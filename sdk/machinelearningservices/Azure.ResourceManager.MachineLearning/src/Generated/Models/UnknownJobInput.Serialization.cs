@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Description != null)
                 {
-                    writer.WritePropertyName("description");
+                    writer.WritePropertyName("description"u8);
                     writer.WriteStringValue(Description);
                 }
                 else
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            writer.WritePropertyName("jobInputType");
+            writer.WritePropertyName("jobInputType"u8);
             writer.WriteStringValue(JobInputType.ToString());
             writer.WriteEndObject();
         }
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static UnknownJobInput DeserializeUnknownJobInput(JsonElement element)
         {
             Optional<string> description = default;
-            JobInputType jobInputType = default;
+            JobInputType jobInputType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobInputType"))
+                if (property.NameEquals("jobInputType"u8))
                 {
                     jobInputType = new JobInputType(property.Value.GetString());
                     continue;

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Maps.Models
     {
         /// <summary> Initializes a new instance of MapsSku. </summary>
         /// <param name="name"> The name of the SKU, in standard format (such as S0). </param>
-        public MapsSku(Name name)
+        public MapsSku(MapsSkuName name)
         {
             Name = name;
         }
@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Maps.Models
         /// <summary> Initializes a new instance of MapsSku. </summary>
         /// <param name="name"> The name of the SKU, in standard format (such as S0). </param>
         /// <param name="tier"> Gets the sku tier. This is based on the SKU name. </param>
-        internal MapsSku(Name name, string tier)
+        internal MapsSku(MapsSkuName name, string tier)
         {
             Name = name;
             Tier = tier;
         }
 
         /// <summary> The name of the SKU, in standard format (such as S0). </summary>
-        public Name Name { get; set; }
+        public MapsSkuName Name { get; set; }
         /// <summary> Gets the sku tier. This is based on the SKU name. </summary>
         public string Tier { get; }
     }

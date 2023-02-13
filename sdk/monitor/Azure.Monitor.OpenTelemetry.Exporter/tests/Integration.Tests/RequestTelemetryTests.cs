@@ -1,16 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using System;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading.Tasks;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.AspNetCoreWebApp;
 using Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.DependencyInjection;
 
 using OpenTelemetry;
 using OpenTelemetry.Trace;
@@ -26,6 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
         {
         }
 
+#if !NET461
         /// <summary>
         /// This test validates that when an app instrumented with the AzureMonitorExporter receives an HTTP request,
         /// A TelemetryItem is created matching that request.
@@ -35,16 +39,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
         {
             string testValue = Guid.NewGuid().ToString();
 
+            ConcurrentBag<TelemetryItem> telemetryItems = null;
+
             // Arrange
-            var transmitter = new MockTransmitter();
-            var activityProcessor = new SimpleActivityExportProcessor(new AzureMonitorTraceExporter(transmitter));
             var client = this.factory
                 .WithWebHostBuilder(builder =>
                     builder.ConfigureTestServices(services =>
                     {
-                        services.AddOpenTelemetryTracing((builder) => builder
+                        services.AddOpenTelemetry().WithTracing(builder => builder
                             .AddAspNetCoreInstrumentation()
-                            .AddProcessor(activityProcessor));
+                            .AddAzureMonitorTraceExporterForTest(out telemetryItems))
+                            .StartWithHost();
                     }))
                 .CreateClient();
 
@@ -54,11 +59,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
 
             // Shutdown
             response.EnsureSuccessStatusCode();
-            this.WaitForActivityExport(transmitter.TelemetryItems);
+            this.WaitForActivityExport(telemetryItems);
 
             // Assert
-            Assert.True(transmitter.TelemetryItems.Any(), "test project did not capture telemetry");
-            var telemetryItem = transmitter.TelemetryItems.Single();
+            Assert.True(telemetryItems.Any(), "test project did not capture telemetry");
+            var telemetryItem = telemetryItems.Single();
             this.telemetryOutput.Write(telemetryItem);
 
             AssertRequestTelemetry(
@@ -66,5 +71,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
                 expectedResponseCode: "200",
                 expectedUrl: request.AbsoluteUri);
         }
+#endif
     }
 }

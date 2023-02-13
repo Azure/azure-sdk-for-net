@@ -17,15 +17,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MinApiVersion))
             {
-                if (MinApiVersion != null)
-                {
-                    writer.WritePropertyName("minApiVersion");
-                    writer.WriteStringValue(MinApiVersion);
-                }
-                else
-                {
-                    writer.WriteNull("minApiVersion");
-                }
+                writer.WritePropertyName("minApiVersion"u8);
+                writer.WriteStringValue(MinApiVersion);
             }
             writer.WriteEndObject();
         }
@@ -35,13 +28,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> minApiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minApiVersion"))
+                if (property.NameEquals("minApiVersion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        minApiVersion = null;
-                        continue;
-                    }
                     minApiVersion = property.Value.GetString();
                     continue;
                 }

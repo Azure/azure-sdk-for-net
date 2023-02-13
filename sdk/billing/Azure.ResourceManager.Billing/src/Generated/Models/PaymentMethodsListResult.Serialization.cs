@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.Billing.Models
     {
         internal static PaymentMethodsListResult DeserializePaymentMethodsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PaymentMethodData>> value = default;
+            Optional<IReadOnlyList<BillingPaymentMethodData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PaymentMethodData> array = new List<PaymentMethodData>();
+                    List<BillingPaymentMethodData> array = new List<BillingPaymentMethodData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PaymentMethodData.DeserializePaymentMethodData(item));
+                        array.Add(BillingPaymentMethodData.DeserializeBillingPaymentMethodData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

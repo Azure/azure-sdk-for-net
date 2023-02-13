@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Avs.Models
         private const string BuildingValue = "Building";
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Succeeded. </summary>
         public static WorkloadNetworkVmGroupProvisioningState Succeeded { get; } = new WorkloadNetworkVmGroupProvisioningState(SucceededValue);
@@ -38,6 +39,8 @@ namespace Azure.ResourceManager.Avs.Models
         public static WorkloadNetworkVmGroupProvisioningState Deleting { get; } = new WorkloadNetworkVmGroupProvisioningState(DeletingValue);
         /// <summary> Updating. </summary>
         public static WorkloadNetworkVmGroupProvisioningState Updating { get; } = new WorkloadNetworkVmGroupProvisioningState(UpdatingValue);
+        /// <summary> Canceled. </summary>
+        public static WorkloadNetworkVmGroupProvisioningState Canceled { get; } = new WorkloadNetworkVmGroupProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="WorkloadNetworkVmGroupProvisioningState"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkVmGroupProvisioningState left, WorkloadNetworkVmGroupProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkVmGroupProvisioningState"/> values are not the same. </summary>

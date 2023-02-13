@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -20,12 +21,12 @@ namespace Azure.ResourceManager.LabServices
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -34,28 +35,28 @@ namespace Azure.ResourceManager.LabServices
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultConnectionProfile))
             {
-                writer.WritePropertyName("defaultConnectionProfile");
+                writer.WritePropertyName("defaultConnectionProfile"u8);
                 writer.WriteObjectValue(DefaultConnectionProfile);
             }
             if (Optional.IsDefined(DefaultAutoShutdownProfile))
             {
-                writer.WritePropertyName("defaultAutoShutdownProfile");
+                writer.WritePropertyName("defaultAutoShutdownProfile"u8);
                 writer.WriteObjectValue(DefaultAutoShutdownProfile);
             }
             if (Optional.IsDefined(DefaultNetworkProfile))
             {
-                writer.WritePropertyName("defaultNetworkProfile");
+                writer.WritePropertyName("defaultNetworkProfile"u8);
                 writer.WriteObjectValue(DefaultNetworkProfile);
             }
             if (Optional.IsCollectionDefined(AllowedRegions))
             {
-                writer.WritePropertyName("allowedRegions");
+                writer.WritePropertyName("allowedRegions"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedRegions)
                 {
@@ -65,18 +66,18 @@ namespace Azure.ResourceManager.LabServices
             }
             if (Optional.IsDefined(SharedGalleryId))
             {
-                writer.WritePropertyName("sharedGalleryId");
+                writer.WritePropertyName("sharedGalleryId"u8);
                 writer.WriteStringValue(SharedGalleryId);
             }
             if (Optional.IsDefined(SupportInfo))
             {
-                writer.WritePropertyName("supportInfo");
+                writer.WritePropertyName("supportInfo"u8);
                 writer.WriteObjectValue(SupportInfo);
             }
             if (Optional.IsDefined(LinkedLmsInstance))
             {
-                writer.WritePropertyName("linkedLmsInstance");
-                writer.WriteStringValue(LinkedLmsInstance);
+                writer.WritePropertyName("linkedLmsInstance"u8);
+                writer.WriteStringValue(LinkedLmsInstance.AbsoluteUri);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -91,27 +92,27 @@ namespace Azure.ResourceManager.LabServices
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ConnectionProfile> defaultConnectionProfile = default;
-            Optional<AutoShutdownProfile> defaultAutoShutdownProfile = default;
+            Optional<LabConnectionProfile> defaultConnectionProfile = default;
+            Optional<LabAutoShutdownProfile> defaultAutoShutdownProfile = default;
             Optional<LabPlanNetworkProfile> defaultNetworkProfile = default;
-            Optional<IList<string>> allowedRegions = default;
-            Optional<string> sharedGalleryId = default;
-            Optional<SupportInfo> supportInfo = default;
-            Optional<string> linkedLmsInstance = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<IList<AzureLocation>> allowedRegions = default;
+            Optional<ResourceIdentifier> sharedGalleryId = default;
+            Optional<LabPlanSupportInfo> supportInfo = default;
+            Optional<Uri> linkedLmsInstance = default;
+            Optional<LabServicesProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,37 +127,37 @@ namespace Azure.ResourceManager.LabServices
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -165,27 +166,27 @@ namespace Azure.ResourceManager.LabServices
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("defaultConnectionProfile"))
+                        if (property0.NameEquals("defaultConnectionProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            defaultConnectionProfile = ConnectionProfile.DeserializeConnectionProfile(property0.Value);
+                            defaultConnectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("defaultAutoShutdownProfile"))
+                        if (property0.NameEquals("defaultAutoShutdownProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            defaultAutoShutdownProfile = AutoShutdownProfile.DeserializeAutoShutdownProfile(property0.Value);
+                            defaultAutoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("defaultNetworkProfile"))
+                        if (property0.NameEquals("defaultNetworkProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -195,49 +196,59 @@ namespace Azure.ResourceManager.LabServices
                             defaultNetworkProfile = LabPlanNetworkProfile.DeserializeLabPlanNetworkProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("allowedRegions"))
+                        if (property0.NameEquals("allowedRegions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<AzureLocation> array = new List<AzureLocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(new AzureLocation(item.GetString()));
                             }
                             allowedRegions = array;
                             continue;
                         }
-                        if (property0.NameEquals("sharedGalleryId"))
-                        {
-                            sharedGalleryId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("supportInfo"))
+                        if (property0.NameEquals("sharedGalleryId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            supportInfo = SupportInfo.DeserializeSupportInfo(property0.Value);
+                            sharedGalleryId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("linkedLmsInstance"))
-                        {
-                            linkedLmsInstance = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("supportInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToProvisioningState();
+                            supportInfo = LabPlanSupportInfo.DeserializeLabPlanSupportInfo(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("linkedLmsInstance"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                linkedLmsInstance = null;
+                                continue;
+                            }
+                            linkedLmsInstance = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            provisioningState = property0.Value.GetString().ToLabServicesProvisioningState();
                             continue;
                         }
                     }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -20,28 +21,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="serverName"> The Sql server name installed on the machine. </param>
         /// <param name="databaseName"> The Sql database name installed on the machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/>, <paramref name="sourceComputerId"/>, <paramref name="machineName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
-        public OnPremiseSqlResourceDetails(string workspaceId, Guid vmUuid, string sourceComputerId, string machineName, string serverName, string databaseName) : base(workspaceId, vmUuid, sourceComputerId, machineName)
+        public OnPremiseSqlResourceDetails(ResourceIdentifier workspaceId, Guid vmUuid, string sourceComputerId, string machineName, string serverName, string databaseName) : base(workspaceId, vmUuid, sourceComputerId, machineName)
         {
-            if (workspaceId == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceId));
-            }
-            if (sourceComputerId == null)
-            {
-                throw new ArgumentNullException(nameof(sourceComputerId));
-            }
-            if (machineName == null)
-            {
-                throw new ArgumentNullException(nameof(machineName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
+            Argument.AssertNotNull(workspaceId, nameof(workspaceId));
+            Argument.AssertNotNull(sourceComputerId, nameof(sourceComputerId));
+            Argument.AssertNotNull(machineName, nameof(machineName));
+            Argument.AssertNotNull(serverName, nameof(serverName));
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
 
             ServerName = serverName;
             DatabaseName = databaseName;
@@ -56,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="machineName"> The name of the machine. </param>
         /// <param name="serverName"> The Sql server name installed on the machine. </param>
         /// <param name="databaseName"> The Sql database name installed on the machine. </param>
-        internal OnPremiseSqlResourceDetails(Source source, string workspaceId, Guid vmUuid, string sourceComputerId, string machineName, string serverName, string databaseName) : base(source, workspaceId, vmUuid, sourceComputerId, machineName)
+        internal OnPremiseSqlResourceDetails(Source source, ResourceIdentifier workspaceId, Guid vmUuid, string sourceComputerId, string machineName, string serverName, string databaseName) : base(source, workspaceId, vmUuid, sourceComputerId, machineName)
         {
             ServerName = serverName;
             DatabaseName = databaseName;

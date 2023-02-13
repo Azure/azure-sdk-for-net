@@ -2,18 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics.Tracing;
 using System.Net;
 using System.Threading.Tasks;
-using System.Web;
 using Azure.Core;
-using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
+using Azure.Identity.Tests.Mock;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class AuthorizationCodeCredentialTests : CredentialTestBase
+    public class AuthorizationCodeCredentialTests : CredentialTestBase<AuthorizationCodeCredentialOptions>
     {
         private const string redirectUriString = "http://192.168.0.1/foo";
 
@@ -22,6 +20,24 @@ namespace Azure.Identity.Tests
 
         public override TokenCredential GetTokenCredential(TokenCredentialOptions options) => InstrumentClient(
             new AuthorizationCodeCredential(TenantId, ClientId, clientSecret, authCode, options, mockConfidentialMsalClient));
+
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
+        {
+            if (config.TenantId == null)
+            {
+                Assert.Ignore("Null TenantId test does not apply to this credential");
+            }
+
+            var options = new AuthorizationCodeCredentialOptions
+            {
+                Transport = config.Transport,
+                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false,
+                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants
+            };
+            var pipeline = CredentialPipeline.GetInstance(options);
+            return InstrumentClient(
+           new AuthorizationCodeCredential(config.TenantId, ClientId, clientSecret, authCode, options, null, pipeline));
+        }
 
         [SetUp]
         public void Setup()
@@ -57,8 +73,9 @@ namespace Azure.Identity.Tests
         public async Task AuthenticateWithAuthCodeHonorsTenantId([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
 
+            var options = new AuthorizationCodeCredentialOptions { AdditionallyAllowedTenants = { TenantIdHint } };
             AuthorizationCodeCredential cred = InstrumentClient(
                 new AuthorizationCodeCredential(TenantId, ClientId, clientSecret, authCode, options, mockConfidentialMsalClient));
 
@@ -74,16 +91,16 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AuthenticateWithAutCodeHonorsRedirectUri([Values(null, redirectUriString)] string redirectUri)
         {
-            var mockTransport = new MockTransport( req =>
+            var mockTransport = new MockTransport(req =>
             {
                 if (redirectUri is not null && req.Uri.Path.EndsWith("/token"))
                 {
                     var content = ReadMockRequestContent(req).GetAwaiter().GetResult();
                     Assert.That(WebUtility.UrlDecode(content), Does.Contain(redirectUri ?? string.Empty));
                 }
-                return CreateMockMsalTokenResponse(200, expectedToken, TenantId, "foo");
+                return CredentialTestHelpers.CreateMockMsalTokenResponse(200, expectedToken, TenantId, "foo");
             });
-            var options = new AuthorizationCodeCredentialOptions { Transport = mockTransport};
+            var options = new AuthorizationCodeCredentialOptions { Transport = mockTransport };
             if (redirectUri != null)
             {
                 options.RedirectUri = new Uri(redirectUri);

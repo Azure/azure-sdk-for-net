@@ -232,7 +232,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual void ReleaseSession() =>
             // manager will be null if instance created using the public constructor which is exposed for testing purposes
             // This will be awaited when closing the receiver.
-            _ = _manager?.CancelSessionAsync();
+            _ = _manager?.CancelAsync();
 
         ///<inheritdoc cref="ServiceBusSessionReceiver.RenewSessionLockAsync(CancellationToken)"/>
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)

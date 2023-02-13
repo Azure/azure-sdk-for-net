@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Purview
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(Guid scopeTenantId, ScopeType scopeType, string scope)
+        internal HttpMessage CreateGetRequest(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="scopeType"> The scope for the default account. </param>
         /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DefaultAccountPayload>> GetAsync(Guid scopeTenantId, ScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DefaultPurviewAccountPayload>> GetAsync(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest(scopeTenantId, scopeType, scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -71,9 +71,9 @@ namespace Azure.ResourceManager.Purview
             {
                 case 200:
                     {
-                        DefaultAccountPayload value = default;
+                        DefaultPurviewAccountPayload value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DefaultAccountPayload.DeserializeDefaultAccountPayload(document.RootElement);
+                        value = DefaultPurviewAccountPayload.DeserializeDefaultPurviewAccountPayload(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="scopeType"> The scope for the default account. </param>
         /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DefaultAccountPayload> Get(Guid scopeTenantId, ScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        public Response<DefaultPurviewAccountPayload> Get(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest(scopeTenantId, scopeType, scope);
             _pipeline.Send(message, cancellationToken);
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Purview
             {
                 case 200:
                     {
-                        DefaultAccountPayload value = default;
+                        DefaultPurviewAccountPayload value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DefaultAccountPayload.DeserializeDefaultAccountPayload(document.RootElement);
+                        value = DefaultPurviewAccountPayload.DeserializeDefaultPurviewAccountPayload(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Purview
             }
         }
 
-        internal HttpMessage CreateSetRequest(DefaultAccountPayload defaultAccountPayload)
+        internal HttpMessage CreateSetRequest(DefaultPurviewAccountPayload defaultAccountPayload)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
-        public async Task<Response<DefaultAccountPayload>> SetAsync(DefaultAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
+        public async Task<Response<DefaultPurviewAccountPayload>> SetAsync(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
 
@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.Purview
             {
                 case 200:
                     {
-                        DefaultAccountPayload value = default;
+                        DefaultPurviewAccountPayload value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DefaultAccountPayload.DeserializeDefaultAccountPayload(document.RootElement);
+                        value = DefaultPurviewAccountPayload.DeserializeDefaultPurviewAccountPayload(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
-        public Response<DefaultAccountPayload> Set(DefaultAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
+        public Response<DefaultPurviewAccountPayload> Set(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
 
@@ -161,9 +161,9 @@ namespace Azure.ResourceManager.Purview
             {
                 case 200:
                     {
-                        DefaultAccountPayload value = default;
+                        DefaultPurviewAccountPayload value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DefaultAccountPayload.DeserializeDefaultAccountPayload(document.RootElement);
+                        value = DefaultPurviewAccountPayload.DeserializeDefaultPurviewAccountPayload(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Purview
             }
         }
 
-        internal HttpMessage CreateRemoveRequest(Guid scopeTenantId, ScopeType scopeType, string scope)
+        internal HttpMessage CreateRemoveRequest(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="scopeType"> The scope for the default account. </param>
         /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response> RemoveAsync(Guid scopeTenantId, ScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        public async Task<Response> RemoveAsync(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateRemoveRequest(scopeTenantId, scopeType, scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="scopeType"> The scope for the default account. </param>
         /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Remove(Guid scopeTenantId, ScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        public Response Remove(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateRemoveRequest(scopeTenantId, scopeType, scope);
             _pipeline.Send(message, cancellationToken);

@@ -20,29 +20,29 @@ namespace Azure.ResourceManager.Network
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(VpnNatRuleType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(VpnNatRuleType.Value.ToString());
             }
             if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("mode");
+                writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
             if (Optional.IsCollectionDefined(InternalMappings))
             {
-                writer.WritePropertyName("internalMappings");
+                writer.WritePropertyName("internalMappings"u8);
                 writer.WriteStartArray();
                 foreach (var item in InternalMappings)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsCollectionDefined(ExternalMappings))
             {
-                writer.WritePropertyName("externalMappings");
+                writer.WritePropertyName("externalMappings"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExternalMappings)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsDefined(IPConfigurationId))
             {
-                writer.WritePropertyName("ipConfigurationId");
+                writer.WritePropertyName("ipConfigurationId"u8);
                 writer.WriteStringValue(IPConfigurationId);
             }
             writer.WriteEndObject();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> ipConfigurationId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.Network
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("type"))
+                        if (property0.NameEquals("type"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network
                             type0 = new VpnNatRuleType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("mode"))
+                        if (property0.NameEquals("mode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
                             mode = new VpnNatRuleMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("internalMappings"))
+                        if (property0.NameEquals("internalMappings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Network
                             internalMappings = array;
                             continue;
                         }
-                        if (property0.NameEquals("externalMappings"))
+                        if (property0.NameEquals("externalMappings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network
                             externalMappings = array;
                             continue;
                         }
-                        if (property0.NameEquals("ipConfigurationId"))
+                        if (property0.NameEquals("ipConfigurationId"u8))
                         {
                             ipConfigurationId = property0.Value.GetString();
                             continue;

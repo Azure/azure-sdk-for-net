@@ -7,7 +7,6 @@
 
 using System;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -22,7 +21,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationMachineRun. </summary>
         /// <param name="name"> Name of the software update configuration machine run. </param>
         /// <param name="id"> Resource Id of the software update configuration machine run. </param>
-        /// <param name="targetComputer"> name of the updated computer. </param>
+        /// <param name="targetComputerId"> name of the updated computer. </param>
         /// <param name="targetComputerType"> type of the updated computer. </param>
         /// <param name="softwareUpdateConfiguration"> software update configuration triggered this run. </param>
         /// <param name="status"> Status of the software update configuration machine run. </param>
@@ -38,11 +37,11 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="lastModifiedOn"> Last time resource was modified, which only appears in the response. </param>
         /// <param name="lastModifiedBy"> lastModifiedBy property, which only appears in the response. </param>
         /// <param name="error"> Details of provisioning error. </param>
-        internal SoftwareUpdateConfigurationMachineRun(string name, string id, string targetComputer, string targetComputerType, UpdateConfigurationNavigation softwareUpdateConfiguration, string status, string osType, Guid? correlationId, Guid? sourceComputerId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? configuredDuration, SubResource job, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, ErrorResponse error)
+        internal SoftwareUpdateConfigurationMachineRun(string name, ResourceIdentifier id, ResourceIdentifier targetComputerId, string targetComputerType, SoftwareUpdateConfigurationNavigation softwareUpdateConfiguration, string status, string osType, Guid? correlationId, Guid? sourceComputerId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? configuredDuration, JobNavigation job, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, AutomationResponseError error)
         {
             Name = name;
             Id = id;
-            TargetComputer = targetComputer;
+            TargetComputerId = targetComputerId;
             TargetComputerType = targetComputerType;
             SoftwareUpdateConfiguration = softwareUpdateConfiguration;
             Status = status;
@@ -63,13 +62,13 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Name of the software update configuration machine run. </summary>
         public string Name { get; }
         /// <summary> Resource Id of the software update configuration machine run. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> name of the updated computer. </summary>
-        public string TargetComputer { get; }
+        public ResourceIdentifier TargetComputerId { get; }
         /// <summary> type of the updated computer. </summary>
         public string TargetComputerType { get; }
         /// <summary> software update configuration triggered this run. </summary>
-        internal UpdateConfigurationNavigation SoftwareUpdateConfiguration { get; }
+        internal SoftwareUpdateConfigurationNavigation SoftwareUpdateConfiguration { get; }
         /// <summary> Name of the software update configuration triggered the software update configuration run. </summary>
         public string SoftwareUpdateName
         {
@@ -91,9 +90,9 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> configured duration for the software update configuration run. </summary>
         public TimeSpan? ConfiguredDuration { get; }
         /// <summary> Job associated with the software update configuration machine run. </summary>
-        internal SubResource Job { get; }
-        /// <summary> Gets Id. </summary>
-        public ResourceIdentifier JobId
+        internal JobNavigation Job { get; }
+        /// <summary> Id of the job associated with the software update configuration run. </summary>
+        public Guid? JobId
         {
             get => Job?.Id;
         }
@@ -107,6 +106,6 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> lastModifiedBy property, which only appears in the response. </summary>
         public string LastModifiedBy { get; }
         /// <summary> Details of provisioning error. </summary>
-        public ErrorResponse Error { get; }
+        public AutomationResponseError Error { get; }
     }
 }

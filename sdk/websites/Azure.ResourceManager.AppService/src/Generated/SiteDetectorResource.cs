@@ -88,8 +88,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get site detector response
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/detectors/{detectorName}
-        /// Operation Id: Diagnostics_GetSiteDetectorResponse
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/detectors/{detectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostics_GetSiteDetectorResponse</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="startTime"> Start Time. </param>
         /// <param name="endTime"> End Time. </param>
@@ -115,8 +123,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get site detector response
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/detectors/{detectorName}
-        /// Operation Id: Diagnostics_GetSiteDetectorResponse
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/detectors/{detectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostics_GetSiteDetectorResponse</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="startTime"> Start Time. </param>
         /// <param name="endTime"> End Time. </param>

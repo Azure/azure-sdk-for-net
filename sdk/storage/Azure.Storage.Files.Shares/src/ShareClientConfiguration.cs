@@ -36,7 +36,7 @@ namespace Azure.Storage.Files.Shares
             AzureSasCredential sasCredential,
             ClientDiagnostics clientDiagnostics,
             ShareClientOptions clientOptions)
-            : base(pipeline, sharedKeyCredential, sasCredential, clientDiagnostics)
+            : base(pipeline, sharedKeyCredential, sasCredential, default, clientDiagnostics)
         {
             ClientOptions = clientOptions;
             TransferValidation = clientOptions.TransferValidation;

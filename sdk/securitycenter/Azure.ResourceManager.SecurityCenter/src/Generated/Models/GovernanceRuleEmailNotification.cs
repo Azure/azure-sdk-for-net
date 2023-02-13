@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of GovernanceRuleEmailNotification. </summary>
-        /// <param name="disableManagerEmailNotification"> Defines whether manager email notifications are disabled. </param>
-        /// <param name="disableOwnerEmailNotification"> Defines whether owner email notifications are disabled. </param>
-        internal GovernanceRuleEmailNotification(bool? disableManagerEmailNotification, bool? disableOwnerEmailNotification)
+        /// <param name="isManagerEmailNotificationDisabled"> Defines whether manager email notifications are disabled. </param>
+        /// <param name="isOwnerEmailNotificationDisabled"> Defines whether owner email notifications are disabled. </param>
+        internal GovernanceRuleEmailNotification(bool? isManagerEmailNotificationDisabled, bool? isOwnerEmailNotificationDisabled)
         {
-            DisableManagerEmailNotification = disableManagerEmailNotification;
-            DisableOwnerEmailNotification = disableOwnerEmailNotification;
+            IsManagerEmailNotificationDisabled = isManagerEmailNotificationDisabled;
+            IsOwnerEmailNotificationDisabled = isOwnerEmailNotificationDisabled;
         }
 
         /// <summary> Defines whether manager email notifications are disabled. </summary>
-        public bool? DisableManagerEmailNotification { get; set; }
+        public bool? IsManagerEmailNotificationDisabled { get; set; }
         /// <summary> Defines whether owner email notifications are disabled. </summary>
-        public bool? DisableOwnerEmailNotification { get; set; }
+        public bool? IsOwnerEmailNotificationDisabled { get; set; }
     }
 }

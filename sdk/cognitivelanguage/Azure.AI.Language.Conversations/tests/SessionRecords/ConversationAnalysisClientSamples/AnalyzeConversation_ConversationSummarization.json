@@ -1,0 +1,301 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/analyze-conversations/jobs?api-version=2022-10-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "699",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221031.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1ce620eb34b020f0b21481fe891f2dff",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "conversations": [
+            {
+              "conversationItems": [
+                {
+                  "text": "Hello, how can I help you?",
+                  "id": "1",
+                  "role": "Agent",
+                  "participantId": "Agent_1"
+                },
+                {
+                  "text": "How to upgrade Office? I am getting error messages the whole day.",
+                  "id": "2",
+                  "role": "Customer",
+                  "participantId": "Customer_1"
+                },
+                {
+                  "text": "Press the upgrade button please. Then sign in and follow the instructions.",
+                  "id": "3",
+                  "role": "Agent",
+                  "participantId": "Agent_1"
+                }
+              ],
+              "id": "1",
+              "language": "en",
+              "modality": "text"
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "taskName": "Issue task",
+            "kind": "ConversationalSummarizationTask",
+            "parameters": {
+              "summaryAspects": [
+                "issue"
+              ]
+            }
+          },
+          {
+            "taskName": "Resolution task",
+            "kind": "ConversationalSummarizationTask",
+            "parameters": {
+              "summaryAspects": [
+                "resolution"
+              ]
+            }
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "79cd3377-7685-4ad8-8276-746babb80f95",
+        "Content-Length": "0",
+        "Date": "Mon, 31 Oct 2022 23:31:47 GMT",
+        "operation-location": "https://languagesdkresource.cognitiveservices.azure.com/language/analyze-conversations/jobs/6ebd5186-ebc1-48ee-9be5-17b1472baed4?api-version=2022-10-01-preview",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "364",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/analyze-conversations/jobs/6ebd5186-ebc1-48ee-9be5-17b1472baed4?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221031.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "cb815e7924ea09a461a5ccf704658a32",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "a8fe02bf-6be4-4778-b587-0866186d802f",
+        "Content-Length": "280",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 31 Oct 2022 23:31:48 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "92",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "jobId": "6ebd5186-ebc1-48ee-9be5-17b1472baed4",
+        "lastUpdatedDateTime": "2022-10-31T23:31:48Z",
+        "createdDateTime": "2022-10-31T23:31:47Z",
+        "expirationDateTime": "2022-11-01T23:31:47Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 2,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/analyze-conversations/jobs/6ebd5186-ebc1-48ee-9be5-17b1472baed4?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221031.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "700e5390e11fffabb9bafed2c52802c6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "2c439dd2-5a24-42e2-83d3-99f5bea330b6",
+        "Content-Length": "280",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 31 Oct 2022 23:31:49 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "15",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "jobId": "6ebd5186-ebc1-48ee-9be5-17b1472baed4",
+        "lastUpdatedDateTime": "2022-10-31T23:31:48Z",
+        "createdDateTime": "2022-10-31T23:31:47Z",
+        "expirationDateTime": "2022-11-01T23:31:47Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 2,
+          "total": 2,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/analyze-conversations/jobs/6ebd5186-ebc1-48ee-9be5-17b1472baed4?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221031.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "766c5307d9ffc6ad7cddbb0a68f91b4d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "2db2f260-8a48-485d-9428-22943e3f724e",
+        "Content-Length": "627",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 31 Oct 2022 23:31:50 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "168",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "jobId": "6ebd5186-ebc1-48ee-9be5-17b1472baed4",
+        "lastUpdatedDateTime": "2022-10-31T23:31:49Z",
+        "createdDateTime": "2022-10-31T23:31:47Z",
+        "expirationDateTime": "2022-11-01T23:31:47Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 2,
+          "items": [
+            {
+              "kind": "conversationalSummarizationResults",
+              "taskName": "Issue task",
+              "lastUpdateDateTime": "2022-10-31T23:31:49.9454955Z",
+              "status": "succeeded",
+              "results": {
+                "conversations": [
+                  {
+                    "summaries": [
+                      {
+                        "aspect": "issue",
+                        "text": "Customer wants to upgrade Office. | Customer is getting error messages."
+                      }
+                    ],
+                    "id": "1",
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "latest"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/analyze-conversations/jobs/6ebd5186-ebc1-48ee-9be5-17b1472baed4?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221031.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "366e4f8abd1097e0b282112f26d14438",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "33e773a6-f431-4d67-b92f-6e7d653bc2f7",
+        "Content-Length": "996",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 31 Oct 2022 23:31:51 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "122",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "jobId": "6ebd5186-ebc1-48ee-9be5-17b1472baed4",
+        "lastUpdatedDateTime": "2022-10-31T23:31:51Z",
+        "createdDateTime": "2022-10-31T23:31:47Z",
+        "expirationDateTime": "2022-11-01T23:31:47Z",
+        "status": "succeeded",
+        "errors": [],
+        "tasks": {
+          "completed": 2,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 2,
+          "items": [
+            {
+              "kind": "conversationalSummarizationResults",
+              "taskName": "Issue task",
+              "lastUpdateDateTime": "2022-10-31T23:31:49.9454955Z",
+              "status": "succeeded",
+              "results": {
+                "conversations": [
+                  {
+                    "summaries": [
+                      {
+                        "aspect": "issue",
+                        "text": "Customer wants to upgrade Office. | Customer is getting error messages."
+                      }
+                    ],
+                    "id": "1",
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "latest"
+              }
+            },
+            {
+              "kind": "conversationalSummarizationResults",
+              "taskName": "Resolution task",
+              "lastUpdateDateTime": "2022-10-31T23:31:51.9659082Z",
+              "status": "succeeded",
+              "results": {
+                "conversations": [
+                  {
+                    "summaries": [
+                      {
+                        "aspect": "resolution",
+                        "text": "Advised to press the upgrade button. | Then sign in and follow the instructions."
+                      }
+                    ],
+                    "id": "1",
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "latest"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
+    "CONVERSATIONS_KEY": "Sanitized",
+    "RandomSeed": "239568701"
+  }
+}

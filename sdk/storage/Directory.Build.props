@@ -63,6 +63,7 @@
     <NoWarn>
       $(NoWarn);
       AZC0010;
+	  AZC0011;
     </NoWarn>
   </PropertyGroup>
 
@@ -88,5 +89,9 @@
     <AzureStorageWebjobsExtensionSharedSources>$(MSBuildThisFileDirectory)\Microsoft.Azure.WebJobs.Extensions.Storage.Common\src\Shared\</AzureStorageWebjobsExtensionSharedSources>
     <AzureStorageWebjobsExtensionSharedTestSources>$(MSBuildThisFileDirectory)\Microsoft.Azure.WebJobs.Extensions.Storage.Common\tests\Shared\</AzureStorageWebjobsExtensionSharedTestSources>
     <MicrosoftAzureWebJobsExtensionsClientsSources>$(MSBuildThisFileDirectory)..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\src\Shared\</MicrosoftAzureWebJobsExtensionsClientsSources>
+    <AzureStorageBlobsSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.Blobs\src\Shared\</AzureStorageBlobsSharedSources>
+    <AzureStorageBlobsSharedTestSources>$(MSBuildThisFileDirectory)\Azure.Storage.Blobs\tests\Shared\</AzureStorageBlobsSharedTestSources>
+    <AzureStorageDataMovementSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.DataMovement\src\Shared\</AzureStorageDataMovementSharedSources>
+    <AzureStorageDataMovementTestSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.DataMovement\tests\Shared\</AzureStorageDataMovementTestSharedSources>
   </PropertyGroup>
 </Project>

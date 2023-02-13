@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of ContainerList. </summary>
         internal ContainerList()
         {
-            Value = new ChangeTrackingList<ContainerData>();
+            Value = new ChangeTrackingList<DataBoxEdgeStorageContainerData>();
         }
 
         /// <summary> Initializes a new instance of ContainerList. </summary>
         /// <param name="value"> The list of containers. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal ContainerList(IReadOnlyList<ContainerData> value, string nextLink)
+        internal ContainerList(IReadOnlyList<DataBoxEdgeStorageContainerData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of containers. </summary>
-        public IReadOnlyList<ContainerData> Value { get; }
+        public IReadOnlyList<DataBoxEdgeStorageContainerData> Value { get; }
         /// <summary> Link to the next set of results. </summary>
         public string NextLink { get; }
     }

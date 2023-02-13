@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ListUsagesResult>> ListByLocationAsync(string subscriptionId, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LabServicesUsageListResult>> ListByLocationAsync(string subscriptionId, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.LabServices
             {
                 case 200:
                     {
-                        ListUsagesResult value = default;
+                        LabServicesUsageListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ListUsagesResult.DeserializeListUsagesResult(document.RootElement);
+                        value = LabServicesUsageListResult.DeserializeLabServicesUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ListUsagesResult> ListByLocation(string subscriptionId, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
+        public Response<LabServicesUsageListResult> ListByLocation(string subscriptionId, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.LabServices
             {
                 case 200:
                     {
-                        ListUsagesResult value = default;
+                        LabServicesUsageListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ListUsagesResult.DeserializeListUsagesResult(document.RootElement);
+                        value = LabServicesUsageListResult.DeserializeLabServicesUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ListUsagesResult>> ListByLocationNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LabServicesUsageListResult>> ListByLocationNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -147,9 +147,9 @@ namespace Azure.ResourceManager.LabServices
             {
                 case 200:
                     {
-                        ListUsagesResult value = default;
+                        LabServicesUsageListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ListUsagesResult.DeserializeListUsagesResult(document.RootElement);
+                        value = LabServicesUsageListResult.DeserializeLabServicesUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ListUsagesResult> ListByLocationNextPage(string nextLink, string subscriptionId, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
+        public Response<LabServicesUsageListResult> ListByLocationNextPage(string nextLink, string subscriptionId, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -176,9 +176,9 @@ namespace Azure.ResourceManager.LabServices
             {
                 case 200:
                     {
-                        ListUsagesResult value = default;
+                        LabServicesUsageListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ListUsagesResult.DeserializeListUsagesResult(document.RootElement);
+                        value = LabServicesUsageListResult.DeserializeLabServicesUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

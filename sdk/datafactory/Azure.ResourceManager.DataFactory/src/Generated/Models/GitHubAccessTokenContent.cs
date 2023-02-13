@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubAccessCode"/> or <paramref name="gitHubAccessTokenBaseUri"/> is null. </exception>
         public GitHubAccessTokenContent(string gitHubAccessCode, Uri gitHubAccessTokenBaseUri)
         {
-            if (gitHubAccessCode == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubAccessCode));
-            }
-            if (gitHubAccessTokenBaseUri == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubAccessTokenBaseUri));
-            }
+            Argument.AssertNotNull(gitHubAccessCode, nameof(gitHubAccessCode));
+            Argument.AssertNotNull(gitHubAccessTokenBaseUri, nameof(gitHubAccessTokenBaseUri));
 
             GitHubAccessCode = gitHubAccessCode;
             GitHubAccessTokenBaseUri = gitHubAccessTokenBaseUri;

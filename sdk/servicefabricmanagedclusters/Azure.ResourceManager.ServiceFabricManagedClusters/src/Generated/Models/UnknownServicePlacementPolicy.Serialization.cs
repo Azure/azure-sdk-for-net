@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(PolicyType.ToString());
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(ServicePlacementPolicyType.ToString());
             writer.WriteEndObject();
         }
 
         internal static UnknownServicePlacementPolicy DeserializeUnknownServicePlacementPolicy(JsonElement element)
         {
-            ServicePlacementPolicyType type = default;
+            ServicePlacementPolicyType type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ServicePlacementPolicyType(property.Value.GetString());
                     continue;

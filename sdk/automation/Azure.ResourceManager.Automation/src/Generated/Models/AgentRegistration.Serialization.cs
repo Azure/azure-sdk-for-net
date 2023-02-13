@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,22 +16,27 @@ namespace Azure.ResourceManager.Automation.Models
         internal static AgentRegistration DeserializeAgentRegistration(JsonElement element)
         {
             Optional<string> dscMetaConfiguration = default;
-            Optional<string> endpoint = default;
+            Optional<Uri> endpoint = default;
             Optional<AgentRegistrationKeys> keys = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dscMetaConfiguration"))
+                if (property.NameEquals("dscMetaConfiguration"u8))
                 {
                     dscMetaConfiguration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpoint"))
+                if (property.NameEquals("endpoint"u8))
                 {
-                    endpoint = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        endpoint = null;
+                        continue;
+                    }
+                    endpoint = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keys"))
+                if (property.NameEquals("keys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,9 +46,14 @@ namespace Azure.ResourceManager.Automation.Models
                     keys = AgentRegistrationKeys.DeserializeAgentRegistrationKeys(property.Value);
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

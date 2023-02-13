@@ -146,8 +146,10 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Response<bool> Exists(string encryptionScopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string encryptionScopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Storage.EncryptionScopeResource> Get(string encryptionScopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Storage.EncryptionScopeResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.EncryptionScopeResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Storage.EncryptionScopeResource> GetAll(int? maxpagesize = default(int?), string filter = null, Azure.ResourceManager.Storage.Models.EncryptionScopesIncludeType? include = default(Azure.ResourceManager.Storage.Models.EncryptionScopesIncludeType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Storage.EncryptionScopeResource> GetAll(System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.EncryptionScopeResource> GetAllAsync(int? maxpagesize = default(int?), string filter = null, Azure.ResourceManager.Storage.Models.EncryptionScopesIncludeType? include = default(Azure.ResourceManager.Storage.Models.EncryptionScopesIncludeType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.EncryptionScopeResource> GetAllAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.EncryptionScopeResource>> GetAsync(string encryptionScopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Storage.EncryptionScopeResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Storage.EncryptionScopeResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Storage.EncryptionScopeResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.EncryptionScopeResource>.GetEnumerator() { throw null; }
@@ -479,8 +481,10 @@ namespace Azure.ResourceManager.Storage
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation EnableHierarchicalNamespace(Azure.WaitUntil waitUntil, string requestType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> EnableHierarchicalNamespaceAsync(Azure.WaitUntil waitUntil, string requestType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Failover(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> FailoverAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Failover(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.Models.StorageAccountFailoverType? failoverType = default(Azure.ResourceManager.Storage.Models.StorageAccountFailoverType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Failover(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> FailoverAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.Models.StorageAccountFailoverType? failoverType = default(Azure.ResourceManager.Storage.Models.StorageAccountFailoverType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> FailoverAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Storage.StorageAccountResource> Get(Azure.ResourceManager.Storage.Models.StorageAccountExpand? expand = default(Azure.ResourceManager.Storage.Models.StorageAccountExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Storage.Models.GetAccountSasResult> GetAccountSas(Azure.ResourceManager.Storage.Models.AccountSasContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.Models.GetAccountSasResult>> GetAccountSasAsync(Azure.ResourceManager.Storage.Models.AccountSasContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -527,6 +531,7 @@ namespace Azure.ResourceManager.Storage
         protected StorageAccountRestoreBlobRangesOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string Id { get { throw null; } }
         public override Azure.ResourceManager.Storage.Models.BlobRestoreStatus Value { get { throw null; } }
         public virtual Azure.ResourceManager.Storage.Models.BlobRestoreStatus GetCurrentStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1072,6 +1077,25 @@ namespace Azure.ResourceManager.Storage.Models
         public System.DateTimeOffset? LastKeyRotationTimestamp { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EncryptionScopesIncludeType : System.IEquatable<Azure.ResourceManager.Storage.Models.EncryptionScopesIncludeType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EncryptionScopesIncludeType(string value) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.EncryptionScopesIncludeType All { get { throw null; } }
+        public static Azure.ResourceManager.Storage.Models.EncryptionScopesIncludeType Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Storage.Models.EncryptionScopesIncludeType Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Storage.Models.EncryptionScopesIncludeType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Storage.Models.EncryptionScopesIncludeType left, Azure.ResourceManager.Storage.Models.EncryptionScopesIncludeType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.EncryptionScopesIncludeType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Storage.Models.EncryptionScopesIncludeType left, Azure.ResourceManager.Storage.Models.EncryptionScopesIncludeType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EncryptionScopeSource : System.IEquatable<Azure.ResourceManager.Storage.Models.EncryptionScopeSource>
     {
         private readonly object _dummy;
@@ -1435,7 +1459,9 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.DateAfterModification Delete { get { throw null; } set { } }
         public bool? EnableAutoTierToHotFromCool { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.DateAfterModification TierToArchive { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.DateAfterModification TierToCold { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.DateAfterModification TierToCool { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.DateAfterModification TierToHot { get { throw null; } set { } }
     }
     public partial class ManagementPolicyDefinition
     {
@@ -1497,7 +1523,9 @@ namespace Azure.ResourceManager.Storage.Models
         public ManagementPolicySnapShot() { }
         public Azure.ResourceManager.Storage.Models.DateAfterCreation Delete { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.DateAfterCreation TierToArchive { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.DateAfterCreation TierToCold { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.DateAfterCreation TierToCool { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.DateAfterCreation TierToHot { get { throw null; } set { } }
     }
     public partial class ManagementPolicyTagFilter
     {
@@ -1511,7 +1539,9 @@ namespace Azure.ResourceManager.Storage.Models
         public ManagementPolicyVersion() { }
         public Azure.ResourceManager.Storage.Models.DateAfterCreation Delete { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.DateAfterCreation TierToArchive { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.DateAfterCreation TierToCold { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.DateAfterCreation TierToCool { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.DateAfterCreation TierToHot { get { throw null; } set { } }
     }
     public partial class ObjectReplicationPolicyFilter
     {
@@ -1689,6 +1719,23 @@ namespace Azure.ResourceManager.Storage.Models
     {
         GeoReplicationStats = 0,
         BlobRestoreStatus = 1,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StorageAccountFailoverType : System.IEquatable<Azure.ResourceManager.Storage.Models.StorageAccountFailoverType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StorageAccountFailoverType(string value) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.StorageAccountFailoverType Planned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Storage.Models.StorageAccountFailoverType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageAccountFailoverType left, Azure.ResourceManager.Storage.Models.StorageAccountFailoverType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountFailoverType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageAccountFailoverType left, Azure.ResourceManager.Storage.Models.StorageAccountFailoverType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public enum StorageAccountHttpProtocol
     {
@@ -2402,6 +2449,8 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class StorageTableAccessPolicy
     {
         public StorageTableAccessPolicy(string permission) { }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
         public string Permission { get { throw null; } set { } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }

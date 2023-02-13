@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Source object from which the control was created. </summary>
         internal SecureScoreControlDefinitionSource Source { get; }
         /// <summary> The type of security control (for example, BuiltIn). </summary>
-        public ControlType? SourceType
+        public SecurityControlType? SourceType
         {
             get => Source?.SourceType;
         }

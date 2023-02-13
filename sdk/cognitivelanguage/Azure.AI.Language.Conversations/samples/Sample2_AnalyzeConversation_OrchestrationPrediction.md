@@ -5,7 +5,7 @@ This sample demonstrates how to analyze an utterance using an Orchestration proj
 To analyze an utterance, you need to first create a `ConversationAnalysisClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:ConversationAnalysisClient_Create
-Uri endpoint = new Uri("https://myaccount.cognitive.microsoft.com");
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);

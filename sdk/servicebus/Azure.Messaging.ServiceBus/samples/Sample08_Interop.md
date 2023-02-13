@@ -44,9 +44,3 @@ string receivedJson = (string) deserializer.ReadObject(reader);
 // deserialize the JSON string into TestModel
 TestModel output = JsonSerializer.Deserialize<TestModel>(receivedJson);
 ```
-
-## Source
-
-To see the full example source, see:
-
-* [Sample08_Interop.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample08_Interop.cs)

@@ -31,7 +31,7 @@ namespace Compute.Tests
         /// Delete restore point
         /// Delete restore point collection
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Restore Points are created in a different sub")]
         [Trait("Name", "CreateRpcAndRestorePoints")]
         public void CreateRpcAndRestorePoints()
         {
@@ -180,7 +180,7 @@ namespace Compute.Tests
         /// Create restore point for VM with SecurityType as TrustedLaunch
         /// Verify SecurityType of DiskRestorePoint
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Restore Points are created in a different sub")]
         [Trait("Name", "CreateLocalRestorePointWithSecurityProfile")]
         public void CreateLocalRestorePointWithSecurityProfile()
         {

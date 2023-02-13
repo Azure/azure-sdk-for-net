@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="authenticationType"> Specifies the authentication type being used for connecting to the endpoint. Defaults to &apos;KeyBased&apos;. If &apos;KeyBased&apos; is selected, a connection string must be specified (at least the primary connection string). If &apos;IdentityBased&apos; is select, the endpointUri and entityPath properties must be specified. </param>
         /// <param name="deadLetterSecret"> Dead letter storage secret for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="deadLetterUri"> Dead letter storage URL for identity-based authentication. </param>
-        internal DigitalTwinsEndpointResourceProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri)
+        /// <param name="identity"> Managed identity properties for the endpoint. </param>
+        internal DigitalTwinsEndpointResourceProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, DigitalTwinsManagedIdentityReference identity)
         {
             EndpointType = endpointType;
             ProvisioningState = provisioningState;
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             AuthenticationType = authenticationType;
             DeadLetterSecret = deadLetterSecret;
             DeadLetterUri = deadLetterUri;
+            Identity = identity;
         }
 
         /// <summary> The type of Digital Twins endpoint. </summary>
@@ -50,5 +52,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public string DeadLetterSecret { get; set; }
         /// <summary> Dead letter storage URL for identity-based authentication. </summary>
         public Uri DeadLetterUri { get; set; }
+        /// <summary> Managed identity properties for the endpoint. </summary>
+        public DigitalTwinsManagedIdentityReference Identity { get; set; }
     }
 }

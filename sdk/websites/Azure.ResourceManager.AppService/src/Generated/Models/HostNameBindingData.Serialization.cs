@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -19,50 +20,54 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(SiteName))
             {
-                writer.WritePropertyName("siteName");
+                writer.WritePropertyName("siteName"u8);
                 writer.WriteStringValue(SiteName);
             }
             if (Optional.IsDefined(DomainId))
             {
-                writer.WritePropertyName("domainId");
+                writer.WritePropertyName("domainId"u8);
                 writer.WriteStringValue(DomainId);
             }
             if (Optional.IsDefined(AzureResourceName))
             {
-                writer.WritePropertyName("azureResourceName");
+                writer.WritePropertyName("azureResourceName"u8);
                 writer.WriteStringValue(AzureResourceName);
             }
             if (Optional.IsDefined(AzureResourceType))
             {
-                writer.WritePropertyName("azureResourceType");
+                writer.WritePropertyName("azureResourceType"u8);
                 writer.WriteStringValue(AzureResourceType.Value.ToSerialString());
             }
             if (Optional.IsDefined(CustomHostNameDnsRecordType))
             {
-                writer.WritePropertyName("customHostNameDnsRecordType");
+                writer.WritePropertyName("customHostNameDnsRecordType"u8);
                 writer.WriteStringValue(CustomHostNameDnsRecordType.Value.ToSerialString());
             }
             if (Optional.IsDefined(HostNameType))
             {
-                writer.WritePropertyName("hostNameType");
+                writer.WritePropertyName("hostNameType"u8);
                 writer.WriteStringValue(HostNameType.Value.ToSerialString());
             }
             if (Optional.IsDefined(SslState))
             {
-                writer.WritePropertyName("sslState");
+                writer.WritePropertyName("sslState"u8);
                 writer.WriteStringValue(SslState.Value.ToSerialString());
             }
             if (Optional.IsDefined(Thumbprint))
             {
-                writer.WritePropertyName("thumbprint");
-                writer.WriteStringValue(Thumbprint);
+                writer.WritePropertyName("thumbprint"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Thumbprint);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Thumbprint.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -78,45 +83,45 @@ namespace Azure.ResourceManager.AppService
             Optional<string> siteName = default;
             Optional<string> domainId = default;
             Optional<string> azureResourceName = default;
-            Optional<AzureResourceType> azureResourceType = default;
+            Optional<AppServiceResourceType> azureResourceType = default;
             Optional<CustomHostNameDnsRecordType> customHostNameDnsRecordType = default;
-            Optional<HostNameType> hostNameType = default;
-            Optional<SslState> sslState = default;
-            Optional<string> thumbprint = default;
+            Optional<AppServiceHostNameType> hostNameType = default;
+            Optional<HostNameBindingSslState> sslState = default;
+            Optional<BinaryData> thumbprint = default;
             Optional<string> virtualIP = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -125,32 +130,32 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("siteName"))
+                        if (property0.NameEquals("siteName"u8))
                         {
                             siteName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("domainId"))
+                        if (property0.NameEquals("domainId"u8))
                         {
                             domainId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("azureResourceName"))
+                        if (property0.NameEquals("azureResourceName"u8))
                         {
                             azureResourceName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("azureResourceType"))
+                        if (property0.NameEquals("azureResourceType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            azureResourceType = property0.Value.GetString().ToAzureResourceType();
+                            azureResourceType = property0.Value.GetString().ToAppServiceResourceType();
                             continue;
                         }
-                        if (property0.NameEquals("customHostNameDnsRecordType"))
+                        if (property0.NameEquals("customHostNameDnsRecordType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -160,32 +165,37 @@ namespace Azure.ResourceManager.AppService
                             customHostNameDnsRecordType = property0.Value.GetString().ToCustomHostNameDnsRecordType();
                             continue;
                         }
-                        if (property0.NameEquals("hostNameType"))
+                        if (property0.NameEquals("hostNameType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hostNameType = property0.Value.GetString().ToHostNameType();
+                            hostNameType = property0.Value.GetString().ToAppServiceHostNameType();
                             continue;
                         }
-                        if (property0.NameEquals("sslState"))
+                        if (property0.NameEquals("sslState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sslState = property0.Value.GetString().ToSslState();
+                            sslState = property0.Value.GetString().ToHostNameBindingSslState();
                             continue;
                         }
-                        if (property0.NameEquals("thumbprint"))
+                        if (property0.NameEquals("thumbprint"u8))
                         {
-                            thumbprint = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            thumbprint = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("virtualIP"))
+                        if (property0.NameEquals("virtualIP"u8))
                         {
                             virtualIP = property0.Value.GetString();
                             continue;

@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Media.Models
         internal static StorageEncryptedAssetDecryptionInfo DeserializeStorageEncryptedAssetDecryptionInfo(JsonElement element)
         {
             Optional<byte[]> key = default;
-            Optional<IReadOnlyList<AssetFileEncryptionMetadata>> assetFileEncryptionMetadata = default;
+            Optional<IReadOnlyList<MediaAssetFileEncryptionMetadata>> assetFileEncryptionMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Media.Models
                     key = property.Value.GetBytesFromBase64("D");
                     continue;
                 }
-                if (property.NameEquals("assetFileEncryptionMetadata"))
+                if (property.NameEquals("assetFileEncryptionMetadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AssetFileEncryptionMetadata> array = new List<AssetFileEncryptionMetadata>();
+                    List<MediaAssetFileEncryptionMetadata> array = new List<MediaAssetFileEncryptionMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.AssetFileEncryptionMetadata.DeserializeAssetFileEncryptionMetadata(item));
+                        array.Add(MediaAssetFileEncryptionMetadata.DeserializeMediaAssetFileEncryptionMetadata(item));
                     }
                     assetFileEncryptionMetadata = array;
                     continue;

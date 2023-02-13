@@ -1,0 +1,457 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-33c8ad11b793d34cb29e9554144e0202-cda57e1ebe8b9542-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "cc0c235cc87d19cbff967fcc31e6cf8a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "420",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 30 Aug 2022 18:20:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c0e03e91-2cf5-45b7-a848-d8eb604952fd",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "c0e03e91-2cf5-45b7-a848-d8eb604952fd",
+        "x-ms-routing-request-id": "AUSTRALIAEAST:20220830T182053Z:c0e03e91-2cf5-45b7-a848-d8eb604952fd"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "62e47139-66d0-4b0b-a000-1e8a412890c1",
+        "tenantId": "8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd",
+        "displayName": "Project Fidalgo - PPE Integration Testing",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Public_2014-09-01",
+          "quotaId": "Sponsored_2016-01-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourcegroups/azsdk?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "28",
+        "Content-Type": "application/json",
+        "traceparent": "00-45d4b2439e4a5d48b0e1abccd01ea67c-2c8f5cd5faf21a43-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "4514f68a5958434f9247871bfed9df7c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "australiaeast"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "214",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 30 Aug 2022 18:20:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "43e929ec-f9e1-41dc-9026-3202332142b8",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "43e929ec-f9e1-41dc-9026-3202332142b8",
+        "x-ms-routing-request-id": "AUSTRALIAEAST:20220830T182053Z:43e929ec-f9e1-41dc-9026-3202332142b8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk",
+        "name": "azsdk",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "australiaeast",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/devcenters/sdk-default-devcenter?api-version=2022-08-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-61077e83403dab4b82133a184dbb2347-ba3ad1d65a3b964c-00",
+        "User-Agent": "azsdk-net-ResourceManager.DevCenter/1.0.0-alpha.20220830.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "a0594f034b5a36f61778496c0aefc905",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "665",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 30 Aug 2022 18:20:53 GMT",
+        "ETag": "\u00226101acac-0000-1a00-0000-630e52ef0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a0594f034b5a36f61778496c0aefc905",
+        "x-ms-correlation-request-id": "7458734d-6656-42bf-9a3b-5fbf18e65b55",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "17f3a977-e329-4ff8-99cb-0c450401f7d5",
+        "x-ms-routing-request-id": "AUSTRALIAEAST:20220830T182054Z:7458734d-6656-42bf-9a3b-5fbf18e65b55"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/devcenters/sdk-default-devcenter",
+        "name": "sdk-default-devcenter",
+        "type": "microsoft.devcenter/devcenters",
+        "location": "australiaeast",
+        "systemData": {
+          "createdBy": "tbyfield@microsoft.com",
+          "createdByType": "User",
+          "createdAt": "2022-08-30T18:10:30.6728815Z",
+          "lastModifiedBy": "tbyfield@microsoft.com",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2022-08-30T18:10:30.6728815Z"
+        },
+        "identity": {
+          "principalId": "6c7d9842-faeb-43ec-bffb-e9c271d6e5e9",
+          "tenantId": "8ab2df1c-ed88-4946-a8a9-e1bbb3e4d1fd",
+          "type": "SystemAssigned"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/devcenters/sdk-default-devcenter/images?api-version=2022-08-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-18abdbf29167f34fa90d6fe7a6e06a86-c1b338f6c92eb84d-00",
+        "User-Agent": "azsdk-net-ResourceManager.DevCenter/1.0.0-alpha.20220830.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "3872e875111b029dd3c93a3641b01b25",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "7685",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 30 Aug 2022 18:20:55 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3872e875111b029dd3c93a3641b01b25",
+        "x-ms-correlation-request-id": "f21f9a71-7807-48ca-a5ab-24bb50bbde62",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "d127b58c-a33b-4d44-82ae-c9c51792df19",
+        "x-ms-routing-request-id": "AUSTRALIAEAST:20220830T182056Z:f21f9a71-7807-48ca-a5ab-24bb50bbde62",
+        "X-Rate-Limit-Limit": "1m",
+        "X-Rate-Limit-Remaining": "299",
+        "X-Rate-Limit-Reset": "2022-08-30T18:21:55.4034839Z"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/devcenters/sdk-default-devcenter/galleries/Default/images/MicrosoftWindowsDesktop_windows-ent-cpc_win11-21h2-ent-cpc-os",
+            "name": "MicrosoftWindowsDesktop_windows-ent-cpc_win11-21h2-ent-cpc-os",
+            "type": "Microsoft.DevCenter/devcenters/galleries/images",
+            "systemData": {
+              "createdByType": "Application",
+              "createdAt": "2021-10-04T00:00:00Z",
+              "lastModifiedByType": "Application"
+            },
+            "properties": {
+              "description": "Windows 11 Enterprise \u002B OS Optimizations 21H2",
+              "publisher": "MicrosoftWindowsDesktop",
+              "offer": "windows-ent-cpc",
+              "sku": "win11-21h2-ent-cpc-os",
+              "recommendedMachineConfiguration": {
+                "memory": {
+                  "min": 2,
+                  "max": 4
+                },
+                "vCPUs": {
+                  "min": 1,
+                  "max": 2
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/devcenters/sdk-default-devcenter/galleries/Default/images/MicrosoftWindowsDesktop_windows-ent-cpc_win11-21h2-ent-cpc-m365",
+            "name": "MicrosoftWindowsDesktop_windows-ent-cpc_win11-21h2-ent-cpc-m365",
+            "type": "Microsoft.DevCenter/devcenters/galleries/images",
+            "systemData": {
+              "createdByType": "Application",
+              "createdAt": "2021-10-04T00:00:00Z",
+              "lastModifiedByType": "Application"
+            },
+            "properties": {
+              "description": "Windows 11 Enterprise \u002B Microsoft 365 Apps 21H2",
+              "publisher": "MicrosoftWindowsDesktop",
+              "offer": "windows-ent-cpc",
+              "sku": "win11-21h2-ent-cpc-m365",
+              "recommendedMachineConfiguration": {
+                "memory": {
+                  "min": 4,
+                  "max": 8
+                },
+                "vCPUs": {
+                  "min": 2,
+                  "max": 4
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/devcenters/sdk-default-devcenter/galleries/Default/images/MicrosoftWindowsDesktop_windows-ent-cpc_win10-21h2-ent-cpc-os-g2",
+            "name": "MicrosoftWindowsDesktop_windows-ent-cpc_win10-21h2-ent-cpc-os-g2",
+            "type": "Microsoft.DevCenter/devcenters/galleries/images",
+            "systemData": {
+              "createdByType": "Application",
+              "createdAt": "2021-11-16T00:00:00Z",
+              "lastModifiedByType": "Application"
+            },
+            "properties": {
+              "description": "Windows 10 Enterprise \u002B OS Optimizations 21H2",
+              "publisher": "MicrosoftWindowsDesktop",
+              "offer": "windows-ent-cpc",
+              "sku": "win10-21h2-ent-cpc-os-g2",
+              "recommendedMachineConfiguration": {
+                "memory": {
+                  "min": 2,
+                  "max": 4
+                },
+                "vCPUs": {
+                  "min": 1,
+                  "max": 2
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/devcenters/sdk-default-devcenter/galleries/Default/images/MicrosoftWindowsDesktop_windows-ent-cpc_win10-21h2-ent-cpc-m365-g2",
+            "name": "MicrosoftWindowsDesktop_windows-ent-cpc_win10-21h2-ent-cpc-m365-g2",
+            "type": "Microsoft.DevCenter/devcenters/galleries/images",
+            "systemData": {
+              "createdByType": "Application",
+              "createdAt": "2021-11-16T00:00:00Z",
+              "lastModifiedByType": "Application"
+            },
+            "properties": {
+              "description": "Windows 10 Enterprise \u002B Microsoft 365 Apps 21H2",
+              "publisher": "MicrosoftWindowsDesktop",
+              "offer": "windows-ent-cpc",
+              "sku": "win10-21h2-ent-cpc-m365-g2",
+              "recommendedMachineConfiguration": {
+                "memory": {
+                  "min": 4,
+                  "max": 8
+                },
+                "vCPUs": {
+                  "min": 2,
+                  "max": 4
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/devcenters/sdk-default-devcenter/galleries/Default/images/MicrosoftWindowsDesktop_windows-ent-cpc_21h1-ent-cpc-os-g2",
+            "name": "MicrosoftWindowsDesktop_windows-ent-cpc_21h1-ent-cpc-os-g2",
+            "type": "Microsoft.DevCenter/devcenters/galleries/images",
+            "systemData": {
+              "createdByType": "Application",
+              "createdAt": "2021-05-18T00:00:00Z",
+              "lastModifiedByType": "Application"
+            },
+            "properties": {
+              "description": "Windows 10 Enterprise \u002B OS Optimizations 21H1",
+              "publisher": "MicrosoftWindowsDesktop",
+              "offer": "windows-ent-cpc",
+              "sku": "21h1-ent-cpc-os-g2",
+              "recommendedMachineConfiguration": {
+                "memory": {
+                  "min": 2,
+                  "max": 4
+                },
+                "vCPUs": {
+                  "min": 1,
+                  "max": 2
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/devcenters/sdk-default-devcenter/galleries/Default/images/MicrosoftWindowsDesktop_windows-ent-cpc_21h1-ent-cpc-m365-g2",
+            "name": "MicrosoftWindowsDesktop_windows-ent-cpc_21h1-ent-cpc-m365-g2",
+            "type": "Microsoft.DevCenter/devcenters/galleries/images",
+            "systemData": {
+              "createdByType": "Application",
+              "createdAt": "2021-05-18T00:00:00Z",
+              "lastModifiedByType": "Application"
+            },
+            "properties": {
+              "description": "Windows 10 Enterprise \u002B Microsoft 365 Apps 21H1",
+              "publisher": "MicrosoftWindowsDesktop",
+              "offer": "windows-ent-cpc",
+              "sku": "21h1-ent-cpc-m365-g2",
+              "recommendedMachineConfiguration": {
+                "memory": {
+                  "min": 4,
+                  "max": 8
+                },
+                "vCPUs": {
+                  "min": 2,
+                  "max": 4
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/devcenters/sdk-default-devcenter/galleries/Default/images/MicrosoftWindowsDesktop_windows-ent-cpc_20h2-ent-cpc-os-g2",
+            "name": "MicrosoftWindowsDesktop_windows-ent-cpc_20h2-ent-cpc-os-g2",
+            "type": "Microsoft.DevCenter/devcenters/galleries/images",
+            "systemData": {
+              "createdByType": "Application",
+              "createdAt": "2020-10-20T00:00:00Z",
+              "lastModifiedByType": "Application"
+            },
+            "properties": {
+              "description": "Windows 10 Enterprise \u002B OS Optimizations 20H2",
+              "publisher": "MicrosoftWindowsDesktop",
+              "offer": "windows-ent-cpc",
+              "sku": "20h2-ent-cpc-os-g2",
+              "recommendedMachineConfiguration": {
+                "memory": {
+                  "min": 2,
+                  "max": 4
+                },
+                "vCPUs": {
+                  "min": 1,
+                  "max": 2
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/devcenters/sdk-default-devcenter/galleries/Default/images/MicrosoftWindowsDesktop_windows-ent-cpc_20h2-ent-cpc-m365-g2",
+            "name": "MicrosoftWindowsDesktop_windows-ent-cpc_20h2-ent-cpc-m365-g2",
+            "type": "Microsoft.DevCenter/devcenters/galleries/images",
+            "systemData": {
+              "createdByType": "Application",
+              "createdAt": "2020-10-20T00:00:00Z",
+              "lastModifiedByType": "Application"
+            },
+            "properties": {
+              "description": "Windows 10 Enterprise \u002B Microsoft 365 Apps 20H2",
+              "publisher": "MicrosoftWindowsDesktop",
+              "offer": "windows-ent-cpc",
+              "sku": "20h2-ent-cpc-m365-g2",
+              "recommendedMachineConfiguration": {
+                "memory": {
+                  "min": 4,
+                  "max": 8
+                },
+                "vCPUs": {
+                  "min": 2,
+                  "max": 4
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/devcenters/sdk-default-devcenter/galleries/Default/images/MicrosoftWindowsDesktop_windows-ent-cpc_19h2-ent-cpc-os-g2",
+            "name": "MicrosoftWindowsDesktop_windows-ent-cpc_19h2-ent-cpc-os-g2",
+            "type": "Microsoft.DevCenter/devcenters/galleries/images",
+            "systemData": {
+              "createdByType": "Application",
+              "createdAt": "2019-11-12T00:00:00Z",
+              "lastModifiedByType": "Application"
+            },
+            "properties": {
+              "description": "Windows 10 Enterprise \u002B OS Optimizations 1909",
+              "publisher": "MicrosoftWindowsDesktop",
+              "offer": "windows-ent-cpc",
+              "sku": "19h2-ent-cpc-os-g2",
+              "recommendedMachineConfiguration": {
+                "memory": {
+                  "min": 2,
+                  "max": 4
+                },
+                "vCPUs": {
+                  "min": 1,
+                  "max": 2
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/devcenters/sdk-default-devcenter/galleries/Default/images/MicrosoftWindowsDesktop_windows-ent-cpc_19h2-ent-cpc-m365-g2",
+            "name": "MicrosoftWindowsDesktop_windows-ent-cpc_19h2-ent-cpc-m365-g2",
+            "type": "Microsoft.DevCenter/devcenters/galleries/images",
+            "systemData": {
+              "createdByType": "Application",
+              "createdAt": "2019-11-12T00:00:00Z",
+              "lastModifiedByType": "Application"
+            },
+            "properties": {
+              "description": "Windows 10 Enterprise \u002B Microsoft 365 Apps 1909",
+              "publisher": "MicrosoftWindowsDesktop",
+              "offer": "windows-ent-cpc",
+              "sku": "19h2-ent-cpc-m365-g2",
+              "recommendedMachineConfiguration": {
+                "memory": {
+                  "min": 4,
+                  "max": 8
+                },
+                "vCPUs": {
+                  "min": 2,
+                  "max": 4
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "DEFAULT_DEVCENTER_ID": "/subscriptions/62e47139-66d0-4b0b-a000-1e8a412890c1/resourceGroups/azsdk/providers/Microsoft.DevCenter/devcenters/sdk-default-devcenter",
+    "LOCATION": "australiaeast",
+    "RandomSeed": "40067698",
+    "RESOURCE_GROUP": "azsdk",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "SUBSCRIPTION_ID": "62e47139-66d0-4b0b-a000-1e8a412890c1"
+  }
+}

@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static DatabasePrincipalListResult DeserializeDatabasePrincipalListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DatabasePrincipal>> value = default;
+            Optional<IReadOnlyList<KustoDatabasePrincipal>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DatabasePrincipal> array = new List<DatabasePrincipal>();
+                    List<KustoDatabasePrincipal> array = new List<KustoDatabasePrincipal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabasePrincipal.DeserializeDatabasePrincipal(item));
+                        array.Add(KustoDatabasePrincipal.DeserializeKustoDatabasePrincipal(item));
                     }
                     value = array;
                     continue;

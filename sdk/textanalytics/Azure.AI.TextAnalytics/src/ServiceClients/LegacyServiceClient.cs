@@ -25,13 +25,13 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         private static readonly AnalyzeSentimentOptions DefaultAnalyzeSentimentOptions = new();
 
         private readonly TextAnalyticsRestClient _serviceRestClient;
-        private readonly TextAnalyticsClientOptions _options;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _baseUri;
 
         public override ClientDiagnostics Diagnostics => _clientDiagnostics;
 
         public LegacyServiceClient(Uri endpoint, TokenCredential credential, string authorizationScope, string serviceVersion, TextAnalyticsClientOptions options)
+            : base(options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -41,14 +41,18 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             Argument.AssertNotNullOrEmpty(serviceVersion, nameof(serviceVersion));
 
             _baseUri = endpoint;
-            _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
-            _options = options;
+            _clientDiagnostics = new ClientDiagnostics(options);
 
-            var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, authorizationScope));
+            var pipeline = HttpPipelineBuilder.Build(new HttpPipelineOptions(options)
+            {
+                PerRetryPolicies = { new BearerTokenAuthenticationPolicy(credential, authorizationScope) },
+                RequestFailedDetailsParser = new TextAnalyticsFailedDetailsParser()
+            });
             _serviceRestClient = new TextAnalyticsRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, serviceVersion);
         }
 
         public LegacyServiceClient(Uri endpoint, AzureKeyCredential credential, string serviceVersion, TextAnalyticsClientOptions options)
+            : base(options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -57,14 +61,15 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             Argument.AssertNotNullOrEmpty(serviceVersion, nameof(serviceVersion));
 
             _baseUri = endpoint;
-            _clientDiagnostics = new TextAnalyticsClientDiagnostics(options);
-            _options = options;
+            _clientDiagnostics = new ClientDiagnostics(options);
 
-            var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
+            var pipeline = HttpPipelineBuilder.Build(new HttpPipelineOptions(options)
+            {
+                PerRetryPolicies = { new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader) },
+                RequestFailedDetailsParser = new TextAnalyticsFailedDetailsParser()
+            });
             _serviceRestClient = new TextAnalyticsRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, serviceVersion);
         }
-
-        internal TextAnalyticsClientOptions.ServiceVersion ServiceVersion => _options.Version;
 
         #region Detect Language
 
@@ -85,9 +90,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
                 if (result.Value.Errors.Count > 0)
                 {
-                    // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
+                    throw new RequestFailedException(response);
                 }
 
                 return Response.FromValue(Transforms.ConvertToDetectedLanguage(result.Value.Documents[0]), response);
@@ -115,9 +118,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
                 if (result.Value.Errors.Count > 0)
                 {
-                    // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
+                    throw new RequestFailedException(response);
                 }
 
                 return Response.FromValue(Transforms.ConvertToDetectedLanguage(result.Value.Documents[0]), response);
@@ -241,9 +242,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
                 if (result.Value.Errors.Count > 0)
                 {
-                    // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
+                    throw new RequestFailedException(response);
                 }
 
                 return Response.FromValue(Transforms.ConvertToCategorizedEntityCollection(result.Value.Documents[0]), response);
@@ -275,9 +274,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
                 if (result.Value.Errors.Count > 0)
                 {
-                    // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
+                    throw new RequestFailedException(response);
                 }
 
                 return Response.FromValue(Transforms.ConvertToCategorizedEntityCollection(result.Value.Documents[0]), response);
@@ -417,9 +414,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
                 if (result.Value.Errors.Count > 0)
                 {
-                    // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
+                    throw new RequestFailedException(response);
                 }
 
                 return Response.FromValue(Transforms.ConvertToPiiEntityCollection(result.Value.Documents[0]), response);
@@ -465,9 +460,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
                 if (result.Value.Errors.Count > 0)
                 {
-                    // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
+                    throw new RequestFailedException(response);
                 }
 
                 return Response.FromValue(Transforms.ConvertToPiiEntityCollection(result.Value.Documents[0]), response);
@@ -635,9 +628,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
                 if (result.Value.Errors.Count > 0)
                 {
-                    // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
+                    throw new RequestFailedException(response);
                 }
 
                 return Response.FromValue(Transforms.ConvertToDocumentSentiment(result.Value.Documents[0]), response);
@@ -673,9 +664,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
                 if (result.Value.Errors.Count > 0)
                 {
-                    // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
+                    throw new RequestFailedException(response);
                 }
 
                 return Response.FromValue(Transforms.ConvertToDocumentSentiment(result.Value.Documents[0]), response);
@@ -799,9 +788,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
                 if (result.Value.Errors.Count > 0)
                 {
-                    // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
+                    throw new RequestFailedException(response);
                 }
 
                 return Response.FromValue(Transforms.ConvertToKeyPhraseCollection(result.Value.Documents[0]), response);
@@ -829,9 +816,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
                 if (result.Value.Errors.Count > 0)
                 {
-                    // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
+                    throw new RequestFailedException(response);
                 }
 
                 return Response.FromValue(Transforms.ConvertToKeyPhraseCollection(result.Value.Documents[0]), response);
@@ -955,9 +940,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
                 if (result.Value.Errors.Count > 0)
                 {
-                    // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
+                    throw new RequestFailedException(response);
                 }
 
                 return Response.FromValue(Transforms.ConvertToLinkedEntityCollection(result.Value.Documents[0]), response);
@@ -989,9 +972,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
                 if (result.Value.Errors.Count > 0)
                 {
-                    // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
+                    throw new RequestFailedException(response);
                 }
 
                 return Response.FromValue(Transforms.ConvertToLinkedEntityCollection(result.Value.Documents[0]), response);
@@ -1562,6 +1543,14 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             {
                 throw Validation.NotSupported(nameof(SingleLabelClassifyAction), TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, ServiceVersion);
             }
+            if (actions.ExtractiveSummarizeActions != null && actions.ExtractiveSummarizeActions.Count > 0)
+            {
+                throw Validation.NotSupported(nameof(ExtractiveSummarizeAction), TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+            }
+            if (actions.AbstractiveSummarizeActions != null && actions.AbstractiveSummarizeActions.Count > 0)
+            {
+                throw Validation.NotSupported(nameof(AbstractiveSummarizeAction), TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview, ServiceVersion);
+            }
             return tasks;
         }
 
@@ -1609,7 +1598,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         #region Common
 
         private MultiLanguageInput ConvertToMultiLanguageInput(string document, string language, int id = 0)
-            => new MultiLanguageInput($"{id}", document) { Language = language ?? _options.DefaultLanguage };
+            => new MultiLanguageInput($"{id}", document) { Language = language ?? Options.DefaultLanguage };
 
         private MultiLanguageBatchInput ConvertToMultiLanguageInputs(IEnumerable<string> documents, string language)
         {
@@ -1631,14 +1620,14 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             foreach (var document in documents)
             {
-                batchInput.Documents.Add(new MultiLanguageInput(document.Id, document.Text) { Language = document.Language ?? _options.DefaultLanguage });;
+                batchInput.Documents.Add(new MultiLanguageInput(document.Id, document.Text) { Language = document.Language ?? Options.DefaultLanguage });;
             }
 
             return batchInput;
         }
 
         private LanguageInput ConvertToLanguageInput(string document, string countryHint, int id = 0)
-            => new LanguageInput($"{id}", document) { CountryHint = countryHint ?? _options.DefaultCountryHint };
+            => new LanguageInput($"{id}", document) { CountryHint = countryHint ?? Options.DefaultCountryHint };
 
         private LanguageBatchInput ConvertToLanguageInputs(IEnumerable<string> documents, string countryHint)
         {
@@ -1660,7 +1649,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             foreach (var document in documents)
             {
-                batchInput.Documents.Add(new LanguageInput(document.Id, document.Text) { CountryHint = document.CountryHint ?? _options.DefaultCountryHint });
+                batchInput.Documents.Add(new LanguageInput(document.Id, document.Text) { CountryHint = document.CountryHint ?? Options.DefaultCountryHint });
             }
 
             return batchInput;
@@ -1689,14 +1678,6 @@ namespace Azure.AI.TextAnalytics.ServiceClients
 
             return map;
         }
-
-        private static IDictionary<string, string> CreateAdditionalInformation(TextAnalyticsError error) =>
-            error.Target switch
-            {
-                { Length: > 0 } => new Dictionary<string, string> { { "Target", error.Target } },
-                _ => null
-            };
-
         #endregion
     }
 }

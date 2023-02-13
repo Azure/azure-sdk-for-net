@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,16 +15,16 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("recurrenceType");
+            writer.WritePropertyName("recurrenceType"u8);
             writer.WriteStringValue(RecurrenceType.ToString());
             if (Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startTime");
+                writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "T");
             }
             if (Optional.IsDefined(EndOn))
             {
-                writer.WritePropertyName("endTime");
+                writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "T");
             }
             writer.WriteEndObject();
@@ -42,38 +41,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     case "Weekly": return AlertProcessingRuleWeeklyRecurrence.DeserializeAlertProcessingRuleWeeklyRecurrence(element);
                 }
             }
-            RecurrenceType recurrenceType = default;
-            Optional<TimeSpan> startTime = default;
-            Optional<TimeSpan> endTime = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("recurrenceType"))
-                {
-                    recurrenceType = new RecurrenceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("startTime"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    startTime = property.Value.GetTimeSpan("T");
-                    continue;
-                }
-                if (property.NameEquals("endTime"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    endTime = property.Value.GetTimeSpan("T");
-                    continue;
-                }
-            }
-            return new UnknownAlertProcessingRuleRecurrence(recurrenceType, Optional.ToNullable(startTime), Optional.ToNullable(endTime));
+            return UnknownRecurrence.DeserializeUnknownRecurrence(element);
         }
     }
 }

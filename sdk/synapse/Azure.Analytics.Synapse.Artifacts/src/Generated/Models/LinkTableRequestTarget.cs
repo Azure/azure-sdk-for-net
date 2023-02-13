@@ -19,11 +19,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="tableName"> Target table table name. </param>
         /// <param name="schemaName"> Target table schema name. </param>
         /// <param name="distributionOptions"> Target table distribution options for link table request. </param>
-        internal LinkTableRequestTarget(string tableName, string schemaName, LinkTableRequestTargetDistributionOptions distributionOptions)
+        /// <param name="structureOptions"> Target table structure options for link table request. </param>
+        internal LinkTableRequestTarget(string tableName, string schemaName, LinkTableRequestTargetDistributionOptions distributionOptions, LinkTableRequestTargetStructureOptions structureOptions)
         {
             TableName = tableName;
             SchemaName = schemaName;
             DistributionOptions = distributionOptions;
+            StructureOptions = structureOptions;
         }
 
         /// <summary> Target table table name. </summary>
@@ -32,5 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public string SchemaName { get; set; }
         /// <summary> Target table distribution options for link table request. </summary>
         public LinkTableRequestTargetDistributionOptions DistributionOptions { get; set; }
+        /// <summary> Target table structure options for link table request. </summary>
+        public LinkTableRequestTargetStructureOptions StructureOptions { get; set; }
     }
 }

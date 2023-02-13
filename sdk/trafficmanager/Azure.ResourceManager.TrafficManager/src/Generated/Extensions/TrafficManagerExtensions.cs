@@ -38,34 +38,50 @@ namespace Azure.ResourceManager.TrafficManager
 
         /// <summary>
         /// Checks the availability of a Traffic Manager Relative DNS name.
-        /// Request Path: /providers/Microsoft.Network/checkTrafficManagerNameAvailability
-        /// Operation Id: Profiles_CheckTrafficManagerRelativeDnsNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Network/checkTrafficManagerNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_CheckTrafficManagerRelativeDnsNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<TrafficManagerNameAvailability>> CheckTrafficManagerRelativeDnsNameAvailabilityProfileAsync(this TenantResource tenantResource, CheckTrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerRelativeDnsNameAvailabilityAsync(this TenantResource tenantResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(tenantResource).CheckTrafficManagerRelativeDnsNameAvailabilityProfileAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(tenantResource).CheckTrafficManagerRelativeDnsNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Checks the availability of a Traffic Manager Relative DNS name.
-        /// Request Path: /providers/Microsoft.Network/checkTrafficManagerNameAvailability
-        /// Operation Id: Profiles_CheckTrafficManagerRelativeDnsNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Network/checkTrafficManagerNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_CheckTrafficManagerRelativeDnsNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<TrafficManagerNameAvailability> CheckTrafficManagerRelativeDnsNameAvailabilityProfile(this TenantResource tenantResource, CheckTrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerRelativeDnsNameAvailability(this TenantResource tenantResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(tenantResource).CheckTrafficManagerRelativeDnsNameAvailabilityProfile(content, cancellationToken);
+            return GetExtensionClient(tenantResource).CheckTrafficManagerRelativeDnsNameAvailability(content, cancellationToken);
         }
 
         private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
@@ -77,38 +93,54 @@ namespace Azure.ResourceManager.TrafficManager
             );
         }
 
-        /// <summary> Gets an object representing a UserMetricsModelResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
+        /// <summary> Gets an object representing a TrafficManagerUserMetricsResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="UserMetricsModelResource" /> object. </returns>
-        public static UserMetricsModelResource GetUserMetricsModel(this SubscriptionResource subscriptionResource)
+        /// <returns> Returns a <see cref="TrafficManagerUserMetricsResource" /> object. </returns>
+        public static TrafficManagerUserMetricsResource GetTrafficManagerUserMetrics(this SubscriptionResource subscriptionResource)
         {
-            return GetExtensionClient(subscriptionResource).GetUserMetricsModel();
+            return GetExtensionClient(subscriptionResource).GetTrafficManagerUserMetrics();
         }
 
         /// <summary>
         /// Lists all Traffic Manager profiles within a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficmanagerprofiles
-        /// Operation Id: Profiles_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficmanagerprofiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ProfileResource> GetProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="TrafficManagerProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<TrafficManagerProfileResource> GetTrafficManagerProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetProfilesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetTrafficManagerProfilesAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists all Traffic Manager profiles within a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficmanagerprofiles
-        /// Operation Id: Profiles_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficmanagerprofiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ProfileResource> GetProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TrafficManagerProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<TrafficManagerProfileResource> GetTrafficManagerProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetProfiles(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetTrafficManagerProfiles(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -120,18 +152,26 @@ namespace Azure.ResourceManager.TrafficManager
             );
         }
 
-        /// <summary> Gets a collection of ProfileResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of TrafficManagerProfileResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ProfileResources and their operations over a ProfileResource. </returns>
-        public static ProfileCollection GetProfiles(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of TrafficManagerProfileResources and their operations over a TrafficManagerProfileResource. </returns>
+        public static TrafficManagerProfileCollection GetTrafficManagerProfiles(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetProfiles();
+            return GetExtensionClient(resourceGroupResource).GetTrafficManagerProfiles();
         }
 
         /// <summary>
         /// Gets a Traffic Manager profile.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}
-        /// Operation Id: Profiles_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
@@ -139,15 +179,23 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ProfileResource>> GetProfileAsync(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
+        public static async Task<Response<TrafficManagerProfileResource>> GetTrafficManagerProfileAsync(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetProfiles().GetAsync(profileName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetTrafficManagerProfiles().GetAsync(profileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a Traffic Manager profile.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}
-        /// Operation Id: Profiles_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
@@ -155,44 +203,44 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ProfileResource> GetProfile(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
+        public static Response<TrafficManagerProfileResource> GetTrafficManagerProfile(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetProfiles().Get(profileName, cancellationToken);
+            return resourceGroupResource.GetTrafficManagerProfiles().Get(profileName, cancellationToken);
         }
 
-        #region EndpointResource
+        #region TrafficManagerEndpointResource
         /// <summary>
-        /// Gets an object representing an <see cref="EndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EndpointResource.CreateResourceIdentifier" /> to create an <see cref="EndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TrafficManagerEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TrafficManagerEndpointResource.CreateResourceIdentifier" /> to create a <see cref="TrafficManagerEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EndpointResource" /> object. </returns>
-        public static EndpointResource GetEndpointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TrafficManagerEndpointResource" /> object. </returns>
+        public static TrafficManagerEndpointResource GetTrafficManagerEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<EndpointResource>(() =>
+            return client.GetResourceClient<TrafficManagerEndpointResource>(() =>
             {
-                EndpointResource.ValidateResourceId(id);
-                return new EndpointResource(client, id);
+                TrafficManagerEndpointResource.ValidateResourceId(id);
+                return new TrafficManagerEndpointResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ProfileResource
+        #region TrafficManagerProfileResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProfileResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProfileResource.CreateResourceIdentifier" /> to create a <see cref="ProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TrafficManagerProfileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TrafficManagerProfileResource.CreateResourceIdentifier" /> to create a <see cref="TrafficManagerProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProfileResource" /> object. </returns>
-        public static ProfileResource GetProfileResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TrafficManagerProfileResource" /> object. </returns>
+        public static TrafficManagerProfileResource GetTrafficManagerProfileResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ProfileResource.ValidateResourceId(id);
-                return new ProfileResource(client, id);
+                TrafficManagerProfileResource.ValidateResourceId(id);
+                return new TrafficManagerProfileResource(client, id);
             }
             );
         }
@@ -217,39 +265,39 @@ namespace Azure.ResourceManager.TrafficManager
         }
         #endregion
 
-        #region HeatMapModelResource
+        #region TrafficManagerHeatMapResource
         /// <summary>
-        /// Gets an object representing a <see cref="HeatMapModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HeatMapModelResource.CreateResourceIdentifier" /> to create a <see cref="HeatMapModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TrafficManagerHeatMapResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TrafficManagerHeatMapResource.CreateResourceIdentifier" /> to create a <see cref="TrafficManagerHeatMapResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HeatMapModelResource" /> object. </returns>
-        public static HeatMapModelResource GetHeatMapModelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TrafficManagerHeatMapResource" /> object. </returns>
+        public static TrafficManagerHeatMapResource GetTrafficManagerHeatMapResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                HeatMapModelResource.ValidateResourceId(id);
-                return new HeatMapModelResource(client, id);
+                TrafficManagerHeatMapResource.ValidateResourceId(id);
+                return new TrafficManagerHeatMapResource(client, id);
             }
             );
         }
         #endregion
 
-        #region UserMetricsModelResource
+        #region TrafficManagerUserMetricsResource
         /// <summary>
-        /// Gets an object representing an <see cref="UserMetricsModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="UserMetricsModelResource.CreateResourceIdentifier" /> to create an <see cref="UserMetricsModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TrafficManagerUserMetricsResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TrafficManagerUserMetricsResource.CreateResourceIdentifier" /> to create a <see cref="TrafficManagerUserMetricsResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="UserMetricsModelResource" /> object. </returns>
-        public static UserMetricsModelResource GetUserMetricsModelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TrafficManagerUserMetricsResource" /> object. </returns>
+        public static TrafficManagerUserMetricsResource GetTrafficManagerUserMetricsResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                UserMetricsModelResource.ValidateResourceId(id);
-                return new UserMetricsModelResource(client, id);
+                TrafficManagerUserMetricsResource.ValidateResourceId(id);
+                return new TrafficManagerUserMetricsResource(client, id);
             }
             );
         }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<IReadOnlyList<NotificationActionDetail>> actionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("context"))
+                if (property.NameEquals("context"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,32 +33,32 @@ namespace Azure.ResourceManager.Monitor.Models
                     context = NotificationContext.DeserializeNotificationContext(property.Value);
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("completedTime"))
+                if (property.NameEquals("completedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    completedTime = property.Value.GetDateTimeOffset();
+                    completedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("createdTime"))
+                if (property.NameEquals("createdTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    createdTime = property.Value.GetDateTimeOffset();
+                    createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("actionDetails"))
+                if (property.NameEquals("actionDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

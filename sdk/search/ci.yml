@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/search/ci.yml
+    - sdk/search/service.projects
     - sdk/search/Azure.Search.Documents/
 
 pr:
@@ -21,13 +22,14 @@ pr:
   paths:
     include:
     - sdk/search/ci.yml
+    - sdk/search/service.projects
     - sdk/search/Azure.Search.Documents/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SDKType: client
     ServiceDirectory: search
-    BuildSnippets: true
     ArtifactName: packages
     Artifacts:
     - name: Azure.Search.Documents

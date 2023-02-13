@@ -27,12 +27,9 @@ namespace Azure.Storage.Blobs.Models
         public IProgress<long> ProgressHandler { get; set; }
 
         /// <summary>
-        /// Optional <see cref="UploadTransferValidationOptions"/> for using additional
-        /// transactional validation on block staging. Transactional checksums are
-        /// discarded after use.
-        ///
+        /// Optional override settings for this client's <see cref="BlobClientOptions.TransferValidation"/> settings.
         /// StageBlock accepts precalcualted checksums if available.
         /// </summary>
-        public UploadTransferValidationOptions TransferValidationOptions { get; set; }
+        public UploadTransferValidationOptions TransferValidation { get; set; }
     }
 }

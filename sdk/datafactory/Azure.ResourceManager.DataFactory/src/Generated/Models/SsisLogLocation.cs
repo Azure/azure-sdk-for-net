@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="logPath"/> is null. </exception>
         public SsisLogLocation(BinaryData logPath, SsisLogLocationType locationType)
         {
-            if (logPath == null)
-            {
-                throw new ArgumentNullException(nameof(logPath));
-            }
+            Argument.AssertNotNull(logPath, nameof(logPath));
 
             LogPath = logPath;
             LocationType = locationType;

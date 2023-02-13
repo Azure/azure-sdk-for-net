@@ -19,7 +19,7 @@ namespace Azure.Maps.Search.Models
             Optional<IReadOnlyList<ReverseSearchCrossStreetAddressResultItem>> addresses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("summary"))
+                if (property.NameEquals("summary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.Maps.Search.Models
                     summary = SearchSummary.DeserializeSearchSummary(property.Value);
                     continue;
                 }
-                if (property.NameEquals("addresses"))
+                if (property.NameEquals("addresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

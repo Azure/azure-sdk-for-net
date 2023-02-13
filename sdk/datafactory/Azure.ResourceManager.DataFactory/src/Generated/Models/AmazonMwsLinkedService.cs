@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -21,22 +22,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="marketplaceId"/>, <paramref name="sellerId"/> or <paramref name="accessKeyId"/> is null. </exception>
         public AmazonMwsLinkedService(BinaryData endpoint, BinaryData marketplaceId, BinaryData sellerId, BinaryData accessKeyId)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (marketplaceId == null)
-            {
-                throw new ArgumentNullException(nameof(marketplaceId));
-            }
-            if (sellerId == null)
-            {
-                throw new ArgumentNullException(nameof(sellerId));
-            }
-            if (accessKeyId == null)
-            {
-                throw new ArgumentNullException(nameof(accessKeyId));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(marketplaceId, nameof(marketplaceId));
+            Argument.AssertNotNull(sellerId, nameof(sellerId));
+            Argument.AssertNotNull(accessKeyId, nameof(accessKeyId));
 
             Endpoint = endpoint;
             MarketplaceId = marketplaceId;

@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static UserList DeserializeUserList(JsonElement element)
         {
-            Optional<IReadOnlyList<UserData>> value = default;
+            Optional<IReadOnlyList<DataBoxEdgeUserData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<UserData> array = new List<UserData>();
+                    List<DataBoxEdgeUserData> array = new List<DataBoxEdgeUserData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserData.DeserializeUserData(item));
+                        array.Add(DataBoxEdgeUserData.DeserializeDataBoxEdgeUserData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

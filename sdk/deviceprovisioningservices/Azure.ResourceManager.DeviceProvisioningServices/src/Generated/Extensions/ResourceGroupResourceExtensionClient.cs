@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ProvisioningServiceDescriptionResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ProvisioningServiceDescriptionResources and their operations over a ProvisioningServiceDescriptionResource. </returns>
-        public virtual ProvisioningServiceDescriptionCollection GetProvisioningServiceDescriptions()
+        /// <summary> Gets a collection of DeviceProvisioningServiceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DeviceProvisioningServiceResources and their operations over a DeviceProvisioningServiceResource. </returns>
+        public virtual DeviceProvisioningServiceCollection GetDeviceProvisioningServices()
         {
-            return GetCachedClient(Client => new ProvisioningServiceDescriptionCollection(Client, Id));
+            return GetCachedClient(Client => new DeviceProvisioningServiceCollection(Client, Id));
         }
     }
 }

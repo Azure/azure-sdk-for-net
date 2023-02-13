@@ -15,11 +15,11 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(TaskName))
             {
-                writer.WritePropertyName("taskName");
+                writer.WritePropertyName("taskName"u8);
                 writer.WriteStringValue(TaskName);
             }
             writer.WriteEndObject();
@@ -31,11 +31,13 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "AbstractiveSummarization": return AbstractiveSummarizationLROTask.DeserializeAbstractiveSummarizationLROTask(element);
                     case "CustomEntityRecognition": return CustomEntitiesLROTask.DeserializeCustomEntitiesLROTask(element);
                     case "CustomMultiLabelClassification": return CustomMultiLabelClassificationLROTask.DeserializeCustomMultiLabelClassificationLROTask(element);
                     case "CustomSingleLabelClassification": return CustomSingleLabelClassificationLROTask.DeserializeCustomSingleLabelClassificationLROTask(element);
                     case "EntityLinking": return EntityLinkingLROTask.DeserializeEntityLinkingLROTask(element);
                     case "EntityRecognition": return EntitiesLROTask.DeserializeEntitiesLROTask(element);
+                    case "ExtractiveSummarization": return ExtractiveSummarizationLROTask.DeserializeExtractiveSummarizationLROTask(element);
                     case "Healthcare": return HealthcareLROTask.DeserializeHealthcareLROTask(element);
                     case "KeyPhraseExtraction": return KeyPhraseLROTask.DeserializeKeyPhraseLROTask(element);
                     case "PiiEntityRecognition": return PiiLROTask.DeserializePiiLROTask(element);
@@ -46,12 +48,12 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<string> taskName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new AnalyzeTextLROTaskKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("taskName"))
+                if (property.NameEquals("taskName"u8))
                 {
                     taskName = property.Value.GetString();
                     continue;

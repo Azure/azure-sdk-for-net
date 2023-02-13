@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="imageRepositoryUri"/> or <paramref name="userName"/> is null. </exception>
         public ImageRepositoryCredential(Uri imageRepositoryUri, string userName)
         {
-            if (imageRepositoryUri == null)
-            {
-                throw new ArgumentNullException(nameof(imageRepositoryUri));
-            }
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
+            Argument.AssertNotNull(imageRepositoryUri, nameof(imageRepositoryUri));
+            Argument.AssertNotNull(userName, nameof(userName));
 
             ImageRepositoryUri = imageRepositoryUri;
             UserName = userName;

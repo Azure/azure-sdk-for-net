@@ -56,8 +56,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Get policy metadata resource.
-        /// Request Path: /providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}
-        /// Operation Id: PolicyMetadata_GetResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyMetadata_GetResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the policy metadata resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +92,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Get policy metadata resource.
-        /// Request Path: /providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}
-        /// Operation Id: PolicyMetadata_GetResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyMetadata_GetResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the policy metadata resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -112,94 +128,62 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Get a list of the policy metadata resources.
-        /// Request Path: /providers/Microsoft.PolicyInsights/policyMetadata
-        /// Operation Id: PolicyMetadata_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.PolicyInsights/policyMetadata</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyMetadata_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SlimPolicyMetadata" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SlimPolicyMetadata> GetAllAsync(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SlimPolicyMetadata> GetAllAsync(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SlimPolicyMetadata>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _policyMetadataPolicyMetadataClientDiagnostics.CreateScope("PolicyMetadataCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _policyMetadataPolicyMetadataRestClient.ListAsync(queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SlimPolicyMetadata>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _policyMetadataPolicyMetadataClientDiagnostics.CreateScope("PolicyMetadataCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _policyMetadataPolicyMetadataRestClient.ListNextPageAsync(nextLink, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyMetadataPolicyMetadataRestClient.CreateListRequest(policyQuerySettings);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyMetadataPolicyMetadataRestClient.CreateListNextPageRequest(nextLink, policyQuerySettings);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SlimPolicyMetadata.DeserializeSlimPolicyMetadata, _policyMetadataPolicyMetadataClientDiagnostics, Pipeline, "PolicyMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get a list of the policy metadata resources.
-        /// Request Path: /providers/Microsoft.PolicyInsights/policyMetadata
-        /// Operation Id: PolicyMetadata_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.PolicyInsights/policyMetadata</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyMetadata_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SlimPolicyMetadata" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SlimPolicyMetadata> GetAll(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SlimPolicyMetadata> GetAll(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            Page<SlimPolicyMetadata> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _policyMetadataPolicyMetadataClientDiagnostics.CreateScope("PolicyMetadataCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _policyMetadataPolicyMetadataRestClient.List(queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SlimPolicyMetadata> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _policyMetadataPolicyMetadataClientDiagnostics.CreateScope("PolicyMetadataCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _policyMetadataPolicyMetadataRestClient.ListNextPage(nextLink, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyMetadataPolicyMetadataRestClient.CreateListRequest(policyQuerySettings);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyMetadataPolicyMetadataRestClient.CreateListNextPageRequest(nextLink, policyQuerySettings);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SlimPolicyMetadata.DeserializeSlimPolicyMetadata, _policyMetadataPolicyMetadataClientDiagnostics, Pipeline, "PolicyMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}
-        /// Operation Id: PolicyMetadata_GetResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyMetadata_GetResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the policy metadata resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -224,8 +208,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}
-        /// Operation Id: PolicyMetadata_GetResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PolicyMetadata_GetResource</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the policy metadata resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

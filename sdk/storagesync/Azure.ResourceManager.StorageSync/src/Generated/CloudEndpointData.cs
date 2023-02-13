@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageSync.Models;
@@ -29,19 +30,19 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="storageAccountTenantId"> Storage Account Tenant Id. </param>
         /// <param name="partnershipId"> Partnership Id. </param>
         /// <param name="friendlyName"> Friendly Name. </param>
-        /// <param name="backupEnabled"> Backup Enabled. </param>
+        /// <param name="isBackupEnabled"> Backup Enabled. </param>
         /// <param name="provisioningState"> CloudEndpoint Provisioning State. </param>
         /// <param name="lastWorkflowId"> CloudEndpoint lastWorkflowId. </param>
         /// <param name="lastOperationName"> Resource Last Operation Name. </param>
         /// <param name="changeEnumerationStatus"> Cloud endpoint change enumeration status. </param>
-        internal CloudEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string storageAccountResourceId, string azureFileShareName, string storageAccountTenantId, string partnershipId, string friendlyName, string backupEnabled, string provisioningState, string lastWorkflowId, string lastOperationName, CloudEndpointChangeEnumerationStatus changeEnumerationStatus) : base(id, name, resourceType, systemData)
+        internal CloudEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier storageAccountResourceId, string azureFileShareName, Guid? storageAccountTenantId, string partnershipId, string friendlyName, string isBackupEnabled, string provisioningState, string lastWorkflowId, string lastOperationName, CloudEndpointChangeEnumerationStatus changeEnumerationStatus) : base(id, name, resourceType, systemData)
         {
             StorageAccountResourceId = storageAccountResourceId;
             AzureFileShareName = azureFileShareName;
             StorageAccountTenantId = storageAccountTenantId;
             PartnershipId = partnershipId;
             FriendlyName = friendlyName;
-            BackupEnabled = backupEnabled;
+            IsBackupEnabled = isBackupEnabled;
             ProvisioningState = provisioningState;
             LastWorkflowId = lastWorkflowId;
             LastOperationName = lastOperationName;
@@ -49,17 +50,17 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Storage Account Resource Id. </summary>
-        public string StorageAccountResourceId { get; set; }
+        public ResourceIdentifier StorageAccountResourceId { get; set; }
         /// <summary> Azure file share name. </summary>
         public string AzureFileShareName { get; set; }
         /// <summary> Storage Account Tenant Id. </summary>
-        public string StorageAccountTenantId { get; set; }
+        public Guid? StorageAccountTenantId { get; set; }
         /// <summary> Partnership Id. </summary>
         public string PartnershipId { get; set; }
         /// <summary> Friendly Name. </summary>
         public string FriendlyName { get; set; }
         /// <summary> Backup Enabled. </summary>
-        public string BackupEnabled { get; }
+        public string IsBackupEnabled { get; }
         /// <summary> CloudEndpoint Provisioning State. </summary>
         public string ProvisioningState { get; set; }
         /// <summary> CloudEndpoint lastWorkflowId. </summary>

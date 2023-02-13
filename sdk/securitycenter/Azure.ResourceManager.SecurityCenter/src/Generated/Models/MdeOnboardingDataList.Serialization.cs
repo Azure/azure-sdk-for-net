@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -16,20 +15,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static MdeOnboardingDataList DeserializeMdeOnboardingDataList(JsonElement element)
         {
-            Optional<IReadOnlyList<MdeOnboardingDataData>> value = default;
+            Optional<IReadOnlyList<MdeOnboarding>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MdeOnboardingDataData> array = new List<MdeOnboardingDataData>();
+                    List<MdeOnboarding> array = new List<MdeOnboarding>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MdeOnboardingDataData.DeserializeMdeOnboardingDataData(item));
+                        array.Add(MdeOnboarding.DeserializeMdeOnboarding(item));
                     }
                     value = array;
                     continue;

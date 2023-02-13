@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of GovernanceEmailNotification. </summary>
-        /// <param name="disableManagerEmailNotification"> Exclude manager from weekly email notification. </param>
-        /// <param name="disableOwnerEmailNotification"> Exclude  owner from weekly email notification. </param>
-        internal GovernanceEmailNotification(bool? disableManagerEmailNotification, bool? disableOwnerEmailNotification)
+        /// <param name="isManagerEmailNotificationDisabled"> Exclude manager from weekly email notification. </param>
+        /// <param name="isOwnerEmailNotificationDisabled"> Exclude  owner from weekly email notification. </param>
+        internal GovernanceEmailNotification(bool? isManagerEmailNotificationDisabled, bool? isOwnerEmailNotificationDisabled)
         {
-            DisableManagerEmailNotification = disableManagerEmailNotification;
-            DisableOwnerEmailNotification = disableOwnerEmailNotification;
+            IsManagerEmailNotificationDisabled = isManagerEmailNotificationDisabled;
+            IsOwnerEmailNotificationDisabled = isOwnerEmailNotificationDisabled;
         }
 
         /// <summary> Exclude manager from weekly email notification. </summary>
-        public bool? DisableManagerEmailNotification { get; set; }
+        public bool? IsManagerEmailNotificationDisabled { get; set; }
         /// <summary> Exclude  owner from weekly email notification. </summary>
-        public bool? DisableOwnerEmailNotification { get; set; }
+        public bool? IsOwnerEmailNotificationDisabled { get; set; }
     }
 }

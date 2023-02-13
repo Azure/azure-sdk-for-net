@@ -1,0 +1,40 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/map/static/png?api-version=2022-08-01\u0026language=",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, image/jpeg, image/png, image/pbf, application/vnd.mapbox-vector-tile",
+        "Authorization": "Sanitized",
+        "traceparent": "00-008685f1c50d1102dfc0774eb1b11992-83b48101c5e2ec35-00",
+        "User-Agent": "azsdk-net-Maps.Rendering/1.0.0-alpha.20220912.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+        "x-ms-client-request-id": "e3a1c6d44d27281029df4bd9244269a4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Content-Length": "81",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 12 Sep 2022 11:57:45 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: EC6C91E854BB47E4BDB42935F02A7598 Ref B: TPE30EDGE0607 Ref C: 2022-09-12T11:57:46Z"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "400 BadRequest",
+          "message": "Either bbox or center is required"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "759641541"
+  }
+}

@@ -20,36 +20,36 @@ namespace Azure.ResourceManager.Marketplace
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Availability))
             {
-                writer.WritePropertyName("availability");
+                writer.WritePropertyName("availability"u8);
                 writer.WriteStringValue(Availability.Value.ToString());
             }
             if (Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("eTag");
+                writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(PrivateStoreName))
             {
-                writer.WritePropertyName("privateStoreName");
+                writer.WritePropertyName("privateStoreName"u8);
                 writer.WriteStringValue(PrivateStoreName);
             }
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(IsGov))
             {
-                writer.WritePropertyName("isGov");
+                writer.WritePropertyName("isGov"u8);
                 writer.WriteBooleanValue(IsGov.Value);
             }
             if (Optional.IsCollectionDefined(Branding))
             {
-                writer.WritePropertyName("branding");
+                writer.WritePropertyName("branding"u8);
                 writer.WriteStartObject();
                 foreach (var item in Branding)
                 {
@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("notificationsSettings");
+            writer.WritePropertyName("notificationsSettings"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Recipients))
             {
-                writer.WritePropertyName("recipients");
+                writer.WritePropertyName("recipients"u8);
                 writer.WriteStartArray();
                 foreach (var item in Recipients)
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Marketplace
             }
             if (Optional.IsDefined(SendToAllMarketplaceAdmins))
             {
-                writer.WritePropertyName("sendToAllMarketplaceAdmins");
+                writer.WritePropertyName("sendToAllMarketplaceAdmins"u8);
                 writer.WriteBooleanValue(SendToAllMarketplaceAdmins.Value);
             }
             writer.WriteEndObject();
@@ -86,44 +86,44 @@ namespace Azure.ResourceManager.Marketplace
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<Availability> availability = default;
-            Optional<string> privateStoreId = default;
+            Optional<PrivateStoreAvailability> availability = default;
+            Optional<Guid> privateStoreId = default;
             Optional<ETag> eTag = default;
             Optional<string> privateStoreName = default;
             Optional<Guid> tenantId = default;
             Optional<bool> isGov = default;
-            Optional<IReadOnlyList<string>> collectionIds = default;
+            Optional<IReadOnlyList<Guid>> collectionIds = default;
             Optional<IDictionary<string, string>> branding = default;
-            Optional<IList<Recipient>> recipients = default;
+            Optional<IList<NotificationRecipient>> recipients = default;
             Optional<bool> sendToAllMarketplaceAdmins = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,22 +132,27 @@ namespace Azure.ResourceManager.Marketplace
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("availability"))
+                        if (property0.NameEquals("availability"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            availability = new Availability(property0.Value.GetString());
+                            availability = new PrivateStoreAvailability(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("privateStoreId"))
+                        if (property0.NameEquals("privateStoreId"u8))
                         {
-                            privateStoreId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            privateStoreId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("eTag"))
+                        if (property0.NameEquals("eTag"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -157,12 +162,12 @@ namespace Azure.ResourceManager.Marketplace
                             eTag = new ETag(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("privateStoreName"))
+                        if (property0.NameEquals("privateStoreName"u8))
                         {
                             privateStoreName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("tenantId"))
+                        if (property0.NameEquals("tenantId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -172,7 +177,7 @@ namespace Azure.ResourceManager.Marketplace
                             tenantId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("isGov"))
+                        if (property0.NameEquals("isGov"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -182,22 +187,22 @@ namespace Azure.ResourceManager.Marketplace
                             isGov = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("collectionIds"))
+                        if (property0.NameEquals("collectionIds"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<Guid> array = new List<Guid>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(item.GetGuid());
                             }
                             collectionIds = array;
                             continue;
                         }
-                        if (property0.NameEquals("branding"))
+                        if (property0.NameEquals("branding"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -212,7 +217,7 @@ namespace Azure.ResourceManager.Marketplace
                             branding = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("notificationsSettings"))
+                        if (property0.NameEquals("notificationsSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -221,22 +226,22 @@ namespace Azure.ResourceManager.Marketplace
                             }
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.NameEquals("recipients"))
+                                if (property1.NameEquals("recipients"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
                                         property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
-                                    List<Recipient> array = new List<Recipient>();
+                                    List<NotificationRecipient> array = new List<NotificationRecipient>();
                                     foreach (var item in property1.Value.EnumerateArray())
                                     {
-                                        array.Add(Recipient.DeserializeRecipient(item));
+                                        array.Add(NotificationRecipient.DeserializeNotificationRecipient(item));
                                     }
                                     recipients = array;
                                     continue;
                                 }
-                                if (property1.NameEquals("sendToAllMarketplaceAdmins"))
+                                if (property1.NameEquals("sendToAllMarketplaceAdmins"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
@@ -253,7 +258,7 @@ namespace Azure.ResourceManager.Marketplace
                     continue;
                 }
             }
-            return new PrivateStoreData(id, name, type, systemData.Value, Optional.ToNullable(availability), privateStoreId.Value, Optional.ToNullable(eTag), privateStoreName.Value, Optional.ToNullable(tenantId), Optional.ToNullable(isGov), Optional.ToList(collectionIds), Optional.ToDictionary(branding), Optional.ToList(recipients), Optional.ToNullable(sendToAllMarketplaceAdmins));
+            return new PrivateStoreData(id, name, type, systemData.Value, Optional.ToNullable(availability), Optional.ToNullable(privateStoreId), Optional.ToNullable(eTag), privateStoreName.Value, Optional.ToNullable(tenantId), Optional.ToNullable(isGov), Optional.ToList(collectionIds), Optional.ToDictionary(branding), Optional.ToList(recipients), Optional.ToNullable(sendToAllMarketplaceAdmins));
         }
     }
 }

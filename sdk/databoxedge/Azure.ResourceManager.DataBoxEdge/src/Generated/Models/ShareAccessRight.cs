@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -16,19 +17,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="shareId"> The share ID. </param>
         /// <param name="accessType"> Type of access to be allowed on the share for this user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareId"/> is null. </exception>
-        internal ShareAccessRight(string shareId, ShareAccessType accessType)
+        internal ShareAccessRight(ResourceIdentifier shareId, ShareAccessType accessType)
         {
-            if (shareId == null)
-            {
-                throw new ArgumentNullException(nameof(shareId));
-            }
+            Argument.AssertNotNull(shareId, nameof(shareId));
 
             ShareId = shareId;
             AccessType = accessType;
         }
 
         /// <summary> The share ID. </summary>
-        public string ShareId { get; }
+        public ResourceIdentifier ShareId { get; }
         /// <summary> Type of access to be allowed on the share for this user. </summary>
         public ShareAccessType AccessType { get; }
     }

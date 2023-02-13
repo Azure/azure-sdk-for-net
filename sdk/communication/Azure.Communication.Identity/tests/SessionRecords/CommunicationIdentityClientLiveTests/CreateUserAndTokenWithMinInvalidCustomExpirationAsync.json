@@ -1,0 +1,51 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/identities?api-version=2022-10-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "58",
+        "Content-Type": "application/json",
+        "traceparent": "00-68742566a37f6fd930e734937bb9438d-d64bb2b16d5c71a0-00",
+        "User-Agent": "azsdk-net-Communication.Identity/1.3.0-alpha.20230112.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "dd869c1f1b9ac5dd580bcf4642945d00",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Thu, 12 Jan 2023 11:02:59 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "createTokenWithScopes": [
+          "chat"
+        ],
+        "expiresInMinutes": 1441
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-10-31-preview, 2021-11-01, 2022-06-01, 2022-10-01",
+        "Content-Type": "application/json",
+        "Date": "Thu, 12 Jan 2023 11:02:59 GMT",
+        "MS-CV": "PeWJEVQlJ0a\u002BulUc6uu1NQ.2.0",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "04\u002Bi/YwAAAAA3NdM1NoszT7uHIDIPnlxxSEVMMDFFREdFMjAxMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Cache": "CONFIG_NOCACHE",
+        "x-ms-client-request-id": "dd869c1f1b9ac5dd580bcf4642945d00",
+        "X-Processing-Time": "31ms"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ValidationError",
+          "message": "ExpiresInMinutes value 1441 is invalid. Value must be within the [60, 1440] interval.",
+          "target": "ExpiresInMinutes"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
+    "RandomSeed": "1093165050"
+  }
+}

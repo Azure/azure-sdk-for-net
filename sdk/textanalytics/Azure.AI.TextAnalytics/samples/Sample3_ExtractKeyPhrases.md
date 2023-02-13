@@ -11,7 +11,7 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 ```C# Snippet:CreateTextAnalyticsClient
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
-var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
 ## Extracting key phrases from a single document
@@ -187,16 +187,6 @@ Console.WriteLine($"  Invalid document count: {keyPhrasesInDocuments.Statistics.
 Console.WriteLine($"  Transaction count: {keyPhrasesInDocuments.Statistics.TransactionCount}");
 Console.WriteLine("");
 ```
-
-To see the full example source files, see:
-
-* [Synchronous ExtractKeyPhrases](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrases.cs)
-* [Asynchronous ExtractKeyPhrases](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesAsync.cs)
-* [ExtractKeyPhrases with warnings](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesWithWarnings.cs)
-* [Synchronous ExtractKeyPhrasesBatch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesBatch.cs)
-* [Asynchronous ExtractKeyPhrasesBatch](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesBatchAsync.cs)
-* [Synchronous ExtractKeyPhrasesBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesBatchConvenience.cs)
-* [Asynchronous ExtractKeyPhrasesBatchConvenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample3_ExtractKeyPhrasesBatchConvenienceAsync.cs)
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

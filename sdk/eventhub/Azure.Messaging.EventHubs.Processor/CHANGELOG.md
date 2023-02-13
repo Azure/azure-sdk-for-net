@@ -8,7 +8,39 @@
 
 ### Bugs Fixed
 
+- Corrected log message issue causing formatting to fail when developer code for processing events leaks an exception.  This obscured the warning that was intended to be emitted to the error handler.
+
 ### Other Changes
+
+- Calling `ToString` on an `EventHubsException` now includes details of any inner exception.
+
+## 5.7.5 (2022-11-22)
+
+### Bugs Fixed
+
+- Corrected an indexing issue with the log event source, causing an exception to surface in some publishing scenarios.
+
+## 5.7.4 (2022-11-08)
+
+### Bugs Fixed
+
+- Telemetry will now use a parent activity instead of links when the event processor is configured to use a `CacheEventCount` of 1.
+
+- The reference for the AMQP transport library, `Microsoft.Azure.Amqp`, has been bumped to 2.5.12. This resolves a rare race condition encountered when creating an AMQP link that could cause the link to hang.
+
+### Other Changes
+
+- Adjusted the frequency that a warning is logged when the processor owns more partitions than a basic heuristic believes is ideal.  Warnings will no longer log on each load balancing cycle, only when the number of partitions owned changes.
+
+- Added timing information to logs for AMQP publish and read operations.
+
+## 5.7.3 (2022-10-11)
+
+### Other Changes
+
+- Added additional heuristics for the `EventProcessorClient` configuration to help discover issues that can impact processor performance and stability; these validations will produce warnings at processor start-up should potential concerns be found.
+
+- Exception messages have been updated to include a link to the Event Hubs troubleshooting guide.
 
 ## 5.7.2 (2022-08-09)
 

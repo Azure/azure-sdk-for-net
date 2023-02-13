@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("resourceType");
+            writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            writer.WritePropertyName("targetResourceName");
+            writer.WritePropertyName("targetResourceName"u8);
             writer.WriteStringValue(TargetResourceName);
             writer.WriteEndObject();
         }
@@ -43,22 +43,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     case "resourceGroups": return ResourceGroupResourceSettings.DeserializeResourceGroupResourceSettings(element);
                 }
             }
-            string resourceType = default;
-            string targetResourceName = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("resourceType"))
-                {
-                    resourceType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("targetResourceName"))
-                {
-                    targetResourceName = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownMoverResourceSettings(resourceType, targetResourceName);
+            return UnknownResourceSettings.DeserializeUnknownResourceSettings(element);
         }
     }
 }

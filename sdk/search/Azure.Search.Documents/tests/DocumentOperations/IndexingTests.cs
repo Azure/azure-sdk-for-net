@@ -852,7 +852,8 @@ namespace Azure.Search.Documents.Tests
             int errorJsonEndIndex = ex.Message.LastIndexOf("}");
             string errorJsonContent = ex.Message.Substring(errorJsonStartIndex, errorJsonEndIndex - errorJsonStartIndex + 1);
 
-            JsonElement errorElement = JsonDocument.Parse(errorJsonContent).RootElement.GetProperty("error");
+            using var jsonDocument = JsonDocument.Parse(errorJsonContent);
+            JsonElement errorElement = jsonDocument.RootElement.GetProperty("error");
             StringAssert.AreEqualIgnoringCase("OperationNotAllowed", errorElement.GetProperty("code").GetString());
             StringAssert.StartsWith("The request is invalid.", errorElement.GetProperty("message").GetString());
             JsonElement details = errorElement.GetProperty("details");

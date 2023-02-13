@@ -32,10 +32,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> is null. </exception>
         public MetricAlertData(AzureLocation location, int severity, bool isEnabled, IEnumerable<string> scopes, TimeSpan evaluationFrequency, TimeSpan windowSize, MetricAlertCriteria criteria) : base(location)
         {
-            if (scopes == null)
-            {
-                throw new ArgumentNullException(nameof(scopes));
-            }
+            Argument.AssertNotNull(scopes, nameof(scopes));
 
             Severity = severity;
             IsEnabled = isEnabled;

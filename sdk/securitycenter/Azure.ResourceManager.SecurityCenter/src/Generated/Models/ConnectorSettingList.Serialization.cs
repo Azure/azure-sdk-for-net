@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static ConnectorSettingList DeserializeConnectorSettingList(JsonElement element)
         {
-            Optional<IReadOnlyList<ConnectorSettingData>> value = default;
+            Optional<IReadOnlyList<SecurityCloudConnectorData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConnectorSettingData> array = new List<ConnectorSettingData>();
+                    List<SecurityCloudConnectorData> array = new List<SecurityCloudConnectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectorSettingData.DeserializeConnectorSettingData(item));
+                        array.Add(SecurityCloudConnectorData.DeserializeSecurityCloudConnectorData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

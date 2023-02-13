@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [OneTimeTearDown]
-        public virtual void GlobalTeardown()
+        public async Task GlobalTeardown()
         {
             if (_databaseAccountIdentifier != null)
             {
-                ArmClient.GetCosmosDBAccountResource(_databaseAccountIdentifier).Delete(WaitUntil.Completed);
+                await ArmClient.GetCosmosDBAccountResource(_databaseAccountIdentifier).DeleteAsync(WaitUntil.Completed);
             }
         }
 

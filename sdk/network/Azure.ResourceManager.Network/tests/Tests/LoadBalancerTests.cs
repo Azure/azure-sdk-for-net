@@ -13,10 +13,12 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
+    [ClientTestFixture(true, "2021-04-01", "2018-11-01")]
     public class LoadBalancerTests : NetworkServiceClientTestBase
     {
         private SubscriptionResource _subscription;
-        public LoadBalancerTests(bool isAsync) : base(isAsync)
+        public LoadBalancerTests(bool isAsync, string apiVersion)
+        : base(isAsync, LoadBalancerResource.ResourceType, apiVersion)
         {
         }
 

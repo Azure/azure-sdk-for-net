@@ -15,6 +15,7 @@ using Azure.AI.Language.Conversations.Authoring;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
 {
+    [IgnoreServiceError(429, "429", Reason = "Exceeded rate limit of S pricing tier given number of tests run")]
     public partial class ConversationAnalysisClientSamples
     {
         private readonly List<string> _projects = new();
@@ -22,7 +23,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         public void CreateConversationAuthoringClient()
         {
             #region Snippet:ConversationAuthoringClient_Create
-            Uri endpoint = new Uri("https://myaccount.cognitive.microsoft.com");
+            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
             AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
@@ -31,8 +32,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
         [SyncOnly]
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/29140")]
-        public void ImportProject()
+        public async Task ImportProject()
         {
             ConversationAuthoringClient client = ProjectsClient;
 
@@ -125,12 +125,14 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 stringIndexType = "Utf16CodeUnit",
             };
 
+#if SNIPPET
+            Operation<BinaryData> importOperation = client.ImportProject(WaitUntil.Completed, projectName, RequestContent.Create(importData));
+#else
+            // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/29140
             Operation<BinaryData> importOperation = client.ImportProject(WaitUntil.Started, projectName, RequestContent.Create(importData));
-#if !SNIPPET
-            _projects.Add(projectName);
+            await InstrumentOperation(importOperation).WaitForCompletionAsync();
 
-            importOperation = InstrumentOperation(importOperation);
-            importOperation.WaitForCompletion();
+            _projects.Add(projectName);
 #endif
 
             // Train the model.
@@ -142,47 +144,40 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             Console.WriteLine($"Training project {projectName}...");
 #if SNIPPET
-            Operation<BinaryData> trainOperation = client.Train(
-                WaitUntil.Completed,
-                projectName,
-                RequestContent.Create(trainData));
+            Operation<BinaryData> trainOperation = client.Train(WaitUntil.Completed, projectName, RequestContent.Create(trainData));
 #else
+            // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/29140
             Operation<BinaryData> trainOperation = client.Train(WaitUntil.Started, projectName, RequestContent.Create(trainData));
-
-            trainOperation = InstrumentOperation(trainOperation);
-            trainOperation.WaitForCompletion();
+            await InstrumentOperation(trainOperation).WaitForCompletionAsync();
 #endif
 
-            // Deploy the model.
-            var deployData = new
-            {
-                trainedModelLabel = "Sample5",
-            };
+                // Deploy the model.
+                var deployData = new
+                {
+                    trainedModelLabel = "Sample5",
+                };
 
             Console.WriteLine($"Deploying project {projectName} to production...");
 #if SNIPPET
-            Operation<BinaryData> deployOperation = client.DeployProject(
-                WaitUntil.Completed,
-                projectName,
-                "production",
-                RequestContent.Create(deployData));
+            Operation<BinaryData> deployOperation = client.DeployProject(WaitUntil.Completed, projectName, "production", RequestContent.Create(deployData));
 #else
+            // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/29140
             Operation<BinaryData> deployOperation = client.DeployProject(WaitUntil.Started, projectName, "production", RequestContent.Create(deployData));
-
             deployOperation = InstrumentOperation(deployOperation);
-            deployOperation.WaitForCompletion();
+            await deployOperation.WaitForCompletionAsync();
 #endif
 
             Console.WriteLine("Import complete");
-#endregion
+            #endregion
 
-            using JsonDocument doc = JsonDocument.Parse(deployOperation.Value);
+            // TODO: Delete this line and uncomment the next when https://github.com/Azure/azure-sdk-for-net/issues/29140 is resolved.
+            using JsonDocument doc = await JsonDocument.ParseAsync(deployOperation.Value.ToStream());
+            // using JsonDocument doc = JsonDocument.Parse(deployOperation.Value);
             Assert.False(doc.RootElement.TryGetProperty("errors", out JsonElement errors) && errors.ValueKind == JsonValueKind.Array && errors.GetArrayLength() > 0);
         }
 
         [AsyncOnly]
         [RecordedTest]
-        [ServiceVersion(Max = ConversationsClientOptions.ServiceVersion.V2022_05_01)] // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/29600
         public async Task ImportProjectAsync()
         {
             ConversationAuthoringClient client = ProjectsClient;
@@ -273,13 +268,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 stringIndexType = "Utf16CodeUnit",
             };
 
-            #region Snippet:ConversationAuthoringClient_ImportProjectAsync
-            Operation<BinaryData> importOperation = await client.ImportProjectAsync(WaitUntil.Started, projectName, RequestContent.Create(importData));
+#region Snippet:ConversationAuthoringClient_ImportProjectAsync
+            Operation<BinaryData> importOperation = await client.ImportProjectAsync(WaitUntil.Completed, projectName, RequestContent.Create(importData));
 #if !SNIPPET
             _projects.Add(projectName);
-
-            importOperation = InstrumentOperation(importOperation);
-            await importOperation.WaitForCompletionAsync();
 #endif
 
             // Train the model.
@@ -290,17 +282,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             };
 
             Console.WriteLine($"Training project {projectName}...");
-#if SNIPPET
-            Operation<BinaryData> trainOperation = await client.TrainAsync(
-                WaitUntil.Completed,
-                projectName,
-                RequestContent.Create(trainData));
-#else
-            Operation<BinaryData> trainOperation = await client.TrainAsync(WaitUntil.Started, projectName, RequestContent.Create(trainData));
-
-            trainOperation = InstrumentOperation(trainOperation);
-            await trainOperation.WaitForCompletionAsync();
-#endif
+            Operation<BinaryData> trainOperation = await client.TrainAsync(WaitUntil.Completed, projectName, RequestContent.Create(trainData));
 
             // Deploy the model.
             var deployData = new
@@ -309,21 +291,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             };
 
             Console.WriteLine($"Deploying project {projectName} to production...");
-#if SNIPPET
-            Operation<BinaryData> deployOperation = await client.DeployProjectAsync(
-                WaitUntil.Completed,
-                projectName,
-                "production",
-                RequestContent.Create(deployData));
-#else
-            Operation<BinaryData> deployOperation = await client.DeployProjectAsync(WaitUntil.Started, projectName, "production", RequestContent.Create(deployData));
-
-            deployOperation = InstrumentOperation(deployOperation);
-            await deployOperation.WaitForCompletionAsync();
-#endif
+            Operation<BinaryData> deployOperation = await client.DeployProjectAsync(WaitUntil.Completed, projectName, "production", RequestContent.Create(deployData));
 
             Console.WriteLine("Import complete");
-            #endregion
+#endregion
 
             using JsonDocument doc = JsonDocument.Parse(deployOperation.Value);
             Assert.False(doc.RootElement.TryGetProperty("errors", out JsonElement errors) && errors.ValueKind == JsonValueKind.Array && errors.GetArrayLength() > 0);

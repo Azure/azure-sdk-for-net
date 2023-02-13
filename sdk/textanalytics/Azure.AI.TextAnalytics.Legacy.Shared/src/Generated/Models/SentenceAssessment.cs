@@ -7,6 +7,7 @@
 
 using System;
 using Azure.AI.TextAnalytics.Legacy.Models;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -23,14 +24,8 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="confidenceScores"/> or <paramref name="text"/> is null. </exception>
         internal SentenceAssessment(TokenSentimentValue sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, bool isNegated)
         {
-            if (confidenceScores == null)
-            {
-                throw new ArgumentNullException(nameof(confidenceScores));
-            }
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            Argument.AssertNotNull(confidenceScores, nameof(confidenceScores));
+            Argument.AssertNotNull(text, nameof(text));
 
             Sentiment = sentiment;
             ConfidenceScores = confidenceScores;

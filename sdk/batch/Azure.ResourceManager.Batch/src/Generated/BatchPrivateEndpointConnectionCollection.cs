@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Gets information about the specified private endpoint connection.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}
-        /// Operation Id: PrivateEndpointConnection_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name. This must be unique within the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Gets information about the specified private endpoint connection.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}
-        /// Operation Id: PrivateEndpointConnection_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name. This must be unique within the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,94 +128,62 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Lists all of the private endpoint connections in the specified account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateEndpointConnections
-        /// Operation Id: PrivateEndpointConnection_ListByBatchAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateEndpointConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_ListByBatchAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BatchPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BatchPrivateEndpointConnectionResource> GetAllAsync(int? maxresults = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<BatchPrivateEndpointConnectionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _batchPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("BatchPrivateEndpointConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.ListByBatchAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<BatchPrivateEndpointConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _batchPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("BatchPrivateEndpointConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.ListByBatchAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateListByBatchAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateListByBatchAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BatchPrivateEndpointConnectionResource(Client, BatchPrivateEndpointConnectionData.DeserializeBatchPrivateEndpointConnectionData(e)), _batchPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, "BatchPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all of the private endpoint connections in the specified account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateEndpointConnections
-        /// Operation Id: PrivateEndpointConnection_ListByBatchAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateEndpointConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_ListByBatchAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BatchPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BatchPrivateEndpointConnectionResource> GetAll(int? maxresults = null, CancellationToken cancellationToken = default)
         {
-            Page<BatchPrivateEndpointConnectionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _batchPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("BatchPrivateEndpointConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.ListByBatchAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<BatchPrivateEndpointConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _batchPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("BatchPrivateEndpointConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.ListByBatchAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BatchPrivateEndpointConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateListByBatchAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreateListByBatchAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BatchPrivateEndpointConnectionResource(Client, BatchPrivateEndpointConnectionData.DeserializeBatchPrivateEndpointConnectionData(e)), _batchPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, "BatchPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}
-        /// Operation Id: PrivateEndpointConnection_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name. This must be unique within the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -226,8 +209,16 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}
-        /// Operation Id: PrivateEndpointConnection_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name. This must be unique within the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

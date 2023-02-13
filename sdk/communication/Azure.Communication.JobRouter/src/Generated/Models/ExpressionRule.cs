@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -17,10 +18,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
         public ExpressionRule(string expression)
         {
-            if (expression == null)
-            {
-                throw new ArgumentNullException(nameof(expression));
-            }
+            Argument.AssertNotNull(expression, nameof(expression));
 
             Language = "powerFx";
             Expression = expression;

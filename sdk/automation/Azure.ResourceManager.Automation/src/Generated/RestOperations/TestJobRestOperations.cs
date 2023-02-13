@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Automation
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, TestJobCreateContent content)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, RunbookTestJobCreateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="runbookName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TestJob>> CreateAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, TestJobCreateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<RunbookTestJob>> CreateAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, RunbookTestJobCreateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 201:
                     {
-                        TestJob value = default;
+                        RunbookTestJob value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TestJob.DeserializeTestJob(document.RootElement);
+                        value = RunbookTestJob.DeserializeRunbookTestJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="runbookName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TestJob> Create(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, TestJobCreateContent content, CancellationToken cancellationToken = default)
+        public Response<RunbookTestJob> Create(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, RunbookTestJobCreateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 201:
                     {
-                        TestJob value = default;
+                        RunbookTestJob value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TestJob.DeserializeTestJob(document.RootElement);
+                        value = RunbookTestJob.DeserializeRunbookTestJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="runbookName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TestJob>> GetAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default)
+        public async Task<Response<RunbookTestJob>> GetAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -174,9 +174,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        TestJob value = default;
+                        RunbookTestJob value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TestJob.DeserializeTestJob(document.RootElement);
+                        value = RunbookTestJob.DeserializeRunbookTestJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="runbookName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TestJob> Get(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default)
+        public Response<RunbookTestJob> Get(string subscriptionId, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -205,9 +205,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        TestJob value = default;
+                        RunbookTestJob value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TestJob.DeserializeTestJob(document.RootElement);
+                        value = RunbookTestJob.DeserializeRunbookTestJob(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

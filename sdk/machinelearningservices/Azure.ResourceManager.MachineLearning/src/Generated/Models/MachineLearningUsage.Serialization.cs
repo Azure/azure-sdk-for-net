@@ -17,38 +17,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> id = default;
             Optional<string> amlWorkspaceLocation = default;
             Optional<string> type = default;
-            Optional<UsageUnit> unit = default;
+            Optional<MachineLearningUsageUnit> unit = default;
             Optional<long> currentValue = default;
             Optional<long> limit = default;
-            Optional<UsageName> name = default;
+            Optional<MachineLearningUsageName> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("amlWorkspaceLocation"))
+                if (property.NameEquals("amlWorkspaceLocation"u8))
                 {
                     amlWorkspaceLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    unit = new UsageUnit(property.Value.GetString());
+                    unit = new MachineLearningUsageUnit(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("currentValue"))
+                if (property.NameEquals("currentValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     currentValue = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,14 +68,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     limit = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = UsageName.DeserializeUsageName(property.Value);
+                    name = MachineLearningUsageName.DeserializeMachineLearningUsageName(property.Value);
                     continue;
                 }
             }

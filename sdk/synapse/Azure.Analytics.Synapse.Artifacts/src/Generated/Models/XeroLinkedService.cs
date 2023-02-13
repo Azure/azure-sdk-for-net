@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public XeroLinkedService(object host)
         {
-            if (host == null)
-            {
-                throw new ArgumentNullException(nameof(host));
-            }
+            Argument.AssertNotNull(host, nameof(host));
 
             Host = host;
             Type = "Xero";
@@ -36,10 +34,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="connectionProperties"> Properties used to connect to Xero. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
         /// <param name="host"> The endpoint of the Xero server. (i.e. api.xero.com). </param>
-        /// <param name="consumerKey"> The consumer key associated with the Xero application. </param>
+        /// <param name="consumerKey">
+        /// The consumer key associated with the Xero application.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="privateKey">
         /// The private key from the .pem file that was generated for your Xero private application. You must include all the text from the .pem file, including the Unix line endings(
         /// ).
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
@@ -62,11 +66,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object ConnectionProperties { get; set; }
         /// <summary> The endpoint of the Xero server. (i.e. api.xero.com). </summary>
         public object Host { get; set; }
-        /// <summary> The consumer key associated with the Xero application. </summary>
+        /// <summary>
+        /// The consumer key associated with the Xero application.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase ConsumerKey { get; set; }
         /// <summary>
         /// The private key from the .pem file that was generated for your Xero private application. You must include all the text from the .pem file, including the Unix line endings(
         /// ).
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </summary>
         public SecretBase PrivateKey { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>

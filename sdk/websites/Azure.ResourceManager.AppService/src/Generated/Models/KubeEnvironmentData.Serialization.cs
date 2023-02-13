@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocation))
             {
-                writer.WritePropertyName("extendedLocation");
+                writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -40,33 +40,33 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IsInternalLoadBalancerEnabled))
             {
-                writer.WritePropertyName("internalLoadBalancerEnabled");
+                writer.WritePropertyName("internalLoadBalancerEnabled"u8);
                 writer.WriteBooleanValue(IsInternalLoadBalancerEnabled.Value);
             }
             if (Optional.IsDefined(StaticIP))
             {
-                writer.WritePropertyName("staticIp");
+                writer.WritePropertyName("staticIp"u8);
                 writer.WriteStringValue(StaticIP);
             }
             if (Optional.IsDefined(ArcConfiguration))
             {
-                writer.WritePropertyName("arcConfiguration");
+                writer.WritePropertyName("arcConfiguration"u8);
                 writer.WriteObjectValue(ArcConfiguration);
             }
             if (Optional.IsDefined(AppLogsConfiguration))
             {
-                writer.WritePropertyName("appLogsConfiguration");
+                writer.WritePropertyName("appLogsConfiguration"u8);
                 writer.WriteObjectValue(AppLogsConfiguration);
             }
             if (Optional.IsDefined(AksResourceId))
             {
-                writer.WritePropertyName("aksResourceID");
+                writer.WritePropertyName("aksResourceID"u8);
                 writer.WriteStringValue(AksResourceId);
             }
             writer.WriteEndObject();
@@ -93,22 +93,22 @@ namespace Azure.ResourceManager.AppService
             Optional<ResourceIdentifier> aksResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("extendedLocation"))
+                if (property.NameEquals("extendedLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.ToString());
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,37 +123,37 @@ namespace Azure.ResourceManager.AppService
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -172,12 +172,12 @@ namespace Azure.ResourceManager.AppService
                             provisioningState = property0.Value.GetString().ToKubeEnvironmentProvisioningState();
                             continue;
                         }
-                        if (property0.NameEquals("deploymentErrors"))
+                        if (property0.NameEquals("deploymentErrors"u8))
                         {
                             deploymentErrors = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("internalLoadBalancerEnabled"))
+                        if (property0.NameEquals("internalLoadBalancerEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -187,17 +187,17 @@ namespace Azure.ResourceManager.AppService
                             internalLoadBalancerEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("defaultDomain"))
+                        if (property0.NameEquals("defaultDomain"u8))
                         {
                             defaultDomain = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("staticIp"))
+                        if (property0.NameEquals("staticIp"u8))
                         {
                             staticIP = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("arcConfiguration"))
+                        if (property0.NameEquals("arcConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.AppService
                             arcConfiguration = ArcConfiguration.DeserializeArcConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("appLogsConfiguration"))
+                        if (property0.NameEquals("appLogsConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.AppService
                             appLogsConfiguration = AppLogsConfiguration.DeserializeAppLogsConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("aksResourceID"))
+                        if (property0.NameEquals("aksResourceID"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

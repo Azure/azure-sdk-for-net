@@ -18,21 +18,21 @@ namespace Azure.ResourceManager.ApiManagement
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IdentityProviderType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityProviderType.Value.ToString());
             }
             if (Optional.IsDefined(SignInTenant))
             {
-                writer.WritePropertyName("signinTenant");
+                writer.WritePropertyName("signinTenant"u8);
                 writer.WriteStringValue(SignInTenant);
             }
             if (Optional.IsCollectionDefined(AllowedTenants))
             {
-                writer.WritePropertyName("allowedTenants");
+                writer.WritePropertyName("allowedTenants"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedTenants)
                 {
@@ -42,37 +42,37 @@ namespace Azure.ResourceManager.ApiManagement
             }
             if (Optional.IsDefined(Authority))
             {
-                writer.WritePropertyName("authority");
+                writer.WritePropertyName("authority"u8);
                 writer.WriteStringValue(Authority);
             }
             if (Optional.IsDefined(SignUpPolicyName))
             {
-                writer.WritePropertyName("signupPolicyName");
+                writer.WritePropertyName("signupPolicyName"u8);
                 writer.WriteStringValue(SignUpPolicyName);
             }
             if (Optional.IsDefined(SignInPolicyName))
             {
-                writer.WritePropertyName("signinPolicyName");
+                writer.WritePropertyName("signinPolicyName"u8);
                 writer.WriteStringValue(SignInPolicyName);
             }
             if (Optional.IsDefined(ProfileEditingPolicyName))
             {
-                writer.WritePropertyName("profileEditingPolicyName");
+                writer.WritePropertyName("profileEditingPolicyName"u8);
                 writer.WriteStringValue(ProfileEditingPolicyName);
             }
             if (Optional.IsDefined(PasswordResetPolicyName))
             {
-                writer.WritePropertyName("passwordResetPolicyName");
+                writer.WritePropertyName("passwordResetPolicyName"u8);
                 writer.WriteStringValue(PasswordResetPolicyName);
             }
             if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("clientId");
+                writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
             if (Optional.IsDefined(ClientSecret))
             {
-                writer.WritePropertyName("clientSecret");
+                writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
             writer.WriteEndObject();
@@ -97,32 +97,32 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<string> clientSecret = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("type"))
+                        if (property0.NameEquals("type"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.ApiManagement
                             type0 = new IdentityProviderType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("signinTenant"))
+                        if (property0.NameEquals("signinTenant"u8))
                         {
                             signinTenant = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("allowedTenants"))
+                        if (property0.NameEquals("allowedTenants"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -161,37 +161,37 @@ namespace Azure.ResourceManager.ApiManagement
                             allowedTenants = array;
                             continue;
                         }
-                        if (property0.NameEquals("authority"))
+                        if (property0.NameEquals("authority"u8))
                         {
                             authority = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("signupPolicyName"))
+                        if (property0.NameEquals("signupPolicyName"u8))
                         {
                             signupPolicyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("signinPolicyName"))
+                        if (property0.NameEquals("signinPolicyName"u8))
                         {
                             signinPolicyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("profileEditingPolicyName"))
+                        if (property0.NameEquals("profileEditingPolicyName"u8))
                         {
                             profileEditingPolicyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("passwordResetPolicyName"))
+                        if (property0.NameEquals("passwordResetPolicyName"u8))
                         {
                             passwordResetPolicyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("clientId"))
+                        if (property0.NameEquals("clientId"u8))
                         {
                             clientId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("clientSecret"))
+                        if (property0.NameEquals("clientSecret"u8))
                         {
                             clientSecret = property0.Value.GetString();
                             continue;

@@ -16,19 +16,13 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Initializes a new instance of NetAppVolumeGroupVolume. </summary>
         /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
-        /// <param name="usageThreshold"> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. Minimum size is 100 GiB. Upper limit is 100TiB. Specified in bytes. </param>
+        /// <param name="usageThreshold"> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. Minimum size is 500 GiB. Upper limit is 100TiB, 500Tib for LargeVolume. Specified in bytes. </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="creationToken"/> or <paramref name="subnetId"/> is null. </exception>
         public NetAppVolumeGroupVolume(string creationToken, long usageThreshold, ResourceIdentifier subnetId)
         {
-            if (creationToken == null)
-            {
-                throw new ArgumentNullException(nameof(creationToken));
-            }
-            if (subnetId == null)
-            {
-                throw new ArgumentNullException(nameof(subnetId));
-            }
+            Argument.AssertNotNull(creationToken, nameof(creationToken));
+            Argument.AssertNotNull(subnetId, nameof(subnetId));
 
             Tags = new ChangeTrackingDictionary<string, string>();
             CreationToken = creationToken;
@@ -47,11 +41,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="fileSystemId"> Unique FileSystem Identifier. </param>
         /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
         /// <param name="serviceLevel"> The service level of the file system. </param>
-        /// <param name="usageThreshold"> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. Minimum size is 100 GiB. Upper limit is 100TiB. Specified in bytes. </param>
+        /// <param name="usageThreshold"> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. Minimum size is 500 GiB. Upper limit is 100TiB, 500Tib for LargeVolume. Specified in bytes. </param>
         /// <param name="exportPolicy"> Set of export policy rules. </param>
         /// <param name="protocolTypes"> Set of protocol types, default NFSv3, CIFS for SMB protocol. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="snapshotId"> UUID v4 or resource identifier used to identify the Snapshot. </param>
+        /// <param name="deleteBaseSnapshot"> If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false. </param>
         /// <param name="backupId"> UUID v4 or resource identifier used to identify the Backup. </param>
         /// <param name="baremetalTenantId"> Unique Baremetal Tenant Identifier. </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
@@ -66,6 +61,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="isKerberosEnabled"> Describe if a volume is KerberosEnabled. To be use with swagger version 2020-05-01 or later. </param>
         /// <param name="securityStyle"> The security style of volume, default unix, defaults to ntfs for dual protocol or CIFS protocol. </param>
         /// <param name="isSmbEncryptionEnabled"> Enables encryption for in-flight smb3 data. Only applicable for SMB/DualProtocol volume. To be used with swagger version 2020-08-01 or later. </param>
+        /// <param name="smbAccessBasedEnumeration"> Enables access based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <param name="smbNonBrowsable"> Enables non browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
         /// <param name="isSmbContinuouslyAvailable"> Enables continuously available share property for smb volume. Only applicable for SMB volume. </param>
         /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </param>
         /// <param name="encryptionKeySource"> Source of key used to encrypt data in volume. Applicable if NetApp account has encryption.keySource = &apos;Microsoft.KeyVault&apos;. Possible values (case-insensitive) are: &apos;Microsoft.NetApp, Microsoft.KeyVault&apos;. </param>
@@ -88,7 +85,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="isEncrypted"> Specifies if the volume is encrypted or not. Only available on volumes created or updated after 2022-01-01. </param>
         /// <param name="placementRules"> Application specific placement rules for the particular volume. </param>
         /// <param name="enableSubvolumes"> Flag indicating whether subvolume operations are enabled on the volume. </param>
-        internal NetAppVolumeGroupVolume(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, string> tags, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, VolumePropertiesExportPolicy exportPolicy, IList<string> protocolTypes, string provisioningState, Guid? snapshotId, Guid? backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, bool? isSmbContinuouslyAvailable, float? throughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, string unixPermissions, int? cloneProgress, NetAppAvsDataStore? avsDataStore, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IList<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes)
+        internal NetAppVolumeGroupVolume(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, string> tags, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, VolumePropertiesExportPolicy exportPolicy, IList<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, string unixPermissions, int? cloneProgress, NetAppAvsDataStore? avsDataStore, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IList<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes)
         {
             Id = id;
             Name = name;
@@ -102,6 +99,7 @@ namespace Azure.ResourceManager.NetApp.Models
             ProtocolTypes = protocolTypes;
             ProvisioningState = provisioningState;
             SnapshotId = snapshotId;
+            DeleteBaseSnapshot = deleteBaseSnapshot;
             BackupId = backupId;
             BaremetalTenantId = baremetalTenantId;
             SubnetId = subnetId;
@@ -116,6 +114,8 @@ namespace Azure.ResourceManager.NetApp.Models
             IsKerberosEnabled = isKerberosEnabled;
             SecurityStyle = securityStyle;
             IsSmbEncryptionEnabled = isSmbEncryptionEnabled;
+            SmbAccessBasedEnumeration = smbAccessBasedEnumeration;
+            SmbNonBrowsable = smbNonBrowsable;
             IsSmbContinuouslyAvailable = isSmbContinuouslyAvailable;
             ThroughputMibps = throughputMibps;
             EncryptionKeySource = encryptionKeySource;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public string CreationToken { get; set; }
         /// <summary> The service level of the file system. </summary>
         public NetAppFileServiceLevel? ServiceLevel { get; set; }
-        /// <summary> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. Minimum size is 100 GiB. Upper limit is 100TiB. Specified in bytes. </summary>
+        /// <summary> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. Minimum size is 500 GiB. Upper limit is 100TiB, 500Tib for LargeVolume. Specified in bytes. </summary>
         public long UsageThreshold { get; set; }
         /// <summary> Set of export policy rules. </summary>
         internal VolumePropertiesExportPolicy ExportPolicy { get; set; }
@@ -174,9 +174,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }
         /// <summary> UUID v4 or resource identifier used to identify the Snapshot. </summary>
-        public Guid? SnapshotId { get; set; }
+        public string SnapshotId { get; set; }
+        /// <summary> If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false. </summary>
+        public bool? DeleteBaseSnapshot { get; set; }
         /// <summary> UUID v4 or resource identifier used to identify the Backup. </summary>
-        public Guid? BackupId { get; set; }
+        public string BackupId { get; set; }
         /// <summary> Unique Baremetal Tenant Identifier. </summary>
         public string BaremetalTenantId { get; }
         /// <summary> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </summary>
@@ -203,6 +205,10 @@ namespace Azure.ResourceManager.NetApp.Models
         public NetAppVolumeSecurityStyle? SecurityStyle { get; set; }
         /// <summary> Enables encryption for in-flight smb3 data. Only applicable for SMB/DualProtocol volume. To be used with swagger version 2020-08-01 or later. </summary>
         public bool? IsSmbEncryptionEnabled { get; set; }
+        /// <summary> Enables access based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
+        public SmbAccessBasedEnumeration? SmbAccessBasedEnumeration { get; set; }
+        /// <summary> Enables non browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
+        public SmbNonBrowsable? SmbNonBrowsable { get; set; }
         /// <summary> Enables continuously available share property for smb volume. Only applicable for SMB volume. </summary>
         public bool? IsSmbContinuouslyAvailable { get; set; }
         /// <summary> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </summary>

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="jobName"/> or <paramref name="jobStreamId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="jobName"/> or <paramref name="jobStreamId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobStream>> GetAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string jobStreamId, string clientRequestId = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomationJobStream>> GetAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string jobStreamId, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        JobStream value = default;
+                        AutomationJobStream value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobStream.DeserializeJobStream(document.RootElement);
+                        value = AutomationJobStream.DeserializeAutomationJobStream(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="jobName"/> or <paramref name="jobStreamId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="jobName"/> or <paramref name="jobStreamId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobStream> Get(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string jobStreamId, string clientRequestId = null, CancellationToken cancellationToken = default)
+        public Response<AutomationJobStream> Get(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string jobStreamId, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        JobStream value = default;
+                        AutomationJobStream value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobStream.DeserializeJobStream(document.RootElement);
+                        value = AutomationJobStream.DeserializeAutomationJobStream(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobStreamListResult>> ListByJobAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomationJobStreamListResult>> ListByJobAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -187,9 +187,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        JobStreamListResult value = default;
+                        AutomationJobStreamListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobStreamListResult.DeserializeJobStreamListResult(document.RootElement);
+                        value = AutomationJobStreamListResult.DeserializeAutomationJobStreamListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobStreamListResult> ListByJob(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
+        public Response<AutomationJobStreamListResult> ListByJob(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -220,9 +220,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        JobStreamListResult value = default;
+                        AutomationJobStreamListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobStreamListResult.DeserializeJobStreamListResult(document.RootElement);
+                        value = AutomationJobStreamListResult.DeserializeAutomationJobStreamListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<JobStreamListResult>> ListByJobNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomationJobStreamListResult>> ListByJobNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -273,9 +273,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        JobStreamListResult value = default;
+                        AutomationJobStreamListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JobStreamListResult.DeserializeJobStreamListResult(document.RootElement);
+                        value = AutomationJobStreamListResult.DeserializeAutomationJobStreamListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<JobStreamListResult> ListByJobNextPage(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
+        public Response<AutomationJobStreamListResult> ListByJobNextPage(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -308,9 +308,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        JobStreamListResult value = default;
+                        AutomationJobStreamListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JobStreamListResult.DeserializeJobStreamListResult(document.RootElement);
+                        value = AutomationJobStreamListResult.DeserializeAutomationJobStreamListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

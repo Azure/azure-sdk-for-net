@@ -1,6 +1,6 @@
 # Release History
 
-## 1.26.0-beta.1 (Unreleased)
+## 1.29.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,12 +10,42 @@
 
 ### Other Changes
 
+## 1.28.0 (2023-02-06)
+
+### Bugs Fixed
+- Fixed an issue with `AzureSasCredential` which resulted in messages to fail authentication if the SAS signature was updated while a message was in a retry cycle.
+
+## 1.27.0 (2023-01-10)
+
+### Features Added
+
+- Made `RedirectPolicy` public to provide `SetAllowAutoRedirect()` method to library authors.
+- Added `RetryPolicy` property to `ClientOptions` to allow library authors to set a custom retry policy.
+- Added `MessageProcessingContext` type and `ProcessingContext` property to `HttpMessage` which contains information about the message as it traverses through the pipeline.
+- Added `SetProperty` and `TryGetProperty` overloads to `HttpMessage` to allow setting property values using a `Type` as the key.
+
+## 1.26.0 (2022-11-08)
+
+### Features Added
+
+- Introduced a new `NullableResponse<T>` type for scenarios where a service method may or may not return a value. One common example is `Get*IfExists` methods. `Response<T>` also now inherits from `NullableResponse<T>`.
+- Added `TryParse` method to the `ResourceIdentifier` type.
+- Added `AppendQuery` and `AppendPath` overloads to `RequestUriBuilder`.
+
+### Bugs Fixed
+
+- Fixed issue where fixed delay was applied when the `RetryMode` was set to `Exponential` when retrying a request that resulted in an exception.
+
+### Other Changes
+
+- Azure.Core now targets .NET 6 in addition to the existing targets.
+
 ## 1.25.0 (2022-06-23)
 
 ### Features Added
 - Added `RequestFailedDetailsParser` abstract class, which client libraries can implement to control customization of exception messages for failed responses.
 - Added `HttpPipelineOptions` type which is accepted in a new overload to `HttpPipelineBuilder.Build`.  This type contains all the properties from other overloads and adds a property to specify a `RequestFailedDetailsParser`.
-- Added a property to `HttpPipelineTransportOptions` called `ClientCertificates` which is a collection of `X509Certificate2`. If populated, the certificates in the collection will be used by the client for TLS client certificate authentication. 
+- Added a property to `HttpPipelineTransportOptions` called `ClientCertificates` which is a collection of `X509Certificate2`. If populated, the certificates in the collection will be used by the client for TLS client certificate authentication.
 - Added the `MultipartResponse` type, which can be used by clients to parse the sub-responses for multi-part responses.
 
 ## 1.24.0 (2022-04-04)
@@ -56,7 +86,7 @@
 - Added `ResourceIdentifier`. This class allows users to load an Azure resource identifier string and parse out the pieces of that string such as which `SubscriptionId` does the resource belong to.
 - Added `ResourceType`. This class represents the ARM provider information for a given resource and is used by the `ResourceIdentifier` class.
 - Added `HttpPipelineTransportOptions` type.  This type contains a `ServerCertificateCustomValidationCallback` property that allows callers to set a `Func<ServerCertificateCustomValidationArgs, bool>` delegate.  If set, the delegate will be called to validate the server side TLS certificate.
-- Added a new static overload for `HttpPipelineBuilder.Build` that takes an `HttpPipelineTransportOptions` instance.  This overload creates an `HttpPipeline` with the default transport configuration and the `HttpPipelineTransportOptions` applied. It returns a `DisposableHttpPipeline` that implements `IDisposable`. Note: The `HttpPipelineTransportOptions` will not be applied if a custom `Transport` has been set in the `ClientOptions`. In the case that transport options were provided but not applied, an event is logged `(PipelineTransportOptionsNotApplied`). 
+- Added a new static overload for `HttpPipelineBuilder.Build` that takes an `HttpPipelineTransportOptions` instance.  This overload creates an `HttpPipeline` with the default transport configuration and the `HttpPipelineTransportOptions` applied. It returns a `DisposableHttpPipeline` that implements `IDisposable`. Note: The `HttpPipelineTransportOptions` will not be applied if a custom `Transport` has been set in the `ClientOptions`. In the case that transport options were provided but not applied, an event is logged `(PipelineTransportOptionsNotApplied`).
 
 ### Breaking Changes
 
@@ -191,7 +221,7 @@ options.Diagnostics.LoggedQueryParameters.Remove("api-version");
 - `AzureSasCredential` and its respective policy.
 
 ### Key Bug Fixes
-- Avoid a causing and ignoring an exception when setting network stream timeout on .NET Core 
+- Avoid a causing and ignoring an exception when setting network stream timeout on .NET Core.
 
 ## 1.7.0 (2020-12-14)
 
@@ -215,7 +245,7 @@ options.Diagnostics.LoggedQueryParameters.Remove("api-version");
 ## 1.5.1 (2020-10-01)
 
 ### Changed
-- `ServicePointManager` Connection limit is automatically increased to `50` for Azure endpoints. 
+- `ServicePointManager` Connection limit is automatically increased to `50` for Azure endpoints.
 
 
 ## 1.5.0 (2020-09-03)
@@ -229,7 +259,7 @@ options.Diagnostics.LoggedQueryParameters.Remove("api-version");
 ```xml
  <ItemGroup>
     <RuntimeHostConfigurationOption Include="Azure.Core.Pipeline.DisableHttpWebRequestTransport" Value="true" />
-  </ItemGroup> 
+  </ItemGroup>
 ```
 
 When the environment variable or the switch are set the `HttpClientTransport` would be used by default instead.
@@ -290,28 +320,28 @@ When the environment variable or the switch are set the `HttpClientTransport` wo
 - Add support for retrying on 408, 500, 502, 504 status codes.
 - Remove commit hash from User-Agent telemetry.
 
-## 1.0.1 
+## 1.0.1
 
 - Fix issues with log redaction where first query character was replaced with '?' character.
 - Exclude EventCounter events from AzureEventSourceListener.
 - Add `AZURE_TRACING_DISABLED` environment variable support.
 
-## 1.0.0 
+## 1.0.0
 
 - Updating versioning and packaging for general availability.
 - Make types and namespace names consistent.
 
-## 1.0.0-preview.9 
+## 1.0.0-preview.9
 
 - Added console and trace logger listener.
 - Added additional content and header logging options.
 - Moved commonly used types to Azure namespace.
 
-## 1.0.0-preview.8 
+## 1.0.0-preview.8
 
 - Minor improvements and bug fixes.
 
-## 1.0.0-preview.7 
+## 1.0.0-preview.7
 
 - Support for distributed tracing added.
 - Support for TokenCredential in ASP.NET Core integration added.

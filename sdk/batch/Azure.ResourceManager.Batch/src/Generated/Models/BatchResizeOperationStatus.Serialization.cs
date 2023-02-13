@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<IReadOnlyList<ResponseError>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetDedicatedNodes"))
+                if (property.NameEquals("targetDedicatedNodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Batch.Models
                     targetDedicatedNodes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("targetLowPriorityNodes"))
+                if (property.NameEquals("targetLowPriorityNodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Batch.Models
                     targetLowPriorityNodes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("resizeTimeout"))
+                if (property.NameEquals("resizeTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Batch.Models
                     resizeTimeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("nodeDeallocationOption"))
+                if (property.NameEquals("nodeDeallocationOption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Batch.Models
                     nodeDeallocationOption = property.Value.GetString().ToBatchNodeDeallocationOption();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Batch.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.ToString()));
+                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
                     }
                     errors = array;
                     continue;

@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownJobLimits. </summary>
-    internal partial class UnknownJobLimits : JobLimits
+    internal partial class UnknownJobLimits : MachineLearningJobLimits
     {
         /// <summary> Initializes a new instance of UnknownJobLimits. </summary>
         /// <param name="jobLimitsType"> [Required] JobLimit type. </param>

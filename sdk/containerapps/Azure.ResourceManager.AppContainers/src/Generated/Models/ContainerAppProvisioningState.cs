@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
+        private const string DeletingValue = "Deleting";
 
         /// <summary> InProgress. </summary>
         public static ContainerAppProvisioningState InProgress { get; } = new ContainerAppProvisioningState(InProgressValue);
@@ -35,6 +36,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static ContainerAppProvisioningState Failed { get; } = new ContainerAppProvisioningState(FailedValue);
         /// <summary> Canceled. </summary>
         public static ContainerAppProvisioningState Canceled { get; } = new ContainerAppProvisioningState(CanceledValue);
+        /// <summary> Deleting. </summary>
+        public static ContainerAppProvisioningState Deleting { get; } = new ContainerAppProvisioningState(DeletingValue);
         /// <summary> Determines if two <see cref="ContainerAppProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ContainerAppProvisioningState left, ContainerAppProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppProvisioningState"/> values are not the same. </summary>

@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("attribute");
+            writer.WritePropertyName("attribute"u8);
             writer.WriteStringValue(Attribute.ToString());
-            writer.WritePropertyName("filter");
+            writer.WritePropertyName("filter"u8);
             writer.WriteStringValue(Filter.ToString());
             if (Optional.IsDefined(FilterValue))
             {
-                writer.WritePropertyName("filterValue");
+                writer.WritePropertyName("filterValue"u8);
                 writer.WriteStringValue(FilterValue);
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
@@ -32,27 +32,27 @@ namespace Azure.ResourceManager.Media.Models
         internal static SelectVideoTrackByAttribute DeserializeSelectVideoTrackByAttribute(JsonElement element)
         {
             TrackAttribute attribute = default;
-            AttributeFilter filter = default;
+            TrackAttributeFilter filter = default;
             Optional<string> filterValue = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("attribute"))
+                if (property.NameEquals("attribute"u8))
                 {
                     attribute = new TrackAttribute(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("filter"))
+                if (property.NameEquals("filter"u8))
                 {
-                    filter = new AttributeFilter(property.Value.GetString());
+                    filter = new TrackAttributeFilter(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("filterValue"))
+                if (property.NameEquals("filterValue"u8))
                 {
                     filterValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;

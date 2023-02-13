@@ -15,8 +15,6 @@ parameters:
 jobs:
   - ${{ if eq(parameters.Daily, false) }}:
     - job: smoke_test_eligibility
-      dependsOn: PublishPackage
-      condition: succeeded()
       pool:
         name: "azsdk-pool-mms-ubuntu-2004-general"
         vmImage: "MMSUbuntu20.04"
@@ -49,85 +47,34 @@ jobs:
       condition: and(succeeded(), eq(dependencies.smoke_test_eligibility.outputs['output_eligibility.RunSmokeTests'], true))
     strategy:
       matrix:
-        Linux (AzureCloud):
+        Ubuntu_Net60:
           Pool: "azsdk-pool-mms-ubuntu-2004-general"
           OSVmImage: "MMSUbuntu20.04"
-          TestTargetFramework: netcoreapp3.1
-          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-          ArmTemplateParameters: $(azureCloudArmParameters)
-          Location: "westus"
-        Windows_NetCoreApp (AzureCloud):
-          Pool: "azsdk-pool-mms-win-2019-general"
-          OSVmImage: "MMS2019"
-          TestTargetFramework: netcoreapp3.1
-          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-          ArmTemplateParameters: $(azureCloudArmParameters)
-          Location: "westus"
-        Windows_NetFramework (AzureCloud):
-          Pool: "azsdk-pool-mms-win-2019-general"
-          OSVmImage: "MMS2019"
-          TestTargetFramework: net461
-          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-          ArmTemplateParameters: $(azureCloudArmParameters)
-          Location: "westus"
-        MacOs (AzureCloud):
-          Pool: Azure Pipelines
-          OSVmImage: "macos-11"
-          TestTargetFramework: netcoreapp3.1
-          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-          ArmTemplateParameters: $(azureCloudArmParameters)
-          Location: "westus"
-        Windows_Net50 (AzureCloud):
-          Pool: "azsdk-pool-mms-win-2019-general"
-          OSVmImage: "MMS2019"
           TestTargetFramework: net6.0
-          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-          ArmTemplateParameters: $(azureCloudArmParameters)
-          Location: "westus"
-        Windows_NetCoreApp (AzureUSGovernment):
-          Pool: "azsdk-pool-mms-win-2019-general"
-          OSVmImage: "MMS2019"
-          TestTargetFramework: netcoreapp3.1
-          SubscriptionConfiguration: $(sub-config-gov-test-resources)
-          ArmTemplateParameters: $(azureUSGovernmentArmParameters)
-          Location: "usgovarizona"
-        Windows_NetFramework (AzureUSGovernment):
-          Pool: "azsdk-pool-mms-win-2019-general"
-          OSVmImage: "MMS2019"
+        Windows_NetFramework:
+          Pool: "azsdk-pool-mms-win-2022-general"
+          OSVmImage: "MMS2022"
           TestTargetFramework: net461
-          SubscriptionConfiguration: $(sub-config-gov-test-resources)
-          ArmTemplateParameters: $(azureUSGovernmentArmParameters)
-          Location: "usgovarizona"
-        Windows_NetCoreApp (AzureChinaCloud):
-          Pool: "azsdk-pool-mms-win-2019-general"
-          OSVmImage: "MMS2019"
-          TestTargetFramework: netcoreapp3.1
-          SubscriptionConfiguration: $(sub-config-cn-test-resources)
-          ArmTemplateParameters: $(azureChinaCloudArmParameters)
-          Location: "chinaeast2"
-        Windows_NetFramework (AzureChinaCloud):
-          Pool: "azsdk-pool-mms-win-2019-general"
-          OSVmImage: "MMS2019"
-          TestTargetFramework: net461
-          SubscriptionConfiguration: $(sub-config-cn-test-resources)
-          ArmTemplateParameters: $(azureChinaCloudArmParameters)
-          Location: "chinaeast2"
-
-    variables:
-      azureCloudArmParameters: "@{ storageEndpointSuffix = 'core.windows.net'; azureCloud = 'AzureCloud'; }"
-      azureUSGovernmentArmParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net'; azureCloud = 'AzureUSGovernment'; }"
-      azureChinaCloudArmParameters: "@{ storageEndpointSuffix = 'core.chinacloudapi.cn'; azureCloud = 'AzureChinaCloud'; }"
-
-    timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
-
+        Windows_Net60:
+          Pool: "azsdk-pool-mms-win-2022-general"
+          OSVmImage: "MMS2022"
+          TestTargetFramework: net6.0
+        Windows_Net70:
+          Pool: "azsdk-pool-mms-win-2022-general"
+          OSVmImage: "MMS2022"
+          TestTargetFramework: net7.0
     pool:
       name: $(Pool)
       vmImage: $(OSVmImage)
+    timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
     steps:
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
         parameters:
           AgentImage: $(OSVmImage)
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+        parameters:
+          EnableNuGetCache: false
 
       - ${{ if eq(parameters.Daily, true) }}:
         - task: PowerShell@2
@@ -135,7 +82,7 @@ jobs:
           inputs:
             targetType: filePath
             filePath: ./common/SmokeTests/SmokeTest/Update-Dependencies.ps1
-            arguments: -CI -Daily
+            arguments: -CI -PreferDevVersion
             workingDirectory: common/SmokeTests/SmokeTest
             pwsh: true
 
@@ -150,7 +97,7 @@ jobs:
           inputs:
             targetType: filePath
             filePath: ./common/SmokeTests/SmokeTest/Update-Dependencies.ps1
-            arguments: -CI -ArtifactsPath "$(Pipeline.Workspace)/${{ parameters.ArtifactName }}"
+            arguments: -CI -PreferDevVersion -ArtifactsPath "$(Pipeline.Workspace)/${{ parameters.ArtifactName }}"
             workingDirectory: common/SmokeTests/SmokeTest
             pwsh: true
 
@@ -162,17 +109,5 @@ jobs:
       - pwsh: dotnet restore ./common/SmokeTests/SmokeTest/SmokeTest.csproj
         displayName: dotnet restore
 
-      - template: /eng/common/TestResources/deploy-test-resources.yml
-        parameters:
-          ServiceDirectory: '$(Build.SourcesDirectory)/common/SmokeTests/'
-          SubscriptionConfiguration: $(SubscriptionConfiguration)
-          ArmTemplateParameters: $(ArmTemplateParameters)
-          Location: $(Location)
-
       - pwsh: dotnet run -p .\common\SmokeTests\SmokeTest\SmokeTest.csproj --framework $(TestTargetFramework)
         displayName: "Run Smoke Tests"
-
-      - template: /eng/common/TestResources/remove-test-resources.yml
-        parameters:
-          ServiceDirectory: '$(Build.SourcesDirectory)/common/SmokeTests/'
-          SubscriptionConfiguration: $(SubscriptionConfiguration)

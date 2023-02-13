@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     case "#Microsoft.Azure.FrontDoor.Models.FrontdoorRedirectConfiguration": return RedirectConfiguration.DeserializeRedirectConfiguration(element);
                 }
             }
-            string odataType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@odata.type"))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownRouteConfiguration(odataType);
+            return UnknownRouteConfiguration.DeserializeUnknownRouteConfiguration(element);
         }
     }
 }

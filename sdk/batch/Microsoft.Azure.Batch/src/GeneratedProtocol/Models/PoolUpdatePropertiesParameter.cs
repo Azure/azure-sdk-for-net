@@ -42,12 +42,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="startTask">A Task to run on each Compute Node as it
         /// joins the Pool. The Task runs when the Compute Node is added to the
         /// Pool or when the Compute Node is restarted.</param>
-        public PoolUpdatePropertiesParameter(IList<CertificateReference> certificateReferences, IList<ApplicationPackageReference> applicationPackageReferences, IList<MetadataItem> metadata, StartTask startTask = default(StartTask))
+        /// <param name="targetNodeCommunicationMode">The desired node
+        /// communication mode for the pool.</param>
+        public PoolUpdatePropertiesParameter(IList<CertificateReference> certificateReferences, IList<ApplicationPackageReference> applicationPackageReferences, IList<MetadataItem> metadata, StartTask startTask = default(StartTask), NodeCommunicationMode? targetNodeCommunicationMode = default(NodeCommunicationMode?))
         {
             StartTask = startTask;
             CertificateReferences = certificateReferences;
             ApplicationPackageReferences = applicationPackageReferences;
             Metadata = metadata;
+            TargetNodeCommunicationMode = targetNodeCommunicationMode;
             CustomInit();
         }
 
@@ -116,6 +119,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "metadata")]
         public IList<MetadataItem> Metadata { get; set; }
+
+        /// <summary>
+        /// Gets or sets the desired node communication mode for the pool.
+        /// </summary>
+        /// <remarks>
+        /// This setting replaces any existing targetNodeCommunication setting
+        /// on the Pool. If omitted, the existing setting is default. Possible
+        /// values include: 'default', 'classic', 'simplified'
+        /// </remarks>
+        [JsonProperty(PropertyName = "targetNodeCommunicationMode")]
+        public NodeCommunicationMode? TargetNodeCommunicationMode { get; set; }
 
     }
 }

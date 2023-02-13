@@ -89,41 +89,57 @@ namespace Azure.ResourceManager.Media
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of AccountFilterResources in the MediaServicesAccount. </summary>
-        /// <returns> An object representing collection of AccountFilterResources and their operations over a AccountFilterResource. </returns>
-        public virtual AccountFilterCollection GetAccountFilters()
+        /// <summary> Gets a collection of MediaServicesAccountFilterResources in the MediaServicesAccount. </summary>
+        /// <returns> An object representing collection of MediaServicesAccountFilterResources and their operations over a MediaServicesAccountFilterResource. </returns>
+        public virtual MediaServicesAccountFilterCollection GetMediaServicesAccountFilters()
         {
-            return GetCachedClient(Client => new AccountFilterCollection(Client, Id));
+            return GetCachedClient(Client => new MediaServicesAccountFilterCollection(Client, Id));
         }
 
         /// <summary>
         /// Get the details of an Account Filter in the Media Services account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/accountFilters/{filterName}
-        /// Operation Id: AccountFilters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/accountFilters/{filterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccountFilters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filterName"> The Account Filter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AccountFilterResource>> GetAccountFilterAsync(string filterName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaServicesAccountFilterResource>> GetMediaServicesAccountFilterAsync(string filterName, CancellationToken cancellationToken = default)
         {
-            return await GetAccountFilters().GetAsync(filterName, cancellationToken).ConfigureAwait(false);
+            return await GetMediaServicesAccountFilters().GetAsync(filterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the details of an Account Filter in the Media Services account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/accountFilters/{filterName}
-        /// Operation Id: AccountFilters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/accountFilters/{filterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccountFilters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filterName"> The Account Filter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AccountFilterResource> GetAccountFilter(string filterName, CancellationToken cancellationToken = default)
+        public virtual Response<MediaServicesAccountFilterResource> GetMediaServicesAccountFilter(string filterName, CancellationToken cancellationToken = default)
         {
-            return GetAccountFilters().Get(filterName, cancellationToken);
+            return GetMediaServicesAccountFilters().Get(filterName, cancellationToken);
         }
 
         /// <summary> Gets a collection of MediaServicesPrivateLinkResources in the MediaServicesAccount. </summary>
@@ -135,8 +151,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Get details of a group ID.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateLinkResources/{name}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateLinkResources/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +174,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Get details of a group ID.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateLinkResources/{name}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateLinkResources/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -172,8 +204,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Get the details of a private endpoint connection.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateEndpointConnections/{name}
-        /// Operation Id: PrivateEndpointConnections_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateEndpointConnections/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -187,8 +227,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Get the details of a private endpoint connection.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateEndpointConnections/{name}
-        /// Operation Id: PrivateEndpointConnections_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateEndpointConnections/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -209,8 +257,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Get the details of an Asset in the Media Services account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}
-        /// Operation Id: Assets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="assetName"> The Asset name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -224,8 +280,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Get the details of an Asset in the Media Services account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}
-        /// Operation Id: Assets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="assetName"> The Asset name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -246,8 +310,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Get the details of a Content Key Policy in the Media Services account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies/{contentKeyPolicyName}
-        /// Operation Id: ContentKeyPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies/{contentKeyPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContentKeyPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="contentKeyPolicyName"> The Content Key Policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -261,8 +333,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Get the details of a Content Key Policy in the Media Services account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies/{contentKeyPolicyName}
-        /// Operation Id: ContentKeyPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies/{contentKeyPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContentKeyPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="contentKeyPolicyName"> The Content Key Policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -283,8 +363,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Gets a Transform.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}
-        /// Operation Id: Transforms_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Transforms_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="transformName"> The Transform name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -298,8 +386,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Gets a Transform.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}
-        /// Operation Id: Transforms_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Transforms_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="transformName"> The Transform name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -320,8 +416,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Get the details of a Streaming Policy in the Media Services account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingPolicies/{streamingPolicyName}
-        /// Operation Id: StreamingPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingPolicies/{streamingPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="streamingPolicyName"> The Streaming Policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -335,8 +439,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Get the details of a Streaming Policy in the Media Services account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingPolicies/{streamingPolicyName}
-        /// Operation Id: StreamingPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingPolicies/{streamingPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="streamingPolicyName"> The Streaming Policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -357,8 +469,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Get the details of a Streaming Locator in the Media Services account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators/{streamingLocatorName}
-        /// Operation Id: StreamingLocators_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators/{streamingLocatorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingLocators_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="streamingLocatorName"> The Streaming Locator name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -372,8 +492,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Get the details of a Streaming Locator in the Media Services account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators/{streamingLocatorName}
-        /// Operation Id: StreamingLocators_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators/{streamingLocatorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingLocators_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="streamingLocatorName"> The Streaming Locator name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -385,41 +513,57 @@ namespace Azure.ResourceManager.Media
             return GetStreamingLocators().Get(streamingLocatorName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LiveEventResources in the MediaServicesAccount. </summary>
-        /// <returns> An object representing collection of LiveEventResources and their operations over a LiveEventResource. </returns>
-        public virtual LiveEventCollection GetLiveEvents()
+        /// <summary> Gets a collection of MediaLiveEventResources in the MediaServicesAccount. </summary>
+        /// <returns> An object representing collection of MediaLiveEventResources and their operations over a MediaLiveEventResource. </returns>
+        public virtual MediaLiveEventCollection GetMediaLiveEvents()
         {
-            return GetCachedClient(Client => new LiveEventCollection(Client, Id));
+            return GetCachedClient(Client => new MediaLiveEventCollection(Client, Id));
         }
 
         /// <summary>
         /// Gets properties of a live event.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}
-        /// Operation Id: LiveEvents_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LiveEvents_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="liveEventName"> The name of the live event, maximum length is 32. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="liveEventName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<LiveEventResource>> GetLiveEventAsync(string liveEventName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaLiveEventResource>> GetMediaLiveEventAsync(string liveEventName, CancellationToken cancellationToken = default)
         {
-            return await GetLiveEvents().GetAsync(liveEventName, cancellationToken).ConfigureAwait(false);
+            return await GetMediaLiveEvents().GetAsync(liveEventName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets properties of a live event.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}
-        /// Operation Id: LiveEvents_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LiveEvents_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="liveEventName"> The name of the live event, maximum length is 32. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="liveEventName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LiveEventResource> GetLiveEvent(string liveEventName, CancellationToken cancellationToken = default)
+        public virtual Response<MediaLiveEventResource> GetMediaLiveEvent(string liveEventName, CancellationToken cancellationToken = default)
         {
-            return GetLiveEvents().Get(liveEventName, cancellationToken);
+            return GetMediaLiveEvents().Get(liveEventName, cancellationToken);
         }
 
         /// <summary> Gets a collection of StreamingEndpointResources in the MediaServicesAccount. </summary>
@@ -431,8 +575,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Gets a streaming endpoint.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
-        /// Operation Id: StreamingEndpoints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingEndpoints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="streamingEndpointName"> The name of the streaming endpoint, maximum length is 24. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -446,8 +598,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Gets a streaming endpoint.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
-        /// Operation Id: StreamingEndpoints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingEndpoints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="streamingEndpointName"> The name of the streaming endpoint, maximum length is 24. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -461,8 +621,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Get the details of a Media Services account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
-        /// Operation Id: Mediaservices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Mediaservices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MediaServicesAccountResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -485,8 +653,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Get the details of a Media Services account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
-        /// Operation Id: Mediaservices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Mediaservices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MediaServicesAccountResource> Get(CancellationToken cancellationToken = default)
@@ -509,8 +685,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Deletes a Media Services account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
-        /// Operation Id: Mediaservices_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Mediaservices_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -535,8 +719,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Deletes a Media Services account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
-        /// Operation Id: Mediaservices_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Mediaservices_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -561,8 +753,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Updates an existing Media Services account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
-        /// Operation Id: Mediaservices_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Mediaservices_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The request parameters. </param>
@@ -591,8 +791,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Updates an existing Media Services account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
-        /// Operation Id: Mediaservices_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Mediaservices_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The request parameters. </param>
@@ -621,8 +829,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Synchronizes storage account keys for a storage account associated with the Media Service account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/syncStorageKeys
-        /// Operation Id: Mediaservices_SyncStorageKeys
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/syncStorageKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Mediaservices_SyncStorageKeys</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -647,8 +863,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Synchronizes storage account keys for a storage account associated with the Media Service account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/syncStorageKeys
-        /// Operation Id: Mediaservices_SyncStorageKeys
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/syncStorageKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Mediaservices_SyncStorageKeys</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -673,13 +897,21 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// List all the media edge policies associated with the Media Services account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/listEdgePolicies
-        /// Operation Id: Mediaservices_ListEdgePolicies
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/listEdgePolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Mediaservices_ListEdgePolicies</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<EdgePolicies>> GetEdgePoliciesAsync(GetEdgePoliciesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaServicesEdgePolicies>> GetEdgePoliciesAsync(EdgePoliciesRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -699,13 +931,21 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// List all the media edge policies associated with the Media Services account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/listEdgePolicies
-        /// Operation Id: Mediaservices_ListEdgePolicies
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/listEdgePolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Mediaservices_ListEdgePolicies</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<EdgePolicies> GetEdgePolicies(GetEdgePoliciesContent content, CancellationToken cancellationToken = default)
+        public virtual Response<MediaServicesEdgePolicies> GetEdgePolicies(EdgePoliciesRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -725,8 +965,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
-        /// Operation Id: Mediaservices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Mediaservices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -771,8 +1019,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
-        /// Operation Id: Mediaservices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Mediaservices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -817,8 +1073,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
-        /// Operation Id: Mediaservices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Mediaservices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -858,8 +1122,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
-        /// Operation Id: Mediaservices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Mediaservices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -899,8 +1171,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
-        /// Operation Id: Mediaservices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Mediaservices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -943,8 +1223,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}
-        /// Operation Id: Mediaservices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Mediaservices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -30,160 +30,180 @@ namespace Azure.ResourceManager.Kusto
 
         /// <summary>
         /// Lists all Kusto clusters within a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/clusters
-        /// Operation Id: Clusters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Kusto/clusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ClusterResource> GetClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="KustoClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<KustoClusterResource> GetKustoClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetClustersAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetKustoClustersAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists all Kusto clusters within a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/clusters
-        /// Operation Id: Clusters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Kusto/clusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ClusterResource> GetClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="KustoClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<KustoClusterResource> GetKustoClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetClusters(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetKustoClusters(cancellationToken);
         }
 
         /// <summary>
         /// Lists eligible SKUs for Kusto resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/skus
-        /// Operation Id: Clusters_ListSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Kusto/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_ListSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SkuDescription" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SkuDescription> GetSkusClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<KustoSkuDescription> GetKustoEligibleSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSkusClustersAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetKustoEligibleSkusAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists eligible SKUs for Kusto resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/skus
-        /// Operation Id: Clusters_ListSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Kusto/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_ListSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SkuDescription" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SkuDescription> GetSkusClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<KustoSkuDescription> GetKustoEligibleSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSkusClusters(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetKustoEligibleSkus(cancellationToken);
         }
 
         /// <summary>
         /// Checks that the cluster name is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/checkNameAvailability
-        /// Operation Id: Clusters_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure location (region) name. </param>
         /// <param name="content"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CheckNameResult>> CheckNameAvailabilityClusterAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ClusterCheckNameContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<KustoNameAvailabilityResult>> CheckKustoClusterNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, KustoClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityClusterAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckKustoClusterNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Checks that the cluster name is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/checkNameAvailability
-        /// Operation Id: Clusters_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure location (region) name. </param>
         /// <param name="content"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CheckNameResult> CheckNameAvailabilityCluster(this SubscriptionResource subscriptionResource, AzureLocation location, ClusterCheckNameContent content, CancellationToken cancellationToken = default)
+        public static Response<KustoNameAvailabilityResult> CheckKustoClusterNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, KustoClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckNameAvailabilityCluster(location, content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckKustoClusterNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
-        /// Returns operation results.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/operationResults/{operationId}
-        /// Operation Id: OperationsResults_Get
+        /// Lists eligible region SKUs for Kusto resource provider by Azure region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure location (region) name. </param>
-        /// <param name="operationId"> The Guid of the operation ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public static async Task<Response<OperationResult>> GetOperationsResultAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<KustoSkuDescription> GetSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return await GetExtensionClient(subscriptionResource).GetOperationsResultAsync(location, operationId, cancellationToken).ConfigureAwait(false);
+            return GetExtensionClient(subscriptionResource).GetSkusAsync(location, cancellationToken);
         }
 
         /// <summary>
-        /// Returns operation results.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/operationResults/{operationId}
-        /// Operation Id: OperationsResults_Get
+        /// Lists eligible region SKUs for Kusto resource provider by Azure region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure location (region) name. </param>
-        /// <param name="operationId"> The Guid of the operation ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public static Response<OperationResult> GetOperationsResult(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<KustoSkuDescription> GetSkus(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return GetExtensionClient(subscriptionResource).GetOperationsResult(location, operationId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns operation results.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/operationResults/{operationId}
-        /// Operation Id: OperationsResultsLocation_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> Azure location (region) name. </param>
-        /// <param name="operationId"> The Guid of the operation ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public static async Task<Response> GetOperationsResultsLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return await GetExtensionClient(subscriptionResource).GetOperationsResultsLocationAsync(location, operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns operation results.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/operationResults/{operationId}
-        /// Operation Id: OperationsResultsLocation_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> Azure location (region) name. </param>
-        /// <param name="operationId"> The Guid of the operation ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public static Response GetOperationsResultsLocation(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return GetExtensionClient(subscriptionResource).GetOperationsResultsLocation(location, operationId, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSkus(location, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -195,18 +215,26 @@ namespace Azure.ResourceManager.Kusto
             );
         }
 
-        /// <summary> Gets a collection of ClusterResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of KustoClusterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ClusterResources and their operations over a ClusterResource. </returns>
-        public static ClusterCollection GetClusters(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of KustoClusterResources and their operations over a KustoClusterResource. </returns>
+        public static KustoClusterCollection GetKustoClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetClusters();
+            return GetExtensionClient(resourceGroupResource).GetKustoClusters();
         }
 
         /// <summary>
         /// Gets a Kusto cluster.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}
-        /// Operation Id: Clusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
@@ -214,15 +242,23 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ClusterResource>> GetClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        public static async Task<Response<KustoClusterResource>> GetKustoClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetKustoClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a Kusto cluster.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}
-        /// Operation Id: Clusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
@@ -230,139 +266,139 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ClusterResource> GetCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        public static Response<KustoClusterResource> GetKustoCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetClusters().Get(clusterName, cancellationToken);
+            return resourceGroupResource.GetKustoClusters().Get(clusterName, cancellationToken);
         }
 
-        #region ClusterResource
+        #region KustoClusterResource
         /// <summary>
-        /// Gets an object representing a <see cref="ClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ClusterResource.CreateResourceIdentifier" /> to create a <see cref="ClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KustoClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KustoClusterResource.CreateResourceIdentifier" /> to create a <see cref="KustoClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClusterResource" /> object. </returns>
-        public static ClusterResource GetClusterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="KustoClusterResource" /> object. </returns>
+        public static KustoClusterResource GetKustoClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ClusterResource.ValidateResourceId(id);
-                return new ClusterResource(client, id);
+                KustoClusterResource.ValidateResourceId(id);
+                return new KustoClusterResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ClusterPrincipalAssignmentResource
+        #region KustoClusterPrincipalAssignmentResource
         /// <summary>
-        /// Gets an object representing a <see cref="ClusterPrincipalAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ClusterPrincipalAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="ClusterPrincipalAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KustoClusterPrincipalAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KustoClusterPrincipalAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="KustoClusterPrincipalAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClusterPrincipalAssignmentResource" /> object. </returns>
-        public static ClusterPrincipalAssignmentResource GetClusterPrincipalAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="KustoClusterPrincipalAssignmentResource" /> object. </returns>
+        public static KustoClusterPrincipalAssignmentResource GetKustoClusterPrincipalAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ClusterPrincipalAssignmentResource.ValidateResourceId(id);
-                return new ClusterPrincipalAssignmentResource(client, id);
+                KustoClusterPrincipalAssignmentResource.ValidateResourceId(id);
+                return new KustoClusterPrincipalAssignmentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseResource
+        #region KustoDatabaseResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KustoDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KustoDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="KustoDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseResource" /> object. </returns>
-        public static DatabaseResource GetDatabaseResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="KustoDatabaseResource" /> object. </returns>
+        public static KustoDatabaseResource GetKustoDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatabaseResource.ValidateResourceId(id);
-                return new DatabaseResource(client, id);
+                KustoDatabaseResource.ValidateResourceId(id);
+                return new KustoDatabaseResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AttachedDatabaseConfigurationResource
+        #region KustoAttachedDatabaseConfigurationResource
         /// <summary>
-        /// Gets an object representing an <see cref="AttachedDatabaseConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AttachedDatabaseConfigurationResource.CreateResourceIdentifier" /> to create an <see cref="AttachedDatabaseConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KustoAttachedDatabaseConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KustoAttachedDatabaseConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="KustoAttachedDatabaseConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AttachedDatabaseConfigurationResource" /> object. </returns>
-        public static AttachedDatabaseConfigurationResource GetAttachedDatabaseConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="KustoAttachedDatabaseConfigurationResource" /> object. </returns>
+        public static KustoAttachedDatabaseConfigurationResource GetKustoAttachedDatabaseConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AttachedDatabaseConfigurationResource.ValidateResourceId(id);
-                return new AttachedDatabaseConfigurationResource(client, id);
+                KustoAttachedDatabaseConfigurationResource.ValidateResourceId(id);
+                return new KustoAttachedDatabaseConfigurationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedPrivateEndpointResource
+        #region KustoManagedPrivateEndpointResource
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedPrivateEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedPrivateEndpointResource.CreateResourceIdentifier" /> to create a <see cref="ManagedPrivateEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KustoManagedPrivateEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KustoManagedPrivateEndpointResource.CreateResourceIdentifier" /> to create a <see cref="KustoManagedPrivateEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedPrivateEndpointResource" /> object. </returns>
-        public static ManagedPrivateEndpointResource GetManagedPrivateEndpointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="KustoManagedPrivateEndpointResource" /> object. </returns>
+        public static KustoManagedPrivateEndpointResource GetKustoManagedPrivateEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedPrivateEndpointResource.ValidateResourceId(id);
-                return new ManagedPrivateEndpointResource(client, id);
+                KustoManagedPrivateEndpointResource.ValidateResourceId(id);
+                return new KustoManagedPrivateEndpointResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabasePrincipalAssignmentResource
+        #region KustoDatabasePrincipalAssignmentResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatabasePrincipalAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabasePrincipalAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="DatabasePrincipalAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KustoDatabasePrincipalAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KustoDatabasePrincipalAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="KustoDatabasePrincipalAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabasePrincipalAssignmentResource" /> object. </returns>
-        public static DatabasePrincipalAssignmentResource GetDatabasePrincipalAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="KustoDatabasePrincipalAssignmentResource" /> object. </returns>
+        public static KustoDatabasePrincipalAssignmentResource GetKustoDatabasePrincipalAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatabasePrincipalAssignmentResource.ValidateResourceId(id);
-                return new DatabasePrincipalAssignmentResource(client, id);
+                KustoDatabasePrincipalAssignmentResource.ValidateResourceId(id);
+                return new KustoDatabasePrincipalAssignmentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ScriptResource
+        #region KustoScriptResource
         /// <summary>
-        /// Gets an object representing a <see cref="ScriptResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScriptResource.CreateResourceIdentifier" /> to create a <see cref="ScriptResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KustoScriptResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KustoScriptResource.CreateResourceIdentifier" /> to create a <see cref="KustoScriptResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScriptResource" /> object. </returns>
-        public static ScriptResource GetScriptResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="KustoScriptResource" /> object. </returns>
+        public static KustoScriptResource GetKustoScriptResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ScriptResource.ValidateResourceId(id);
-                return new ScriptResource(client, id);
+                KustoScriptResource.ValidateResourceId(id);
+                return new KustoScriptResource(client, id);
             }
             );
         }
@@ -406,20 +442,20 @@ namespace Azure.ResourceManager.Kusto
         }
         #endregion
 
-        #region DataConnectionResource
+        #region KustoDataConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DataConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KustoDataConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KustoDataConnectionResource.CreateResourceIdentifier" /> to create a <see cref="KustoDataConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataConnectionResource" /> object. </returns>
-        public static DataConnectionResource GetDataConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="KustoDataConnectionResource" /> object. </returns>
+        public static KustoDataConnectionResource GetKustoDataConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataConnectionResource.ValidateResourceId(id);
-                return new DataConnectionResource(client, id);
+                KustoDataConnectionResource.ValidateResourceId(id);
+                return new KustoDataConnectionResource(client, id);
             }
             );
         }

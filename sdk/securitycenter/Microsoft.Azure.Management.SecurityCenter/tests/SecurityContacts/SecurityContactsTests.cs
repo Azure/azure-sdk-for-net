@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using Microsoft.Azure.Management.Security;
 using Microsoft.Azure.Management.Security.Models;
@@ -58,7 +59,7 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var securityContact = securityCenterClient.SecurityContacts.Get("default2");
+                var securityContact = securityCenterClient.SecurityContacts.Get("default");
                 ValidateSecurityContact(securityContact);
             }
         }
@@ -70,9 +71,9 @@ namespace SecurityCenter.Tests
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
 
-                var contact = new SecurityContact("barbra@contoso.com", "", "Off", "Off");
+                var contact = new SecurityContact("Off", "", "", "barbra@contoso.com", "", new SecurityContactPropertiesAlertNotifications(), new SecurityContactPropertiesNotificationsByRole());
 
-                var securityContact = securityCenterClient.SecurityContacts.Create("default2", contact);
+                var securityContact = securityCenterClient.SecurityContacts.Create("default", contact);
                 ValidateSecurityContact(securityContact);
             }
         }
@@ -83,21 +84,7 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                securityCenterClient.SecurityContacts.Delete("default2");
-            }
-        }
-
-        [Fact]
-        public void SecurityContacts_Update()
-        {
-            using (var context = MockContext.Start(this.GetType()))
-            {
-                var securityCenterClient = GetSecurityCenterClient(context);
-
-                var contact = new SecurityContact("barbra@contoso.com", "", "Off", "Off");
-
-                var securityContact = securityCenterClient.SecurityContacts.Update("default2", contact);
-                ValidateSecurityContact(securityContact);
+                securityCenterClient.SecurityContacts.Delete("default");
             }
         }
 
@@ -105,7 +92,7 @@ namespace SecurityCenter.Tests
 
         #region Validations
 
-        private void ValidateSecurityContacts(IPage<SecurityContact> securityContactPage)
+        private void ValidateSecurityContacts(IList<SecurityContact> securityContactPage)
         {
             Assert.True(securityContactPage.IsAny());
 

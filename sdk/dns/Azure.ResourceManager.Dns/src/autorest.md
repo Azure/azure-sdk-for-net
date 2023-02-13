@@ -59,85 +59,72 @@ rename-rules:
   GET: Get
   PUT: Put
   RecordType: DnsRecordType
-  ARecord: ARecordInfo
-  AaaaRecord: AaaaRecordInfo
-  MxRecord: MXRecordInfo
-  NsRecord: NSRecordInfo
-  PtrRecord: PtrRecordInfo
-  SrvRecord: SrvRecordInfo
-  TxtRecord: TxtRecordInfo
-  CnameRecord: CnameRecordInfo
-  SoaRecord: SoaRecordInfo
-  CaaRecord: CaaRecordInfo
+  ARecord: DnsARecordInfo
+  AaaaRecord: DnsAaaaRecordInfo
+  MxRecord: DnsMXRecordInfo
+  NsRecord: DnsNSRecordInfo
+  PtrRecord: DnsPtrRecordInfo
+  SrvRecord: DnsSrvRecordInfo
+  TxtRecord: DnsTxtRecordInfo
+  CnameRecord: DnsCnameRecordInfo
+  SoaRecord: DnsSoaRecordInfo
+  CaaRecord: DnsCaaRecordInfo
 
 override-operation-name:
-  RecordSets_ListByDnsZone: GetRecordSets
-  RecordSets_ListAllByDnsZone: GetAllRecordSets
+  RecordSets_ListByDnsZone: GetAllRecordData # Change back to GetRecords once the polymorphic resource change is merged.
+  DnsResourceReference_GetByTargetResources: GetDnsResourceReferencesByTargetResources
+  Zones_List: GetDnsZones
 
 request-path-to-resource-name:
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/A: ARecord
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/AAAA: AaaaRecord
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/CAA: CaaRecord
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/CNAME: CnameRecord
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/MX: MXRecord
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/NS: NSRecord
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/PTR: PtrRecord
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/SOA: SoaRecord
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/SRV: SrvRecord
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/TXT: TxtRecord
-# Add nullable annotations
-directive:
-  - from: swagger-document
-    where: $.definitions.ZoneProperties
-    transform: $.properties.maxNumberOfRecordsPerRecordSet["x-nullable"] = true;
-# Rename models
-  - from: swagger-document
-    where: $.definitions.ZoneUpdate
-    transform: $["x-ms-client-name"] = "ZoneUpdateOptions";
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/A: DnsARecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/AAAA: DnsAaaaRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/CAA: DnsCaaRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/CNAME: DnsCnameRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/MX: DnsMXRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/NS: DnsNSRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/PTR: DnsPtrRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/SOA: DnsSoaRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/SRV: DnsSrvRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/TXT: DnsTxtRecord
 
+directive:
+  - remove-operation: RecordSets_ListAllByDnsZone
   - from: swagger-document
-    where: $.definitions.NsRecord.properties.nsdname
-    transform: $["x-ms-client-name"] = "DnsNSDomainName";
-  - from: swagger-document
-    where: $.definitions.PtrRecord.properties.ptrdname
-    transform: $["x-ms-client-name"] = "DnsPtrDomainName";
-  - from: swagger-document
-    where: $.definitions.RecordSetProperties.properties.TTL
-    transform: $["x-ms-client-name"] = "TtlInSeconds";
-  - from: swagger-document
-    where: $.definitions.TxtRecord.properties.value
-    transform: $["x-ms-client-name"] = "values";
+    where: $.definitions
+    transform: >
+      $.RecordSet["x-ms-client-name"] = "DnsRecord";
+      $.RecordSetListResult["x-ms-client-name"] = "DnsRecordListResult";
+      $.ZoneUpdate["x-ms-client-name"] = "ZoneUpdateOptions";
+      $.NsRecord.properties.nsdname["x-ms-client-name"] = "DnsNSDomainName";
+      $.PtrRecord.properties.ptrdname["x-ms-client-name"] = "DnsPtrDomainName";
+      $.RecordSetProperties.properties.TTL["x-ms-client-name"] = "TtlInSeconds";
+      $.TxtRecord.properties.value["x-ms-client-name"] = "values";
+      $.ZoneProperties.properties.maxNumberOfRecordsPerRecordSet["x-nullable"] = true;
+      $.ZoneProperties.properties.maxNumberOfRecordSets["x-ms-client-name"] = "maxNumberOfRecords";
+      $.ZoneProperties.properties.maxNumberOfRecordsPerRecordSet["x-ms-client-name"] = "maxNumberOfRecordsPerRecord";
+      $.ZoneProperties.properties.numberOfRecordSets["x-ms-client-name"] = "numberOfRecords";
 
 # FooTime => FooTimeInSeconds
   - from: swagger-document
-    where: $.definitions.SoaRecord.properties.expireTime
-    transform: $["x-ms-client-name"] = "expireTimeInSeconds";
-  - from: swagger-document
-    where: $.definitions.SoaRecord.properties.retryTime
-    transform: $["x-ms-client-name"] = "retryTimeInSeconds";
-  - from: swagger-document
-    where: $.definitions.SoaRecord.properties.minimumTTL
-    transform: $["x-ms-client-name"] = "minimumTtlInSeconds";
-  - from: swagger-document
-    where: $.definitions.SoaRecord.properties.refreshTime
-    transform: $["x-ms-client-name"] = "refreshTimeInSeconds";
+    where: $.definitions
+    transform: >
+      $.SoaRecord.properties.expireTime["x-ms-client-name"] = "expireTimeInSeconds";
+      $.SoaRecord.properties.retryTime["x-ms-client-name"] = "retryTimeInSeconds";
+      $.SoaRecord.properties.minimumTTL["x-ms-client-name"] = "minimumTtlInSeconds";
+      $.SoaRecord.properties.refreshTime["x-ms-client-name"] = "refreshTimeInSeconds";
 
 # Add Prepend Name
   - from: swagger-document
-    where: $.definitions.Zone
-    transform: $["x-ms-client-name"] = "DnsZone";
-  - from: swagger-document
-    where: $.definitions.ZoneProperties.properties.zoneType
-    transform: $["x-ms-enum"].name = "DnsZoneType";
-  - from: swagger-document
-    where: $.definitions.ZoneListResult
-    transform: $["x-ms-client-name"] = "DnsZoneListResult";
+    where: $.definitions
+    transform: >
+      $.Zone["x-ms-client-name"] = "DnsZone";
+      $.ZoneProperties.properties.zoneType["x-ms-enum"].name = "DnsZoneType";
+      $.ZoneListResult["x-ms-client-name"] = "DnsZoneListResult";
 
 # Mx Ns => MX NS
   - from: swagger-document
-    where: $.definitions.RecordSetProperties.properties.MXRecords
-    transform: $["x-ms-client-name"] = "MXRecords";
-  - from: swagger-document
-    where: $.definitions.RecordSetProperties.properties.NSRecords
-    transform: $["x-ms-client-name"] = "NSRecords";
+    where: $.definitions
+    transform: >
+      $.RecordSetProperties.properties.MXRecords["x-ms-client-name"] = "MXRecords";
+      $.RecordSetProperties.properties.NSRecords["x-ms-client-name"] = "NSRecords";
 ```

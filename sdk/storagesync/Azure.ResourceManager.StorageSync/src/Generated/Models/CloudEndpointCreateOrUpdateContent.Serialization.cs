@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -16,26 +17,26 @@ namespace Azure.ResourceManager.StorageSync.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccountResourceId))
             {
-                writer.WritePropertyName("storageAccountResourceId");
+                writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
             if (Optional.IsDefined(AzureFileShareName))
             {
-                writer.WritePropertyName("azureFileShareName");
+                writer.WritePropertyName("azureFileShareName"u8);
                 writer.WriteStringValue(AzureFileShareName);
             }
             if (Optional.IsDefined(StorageAccountTenantId))
             {
-                writer.WritePropertyName("storageAccountTenantId");
-                writer.WriteStringValue(StorageAccountTenantId);
+                writer.WritePropertyName("storageAccountTenantId"u8);
+                writer.WriteStringValue(StorageAccountTenantId.Value);
             }
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             writer.WriteEndObject();
@@ -48,38 +49,38 @@ namespace Azure.ResourceManager.StorageSync.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> storageAccountResourceId = default;
+            Optional<ResourceIdentifier> storageAccountResourceId = default;
             Optional<string> azureFileShareName = default;
-            Optional<string> storageAccountTenantId = default;
+            Optional<Guid> storageAccountTenantId = default;
             Optional<string> friendlyName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,22 +89,32 @@ namespace Azure.ResourceManager.StorageSync.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("storageAccountResourceId"))
+                        if (property0.NameEquals("storageAccountResourceId"u8))
                         {
-                            storageAccountResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            storageAccountResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("azureFileShareName"))
+                        if (property0.NameEquals("azureFileShareName"u8))
                         {
                             azureFileShareName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("storageAccountTenantId"))
+                        if (property0.NameEquals("storageAccountTenantId"u8))
                         {
-                            storageAccountTenantId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            storageAccountTenantId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("friendlyName"))
+                        if (property0.NameEquals("friendlyName"u8))
                         {
                             friendlyName = property0.Value.GetString();
                             continue;
@@ -112,7 +123,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new CloudEndpointCreateOrUpdateContent(id, name, type, systemData.Value, storageAccountResourceId.Value, azureFileShareName.Value, storageAccountTenantId.Value, friendlyName.Value);
+            return new CloudEndpointCreateOrUpdateContent(id, name, type, systemData.Value, storageAccountResourceId.Value, azureFileShareName.Value, Optional.ToNullable(storageAccountTenantId), friendlyName.Value);
         }
     }
 }

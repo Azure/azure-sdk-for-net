@@ -28,18 +28,26 @@ namespace Azure.ResourceManager.Subscription
             );
         }
 
-        /// <summary> Gets a collection of SubscriptionAliasResponseResources in the TenantResource. </summary>
+        /// <summary> Gets a collection of SubscriptionAliasResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SubscriptionAliasResponseResources and their operations over a SubscriptionAliasResponseResource. </returns>
-        public static SubscriptionAliasResponseCollection GetSubscriptionAliasResponses(this TenantResource tenantResource)
+        /// <returns> An object representing collection of SubscriptionAliasResources and their operations over a SubscriptionAliasResource. </returns>
+        public static SubscriptionAliasCollection GetSubscriptionAliases(this TenantResource tenantResource)
         {
-            return GetExtensionClient(tenantResource).GetSubscriptionAliasResponses();
+            return GetExtensionClient(tenantResource).GetSubscriptionAliases();
         }
 
         /// <summary>
         /// Get Alias Subscription.
-        /// Request Path: /providers/Microsoft.Subscription/aliases/{aliasName}
-        /// Operation Id: Alias_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Subscription/aliases/{aliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alias_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="aliasName"> AliasName is the name for the subscription creation request. Note that this is not the same as subscription name and this doesn’t have any other lifecycle need beyond the request for subscription creation. </param>
@@ -47,15 +55,23 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SubscriptionAliasResponseResource>> GetSubscriptionAliasResponseAsync(this TenantResource tenantResource, string aliasName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SubscriptionAliasResource>> GetSubscriptionAliasAsync(this TenantResource tenantResource, string aliasName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetSubscriptionAliasResponses().GetAsync(aliasName, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetSubscriptionAliases().GetAsync(aliasName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get Alias Subscription.
-        /// Request Path: /providers/Microsoft.Subscription/aliases/{aliasName}
-        /// Operation Id: Alias_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Subscription/aliases/{aliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Alias_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="aliasName"> AliasName is the name for the subscription creation request. Note that this is not the same as subscription name and this doesn’t have any other lifecycle need beyond the request for subscription creation. </param>
@@ -63,31 +79,39 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SubscriptionAliasResponseResource> GetSubscriptionAliasResponse(this TenantResource tenantResource, string aliasName, CancellationToken cancellationToken = default)
+        public static Response<SubscriptionAliasResource> GetSubscriptionAlias(this TenantResource tenantResource, string aliasName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetSubscriptionAliasResponses().Get(aliasName, cancellationToken);
+            return tenantResource.GetSubscriptionAliases().Get(aliasName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a GetTenantPolicyResponseResource along with the instance operations that can be performed on it in the TenantResource. </summary>
+        /// <summary> Gets an object representing a TenantPolicyResource along with the instance operations that can be performed on it in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="GetTenantPolicyResponseResource" /> object. </returns>
-        public static GetTenantPolicyResponseResource GetGetTenantPolicyResponse(this TenantResource tenantResource)
+        /// <returns> Returns a <see cref="TenantPolicyResource" /> object. </returns>
+        public static TenantPolicyResource GetTenantPolicy(this TenantResource tenantResource)
         {
-            return GetExtensionClient(tenantResource).GetGetTenantPolicyResponse();
+            return GetExtensionClient(tenantResource).GetTenantPolicy();
         }
 
-        /// <summary> Gets a collection of BillingAccountPoliciesResponseResources in the TenantResource. </summary>
+        /// <summary> Gets a collection of BillingAccountPolicyResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of BillingAccountPoliciesResponseResources and their operations over a BillingAccountPoliciesResponseResource. </returns>
-        public static BillingAccountPoliciesResponseCollection GetBillingAccountPoliciesResponses(this TenantResource tenantResource)
+        /// <returns> An object representing collection of BillingAccountPolicyResources and their operations over a BillingAccountPolicyResource. </returns>
+        public static BillingAccountPolicyCollection GetBillingAccountPolicies(this TenantResource tenantResource)
         {
-            return GetExtensionClient(tenantResource).GetBillingAccountPoliciesResponses();
+            return GetExtensionClient(tenantResource).GetBillingAccountPolicies();
         }
 
         /// <summary>
         /// Get Billing Account Policy.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default
-        /// Operation Id: BillingAccount_GetPolicy
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingAccount_GetPolicy</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountId"> Billing Account Id. </param>
@@ -95,15 +119,23 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<BillingAccountPoliciesResponseResource>> GetBillingAccountPoliciesResponseAsync(this TenantResource tenantResource, string billingAccountId, CancellationToken cancellationToken = default)
+        public static async Task<Response<BillingAccountPolicyResource>> GetBillingAccountPolicyAsync(this TenantResource tenantResource, string billingAccountId, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetBillingAccountPoliciesResponses().GetAsync(billingAccountId, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetBillingAccountPolicies().GetAsync(billingAccountId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get Billing Account Policy.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default
-        /// Operation Id: BillingAccount_GetPolicy
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.Subscription/policies/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingAccount_GetPolicy</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="billingAccountId"> Billing Account Id. </param>
@@ -111,101 +143,23 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<BillingAccountPoliciesResponseResource> GetBillingAccountPoliciesResponse(this TenantResource tenantResource, string billingAccountId, CancellationToken cancellationToken = default)
+        public static Response<BillingAccountPolicyResource> GetBillingAccountPolicy(this TenantResource tenantResource, string billingAccountId, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetBillingAccountPoliciesResponses().Get(billingAccountId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets details about a specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}
-        /// Operation Id: Subscriptions_Get
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public static async Task<Response<Models.Subscription>> GetSubscriptionAsync(this TenantResource tenantResource, string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            return await GetExtensionClient(tenantResource).GetSubscriptionAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets details about a specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}
-        /// Operation Id: Subscriptions_Get
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public static Response<Models.Subscription> GetSubscription(this TenantResource tenantResource, string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            return GetExtensionClient(tenantResource).GetSubscription(subscriptionId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all subscriptions for a tenant.
-        /// Request Path: /subscriptions
-        /// Operation Id: Subscriptions_List
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Models.Subscription" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Models.Subscription> GetSubscriptionsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetSubscriptionsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all subscriptions for a tenant.
-        /// Request Path: /subscriptions
-        /// Operation Id: Subscriptions_List
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Models.Subscription" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Models.Subscription> GetSubscriptions(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetSubscriptions(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the tenants for your account.
-        /// Request Path: /tenants
-        /// Operation Id: Tenants_List
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TenantIdDescription" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<TenantIdDescription> GetTenantsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetTenantsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the tenants for your account.
-        /// Request Path: /tenants
-        /// Operation Id: Tenants_List
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TenantIdDescription" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<TenantIdDescription> GetTenants(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetTenants(cancellationToken);
+            return tenantResource.GetBillingAccountPolicies().Get(billingAccountId, cancellationToken);
         }
 
         /// <summary>
         /// Accept subscription ownership.
-        /// Request Path: /providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnership
-        /// Operation Id: Subscription_AcceptOwnership
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnership</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_AcceptOwnership</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -214,18 +168,26 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<ArmOperation> AcceptOwnershipSubscriptionAsync(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation> AcceptSubscriptionOwnershipAsync(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(tenantResource).AcceptOwnershipSubscriptionAsync(waitUntil, subscriptionId, content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(tenantResource).AcceptSubscriptionOwnershipAsync(waitUntil, subscriptionId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Accept subscription ownership.
-        /// Request Path: /providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnership
-        /// Operation Id: Subscription_AcceptOwnership
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnership</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_AcceptOwnership</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -234,46 +196,62 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
-        public static ArmOperation AcceptOwnershipSubscription(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
+        public static ArmOperation AcceptSubscriptionOwnership(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(tenantResource).AcceptOwnershipSubscription(waitUntil, subscriptionId, content, cancellationToken);
+            return GetExtensionClient(tenantResource).AcceptSubscriptionOwnership(waitUntil, subscriptionId, content, cancellationToken);
         }
 
         /// <summary>
         /// Accept subscription ownership status.
-        /// Request Path: /providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnershipStatus
-        /// Operation Id: Subscription_AcceptOwnershipStatus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnershipStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_AcceptOwnershipStatus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public static async Task<Response<AcceptOwnershipStatusResponse>> AcceptOwnershipStatusSubscriptionAsync(this TenantResource tenantResource, string subscriptionId, CancellationToken cancellationToken = default)
+        public static async Task<Response<AcceptOwnershipStatus>> GetAcceptOwnershipStatusAsync(this TenantResource tenantResource, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            return await GetExtensionClient(tenantResource).AcceptOwnershipStatusSubscriptionAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(tenantResource).GetAcceptOwnershipStatusAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Accept subscription ownership status.
-        /// Request Path: /providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnershipStatus
-        /// Operation Id: Subscription_AcceptOwnershipStatus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnershipStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_AcceptOwnershipStatus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public static Response<AcceptOwnershipStatusResponse> AcceptOwnershipStatusSubscription(this TenantResource tenantResource, string subscriptionId, CancellationToken cancellationToken = default)
+        public static Response<AcceptOwnershipStatus> GetAcceptOwnershipStatus(this TenantResource tenantResource, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            return GetExtensionClient(tenantResource).AcceptOwnershipStatusSubscription(subscriptionId, cancellationToken);
+            return GetExtensionClient(tenantResource).GetAcceptOwnershipStatus(subscriptionId, cancellationToken);
         }
 
         private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
@@ -286,35 +264,17 @@ namespace Azure.ResourceManager.Subscription
         }
 
         /// <summary>
-        /// This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list.
-        /// Request Path: /subscriptions/{subscriptionId}/locations
-        /// Operation Id: Subscriptions_ListLocations
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Location" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Location> GetLocationsSubscriptionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetLocationsSubscriptionsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list.
-        /// Request Path: /subscriptions/{subscriptionId}/locations
-        /// Operation Id: Subscriptions_ListLocations
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Location" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Location> GetLocationsSubscriptions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetLocationsSubscriptions(cancellationToken);
-        }
-
-        /// <summary>
         /// The operation to cancel a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/cancel
-        /// Operation Id: Subscription_Cancel
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/cancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Cancel</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -325,8 +285,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// The operation to cancel a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/cancel
-        /// Operation Id: Subscription_Cancel
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/cancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Cancel</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -337,8 +305,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// The operation to rename a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/rename
-        /// Operation Id: Subscription_Rename
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/rename</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Rename</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="body"> Subscription Name. </param>
@@ -353,8 +329,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// The operation to rename a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/rename
-        /// Operation Id: Subscription_Rename
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/rename</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Rename</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="body"> Subscription Name. </param>
@@ -369,8 +353,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// The operation to enable a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/enable
-        /// Operation Id: Subscription_Enable
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/enable</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Enable</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -381,8 +373,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// The operation to enable a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/enable
-        /// Operation Id: Subscription_Enable
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/enable</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Enable</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -391,58 +391,58 @@ namespace Azure.ResourceManager.Subscription
             return GetExtensionClient(subscriptionResource).EnableSubscription(cancellationToken);
         }
 
-        #region SubscriptionAliasResponseResource
+        #region SubscriptionAliasResource
         /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionAliasResponseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionAliasResponseResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionAliasResponseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SubscriptionAliasResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionAliasResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionAliasResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionAliasResponseResource" /> object. </returns>
-        public static SubscriptionAliasResponseResource GetSubscriptionAliasResponseResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SubscriptionAliasResource" /> object. </returns>
+        public static SubscriptionAliasResource GetSubscriptionAliasResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SubscriptionAliasResponseResource.ValidateResourceId(id);
-                return new SubscriptionAliasResponseResource(client, id);
+                SubscriptionAliasResource.ValidateResourceId(id);
+                return new SubscriptionAliasResource(client, id);
             }
             );
         }
         #endregion
 
-        #region GetTenantPolicyResponseResource
+        #region TenantPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="GetTenantPolicyResponseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GetTenantPolicyResponseResource.CreateResourceIdentifier" /> to create a <see cref="GetTenantPolicyResponseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TenantPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantPolicyResource.CreateResourceIdentifier" /> to create a <see cref="TenantPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GetTenantPolicyResponseResource" /> object. </returns>
-        public static GetTenantPolicyResponseResource GetGetTenantPolicyResponseResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TenantPolicyResource" /> object. </returns>
+        public static TenantPolicyResource GetTenantPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                GetTenantPolicyResponseResource.ValidateResourceId(id);
-                return new GetTenantPolicyResponseResource(client, id);
+                TenantPolicyResource.ValidateResourceId(id);
+                return new TenantPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region BillingAccountPoliciesResponseResource
+        #region BillingAccountPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="BillingAccountPoliciesResponseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingAccountPoliciesResponseResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountPoliciesResponseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BillingAccountPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountPolicyResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BillingAccountPoliciesResponseResource" /> object. </returns>
-        public static BillingAccountPoliciesResponseResource GetBillingAccountPoliciesResponseResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BillingAccountPolicyResource" /> object. </returns>
+        public static BillingAccountPolicyResource GetBillingAccountPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BillingAccountPoliciesResponseResource.ValidateResourceId(id);
-                return new BillingAccountPoliciesResponseResource(client, id);
+                BillingAccountPolicyResource.ValidateResourceId(id);
+                return new BillingAccountPolicyResource(client, id);
             }
             );
         }

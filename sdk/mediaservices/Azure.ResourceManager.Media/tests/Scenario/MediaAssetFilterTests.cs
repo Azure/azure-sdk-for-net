@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -11,90 +12,51 @@ namespace Azure.ResourceManager.Media.Tests
 {
     public class MediaAssetFilterTests : MediaManagementTestBase
     {
-        private ResourceIdentifier _mediaAssetIdentifier;
-        private MediaAssetResource _mediaAssetResource;
+        private MediaAssetResource _mediaAsset;
 
-        private AssetFilterCollection assetFilterCollection => _mediaAssetResource.GetAssetFilters();
+        private MediaAssetFilterCollection assetFilterCollection => _mediaAsset.GetMediaAssetFilters();
 
-        public MediaAssetFilterTests(bool isAsync) : base(isAsync)
+        public MediaAssetFilterTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
-        }
-
-        [OneTimeSetUp]
-        public async Task GlobalSetup()
-        {
-            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, SessionRecording.GenerateAssetName(ResourceGroupNamePrefix), new ResourceGroupData(AzureLocation.WestUS2));
-            var storage = await CreateStorageAccount(rgLro.Value, SessionRecording.GenerateAssetName(StorageAccountNamePrefix));
-            var mediaService = await CreateMediaService(rgLro.Value, SessionRecording.GenerateAssetName("mediaservice"), storage.Id);
-            var mediaAsset = await mediaService.GetMediaAssets().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("asset"), new MediaAssetData());
-            _mediaAssetIdentifier = mediaAsset.Value.Id;
-
-            await StopSessionRecordingAsync();
         }
 
         [SetUp]
         public async Task SetUp()
         {
-            _mediaAssetResource = await Client.GetMediaAssetResource(_mediaAssetIdentifier).GetAsync();
+            var mediaServiceName = Recording.GenerateAssetName("dotnetsdkmediatests");
+            var mediaAssetName = Recording.GenerateAssetName("asset");
+            var mediaService = await CreateMediaService(ResourceGroup, mediaServiceName);
+            _mediaAsset = await CreateMediaAsset(mediaService, mediaAssetName);
         }
 
-        private async Task<AssetFilterResource> CreateDefaultAssetFilter(string filterName)
+        private async Task<MediaAssetFilterResource> CreateDefaultAssetFilter(string filterName)
         {
-            AssetFilterData data = new AssetFilterData();
+            MediaAssetFilterData data = new MediaAssetFilterData();
             var filter = await assetFilterCollection.CreateOrUpdateAsync(WaitUntil.Completed, filterName, data);
             return filter.Value;
         }
 
         [Test]
         [RecordedTest]
-        public async Task CreateOrUpdate()
+        public async Task MediaAssetFilterBasicTests()
         {
-            string filterName = SessionRecording.GenerateAssetName("filter");
+            // Create
+            string filterName = Recording.GenerateAssetName("mediaAssetFilter");
             var filter =await CreateDefaultAssetFilter(filterName);
             Assert.IsNotNull(filter);
             Assert.AreEqual(filterName, filter.Data.Name);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task Exist()
-        {
-            string filterName = SessionRecording.GenerateAssetName("filter");
-            await CreateDefaultAssetFilter(filterName);
+            // Check exists
             bool flag = await assetFilterCollection.ExistsAsync(filterName);
             Assert.IsTrue(flag);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task Get()
-        {
-            string filterName = SessionRecording.GenerateAssetName("filter");
-            await CreateDefaultAssetFilter(filterName);
-            var filter = await assetFilterCollection.GetAsync(filterName);
+            // Get
+            var result = await assetFilterCollection.GetAsync(filterName);
             Assert.IsNotNull(filter);
-            Assert.AreEqual(filterName, filter.Value.Data.Name);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task GetAll()
-        {
-            string filterName = SessionRecording.GenerateAssetName("filter");
-            await CreateDefaultAssetFilter(filterName);
+            Assert.AreEqual(filterName, result.Value.Data.Name);
+            // List
             var list = await assetFilterCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task Delete()
-        {
-            string filterName = SessionRecording.GenerateAssetName("filter");
-            var filter=await CreateDefaultAssetFilter(filterName);
-            bool flag = await assetFilterCollection.ExistsAsync(filterName);
-            Assert.IsTrue(flag);
-
+            // Delete
             await filter.DeleteAsync(WaitUntil.Completed);
             flag = await assetFilterCollection.ExistsAsync(filterName);
             Assert.IsFalse(flag);

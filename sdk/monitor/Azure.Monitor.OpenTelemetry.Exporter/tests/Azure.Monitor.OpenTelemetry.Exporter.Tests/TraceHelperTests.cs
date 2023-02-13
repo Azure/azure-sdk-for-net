@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -232,15 +234,50 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Activity[] activityList = new Activity[1];
             activityList[0] = activity;
             Batch<Activity> batch = new Batch<Activity>(activityList, 1);
+            var traceResource = new AzureMonitorResource();
 
-            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, "roleName", "roleInstance", "00000000 - 0000 - 0000 - 0000 - 000000000000");
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000-0000-0000-0000-000000000000");
 
             Assert.Equal(2, telemetryItems.Count());
-            Assert.Equal("Request", (IEnumerable<char>)telemetryItems[0].Name);
-            Assert.Equal("Exception", (IEnumerable<char>)telemetryItems[1].Name);
-            Assert.Equal(exceptionMessage, (IEnumerable<char>)(telemetryItems[1].Data.BaseData as TelemetryExceptionData).Exceptions.First().Message);
-            Assert.Equal("System.Exception", (IEnumerable<char>)(telemetryItems[1].Data.BaseData as TelemetryExceptionData).Exceptions.First().TypeName);
-            Assert.Equal("System.Exception: Exception Message", (IEnumerable<char>)(telemetryItems[1].Data.BaseData as TelemetryExceptionData).Exceptions.First().Stack);
+            Assert.Equal("Exception", telemetryItems[0].Name);
+            Assert.Equal("Request", telemetryItems[1].Name);
+            Assert.Equal(exceptionMessage, (telemetryItems[0].Data.BaseData as TelemetryExceptionData).Exceptions.First().Message);
+            Assert.Equal("System.Exception", (telemetryItems[0].Data.BaseData as TelemetryExceptionData).Exceptions.First().TypeName);
+            Assert.Equal("System.Exception: Exception Message", (telemetryItems[0].Data.BaseData as TelemetryExceptionData).Exceptions.First().Stack);
+        }
+
+        [Fact]
+        public void ActivityWithEventCreatesTraceTelemetry()
+        {
+            var eventName = "Custom Event";
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+               ActivityName,
+               ActivityKind.Server);
+
+            var tagsCollection = new ActivityTagsCollection
+            {
+                { "key1", "value1" },
+            };
+
+            var activityEvent = new ActivityEvent(eventName, default, tagsCollection);
+
+            activity.AddEvent(activityEvent);
+
+            Activity[] activityList = new Activity[1];
+            activityList[0] = activity;
+            Batch<Activity> batch = new Batch<Activity>(activityList, 1);
+            var traceResource = new AzureMonitorResource();
+
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000-0000-0000-0000-000000000000");
+
+            Assert.Equal(2, telemetryItems.Count());
+            Assert.Equal("Message", telemetryItems[0].Name);
+            Assert.Equal("Request", telemetryItems[1].Name);
+            Assert.Equal(eventName, (telemetryItems[0].Data.BaseData as MessageData).Message);
+            Assert.True((telemetryItems[0].Data.BaseData as MessageData).Properties.TryGetValue("key1", out var value));
+            Assert.Equal("value1", value);
+            Assert.Null((telemetryItems[0].Data.BaseData as MessageData).SeverityLevel);
         }
 
         [Fact]
@@ -259,8 +296,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Activity[] activityList = new Activity[1];
             activityList[0] = activity;
             Batch<Activity> batch = new Batch<Activity>(activityList, 1);
+            var traceResource = new AzureMonitorResource();
 
-            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, "roleName", "roleInstance", "00000000 - 0000 - 0000 - 0000 - 000000000000");
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000 - 0000 - 0000 - 0000 - 000000000000");
 
             Assert.Single(telemetryItems);
             Assert.Equal("Request", (IEnumerable<char>)telemetryItems[0].Name);
@@ -289,11 +327,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Activity[] activityList = new Activity[1];
             activityList[0] = activity;
             Batch<Activity> batch = new Batch<Activity>(activityList, 1);
+            var traceResource = new AzureMonitorResource();
 
-            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, "roleName", "roleInstance", "00000000 - 0000 - 0000 - 0000 - 000000000000");
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000 - 0000 - 0000 - 0000 - 000000000000");
 
             Assert.Single(telemetryItems);
-            Assert.Equal("Request", (IEnumerable<char>)telemetryItems[0].Name);
+            Assert.Equal("Request", telemetryItems[0].Name);
         }
 
         private string GetExpectedMSlinks(IEnumerable<ActivityLink> links)

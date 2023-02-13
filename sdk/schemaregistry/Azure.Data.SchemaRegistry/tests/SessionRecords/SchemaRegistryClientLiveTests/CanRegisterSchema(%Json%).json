@@ -1,0 +1,108 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://mreddingschemaregistry-json.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/test-10499?api-version=2022-10",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "460",
+        "Content-Type": "application/json; serialization=json",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.4.0-alpha.20230111.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1e6c9c1da59ef827d5b306fd46891371",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "$id": "1",
+        "$schema": "Json",
+        "title": "Person",
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "The person\u0027s first name."
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The person\u0027s last name."
+          },
+          "age": {
+            "description": "Age in years which must be equal to or greater than zero.",
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      },
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 12 Jan 2023 00:09:32 GMT",
+        "Location": "https://mreddingschemaregistry-json.servicebus.windows.net/$schemagroups/azsdk_net_test_group/schemas/test-10499/versions/1?api-version=2022-10",
+        "Schema-Group-Name": "azsdk_net_test_group",
+        "Schema-Id": "2527eec634604910a1769b58cb0649c3",
+        "Schema-Id-Location": "https://mreddingschemaregistry-json.servicebus.windows.net:443/$schemagroups/$schemas/2527eec634604910a1769b58cb0649c3?api-version=2022-10",
+        "Schema-Name": "test-10499",
+        "Schema-Version": "1",
+        "Schema-Versions-Location": "https://mreddingschemaregistry-json.servicebus.windows.net:443/$schemagroups/azsdk_net_test_group/schemas/test-10499/versions?api-version=2022-10",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://mreddingschemaregistry-json.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/test-10499:get-id?api-version=2022-10",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "460",
+        "Content-Type": "application/json; serialization=json",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.4.0-alpha.20230111.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8fcabf3b7d085b77068653f033738951",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "$id": "1",
+        "$schema": "Json",
+        "title": "Person",
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "The person\u0027s first name."
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The person\u0027s last name."
+          },
+          "age": {
+            "description": "Age in years which must be equal to or greater than zero.",
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      },
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Thu, 12 Jan 2023 00:09:33 GMT",
+        "Location": "https://mreddingschemaregistry-json.servicebus.windows.net/$schemagroups/azsdk_net_test_group/schemas/test-10499/versions/1?api-version=2022-10",
+        "Schema-Group-Name": "azsdk_net_test_group",
+        "Schema-Id": "2527eec634604910a1769b58cb0649c3",
+        "Schema-Id-Location": "https://mreddingschemaregistry-json.servicebus.windows.net:443/$schemagroups/$schemas/2527eec634604910a1769b58cb0649c3?api-version=2022-10",
+        "Schema-Name": "test-10499",
+        "Schema-Version": "1",
+        "Schema-Versions-Location": "https://mreddingschemaregistry-json.servicebus.windows.net:443/$schemagroups/azsdk_net_test_group/schemas/test-10499/versions?api-version=2022-10",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "1515580249",
+    "SCHEMAREGISTRY_ENDPOINT_JSON": "mreddingschemaregistry-json.servicebus.windows.net",
+    "SCHEMAREGISTRY_GROUP": "azsdk_net_test_group"
+  }
+}

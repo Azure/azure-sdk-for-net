@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Avs
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -30,34 +31,36 @@ namespace Azure.ResourceManager.Avs
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
             Optional<string> version = default;
+            Optional<string> company = default;
+            Optional<Uri> uri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,21 +69,36 @@ namespace Azure.ResourceManager.Avs
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("version"))
+                        if (property0.NameEquals("version"u8))
                         {
                             version = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("company"u8))
+                        {
+                            company = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("uri"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                uri = null;
+                                continue;
+                            }
+                            uri = new Uri(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ScriptPackageData(id, name, type, systemData.Value, description.Value, version.Value);
+            return new ScriptPackageData(id, name, type, systemData.Value, description.Value, version.Value, company.Value, uri.Value);
         }
     }
 }

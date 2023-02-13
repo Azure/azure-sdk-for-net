@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <param name="minimum"> The lowest permitted capacity for this resource. </param>
         /// <param name="maximum"> The highest permitted capacity for this resource. </param>
         /// <param name="scaleType"> The localized name of the resource. </param>
-        internal AvailableLabServicesSkuCapacity(long? @default, long? minimum, long? maximum, SkuCapacityScaleType? scaleType)
+        internal AvailableLabServicesSkuCapacity(long? @default, long? minimum, long? maximum, LabServicesSkuCapacityScaleType? scaleType)
         {
             Default = @default;
             Minimum = minimum;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <summary> The highest permitted capacity for this resource. </summary>
         public long? Maximum { get; }
         /// <summary> The localized name of the resource. </summary>
-        public SkuCapacityScaleType? ScaleType { get; }
+        public LabServicesSkuCapacityScaleType? ScaleType { get; }
     }
 }

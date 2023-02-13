@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -16,26 +15,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static SecuritySolutionList DeserializeSecuritySolutionList(JsonElement element)
         {
-            Optional<IReadOnlyList<SecuritySolutionData>> value = default;
+            Optional<IReadOnlyList<SecuritySolution>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SecuritySolutionData> array = new List<SecuritySolutionData>();
+                    List<SecuritySolution> array = new List<SecuritySolution>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecuritySolutionData.DeserializeSecuritySolutionData(item));
+                        array.Add(SecuritySolution.DeserializeSecuritySolution(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

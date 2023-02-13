@@ -138,10 +138,13 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public static EventData CreateEventFromBody(ReadOnlyMemory<byte> eventBody)
         {
-            var currentEvent = new EventData(eventBody);
-            currentEvent.Properties.Add(IdPropertyName, Guid.NewGuid().ToString());
+            var id = Guid.NewGuid().ToString();
 
-            return currentEvent;
+            return new EventData(eventBody)
+            {
+                MessageId = id,
+                Properties = {{ IdPropertyName, id }}
+            };
         }
 
         /// <summary>

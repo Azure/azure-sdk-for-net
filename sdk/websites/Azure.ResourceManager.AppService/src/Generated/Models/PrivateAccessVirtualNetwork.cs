@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="key"> The key (ID) of the Virtual Network. </param>
         /// <param name="resourceId"> The ARM uri of the Virtual Network. </param>
         /// <param name="subnets"> A List of subnets that access is allowed to on this Virtual Network. An empty array (but not null) is interpreted to mean that all subnets are allowed within this Virtual Network. </param>
-        internal PrivateAccessVirtualNetwork(string name, int? key, string resourceId, IList<PrivateAccessSubnet> subnets)
+        internal PrivateAccessVirtualNetwork(string name, int? key, ResourceIdentifier resourceId, IList<PrivateAccessSubnet> subnets)
         {
             Name = name;
             Key = key;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> The key (ID) of the Virtual Network. </summary>
         public int? Key { get; set; }
         /// <summary> The ARM uri of the Virtual Network. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> A List of subnets that access is allowed to on this Virtual Network. An empty array (but not null) is interpreted to mean that all subnets are allowed within this Virtual Network. </summary>
         public IList<PrivateAccessSubnet> Subnets { get; }
     }

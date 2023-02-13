@@ -11,18 +11,18 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void RecognizeEntities()
         {
+            // Create a text analytics client.
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
 
             #region Snippet:RecognizeEntities
-            string document = @"We love this trail and make the trip every year. The views are breathtaking and well
-                                worth the hike! Yesterday was foggy though, so we missed the spectacular views.
-                                We tried again today and it was amazing. Everyone in my family liked the trail although
-                                it was too challenging for the less athletic among us.
-                                Not necessarily recommended for small children.
-                                A hotel close to the trail offers services for childcare in case you want that.";
+            string document =
+                "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
+                + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
+                + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
+                + " athletic among us. Not necessarily recommended for small children. A hotel close to the trail"
+                + " offers services for childcare in case you want that.";
 
             try
             {
@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Samples
                     if (!string.IsNullOrEmpty(entity.SubCategory))
                         Console.WriteLine($"  SubCategory: {entity.SubCategory}");
                     Console.WriteLine($"  Confidence score: {entity.ConfidenceScore}");
-                    Console.WriteLine("");
+                    Console.WriteLine();
                 }
             }
             catch (RequestFailedException exception)

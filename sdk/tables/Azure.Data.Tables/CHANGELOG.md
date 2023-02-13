@@ -1,13 +1,47 @@
 # Release History
 
-## 12.7.0-beta.2 (Unreleased)
+## 12.9.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+### Other Changes
+
+## 12.8.0 (2023-02-08)
+
+### Bugs Fixed
+- Fixed an issue where LINQ predicates containing New expressions, such as `ent => ent.TimeStamp > new DateTimeOffset(...)`, threw an exception.
+
+### Other Changes
+- `TableClient.CreateIfNotExists` / `TableClient.CreateIfNotExistsAsync` documentation corrected (methods do not return `null` if the table already exists)
+- `TableClient` and `TableServiceClient` constructors that take SAS credentials no longer throw if the URI scheme is not https if it is a loopback host
+- Removed the `new()` constraint from methods on `TableClient`
+
+## 12.7.1 (2022-12-06)
+
+### Bugs Fixed
+- Removed client side validation which prevented `GetEntity` and `GetEntityAsync` from getting an entity with an empty string as its RowKey or PartitionKey value. ([#32447](https://github.com/Azure/azure-sdk-for-net/issues/32447))
+
+## 12.7.0 (2022-11-08)
+
+### Features Added
+- Added a `Uri` property to `TableClient` and `TableServiceClient`
+
+### Breaking Changes
+- `TableClient.GetEntityIfExists` now returns `NullableResponse<T>` which has a `HasValue` property which returns false when the entity did not exist. Accessing the `Value` property in this case will throw an exception.
+
+### Bugs Fixed
 - Fixed a OData filter issue with implicit boolean comparisons (for example expressions such as `ent => ent.BooleanProperty`) when calling `TableClient.QueryAsync(Expression<Func<T, bool>> filter, ...)`. ([#30185](https://github.com/Azure/azure-sdk-for-net/issues/30185))
+- Fixed an issue where `PartitionKey` and `RowKey` parameter values containing single quote characters are not automatically escaped on `DeleteEntity` calls. The new behavior can be overridden by either setting an AppContext switch named "Azure.Data.Tables.DisableEscapeSingleQuotesOnDeleteEntity" to `true` or by setting the environment variable "AZURE_DATA_TABLES_DISABLE_ESCAPESINGLEQUOTESONDELETEENTITY" to "true". Note: AppContext switches can also be configured via configuration like below:
+
+```xml
+<ItemGroup>
+    <RuntimeHostConfigurationOption Include="Azure.Data.Tables.DisableEscapeSingleQuotesOnDeleteEntity" Value="true" />
+</ItemGroup>
+  ```
 
 ### Other Changes
 - Custom defined entity models that implement `ITableEntity` explicitly will now be serialized properly ([#26514](https://github.com/Azure/azure-sdk-for-net/issues/26514))
@@ -15,7 +49,7 @@
 ## 12.7.0-beta.1 (2022-09-06)
 
 ### Features Added
-- Added `TableClient.GetEntityIfNotExists` which will not throw or log an error to telemetry if the specified entity does not exist in the table.
+- Added `TableClient.GetEntityIfExists` which will not throw or log an error to telemetry if the specified entity does not exist in the table.
 
 ### Bugs Fixed
 - `TableClient.CreateIfNotExists` and `TableServiceClient.CreateTableIfNotExists` no longer log an error or exception to telemetry when the table already exists (response status 409). ([#28084](https://github.com/Azure/azure-sdk-for-net/issues/28084))

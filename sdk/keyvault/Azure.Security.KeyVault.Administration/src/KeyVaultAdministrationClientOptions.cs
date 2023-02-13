@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Administration
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/keyvault/key-vault-versions">Key Vault versions</see>.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V7_3;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V7_4_Preview_1;
 
         /// <summary>
         /// The versions of Azure Key Vault supported by this client
@@ -34,6 +34,11 @@ namespace Azure.Security.KeyVault.Administration
             /// The Key Vault API version 7.3.
             /// </summary>
             V7_3 = 2,
+
+            /// <summary>
+            /// The Key Vault API version 7.4-preview.1.
+            /// </summary>
+            V7_4_Preview_1 = 3,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -46,7 +51,6 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyVaultAdministrationClientOptions"/> class.
-        /// class.
         /// </summary>
         /// <param name="version">
         /// The <see cref="ServiceVersion"/> of the service API used when
@@ -59,12 +63,18 @@ namespace Azure.Security.KeyVault.Administration
             this.ConfigureLogging();
         }
 
+        /// <summary>
+        /// Gets or sets whether to disable verification that the authentication challenge resource matches the Key Vault or Managed HSM domain.
+        /// </summary>
+        public bool DisableChallengeResourceVerification { get; set; }
+
         internal string GetVersionString()
         {
             return Version switch
             {
                 ServiceVersion.V7_2 => "7.2",
                 ServiceVersion.V7_3 => "7.3",
+                ServiceVersion.V7_4_Preview_1 => "7.4-preview.1",
                 _ => throw new ArgumentException(Version.ToString()),
             };
         }

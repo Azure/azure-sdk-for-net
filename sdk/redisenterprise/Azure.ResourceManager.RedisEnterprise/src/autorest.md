@@ -9,7 +9,6 @@ csharp: true
 library-name: RedisEnterprise
 namespace: Azure.ResourceManager.RedisEnterprise
 require: https://github.com/Azure/azure-rest-api-specs/blob/bab2f4389eb5ca73cdf366ec0a4af3f3eb6e1f6d/specification/redisenterprise/resource-manager/readme.md
-tag: package-2022-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

@@ -91,6 +91,16 @@ namespace Microsoft.Azure.Management.Network
         IApplicationGatewayPrivateEndpointConnectionsOperations ApplicationGatewayPrivateEndpointConnections { get; }
 
         /// <summary>
+        /// Gets the IApplicationGatewayWafDynamicManifestsDefaultOperations.
+        /// </summary>
+        IApplicationGatewayWafDynamicManifestsDefaultOperations ApplicationGatewayWafDynamicManifestsDefault { get; }
+
+        /// <summary>
+        /// Gets the IApplicationGatewayWafDynamicManifestsOperations.
+        /// </summary>
+        IApplicationGatewayWafDynamicManifestsOperations ApplicationGatewayWafDynamicManifests { get; }
+
+        /// <summary>
         /// Gets the IApplicationSecurityGroupsOperations.
         /// </summary>
         IApplicationSecurityGroupsOperations ApplicationSecurityGroups { get; }
@@ -139,6 +149,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IPublicIPAddressesOperations.
         /// </summary>
         IPublicIPAddressesOperations PublicIPAddresses { get; }
+
+        /// <summary>
+        /// Gets the IVipSwapOperations.
+        /// </summary>
+        IVipSwapOperations VipSwap { get; }
 
         /// <summary>
         /// Gets the ICustomIPPrefixesOperations.
@@ -224,6 +239,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IExpressRoutePortAuthorizationsOperations.
         /// </summary>
         IExpressRoutePortAuthorizationsOperations ExpressRoutePortAuthorizations { get; }
+
+        /// <summary>
+        /// Gets the IExpressRouteProviderPortsLocationOperations.
+        /// </summary>
+        IExpressRouteProviderPortsLocationOperations ExpressRouteProviderPortsLocation { get; }
 
         /// <summary>
         /// Gets the IFirewallPoliciesOperations.
@@ -621,6 +641,11 @@ namespace Microsoft.Azure.Management.Network
         IVirtualHubsOperations VirtualHubs { get; }
 
         /// <summary>
+        /// Gets the IRouteMapsOperations.
+        /// </summary>
+        IRouteMapsOperations RouteMaps { get; }
+
+        /// <summary>
         /// Gets the IHubVirtualNetworkConnectionsOperations.
         /// </summary>
         IHubVirtualNetworkConnectionsOperations HubVirtualNetworkConnections { get; }
@@ -704,11 +729,6 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IWebApplicationFirewallPoliciesOperations.
         /// </summary>
         IWebApplicationFirewallPoliciesOperations WebApplicationFirewallPolicies { get; }
-
-        /// <summary>
-        /// Gets the IExpressRouteProviderPortsLocationOperations.
-        /// </summary>
-        IExpressRouteProviderPortsLocationOperations ExpressRouteProviderPortsLocation { get; }
 
         /// <summary>
         /// Creates a Bastion Shareable Links for all the VMs specified in the
@@ -830,6 +850,20 @@ namespace Microsoft.Azure.Management.Network
         Task<AzureOperationResponse<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityWithHttpMessagesAsync(string location, string domainNameLabel, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
+        /// Retrieves detail of a provider port.
+        /// </summary>
+        /// <param name='providerport'>
+        /// The name of the provider port.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ExpressRouteProviderPort>> ExpressRouteProviderPortMethodWithHttpMessagesAsync(string providerport, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Lists active connectivity configurations in a network manager.
         /// </summary>
         /// <param name='parameters'>
@@ -841,13 +875,17 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='networkManagerName'>
         /// The name of the network manager.
         /// </param>
+        /// <param name='top'>
+        /// An optional query parameter which specifies the maximum number of
+        /// records to be returned by the server.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<ActiveConnectivityConfigurationsListResult>> ListActiveConnectivityConfigurationsWithHttpMessagesAsync(ActiveConfigurationParameter parameters, string resourceGroupName, string networkManagerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ActiveConnectivityConfigurationsListResult>> ListActiveConnectivityConfigurationsWithHttpMessagesAsync(ActiveConfigurationParameter parameters, string resourceGroupName, string networkManagerName, int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Lists active security admin rules in a network manager.
@@ -861,13 +899,17 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='networkManagerName'>
         /// The name of the network manager.
         /// </param>
+        /// <param name='top'>
+        /// An optional query parameter which specifies the maximum number of
+        /// records to be returned by the server.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<ActiveSecurityAdminRulesListResult>> ListActiveSecurityAdminRulesWithHttpMessagesAsync(ActiveConfigurationParameter parameters, string resourceGroupName, string networkManagerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ActiveSecurityAdminRulesListResult>> ListActiveSecurityAdminRulesWithHttpMessagesAsync(ActiveConfigurationParameter parameters, string resourceGroupName, string networkManagerName, int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List all effective connectivity configurations applied on a virtual
@@ -882,13 +924,17 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network.
         /// </param>
+        /// <param name='top'>
+        /// An optional query parameter which specifies the maximum number of
+        /// records to be returned by the server.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<NetworkManagerEffectiveConnectivityConfigurationListResult>> ListNetworkManagerEffectiveConnectivityConfigurationsWithHttpMessagesAsync(QueryRequestOptions parameters, string resourceGroupName, string virtualNetworkName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NetworkManagerEffectiveConnectivityConfigurationListResult>> ListNetworkManagerEffectiveConnectivityConfigurationsWithHttpMessagesAsync(QueryRequestOptions parameters, string resourceGroupName, string virtualNetworkName, int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List all effective security admin rules applied on a virtual
@@ -903,13 +949,17 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='virtualNetworkName'>
         /// The name of the virtual network.
         /// </param>
+        /// <param name='top'>
+        /// An optional query parameter which specifies the maximum number of
+        /// records to be returned by the server.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<NetworkManagerEffectiveSecurityAdminRulesListResult>> ListNetworkManagerEffectiveSecurityAdminRulesWithHttpMessagesAsync(QueryRequestOptions parameters, string resourceGroupName, string virtualNetworkName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NetworkManagerEffectiveSecurityAdminRulesListResult>> ListNetworkManagerEffectiveSecurityAdminRulesWithHttpMessagesAsync(QueryRequestOptions parameters, string resourceGroupName, string virtualNetworkName, int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gives the supported security providers for the virtual wan.
@@ -952,20 +1002,6 @@ namespace Microsoft.Azure.Management.Network
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<VpnProfileResponse>> GeneratevirtualwanvpnserverconfigurationvpnprofileWithHttpMessagesAsync(string resourceGroupName, string virtualWANName, VirtualWanVpnProfileParameters vpnClientParams, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Retrieves detail of a provider port.
-        /// </summary>
-        /// <param name='providerport'>
-        /// The name of the provider port.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<ExpressRouteProviderPort>> ExpressRouteProviderPortMethodWithHttpMessagesAsync(string providerport, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Creates a Bastion Shareable Links for all the VMs specified in the

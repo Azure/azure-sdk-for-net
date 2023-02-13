@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Billing.Models
             Optional<string> billingFrequency = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("billingFrequency"))
+                if (property.NameEquals("billingFrequency"u8))
                 {
                     billingFrequency = property.Value.GetString();
                     continue;

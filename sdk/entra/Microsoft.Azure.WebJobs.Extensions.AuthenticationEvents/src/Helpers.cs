@@ -4,6 +4,7 @@
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
@@ -17,8 +18,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     {
         internal static Dictionary<string, Type> _actionMapping = new Dictionary<string, Type>()
         {
-            {"microsoft.graph.provideclaimsfortoken",typeof(ProvideClaimsForToken) },
-            {"provideclaimsfortoken",typeof(ProvideClaimsForTokenLegacy) }
+            {"microsoft.graph.provideclaimsfortoken", typeof(ProvideClaimsForToken) }
         };
 
         internal static EventDefinition GetEventDefintionFromPayload(string payload)
@@ -41,11 +41,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     }
                 }
 
-                throw new Exception(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Comparable_Not_Found, comparable));
+                throw new InvalidOperationException(
+                    string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Comparable_Not_Found, comparable));
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Event_Missing, ex.Message));
+                throw new InvalidOperationException(AuthenticationEventResource.Ex_Event_Missing, ex);
             }
         }
 
@@ -119,40 +120,39 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         {
             return actionType != null && _actionMapping.ContainsKey(actionType.ToLower(CultureInfo.CurrentCulture))
                  ? (AuthenticationEventAction)Activator.CreateInstance(_actionMapping[actionType.ToLower(CultureInfo.CurrentCulture)])
-                 : throw new Exception(String.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Action_Invalid, actionType, String.Join("', '", _actionMapping.Select(x => x.Key))));
+                 : throw new Exception(String.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Invalid_Action, actionType, String.Join("', '", _actionMapping.Select(x => x.Key))));
         }
 
-        internal static void ValidateGraph(object graph)
+        internal static void ValidateGraph(object obj)
         {
-            var validationResults = new List<ValidationResult>();
-
-            ValidateGraph(graph, validationResults);
-
-            if (validationResults.Count > 0)
+            if (obj == null) return;//Fail safe not to try validate any null objects.
+            try
             {
-                throw new AggregateException(AuthenticationEventResource.Ex_Invalid_Payload, validationResults.Select(v => new Exception(v.ErrorMessage)));
-            }
-        }
-
-        private static void ValidateGraph(object obj, List<ValidationResult> validationResults)
-        {
-            List<ValidationResult> objectValidations = new List<ValidationResult>();
-
-            var props = obj.GetType().GetProperties().Where(p => p.GetCustomAttributes(false).FirstOrDefault(a => typeof(ValidationAttribute).IsAssignableFrom(a.GetType())) != null);
-
-            foreach (var prop in props)
-            {
-                object inst = prop.GetValue(obj);
-
-                Validator.TryValidateProperty(inst, new ValidationContext(obj) { MemberName = prop.Name }, objectValidations);
-
-                if (inst != null)//Short circuit the validation if the parent is null.
+                Validator.ValidateObject(obj, new ValidationContext(obj), true);
+                foreach (var prop in obj.GetType().GetProperties())
                 {
-                    ValidateGraph(inst, validationResults);
+                    if (prop.PropertyType == typeof(string) || prop.PropertyType.IsValueType) continue;
+
+                    object value = prop.GetValue(obj);
+                    if (value == null) continue;
+
+                    if (value is IEnumerable values)
+                    {
+                        foreach (object i in values)
+                        {
+                            ValidateGraph(i);
+                        }
+                    }
+                    else
+                    {
+                        ValidateGraph(value);
+                    }
                 }
             }
-
-            validationResults.AddRange(objectValidations.Select(f => { f.ErrorMessage = $"{obj.GetType().Name}: {f.ErrorMessage}"; return f; }));
+            catch (ValidationException val)
+            {
+                throw new ValidationException($"{obj.GetType().Name}: {val.Message}");
+            }
         }
     }
 }

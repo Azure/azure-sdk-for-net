@@ -15,58 +15,58 @@ namespace Azure.ResourceManager.Batch.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("username");
+            writer.WritePropertyName("userName"u8);
             writer.WriteStringValue(Username);
-            writer.WritePropertyName("source");
+            writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source);
-            writer.WritePropertyName("relativeMountPath");
+            writer.WritePropertyName("relativeMountPath"u8);
             writer.WriteStringValue(RelativeMountPath);
             if (Optional.IsDefined(MountOptions))
             {
-                writer.WritePropertyName("mountOptions");
+                writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStringValue(MountOptions);
             }
-            writer.WritePropertyName("password");
+            writer.WritePropertyName("password"u8);
             writer.WriteStringValue(Password);
             writer.WriteEndObject();
         }
 
         internal static BatchCifsMountConfiguration DeserializeBatchCifsMountConfiguration(JsonElement element)
         {
-            string username = default;
+            string userName = default;
             string source = default;
             string relativeMountPath = default;
             Optional<string> mountOptions = default;
             string password = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("username"))
+                if (property.NameEquals("userName"u8))
                 {
-                    username = property.Value.GetString();
+                    userName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     source = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("relativeMountPath"))
+                if (property.NameEquals("relativeMountPath"u8))
                 {
                     relativeMountPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mountOptions"))
+                if (property.NameEquals("mountOptions"u8))
                 {
                     mountOptions = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
                     continue;
                 }
             }
-            return new BatchCifsMountConfiguration(username, source, relativeMountPath, mountOptions.Value, password);
+            return new BatchCifsMountConfiguration(userName, source, relativeMountPath, mountOptions.Value, password);
         }
     }
 }

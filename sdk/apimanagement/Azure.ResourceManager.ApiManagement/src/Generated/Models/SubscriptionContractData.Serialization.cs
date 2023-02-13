@@ -18,94 +18,66 @@ namespace Azure.ResourceManager.ApiManagement
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(OwnerId))
             {
-                writer.WritePropertyName("ownerId");
+                writer.WritePropertyName("ownerId"u8);
                 writer.WriteStringValue(OwnerId);
             }
             if (Optional.IsDefined(Scope))
             {
-                writer.WritePropertyName("scope");
+                writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
             if (Optional.IsDefined(StartOn))
             {
-                if (StartOn != null)
-                {
-                    writer.WritePropertyName("startDate");
-                    writer.WriteStringValue(StartOn.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("startDate");
-                }
+                writer.WritePropertyName("startDate"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpiresOn))
+            if (Optional.IsDefined(ExpireOn))
             {
-                if (ExpiresOn != null)
-                {
-                    writer.WritePropertyName("expirationDate");
-                    writer.WriteStringValue(ExpiresOn.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("expirationDate");
-                }
+                writer.WritePropertyName("expirationDate"u8);
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(EndOn))
             {
-                if (EndOn != null)
-                {
-                    writer.WritePropertyName("endDate");
-                    writer.WriteStringValue(EndOn.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("endDate");
-                }
+                writer.WritePropertyName("endDate"u8);
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             if (Optional.IsDefined(NotifiesOn))
             {
-                if (NotifiesOn != null)
-                {
-                    writer.WritePropertyName("notificationDate");
-                    writer.WriteStringValue(NotifiesOn.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("notificationDate");
-                }
+                writer.WritePropertyName("notificationDate"u8);
+                writer.WriteStringValue(NotifiesOn.Value, "O");
             }
             if (Optional.IsDefined(PrimaryKey))
             {
-                writer.WritePropertyName("primaryKey");
+                writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
             if (Optional.IsDefined(SecondaryKey))
             {
-                writer.WritePropertyName("secondaryKey");
+                writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
             if (Optional.IsDefined(StateComment))
             {
-                writer.WritePropertyName("stateComment");
+                writer.WritePropertyName("stateComment"u8);
                 writer.WriteStringValue(StateComment);
             }
             if (Optional.IsDefined(AllowTracing))
             {
-                writer.WritePropertyName("allowTracing");
+                writer.WritePropertyName("allowTracing"u8);
                 writer.WriteBooleanValue(AllowTracing.Value);
             }
             writer.WriteEndObject();
@@ -123,42 +95,42 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<string> displayName = default;
             Optional<SubscriptionState> state = default;
             Optional<DateTimeOffset> createdDate = default;
-            Optional<DateTimeOffset?> startDate = default;
-            Optional<DateTimeOffset?> expirationDate = default;
-            Optional<DateTimeOffset?> endDate = default;
-            Optional<DateTimeOffset?> notificationDate = default;
+            Optional<DateTimeOffset> startDate = default;
+            Optional<DateTimeOffset> expirationDate = default;
+            Optional<DateTimeOffset> endDate = default;
+            Optional<DateTimeOffset> notificationDate = default;
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
             Optional<string> stateComment = default;
             Optional<bool> allowTracing = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -167,22 +139,22 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("ownerId"))
+                        if (property0.NameEquals("ownerId"u8))
                         {
                             ownerId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("scope"))
+                        if (property0.NameEquals("scope"u8))
                         {
                             scope = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -192,7 +164,7 @@ namespace Azure.ResourceManager.ApiManagement
                             state = property0.Value.GetString().ToSubscriptionState();
                             continue;
                         }
-                        if (property0.NameEquals("createdDate"))
+                        if (property0.NameEquals("createdDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -202,62 +174,62 @@ namespace Azure.ResourceManager.ApiManagement
                             createdDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("startDate"))
+                        if (property0.NameEquals("startDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                startDate = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("expirationDate"))
+                        if (property0.NameEquals("expirationDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                expirationDate = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expirationDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("endDate"))
+                        if (property0.NameEquals("endDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                endDate = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("notificationDate"))
+                        if (property0.NameEquals("notificationDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                notificationDate = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             notificationDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("primaryKey"))
+                        if (property0.NameEquals("primaryKey"u8))
                         {
                             primaryKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("secondaryKey"))
+                        if (property0.NameEquals("secondaryKey"u8))
                         {
                             secondaryKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("stateComment"))
+                        if (property0.NameEquals("stateComment"u8))
                         {
                             stateComment = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("allowTracing"))
+                        if (property0.NameEquals("allowTracing"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

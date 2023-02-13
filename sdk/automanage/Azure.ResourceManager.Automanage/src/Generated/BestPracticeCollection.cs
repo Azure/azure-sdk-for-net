@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -56,8 +55,16 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Get information about a Automanage best practice
-        /// Request Path: /providers/Microsoft.Automanage/bestPractices/{bestPracticeName}
-        /// Operation Id: BestPractices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Automanage/bestPractices/{bestPracticeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BestPractices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="bestPracticeName"> The Automanage best practice name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -85,8 +92,16 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Get information about a Automanage best practice
-        /// Request Path: /providers/Microsoft.Automanage/bestPractices/{bestPracticeName}
-        /// Operation Id: BestPractices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Automanage/bestPractices/{bestPracticeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BestPractices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="bestPracticeName"> The Automanage best practice name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -114,62 +129,58 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Retrieve a list of Automanage best practices
-        /// Request Path: /providers/Microsoft.Automanage/bestPractices
-        /// Operation Id: BestPractices_ListByTenant
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Automanage/bestPractices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BestPractices_ListByTenant</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BestPracticeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BestPracticeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<BestPracticeResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _bestPracticeClientDiagnostics.CreateScope("BestPracticeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _bestPracticeRestClient.ListByTenantAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BestPracticeResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _bestPracticeRestClient.CreateListByTenantRequest();
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new BestPracticeResource(Client, BestPracticeData.DeserializeBestPracticeData(e)), _bestPracticeClientDiagnostics, Pipeline, "BestPracticeCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Retrieve a list of Automanage best practices
-        /// Request Path: /providers/Microsoft.Automanage/bestPractices
-        /// Operation Id: BestPractices_ListByTenant
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Automanage/bestPractices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BestPractices_ListByTenant</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BestPracticeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BestPracticeResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<BestPracticeResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _bestPracticeClientDiagnostics.CreateScope("BestPracticeCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _bestPracticeRestClient.ListByTenant(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BestPracticeResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _bestPracticeRestClient.CreateListByTenantRequest();
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new BestPracticeResource(Client, BestPracticeData.DeserializeBestPracticeData(e)), _bestPracticeClientDiagnostics, Pipeline, "BestPracticeCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Automanage/bestPractices/{bestPracticeName}
-        /// Operation Id: BestPractices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Automanage/bestPractices/{bestPracticeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BestPractices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="bestPracticeName"> The Automanage best practice name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -195,8 +206,16 @@ namespace Azure.ResourceManager.Automanage
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /providers/Microsoft.Automanage/bestPractices/{bestPracticeName}
-        /// Operation Id: BestPractices_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Automanage/bestPractices/{bestPracticeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BestPractices_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="bestPracticeName"> The Automanage best practice name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

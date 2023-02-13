@@ -341,5 +341,5 @@ Synchronous methods are also available on `CryptographyClient`, though we recomm
 
 ## Additional samples
 
-- [Key Vault keys samples for .NET](https://docs.microsoft.com/samples/azure/azure-sdk-for-net/azuresecuritykeyvaultkeys-samples/)
-- [All Key Vault samples for .NET](https://docs.microsoft.com/samples/browse/?products=azure-key-vault&languages=csharp)
+- [Key Vault keys samples for .NET](https://learn.microsoft.com/samples/azure/azure-sdk-for-net/azuresecuritykeyvaultkeys-samples/)
+- [All Key Vault samples for .NET](https://learn.microsoft.com/samples/browse/?products=azure-key-vault&languages=csharp)

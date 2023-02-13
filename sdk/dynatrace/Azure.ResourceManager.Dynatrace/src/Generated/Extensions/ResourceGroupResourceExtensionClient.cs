@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Dynatrace
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of MonitorResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of MonitorResources and their operations over a MonitorResource. </returns>
-        public virtual MonitorResourceCollection GetMonitorResources()
+        /// <summary> Gets a collection of DynatraceMonitorResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DynatraceMonitorResources and their operations over a DynatraceMonitorResource. </returns>
+        public virtual DynatraceMonitorCollection GetDynatraceMonitors()
         {
-            return GetCachedClient(Client => new MonitorResourceCollection(Client, Id));
+            return GetCachedClient(Client => new DynatraceMonitorCollection(Client, Id));
         }
     }
 }

@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
+                writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
             if (Optional.IsDefined(Identifier))
             {
-                writer.WritePropertyName("identifier");
+                writer.WritePropertyName("identifier"u8);
                 writer.WriteNumberValue(Identifier.Value);
             }
             if (Optional.IsDefined(Protocol))
             {
-                writer.WritePropertyName("protocol");
+                writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
             if (Optional.IsDefined(InterfaceType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(InterfaceType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<GatewayLoadBalancerTunnelInterfaceType> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
                     port = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("identifier"))
+                if (property.NameEquals("identifier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
                     identifier = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("protocol"))
+                if (property.NameEquals("protocol"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
                     protocol = new GatewayLoadBalancerTunnelProtocol(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

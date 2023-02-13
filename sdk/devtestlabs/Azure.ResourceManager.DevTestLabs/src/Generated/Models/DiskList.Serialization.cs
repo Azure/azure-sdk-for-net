@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static DiskList DeserializeDiskList(JsonElement element)
         {
-            Optional<IReadOnlyList<DiskData>> value = default;
+            Optional<IReadOnlyList<DevTestLabDiskData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DiskData> array = new List<DiskData>();
+                    List<DevTestLabDiskData> array = new List<DevTestLabDiskData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskData.DeserializeDiskData(item));
+                        array.Add(DevTestLabDiskData.DeserializeDevTestLabDiskData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

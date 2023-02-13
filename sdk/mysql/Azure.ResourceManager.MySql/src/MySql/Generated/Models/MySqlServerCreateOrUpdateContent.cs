@@ -25,10 +25,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public MySqlServerCreateOrUpdateContent(MySqlServerPropertiesForCreate properties, AzureLocation location)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
             Location = location;

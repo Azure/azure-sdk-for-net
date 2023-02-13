@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of CustomDomainResourceList. </summary>
         internal CustomDomainResourceList()
         {
-            Value = new ChangeTrackingList<AppPlatformCustomDomainResourceData>();
+            Value = new ChangeTrackingList<AppPlatformCustomDomainData>();
         }
 
         /// <summary> Initializes a new instance of CustomDomainResourceList. </summary>
         /// <param name="value"> The custom domain resources list. </param>
         /// <param name="nextLink"> The link to next page of custom domain list. </param>
-        internal CustomDomainResourceList(IReadOnlyList<AppPlatformCustomDomainResourceData> value, string nextLink)
+        internal CustomDomainResourceList(IReadOnlyList<AppPlatformCustomDomainData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The custom domain resources list. </summary>
-        public IReadOnlyList<AppPlatformCustomDomainResourceData> Value { get; }
+        public IReadOnlyList<AppPlatformCustomDomainData> Value { get; }
         /// <summary> The link to next page of custom domain list. </summary>
         public string NextLink { get; }
     }

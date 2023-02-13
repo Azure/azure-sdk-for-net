@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="identity"> Identity information for the resource. </param>
         /// <param name="privateEndpointConnections"></param>
         /// <param name="provisioningState"> Provisioning state of the topic. </param>
-        /// <param name="endpointUri"> Endpoint for the topic. </param>
+        /// <param name="endpoint"> Endpoint for the topic. </param>
         /// <param name="inputSchema"> This determines the format that Event Grid should expect for incoming events published to the topic. </param>
         /// <param name="inputSchemaMapping">
         /// This enables publishing using custom event schemas. An InputSchemaMapping can be specified to map various properties of a source schema to various required properties of the EventGridEvent schema.
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
         /// <param name="isLocalAuthDisabled"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only AAD token will be used to authenticate if user is allowed to publish to the topic. </param>
         /// <param name="dataResidencyBoundary"> Data Residency Boundary of the resource. </param>
-        internal EventGridTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, EventGridTopicProvisioningState? provisioningState, Uri endpointUri, EventGridInputSchema? inputSchema, EventGridInputSchemaMapping inputSchemaMapping, string metricResourceId, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, DataResidencyBoundary? dataResidencyBoundary) : base(id, name, resourceType, systemData, tags, location)
+        internal EventGridTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, EventGridTopicProvisioningState? provisioningState, Uri endpoint, EventGridInputSchema? inputSchema, EventGridInputSchemaMapping inputSchemaMapping, string metricResourceId, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, DataResidencyBoundary? dataResidencyBoundary) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             PrivateEndpointConnections = privateEndpointConnections;
             ProvisioningState = provisioningState;
-            EndpointUri = endpointUri;
+            Endpoint = endpoint;
             InputSchema = inputSchema;
             InputSchemaMapping = inputSchemaMapping;
             MetricResourceId = metricResourceId;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Provisioning state of the topic. </summary>
         public EventGridTopicProvisioningState? ProvisioningState { get; }
         /// <summary> Endpoint for the topic. </summary>
-        public Uri EndpointUri { get; }
+        public Uri Endpoint { get; }
         /// <summary> This determines the format that Event Grid should expect for incoming events published to the topic. </summary>
         public EventGridInputSchema? InputSchema { get; set; }
         /// <summary>

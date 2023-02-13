@@ -31,7 +31,29 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager", "..\..\resourcemanager\Azure.ResourceManager\src\Azure.ResourceManager.csproj", "{8E60A748-3973-471A-B103-EC9406BB3313}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.TestFramework.Tests", "..\Azure.Core.TestFramework\tests\Azure.Core.TestFramework.Tests.csproj", "{33C299B5-ABDA-47BC-838F-973E62C067F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework.Tests", "..\Azure.Core.TestFramework\tests\Azure.Core.TestFramework.Tests.csproj", "{33C299B5-ABDA-47BC-838F-973E62C067F9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{13A04222-4F21-40FC-BE42-A37EE34FF272}"
+	ProjectSection(SolutionItems) = preProject
+		samples\Configuration.md = samples\Configuration.md
+		samples\Diagnostics.md = samples\Diagnostics.md
+		samples\Events.md = samples\Events.md
+		samples\LongRunningOperations.md = samples\LongRunningOperations.md
+		samples\Mocking.md = samples\Mocking.md
+		samples\Pipeline.md = samples\Pipeline.md
+		samples\ProtocolMethods.md = samples\ProtocolMethods.md
+		samples\README.md = samples\README.md
+		samples\RequestContext.md = samples\RequestContext.md
+		samples\Response.md = samples\Response.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Expressions.DataFactory", "..\Azure.Core.Expressions.DataFactory\src\Azure.Core.Expressions.DataFactory.csproj", "{7723BA5F-0017-45B4-B584-7D11AA069735}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Expressions.DataFactory.Tests", "..\Azure.Core.Expressions.DataFactory\tests\Azure.Core.Expressions.DataFactory.Tests.csproj", "{E1E88CD0-609C-4B8C-B723-DB004B90E235}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Experimental.Tests.Public", "..\Azure.Core.Experimental\tests\public\Azure.Core.Experimental.Tests.Public.csproj", "{3A0B2AFE-21E3-4585-A348-EE0645F98414}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Experimental.Perf.Benchmarks", "..\Azure.Core.Experimental\tests\perf\Azure.Core.Experimental.Perf.Benchmarks.csproj", "{8812429A-CDA8-4951-B6FD-2CC84741FFA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +121,22 @@ Global
 		{33C299B5-ABDA-47BC-838F-973E62C067F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33C299B5-ABDA-47BC-838F-973E62C067F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33C299B5-ABDA-47BC-838F-973E62C067F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7723BA5F-0017-45B4-B584-7D11AA069735}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7723BA5F-0017-45B4-B584-7D11AA069735}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7723BA5F-0017-45B4-B584-7D11AA069735}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7723BA5F-0017-45B4-B584-7D11AA069735}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1E88CD0-609C-4B8C-B723-DB004B90E235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1E88CD0-609C-4B8C-B723-DB004B90E235}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1E88CD0-609C-4B8C-B723-DB004B90E235}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1E88CD0-609C-4B8C-B723-DB004B90E235}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A0B2AFE-21E3-4585-A348-EE0645F98414}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A0B2AFE-21E3-4585-A348-EE0645F98414}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A0B2AFE-21E3-4585-A348-EE0645F98414}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A0B2AFE-21E3-4585-A348-EE0645F98414}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8812429A-CDA8-4951-B6FD-2CC84741FFA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8812429A-CDA8-4951-B6FD-2CC84741FFA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8812429A-CDA8-4951-B6FD-2CC84741FFA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8812429A-CDA8-4951-B6FD-2CC84741FFA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

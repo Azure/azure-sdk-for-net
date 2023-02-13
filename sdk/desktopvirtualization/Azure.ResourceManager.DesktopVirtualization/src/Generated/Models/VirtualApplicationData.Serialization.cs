@@ -18,28 +18,28 @@ namespace Azure.ResourceManager.DesktopVirtualization
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(FilePath))
             {
-                writer.WritePropertyName("filePath");
+                writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
             if (Optional.IsDefined(MsixPackageFamilyName))
             {
                 if (MsixPackageFamilyName != null)
                 {
-                    writer.WritePropertyName("msixPackageFamilyName");
+                    writer.WritePropertyName("msixPackageFamilyName"u8);
                     writer.WriteStringValue(MsixPackageFamilyName);
                 }
                 else
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 if (MsixPackageApplicationId != null)
                 {
-                    writer.WritePropertyName("msixPackageApplicationId");
+                    writer.WritePropertyName("msixPackageApplicationId"u8);
                     writer.WriteStringValue(MsixPackageApplicationId);
                 }
                 else
@@ -61,29 +61,29 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
             if (Optional.IsDefined(ApplicationType))
             {
-                writer.WritePropertyName("applicationType");
+                writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType.Value.ToString());
             }
-            writer.WritePropertyName("commandLineSetting");
+            writer.WritePropertyName("commandLineSetting"u8);
             writer.WriteStringValue(CommandLineSetting.ToString());
             if (Optional.IsDefined(CommandLineArguments))
             {
-                writer.WritePropertyName("commandLineArguments");
+                writer.WritePropertyName("commandLineArguments"u8);
                 writer.WriteStringValue(CommandLineArguments);
             }
             if (Optional.IsDefined(ShowInPortal))
             {
-                writer.WritePropertyName("showInPortal");
+                writer.WritePropertyName("showInPortal"u8);
                 writer.WriteBooleanValue(ShowInPortal.Value);
             }
             if (Optional.IsDefined(IconPath))
             {
-                writer.WritePropertyName("iconPath");
+                writer.WritePropertyName("iconPath"u8);
                 writer.WriteStringValue(IconPath);
             }
             if (Optional.IsDefined(IconIndex))
             {
-                writer.WritePropertyName("iconIndex");
+                writer.WritePropertyName("iconIndex"u8);
                 writer.WriteNumberValue(IconIndex.Value);
             }
             writer.WriteEndObject();
@@ -109,35 +109,35 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<string> iconPath = default;
             Optional<int> iconIndex = default;
             Optional<string> iconHash = default;
-            Optional<byte[]> iconContent = default;
+            Optional<BinaryData> iconContent = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -146,27 +146,27 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("objectId"))
+                        if (property0.NameEquals("objectId"u8))
                         {
                             objectId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("friendlyName"))
+                        if (property0.NameEquals("friendlyName"u8))
                         {
                             friendlyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("filePath"))
+                        if (property0.NameEquals("filePath"u8))
                         {
                             filePath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("msixPackageFamilyName"))
+                        if (property0.NameEquals("msixPackageFamilyName"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             msixPackageFamilyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("msixPackageApplicationId"))
+                        if (property0.NameEquals("msixPackageApplicationId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             msixPackageApplicationId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("applicationType"))
+                        if (property0.NameEquals("applicationType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -196,17 +196,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             applicationType = new RemoteApplicationType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("commandLineSetting"))
+                        if (property0.NameEquals("commandLineSetting"u8))
                         {
                             commandLineSetting = new VirtualApplicationCommandLineSetting(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("commandLineArguments"))
+                        if (property0.NameEquals("commandLineArguments"u8))
                         {
                             commandLineArguments = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("showInPortal"))
+                        if (property0.NameEquals("showInPortal"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -216,12 +216,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             showInPortal = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("iconPath"))
+                        if (property0.NameEquals("iconPath"u8))
                         {
                             iconPath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("iconIndex"))
+                        if (property0.NameEquals("iconIndex"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -231,19 +231,19 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             iconIndex = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("iconHash"))
+                        if (property0.NameEquals("iconHash"u8))
                         {
                             iconHash = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("iconContent"))
+                        if (property0.NameEquals("iconContent"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            iconContent = property0.Value.GetBytesFromBase64("D");
+                            iconContent = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }

@@ -14,21 +14,21 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static RunbookDraftUndoEditResult DeserializeRunbookDraftUndoEditResult(JsonElement element)
         {
-            Optional<HttpStatusCode> statusCode = default;
+            Optional<AutomationHttpStatusCode> statusCode = default;
             Optional<string> requestId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("statusCode"))
+                if (property.NameEquals("statusCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    statusCode = new HttpStatusCode(property.Value.GetString());
+                    statusCode = new AutomationHttpStatusCode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("requestId"))
+                if (property.NameEquals("requestId"u8))
                 {
                     requestId = property.Value.GetString();
                     continue;

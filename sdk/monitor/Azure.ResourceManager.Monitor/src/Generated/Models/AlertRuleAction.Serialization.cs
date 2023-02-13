@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("odata.type");
+            writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     case "Microsoft.Azure.Management.Insights.Models.RuleWebhookAction": return RuleWebhookAction.DeserializeRuleWebhookAction(element);
                 }
             }
-            string odataType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("odata.type"))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownAlertRuleAction(odataType);
+            return UnknownRuleAction.DeserializeUnknownRuleAction(element);
         }
     }
 }

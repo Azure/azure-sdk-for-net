@@ -13,22 +13,15 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary> A Kusto database data set mapping. </summary>
-    public partial class KustoDatabaseDataSetMapping : DataSetMappingData
+    public partial class KustoDatabaseDataSetMapping : ShareDataSetMappingData
     {
         /// <summary> Initializes a new instance of KustoDatabaseDataSetMapping. </summary>
         /// <param name="dataSetId"> The id of the source data set. </param>
         /// <param name="kustoClusterResourceId"> Resource id of the sink kusto cluster. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataSetId"/> or <paramref name="kustoClusterResourceId"/> is null. </exception>
-        public KustoDatabaseDataSetMapping(string dataSetId, string kustoClusterResourceId)
+        /// <exception cref="ArgumentNullException"> <paramref name="kustoClusterResourceId"/> is null. </exception>
+        public KustoDatabaseDataSetMapping(Guid dataSetId, ResourceIdentifier kustoClusterResourceId)
         {
-            if (dataSetId == null)
-            {
-                throw new ArgumentNullException(nameof(dataSetId));
-            }
-            if (kustoClusterResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(kustoClusterResourceId));
-            }
+            Argument.AssertNotNull(kustoClusterResourceId, nameof(kustoClusterResourceId));
 
             DataSetId = dataSetId;
             KustoClusterResourceId = kustoClusterResourceId;
@@ -46,7 +39,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="kustoClusterResourceId"> Resource id of the sink kusto cluster. </param>
         /// <param name="location"> Location of the sink kusto cluster. </param>
         /// <param name="provisioningState"> Provisioning state of the data set mapping. </param>
-        internal KustoDatabaseDataSetMapping(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetMappingKind kind, string dataSetId, DataSetMappingStatus? dataSetMappingStatus, string kustoClusterResourceId, AzureLocation? location, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, kind)
+        internal KustoDatabaseDataSetMapping(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetMappingKind kind, Guid dataSetId, DataSetMappingStatus? dataSetMappingStatus, ResourceIdentifier kustoClusterResourceId, AzureLocation? location, DataShareProvisioningState? provisioningState) : base(id, name, resourceType, systemData, kind)
         {
             DataSetId = dataSetId;
             DataSetMappingStatus = dataSetMappingStatus;
@@ -57,14 +50,14 @@ namespace Azure.ResourceManager.DataShare.Models
         }
 
         /// <summary> The id of the source data set. </summary>
-        public string DataSetId { get; set; }
+        public Guid DataSetId { get; set; }
         /// <summary> Gets the status of the data set mapping. </summary>
         public DataSetMappingStatus? DataSetMappingStatus { get; }
         /// <summary> Resource id of the sink kusto cluster. </summary>
-        public string KustoClusterResourceId { get; set; }
+        public ResourceIdentifier KustoClusterResourceId { get; set; }
         /// <summary> Location of the sink kusto cluster. </summary>
         public AzureLocation? Location { get; }
         /// <summary> Provisioning state of the data set mapping. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DataShareProvisioningState? ProvisioningState { get; }
     }
 }

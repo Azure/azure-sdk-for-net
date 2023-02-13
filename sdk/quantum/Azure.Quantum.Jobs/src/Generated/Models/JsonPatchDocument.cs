@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Quantum.Jobs.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.Quantum.Jobs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
         public JsonPatchDocument(JsonPatchOperation op, string path)
         {
-            if (path == null)
-            {
-                throw new ArgumentNullException(nameof(path));
-            }
+            Argument.AssertNotNull(path, nameof(path));
 
             Op = op;
             Path = path;

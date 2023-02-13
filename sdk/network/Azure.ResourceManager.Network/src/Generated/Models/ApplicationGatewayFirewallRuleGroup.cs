@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -20,14 +21,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ruleGroupName"/> or <paramref name="rules"/> is null. </exception>
         public ApplicationGatewayFirewallRuleGroup(string ruleGroupName, IEnumerable<ApplicationGatewayFirewallRule> rules)
         {
-            if (ruleGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleGroupName));
-            }
-            if (rules == null)
-            {
-                throw new ArgumentNullException(nameof(rules));
-            }
+            Argument.AssertNotNull(ruleGroupName, nameof(ruleGroupName));
+            Argument.AssertNotNull(rules, nameof(rules));
 
             RuleGroupName = ruleGroupName;
             Rules = rules.ToList();

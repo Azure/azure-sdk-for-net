@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Gets the Move Resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/moveResources/{moveResourceName}
-        /// Operation Id: MoveResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/moveResources/{moveResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MoverResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -99,7 +107,7 @@ namespace Azure.ResourceManager.ResourceMover
             scope.Start();
             try
             {
-                var response = await _moverResourceMoveResourcesRestClient.GetAsync(Id.Parent.Name, Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                var response = await _moverResourceMoveResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MoverResource(Client, response.Value), response.GetRawResponse());
@@ -113,8 +121,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Gets the Move Resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/moveResources/{moveResourceName}
-        /// Operation Id: MoveResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/moveResources/{moveResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MoverResource> Get(CancellationToken cancellationToken = default)
@@ -123,7 +139,7 @@ namespace Azure.ResourceManager.ResourceMover
             scope.Start();
             try
             {
-                var response = _moverResourceMoveResourcesRestClient.Get(Id.Parent.Name, Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
+                var response = _moverResourceMoveResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MoverResource(Client, response.Value), response.GetRawResponse());
@@ -137,8 +153,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Deletes a Move Resource from the move collection.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/moveResources/{moveResourceName}
-        /// Operation Id: MoveResources_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/moveResources/{moveResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveResources_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -148,8 +172,8 @@ namespace Azure.ResourceManager.ResourceMover
             scope.Start();
             try
             {
-                var response = await _moverResourceMoveResourcesRestClient.DeleteAsync(Id.Parent.Name, Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceMoveResourcesClientDiagnostics, Pipeline, _moverResourceMoveResourcesRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _moverResourceMoveResourcesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceMoveResourcesClientDiagnostics, Pipeline, _moverResourceMoveResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -163,8 +187,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Deletes a Move Resource from the move collection.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/moveResources/{moveResourceName}
-        /// Operation Id: MoveResources_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/moveResources/{moveResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveResources_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -174,8 +206,8 @@ namespace Azure.ResourceManager.ResourceMover
             scope.Start();
             try
             {
-                var response = _moverResourceMoveResourcesRestClient.Delete(Id.Parent.Name, Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
-                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceMoveResourcesClientDiagnostics, Pipeline, _moverResourceMoveResourcesRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _moverResourceMoveResourcesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new ResourceMoverArmOperation<MoverOperationStatus>(new MoverOperationStatusOperationSource(), _moverResourceMoveResourcesClientDiagnostics, Pipeline, _moverResourceMoveResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -189,8 +221,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Creates or updates a Move Resource in the move collection.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/moveResources/{moveResourceName}
-        /// Operation Id: MoveResources_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/moveResources/{moveResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveResources_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The MoverResource to use. </param>
@@ -204,8 +244,8 @@ namespace Azure.ResourceManager.ResourceMover
             scope.Start();
             try
             {
-                var response = await _moverResourceMoveResourcesRestClient.CreateAsync(Id.Parent.Name, Id.Name, Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourceMoverArmOperation<MoverResource>(new MoverResourceOperationSource(Client), _moverResourceMoveResourcesClientDiagnostics, Pipeline, _moverResourceMoveResourcesRestClient.CreateCreateRequest(Id.Parent.Name, Id.Name, Id.SubscriptionId, Id.ResourceGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _moverResourceMoveResourcesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourceMoverArmOperation<MoverResource>(new MoverResourceOperationSource(Client), _moverResourceMoveResourcesClientDiagnostics, Pipeline, _moverResourceMoveResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -219,8 +259,16 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary>
         /// Creates or updates a Move Resource in the move collection.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/moveResources/{moveResourceName}
-        /// Operation Id: MoveResources_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/moveResources/{moveResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveResources_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The MoverResource to use. </param>
@@ -234,8 +282,8 @@ namespace Azure.ResourceManager.ResourceMover
             scope.Start();
             try
             {
-                var response = _moverResourceMoveResourcesRestClient.Create(Id.Parent.Name, Id.Name, Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken);
-                var operation = new ResourceMoverArmOperation<MoverResource>(new MoverResourceOperationSource(Client), _moverResourceMoveResourcesClientDiagnostics, Pipeline, _moverResourceMoveResourcesRestClient.CreateCreateRequest(Id.Parent.Name, Id.Name, Id.SubscriptionId, Id.ResourceGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _moverResourceMoveResourcesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new ResourceMoverArmOperation<MoverResource>(new MoverResourceOperationSource(Client), _moverResourceMoveResourcesClientDiagnostics, Pipeline, _moverResourceMoveResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

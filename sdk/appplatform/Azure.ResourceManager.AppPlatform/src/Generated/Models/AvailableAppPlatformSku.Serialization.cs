@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<ResourceType> resourceType = default;
             Optional<string> name = default;
             Optional<string> tier = default;
-            Optional<SkuCapacity> capacity = default;
+            Optional<AppPlatformSkuCapacity> capacity = default;
             Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<ResourceSkuLocationInfo>> locationInfo = default;
-            Optional<IReadOnlyList<ResourceSkuRestrictions>> restrictions = default;
+            Optional<IReadOnlyList<AppPlatformSkuLocationInfo>> locationInfo = default;
+            Optional<IReadOnlyList<AppPlatformSkuRestrictions>> restrictions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,27 +34,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     tier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capacity"))
+                if (property.NameEquals("capacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    capacity = SkuCapacity.DeserializeSkuCapacity(property.Value);
+                    capacity = AppPlatformSkuCapacity.DeserializeAppPlatformSkuCapacity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("locations"))
+                if (property.NameEquals("locations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,32 +69,32 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     locations = array;
                     continue;
                 }
-                if (property.NameEquals("locationInfo"))
+                if (property.NameEquals("locationInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ResourceSkuLocationInfo> array = new List<ResourceSkuLocationInfo>();
+                    List<AppPlatformSkuLocationInfo> array = new List<AppPlatformSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuLocationInfo.DeserializeResourceSkuLocationInfo(item));
+                        array.Add(AppPlatformSkuLocationInfo.DeserializeAppPlatformSkuLocationInfo(item));
                     }
                     locationInfo = array;
                     continue;
                 }
-                if (property.NameEquals("restrictions"))
+                if (property.NameEquals("restrictions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ResourceSkuRestrictions> array = new List<ResourceSkuRestrictions>();
+                    List<AppPlatformSkuRestrictions> array = new List<AppPlatformSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuRestrictions.DeserializeResourceSkuRestrictions(item));
+                        array.Add(AppPlatformSkuRestrictions.DeserializeAppPlatformSkuRestrictions(item));
                     }
                     restrictions = array;
                     continue;

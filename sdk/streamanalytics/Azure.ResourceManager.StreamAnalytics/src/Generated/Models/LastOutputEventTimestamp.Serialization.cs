@@ -19,24 +19,24 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<DateTimeOffset> lastUpdateTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastOutputEventTime"))
+                if (property.NameEquals("lastOutputEventTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    lastOutputEventTime = property.Value.GetDateTimeOffset();
+                    lastOutputEventTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdateTime"))
+                if (property.NameEquals("lastUpdateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    lastUpdateTime = property.Value.GetDateTimeOffset();
+                    lastUpdateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }

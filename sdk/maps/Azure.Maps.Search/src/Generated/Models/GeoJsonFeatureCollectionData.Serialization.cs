@@ -16,7 +16,7 @@ namespace Azure.Maps.Search.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("features");
+            writer.WritePropertyName("features"u8);
             writer.WriteStartArray();
             foreach (var item in Features)
             {
@@ -31,7 +31,7 @@ namespace Azure.Maps.Search.Models
             IList<GeoJsonFeature> features = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("features"))
+                if (property.NameEquals("features"u8))
                 {
                     List<GeoJsonFeature> array = new List<GeoJsonFeature>();
                     foreach (var item in property.Value.EnumerateArray())

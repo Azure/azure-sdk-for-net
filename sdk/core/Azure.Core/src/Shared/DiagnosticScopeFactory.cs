@@ -41,7 +41,7 @@ namespace Azure.Core.Pipeline
 
         public bool IsActivityEnabled { get; }
 
-        public DiagnosticScope CreateScope(string name, DiagnosticScope.ActivityKind kind = DiagnosticScope.ActivityKind.Client)
+        public DiagnosticScope CreateScope(string name, DiagnosticScope.ActivityKind kind = DiagnosticScope.ActivityKind.Internal)
         {
             if (_source == null)
             {

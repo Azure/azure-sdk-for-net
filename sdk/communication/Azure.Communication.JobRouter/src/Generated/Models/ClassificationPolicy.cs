@@ -19,7 +19,11 @@ namespace Azure.Communication.JobRouter.Models
         /// <param name="id"> Unique identifier of this policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
         /// <param name="fallbackQueueId"> The fallback queue to select if the queue selector doesn&apos;t find a match. </param>
-        /// <param name="queueSelectors"> The queue selectors to resolve a queue for a given job. </param>
+        /// <param name="queueSelectors">
+        /// The queue selectors to resolve a queue for a given job.
+        /// Please note <see cref="QueueSelectorAttachment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ConditionalQueueSelectorAttachment"/>, <see cref="PassThroughQueueSelectorAttachment"/>, <see cref="RuleEngineQueueSelectorAttachment"/>, <see cref="StaticQueueSelectorAttachment"/> and <see cref="WeightedAllocationQueueSelectorAttachment"/>.
+        /// </param>
         /// <param name="prioritizationRule">
         /// A rule of one of the following types:
         ///             
@@ -27,8 +31,14 @@ namespace Azure.Communication.JobRouter.Models
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.
         /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
+        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FunctionRule"/>, <see cref="DirectMapRule"/>, <see cref="ExpressionRule"/> and <see cref="StaticRule"/>.
         /// </param>
-        /// <param name="workerSelectors"> The worker label selectors to attach to a given job. </param>
+        /// <param name="workerSelectors">
+        /// The worker label selectors to attach to a given job.
+        /// Please note <see cref="WorkerSelectorAttachment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ConditionalWorkerSelectorAttachment"/>, <see cref="PassThroughWorkerSelectorAttachment"/>, <see cref="RuleEngineWorkerSelectorAttachment"/>, <see cref="StaticWorkerSelectorAttachment"/> and <see cref="WeightedAllocationWorkerSelectorAttachment"/>.
+        /// </param>
         internal ClassificationPolicy(string id, string name, string fallbackQueueId, IList<QueueSelectorAttachment> queueSelectors, RouterRule prioritizationRule, IList<WorkerSelectorAttachment> workerSelectors)
         {
             Id = id;
@@ -52,6 +62,8 @@ namespace Azure.Communication.JobRouter.Models
         /// DirectMapRule:  A rule that return the same labels as the input labels.
         /// ExpressionRule: A rule providing inline expression rules.
         /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
+        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FunctionRule"/>, <see cref="DirectMapRule"/>, <see cref="ExpressionRule"/> and <see cref="StaticRule"/>.
         /// </summary>
         public RouterRule PrioritizationRule { get; set; }
     }

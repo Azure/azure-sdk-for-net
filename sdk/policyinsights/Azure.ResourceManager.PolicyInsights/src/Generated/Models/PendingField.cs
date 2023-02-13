@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="field"/> is null. </exception>
         public PendingField(string field)
         {
-            if (field == null)
-            {
-                throw new ArgumentNullException(nameof(field));
-            }
+            Argument.AssertNotNull(field, nameof(field));
 
             Field = field;
             Values = new ChangeTrackingList<string>();

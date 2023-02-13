@@ -8,8 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Media
 namespace: Azure.ResourceManager.Media
-require: https://github.com/Azure/azure-rest-api-specs/blob/0f9df940977c680c39938c8b8bd5baf893737ed0/specification/mediaservices/resource-manager/readme.md
-tag: package-account-2021-11
+require: https://github.com/Azure/azure-rest-api-specs/blob/c91eca4e2081703002581da6f58f9d9332e1afd1/specification/mediaservices/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -24,17 +23,16 @@ request-path-to-resource-name:
 
 override-operation-name:
   StreamingEndpoints_Skus: GetSupportedSkus
-  StreamingLocators_ListPaths: GetSupportedPaths
-  Locations_CheckNameAvailability: CheckMediaNameAvailability
+  StreamingLocators_ListPaths: GetStreamingPaths
+  Locations_CheckNameAvailability: CheckMediaServicesNameAvailability
   Assets_ListContainerSas: GetStorageContainerUris
-  
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
-  '*UriTemplate': 'Uri'
   'ResponseCustomData': 'any'
   'locationName': 'azure-location'
 
@@ -68,169 +66,175 @@ rename-rules:
   CRF: Crf
   MP4: Mp4
 
-list-exception:
-- /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}
-- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}/operationResults/{operationId}
-
 rename-mapping:
   AacAudioProfile.HeAacV1: HEAacV1
   AacAudioProfile.HeAacV2: HEAacV2
   AccessControl: MediaAccessControl
-  KeyDelivery: MediaKeyDelivery
-  Asset: MediaAsset
-  Asset.properties.created: CreatedOn
-  Asset.properties.lastModified: LastModifiedOn
-  ProvisioningState: MediaProvisioningState
-  ContentKeyPolicy.properties.created: CreatedOn
-  ContentKeyPolicy.properties.lastModified: LastModifiedOn
-  ContentKeyPolicy.properties.options: Preferences
-  ContentKeyPolicyOption: ContentKeyPolicyPreference
-  Job: MediaTransformJob
-  Job.properties.created: CreatedOn
-  Job.properties.lastModified: LastModifiedOn
-  Job.properties.startTime: StartsOn
-  Job.properties.endTime: EndsOn
-  Priority: TransformOutputsPriority
-  LiveEvent.properties.created: CreatedOn
-  LiveEvent.properties.lastModified: LastModifiedOn
-  LiveOutput.properties.created: CreatedOn
-  LiveOutput.properties.lastModified: LastModifiedOn
-  PublicNetworkAccess: MediaPublicNetworkAccessStatus
-  StorageAccount: MediaServicesStorageAccount
-  StorageAccount.id: -|arm-id
-  StreamingEndpoint.properties.cdnEnabled: IsCdnEnabled
-  StreamingEndpoint.properties.created: CreatedOn
-  StreamingEndpoint.properties.lastModified: LastModifiedOn
-  StreamingEndpoint.properties.scaleUnits: ScaleUnitsNumber
-  StreamingLocator.properties.created: CreatedOn
-  StreamingLocator.properties.startTime: StartsOn
-  StreamingLocator.properties.endTime: EndsOn
-  StreamingPolicy.properties.created: CreatedOn
-  Transform: MediaTransform
-  Transform.properties.created: CreatedOn
-  Transform.properties.lastModified: LastModifiedOn
-  CheckNameAvailabilityInput: MediaNameAvailabilityContent
-  EntityNameAvailabilityCheckOutput: MediaNameAvailabilityResult
-  EntityNameAvailabilityCheckOutput.nameAvailable: IsNameAvailable
-  AssetStreamingLocator.created: CreatedOn
-  AssetStreamingLocator.startTime: StartsOn
-  AssetStreamingLocator.endTime: EndsOn
-  Codec: CodecBasicProperties
-  Audio: AudioCommonProperties
-  Overlay: OverlayBasicProperties
-  Complexity: EncoderComplexitySetting
-  ContentKeyPolicyPlayReadyLicense.expirationDate: ExpiresOn
-  ContentKeyPolicyPlayReadyUnknownOutputPassingOption: ContentKeyPolicyPlayReadyUnknownOutputPassingSetting
-  ContentKeyPolicyProperties.created: CreatedOn
-  ContentKeyPolicyProperties.lastModified: LastModifiedOn
-  ContentKeyPolicyProperties.options: Preferences
-  Filters: FilteringOperations
-  Rectangle: RectangularWindowProperties
-  Deinterlace: DeinterlaceSettings
-  Rotation: RotationSetting
-  Format: FormatBasicProperties
-  Image: ImageBasicProperties
-  Video: InputVideoEncodingProperties
-  Layer: VideoOrImageLayerProperties
-  ListContainerSasInput: GetContainerSasContent
-  ListContainerSasInput.expiryTime: ExpiresOn
-  ListEdgePoliciesInput: GetEdgePoliciesContent
-  Preset: MediaPreset
-  StorageAccountType: MediaServicesStorageAccountType
-  Visibility: PlayerVisibility
-  AssetCollection: AssetListResult
-  AccountFilterCollection: AccountFilterListResult
-  AssetFilterCollection: AssetFilterListResult
-  AssetTrackCollection: AssetTrackListResult
-  ContentKeyPolicyCollection: ContentKeyPolicyListResult
-  JobCollection: MediaTransformJobListResult
-  MediaServiceCollection: MediaServicesAccountListResult
-  StreamingLocatorCollection: StreamingLocatorListResult
-  StreamingPolicyCollection: StreamingPolicyListResult
-  TransformCollection: TransformListResult
-  StorageEncryptedAssetDecryptionData: StorageEncryptedAssetDecryptionInfo
-  AssetTrack: MediaAssetTrack
-  TrackBase: AssetTrackInfo
-  PrivateEndpointConnection: MediaServicesPrivateEndpointConnection
-  PrivateLinkResource: MediaServicesPrivateLinkResource
-  ListPathsResponse: GetPathsResult
-  AkamaiSignatureHeaderAuthenticationKey.expiration: ExpiresOn
-  ContentKeyPolicyFairPlayOfflineRentalConfiguration.playbackDurationSeconds: PlaybackDurationInSeconds
-  ContentKeyPolicyFairPlayOfflineRentalConfiguration.storageDurationSeconds: StorageDurationInSeconds
-  ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction.bestEffort: IsBestEffort
-  EnabledProtocols: MediaEnabledProtocols
-  EnabledProtocols.download: IsDownloadEnabled
-  EnabledProtocols.dash: IsDashEnabled
-  EnabledProtocols.hls: IsHttpLiveStreamingEnabled
-  EnabledProtocols.smoothStreaming: IsSmoothStreamingEnabled
-  LiveOutput.properties.hls: HttpLiveStreaming
-  StorageAuthentication: MediaStorageAuthentication
+  AccountFilter: MediaServicesAccountFilter
+  AccountFilterCollection: MediaServicesAccountFilterListResult
+  AkamaiSignatureHeaderAuthenticationKey.expiration: ExpireOn
   ArmStreamingEndpointCapacity: StreamingEndpointCapacity
   ArmStreamingEndpointCurrentSku: StreamingEndpointCurrentSku
   ArmStreamingEndpointSku: StreamingEndpointSku
   ArmStreamingEndpointSkuInfo: StreamingEndpointSkuInfo
-  DefaultAction: IPAccessControlDefaultAction
-  AssetTrackOperationStatus.startTime: StartsOn
-  AssetTrackOperationStatus.endTime: EndsOn
-  ContentKeyPolicyFairPlayConfiguration.ask: FairPlayApplicationSecretKey
-  ContentKeyPolicyPlayReadyPlayRight.uncompressedDigitalVideoOpl: UncompressedDigitalVideoOutputProtectionLevel
-  ContentKeyPolicyPlayReadyPlayRight.uncompressedDigitalAudioOpl: UncompressedDigitalAudioOutputProtectionLevel
+  Asset: MediaAsset
+  Asset.properties.created: CreatedOn
+  Asset.properties.lastModified: LastModifiedOn
+  AssetFilter: MediaAssetFilter
+  AssetCollection: MediaAssetListResult
+  AssetContainerPermission: MediaAssetContainerPermission
+  AssetFileEncryptionMetadata: MediaAssetFileEncryptionMetadata
+  AssetFilterCollection: MediaAssetFilterListResult
+  AssetStorageEncryptionFormat: MediaAssetStorageEncryptionFormat
+  AssetStreamingLocator: MediaAssetStreamingLocator
+  AssetStreamingLocator.created: CreatedOn
+  AssetStreamingLocator.startTime: StartOn
+  AssetStreamingLocator.endTime: EndOn
+  AssetTrack: MediaAssetTrack
+  AssetTrackCollection: MediaAssetTrackListResult
+  AttributeFilter: TrackAttributeFilter
+  Audio: MediaAudioBase
+  CheckNameAvailabilityInput: MediaServicesNameAvailabilityContent
+  Codec: MediaCodecBase
+  Complexity: EncodingComplexity
+  ContentKeyPolicy.properties.created: CreatedOn
+  ContentKeyPolicy.properties.lastModified: LastModifiedOn
+  ContentKeyPolicyCollection: ContentKeyPolicyListResult
+  ContentKeyPolicyFairPlayConfiguration.ask: ApplicationSecretKey
+  ContentKeyPolicyFairPlayOfflineRentalConfiguration.playbackDurationSeconds: PlaybackDurationInSeconds
+  ContentKeyPolicyFairPlayOfflineRentalConfiguration.storageDurationSeconds: StorageDurationInSeconds
+  ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction.bestEffort: IsBestEffort
+  ContentKeyPolicyPlayReadyLicense.expirationDate: ExpireOn
+  ContentKeyPolicyPlayReadyPlayRight.analogVideoOpl: AnalogVideoOutputProtectionLevel
   ContentKeyPolicyPlayReadyPlayRight.compressedDigitalVideoOpl: CompressedDigitalVideoOutputProtectionLevel
   ContentKeyPolicyPlayReadyPlayRight.compressedDigitalAudioOpl: CompressedDigitalAudioOutputProtectionLevel
-  ContentKeyPolicyPlayReadyPlayRight.analogVideoOpl: AnalogVideoOutputProtectionLevel
-  DefaultKey: EncryptionSchemeDefaultKey
-  EncryptionScheme: StreamingPathEncryptionScheme
-  EntropyMode: LayerEntropyMode
-  EntropyMode.Cabac: ContextAdaptiveBinaryArithmeticCoder
-  EntropyMode.Cavlc: ContextAdaptiveVariableLengthCoder
-  TrackSelection: MediaTrackSelection
-  TransformOutput: MediaTransformOutput
-  H264Layer.crf: ConstantRateFactor
-  ImageFormat: OutputImageFileFormat
-  InputDefinition: MediaTransformJobInputDefinition
-  InputFile: MediaTransformJobInputFile
-  IPRange.address: -|ip-address
-  JobOutput: MediaTransformJobOutput
-  JobOutput.startTime: StartsOn
-  JobOutput.endTime: EndsOn
-  JobOutputAsset: MediaTransformJobOutputAsset
-  JobError: MediaTransformJobError
-  JobErrorCode: MediaTransformJobErrorCode
-  JobErrorCategory: MediaTransformJobErrorCategory
-  JobRetry: MediaTransformJobRetry
-  JobErrorDetail: MediaTransformJobErrorDetail
-  JobInput: MediaTransformJobInputBasicProperties
-  JobInputAsset: MediaTransformJobInputAsset
-  JobInputClip: MediaTransformJobInputClip
-  JobInputHttp: MediaTransformJobInputHttp
-  JobInputs: MediaTransformJobInputs
-  JobInputSequence: MediaTransformJobInputSequence
-  MediaService: MediaServicesAccount
-  MediaService.properties.mediaServiceId: MediaServicesAccountId
-  MediaServiceOperationStatus.id: -|arm-id
-  MediaServiceOperationStatus.startTime: StartsOn
-  MediaServiceOperationStatus.endTime: EndsOn
-  MediaServiceOperationStatus: MediaServicesOperationStatus
-  OnErrorType: MediaTransformOutputErrorAction
-  OutputFile: MultiBitrateOutputFile
-  PresetConfigurations: EncoderPresetConfigurations
-  StreamingEndpointAccessControl.ip: IPs
-  IPAccessControl.allow: AllowedIPs
-  StretchMode: InputVideoStretchMode
-  TrackPropertyType.FourCC: FourCharacterCode
-  FilterTrackPropertyType.FourCC: FourCharacterCode
-  AssetTrackOperationStatus.id: -|arm-id
   ContentKeyPolicyPlayReadyPlayRight.digitalVideoOnlyContentRestriction: HasDigitalVideoOnlyContentRestriction
   ContentKeyPolicyPlayReadyPlayRight.imageConstraintForAnalogComponentVideoRestriction: HasImageConstraintForAnalogComponentVideoRestriction
   ContentKeyPolicyPlayReadyPlayRight.imageConstraintForAnalogComputerMonitorRestriction: HasImageConstraintForAnalogComputerMonitorRestriction
+  ContentKeyPolicyPlayReadyPlayRight.uncompressedDigitalVideoOpl: UncompressedDigitalVideoOutputProtectionLevel
+  ContentKeyPolicyPlayReadyPlayRight.uncompressedDigitalAudioOpl: UncompressedDigitalAudioOutputProtectionLevel
+  ContentKeyPolicyProperties.created: CreatedOn
+  ContentKeyPolicyProperties.lastModified: LastModifiedOn
+  CopyAudio: CodecCopyAudio
+  CopyVideo: CodecCopyVideo
+  DashSettings: TrackDashSettings
+  DefaultAction: IPAccessControlDefaultAction
+  DefaultKey: EncryptionSchemeDefaultKey
+  Deinterlace: DeinterlaceSettings
+  EdgePolicies: MediaServicesEdgePolicies
+  EnabledProtocols: MediaEnabledProtocols
+  EnabledProtocols.download: IsDownloadEnabled
+  EnabledProtocols.dash: IsDashEnabled
+  EnabledProtocols.hls: IsHlsEnabled
+  EnabledProtocols.smoothStreaming: IsSmoothStreamingEnabled
+  EncryptionScheme: StreamingPathEncryptionScheme
+  EntropyMode: LayerEntropyMode
+  EntityNameAvailabilityCheckOutput: MediaServicesNameAvailabilityResult
+  EntityNameAvailabilityCheckOutput.nameAvailable: IsNameAvailable
+  Fade: FadeOptions
+  Filters: FilteringOperations
+  Format: MediaFormatBase
+  GetEdgePoliciesContent: EdgePoliciesRequestContent
+  H264Layer.crf: ConstantRateFactor
   H264Video.sceneChangeDetection: UseSceneChangeDetection
   H265Video.sceneChangeDetection: UseSceneChangeDetection
   H265VideoLayer.adaptiveBFrame: UseAdaptiveBFrame
   HlsSettings.default: IsDefault
   HlsSettings.forced: IsForced
+  Image: MediaImageBase
+  ImageFormat: OutputImageFileFormat
+  InputDefinition: MediaJobInputDefinition
+  InputFile: MediaJobInputFile
+  IPAccessControl.allow: AllowedIPs
+  IPRange.address: -|ip-address
+  Job: MediaJob
+  Job.properties.created: CreatedOn
+  Job.properties.lastModified: LastModifiedOn
+  Job.properties.startTime: StartOn
+  Job.properties.endTime: EndOn
+  JobCollection: MediaJobListResult
+  JobError: MediaJobError
+  JobErrorCode: MediaJobErrorCode
+  JobErrorCategory: MediaJobErrorCategory
+  JobErrorDetail: MediaJobErrorDetail
+  JobInput: MediaJobInputBasicProperties
+  JobInputAsset: MediaJobInputAsset
+  JobInputClip: MediaJobInputClip
+  JobInputHttp: MediaJobInputHttp
+  JobInputSequence: MediaJobInputSequence
+  JobInputs: MediaJobInputs
+  JobOutput: MediaJobOutput
+  JobOutput.startTime: StartOn
+  JobOutput.endTime: EndOn
+  JobOutputAsset: MediaJobOutputAsset
+  JobRetry: MediaJobRetry
+  JobState: MediaJobState
+  KeyDelivery: MediaKeyDelivery
+  Layer: MediaLayerBase
+  ListContainerSasInput: MediaAssetStorageContainerSasContent
+  ListContainerSasInput.expiryTime: ExpireOn
+  ListEdgePoliciesInput: EdgePoliciesRequestContent
+  LiveEvent.properties.created: CreatedOn
+  LiveEvent.properties.lastModified: LastModifiedOn
+  LiveEvent: MediaLiveEvent
+  LiveOutput: MediaLiveOutput
+  LiveOutput.properties.created: CreatedOn
+  LiveOutput.properties.lastModified: LastModifiedOn
+  ListPathsResponse: StreamingPathsResult
+  MediaService: MediaServicesAccount
+  MediaService.properties.mediaServiceId: MediaServicesAccountId
+  MediaServiceCollection: MediaServicesAccountListResult
+  OnErrorType: MediaTransformOnErrorType
+  OutputFile: MediaOutputFile
+  Overlay: MediaOverlayBase
+  Preset: MediaTransformPreset
+  PresetConfigurations: EncoderPresetConfigurations
+  Priority: MediaJobPriority
+  PrivateEndpointConnection: MediaServicesPrivateEndpointConnection
+  PrivateLinkResource: MediaServicesPrivateLinkResource
+  ProvisioningState: MediaServicesProvisioningState
+  PublicNetworkAccess: MediaServicesPublicNetworkAccess
+  Rectangle: RectangularWindow
+  Rotation: RotationSetting
+  SecurityLevel: PlayReadySecurityLevel
+  StorageAccount: MediaServicesStorageAccount
+  StorageAccount.id: -|arm-id
+  StorageAccountType: MediaServicesStorageAccountType
+  StorageAuthentication: MediaStorageAuthentication
+  StorageEncryptedAssetDecryptionData: StorageEncryptedAssetDecryptionInfo
+  StreamingEndpoint.properties.cdnEnabled: IsCdnEnabled
+  StreamingEndpoint.properties.created: CreatedOn
+  StreamingEndpoint.properties.lastModified: LastModifiedOn
+  StreamingEndpointAccessControl.ip: IPs
+  StreamingLocator.properties.created: CreatedOn
+  StreamingLocator.properties.startTime: StartOn
+  StreamingLocator.properties.endTime: EndOn
+  StreamingLocatorCollection: StreamingLocatorListResult
+  StreamingPolicy.properties.created: CreatedOn
+  StreamingPolicyCollection: StreamingPolicyListResult
+  StretchMode: InputVideoStretchMode
+  TrackBase: MediaAssetTrackBase
+  TrackSelection: MediaTrackSelection
+  Transform: MediaTransform
+  Transform.properties.created: CreatedOn
+  Transform.properties.lastModified: LastModifiedOn
+  TransformCollection: MediaTransformListResult
+  TransformOutput: MediaTransformOutput
+  Video: MediaVideoBase
   VideoLayer.adaptiveBFrame: UseAdaptiveBFrame
-  
+  Visibility: PlayerVisibility
+
 directive:
+  - remove-operation: OperationResults_Get
+  - remove-operation: OperationStatuses_Get
+  - remove-operation: MediaServicesOperationStatuses_Get
+  - remove-operation: MediaServicesOperationResults_Get
+  - remove-operation: StreamingEndpoints_OperationLocation
+  - remove-operation: LiveOutputs_OperationLocation
+  - remove-operation: LiveEvents_OperationLocation
+  - remove-operation: LiveEvents_AsyncOperation
+  - remove-operation: LiveOutputs_AsyncOperation
+  - remove-operation: StreamingEndpoints_AsyncOperation
   - from: Accounts.json
     where: $.definitions
     transform: >
@@ -241,11 +245,6 @@ directive:
     transform: >
       $.LiveEventInput.properties.keyFrameIntervalDuration["format"] = 'duration';
       $.ArmStreamingEndpointSkuInfo.properties.resourceType['x-ms-format'] = 'resource-type';
-  - from: Encoding.json
-    where: $.definitions
-    transform: >
-      $.Overlay.properties.fadeInDuration['format'] = 'duration';
-      $.Overlay.properties.fadeOutDuration['format'] = 'duration';
   - from: AssetsAndAssetFilters.json
     where: $.paths
     transform: >
@@ -279,4 +278,5 @@ directive:
       $.LiveEventEncoding.properties.keyFrameInterval["x-nullable"] = true;
       $.LiveEventPreview.properties.accessControl["x-nullable"] = true;
       $.LiveEventInput.properties.accessControl["x-nullable"] = true;
+      $.LiveOutputProperties.properties.rewindWindowLength["x-nullable"] = true;
 ```

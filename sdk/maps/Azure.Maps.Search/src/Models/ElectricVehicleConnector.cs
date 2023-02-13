@@ -4,10 +4,9 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 using Azure.Core;
 
-namespace Azure.Maps.Search.Models
+namespace Azure.Maps.Search
 {
     /// <summary> The ElectricVehicleConnector. </summary>
     [CodeGenModel("ElectricVehicleConnector")]

@@ -16,27 +16,27 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
         internal static DynatraceSingleSignOnResourceListResult DeserializeDynatraceSingleSignOnResourceListResult(JsonElement element)
         {
-            IReadOnlyList<DynatraceSingleSignOnResourceData> value = default;
-            string nextLink = default;
+            IReadOnlyList<DynatraceSingleSignOnData> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
-                    List<DynatraceSingleSignOnResourceData> array = new List<DynatraceSingleSignOnResourceData>();
+                    List<DynatraceSingleSignOnData> array = new List<DynatraceSingleSignOnData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DynatraceSingleSignOnResourceData.DeserializeDynatraceSingleSignOnResourceData(item));
+                        array.Add(DynatraceSingleSignOnData.DeserializeDynatraceSingleSignOnData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new DynatraceSingleSignOnResourceListResult(value, nextLink);
+            return new DynatraceSingleSignOnResourceListResult(value, nextLink.Value);
         }
     }
 }

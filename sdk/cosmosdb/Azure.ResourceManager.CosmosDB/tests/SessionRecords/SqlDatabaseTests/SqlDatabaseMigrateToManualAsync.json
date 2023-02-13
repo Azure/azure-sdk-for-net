@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -130,7 +130,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020/sqlDatabases/sql-db-905?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020/sqlDatabases/sql-db-905?api-version=2022-05-15",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -157,7 +157,7 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/85afaa55-1a50-40df-a665-cb9eda8f53ec?api-version=2021-10-15",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/85afaa55-1a50-40df-a665-cb9eda8f53ec?api-version=2022-05-15",
         "Cache-Control": [
           "no-store",
           "no-cache"
@@ -165,7 +165,7 @@
         "Content-Length": "21",
         "Content-Type": "application/json",
         "Date": "Fri, 03 Dec 2021 12:34:36 GMT",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020/sqlDatabases/sql-db-905/operationResults/85afaa55-1a50-40df-a665-cb9eda8f53ec?api-version=2021-10-15",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020/sqlDatabases/sql-db-905/operationResults/85afaa55-1a50-40df-a665-cb9eda8f53ec?api-version=2022-05-15",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -181,7 +181,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/85afaa55-1a50-40df-a665-cb9eda8f53ec?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/85afaa55-1a50-40df-a665-cb9eda8f53ec?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -214,7 +214,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020/sqlDatabases/sql-db-905?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020/sqlDatabases/sql-db-905?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -260,7 +260,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020/sqlDatabases/sql-db-905/throughputSettings/default?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020/sqlDatabases/sql-db-905/throughputSettings/default?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -305,7 +305,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020/sqlDatabases/sql-db-905/throughputSettings/default/migrateToManualThroughput?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020/sqlDatabases/sql-db-905/throughputSettings/default/migrateToManualThroughput?api-version=2022-05-15",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -317,7 +317,7 @@
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/7a1baea9-4a98-4921-8898-6cb8ac572059?api-version=2021-10-15",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/7a1baea9-4a98-4921-8898-6cb8ac572059?api-version=2022-05-15",
         "Cache-Control": [
           "no-store",
           "no-cache"
@@ -325,7 +325,7 @@
         "Content-Length": "21",
         "Content-Type": "application/json",
         "Date": "Fri, 03 Dec 2021 12:34:47 GMT",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020/sqlDatabases/sql-db-905/throughputSettings/default/migrateToManualThroughput/operationResults/7a1baea9-4a98-4921-8898-6cb8ac572059?api-version=2021-10-15",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020/sqlDatabases/sql-db-905/throughputSettings/default/migrateToManualThroughput/operationResults/7a1baea9-4a98-4921-8898-6cb8ac572059?api-version=2022-05-15",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -341,7 +341,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/7a1baea9-4a98-4921-8898-6cb8ac572059?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/7a1baea9-4a98-4921-8898-6cb8ac572059?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -374,7 +374,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020/sqlDatabases/sql-db-905/throughputSettings/default/migrateToManualThroughput/operationResults/7a1baea9-4a98-4921-8898-6cb8ac572059?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020/sqlDatabases/sql-db-905/throughputSettings/default/migrateToManualThroughput/operationResults/7a1baea9-4a98-4921-8898-6cb8ac572059?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -415,7 +415,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/7a1baea9-4a98-4921-8898-6cb8ac572059?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/7a1baea9-4a98-4921-8898-6cb8ac572059?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -448,7 +448,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020/sqlDatabases/sql-db-905/throughputSettings/default/migrateToManualThroughput/operationResults/7a1baea9-4a98-4921-8898-6cb8ac572059?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020/sqlDatabases/sql-db-905/throughputSettings/default/migrateToManualThroughput/operationResults/7a1baea9-4a98-4921-8898-6cb8ac572059?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -489,7 +489,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020/sqlDatabases/sql-db-905?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020/sqlDatabases/sql-db-905?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -536,7 +536,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020/sqlDatabases/sql-db-905?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020/sqlDatabases/sql-db-905?api-version=2022-05-15",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -547,7 +547,7 @@
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/afc71b2a-842b-4173-b95f-53624ebf7af3?api-version=2021-10-15",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/afc71b2a-842b-4173-b95f-53624ebf7af3?api-version=2022-05-15",
         "Cache-Control": [
           "no-store",
           "no-cache"
@@ -555,7 +555,7 @@
         "Content-Length": "21",
         "Content-Type": "application/json",
         "Date": "Fri, 03 Dec 2021 12:34:56 GMT",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020/sqlDatabases/sql-db-905/operationResults/afc71b2a-842b-4173-b95f-53624ebf7af3?api-version=2021-10-15",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-8633/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-6020/sqlDatabases/sql-db-905/operationResults/afc71b2a-842b-4173-b95f-53624ebf7af3?api-version=2022-05-15",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -571,7 +571,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/afc71b2a-842b-4173-b95f-53624ebf7af3?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/afc71b2a-842b-4173-b95f-53624ebf7af3?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",

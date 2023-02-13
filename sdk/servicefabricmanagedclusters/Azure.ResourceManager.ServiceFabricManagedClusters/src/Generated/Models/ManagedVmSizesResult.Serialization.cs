@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -16,26 +15,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     {
         internal static ManagedVmSizesResult DeserializeManagedVmSizesResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ManagedVmSizeData>> value = default;
+            Optional<IReadOnlyList<ServiceFabricManagedUnsupportedVmSize>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ManagedVmSizeData> array = new List<ManagedVmSizeData>();
+                    List<ServiceFabricManagedUnsupportedVmSize> array = new List<ServiceFabricManagedUnsupportedVmSize>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedVmSizeData.DeserializeManagedVmSizeData(item));
+                        array.Add(ServiceFabricManagedUnsupportedVmSize.DeserializeServiceFabricManagedUnsupportedVmSize(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public ExcelDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
             Type = "Excel";
         }
@@ -36,16 +34,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="location"> The location of the excel storage. </param>
-        /// <param name="sheetName"> The sheet of excel file. Type: string (or Expression with resultType string). </param>
+        /// <param name="location">
+        /// The location of the excel storage.
+        /// Please note <see cref="DatasetLocation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AmazonS3Location"/>, <see cref="AzureBlobFSLocation"/>, <see cref="AzureBlobStorageLocation"/>, <see cref="AzureDataLakeStoreLocation"/>, <see cref="AzureFileStorageLocation"/>, <see cref="FileServerLocation"/>, <see cref="FtpServerLocation"/>, <see cref="GoogleCloudStorageLocation"/>, <see cref="HdfsLocation"/>, <see cref="HttpServerLocation"/> and <see cref="SftpLocation"/>.
+        /// </param>
+        /// <param name="sheetName"> The sheet name of excel file. Type: string (or Expression with resultType string). </param>
+        /// <param name="sheetIndex"> The sheet index of excel file and default value is 0. Type: integer (or Expression with resultType integer). </param>
         /// <param name="range"> The partial data of one sheet. Type: string (or Expression with resultType string). </param>
         /// <param name="firstRowAsHeader"> When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="compression"> The data compression method used for the json dataset. </param>
         /// <param name="nullValue"> The null value string. Type: string (or Expression with resultType string). </param>
-        internal ExcelDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, DatasetLocation location, object sheetName, object range, object firstRowAsHeader, DatasetCompression compression, object nullValue) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal ExcelDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, DatasetLocation location, object sheetName, object sheetIndex, object range, object firstRowAsHeader, DatasetCompression compression, object nullValue) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Location = location;
             SheetName = sheetName;
+            SheetIndex = sheetIndex;
             Range = range;
             FirstRowAsHeader = firstRowAsHeader;
             Compression = compression;
@@ -53,10 +57,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Excel";
         }
 
-        /// <summary> The location of the excel storage. </summary>
+        /// <summary>
+        /// The location of the excel storage.
+        /// Please note <see cref="DatasetLocation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AmazonS3Location"/>, <see cref="AzureBlobFSLocation"/>, <see cref="AzureBlobStorageLocation"/>, <see cref="AzureDataLakeStoreLocation"/>, <see cref="AzureFileStorageLocation"/>, <see cref="FileServerLocation"/>, <see cref="FtpServerLocation"/>, <see cref="GoogleCloudStorageLocation"/>, <see cref="HdfsLocation"/>, <see cref="HttpServerLocation"/> and <see cref="SftpLocation"/>.
+        /// </summary>
         public DatasetLocation Location { get; set; }
-        /// <summary> The sheet of excel file. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The sheet name of excel file. Type: string (or Expression with resultType string). </summary>
         public object SheetName { get; set; }
+        /// <summary> The sheet index of excel file and default value is 0. Type: integer (or Expression with resultType integer). </summary>
+        public object SheetIndex { get; set; }
         /// <summary> The partial data of one sheet. Type: string (or Expression with resultType string). </summary>
         public object Range { get; set; }
         /// <summary> When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean). </summary>

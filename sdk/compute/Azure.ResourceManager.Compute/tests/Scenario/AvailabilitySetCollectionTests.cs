@@ -10,10 +10,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [ClientTestFixture(true, "2021-04-01", "2020-06-01", "2022-08-01", "2022-11-01")]
     public class AvailabilitySetCollectionTests : ComputeTestBase
     {
-        public AvailabilitySetCollectionTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+        public AvailabilitySetCollectionTests(bool isAsync, string apiVersion)
+            : base(isAsync, AvailabilitySetResource.ResourceType, apiVersion)//, RecordedTestMode.Record)
         {
         }
 

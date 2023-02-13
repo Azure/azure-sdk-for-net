@@ -54,8 +54,16 @@ namespace Azure.ResourceManager.ServiceLinker
 
         /// <summary>
         /// Returns Linker resource for a given name.
-        /// Request Path: /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}
-        /// Operation Id: Linker_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Linker_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <param name="linkerName"> The name Linker resource. </param>
@@ -70,8 +78,16 @@ namespace Azure.ResourceManager.ServiceLinker
 
         /// <summary>
         /// Returns Linker resource for a given name.
-        /// Request Path: /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}
-        /// Operation Id: Linker_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Linker_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -87,8 +103,16 @@ namespace Azure.ResourceManager.ServiceLinker
 
         /// <summary>
         /// Returns Linker resource for a given name.
-        /// Request Path: /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}
-        /// Operation Id: Linker_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Linker_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <param name="linkerName"> The name Linker resource. </param>
@@ -103,8 +127,16 @@ namespace Azure.ResourceManager.ServiceLinker
 
         /// <summary>
         /// Returns Linker resource for a given name.
-        /// Request Path: /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}
-        /// Operation Id: Linker_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Linker_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -18,15 +19,15 @@ namespace Azure.ResourceManager.DataBoxEdge
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("start");
-            writer.WriteStringValue(Start);
-            writer.WritePropertyName("stop");
-            writer.WriteStringValue(Stop);
-            writer.WritePropertyName("rateInMbps");
+            writer.WritePropertyName("start"u8);
+            writer.WriteStringValue(StartOn, "T");
+            writer.WritePropertyName("stop"u8);
+            writer.WriteStringValue(StopOn, "T");
+            writer.WritePropertyName("rateInMbps"u8);
             writer.WriteNumberValue(RateInMbps);
-            writer.WritePropertyName("days");
+            writer.WritePropertyName("days"u8);
             writer.WriteStartArray();
             foreach (var item in Days)
             {
@@ -43,38 +44,38 @@ namespace Azure.ResourceManager.DataBoxEdge
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            string start = default;
-            string stop = default;
+            TimeSpan start = default;
+            TimeSpan stop = default;
             int rateInMbps = default;
-            IList<DayOfWeek> days = default;
+            IList<DataBoxEdgeDayOfWeek> days = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,27 +84,27 @@ namespace Azure.ResourceManager.DataBoxEdge
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("start"))
+                        if (property0.NameEquals("start"u8))
                         {
-                            start = property0.Value.GetString();
+                            start = property0.Value.GetTimeSpan("T");
                             continue;
                         }
-                        if (property0.NameEquals("stop"))
+                        if (property0.NameEquals("stop"u8))
                         {
-                            stop = property0.Value.GetString();
+                            stop = property0.Value.GetTimeSpan("T");
                             continue;
                         }
-                        if (property0.NameEquals("rateInMbps"))
+                        if (property0.NameEquals("rateInMbps"u8))
                         {
                             rateInMbps = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("days"))
+                        if (property0.NameEquals("days"u8))
                         {
-                            List<DayOfWeek> array = new List<DayOfWeek>();
+                            List<DataBoxEdgeDayOfWeek> array = new List<DataBoxEdgeDayOfWeek>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new DayOfWeek(item.GetString()));
+                                array.Add(new DataBoxEdgeDayOfWeek(item.GetString()));
                             }
                             days = array;
                             continue;

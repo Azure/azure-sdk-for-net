@@ -9,7 +9,6 @@ csharp: true
 library-name: ChangeAnalysis
 namespace: Azure.ResourceManager.ChangeAnalysis
 require: https://github.com/Azure/azure-rest-api-specs/blob/80065490402157d0df0dd37ab347c651b22eb576/specification/changeanalysis/resource-manager/readme.md
-tag: package-2021-04-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

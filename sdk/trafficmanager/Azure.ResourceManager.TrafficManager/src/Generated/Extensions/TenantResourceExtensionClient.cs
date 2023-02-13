@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.TrafficManager
     /// <summary> A class to add extension methods to TenantResource. </summary>
     internal partial class TenantResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _profileClientDiagnostics;
-        private ProfilesRestOperations _profileRestClient;
+        private ClientDiagnostics _trafficManagerProfileProfilesClientDiagnostics;
+        private ProfilesRestOperations _trafficManagerProfileProfilesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class for mocking. </summary>
         protected TenantResourceExtensionClient()
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.TrafficManager
         {
         }
 
-        private ClientDiagnostics ProfileClientDiagnostics => _profileClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.TrafficManager", ProfileResource.ResourceType.Namespace, Diagnostics);
-        private ProfilesRestOperations ProfileRestClient => _profileRestClient ??= new ProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ProfileResource.ResourceType));
+        private ClientDiagnostics TrafficManagerProfileProfilesClientDiagnostics => _trafficManagerProfileProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.TrafficManager", TrafficManagerProfileResource.ResourceType.Namespace, Diagnostics);
+        private ProfilesRestOperations TrafficManagerProfileProfilesRestClient => _trafficManagerProfileProfilesRestClient ??= new ProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(TrafficManagerProfileResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -52,18 +52,26 @@ namespace Azure.ResourceManager.TrafficManager
 
         /// <summary>
         /// Checks the availability of a Traffic Manager Relative DNS name.
-        /// Request Path: /providers/Microsoft.Network/checkTrafficManagerNameAvailability
-        /// Operation Id: Profiles_CheckTrafficManagerRelativeDnsNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Network/checkTrafficManagerNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_CheckTrafficManagerRelativeDnsNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TrafficManagerNameAvailability>> CheckTrafficManagerRelativeDnsNameAvailabilityProfileAsync(CheckTrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerRelativeDnsNameAvailabilityAsync(TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ProfileClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckTrafficManagerRelativeDnsNameAvailabilityProfile");
+            using var scope = TrafficManagerProfileProfilesClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckTrafficManagerRelativeDnsNameAvailability");
             scope.Start();
             try
             {
-                var response = await ProfileRestClient.CheckTrafficManagerRelativeDnsNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+                var response = await TrafficManagerProfileProfilesRestClient.CheckTrafficManagerRelativeDnsNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -75,18 +83,26 @@ namespace Azure.ResourceManager.TrafficManager
 
         /// <summary>
         /// Checks the availability of a Traffic Manager Relative DNS name.
-        /// Request Path: /providers/Microsoft.Network/checkTrafficManagerNameAvailability
-        /// Operation Id: Profiles_CheckTrafficManagerRelativeDnsNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Network/checkTrafficManagerNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_CheckTrafficManagerRelativeDnsNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TrafficManagerNameAvailability> CheckTrafficManagerRelativeDnsNameAvailabilityProfile(CheckTrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerRelativeDnsNameAvailability(TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ProfileClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckTrafficManagerRelativeDnsNameAvailabilityProfile");
+            using var scope = TrafficManagerProfileProfilesClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckTrafficManagerRelativeDnsNameAvailability");
             scope.Start();
             try
             {
-                var response = ProfileRestClient.CheckTrafficManagerRelativeDnsNameAvailability(content, cancellationToken);
+                var response = TrafficManagerProfileProfilesRestClient.CheckTrafficManagerRelativeDnsNameAvailability(content, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -29,8 +29,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// List of resourcePools in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools
-        /// Operation Id: ResourcePools_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourcePools_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -42,8 +50,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// List of resourcePools in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools
-        /// Operation Id: ResourcePools_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourcePools_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -55,8 +71,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// List of clusters in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/clusters
-        /// Operation Id: Clusters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/clusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -68,8 +92,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// List of clusters in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/clusters
-        /// Operation Id: Clusters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/clusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -81,8 +113,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// List of hosts in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/hosts
-        /// Operation Id: Hosts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/hosts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Hosts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -94,8 +134,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// List of hosts in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/hosts
-        /// Operation Id: Hosts_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/hosts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Hosts_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -107,8 +155,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// List of datastores in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/datastores
-        /// Operation Id: Datastores_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/datastores</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Datastores_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -120,8 +176,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// List of datastores in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/datastores
-        /// Operation Id: Datastores_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/datastores</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Datastores_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,8 +197,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// List of vCenters in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/vcenters
-        /// Operation Id: VCenters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/vcenters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VCenters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -146,8 +218,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// List of vCenters in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/vcenters
-        /// Operation Id: VCenters_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/vcenters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VCenters_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -159,8 +239,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// List of virtualMachines in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines
-        /// Operation Id: VirtualMachines_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachines_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -172,8 +260,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// List of virtualMachines in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines
-        /// Operation Id: VirtualMachines_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachines_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -185,8 +281,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// List of virtualMachineTemplates in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates
-        /// Operation Id: VirtualMachineTemplates_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineTemplates_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -198,8 +302,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// List of virtualMachineTemplates in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates
-        /// Operation Id: VirtualMachineTemplates_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineTemplates_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -211,8 +323,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// List of virtualNetworks in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualNetworks
-        /// Operation Id: VirtualNetworks_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworks_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -224,8 +344,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// List of virtualNetworks in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualNetworks
-        /// Operation Id: VirtualNetworks_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConnectedVMwarevSphere/virtualNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworks_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -254,8 +382,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// Implements resourcePool GET method.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools/{resourcePoolName}
-        /// Operation Id: ResourcePools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools/{resourcePoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourcePools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
@@ -270,8 +406,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// Implements resourcePool GET method.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools/{resourcePoolName}
-        /// Operation Id: ResourcePools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools/{resourcePoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourcePools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourcePoolName"> Name of the resourcePool. </param>
@@ -294,8 +438,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// Implements cluster GET method.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/clusters/{clusterName}
-        /// Operation Id: Clusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/clusters/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> Name of the cluster. </param>
@@ -310,8 +462,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// Implements cluster GET method.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/clusters/{clusterName}
-        /// Operation Id: Clusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/clusters/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> Name of the cluster. </param>
@@ -334,8 +494,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// Implements host GET method.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
-        /// Operation Id: Hosts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Hosts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="hostName"> Name of the host. </param>
@@ -350,8 +518,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// Implements host GET method.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}
-        /// Operation Id: Hosts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Hosts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="hostName"> Name of the host. </param>
@@ -374,8 +550,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// Implements datastore GET method.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/datastores/{datastoreName}
-        /// Operation Id: Datastores_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/datastores/{datastoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Datastores_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="datastoreName"> Name of the datastore. </param>
@@ -390,8 +574,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// Implements datastore GET method.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/datastores/{datastoreName}
-        /// Operation Id: Datastores_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/datastores/{datastoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Datastores_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="datastoreName"> Name of the datastore. </param>
@@ -414,8 +606,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// Implements vCenter GET method.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}
-        /// Operation Id: VCenters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VCenters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vcenterName"> Name of the vCenter. </param>
@@ -430,8 +630,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// Implements vCenter GET method.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}
-        /// Operation Id: VCenters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/vcenters/{vcenterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VCenters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vcenterName"> Name of the vCenter. </param>
@@ -454,8 +662,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// Implements virtual machine GET method.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}
-        /// Operation Id: VirtualMachines_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachines_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
@@ -470,8 +686,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// Implements virtual machine GET method.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}
-        /// Operation Id: VirtualMachines_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachines_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
@@ -494,8 +718,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// Implements virtual machine template GET method.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates/{virtualMachineTemplateName}
-        /// Operation Id: VirtualMachineTemplates_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates/{virtualMachineTemplateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineTemplates_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualMachineTemplateName"> Name of the virtual machine template resource. </param>
@@ -510,8 +742,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// Implements virtual machine template GET method.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates/{virtualMachineTemplateName}
-        /// Operation Id: VirtualMachineTemplates_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates/{virtualMachineTemplateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineTemplates_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualMachineTemplateName"> Name of the virtual machine template resource. </param>
@@ -534,8 +774,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// Implements virtual network GET method.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualNetworks/{virtualNetworkName}
-        /// Operation Id: VirtualNetworks_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualNetworks/{virtualNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworks_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualNetworkName"> Name of the virtual network resource. </param>
@@ -550,8 +798,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         /// <summary>
         /// Implements virtual network GET method.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualNetworks/{virtualNetworkName}
-        /// Operation Id: VirtualNetworks_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualNetworks/{virtualNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworks_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualNetworkName"> Name of the virtual network resource. </param>

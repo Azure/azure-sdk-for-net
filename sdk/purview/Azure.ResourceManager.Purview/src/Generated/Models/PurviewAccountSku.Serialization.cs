@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Purview.Models
         internal static PurviewAccountSku DeserializePurviewAccountSku(JsonElement element)
         {
             Optional<int> capacity = default;
-            Optional<Name> name = default;
+            Optional<PurviewAccountSkuName> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("capacity"))
+                if (property.NameEquals("capacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Purview.Models
                     capacity = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = new Name(property.Value.GetString());
+                    name = new PurviewAccountSkuName(property.Value.GetString());
                     continue;
                 }
             }

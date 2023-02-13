@@ -24,7 +24,13 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 TestEnvironment.Endpoint,
                 new AzureKeyCredential(TestEnvironment.ApiKey),
                 InstrumentClientOptions(
-                    new ConversationsClientOptions(ServiceVersion)));
+                    new ConversationsClientOptions(ServiceVersion)
+                    {
+                        Retry =
+                        {
+                            MaxRetries = 10,
+                        },
+                    }));
         }
     }
 }

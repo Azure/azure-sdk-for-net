@@ -1,13 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <OutputType>Exe</OutputType>
-        <TargetFramework>net5.0</TargetFramework>
-    </PropertyGroup>
+  
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
 
-    <ItemGroup>
-      <PackageReference Include="Azure.Identity" Version="1.2.1" />
-      <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.2.0-beta.2" />
-      <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.21216.1" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Azure.Messaging.ServiceBus" />
+    <PackageReference Include="System.CommandLine" VersionOverride="2.0.0-beta1.21216.1" />
+  </ItemGroup>
 
+  <!-- Use decentralized package references when building outside https://github.com/Azure/azure-sdk-for-net -->
+  <ItemGroup Condition="'$(IsSamplesProject)' != 'true'">
+    <PackageReference Update="Azure.Identity" Version="1.7.0" />
+    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.11.1" />
+    <PackageReference Update="System.CommandLine" Version="%(VersionOverride)" />
+  </ItemGroup>
+    
 </Project>

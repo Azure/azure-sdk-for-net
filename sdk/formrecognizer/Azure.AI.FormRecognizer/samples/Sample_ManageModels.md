@@ -111,8 +111,4 @@ Console.WriteLine($"  Created on: {newCreatedModel.CreatedOn}");
 client.DeleteDocumentModel(newCreatedModel.ModelId);
 ```
 
-To see the full example source files, see:
-* [Manage models (Asynchronous)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_ManageModelsAsync.cs)
-* [Manage models (Synchronous)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_ManageModels.cs)
-
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started

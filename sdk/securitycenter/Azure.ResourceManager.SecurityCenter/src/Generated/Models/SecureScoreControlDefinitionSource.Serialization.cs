@@ -14,17 +14,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static SecureScoreControlDefinitionSource DeserializeSecureScoreControlDefinitionSource(JsonElement element)
         {
-            Optional<ControlType> sourceType = default;
+            Optional<SecurityControlType> sourceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceType"))
+                if (property.NameEquals("sourceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sourceType = new ControlType(property.Value.GetString());
+                    sourceType = new SecurityControlType(property.Value.GetString());
                     continue;
                 }
             }

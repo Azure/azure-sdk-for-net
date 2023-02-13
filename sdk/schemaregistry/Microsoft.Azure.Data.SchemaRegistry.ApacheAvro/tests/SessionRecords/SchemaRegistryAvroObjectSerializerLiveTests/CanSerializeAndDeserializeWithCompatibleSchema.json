@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://jolovschemaregistry.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/TestSchema.EmployeeV2?api-version=2021-10",
+      "RequestUri": "https://mreddingschemaregistry-avro.servicebus.windows.net/$schemaGroups/azsdk_net_test_group/schemas/TestSchema.EmployeeV2?api-version=2022-10",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "199",
         "Content-Type": "application/json; serialization=Avro",
-        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.1.0-alpha.20211206.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "ef6c2a5b1a16cce9ea9883d0a9218b0d",
+        "User-Agent": "azsdk-net-Data.SchemaRegistry/1.4.0-alpha.20230112.1 (.NET Core 3.1.32; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "89792612137c7d76d1697a8aecffc619",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -37,14 +37,14 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 07 Dec 2021 19:06:30 GMT",
-        "Location": "https://jolovschemaregistry.servicebus.windows.net/$schemagroups/azsdk_net_test_group/schemas/TestSchema.EmployeeV2/versions/2?api-version=2021-10",
+        "Date": "Thu, 12 Jan 2023 23:50:02 GMT",
+        "Location": "https://mreddingschemaregistry-avro.servicebus.windows.net/$schemagroups/azsdk_net_test_group/schemas/TestSchema.EmployeeV2/versions/1?api-version=2022-10",
         "Schema-Group-Name": "azsdk_net_test_group",
-        "Schema-Id": "133edfde246e4d6591c3cbae1701568f",
-        "Schema-Id-Location": "https://jolovschemaregistry.servicebus.windows.net:443/$schemagroups/$schemas/133edfde246e4d6591c3cbae1701568f?api-version=2021-10",
+        "Schema-Id": "78b1ef9c127c4055b7429d7d93decdee",
+        "Schema-Id-Location": "https://mreddingschemaregistry-avro.servicebus.windows.net:443/$schemagroups/$schemas/78b1ef9c127c4055b7429d7d93decdee?api-version=2022-10",
         "Schema-Name": "TestSchema.EmployeeV2",
-        "Schema-Version": "2",
-        "Schema-Versions-Location": "https://jolovschemaregistry.servicebus.windows.net:443/$schemagroups/azsdk_net_test_group/schemas/TestSchema.EmployeeV2/versions?api-version=2021-10",
+        "Schema-Version": "1",
+        "Schema-Versions-Location": "https://mreddingschemaregistry-avro.servicebus.windows.net:443/$schemagroups/azsdk_net_test_group/schemas/TestSchema.EmployeeV2/versions?api-version=2022-10",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000"
       },
@@ -52,8 +52,9 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "15402849",
-    "SCHEMAREGISTRY_ENDPOINT": "jolovschemaregistry.servicebus.windows.net",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "1778068975",
+    "SCHEMAREGISTRY_ENDPOINT_AVRO": "mreddingschemaregistry-avro.servicebus.windows.net",
     "SCHEMAREGISTRY_GROUP": "azsdk_net_test_group"
   }
 }

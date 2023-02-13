@@ -16,32 +16,42 @@ namespace Azure.ResourceManager.Avs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("vmMembers");
+            writer.WritePropertyName("vmMembers"u8);
             writer.WriteStartArray();
             foreach (var item in VmMembers)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("hostMembers");
+            writer.WritePropertyName("hostMembers"u8);
             writer.WriteStartArray();
             foreach (var item in HostMembers)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("affinityType");
+            writer.WritePropertyName("affinityType"u8);
             writer.WriteStringValue(AffinityType.ToString());
-            writer.WritePropertyName("type");
+            if (Optional.IsDefined(AffinityStrength))
+            {
+                writer.WritePropertyName("affinityStrength"u8);
+                writer.WriteStringValue(AffinityStrength.Value.ToString());
+            }
+            if (Optional.IsDefined(AzureHybridBenefitType))
+            {
+                writer.WritePropertyName("azureHybridBenefitType"u8);
+                writer.WriteStringValue(AzureHybridBenefitType.Value.ToString());
+            }
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(PolicyType.ToString());
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             writer.WriteEndObject();
@@ -52,13 +62,15 @@ namespace Azure.ResourceManager.Avs.Models
             IList<ResourceIdentifier> vmMembers = default;
             IList<string> hostMembers = default;
             AvsPlacementPolicyAffinityType affinityType = default;
+            Optional<VmHostPlacementPolicyAffinityStrength> affinityStrength = default;
+            Optional<AzureHybridBenefitType> azureHybridBenefitType = default;
             PlacementPolicyType type = default;
             Optional<PlacementPolicyState> state = default;
             Optional<string> displayName = default;
             Optional<PlacementPolicyProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vmMembers"))
+                if (property.NameEquals("vmMembers"u8))
                 {
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -68,7 +80,7 @@ namespace Azure.ResourceManager.Avs.Models
                     vmMembers = array;
                     continue;
                 }
-                if (property.NameEquals("hostMembers"))
+                if (property.NameEquals("hostMembers"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -78,17 +90,37 @@ namespace Azure.ResourceManager.Avs.Models
                     hostMembers = array;
                     continue;
                 }
-                if (property.NameEquals("affinityType"))
+                if (property.NameEquals("affinityType"u8))
                 {
                     affinityType = new AvsPlacementPolicyAffinityType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("affinityStrength"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    affinityStrength = new VmHostPlacementPolicyAffinityStrength(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("azureHybridBenefitType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    azureHybridBenefitType = new AzureHybridBenefitType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
                 {
                     type = new PlacementPolicyType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,12 +130,12 @@ namespace Azure.ResourceManager.Avs.Models
                     state = new PlacementPolicyState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +146,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new VmHostPlacementPolicyProperties(type, Optional.ToNullable(state), displayName.Value, Optional.ToNullable(provisioningState), vmMembers, hostMembers, affinityType);
+            return new VmHostPlacementPolicyProperties(type, Optional.ToNullable(state), displayName.Value, Optional.ToNullable(provisioningState), vmMembers, hostMembers, affinityType, Optional.ToNullable(affinityStrength), Optional.ToNullable(azureHybridBenefitType));
         }
     }
 }

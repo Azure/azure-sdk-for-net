@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.Search
         private ClientDiagnostics SearchServiceServicesClientDiagnostics => _searchServiceServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Search", SearchServiceResource.ResourceType.Namespace, Diagnostics);
         private ServicesRestOperations SearchServiceServicesRestClient => _searchServiceServicesRestClient ??= new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SearchServiceResource.ResourceType));
 
-        private string GetApiVersionOrNull(Core.ResourceType resourceType)
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
@@ -46,101 +45,69 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Gets a list of all search services in the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Search/searchServices
-        /// Operation Id: Services_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/searchServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SearchServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SearchServiceResource> GetSearchServicesAsync(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SearchServiceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SearchServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSearchServices");
-                scope.Start();
-                try
-                {
-                    var response = await SearchServiceServicesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, searchManagementRequestOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SearchServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SearchServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SearchServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSearchServices");
-                scope.Start();
-                try
-                {
-                    var response = await SearchServiceServicesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, searchManagementRequestOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SearchServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SearchServiceServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, searchManagementRequestOptions);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SearchServiceServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, searchManagementRequestOptions);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SearchServiceResource(Client, SearchServiceData.DeserializeSearchServiceData(e)), SearchServiceServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSearchServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of all search services in the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Search/searchServices
-        /// Operation Id: Services_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/searchServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SearchServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SearchServiceResource> GetSearchServices(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Page<SearchServiceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SearchServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSearchServices");
-                scope.Start();
-                try
-                {
-                    var response = SearchServiceServicesRestClient.ListBySubscription(Id.SubscriptionId, searchManagementRequestOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SearchServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SearchServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SearchServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSearchServices");
-                scope.Start();
-                try
-                {
-                    var response = SearchServiceServicesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, searchManagementRequestOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SearchServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SearchServiceServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, searchManagementRequestOptions);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SearchServiceServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, searchManagementRequestOptions);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SearchServiceResource(Client, SearchServiceData.DeserializeSearchServiceData(e)), SearchServiceServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSearchServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks whether or not the given search service name is available for use. Search service names must be globally unique since they are part of the service URI (https://&lt;name&gt;.search.windows.net).
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Search/checkNameAvailability
-        /// Operation Id: Services_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The resource name and type to check. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityOutput>> CheckNameAvailabilityServiceAsync(CheckNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchServiceNameAvailabilityResult>> CheckSearchServiceNameAvailabilityAsync(SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            using var scope = SearchServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityService");
+            using var scope = SearchServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSearchServiceNameAvailability");
             scope.Start();
             try
             {
@@ -156,15 +123,23 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Checks whether or not the given search service name is available for use. Search service names must be globally unique since they are part of the service URI (https://&lt;name&gt;.search.windows.net).
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Search/checkNameAvailability
-        /// Operation Id: Services_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The resource name and type to check. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityOutput> CheckNameAvailabilityService(CheckNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchServiceNameAvailabilityResult> CheckSearchServiceNameAvailability(SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            using var scope = SearchServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityService");
+            using var scope = SearchServiceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSearchServiceNameAvailability");
             scope.Start();
             try
             {

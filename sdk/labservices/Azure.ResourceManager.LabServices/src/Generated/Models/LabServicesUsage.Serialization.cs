@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.LabServices.Models
         {
             Optional<long> currentValue = default;
             Optional<long> limit = default;
-            Optional<UsageUnit> unit = default;
-            Optional<UsageName> name = default;
-            Optional<string> id = default;
+            Optional<LabServicesUsageUnit> unit = default;
+            Optional<LabServicesUsageName> name = default;
+            Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("currentValue"))
+                if (property.NameEquals("currentValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     currentValue = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,29 +41,34 @@ namespace Azure.ResourceManager.LabServices.Models
                     limit = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    unit = new UsageUnit(property.Value.GetString());
+                    unit = new LabServicesUsageUnit(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = UsageName.DeserializeUsageName(property.Value);
+                    name = LabServicesUsageName.DeserializeLabServicesUsageName(property.Value);
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

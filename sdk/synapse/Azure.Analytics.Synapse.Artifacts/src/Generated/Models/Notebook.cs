@@ -23,14 +23,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="cells"/> is null. </exception>
         public Notebook(NotebookMetadata metadata, int notebookFormat, int notebookFormatMinor, IEnumerable<NotebookCell> cells)
         {
-            if (metadata == null)
-            {
-                throw new ArgumentNullException(nameof(metadata));
-            }
-            if (cells == null)
-            {
-                throw new ArgumentNullException(nameof(cells));
-            }
+            Argument.AssertNotNull(metadata, nameof(metadata));
+            Argument.AssertNotNull(cells, nameof(cells));
 
             Metadata = metadata;
             NotebookFormat = notebookFormat;
@@ -42,6 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of Notebook. </summary>
         /// <param name="description"> The description of the notebook. </param>
         /// <param name="bigDataPool"> Big data pool reference. </param>
+        /// <param name="targetSparkConfiguration"> The spark configuration of the spark job. </param>
         /// <param name="sessionProperties"> Session properties. </param>
         /// <param name="metadata"> Notebook root-level metadata. </param>
         /// <param name="notebookFormat"> Notebook format (major number). Incremented between backwards incompatible changes to the notebook format. </param>
@@ -49,10 +44,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="cells"> Array of cells of the current notebook. </param>
         /// <param name="folder"> The folder that this notebook is in. If not specified, this notebook will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal Notebook(string description, BigDataPoolReference bigDataPool, NotebookSessionProperties sessionProperties, NotebookMetadata metadata, int notebookFormat, int notebookFormatMinor, IList<NotebookCell> cells, NotebookFolder folder, IDictionary<string, object> additionalProperties)
+        internal Notebook(string description, BigDataPoolReference bigDataPool, SparkConfigurationReference targetSparkConfiguration, NotebookSessionProperties sessionProperties, NotebookMetadata metadata, int notebookFormat, int notebookFormatMinor, IList<NotebookCell> cells, NotebookFolder folder, IDictionary<string, object> additionalProperties)
         {
             Description = description;
             BigDataPool = bigDataPool;
+            TargetSparkConfiguration = targetSparkConfiguration;
             SessionProperties = sessionProperties;
             Metadata = metadata;
             NotebookFormat = notebookFormat;
@@ -66,6 +62,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public string Description { get; set; }
         /// <summary> Big data pool reference. </summary>
         public BigDataPoolReference BigDataPool { get; set; }
+        /// <summary> The spark configuration of the spark job. </summary>
+        public SparkConfigurationReference TargetSparkConfiguration { get; set; }
         /// <summary> Session properties. </summary>
         public NotebookSessionProperties SessionProperties { get; set; }
         /// <summary> Notebook root-level metadata. </summary>

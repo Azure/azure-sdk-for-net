@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="aksResourceId"></param>
         /// <param name="kind"> Kind of resource. </param>
-        internal KubeEnvironmentPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? isInternalLoadBalancerEnabled, string defaultDomain, string staticIP, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, string aksResourceId, string kind) : base(id, name, resourceType, systemData)
+        internal KubeEnvironmentPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? isInternalLoadBalancerEnabled, string defaultDomain, string staticIP, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, ResourceIdentifier aksResourceId, string kind) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DeploymentErrors = deploymentErrors;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         public AppLogsConfiguration AppLogsConfiguration { get; set; }
         /// <summary> Gets or sets the aks resource id. </summary>
-        public string AksResourceId { get; set; }
+        public ResourceIdentifier AksResourceId { get; set; }
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }

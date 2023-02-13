@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,23 +15,28 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static Pav2MeterDetails DeserializePav2MeterDetails(JsonElement element)
         {
-            Optional<string> meterGuid = default;
+            Optional<Guid> meterGuid = default;
             BillingType billingType = default;
             Optional<double> multiplier = default;
-            Optional<ChargingType> chargingType = default;
+            Optional<EdgeOrderProductChargingType> chargingType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("meterGuid"))
+                if (property.NameEquals("meterGuid"u8))
                 {
-                    meterGuid = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    meterGuid = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("billingType"))
+                if (property.NameEquals("billingType"u8))
                 {
                     billingType = new BillingType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("multiplier"))
+                if (property.NameEquals("multiplier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,18 +46,18 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     multiplier = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("chargingType"))
+                if (property.NameEquals("chargingType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    chargingType = new ChargingType(property.Value.GetString());
+                    chargingType = new EdgeOrderProductChargingType(property.Value.GetString());
                     continue;
                 }
             }
-            return new Pav2MeterDetails(billingType, Optional.ToNullable(multiplier), Optional.ToNullable(chargingType), meterGuid.Value);
+            return new Pav2MeterDetails(billingType, Optional.ToNullable(multiplier), Optional.ToNullable(chargingType), Optional.ToNullable(meterGuid));
         }
     }
 }

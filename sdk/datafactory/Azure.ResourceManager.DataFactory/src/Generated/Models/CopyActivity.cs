@@ -29,18 +29,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="source"/> or <paramref name="sink"/> is null. </exception>
         public CopyActivity(string name, CopyActivitySource source, CopySink sink) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-            if (sink == null)
-            {
-                throw new ArgumentNullException(nameof(sink));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(source, nameof(source));
+            Argument.AssertNotNull(sink, nameof(sink));
 
             Inputs = new ChangeTrackingList<DatasetReference>();
             Outputs = new ChangeTrackingList<DatasetReference>();
@@ -286,9 +277,67 @@ namespace Azure.ResourceManager.DataFactory.Models
         public LogStorageSettings LogStorageSettings { get; set; }
         /// <summary> Log settings customer needs provide when enabling log. </summary>
         public LogSettings LogSettings { get; set; }
-        /// <summary> Preserve Rules. </summary>
+        /// <summary>
+        /// Preserve Rules.
+        /// <para>
+        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IList<BinaryData> PreserveRules { get; }
-        /// <summary> Preserve rules. </summary>
+        /// <summary>
+        /// Preserve rules.
+        /// <para>
+        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IList<BinaryData> Preserve { get; }
         /// <summary>
         /// Whether to enable Data Consistency validation. Type: boolean (or Expression with resultType boolean).

@@ -140,6 +140,7 @@ namespace Azure.ResourceManager.Batch
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public int? CurrentDedicatedNodes { get { throw null; } }
         public int? CurrentLowPriorityNodes { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.NodeCommunicationMode? CurrentNodeCommunicationMode { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.BatchDeploymentConfiguration DeploymentConfiguration { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
@@ -154,6 +155,7 @@ namespace Azure.ResourceManager.Batch
         public Azure.ResourceManager.Batch.Models.BatchResizeOperationStatus ResizeOperationStatus { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.BatchAccountPoolScaleSettings ScaleSettings { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchAccountPoolStartTask StartTask { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.NodeCommunicationMode? TargetNodeCommunicationMode { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchNodeFillType? TaskSchedulingNodeFillType { get { throw null; } set { } }
         public int? TaskSlotsPerNode { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchUserAccount> UserAccounts { get { throw null; } }
@@ -1106,5 +1108,11 @@ namespace Azure.ResourceManager.Batch.Models
     {
         Enabled = 0,
         Disabled = 1,
+    }
+    public enum NodeCommunicationMode
+    {
+        Default = 0,
+        Classic = 1,
+        Simplified = 2,
     }
 }

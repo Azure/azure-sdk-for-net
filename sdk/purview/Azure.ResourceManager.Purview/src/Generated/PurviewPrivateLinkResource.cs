@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Purview
     /// A Class representing a PurviewPrivateLinkResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PurviewPrivateLinkResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetPurviewPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AccountResource" /> using the GetPurviewPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PurviewAccountResource" /> using the GetPurviewPrivateLinkResource method.
     /// </summary>
     public partial class PurviewPrivateLinkResource : ArmResource
     {
@@ -88,8 +88,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Gets a privately linkable resources for an account with given group identifier
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateLinkResources/{groupId}
-        /// Operation Id: PrivateLinkResources_GetByGroupId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateLinkResources/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_GetByGroupId</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PurviewPrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -112,8 +120,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Gets a privately linkable resources for an account with given group identifier
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateLinkResources/{groupId}
-        /// Operation Id: PrivateLinkResources_GetByGroupId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateLinkResources/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_GetByGroupId</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PurviewPrivateLinkResource> Get(CancellationToken cancellationToken = default)

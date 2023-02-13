@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,9 +10,31 @@
 
 ### Other Changes
 
+## 1.1.0 (2022-11-02)
+
+### Features Added
+
+Supported following methods:
+- Get available SSL options info
+- Get specified SSL predefined policy
+- Get all SSL predefined policies
+
+## 1.0.1 (2022-09-13)
+
+### Breaking Changes
+
+Modified the following classes to abstract classes and changed their constructors from public to protected:
+- `FirewallPolicyRule`
+- `FirewallPolicyRuleCollectionInfo`
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.3.1.
+- Optimized the implementation of methods related to tag operations.
+
 ## 1.0.0 (2022-07-11)
 
-This is the first stable release of the Network Management client library.
+This release is the first stable release of the Network Management client library.
 
 ### Features Added
 
@@ -28,10 +50,10 @@ Polishing since last public beta release:
 - Corrected the format of all `ETag` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
 - Corrected the format of all binary type properties / parameters.
-- Corrected all acronyms which not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected all acronyms that not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
 - Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
 - Corrected the suffix of `DateTimeOffset` properties / parameters.
-- Corrected the name of interval / duration properties / parameters which end with units.
+- Corrected the name of interval / duration properties / parameters that end with units.
 - Optimized the name of some models and functions.
 
 ### Other Changes
@@ -44,7 +66,7 @@ Polishing since last public beta release:
 ### Breaking Changes
 
 - Simplified `type` property names.
-- Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
+- Normalized the body parameter type names for PUT / POST / PATCH operations if it's only used as input.
 
 ### Other Changes
 
@@ -54,7 +76,7 @@ Polishing since last public beta release:
 
 ### Breaking Changes
 
-- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Now all the resource classes would have a `Resource` suffix (if it previously doesn't have one).
 - Renamed some models to more comprehensive names.
 - `bool waitForCompletion` parameter in all long running operations were changed to `WaitUntil waitUntil`.
 - All properties of the type `object` were changed to `BinaryData`.
@@ -99,25 +121,29 @@ Polishing since last public beta release:
 
 ## 1.0.0-beta.1 (2021-08-31)
 
-This package follows the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
+### Breaking Changes
 
-This is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, please submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
+New design of track 2 initial commit.
+
+### Package Name
+
+The package name has been changed from `Microsoft.Azure.Management.Network` to `Azure.ResourceManager.Network`.
 
 ### General New Features
 
-- Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET
-- Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing
-- HTTP pipeline with custom policies
-- Better error-handling
-- Support uniform telemetry across all languages
+This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
-> NOTE: For more information about unified authentication, please refer to [Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
+    - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
+    - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.
+    - HTTP pipeline with custom policies.
+    - Better error-handling.
+    - Support uniform telemetry across all languages.
 
-#### Package Name
+This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
-The package name has been changed from `Microsoft.Azure.Management.Network` to `Azure.ResourceManager.Network`
+> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
 
-#### Management Client Changes
+### Management Client Changes
 
 Example: Create a VNet:
 

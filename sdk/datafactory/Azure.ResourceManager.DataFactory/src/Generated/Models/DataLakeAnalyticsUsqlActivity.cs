@@ -21,18 +21,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="scriptPath"/> or <paramref name="scriptLinkedService"/> is null. </exception>
         public DataLakeAnalyticsUsqlActivity(string name, BinaryData scriptPath, FactoryLinkedServiceReference scriptLinkedService) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (scriptPath == null)
-            {
-                throw new ArgumentNullException(nameof(scriptPath));
-            }
-            if (scriptLinkedService == null)
-            {
-                throw new ArgumentNullException(nameof(scriptLinkedService));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(scriptPath, nameof(scriptPath));
+            Argument.AssertNotNull(scriptLinkedService, nameof(scriptLinkedService));
 
             ScriptPath = scriptPath;
             ScriptLinkedService = scriptLinkedService;
@@ -163,7 +154,36 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData Priority { get; set; }
-        /// <summary> Parameters for U-SQL job request. </summary>
+        /// <summary>
+        /// Parameters for U-SQL job request.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IDictionary<string, BinaryData> Parameters { get; }
         /// <summary>
         /// Runtime version of the U-SQL engine to use. Type: string (or Expression with resultType string).

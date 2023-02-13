@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +15,7 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             writer.WriteEndObject();
         }
@@ -34,7 +33,7 @@ namespace Azure.Communication.JobRouter
                     case "weighted-allocation-queue-selector": return WeightedAllocationQueueSelectorAttachment.DeserializeWeightedAllocationQueueSelectorAttachment(element);
                 }
             }
-            throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Communication.JobRouter.QueueSelectorAttachment' not supported.");
+            return UnknownQueueSelectorAttachment.DeserializeUnknownQueueSelectorAttachment(element);
         }
     }
 }

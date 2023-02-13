@@ -46,8 +46,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Asynchronously creates a new event subscription or updates an existing event subscription based on the specified scope.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: EventSubscriptions_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription. Event subscription names must be between 3 and 64 characters in length and should use alphanumeric letters only. </param>
@@ -55,7 +63,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<EventSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string eventSubscriptionName, EventSubscriptionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EventSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string eventSubscriptionName, EventGridSubscriptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
             Argument.AssertNotNull(data, nameof(data));
@@ -79,8 +87,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Asynchronously creates a new event subscription or updates an existing event subscription based on the specified scope.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: EventSubscriptions_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription. Event subscription names must be between 3 and 64 characters in length and should use alphanumeric letters only. </param>
@@ -88,7 +104,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<EventSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string eventSubscriptionName, EventSubscriptionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EventSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string eventSubscriptionName, EventGridSubscriptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
             Argument.AssertNotNull(data, nameof(data));
@@ -112,8 +128,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Get properties of an event subscription.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: EventSubscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -141,8 +165,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Get properties of an event subscription.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: EventSubscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -170,14 +202,40 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// List all aggregated global event subscriptions under a specific Azure subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/eventSubscriptions
-        /// Operation Id: EventSubscriptions_ListGlobalBySubscription
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/eventSubscriptions
-        /// Operation Id: EventSubscriptions_ListGlobalByResourceGroup
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerNamespace}/{resourceTypeName}/{resourceName}/providers/Microsoft.EventGrid/eventSubscriptions
-        /// Operation Id: EventSubscriptions_ListByResource
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/providers/Microsoft.EventGrid/eventSubscriptions
-        /// Operation Id: EventSubscriptions_ListByDomainTopic
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/eventSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_ListGlobalBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/eventSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_ListGlobalByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerNamespace}/{resourceTypeName}/{resourceName}/providers/Microsoft.EventGrid/eventSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_ListByResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/providers/Microsoft.EventGrid/eventSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_ListByDomainTopic</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
@@ -187,152 +245,66 @@ namespace Azure.ResourceManager.EventGrid
         {
             if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
-                async Task<Page<EventSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _eventSubscriptionRestClient.ListGlobalBySubscriptionAsync(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<EventSubscriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _eventSubscriptionRestClient.ListGlobalBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateListGlobalBySubscriptionRequest(Id.SubscriptionId, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventSubscriptionRestClient.CreateListGlobalBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventSubscriptionResource(Client, EventGridSubscriptionData.DeserializeEventGridSubscriptionData(e)), _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == ResourceGroupResource.ResourceType)
             {
-                async Task<Page<EventSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _eventSubscriptionRestClient.ListGlobalByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<EventSubscriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _eventSubscriptionRestClient.ListGlobalByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateListGlobalByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventSubscriptionRestClient.CreateListGlobalByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventSubscriptionResource(Client, EventGridSubscriptionData.DeserializeEventGridSubscriptionData(e)), _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == DomainTopicResource.ResourceType)
             {
-                async Task<Page<EventSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _eventSubscriptionRestClient.ListByDomainTopicAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<EventSubscriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _eventSubscriptionRestClient.ListByDomainTopicNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateListByDomainTopicRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventSubscriptionRestClient.CreateListByDomainTopicNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventSubscriptionResource(Client, EventGridSubscriptionData.DeserializeEventGridSubscriptionData(e)), _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else
             {
-                async Task<Page<EventSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _eventSubscriptionRestClient.ListByResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<EventSubscriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _eventSubscriptionRestClient.ListByResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.GetLastType(), Id.Name, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventSubscriptionRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.GetLastType(), Id.Name, filter, top);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventSubscriptionResource(Client, EventGridSubscriptionData.DeserializeEventGridSubscriptionData(e)), _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
             }
         }
 
         /// <summary>
         /// List all aggregated global event subscriptions under a specific Azure subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/eventSubscriptions
-        /// Operation Id: EventSubscriptions_ListGlobalBySubscription
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/eventSubscriptions
-        /// Operation Id: EventSubscriptions_ListGlobalByResourceGroup
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerNamespace}/{resourceTypeName}/{resourceName}/providers/Microsoft.EventGrid/eventSubscriptions
-        /// Operation Id: EventSubscriptions_ListByResource
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/providers/Microsoft.EventGrid/eventSubscriptions
-        /// Operation Id: EventSubscriptions_ListByDomainTopic
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/eventSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_ListGlobalBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/eventSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_ListGlobalByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerNamespace}/{resourceTypeName}/{resourceName}/providers/Microsoft.EventGrid/eventSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_ListByResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/providers/Microsoft.EventGrid/eventSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_ListByDomainTopic</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
@@ -342,146 +314,42 @@ namespace Azure.ResourceManager.EventGrid
         {
             if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
-                Page<EventSubscriptionResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _eventSubscriptionRestClient.ListGlobalBySubscription(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<EventSubscriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _eventSubscriptionRestClient.ListGlobalBySubscriptionNextPage(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateListGlobalBySubscriptionRequest(Id.SubscriptionId, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventSubscriptionRestClient.CreateListGlobalBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventSubscriptionResource(Client, EventGridSubscriptionData.DeserializeEventGridSubscriptionData(e)), _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == ResourceGroupResource.ResourceType)
             {
-                Page<EventSubscriptionResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _eventSubscriptionRestClient.ListGlobalByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<EventSubscriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _eventSubscriptionRestClient.ListGlobalByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateListGlobalByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventSubscriptionRestClient.CreateListGlobalByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
+                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventSubscriptionResource(Client, EventGridSubscriptionData.DeserializeEventGridSubscriptionData(e)), _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == DomainTopicResource.ResourceType)
             {
-                Page<EventSubscriptionResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _eventSubscriptionRestClient.ListByDomainTopic(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<EventSubscriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _eventSubscriptionRestClient.ListByDomainTopicNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateListByDomainTopicRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventSubscriptionRestClient.CreateListByDomainTopicNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
+                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventSubscriptionResource(Client, EventGridSubscriptionData.DeserializeEventGridSubscriptionData(e)), _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else
             {
-                Page<EventSubscriptionResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _eventSubscriptionRestClient.ListByResource(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<EventSubscriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _eventSubscriptionRestClient.ListByResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new EventSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.GetLastType(), Id.Name, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventSubscriptionRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.GetLastType(), Id.Name, filter, top);
+                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventSubscriptionResource(Client, EventGridSubscriptionData.DeserializeEventGridSubscriptionData(e)), _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
             }
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: EventSubscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -507,8 +375,16 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
-        /// Operation Id: EventSubscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
@@ -16,12 +17,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="status"> The status of a private endpoint connection. </param>
         /// <param name="description"> The description for the current state of a private endpoint connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="description"/> is null. </exception>
-        public DeviceProvisioningServicesPrivateLinkServiceConnectionState(PrivateLinkServiceConnectionStatus status, string description)
+        public DeviceProvisioningServicesPrivateLinkServiceConnectionState(DeviceProvisioningServicesPrivateLinkServiceConnectionStatus status, string description)
         {
-            if (description == null)
-            {
-                throw new ArgumentNullException(nameof(description));
-            }
+            Argument.AssertNotNull(description, nameof(description));
 
             Status = status;
             Description = description;
@@ -31,7 +29,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="status"> The status of a private endpoint connection. </param>
         /// <param name="description"> The description for the current state of a private endpoint connection. </param>
         /// <param name="actionsRequired"> Actions required for a private endpoint connection. </param>
-        internal DeviceProvisioningServicesPrivateLinkServiceConnectionState(PrivateLinkServiceConnectionStatus status, string description, string actionsRequired)
+        internal DeviceProvisioningServicesPrivateLinkServiceConnectionState(DeviceProvisioningServicesPrivateLinkServiceConnectionStatus status, string description, string actionsRequired)
         {
             Status = status;
             Description = description;
@@ -39,7 +37,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         }
 
         /// <summary> The status of a private endpoint connection. </summary>
-        public PrivateLinkServiceConnectionStatus Status { get; set; }
+        public DeviceProvisioningServicesPrivateLinkServiceConnectionStatus Status { get; set; }
         /// <summary> The description for the current state of a private endpoint connection. </summary>
         public string Description { get; set; }
         /// <summary> Actions required for a private endpoint connection. </summary>

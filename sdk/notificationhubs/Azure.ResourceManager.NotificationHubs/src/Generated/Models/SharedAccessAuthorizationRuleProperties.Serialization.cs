@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Rights))
             {
-                writer.WritePropertyName("rights");
+                writer.WritePropertyName("rights"u8);
                 writer.WriteStartArray();
                 foreach (var item in Rights)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Optional<int> revision = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rights"))
+                if (property.NameEquals("rights"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,52 +58,52 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     rights = array;
                     continue;
                 }
-                if (property.NameEquals("primaryKey"))
+                if (property.NameEquals("primaryKey"u8))
                 {
                     primaryKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryKey"))
+                if (property.NameEquals("secondaryKey"u8))
                 {
                     secondaryKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyName"))
+                if (property.NameEquals("keyName"u8))
                 {
                     keyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("claimType"))
+                if (property.NameEquals("claimType"u8))
                 {
                     claimType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("claimValue"))
+                if (property.NameEquals("claimValue"u8))
                 {
                     claimValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("modifiedTime"))
+                if (property.NameEquals("modifiedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    modifiedTime = property.Value.GetDateTimeOffset();
+                    modifiedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("createdTime"))
+                if (property.NameEquals("createdTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    createdTime = property.Value.GetDateTimeOffset();
+                    createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("revision"))
+                if (property.NameEquals("revision"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

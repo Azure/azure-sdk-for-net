@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("authenticationType");
+            writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             writer.WriteEndObject();
         }
@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         internal static UnknownAuthenticationDetailsProperties DeserializeUnknownAuthenticationDetailsProperties(JsonElement element)
         {
             Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
-            Optional<IReadOnlyList<PermissionProperty>> grantedPermissions = default;
-            AuthenticationType authenticationType = default;
+            Optional<IReadOnlyList<SecurityCenterCloudPermission>> grantedPermissions = default;
+            AuthenticationType authenticationType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("authenticationProvisioningState"))
+                if (property.NameEquals("authenticationProvisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     authenticationProvisioningState = new AuthenticationProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("grantedPermissions"))
+                if (property.NameEquals("grantedPermissions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PermissionProperty> array = new List<PermissionProperty>();
+                    List<SecurityCenterCloudPermission> array = new List<SecurityCenterCloudPermission>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new PermissionProperty(item.GetString()));
+                        array.Add(new SecurityCenterCloudPermission(item.GetString()));
                     }
                     grantedPermissions = array;
                     continue;
                 }
-                if (property.NameEquals("authenticationType"))
+                if (property.NameEquals("authenticationType"u8))
                 {
                     authenticationType = new AuthenticationType(property.Value.GetString());
                     continue;

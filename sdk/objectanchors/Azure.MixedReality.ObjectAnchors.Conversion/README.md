@@ -92,6 +92,10 @@ using (FileStream fs = File.OpenRead(localFilePath))
 ```csharp
 AssetConversionOptions assetConversionOptions = new AssetConversionOptions(uploadedInputAssetUri, AssetFileType.FromFilePath(localFilePath), assetGravity, scale);
 
+// Or you can pass in an optional parameter DisableDetectScaleUnits if you are converting a FBX, specifying whether or not you want to disable automatic detection of the embedded scale units. 
+// The detection is enabled by default.
+AssetConversionOptions assetConversionOptions = new AssetConversionOptions(uploadedInputAssetUri, AssetFileType.FromFilePath(localFilePath), assetGravity, scale, disableDetectScaleUnits: true);
+
 AssetConversionOperation operation = await client.StartAssetConversionAsync(assetConversionOptions);
 
 Guid jobId = new Guid(operation.Id);

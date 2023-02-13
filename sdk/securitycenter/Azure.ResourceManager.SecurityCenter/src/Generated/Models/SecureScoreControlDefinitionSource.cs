@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of SecureScoreControlDefinitionSource. </summary>
         /// <param name="sourceType"> The type of security control (for example, BuiltIn). </param>
-        internal SecureScoreControlDefinitionSource(ControlType? sourceType)
+        internal SecureScoreControlDefinitionSource(SecurityControlType? sourceType)
         {
             SourceType = sourceType;
         }
 
         /// <summary> The type of security control (for example, BuiltIn). </summary>
-        public ControlType? SourceType { get; }
+        public SecurityControlType? SourceType { get; }
     }
 }

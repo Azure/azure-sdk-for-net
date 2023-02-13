@@ -1,0 +1,3421 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/69a75bda-882e-44d5-8431-63421204132a?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-214a3fb060bdbf421ed7d100f1d2c3f8-f3d29a31057eb7ce-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "1b5f26d5095c73190da1c9b0619863ad",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "422",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 14 Sep 2022 13:49:02 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f27d8db2-5a49-48e9-9886-eb2fee0c617f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11960",
+        "x-ms-request-id": "f27d8db2-5a49-48e9-9886-eb2fee0c617f",
+        "x-ms-routing-request-id": "WESTEUROPE:20220914T134902Z:f27d8db2-5a49-48e9-9886-eb2fee0c617f"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/69a75bda-882e-44d5-8431-63421204132a",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "SkipNRMSNSG": "true"
+        },
+        "subscriptionId": "69a75bda-882e-44d5-8431-63421204132a",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "QATest02-SVL",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/69a75bda-882e-44d5-8431-63421204132a/providers/Microsoft.NetApp?api-version=**",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-fe178458de7f77d30e9a4a91e8e808c6-9cd2654a1cd22622-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "1ff5793f7a6f632b76528149f249fcdb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "22420",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 14 Sep 2022 13:49:02 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "86442e4c-c4e7-42ae-80db-43b0085f3db2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11959",
+        "x-ms-request-id": "86442e4c-c4e7-42ae-80db-43b0085f3db2",
+        "x-ms-routing-request-id": "WESTEUROPE:20220914T134902Z:86442e4c-c4e7-42ae-80db-43b0085f3db2"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/69a75bda-882e-44d5-8431-63421204132a/providers/Microsoft.NetApp",
+        "namespace": "Microsoft.NetApp",
+        "authorizations": [
+          {
+            "applicationId": "12fb057d-b751-47cd-857c-f2934bb677b4",
+            "roleDefinitionId": "e4796bef-6b6d-4cbc-ba1e-27f1a308d860"
+          },
+          {
+            "applicationId": "608f9929-9737-432e-860f-4e1c1821052f",
+            "roleDefinitionId": "3db66429-be98-4b0c-8ad6-20dc5cb960e4"
+          }
+        ],
+        "resourceTypes": [
+          {
+            "resourceType": "netAppAccounts",
+            "locations": [
+              "Australia Central",
+              "Australia Central 2",
+              "Australia East",
+              "Australia Southeast",
+              "Brazil South",
+              "Canada Central",
+              "Canada East",
+              "Central India",
+              "Central US",
+              "East Asia",
+              "East US",
+              "East US 2",
+              "France Central",
+              "Germany North",
+              "Germany West Central",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "Korea South",
+              "North Central US",
+              "North Europe",
+              "Norway East",
+              "Norway West",
+              "South Central US",
+              "South India",
+              "Southeast Asia",
+              "Sweden Central",
+              "Switzerland North",
+              "Switzerland West",
+              "UAE North",
+              "UAE Central",
+              "UK South",
+              "UK West",
+              "West Europe",
+              "West US",
+              "West US 2",
+              "West US 3",
+              "West US (Stage)",
+              "East US 2 EUAP",
+              "South Central US (Stage)",
+              "West Central US",
+              "West US 2 (Stage)",
+              "Brazil Southeast",
+              "Central US EUAP",
+              "Sweden South"
+            ],
+            "apiVersions": [
+              "2022-05-01",
+              "2022-03-01",
+              "2022-01-01",
+              "2021-10-01",
+              "2021-08-01",
+              "2021-06-01",
+              "2021-04-01",
+              "2021-02-01",
+              "2020-12-01",
+              "2020-11-01",
+              "2020-10-01",
+              "2020-09-01",
+              "2020-08-01",
+              "2020-07-01",
+              "2020-06-01",
+              "2020-05-01",
+              "2020-03-01",
+              "2020-02-01",
+              "2019-11-01",
+              "2019-10-01",
+              "2019-08-01",
+              "2019-07-01",
+              "2019-06-01",
+              "2019-05-01",
+              "2017-08-15"
+            ],
+            "capabilities": "SystemAssignedResourceIdentity, SupportsTags, SupportsLocation"
+          },
+          {
+            "resourceType": "netAppAccounts/snapshotPolicies",
+            "locations": [
+              "Australia Central",
+              "Australia Central 2",
+              "Australia East",
+              "Australia Southeast",
+              "Brazil South",
+              "Canada Central",
+              "Canada East",
+              "Central India",
+              "Central US",
+              "East Asia",
+              "East US",
+              "East US 2",
+              "France Central",
+              "Germany North",
+              "Germany West Central",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "Korea South",
+              "North Central US",
+              "North Europe",
+              "Norway East",
+              "Norway West",
+              "South Central US",
+              "South India",
+              "Southeast Asia",
+              "Sweden Central",
+              "Switzerland North",
+              "Switzerland West",
+              "UAE North",
+              "UAE Central",
+              "UK South",
+              "UK West",
+              "West Europe",
+              "West US",
+              "West US 2",
+              "West US 3",
+              "West US (Stage)",
+              "East US 2 EUAP",
+              "South Central US (Stage)",
+              "West Central US",
+              "West US 2 (Stage)",
+              "Brazil Southeast",
+              "Central US EUAP",
+              "Sweden South"
+            ],
+            "apiVersions": [
+              "2022-05-01",
+              "2022-03-01",
+              "2022-01-01",
+              "2021-10-01",
+              "2021-08-01",
+              "2021-06-01",
+              "2021-04-01",
+              "2021-02-01",
+              "2020-12-01",
+              "2020-11-01",
+              "2020-10-01",
+              "2020-09-01",
+              "2020-08-01",
+              "2020-07-01",
+              "2020-06-01",
+              "2020-05-01"
+            ],
+            "capabilities": "SupportsTags, SupportsLocation"
+          },
+          {
+            "resourceType": "netAppAccounts/volumeGroups",
+            "locations": [
+              "Australia Central",
+              "Australia Central 2",
+              "Australia East",
+              "Australia Southeast",
+              "Brazil South",
+              "Canada Central",
+              "Canada East",
+              "Central India",
+              "Central US",
+              "East Asia",
+              "East US",
+              "East US 2",
+              "France Central",
+              "Germany North",
+              "Germany West Central",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "Korea South",
+              "North Central US",
+              "North Europe",
+              "Norway East",
+              "Norway West",
+              "South Central US",
+              "South India",
+              "Southeast Asia",
+              "Sweden Central",
+              "Switzerland North",
+              "Switzerland West",
+              "UAE North",
+              "UAE Central",
+              "UK South",
+              "UK West",
+              "West Europe",
+              "West US",
+              "West US 2",
+              "West US 3",
+              "West US (Stage)",
+              "East US 2 EUAP",
+              "South Central US (Stage)",
+              "West Central US",
+              "West US 2 (Stage)",
+              "Brazil Southeast",
+              "Central US EUAP",
+              "Sweden South"
+            ],
+            "apiVersions": [
+              "2022-05-01",
+              "2022-03-01",
+              "2022-01-01",
+              "2021-10-01",
+              "2021-08-01",
+              "2021-06-01",
+              "2021-04-01",
+              "2021-02-01"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "netAppAccounts/capacityPools",
+            "locations": [
+              "Australia Central",
+              "Australia Central 2",
+              "Australia East",
+              "Australia Southeast",
+              "Brazil South",
+              "Canada Central",
+              "Canada East",
+              "Central India",
+              "Central US",
+              "East Asia",
+              "East US",
+              "East US 2",
+              "France Central",
+              "Germany North",
+              "Germany West Central",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "Korea South",
+              "North Central US",
+              "North Europe",
+              "Norway East",
+              "Norway West",
+              "South Central US",
+              "South India",
+              "Southeast Asia",
+              "Sweden Central",
+              "Switzerland North",
+              "Switzerland West",
+              "UAE North",
+              "UAE Central",
+              "UK South",
+              "UK West",
+              "West Europe",
+              "West US",
+              "West US 2",
+              "West US 3",
+              "West US (Stage)",
+              "East US 2 EUAP",
+              "South Central US (Stage)",
+              "West Central US",
+              "West US 2 (Stage)",
+              "Brazil Southeast",
+              "Central US EUAP",
+              "Sweden South"
+            ],
+            "apiVersions": [
+              "2022-05-01",
+              "2022-03-01",
+              "2022-01-01",
+              "2021-10-01",
+              "2021-08-01",
+              "2021-06-01",
+              "2021-04-01",
+              "2021-02-01",
+              "2020-12-01",
+              "2020-11-01",
+              "2020-10-01",
+              "2020-09-01",
+              "2020-08-01",
+              "2020-07-01",
+              "2020-06-01",
+              "2020-05-01",
+              "2020-03-01",
+              "2020-02-01",
+              "2019-11-01",
+              "2019-10-01",
+              "2019-08-01",
+              "2019-07-01",
+              "2019-06-01",
+              "2019-05-01",
+              "2017-08-15"
+            ],
+            "capabilities": "SupportsTags, SupportsLocation"
+          },
+          {
+            "resourceType": "netAppAccounts/capacityPools/volumes",
+            "locations": [
+              "Australia Central",
+              "Australia Central 2",
+              "Australia East",
+              "Australia Southeast",
+              "Brazil South",
+              "Canada Central",
+              "Canada East",
+              "Central India",
+              "Central US",
+              "East Asia",
+              "East US",
+              "East US 2",
+              "France Central",
+              "Germany North",
+              "Germany West Central",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "Korea South",
+              "North Central US",
+              "North Europe",
+              "Norway East",
+              "Norway West",
+              "South Central US",
+              "South India",
+              "Southeast Asia",
+              "Sweden Central",
+              "Switzerland North",
+              "Switzerland West",
+              "UAE North",
+              "UAE Central",
+              "UK South",
+              "UK West",
+              "West Europe",
+              "West US",
+              "West US 2",
+              "West US 3",
+              "West US (Stage)",
+              "East US 2 EUAP",
+              "South Central US (Stage)",
+              "West Central US",
+              "West US 2 (Stage)",
+              "Brazil Southeast",
+              "Central US EUAP",
+              "Sweden South"
+            ],
+            "apiVersions": [
+              "2022-05-01",
+              "2022-03-01",
+              "2022-01-01",
+              "2021-10-01",
+              "2021-08-01",
+              "2021-06-01",
+              "2021-04-01",
+              "2021-02-01",
+              "2020-12-01",
+              "2020-11-01",
+              "2020-10-01",
+              "2020-09-01",
+              "2020-08-01",
+              "2020-07-01",
+              "2020-06-01",
+              "2020-05-01",
+              "2020-03-01",
+              "2020-02-01",
+              "2019-11-01",
+              "2019-10-01",
+              "2019-08-01",
+              "2019-07-01",
+              "2019-06-01",
+              "2019-05-01",
+              "2017-08-15"
+            ],
+            "zoneMappings": [
+              {
+                "location": "Australia East",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "location": "Brazil South",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "location": "Canada Central",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "location": "Central India",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "location": "Central US",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "location": "Central US EUAP",
+                "zones": []
+              },
+              {
+                "location": "East Asia",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "location": "East US",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "location": "East US 2",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "location": "East US 2 EUAP",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "location": "France Central",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "location": "Germany West Central",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "location": "Japan East",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "location": "Korea Central",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "location": "North Central US",
+                "zones": []
+              },
+              {
+                "location": "North Europe",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "location": "Norway East",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "location": "South Central US",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "location": "Southeast Asia",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "location": "Sweden Central",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "location": "Switzerland North",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "location": "UAE North",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "location": "UK South",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "location": "West Europe",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "location": "West US 2",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              },
+              {
+                "location": "West US 3",
+                "zones": [
+                  "3",
+                  "1",
+                  "2"
+                ]
+              }
+            ],
+            "capabilities": "SupportsTags, SupportsLocation"
+          },
+          {
+            "resourceType": "netAppAccounts/capacityPools/volumes/mountTargets",
+            "locations": [
+              "Australia Central",
+              "Australia Central 2",
+              "Australia East",
+              "Australia Southeast",
+              "Brazil South",
+              "Canada Central",
+              "Canada East",
+              "Central India",
+              "Central US",
+              "East Asia",
+              "East US",
+              "East US 2",
+              "France Central",
+              "Germany North",
+              "Germany West Central",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "Korea South",
+              "North Central US",
+              "North Europe",
+              "Norway East",
+              "Norway West",
+              "South Central US",
+              "South India",
+              "Southeast Asia",
+              "Sweden Central",
+              "Switzerland North",
+              "Switzerland West",
+              "UAE North",
+              "UAE Central",
+              "UK South",
+              "UK West",
+              "West Europe",
+              "West US",
+              "West US 2",
+              "West US 3",
+              "West US (Stage)",
+              "East US 2 EUAP",
+              "South Central US (Stage)",
+              "West Central US",
+              "West US 2 (Stage)",
+              "Brazil Southeast",
+              "Central US EUAP",
+              "Sweden South"
+            ],
+            "apiVersions": [
+              "2019-10-01",
+              "2019-08-01",
+              "2019-07-01",
+              "2019-06-01",
+              "2019-05-01",
+              "2017-08-15"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "netAppAccounts/capacityPools/volumes/snapshots",
+            "locations": [
+              "Australia Central",
+              "Australia Central 2",
+              "Australia East",
+              "Australia Southeast",
+              "Brazil South",
+              "Canada Central",
+              "Canada East",
+              "Central India",
+              "Central US",
+              "East Asia",
+              "East US",
+              "East US 2",
+              "France Central",
+              "Germany North",
+              "Germany West Central",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "Korea South",
+              "North Central US",
+              "North Europe",
+              "Norway East",
+              "Norway West",
+              "South Central US",
+              "South India",
+              "Southeast Asia",
+              "Sweden Central",
+              "Switzerland North",
+              "Switzerland West",
+              "UAE North",
+              "UAE Central",
+              "UK South",
+              "UK West",
+              "West Europe",
+              "West US",
+              "West US 2",
+              "West US 3",
+              "West US (Stage)",
+              "East US 2 EUAP",
+              "South Central US (Stage)",
+              "West Central US",
+              "West US 2 (Stage)",
+              "Brazil Southeast",
+              "Central US EUAP",
+              "Sweden South"
+            ],
+            "apiVersions": [
+              "2022-05-01",
+              "2022-03-01",
+              "2022-01-01",
+              "2021-10-01",
+              "2021-08-01",
+              "2021-06-01",
+              "2021-04-01",
+              "2021-02-01",
+              "2020-12-01",
+              "2020-11-01",
+              "2020-10-01",
+              "2020-09-01",
+              "2020-08-01",
+              "2020-07-01",
+              "2020-06-01",
+              "2020-05-01",
+              "2020-03-01",
+              "2020-02-01",
+              "2019-11-01",
+              "2019-10-01",
+              "2019-08-01",
+              "2019-07-01",
+              "2019-06-01",
+              "2019-05-01",
+              "2017-08-15"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "locations",
+            "locations": [
+              "Australia Central",
+              "Australia Central 2",
+              "Australia East",
+              "Australia Southeast",
+              "Brazil South",
+              "Canada Central",
+              "Canada East",
+              "Central India",
+              "Central US",
+              "East Asia",
+              "East US",
+              "East US 2",
+              "France Central",
+              "Germany North",
+              "Germany West Central",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "Korea South",
+              "North Central US",
+              "North Europe",
+              "Norway East",
+              "Norway West",
+              "South Central US",
+              "South India",
+              "Southeast Asia",
+              "Sweden Central",
+              "Switzerland North",
+              "Switzerland West",
+              "UAE Central",
+              "UAE North",
+              "UK South",
+              "UK West",
+              "West US",
+              "West US 2",
+              "West US 3",
+              "West Europe",
+              "West Central US",
+              "West US (Stage)",
+              "West US 2 (Stage)",
+              "South Central US (Stage)",
+              "Brazil Southeast",
+              "Sweden South",
+              "Central US EUAP",
+              "East US 2 EUAP"
+            ],
+            "apiVersions": [
+              "2022-05-01",
+              "2022-03-01",
+              "2022-01-01",
+              "2021-10-01",
+              "2021-08-01",
+              "2021-06-01",
+              "2021-04-01",
+              "2021-02-01",
+              "2020-12-01",
+              "2020-11-01",
+              "2020-10-01",
+              "2020-09-01",
+              "2020-08-01",
+              "2020-07-01",
+              "2020-06-01",
+              "2020-05-01",
+              "2020-03-01",
+              "2020-02-01",
+              "2019-11-01",
+              "2019-10-01",
+              "2019-08-01",
+              "2019-07-01",
+              "2019-06-01",
+              "2019-05-01",
+              "2017-08-15"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "locations/checkNameAvailability",
+            "locations": [
+              "Australia Central",
+              "Australia Central 2",
+              "Australia East",
+              "Australia Southeast",
+              "Brazil South",
+              "Canada Central",
+              "Canada East",
+              "Central India",
+              "Central US",
+              "East Asia",
+              "East US",
+              "East US 2",
+              "France Central",
+              "Germany North",
+              "Germany West Central",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "Korea South",
+              "North Central US",
+              "North Europe",
+              "Norway East",
+              "Norway West",
+              "South Central US",
+              "South India",
+              "Southeast Asia",
+              "Sweden Central",
+              "Switzerland North",
+              "Switzerland West",
+              "UAE North",
+              "UAE Central",
+              "UK South",
+              "UK West",
+              "West Europe",
+              "West US",
+              "West US 2",
+              "West US 3",
+              "West US (Stage)",
+              "East US 2 EUAP",
+              "South Central US (Stage)",
+              "West Central US",
+              "West US 2 (Stage)",
+              "Brazil Southeast",
+              "Central US EUAP",
+              "Sweden South"
+            ],
+            "apiVersions": [
+              "2020-12-01",
+              "2020-11-01",
+              "2020-10-01",
+              "2020-09-01",
+              "2020-08-01",
+              "2020-07-01",
+              "2020-06-01",
+              "2020-05-01",
+              "2020-03-01",
+              "2020-02-01",
+              "2019-11-01",
+              "2019-10-01",
+              "2019-08-01",
+              "2019-07-01",
+              "2019-06-01",
+              "2019-05-01",
+              "2017-08-15"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "locations/checkFilePathAvailability",
+            "locations": [
+              "Australia Central",
+              "Australia Central 2",
+              "Australia East",
+              "Australia Southeast",
+              "Brazil South",
+              "Canada Central",
+              "Canada East",
+              "Central India",
+              "Central US",
+              "East Asia",
+              "East US",
+              "East US 2",
+              "France Central",
+              "Germany North",
+              "Germany West Central",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "Korea South",
+              "North Central US",
+              "North Europe",
+              "Norway East",
+              "Norway West",
+              "South Central US",
+              "South India",
+              "Southeast Asia",
+              "Sweden Central",
+              "Switzerland North",
+              "Switzerland West",
+              "UAE North",
+              "UAE Central",
+              "UK South",
+              "UK West",
+              "West Europe",
+              "West US",
+              "West US 2",
+              "West US 3",
+              "West US (Stage)",
+              "East US 2 EUAP",
+              "South Central US (Stage)",
+              "West Central US",
+              "West US 2 (Stage)",
+              "Brazil Southeast",
+              "Central US EUAP",
+              "Sweden South"
+            ],
+            "apiVersions": [
+              "2022-05-01",
+              "2022-03-01",
+              "2022-01-01",
+              "2021-10-01",
+              "2021-08-01",
+              "2021-06-01",
+              "2021-04-01",
+              "2021-02-01",
+              "2020-12-01",
+              "2020-11-01",
+              "2020-10-01",
+              "2020-09-01",
+              "2020-08-01",
+              "2020-07-01",
+              "2020-06-01",
+              "2020-05-01",
+              "2020-03-01",
+              "2020-02-01",
+              "2019-11-01",
+              "2019-10-01",
+              "2019-08-01",
+              "2019-07-01",
+              "2019-06-01",
+              "2019-05-01",
+              "2017-08-15"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "operations",
+            "locations": [
+              "Australia Central",
+              "Australia Central 2",
+              "Australia East",
+              "Australia Southeast",
+              "Brazil South",
+              "Brazil Southeast",
+              "Canada Central",
+              "Canada East",
+              "Central India",
+              "Central US",
+              "East Asia",
+              "East US",
+              "East US 2",
+              "France Central",
+              "Germany North",
+              "Germany West Central",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "Korea South",
+              "North Central US",
+              "North Europe",
+              "Norway East",
+              "Norway West",
+              "South Central US",
+              "South India",
+              "Southeast Asia",
+              "Sweden Central",
+              "Switzerland North",
+              "Switzerland West",
+              "UAE Central",
+              "UAE North",
+              "UK South",
+              "UK West",
+              "West Central US",
+              "West Europe",
+              "West US",
+              "West US 2",
+              "West US 3",
+              "West US (Stage)",
+              "West US 2 (Stage)",
+              "South Central US (Stage)",
+              "Central US EUAP",
+              "East US 2 EUAP"
+            ],
+            "apiVersions": [
+              "2022-05-01",
+              "2022-03-01",
+              "2022-01-01",
+              "2021-10-01",
+              "2021-08-01",
+              "2021-06-01",
+              "2021-04-01",
+              "2021-02-01",
+              "2020-12-01",
+              "2020-11-01",
+              "2020-10-01",
+              "2020-09-01",
+              "2020-08-01",
+              "2020-07-01",
+              "2020-06-01",
+              "2020-05-01",
+              "2020-03-01",
+              "2020-02-01",
+              "2019-11-01",
+              "2019-10-01",
+              "2019-08-01",
+              "2019-07-01",
+              "2019-06-01",
+              "2019-05-01",
+              "2017-08-15"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "locations/checkQuotaAvailability",
+            "locations": [
+              "Australia Central",
+              "Australia Central 2",
+              "Australia East",
+              "Australia Southeast",
+              "Brazil South",
+              "Canada Central",
+              "Canada East",
+              "Central India",
+              "Central US",
+              "East Asia",
+              "East US",
+              "East US 2",
+              "France Central",
+              "Germany North",
+              "Germany West Central",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "Korea South",
+              "North Central US",
+              "North Europe",
+              "Norway East",
+              "Norway West",
+              "South Central US",
+              "South India",
+              "Southeast Asia",
+              "Sweden Central",
+              "Switzerland North",
+              "Switzerland West",
+              "UAE North",
+              "UAE Central",
+              "UK South",
+              "UK West",
+              "West Europe",
+              "West US",
+              "West US 2",
+              "West US 3",
+              "West US (Stage)",
+              "East US 2 EUAP",
+              "South Central US (Stage)",
+              "West Central US",
+              "West US 2 (Stage)",
+              "Brazil Southeast",
+              "Central US EUAP",
+              "Sweden South"
+            ],
+            "apiVersions": [
+              "2022-05-01",
+              "2022-03-01",
+              "2022-01-01",
+              "2021-10-01",
+              "2021-08-01",
+              "2021-06-01",
+              "2021-04-01",
+              "2021-02-01",
+              "2020-12-01",
+              "2020-11-01",
+              "2020-10-01",
+              "2020-09-01",
+              "2020-08-01",
+              "2020-07-01",
+              "2020-06-01"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "locations/regionInfo",
+            "locations": [
+              "Australia Central",
+              "Australia Central 2",
+              "Australia East",
+              "Australia Southeast",
+              "Brazil South",
+              "Canada Central",
+              "Canada East",
+              "Central India",
+              "Central US",
+              "East Asia",
+              "East US",
+              "East US 2",
+              "France Central",
+              "Germany North",
+              "Germany West Central",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "Korea South",
+              "North Central US",
+              "North Europe",
+              "Norway East",
+              "Norway West",
+              "South Central US",
+              "South India",
+              "Southeast Asia",
+              "Sweden Central",
+              "Switzerland North",
+              "Switzerland West",
+              "UAE North",
+              "UAE Central",
+              "UK South",
+              "UK West",
+              "West Europe",
+              "West US",
+              "West US 2",
+              "West US 3",
+              "West US (Stage)",
+              "East US 2 EUAP",
+              "South Central US (Stage)",
+              "West Central US",
+              "West US 2 (Stage)",
+              "Brazil Southeast",
+              "Central US EUAP",
+              "Sweden South"
+            ],
+            "apiVersions": [
+              "2021-04-01-preview"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "locations/QuotaLimits",
+            "locations": [
+              "Australia Central",
+              "Australia Central 2",
+              "Australia East",
+              "Australia Southeast",
+              "Brazil South",
+              "Canada Central",
+              "Canada East",
+              "Central India",
+              "Central US",
+              "East Asia",
+              "East US",
+              "East US 2",
+              "France Central",
+              "Germany North",
+              "Germany West Central",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "Korea South",
+              "North Central US",
+              "North Europe",
+              "Norway East",
+              "Norway West",
+              "South Central US",
+              "South India",
+              "Southeast Asia",
+              "Sweden Central",
+              "Switzerland North",
+              "Switzerland West",
+              "UAE North",
+              "UAE Central",
+              "UK South",
+              "UK West",
+              "West Europe",
+              "West US",
+              "West US 2",
+              "West US 3",
+              "West US (Stage)",
+              "East US 2 EUAP",
+              "South Central US (Stage)",
+              "West Central US",
+              "West US 2 (Stage)",
+              "Brazil Southeast",
+              "Central US EUAP",
+              "Sweden South"
+            ],
+            "apiVersions": [
+              "2022-05-01",
+              "2022-03-01",
+              "2022-01-01",
+              "2021-10-01",
+              "2021-08-01",
+              "2021-06-01"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "locations/CheckInventory",
+            "locations": [
+              "Australia Central",
+              "Australia Central 2",
+              "Australia East",
+              "Australia Southeast",
+              "Brazil South",
+              "Canada Central",
+              "Canada East",
+              "Central India",
+              "Central US",
+              "East Asia",
+              "East US",
+              "East US 2",
+              "France Central",
+              "Germany North",
+              "Germany West Central",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "Korea South",
+              "North Central US",
+              "North Europe",
+              "Norway East",
+              "Norway West",
+              "South Central US",
+              "South India",
+              "Southeast Asia",
+              "Sweden Central",
+              "Switzerland North",
+              "Switzerland West",
+              "UAE North",
+              "UAE Central",
+              "UK South",
+              "UK West",
+              "West Europe",
+              "West US",
+              "West US 2",
+              "West US 3",
+              "West US (Stage)",
+              "East US 2 EUAP",
+              "South Central US (Stage)",
+              "West Central US",
+              "West US 2 (Stage)",
+              "Brazil Southeast",
+              "Central US EUAP",
+              "Sweden South"
+            ],
+            "apiVersions": [
+              "2022-05-01",
+              "2022-03-01",
+              "2022-01-01",
+              "2021-10-01",
+              "2021-08-01"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "locations/operationResults",
+            "locations": [
+              "Australia Central",
+              "Australia Central 2",
+              "Australia East",
+              "Australia Southeast",
+              "Brazil South",
+              "Canada Central",
+              "Canada East",
+              "Central India",
+              "Central US",
+              "East Asia",
+              "East US",
+              "East US 2",
+              "France Central",
+              "Germany North",
+              "Germany West Central",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "Korea South",
+              "North Central US",
+              "North Europe",
+              "Norway East",
+              "Norway West",
+              "South Central US",
+              "South India",
+              "Southeast Asia",
+              "Sweden Central",
+              "Switzerland North",
+              "Switzerland West",
+              "UAE North",
+              "UAE Central",
+              "UK South",
+              "UK West",
+              "West Europe",
+              "West US",
+              "West US 2",
+              "West US 3",
+              "West US (Stage)",
+              "East US 2 EUAP",
+              "South Central US (Stage)",
+              "West Central US",
+              "West US 2 (Stage)",
+              "Brazil Southeast",
+              "Central US EUAP",
+              "Sweden South"
+            ],
+            "apiVersions": [
+              "2022-05-01",
+              "2022-03-01",
+              "2022-01-01",
+              "2021-10-01",
+              "2021-08-01",
+              "2021-06-01",
+              "2021-04-01",
+              "2021-02-01",
+              "2020-12-01",
+              "2020-11-01",
+              "2020-10-01",
+              "2020-09-01",
+              "2020-08-01",
+              "2020-07-01",
+              "2020-06-01",
+              "2020-05-01",
+              "2020-03-01",
+              "2020-02-01",
+              "2019-11-01",
+              "2019-10-01",
+              "2019-08-01",
+              "2019-07-01",
+              "2019-06-01",
+              "2019-05-01",
+              "2017-08-15"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "netAppAccounts/accountBackups",
+            "locations": [
+              "West US (Stage)",
+              "East US 2 EUAP",
+              "South Central US (Stage)",
+              "West Central US",
+              "West US 2 (Stage)",
+              "Australia East",
+              "France Central",
+              "East US",
+              "East US 2",
+              "Japan East",
+              "North Europe",
+              "South Central US",
+              "Southeast Asia",
+              "UK South",
+              "West Europe",
+              "West US",
+              "West US 2"
+            ],
+            "apiVersions": [
+              "2022-05-01",
+              "2022-03-01",
+              "2022-01-01",
+              "2021-10-01",
+              "2021-08-01",
+              "2021-06-01",
+              "2021-04-01",
+              "2021-02-01",
+              "2020-12-01",
+              "2020-11-01",
+              "2020-10-01",
+              "2020-08-01",
+              "2020-07-01",
+              "2020-06-01",
+              "2020-05-01"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "netAppAccounts/backupPolicies",
+            "locations": [
+              "West US (Stage)",
+              "East US 2 EUAP",
+              "South Central US (Stage)",
+              "West Central US",
+              "West US 2 (Stage)",
+              "Australia East",
+              "France Central",
+              "East US",
+              "East US 2",
+              "Japan East",
+              "North Europe",
+              "South Central US",
+              "Southeast Asia",
+              "UK South",
+              "West Europe",
+              "West US",
+              "West US 2"
+            ],
+            "apiVersions": [
+              "2022-05-01",
+              "2022-03-01",
+              "2022-01-01",
+              "2021-10-01",
+              "2021-08-01",
+              "2021-06-01",
+              "2021-04-01",
+              "2021-02-01",
+              "2020-12-01",
+              "2020-11-01",
+              "2020-10-01",
+              "2020-07-01",
+              "2020-06-01",
+              "2020-05-01"
+            ],
+            "capabilities": "SupportsTags, SupportsLocation"
+          },
+          {
+            "resourceType": "netAppAccounts/vaults",
+            "locations": [
+              "West US (Stage)",
+              "East US 2 EUAP",
+              "South Central US (Stage)",
+              "West Central US",
+              "West US 2 (Stage)",
+              "Australia East",
+              "France Central",
+              "East US",
+              "East US 2",
+              "Japan East",
+              "North Europe",
+              "South Central US",
+              "Southeast Asia",
+              "UK South",
+              "West Europe",
+              "West US",
+              "West US 2"
+            ],
+            "apiVersions": [
+              "2022-05-01",
+              "2022-03-01",
+              "2022-01-01",
+              "2021-10-01",
+              "2021-08-01",
+              "2021-06-01",
+              "2021-04-01",
+              "2021-02-01",
+              "2020-12-01",
+              "2020-11-01",
+              "2020-10-01",
+              "2020-09-01",
+              "2020-08-01",
+              "2020-07-01",
+              "2020-06-01",
+              "2020-05-01"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "netAppAccounts/capacityPools/volumes/backups",
+            "locations": [
+              "West US (Stage)",
+              "East US 2 EUAP",
+              "South Central US (Stage)",
+              "West Central US",
+              "West US 2 (Stage)",
+              "Australia East",
+              "France Central",
+              "East US",
+              "East US 2",
+              "Japan East",
+              "North Europe",
+              "South Central US",
+              "Southeast Asia",
+              "UK South",
+              "West Europe",
+              "West US",
+              "West US 2"
+            ],
+            "apiVersions": [
+              "2022-05-01",
+              "2022-03-01",
+              "2022-01-01",
+              "2021-10-01",
+              "2021-08-01",
+              "2021-06-01",
+              "2021-04-01",
+              "2021-02-01",
+              "2020-12-01",
+              "2020-11-01",
+              "2020-10-01",
+              "2020-09-01",
+              "2020-08-01",
+              "2020-07-01",
+              "2020-06-01",
+              "2020-05-01"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "netAppAccounts/capacityPools/volumes/subvolumes",
+            "locations": [
+              "West US (Stage)",
+              "East US 2 EUAP",
+              "South Central US (Stage)",
+              "West Central US",
+              "West US 2 (Stage)",
+              "Australia Central",
+              "Australia Central 2",
+              "Australia East",
+              "Australia Southeast",
+              "Brazil South",
+              "Brazil Southeast",
+              "Canada Central",
+              "Canada East",
+              "Central India",
+              "Central US",
+              "Central US EUAP",
+              "East Asia",
+              "East US",
+              "East US 2",
+              "France Central",
+              "Germany North",
+              "Germany West Central",
+              "Japan East",
+              "Japan West",
+              "Korea Central",
+              "Korea South",
+              "North Central US",
+              "North Europe",
+              "Norway East",
+              "Norway West",
+              "South Central US",
+              "South India",
+              "Southeast Asia",
+              "Sweden Central",
+              "Sweden South",
+              "Switzerland North",
+              "Switzerland West",
+              "UAE North",
+              "UAE Central",
+              "UK South",
+              "UK West",
+              "West Europe",
+              "West US",
+              "West US 2",
+              "West US 3"
+            ],
+            "apiVersions": [
+              "2022-05-01",
+              "2022-03-01",
+              "2022-01-01",
+              "2021-10-01"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "netAppAccounts/capacityPools/volumes/volumeQuotaRules",
+            "locations": [
+              "West US (Stage)",
+              "East US 2 EUAP",
+              "South Central US (Stage)",
+              "West Central US",
+              "West US 2 (Stage)"
+            ],
+            "apiVersions": [
+              "2022-05-01",
+              "2022-03-01",
+              "2022-01-01"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "locations/queryNetworkSiblingSet",
+            "locations": [
+              "West US (Stage)",
+              "East US 2 EUAP",
+              "South Central US (Stage)",
+              "West Central US",
+              "West US 2 (Stage)"
+            ],
+            "apiVersions": [
+              "2021-12-01-preview"
+            ],
+            "capabilities": "None"
+          },
+          {
+            "resourceType": "locations/updateNetworkSiblingSet",
+            "locations": [
+              "West US (Stage)",
+              "East US 2 EUAP",
+              "South Central US (Stage)",
+              "West Central US",
+              "West US 2 (Stage)"
+            ],
+            "apiVersions": [
+              "2021-12-01-preview"
+            ],
+            "capabilities": "None"
+          }
+        ],
+        "registrationState": "Registered",
+        "registrationPolicy": "RegistrationRequired"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.NetApp/operations?api-version=2022-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-fe178458de7f77d30e9a4a91e8e808c6-909cb2425c823c0f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "0dfb61092e5ac89eae1a0a0800102148",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "41962",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 14 Sep 2022 13:49:02 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "465763b8-aaa9-4ede-ac0d-f5c568248038",
+        "x-ms-ratelimit-remaining-tenant-reads": "11999",
+        "x-ms-request-id": "2bf0fb0c-57b6-46b7-8ae3-4cd0135eb4ee",
+        "x-ms-routing-request-id": "WESTEUROPE:20220914T134903Z:465763b8-aaa9-4ede-ac0d-f5c568248038",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "Microsoft.NetApp/register/action",
+            "display": {
+              "provider": "Microsoft.NetApp",
+              "resource": "Subscription",
+              "operation": "Subscription Registration Action",
+              "description": "Subscription Registration Action"
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Read volume resource",
+              "description": "Reads a volume resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/write",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Write volume resource",
+              "description": "Writes a volume resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/delete",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Delete volume resource",
+              "description": "Deletes a volume resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/Revert/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Revert volume resource",
+              "description": "Revert volume to specific snapshot"
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/ResetCifsPassword/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Reset cifs password for volume.",
+              "description": "Reset cifs password from specific volume."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/BreakReplication/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Break volume replication resource",
+              "description": "Break volume replication relations"
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/ReplicationStatus/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Read Volume Replication Status.",
+              "description": "Reads the statuses of the Volume Replication."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/ListReplications/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "List Replications",
+              "description": "A list of replications"
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/ReInitializeReplication/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Re-Initialize replication",
+              "description": "Attempts to re-initialize an uninitialized replication"
+            },
+            "origin": "user,system"
+          },
+          {
+            "properties": {
+              "serviceSpecification": {
+                "metricSpecifications": [
+                  {
+                    "name": "AverageReadLatency",
+                    "displayName": "Average read latency",
+                    "displayDescription": "Average read latency in milliseconds per operation",
+                    "unit": "MilliSeconds",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "AverageReadLatency",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "AverageWriteLatency",
+                    "displayName": "Average write latency",
+                    "displayDescription": "Average write latency in milliseconds per operation",
+                    "unit": "MilliSeconds",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "AverageWriteLatency",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "VolumeLogicalSize",
+                    "displayName": "Volume Consumed Size",
+                    "displayDescription": "Logical size of the volume (used bytes)",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "VolumeLogicalSize",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "VolumeSnapshotSize",
+                    "displayName": "Volume snapshot size",
+                    "displayDescription": "Size of all snapshots in volume",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "VolumeSnapshotSize",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "ReadIops",
+                    "displayName": "Read iops",
+                    "displayDescription": "Read In/out operations per second",
+                    "unit": "CountPerSecond",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "ReadIops",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "WriteIops",
+                    "displayName": "Write iops",
+                    "displayDescription": "Write In/out operations per second",
+                    "unit": "CountPerSecond",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "WriteIops",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "VolumeAllocatedSize",
+                    "displayName": "Volume allocated size",
+                    "displayDescription": "The provisioned size of a volume",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "VolumeAllocatedSize",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "VolumeCoolTierSize",
+                    "displayName": "Volume cool tier size",
+                    "displayDescription": "Volume Footprint for Cool Tier",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "VolumeCoolTierSize",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "VolumeCoolTierDataReadSize",
+                    "displayName": "Volume cool tier data read size",
+                    "displayDescription": "Data read in using GET per volume",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "VolumeCoolTierDataReadSize",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "VolumeCoolTierDataWriteSize",
+                    "displayName": "Volume cool tier data write size",
+                    "displayDescription": "Data tiered out using PUT per volume",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "VolumeCoolTierDataWriteSize",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "XregionReplicationLastTransferDuration",
+                    "displayName": "Volume replication last transfer duration",
+                    "displayDescription": "The amount of time in seconds it took for the last transfer to complete.",
+                    "unit": "Seconds",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "XregionReplicationLastTransferDuration",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "XregionReplicationLastTransferSize",
+                    "displayName": "Volume replication last transfer size",
+                    "displayDescription": "The total number of bytes transferred as part of the last transfer.",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "XregionReplicationLastTransferSize",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "XregionReplicationHealthy",
+                    "displayName": "Is volume replication status healthy",
+                    "displayDescription": "Condition of the relationship, 1 or 0.",
+                    "unit": "Count",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "XregionReplicationHealthy",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "XregionReplicationLagTime",
+                    "displayName": "Volume replication lag time",
+                    "displayDescription": "The amount of time in seconds by which the data on the mirror lags behind the source.",
+                    "unit": "Seconds",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "XregionReplicationLagTime",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "XregionReplicationTotalTransferBytes",
+                    "displayName": "Volume replication total transfer",
+                    "displayDescription": "Cumulative bytes transferred for the relationship.",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "XregionReplicationTotalTransferBytes",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "XregionReplicationRelationshipProgress",
+                    "displayName": "Volume replication progress",
+                    "displayDescription": "Total amount of data transferred for the current transfer operation.",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "XregionReplicationRelationshipProgress",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "XregionReplicationRelationshipTransferring",
+                    "displayName": "Is volume replication transferring",
+                    "displayDescription": "Whether the status of the Volume Replication is \u0027transferring\u0027.",
+                    "unit": "Count",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "XregionReplicationRelationshipTransferring",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "CbsVolumeLogicalBackupBytes",
+                    "displayName": "Volume Backup Bytes",
+                    "displayDescription": "Total bytes backed up for this Volume.",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "CbsVolumeLogicalBackupBytes",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "CbsVolumeProtected",
+                    "displayName": "Is Volume Backup Enabled",
+                    "displayDescription": "Is backup enabled for the volume? 1 if yes, 0 if no.",
+                    "unit": "Count",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "CbsVolumeProtected",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "CbsVolumeBackupActive",
+                    "displayName": "Is Volume Backup suspended",
+                    "displayDescription": "Is the backup policy suspended for the volume? 0 if yes, 1 if no.",
+                    "unit": "Count",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "CbsVolumeBackupActive",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "CbsVolumeOperationTransferredBytes",
+                    "displayName": "Volume Backup Last Transferred Bytes",
+                    "displayDescription": "Total bytes transferred for last backup or restore operation.",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "CbsVolumeOperationTransferredBytes",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "CbsVolumeOperationComplete",
+                    "displayName": "Is Volume Backup Operation Complete",
+                    "displayDescription": "Did the last volume backup or restore operation complete successfully? 1 if yes, 0 if no.",
+                    "unit": "Count",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "CbsVolumeOperationComplete",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "VolumeConsumedSizePercentage",
+                    "displayName": "Percentage Volume Consumed Size",
+                    "displayDescription": "The percentage of the volume consumed including snapshots.",
+                    "unit": "Percent",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "VolumeConsumedSizePercentage",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "OtherThroughput",
+                    "displayName": "Other throughput",
+                    "displayDescription": "Other throughput (that is not read or write) in bytes per second",
+                    "unit": "BytesPerSecond",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "OtherThroughput",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "ReadThroughput",
+                    "displayName": "Read throughput",
+                    "displayDescription": "Read throughput in bytes per second",
+                    "unit": "BytesPerSecond",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "ReadThroughput",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "TotalThroughput",
+                    "displayName": "Total throughput",
+                    "displayDescription": "Sum of all throughput in bytes per second",
+                    "unit": "BytesPerSecond",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "TotalThroughput",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "WriteThroughput",
+                    "displayName": "Write throughput",
+                    "displayDescription": "Write throughput in bytes per second",
+                    "unit": "BytesPerSecond",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "WriteThroughput",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  }
+                ]
+              }
+            },
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/providers/Microsoft.Insights/metricDefinitions/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Read volume metric definitions.",
+              "description": "Gets the available metrics for Volume resource."
+            },
+            "origin": "system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/providers/Microsoft.Insights/diagnosticSettings/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Read diagnostic setting.",
+              "description": "Gets the diagnostic setting for the resource."
+            },
+            "origin": "system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/providers/Microsoft.Insights/diagnosticSettings/write",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Write diagnostic setting.",
+              "description": "Creates or updates the diagnostic setting for the resource."
+            },
+            "origin": "system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/AuthorizeReplication/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Authorize Replication",
+              "description": "Authorize the source volume replication"
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/ResyncReplication/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Resync Replication",
+              "description": "Resync the replication on the destination volume"
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/DeleteReplication/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Delete Replication",
+              "description": "Delete the replication on the destination volume"
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/ReplicationStatus/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Read Volume Replication Status.",
+              "description": "Reads the statuses of the Volume Replication."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/MountTargets/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Read mount target resource",
+              "description": "Reads a mount target resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/BackupStatus/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Get volume\u0027s backup status",
+              "description": "Get the status of the backup for a volume"
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/RestoreStatus/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Get volume\u0027s restore status",
+              "description": "Get the status of the restore for a volume"
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/PoolChange/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Change pool for volume",
+              "description": "Moves volume to another pool."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/Relocate/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Relocate volume to a new stamp.",
+              "description": "Relocate volume to a new stamp."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/FinalizeRelocation/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Finalize relocation of volume.",
+              "description": "Finalize relocation by cleaning up the old volume."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/RevertRelocation/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Revert the relocation of volume.",
+              "description": "Revert the relocation and revert back to the old volume."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/BreakFileLocks/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Break file locks",
+              "description": "Breaks file locks on a volume"
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/MigrateBackups/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Migrate Volume Backups to BackupVault.",
+              "description": "Migrate Volume Backups to BackupVault."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/PopulateAvailabilityZone/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Populates availability zone for a volume",
+              "description": "Populates logical availability zone for a volume in a zone aware region and storage."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Accounts resource type",
+              "operation": "Read account resource",
+              "description": "Reads an account resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/write",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Accounts resource type",
+              "operation": "Write account resource",
+              "description": "Writes an account resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/delete",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Accounts resource type",
+              "operation": "Delete account resource",
+              "description": "Deletes a account resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/RenewCredentials/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Accounts resource type",
+              "operation": "Renew MSI credentials, if possible.",
+              "description": "Renews MSI credentials of account, if account has MSI credentials that are due for renewal."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/MigrateBackups/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Accounts resource type",
+              "operation": "Migrate Account Backups to BackupVault.",
+              "description": "Migrate Account Backups to BackupVault."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Pools resource type",
+              "operation": "Read pool resource",
+              "description": "Reads a pool resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/write",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Pools resource type",
+              "operation": "Write pool resource",
+              "description": "Writes a pool resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/delete",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Pools resource type",
+              "operation": "Delete pool resource",
+              "description": "Deletes a pool resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "properties": {
+              "serviceSpecification": {
+                "metricSpecifications": [
+                  {
+                    "name": "VolumePoolAllocatedUsed",
+                    "displayName": "Pool Allocated To Volume Size",
+                    "displayDescription": "Allocated used size of the pool",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "VolumePoolAllocatedUsed",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "VolumePoolTotalLogicalSize",
+                    "displayName": "Pool Consumed Size",
+                    "displayDescription": "Sum of the logical size of all the volumes belonging to the pool",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average",
+                      "Total"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "VolumePoolTotalLogicalSize",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "VolumePoolAllocatedSize",
+                    "displayName": "Pool Allocated Size",
+                    "displayDescription": "Provisioned size of this pool",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average",
+                      "Total"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "VolumePoolAllocatedSize",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "VolumePoolTotalSnapshotSize",
+                    "displayName": "Total Snapshot size for the pool",
+                    "displayDescription": "Sum of snapshot size of all volumes in this pool",
+                    "unit": "Bytes",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "VolumePoolTotalSnapshotSize",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "VolumePoolProvisionedThroughput",
+                    "displayName": "Provisioned throughput for the pool",
+                    "displayDescription": "Provisioned throughput of this pool",
+                    "unit": "BytesPerSecond",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "VolumePoolProvisionedThroughput",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  },
+                  {
+                    "name": "VolumePoolAllocatedToVolumeThroughput",
+                    "displayName": "Pool allocated throughput",
+                    "displayDescription": "Sum of the throughput of all the volumes belonging to the pool",
+                    "unit": "BytesPerSecond",
+                    "aggregationType": "Average",
+                    "supportedAggregationTypes": [
+                      "Average"
+                    ],
+                    "supportedTimeGrainTypes": [
+                      "PT5M",
+                      "PT15M",
+                      "PT30M",
+                      "PT1H",
+                      "PT6H",
+                      "PT12H",
+                      "P1D"
+                    ],
+                    "internalMetricName": "VolumePoolAllocatedToVolumeThroughput",
+                    "enableRegionalMdmAccount": true,
+                    "sourceMdmAccount": "MicrosoftNetAppShoebox2",
+                    "sourceMdmNamespace": "NetAppUsageAndMetrics",
+                    "fillGapWithZero": false,
+                    "isInternal": false,
+                    "dimensions": []
+                  }
+                ]
+              }
+            },
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/providers/Microsoft.Insights/metricDefinitions/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Pools resource type",
+              "operation": "Read volume metric definitions.",
+              "description": "Gets the available metrics for Volume resource."
+            },
+            "origin": "system"
+          },
+          {
+            "properties": {
+              "serviceSpecification": {
+                "logSpecifications": [
+                  {
+                    "name": "Autoscale",
+                    "displayName": "Capacity Pool Autoscaled"
+                  }
+                ]
+              }
+            },
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/providers/Microsoft.Insights/logDefinitions/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Pools resource type",
+              "operation": "Read log definitions.",
+              "description": "Gets the log definitions for the resource."
+            },
+            "origin": "system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/providers/Microsoft.Insights/diagnosticSettings/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Pools resource type",
+              "operation": "Read diagnostic setting.",
+              "description": "Gets the diagnostic setting for the resource."
+            },
+            "origin": "system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/providers/Microsoft.Insights/diagnosticSettings/write",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Pools resource type",
+              "operation": "Write diagnostic setting.",
+              "description": "Creates or updates the diagnostic setting for the resource."
+            },
+            "origin": "system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Snapshots resource type",
+              "operation": "Read snapshot resource",
+              "description": "Reads a snapshot resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots/write",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Snapshots resource type",
+              "operation": "Write snapshot resource",
+              "description": "Writes a snapshot resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots/delete",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Snapshots resource type",
+              "operation": "Delete snapshot resource",
+              "description": "Deletes a snapshot resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots/RestoreFiles/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Snapshots resource type",
+              "operation": "Single File Snapshot Restore",
+              "description": "Restores files from a snapshot resource"
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/subvolumes/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Subvolume resource type.",
+              "operation": "",
+              "description": ""
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/subvolumes/write",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Subvolume resource type.",
+              "operation": "Write subvolume Resource",
+              "description": "Write a subvolume resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/subvolumes/delete",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Subvolume resource type.",
+              "operation": "",
+              "description": ""
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/subvolumes/GetMetadata/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Subvolume resource type.",
+              "operation": "Subvolume Metadata resource.",
+              "description": "Read subvolume metadata resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/snapshotPolicies/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Snapshot Policies resource type",
+              "operation": "Read snapshot policy resource",
+              "description": "Reads a snapshot policy resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/snapshotPolicies/write",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Snapshot Policies resource type",
+              "operation": "Write snapshot policy resource",
+              "description": "Writes a snapshot policy resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/snapshotPolicies/delete",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Snapshot Policies resource type",
+              "operation": "Delete snapshot policy resource",
+              "description": "Deletes a snapshot policy resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/snapshotPolicies/Volumes/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Snapshot Policies resource type",
+              "operation": "List connected volumes",
+              "description": "List volumes connected to snapshot policy"
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/snapshotPolicies/ListVolumes/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Snapshot Policies resource type",
+              "operation": "List connected volumes",
+              "description": "List volumes connected to snapshot policy"
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/backups/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Backup resource type",
+              "operation": "Read backup resource.",
+              "description": "Reads a backup resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/backups/write",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Backup resource type",
+              "operation": "Write backup resource.",
+              "description": "Writes a backup resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/backups/delete",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Backup resource type",
+              "operation": "Delete backup resource",
+              "description": "Deletes a backup resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/backups/RestoreFiles/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Backup resource type",
+              "operation": "Single File Backup Restore",
+              "description": "Restores files from a backup resource"
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppIPSecPolicies/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "IPSec policy resource type",
+              "operation": "Read IPSec policy resource.",
+              "description": "Reads an IPSec policy resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppIPSecPolicies/write",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "IPSec policy resource type",
+              "operation": "Write IPSec policy resource.",
+              "description": "Writes an IPSec policy resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppIPSecPolicies/delete",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "IPSec policy resource type",
+              "operation": "Delete IPSec policy resource",
+              "description": "Deletes an IPSec policy resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppIPSecPolicies/Apply/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "IPSec policy resource type",
+              "operation": "",
+              "description": ""
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/volumeQuotaRules/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volume quota rule resource type",
+              "operation": "Read Volume quota rule resource.",
+              "description": "Reads a Volume quota rule resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/volumeQuotaRules/write",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volume quota rule resource type",
+              "operation": "Write Volume quota rule resource.",
+              "description": "Writes Volume quota rule resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/volumeQuotaRules/delete",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volume quota rule resource type",
+              "operation": "Delete Volume quota rule resource",
+              "description": "Deletes a Volume quota rule resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/backupPolicies/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Backup Policy resource type",
+              "operation": "Read backup policy resource.",
+              "description": "Reads a backup policy resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/backupPolicies/write",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Backup Policy resource type",
+              "operation": "Write backup policy resource.",
+              "description": "Writes a backup policy resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/backupPolicies/delete",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Backup Policy resource type",
+              "operation": "Delete backup policy resource",
+              "description": "Deletes a backup policy resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/vaults/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Vault resource type",
+              "operation": "Read vault resource.",
+              "description": "Reads a vault resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/accountBackups/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Account backup resource type",
+              "operation": "Read an account backup resource.",
+              "description": "Reads an account backup resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/accountBackups/write",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Account backup resource type",
+              "operation": "Write an account backup resource.",
+              "description": "Writes an account backup resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/accountBackups/delete",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Account backup resource type",
+              "operation": "Delete an account backup resource.",
+              "description": "Deletes an account backup resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/volumeGroups/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volume Group resource type",
+              "operation": "Read volume group resource",
+              "description": "Reads a volume group resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/volumeGroups/write",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volume Group resource type",
+              "operation": "Write volume group resource",
+              "description": "Writes a volume group resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/netAppAccounts/volumeGroups/delete",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volume Group resource type",
+              "operation": "Delete volume group resource",
+              "description": "Deletes a volume group resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/locations/quotaLimits/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "QuotaLimit resource type",
+              "operation": "Read QuotaLimit resource type",
+              "description": "Reads a Quotalimit resource type."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/locations/RegionInfo/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "RegionInfo resource type",
+              "operation": "Read a regionInfo resource.",
+              "description": "Reads a regionInfo resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/Operations/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Operations resource type",
+              "operation": "Read operation resource",
+              "description": "Reads an operation resources."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/locations/operationresults/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Operation results resource type",
+              "operation": "Read operation result resource",
+              "description": "Reads an operation result resource."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/locations/read",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Location wide operation",
+              "operation": "Read location wide operation",
+              "description": "Reads a location wide operation."
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/locations/checknameavailability/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "NetApp resources",
+              "operation": "Check if resource name is available",
+              "description": "Check if resource name is available"
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/locations/checkfilepathavailability/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Volumes resource type",
+              "operation": "Check if file path is available",
+              "description": "Check if file path is available"
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/unregister/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "Subscription",
+              "operation": "Unregister Subscription for Azure NetApp Files",
+              "description": "Unregisters Subscription with Microsoft.NetApp resource provider"
+            },
+            "origin": "user,system"
+          },
+          {
+            "name": "Microsoft.NetApp/locations/checkinventory/action",
+            "display": {
+              "provider": "Microsoft.NetApp Resource Provider",
+              "resource": "ReservedCapacity reservation resource.",
+              "operation": "Checks ReservedCapacity inventory.",
+              "description": "Checks ReservedCapacity inventory."
+            },
+            "origin": "user,system"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1564422621",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "69a75bda-882e-44d5-8431-63421204132a"
+  }
+}

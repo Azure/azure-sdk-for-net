@@ -7,6 +7,7 @@
 
 using System;
 using Azure;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="error"> Error encountered while remediated the resource. </param>
         /// <param name="createdOn"> The time at which the remediation was created. </param>
         /// <param name="lastUpdatedOn"> The time at which the remediation deployment was last updated. </param>
-        internal RemediationDeployment(string remediatedResourceId, string deploymentId, string status, string resourceLocation, ResponseError error, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn)
+        internal RemediationDeployment(ResourceIdentifier remediatedResourceId, ResourceIdentifier deploymentId, string status, AzureLocation? resourceLocation, ResponseError error, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn)
         {
             RemediatedResourceId = remediatedResourceId;
             DeploymentId = deploymentId;
@@ -38,13 +39,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Resource ID of the resource that is being remediated by the deployment. </summary>
-        public string RemediatedResourceId { get; }
+        public ResourceIdentifier RemediatedResourceId { get; }
         /// <summary> Resource ID of the template deployment that will remediate the resource. </summary>
-        public string DeploymentId { get; }
+        public ResourceIdentifier DeploymentId { get; }
         /// <summary> Status of the remediation deployment. </summary>
         public string Status { get; }
         /// <summary> Location of the resource that is being remediated. </summary>
-        public string ResourceLocation { get; }
+        public AzureLocation? ResourceLocation { get; }
         /// <summary> Error encountered while remediated the resource. </summary>
         public ResponseError Error { get; }
         /// <summary> The time at which the remediation was created. </summary>

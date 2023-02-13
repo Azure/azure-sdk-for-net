@@ -28,18 +28,26 @@ namespace Azure.ResourceManager.Support
             );
         }
 
-        /// <summary> Gets a collection of ServiceResources in the TenantResource. </summary>
+        /// <summary> Gets a collection of SupportAzureServiceResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ServiceResources and their operations over a ServiceResource. </returns>
-        public static ServiceCollection GetServices(this TenantResource tenantResource)
+        /// <returns> An object representing collection of SupportAzureServiceResources and their operations over a SupportAzureServiceResource. </returns>
+        public static SupportAzureServiceCollection GetSupportAzureServices(this TenantResource tenantResource)
         {
-            return GetExtensionClient(tenantResource).GetServices();
+            return GetExtensionClient(tenantResource).GetSupportAzureServices();
         }
 
         /// <summary>
         /// Gets a specific Azure service for support ticket creation.
-        /// Request Path: /providers/Microsoft.Support/services/{serviceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/services/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="serviceName"> Name of the Azure service. </param>
@@ -47,15 +55,23 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ServiceResource>> GetServiceAsync(this TenantResource tenantResource, string serviceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SupportAzureServiceResource>> GetSupportAzureServiceAsync(this TenantResource tenantResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetServices().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetSupportAzureServices().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a specific Azure service for support ticket creation.
-        /// Request Path: /providers/Microsoft.Support/services/{serviceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/services/{serviceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="serviceName"> Name of the Azure service. </param>
@@ -63,9 +79,9 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ServiceResource> GetService(this TenantResource tenantResource, string serviceName, CancellationToken cancellationToken = default)
+        public static Response<SupportAzureServiceResource> GetSupportAzureService(this TenantResource tenantResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetServices().Get(serviceName, cancellationToken);
+            return tenantResource.GetSupportAzureServices().Get(serviceName, cancellationToken);
         }
 
         private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
@@ -77,18 +93,26 @@ namespace Azure.ResourceManager.Support
             );
         }
 
-        /// <summary> Gets a collection of SupportTicketDetailResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of SupportTicketResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SupportTicketDetailResources and their operations over a SupportTicketDetailResource. </returns>
-        public static SupportTicketDetailCollection GetSupportTicketDetails(this SubscriptionResource subscriptionResource)
+        /// <returns> An object representing collection of SupportTicketResources and their operations over a SupportTicketResource. </returns>
+        public static SupportTicketCollection GetSupportTickets(this SubscriptionResource subscriptionResource)
         {
-            return GetExtensionClient(subscriptionResource).GetSupportTicketDetails();
+            return GetExtensionClient(subscriptionResource).GetSupportTickets();
         }
 
         /// <summary>
         /// Get ticket details for an Azure subscription. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}
-        /// Operation Id: SupportTickets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
@@ -96,15 +120,23 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SupportTicketDetailResource>> GetSupportTicketDetailAsync(this SubscriptionResource subscriptionResource, string supportTicketName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SupportTicketResource>> GetSupportTicketAsync(this SubscriptionResource subscriptionResource, string supportTicketName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetSupportTicketDetails().GetAsync(supportTicketName, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetSupportTickets().GetAsync(supportTicketName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get ticket details for an Azure subscription. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}
-        /// Operation Id: SupportTickets_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
@@ -112,57 +144,73 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SupportTicketDetailResource> GetSupportTicketDetail(this SubscriptionResource subscriptionResource, string supportTicketName, CancellationToken cancellationToken = default)
+        public static Response<SupportTicketResource> GetSupportTicket(this SubscriptionResource subscriptionResource, string supportTicketName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetSupportTicketDetails().Get(supportTicketName, cancellationToken);
+            return subscriptionResource.GetSupportTickets().Get(supportTicketName, cancellationToken);
         }
 
         /// <summary>
         /// Check the availability of a resource name. This API should be used to check the uniqueness of the name for support ticket creation for the selected subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/checkNameAvailability
-        /// Operation Id: SupportTickets_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityOutput>> CheckNameAvailabilitySupportTicketAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<SupportNameAvailabilityResult>> CheckSupportTicketNameAvailabilityAsync(this SubscriptionResource subscriptionResource, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilitySupportTicketAsync(input, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckSupportTicketNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Check the availability of a resource name. This API should be used to check the uniqueness of the name for support ticket creation for the selected subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Support/checkNameAvailability
-        /// Operation Id: SupportTickets_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="input"> Input to check. </param>
+        /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public static Response<CheckNameAvailabilityOutput> CheckNameAvailabilitySupportTicket(this SubscriptionResource subscriptionResource, CheckNameAvailabilityInput input, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<SupportNameAvailabilityResult> CheckSupportTicketNameAvailability(this SubscriptionResource subscriptionResource, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckNameAvailabilitySupportTicket(input, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckSupportTicketNameAvailability(content, cancellationToken);
         }
 
-        #region ServiceResource
+        #region SupportAzureServiceResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceResource.CreateResourceIdentifier" /> to create a <see cref="ServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SupportAzureServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SupportAzureServiceResource.CreateResourceIdentifier" /> to create a <see cref="SupportAzureServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceResource" /> object. </returns>
-        public static ServiceResource GetServiceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SupportAzureServiceResource" /> object. </returns>
+        public static SupportAzureServiceResource GetSupportAzureServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServiceResource.ValidateResourceId(id);
-                return new ServiceResource(client, id);
+                SupportAzureServiceResource.ValidateResourceId(id);
+                return new SupportAzureServiceResource(client, id);
             }
             );
         }
@@ -187,39 +235,39 @@ namespace Azure.ResourceManager.Support
         }
         #endregion
 
-        #region SupportTicketDetailResource
+        #region SupportTicketResource
         /// <summary>
-        /// Gets an object representing a <see cref="SupportTicketDetailResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SupportTicketDetailResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SupportTicketResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SupportTicketResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SupportTicketDetailResource" /> object. </returns>
-        public static SupportTicketDetailResource GetSupportTicketDetailResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SupportTicketResource" /> object. </returns>
+        public static SupportTicketResource GetSupportTicketResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SupportTicketDetailResource.ValidateResourceId(id);
-                return new SupportTicketDetailResource(client, id);
+                SupportTicketResource.ValidateResourceId(id);
+                return new SupportTicketResource(client, id);
             }
             );
         }
         #endregion
 
-        #region CommunicationDetailResource
+        #region SupportTicketCommunicationResource
         /// <summary>
-        /// Gets an object representing a <see cref="CommunicationDetailResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CommunicationDetailResource.CreateResourceIdentifier" /> to create a <see cref="CommunicationDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SupportTicketCommunicationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SupportTicketCommunicationResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketCommunicationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CommunicationDetailResource" /> object. </returns>
-        public static CommunicationDetailResource GetCommunicationDetailResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SupportTicketCommunicationResource" /> object. </returns>
+        public static SupportTicketCommunicationResource GetSupportTicketCommunicationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CommunicationDetailResource.ValidateResourceId(id);
-                return new CommunicationDetailResource(client, id);
+                SupportTicketCommunicationResource.ValidateResourceId(id);
+                return new SupportTicketCommunicationResource(client, id);
             }
             );
         }

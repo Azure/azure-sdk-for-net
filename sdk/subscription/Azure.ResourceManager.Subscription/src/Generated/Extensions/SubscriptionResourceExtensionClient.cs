@@ -19,8 +19,6 @@ namespace Azure.ResourceManager.Subscription
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _subscriptionsClientDiagnostics;
-        private SubscriptionsRestOperations _subscriptionsRestClient;
         private ClientDiagnostics _subscriptionClientDiagnostics;
         private SubscriptionRestOperations _subscriptionRestClient;
 
@@ -36,8 +34,6 @@ namespace Azure.ResourceManager.Subscription
         {
         }
 
-        private ClientDiagnostics SubscriptionsClientDiagnostics => _subscriptionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Subscription", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SubscriptionsRestOperations SubscriptionsRestClient => _subscriptionsRestClient ??= new SubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics SubscriptionClientDiagnostics => _subscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Subscription", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SubscriptionRestOperations SubscriptionRestClient => _subscriptionRestClient ??= new SubscriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -48,63 +44,17 @@ namespace Azure.ResourceManager.Subscription
         }
 
         /// <summary>
-        /// This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list.
-        /// Request Path: /subscriptions/{subscriptionId}/locations
-        /// Operation Id: Subscriptions_ListLocations
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Location" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Location> GetLocationsSubscriptionsAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<Location>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLocationsSubscriptions");
-                scope.Start();
-                try
-                {
-                    var response = await SubscriptionsRestClient.ListLocationsAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list.
-        /// Request Path: /subscriptions/{subscriptionId}/locations
-        /// Operation Id: Subscriptions_ListLocations
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Location" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Location> GetLocationsSubscriptions(CancellationToken cancellationToken = default)
-        {
-            Page<Location> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLocationsSubscriptions");
-                scope.Start();
-                try
-                {
-                    var response = SubscriptionsRestClient.ListLocations(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
         /// The operation to cancel a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/cancel
-        /// Operation Id: Subscription_Cancel
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/cancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Cancel</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CanceledSubscriptionId>> CancelSubscriptionAsync(CancellationToken cancellationToken = default)
@@ -125,8 +75,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// The operation to cancel a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/cancel
-        /// Operation Id: Subscription_Cancel
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/cancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Cancel</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CanceledSubscriptionId> CancelSubscription(CancellationToken cancellationToken = default)
@@ -147,8 +105,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// The operation to rename a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/rename
-        /// Operation Id: Subscription_Rename
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/rename</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Rename</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="body"> Subscription Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -170,8 +136,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// The operation to rename a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/rename
-        /// Operation Id: Subscription_Rename
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/rename</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Rename</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="body"> Subscription Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -193,8 +167,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// The operation to enable a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/enable
-        /// Operation Id: Subscription_Enable
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/enable</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Enable</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<EnabledSubscriptionId>> EnableSubscriptionAsync(CancellationToken cancellationToken = default)
@@ -215,8 +197,16 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// The operation to enable a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Subscription/enable
-        /// Operation Id: Subscription_Enable
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/enable</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Enable</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<EnabledSubscriptionId> EnableSubscription(CancellationToken cancellationToken = default)

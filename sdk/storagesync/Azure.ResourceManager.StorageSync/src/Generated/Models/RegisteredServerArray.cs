@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Initializes a new instance of RegisteredServerArray. </summary>
         internal RegisteredServerArray()
         {
-            Value = new ChangeTrackingList<RegisteredServerData>();
+            Value = new ChangeTrackingList<StorageSyncRegisteredServerData>();
         }
 
         /// <summary> Initializes a new instance of RegisteredServerArray. </summary>
         /// <param name="value"> Collection of Registered Server. </param>
-        internal RegisteredServerArray(IReadOnlyList<RegisteredServerData> value)
+        internal RegisteredServerArray(IReadOnlyList<StorageSyncRegisteredServerData> value)
         {
             Value = value;
         }
 
         /// <summary> Collection of Registered Server. </summary>
-        public IReadOnlyList<RegisteredServerData> Value { get; }
+        public IReadOnlyList<StorageSyncRegisteredServerData> Value { get; }
     }
 }

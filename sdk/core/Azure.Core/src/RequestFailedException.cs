@@ -168,16 +168,12 @@ namespace Azure
                 }
             }
 
-            if (response.ContentStream is MemoryStream)
+            if (response.ContentStream is MemoryStream && ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out Encoding _))
             {
-                string content = response.Content.ToString();
-                if (content.Length > 0)
-                {
-                    messageBuilder
-                        .AppendLine()
-                        .AppendLine("Content:")
-                        .AppendLine(content);
-                }
+                messageBuilder
+                    .AppendLine()
+                    .AppendLine("Content:")
+                    .AppendLine(response.Content.ToString());
             }
 
             messageBuilder
@@ -187,7 +183,8 @@ namespace Azure
             foreach (HttpHeader responseHeader in response.Headers)
             {
                 string headerValue = response.Sanitizer.SanitizeHeader(responseHeader.Name, responseHeader.Value);
-                messageBuilder.AppendLine($"{responseHeader.Name}: {headerValue}");
+                string header = $"{responseHeader.Name}: {headerValue}";
+                messageBuilder.AppendLine(header);
             }
 
             var formatMessage = messageBuilder.ToString();

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for resources under the Media Services account. </param>
         /// <param name="provisioningState"> Provisioning state of the Media Services account. </param>
         /// <param name="privateEndpointConnections"> The Private Endpoint Connections created for the Media Service account. </param>
-        internal MediaServicesAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Guid? mediaServicesAccountId, IList<MediaServicesStorageAccount> storageAccounts, MediaStorageAuthentication? storageAuthentication, AccountEncryption encryption, MediaKeyDelivery keyDelivery, MediaPublicNetworkAccessStatus? publicNetworkAccess, MediaProvisioningState? provisioningState, IReadOnlyList<MediaServicesPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        internal MediaServicesAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Guid? mediaServicesAccountId, IList<MediaServicesStorageAccount> storageAccounts, MediaStorageAuthentication? storageAuthentication, AccountEncryption encryption, MediaKeyDelivery keyDelivery, MediaServicesPublicNetworkAccess? publicNetworkAccess, MediaServicesProvisioningState? provisioningState, IReadOnlyList<MediaServicesPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             MediaServicesAccountId = mediaServicesAccountId;
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary> Whether or not public network access is allowed for resources under the Media Services account. </summary>
-        public MediaPublicNetworkAccessStatus? PublicNetworkAccess { get; set; }
+        public MediaServicesPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Provisioning state of the Media Services account. </summary>
-        public MediaProvisioningState? ProvisioningState { get; }
+        public MediaServicesProvisioningState? ProvisioningState { get; }
         /// <summary> The Private Endpoint Connections created for the Media Service account. </summary>
         public IReadOnlyList<MediaServicesPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
     }

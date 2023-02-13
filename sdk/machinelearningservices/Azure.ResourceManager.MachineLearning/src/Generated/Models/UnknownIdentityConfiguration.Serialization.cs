@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("identityType");
+            writer.WritePropertyName("identityType"u8);
             writer.WriteStringValue(IdentityType.ToString());
             writer.WriteEndObject();
         }
 
         internal static UnknownIdentityConfiguration DeserializeUnknownIdentityConfiguration(JsonElement element)
         {
-            IdentityConfigurationType identityType = default;
+            IdentityConfigurationType identityType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identityType"))
+                if (property.NameEquals("identityType"u8))
                 {
                     identityType = new IdentityConfigurationType(property.Value.GetString());
                     continue;

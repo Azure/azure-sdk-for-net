@@ -1,0 +1,35 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger:
+  branches:
+    include:
+      - main
+      - hotfix/*
+      - release/*
+  paths:
+    include:
+      - sdk/eventgrid/ci.data.yml
+      - sdk/eventgrid/Microsoft.Azure.EventGrid
+
+pr:
+  branches:
+    include:
+      - main
+      - feature/*
+      - hotfix/*
+      - release/*
+  paths:
+    include:
+      - sdk/eventgrid/ci.data.yml
+      - sdk/eventgrid/Microsoft.Azure.EventGrid
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    SdkType: data
+    ServiceDirectory: eventgrid
+    BuildSnippets: false
+    ArtifactName: packages
+    Artifacts:
+      - name: Microsoft.Azure.EventGrid
+        safeName: MicrosoftAzureEventGrid

@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataset"/> is null. </exception>
         public GetDatasetMetadataActivity(string name, DatasetReference dataset) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (dataset == null)
-            {
-                throw new ArgumentNullException(nameof(dataset));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(dataset, nameof(dataset));
 
             Dataset = dataset;
             FieldList = new ChangeTrackingList<BinaryData>();
@@ -66,7 +60,36 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> GetMetadata activity dataset reference. </summary>
         public DatasetReference Dataset { get; set; }
-        /// <summary> Fields of metadata to get from dataset. </summary>
+        /// <summary>
+        /// Fields of metadata to get from dataset.
+        /// <para>
+        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IList<BinaryData> FieldList { get; }
         /// <summary>
         /// GetMetadata activity store settings.

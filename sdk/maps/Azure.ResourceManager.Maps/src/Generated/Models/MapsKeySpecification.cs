@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Maps.Models
     {
         /// <summary> Initializes a new instance of MapsKeySpecification. </summary>
         /// <param name="keyType"> Whether the operation refers to the primary or secondary key. </param>
-        public MapsKeySpecification(KeyType keyType)
+        public MapsKeySpecification(MapsKeyType keyType)
         {
             KeyType = keyType;
         }
 
         /// <summary> Whether the operation refers to the primary or secondary key. </summary>
-        public KeyType KeyType { get; }
+        public MapsKeyType KeyType { get; }
     }
 }

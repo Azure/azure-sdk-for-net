@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary>
         /// Gets the specified backup for a Netapp Account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups/{backupName}
-        /// Operation Id: AccountBackups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups/{backupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccountBackups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="backupName"> The name of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary>
         /// Gets the specified backup for a Netapp Account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups/{backupName}
-        /// Operation Id: AccountBackups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups/{backupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccountBackups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="backupName"> The name of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,62 +128,58 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary>
         /// List all Backups for a Netapp Account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups
-        /// Operation Id: AccountBackups_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccountBackups_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetAppAccountBackupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetAppAccountBackupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NetAppAccountBackupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _netAppAccountBackupAccountBackupsClientDiagnostics.CreateScope("NetAppAccountBackupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _netAppAccountBackupAccountBackupsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetAppAccountBackupResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppAccountBackupAccountBackupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new NetAppAccountBackupResource(Client, NetAppBackupData.DeserializeNetAppBackupData(e)), _netAppAccountBackupAccountBackupsClientDiagnostics, Pipeline, "NetAppAccountBackupCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// List all Backups for a Netapp Account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups
-        /// Operation Id: AccountBackups_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccountBackups_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetAppAccountBackupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetAppAccountBackupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<NetAppAccountBackupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _netAppAccountBackupAccountBackupsClientDiagnostics.CreateScope("NetAppAccountBackupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _netAppAccountBackupAccountBackupsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetAppAccountBackupResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppAccountBackupAccountBackupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new NetAppAccountBackupResource(Client, NetAppBackupData.DeserializeNetAppBackupData(e)), _netAppAccountBackupAccountBackupsClientDiagnostics, Pipeline, "NetAppAccountBackupCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups/{backupName}
-        /// Operation Id: AccountBackups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups/{backupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccountBackups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="backupName"> The name of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -194,8 +205,16 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups/{backupName}
-        /// Operation Id: AccountBackups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups/{backupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccountBackups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="backupName"> The name of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

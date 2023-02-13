@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -23,14 +24,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> or <paramref name="userToken"/> is null. </exception>
         public QuickbaseLinkedService(BinaryData uri, FactorySecretBaseDefinition userToken)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
-            if (userToken == null)
-            {
-                throw new ArgumentNullException(nameof(userToken));
-            }
+            Argument.AssertNotNull(uri, nameof(uri));
+            Argument.AssertNotNull(userToken, nameof(userToken));
 
             Uri = uri;
             UserToken = userToken;

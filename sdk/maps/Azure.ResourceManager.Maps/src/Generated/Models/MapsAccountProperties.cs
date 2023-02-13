@@ -5,8 +5,7 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using Azure.Core;
+using System;
 
 namespace Azure.ResourceManager.Maps.Models
 {
@@ -16,43 +15,24 @@ namespace Azure.ResourceManager.Maps.Models
         /// <summary> Initializes a new instance of MapsAccountProperties. </summary>
         public MapsAccountProperties()
         {
-            LinkedResources = new ChangeTrackingList<LinkedResource>();
         }
 
         /// <summary> Initializes a new instance of MapsAccountProperties. </summary>
         /// <param name="uniqueId"> A unique identifier for the maps account. </param>
         /// <param name="disableLocalAuth"> Allows toggle functionality on Azure Policy to disable Azure Maps local authentication support. This will disable Shared Keys authentication from any usage. </param>
-        /// <param name="provisioningState"> The provisioning state of the Map account resource. </param>
-        /// <param name="linkedResources"> Sets the resources to be used for Managed Identities based operations for the Map account resource. </param>
-        /// <param name="cors"> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </param>
-        internal MapsAccountProperties(string uniqueId, bool? disableLocalAuth, string provisioningState, IList<LinkedResource> linkedResources, CorsRules cors)
+        /// <param name="provisioningState"> the state of the provisioning. </param>
+        internal MapsAccountProperties(Guid? uniqueId, bool? disableLocalAuth, string provisioningState)
         {
             UniqueId = uniqueId;
             DisableLocalAuth = disableLocalAuth;
             ProvisioningState = provisioningState;
-            LinkedResources = linkedResources;
-            Cors = cors;
         }
 
         /// <summary> A unique identifier for the maps account. </summary>
-        public string UniqueId { get; }
+        public Guid? UniqueId { get; }
         /// <summary> Allows toggle functionality on Azure Policy to disable Azure Maps local authentication support. This will disable Shared Keys authentication from any usage. </summary>
         public bool? DisableLocalAuth { get; set; }
-        /// <summary> The provisioning state of the Map account resource. </summary>
+        /// <summary> the state of the provisioning. </summary>
         public string ProvisioningState { get; }
-        /// <summary> Sets the resources to be used for Managed Identities based operations for the Map account resource. </summary>
-        public IList<LinkedResource> LinkedResources { get; }
-        /// <summary> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </summary>
-        internal CorsRules Cors { get; set; }
-        /// <summary> The list of CORS rules. You can include up to five CorsRule elements in the request. </summary>
-        public IList<CorsRule> CorsRulesValue
-        {
-            get
-            {
-                if (Cors is null)
-                    Cors = new CorsRules();
-                return Cors.CorsRulesValue;
-            }
-        }
     }
 }

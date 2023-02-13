@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("odata.type");
+            writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType.ToString());
             foreach (var item in AdditionalProperties)
             {
@@ -42,20 +40,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     case "Microsoft.Azure.Monitor.WebtestLocationAvailabilityCriteria": return WebtestLocationAvailabilityCriteria.DeserializeWebtestLocationAvailabilityCriteria(element);
                 }
             }
-            MonitorOdataType odataType = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("odata.type"))
-                {
-                    odataType = new MonitorOdataType(property.Value.GetString());
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new MetricAlertCriteria(odataType, additionalProperties);
+            return UnknownMetricAlertCriteria.DeserializeUnknownMetricAlertCriteria(element);
         }
     }
 }

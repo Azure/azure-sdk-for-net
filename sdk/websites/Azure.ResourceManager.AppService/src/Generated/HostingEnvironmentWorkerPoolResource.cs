@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics;
         private readonly AppServiceEnvironmentsRestOperations _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient;
-        private readonly WorkerPoolData _data;
+        private readonly AppServiceWorkerPoolData _data;
 
         /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentWorkerPoolResource"/> class for mocking. </summary>
         protected HostingEnvironmentWorkerPoolResource()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "HostingEnvironmentWorkerPoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HostingEnvironmentWorkerPoolResource(ArmClient client, WorkerPoolData data) : this(client, data.Id)
+        internal HostingEnvironmentWorkerPoolResource(ArmClient client, AppServiceWorkerPoolData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual WorkerPoolData Data
+        public virtual AppServiceWorkerPoolData Data
         {
             get
             {
@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get properties of a worker pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
-        /// Operation Id: AppServiceEnvironments_GetWorkerPool
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_GetWorkerPool</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HostingEnvironmentWorkerPoolResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -113,8 +121,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get properties of a worker pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
-        /// Operation Id: AppServiceEnvironments_GetWorkerPool
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_GetWorkerPool</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HostingEnvironmentWorkerPoolResource> Get(CancellationToken cancellationToken = default)
@@ -137,13 +153,21 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Create or update a worker pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
-        /// Operation Id: AppServiceEnvironments_UpdateWorkerPool
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_UpdateWorkerPool</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> Properties of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<HostingEnvironmentWorkerPoolResource>> UpdateAsync(WorkerPoolData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostingEnvironmentWorkerPoolResource>> UpdateAsync(AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -163,13 +187,21 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Create or update a worker pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}
-        /// Operation Id: AppServiceEnvironments_UpdateWorkerPool
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_UpdateWorkerPool</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> Properties of the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<HostingEnvironmentWorkerPoolResource> Update(WorkerPoolData data, CancellationToken cancellationToken = default)
+        public virtual Response<HostingEnvironmentWorkerPoolResource> Update(AppServiceWorkerPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -189,8 +221,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get metric definitions for a specific instance of a worker pool of an App Service Environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/instances/{instance}/metricdefinitions
-        /// Operation Id: AppServiceEnvironments_ListWorkerPoolInstanceMetricDefinitions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/instances/{instance}/metricdefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_ListWorkerPoolInstanceMetricDefinitions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="instance"> Name of the instance in the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -201,43 +241,23 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(instance, nameof(instance));
 
-            async Task<Page<ResourceMetricDefinition>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWorkerPoolInstanceMetricDefinitions");
-                scope.Start();
-                try
-                {
-                    var response = await _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.ListWorkerPoolInstanceMetricDefinitionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instance, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ResourceMetricDefinition>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWorkerPoolInstanceMetricDefinitions");
-                scope.Start();
-                try
-                {
-                    var response = await _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.ListWorkerPoolInstanceMetricDefinitionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instance, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolInstanceMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instance);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolInstanceMetricDefinitionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instance);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceMetricDefinition.DeserializeResourceMetricDefinition, _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWorkerPoolInstanceMetricDefinitions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Description for Get metric definitions for a specific instance of a worker pool of an App Service Environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/instances/{instance}/metricdefinitions
-        /// Operation Id: AppServiceEnvironments_ListWorkerPoolInstanceMetricDefinitions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/instances/{instance}/metricdefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_ListWorkerPoolInstanceMetricDefinitions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="instance"> Name of the instance in the worker pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -248,289 +268,141 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(instance, nameof(instance));
 
-            Page<ResourceMetricDefinition> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWorkerPoolInstanceMetricDefinitions");
-                scope.Start();
-                try
-                {
-                    var response = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.ListWorkerPoolInstanceMetricDefinitions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instance, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ResourceMetricDefinition> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWorkerPoolInstanceMetricDefinitions");
-                scope.Start();
-                try
-                {
-                    var response = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.ListWorkerPoolInstanceMetricDefinitionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instance, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolInstanceMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instance);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolInstanceMetricDefinitionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instance);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceMetricDefinition.DeserializeResourceMetricDefinition, _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWorkerPoolInstanceMetricDefinitions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Description for Get metric definitions for a worker pool of an App Service Environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/metricdefinitions
-        /// Operation Id: AppServiceEnvironments_ListWebWorkerMetricDefinitions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/metricdefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_ListWebWorkerMetricDefinitions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceMetricDefinition> GetWebWorkerMetricDefinitionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceMetricDefinition>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWebWorkerMetricDefinitions");
-                scope.Start();
-                try
-                {
-                    var response = await _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.ListWebWorkerMetricDefinitionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ResourceMetricDefinition>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWebWorkerMetricDefinitions");
-                scope.Start();
-                try
-                {
-                    var response = await _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.ListWebWorkerMetricDefinitionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWebWorkerMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWebWorkerMetricDefinitionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceMetricDefinition.DeserializeResourceMetricDefinition, _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWebWorkerMetricDefinitions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Description for Get metric definitions for a worker pool of an App Service Environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/metricdefinitions
-        /// Operation Id: AppServiceEnvironments_ListWebWorkerMetricDefinitions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/metricdefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_ListWebWorkerMetricDefinitions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceMetricDefinition> GetWebWorkerMetricDefinitions(CancellationToken cancellationToken = default)
         {
-            Page<ResourceMetricDefinition> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWebWorkerMetricDefinitions");
-                scope.Start();
-                try
-                {
-                    var response = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.ListWebWorkerMetricDefinitions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ResourceMetricDefinition> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWebWorkerMetricDefinitions");
-                scope.Start();
-                try
-                {
-                    var response = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.ListWebWorkerMetricDefinitionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWebWorkerMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWebWorkerMetricDefinitionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceMetricDefinition.DeserializeResourceMetricDefinition, _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWebWorkerMetricDefinitions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Description for Get available SKUs for scaling a worker pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/skus
-        /// Operation Id: AppServiceEnvironments_ListWorkerPoolSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_ListWorkerPoolSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServicePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServicePoolSkuInfo> GetWorkerPoolSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppServicePoolSkuInfo>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWorkerPoolSkus");
-                scope.Start();
-                try
-                {
-                    var response = await _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.ListWorkerPoolSkusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AppServicePoolSkuInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWorkerPoolSkus");
-                scope.Start();
-                try
-                {
-                    var response = await _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.ListWorkerPoolSkusNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServicePoolSkuInfo.DeserializeAppServicePoolSkuInfo, _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWorkerPoolSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Description for Get available SKUs for scaling a worker pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/skus
-        /// Operation Id: AppServiceEnvironments_ListWorkerPoolSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_ListWorkerPoolSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServicePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServicePoolSkuInfo> GetWorkerPoolSkus(CancellationToken cancellationToken = default)
         {
-            Page<AppServicePoolSkuInfo> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWorkerPoolSkus");
-                scope.Start();
-                try
-                {
-                    var response = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.ListWorkerPoolSkus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AppServicePoolSkuInfo> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWorkerPoolSkus");
-                scope.Start();
-                try
-                {
-                    var response = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.ListWorkerPoolSkusNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServicePoolSkuInfo.DeserializeAppServicePoolSkuInfo, _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWorkerPoolSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Description for Get usage metrics for a worker pool of an App Service Environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/usages
-        /// Operation Id: AppServiceEnvironments_ListWebWorkerUsages
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_ListWebWorkerUsages</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceUsage> GetWebWorkerUsagesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppServiceUsage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWebWorkerUsages");
-                scope.Start();
-                try
-                {
-                    var response = await _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.ListWebWorkerUsagesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AppServiceUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWebWorkerUsages");
-                scope.Start();
-                try
-                {
-                    var response = await _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.ListWebWorkerUsagesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWebWorkerUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWebWorkerUsagesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServiceUsage.DeserializeAppServiceUsage, _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWebWorkerUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Description for Get usage metrics for a worker pool of an App Service Environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/usages
-        /// Operation Id: AppServiceEnvironments_ListWebWorkerUsages
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_ListWebWorkerUsages</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceUsage> GetWebWorkerUsages(CancellationToken cancellationToken = default)
         {
-            Page<AppServiceUsage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWebWorkerUsages");
-                scope.Start();
-                try
-                {
-                    var response = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.ListWebWorkerUsages(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AppServiceUsage> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolResource.GetWebWorkerUsages");
-                scope.Start();
-                try
-                {
-                    var response = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.ListWebWorkerUsagesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWebWorkerUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWebWorkerUsagesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServiceUsage.DeserializeAppServiceUsage, _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentWorkerPoolResource.GetWebWorkerUsages", "value", "nextLink", cancellationToken);
         }
     }
 }

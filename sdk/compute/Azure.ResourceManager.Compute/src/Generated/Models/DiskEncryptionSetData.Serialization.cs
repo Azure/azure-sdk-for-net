@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -35,28 +35,28 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(EncryptionType))
             {
-                writer.WritePropertyName("encryptionType");
+                writer.WritePropertyName("encryptionType"u8);
                 writer.WriteStringValue(EncryptionType.Value.ToString());
             }
             if (Optional.IsDefined(ActiveKey))
             {
-                writer.WritePropertyName("activeKey");
+                writer.WritePropertyName("activeKey"u8);
                 writer.WriteObjectValue(ActiveKey);
             }
             if (Optional.IsDefined(RotationToLatestKeyVersionEnabled))
             {
-                writer.WritePropertyName("rotationToLatestKeyVersionEnabled");
+                writer.WritePropertyName("rotationToLatestKeyVersionEnabled"u8);
                 writer.WriteBooleanValue(RotationToLatestKeyVersionEnabled.Value);
             }
             if (Optional.IsDefined(FederatedClientId))
             {
-                writer.WritePropertyName("federatedClientId");
+                writer.WritePropertyName("federatedClientId"u8);
                 writer.WriteStringValue(FederatedClientId);
             }
             writer.WriteEndObject();
@@ -82,17 +82,17 @@ namespace Azure.ResourceManager.Compute
             Optional<string> federatedClientId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,37 +107,37 @@ namespace Azure.ResourceManager.Compute
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("encryptionType"))
+                        if (property0.NameEquals("encryptionType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Compute
                             encryptionType = new DiskEncryptionSetType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("activeKey"))
+                        if (property0.NameEquals("activeKey"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute
                             activeKey = KeyForDiskEncryptionSet.DeserializeKeyForDiskEncryptionSet(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("previousKeys"))
+                        if (property0.NameEquals("previousKeys"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -181,12 +181,12 @@ namespace Azure.ResourceManager.Compute
                             previousKeys = array;
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("rotationToLatestKeyVersionEnabled"))
+                        if (property0.NameEquals("rotationToLatestKeyVersionEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Compute
                             rotationToLatestKeyVersionEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("lastKeyRotationTimestamp"))
+                        if (property0.NameEquals("lastKeyRotationTimestamp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Compute
                             lastKeyRotationTimestamp = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("autoKeyRotationError"))
+                        if (property0.NameEquals("autoKeyRotationError"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Compute
                             autoKeyRotationError = ComputeApiError.DeserializeComputeApiError(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("federatedClientId"))
+                        if (property0.NameEquals("federatedClientId"u8))
                         {
                             federatedClientId = property0.Value.GetString();
                             continue;

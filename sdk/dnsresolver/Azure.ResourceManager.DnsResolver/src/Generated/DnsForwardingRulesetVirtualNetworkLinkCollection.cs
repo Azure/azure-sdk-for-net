@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary>
         /// Creates or updates a virtual network link to a DNS forwarding ruleset.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}
-        /// Operation Id: VirtualNetworkLinks_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworkLinks_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
@@ -75,8 +82,8 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = await _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateOrUpdateAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkLinkName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource>(new DnsForwardingRulesetVirtualNetworkLinkOperationSource(Client), _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateCreateOrUpdateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkLinkName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var response = await _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource>(new DnsForwardingRulesetVirtualNetworkLinkOperationSource(Client), _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,8 +97,16 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary>
         /// Creates or updates a virtual network link to a DNS forwarding ruleset.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}
-        /// Operation Id: VirtualNetworkLinks_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworkLinks_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
@@ -110,8 +125,8 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateOrUpdate(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkLinkName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource>(new DnsForwardingRulesetVirtualNetworkLinkOperationSource(Client), _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateCreateOrUpdateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkLinkName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var response = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, data, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new DnsResolverArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource>(new DnsForwardingRulesetVirtualNetworkLinkOperationSource(Client), _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -125,8 +140,16 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary>
         /// Gets properties of a virtual network link to a DNS forwarding ruleset.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}
-        /// Operation Id: VirtualNetworkLinks_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworkLinks_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -140,7 +163,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = await _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.GetAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkLinkName, cancellationToken).ConfigureAwait(false);
+                var response = await _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DnsForwardingRulesetVirtualNetworkLinkResource(Client, response.Value), response.GetRawResponse());
@@ -154,8 +177,16 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary>
         /// Gets properties of a virtual network link to a DNS forwarding ruleset.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}
-        /// Operation Id: VirtualNetworkLinks_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworkLinks_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -169,7 +200,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.Get(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkLinkName, cancellationToken);
+                var response = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DnsForwardingRulesetVirtualNetworkLinkResource(Client, response.Value), response.GetRawResponse());
@@ -183,94 +214,62 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary>
         /// Lists virtual network links to a DNS forwarding ruleset.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks
-        /// Operation Id: VirtualNetworkLinks_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworkLinks_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DnsForwardingRulesetVirtualNetworkLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DnsForwardingRulesetVirtualNetworkLinkResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DnsForwardingRulesetVirtualNetworkLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics.CreateScope("DnsForwardingRulesetVirtualNetworkLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.ListAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRulesetVirtualNetworkLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DnsForwardingRulesetVirtualNetworkLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics.CreateScope("DnsForwardingRulesetVirtualNetworkLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.ListNextPageAsync(nextLink, Id.Name, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRulesetVirtualNetworkLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsForwardingRulesetVirtualNetworkLinkResource(Client, DnsForwardingRulesetVirtualNetworkLinkData.DeserializeDnsForwardingRulesetVirtualNetworkLinkData(e)), _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, "DnsForwardingRulesetVirtualNetworkLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists virtual network links to a DNS forwarding ruleset.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks
-        /// Operation Id: VirtualNetworkLinks_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworkLinks_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DnsForwardingRulesetVirtualNetworkLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DnsForwardingRulesetVirtualNetworkLinkResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<DnsForwardingRulesetVirtualNetworkLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics.CreateScope("DnsForwardingRulesetVirtualNetworkLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.List(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRulesetVirtualNetworkLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DnsForwardingRulesetVirtualNetworkLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics.CreateScope("DnsForwardingRulesetVirtualNetworkLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.ListNextPage(nextLink, Id.Name, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRulesetVirtualNetworkLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsForwardingRulesetVirtualNetworkLinkResource(Client, DnsForwardingRulesetVirtualNetworkLinkData.DeserializeDnsForwardingRulesetVirtualNetworkLinkData(e)), _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics, Pipeline, "DnsForwardingRulesetVirtualNetworkLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}
-        /// Operation Id: VirtualNetworkLinks_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworkLinks_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -284,7 +283,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = await _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.GetAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -296,8 +295,16 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}
-        /// Operation Id: VirtualNetworkLinks_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworkLinks_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -311,7 +318,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.Get(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkLinkName, cancellationToken: cancellationToken);
+                var response = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

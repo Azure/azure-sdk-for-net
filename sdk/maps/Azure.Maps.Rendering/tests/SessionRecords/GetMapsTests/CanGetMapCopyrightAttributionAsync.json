@@ -1,0 +1,39 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/map/attribution?api-version=2022-08-01\u0026tilesetId=microsoft.base\u0026zoom=0\u0026bounds=13.228%2C52.4559%2C13.5794%2C52.629",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ba4d564d4b4ee779d88021848dc47395-ad7754ec0d75bf10-00",
+        "User-Agent": "azsdk-net-Maps.Rendering/1.0.0-alpha.20220912.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+        "x-ms-client-request-id": "263e1dfc018baed3419494220fd732cb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "98",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 12 Sep 2022 11:57:46 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 9702FD14351A4FF2B8FA0D773B65800E Ref B: TPE30EDGE0607 Ref C: 2022-09-12T11:57:46Z"
+      },
+      "ResponseBody": {
+        "copyrights": [
+          "\u003Ca data-azure-maps-attribution-tileset=\u0022microsoft.base\u0022\u003E\u0026copy;2022 TomTom\u003C/a\u003E"
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "817330127"
+  }
+}

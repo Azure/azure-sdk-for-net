@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.LabServices
             }
         }
 
-        internal HttpMessage CreateSaveImageRequest(string subscriptionId, string resourceGroupName, string labPlanName, SaveImageBody body)
+        internal HttpMessage CreateSaveImageRequest(string subscriptionId, string resourceGroupName, string labPlanName, LabVirtualMachineImageContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -513,9 +513,9 @@ namespace Azure.ResourceManager.LabServices
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -524,18 +524,18 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labPlanName"> The name of the lab plan that uniquely identifies it within containing resource group. Used in resource URIs and in UI. </param>
-        /// <param name="body"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labPlanName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labPlanName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="labPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> SaveImageAsync(string subscriptionId, string resourceGroupName, string labPlanName, SaveImageBody body, CancellationToken cancellationToken = default)
+        public async Task<Response> SaveImageAsync(string subscriptionId, string resourceGroupName, string labPlanName, LabVirtualMachineImageContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(labPlanName, nameof(labPlanName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSaveImageRequest(subscriptionId, resourceGroupName, labPlanName, body);
+            using var message = CreateSaveImageRequest(subscriptionId, resourceGroupName, labPlanName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -551,18 +551,18 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="labPlanName"> The name of the lab plan that uniquely identifies it within containing resource group. Used in resource URIs and in UI. </param>
-        /// <param name="body"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labPlanName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labPlanName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="labPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response SaveImage(string subscriptionId, string resourceGroupName, string labPlanName, SaveImageBody body, CancellationToken cancellationToken = default)
+        public Response SaveImage(string subscriptionId, string resourceGroupName, string labPlanName, LabVirtualMachineImageContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(labPlanName, nameof(labPlanName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSaveImageRequest(subscriptionId, resourceGroupName, labPlanName, body);
+            using var message = CreateSaveImageRequest(subscriptionId, resourceGroupName, labPlanName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -21,8 +20,8 @@ namespace Azure.ResourceManager.DataShare
 {
     /// <summary>
     /// A class representing a collection of <see cref="ProviderShareSubscriptionResource" /> and their operations.
-    /// Each <see cref="ProviderShareSubscriptionResource" /> in the collection will belong to the same instance of <see cref="ShareResource" />.
-    /// To get a <see cref="ProviderShareSubscriptionCollection" /> instance call the GetProviderShareSubscriptions method from an instance of <see cref="ShareResource" />.
+    /// Each <see cref="ProviderShareSubscriptionResource" /> in the collection will belong to the same instance of <see cref="DataShareResource" />.
+    /// To get a <see cref="ProviderShareSubscriptionCollection" /> instance call the GetProviderShareSubscriptions method from an instance of <see cref="DataShareResource" />.
     /// </summary>
     public partial class ProviderShareSubscriptionCollection : ArmCollection, IEnumerable<ProviderShareSubscriptionResource>, IAsyncEnumerable<ProviderShareSubscriptionResource>
     {
@@ -49,14 +48,22 @@ namespace Azure.ResourceManager.DataShare
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ShareResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ShareResource.ResourceType), nameof(id));
+            if (id.ResourceType != DataShareResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataShareResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get share subscription in a provider share
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions/{providerShareSubscriptionId}
-        /// Operation Id: ProviderShareSubscriptions_GetByShare
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions/{providerShareSubscriptionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderShareSubscriptions_GetByShare</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="providerShareSubscriptionId"> To locate shareSubscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Get share subscription in a provider share
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions/{providerShareSubscriptionId}
-        /// Operation Id: ProviderShareSubscriptions_GetByShare
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions/{providerShareSubscriptionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderShareSubscriptions_GetByShare</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="providerShareSubscriptionId"> To locate shareSubscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,94 +128,62 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// List share subscriptions in a provider share
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions
-        /// Operation Id: ProviderShareSubscriptions_ListByShare
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderShareSubscriptions_ListByShare</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation Token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProviderShareSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProviderShareSubscriptionResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProviderShareSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _providerShareSubscriptionClientDiagnostics.CreateScope("ProviderShareSubscriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _providerShareSubscriptionRestClient.ListByShareAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProviderShareSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProviderShareSubscriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _providerShareSubscriptionClientDiagnostics.CreateScope("ProviderShareSubscriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _providerShareSubscriptionRestClient.ListByShareNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProviderShareSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _providerShareSubscriptionRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _providerShareSubscriptionRestClient.CreateListByShareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProviderShareSubscriptionResource(Client, ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(e)), _providerShareSubscriptionClientDiagnostics, Pipeline, "ProviderShareSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List share subscriptions in a provider share
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions
-        /// Operation Id: ProviderShareSubscriptions_ListByShare
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderShareSubscriptions_ListByShare</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation Token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProviderShareSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProviderShareSubscriptionResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<ProviderShareSubscriptionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _providerShareSubscriptionClientDiagnostics.CreateScope("ProviderShareSubscriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _providerShareSubscriptionRestClient.ListByShare(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProviderShareSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProviderShareSubscriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _providerShareSubscriptionClientDiagnostics.CreateScope("ProviderShareSubscriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _providerShareSubscriptionRestClient.ListByShareNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProviderShareSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _providerShareSubscriptionRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _providerShareSubscriptionRestClient.CreateListByShareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProviderShareSubscriptionResource(Client, ProviderShareSubscriptionData.DeserializeProviderShareSubscriptionData(e)), _providerShareSubscriptionClientDiagnostics, Pipeline, "ProviderShareSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions/{providerShareSubscriptionId}
-        /// Operation Id: ProviderShareSubscriptions_GetByShare
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions/{providerShareSubscriptionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderShareSubscriptions_GetByShare</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="providerShareSubscriptionId"> To locate shareSubscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -226,8 +209,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions/{providerShareSubscriptionId}
-        /// Operation Id: ProviderShareSubscriptions_GetByShare
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions/{providerShareSubscriptionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderShareSubscriptions_GetByShare</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="providerShareSubscriptionId"> To locate shareSubscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

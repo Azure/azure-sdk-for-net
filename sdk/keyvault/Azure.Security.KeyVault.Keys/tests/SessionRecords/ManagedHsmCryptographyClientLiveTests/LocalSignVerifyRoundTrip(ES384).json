@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://heathskeyvaulthsm.managedhsm.azure.net/keys/866490578?api-version=7.3",
+      "RequestUri": "https://heathskeyvaulthsm.managedhsm.azure.net/keys/1482977912?api-version=7.4-preview.1",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "0",
-        "traceparent": "00-d5d38652722c591a3df0a18a4160d8c1-7bf13d3da493f277-00",
-        "User-Agent": "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20220322.1 (.NET 6.0.3; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "1b343d4ac96786d0af3e2108a4f864a9",
+        "traceparent": "00-3b4321843b000e79f668519982f52630-3c27229eaa431bf2-00",
+        "User-Agent": "azsdk-net-Security.KeyVault.Keys/4.5.0-alpha.20221102.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3d5e6065d32acb19920181531b30d756",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -22,22 +22,22 @@
         "WWW-Authenticate": "Bearer authorization=\u0022https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://managedhsm.azure.net\u0022",
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "SAMEORIGIN",
-        "x-ms-request-id": "7879b4d4-aad2-11ec-8057-000d3aed998e",
+        "x-ms-request-id": "6108f9e4-5b04-11ed-83e9-0022488df0c4",
         "x-ms-server-latency": "1"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://heathskeyvaulthsm.managedhsm.azure.net/keys/866490578?api-version=7.3",
+      "RequestUri": "https://heathskeyvaulthsm.managedhsm.azure.net/keys/1482977912?api-version=7.4-preview.1",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "275",
         "Content-Type": "application/json",
-        "traceparent": "00-d5d38652722c591a3df0a18a4160d8c1-7bf13d3da493f277-00",
-        "User-Agent": "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20220322.1 (.NET 6.0.3; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "1b343d4ac96786d0af3e2108a4f864a9",
+        "traceparent": "00-3b4321843b000e79f668519982f52630-3c27229eaa431bf2-00",
+        "User-Agent": "azsdk-net-Security.KeyVault.Keys/4.5.0-alpha.20221102.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3d5e6065d32acb19920181531b30d756",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -48,33 +48,33 @@
             "verify"
           ],
           "crv": "P-384",
-          "x": "L785Vx8UYMdorttjYPjP-SaDpwKRP8fu-1XYw0DqSS8EDdlBEMx4Zdqk847LVJPx",
-          "y": "ooRlM8W9q0Rbw4I2PnAE7LiU5ymznNK0Lge64LEElcfTLMoEAjbYukcBD4Lp2ndh",
-          "d": "i5cCgTw3DeBxmbUBG_anbW7zG-lVUxMtwLI3BSDOM-KJiandfMVarSIXiAVTZIFL"
+          "x": "OU7rTbjcV7a4sYShHg4zydAJCfa0Ad3BuiH_ATvz5SfeuFAqkr5x_qp4e9LpI3zs",
+          "y": "QC10MGINzLD9dLbLJy2yEOvdhbiGN9qTMQD-ryyy2Xg6-RY2qtZoQAXsMLAuCWPC",
+          "d": "gZxLVcVNAtfYlhZeAwDYq5k8AJjVCrpcICAnSEvwYExqTp91LswLBlGY6L8hR_dL"
         }
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "472",
+        "Content-Length": "473",
         "Content-Security-Policy": "default-src \u0027self\u0027",
         "Content-Type": "application/json; charset=utf-8",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "SAMEORIGIN",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=Ipv4;",
-        "x-ms-keyvault-region": "southcentralus",
-        "x-ms-request-id": "789956d6-aad2-11ec-8057-000d3aed998e",
-        "x-ms-server-latency": "404"
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=131.107.174.211;act_addr_fam=Ipv4;",
+        "x-ms-keyvault-region": "northus",
+        "x-ms-request-id": "612ba8ae-5b04-11ed-83e9-0022488df0c4",
+        "x-ms-server-latency": "479"
       },
       "ResponseBody": {
         "attributes": {
-          "created": 1648058148,
+          "created": 1667430988,
           "enabled": true,
           "exportable": false,
           "recoverableDays": 7,
           "recoveryLevel": "CustomizedRecoverable\u002BPurgeable",
-          "updated": 1648058148
+          "updated": 1667430988
         },
         "key": {
           "crv": "P-384",
@@ -82,54 +82,55 @@
             "sign",
             "verify"
           ],
-          "kid": "https://heathskeyvaulthsm.managedhsm.azure.net/keys/866490578/fe47011aebf80d3c3ac9c8e7389261c9",
+          "kid": "https://heathskeyvaulthsm.managedhsm.azure.net/keys/1482977912/75a66686efd5045b1eaff3e83e570f75",
           "kty": "EC-HSM",
-          "x": "L785Vx8UYMdorttjYPjP-SaDpwKRP8fu-1XYw0DqSS8EDdlBEMx4Zdqk847LVJPx",
-          "y": "ooRlM8W9q0Rbw4I2PnAE7LiU5ymznNK0Lge64LEElcfTLMoEAjbYukcBD4Lp2ndh"
+          "x": "OU7rTbjcV7a4sYShHg4zydAJCfa0Ad3BuiH_ATvz5SfeuFAqkr5x_qp4e9LpI3zs",
+          "y": "QC10MGINzLD9dLbLJy2yEOvdhbiGN9qTMQD-ryyy2Xg6-RY2qtZoQAXsMLAuCWPC"
         }
       }
     },
     {
-      "RequestUri": "https://heathskeyvaulthsm.managedhsm.azure.net/keys/866490578/fe47011aebf80d3c3ac9c8e7389261c9/verify?api-version=7.3",
+      "RequestUri": "https://heathskeyvaulthsm.managedhsm.azure.net/keys/1482977912/75a66686efd5045b1eaff3e83e570f75/verify?api-version=7.4-preview.1",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "230",
         "Content-Type": "application/json",
-        "traceparent": "00-c48a5345171433335ec759d327554239-7598262f113e4b2c-00",
-        "User-Agent": "azsdk-net-Security.KeyVault.Keys/4.3.0-alpha.20220322.1 (.NET 6.0.3; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "0507921a6ead6a6028889abfbfdd6370",
+        "traceparent": "00-fb020e1a14f3c1d7b001222f7850afd5-844dda227f1a92ee-00",
+        "User-Agent": "azsdk-net-Security.KeyVault.Keys/4.5.0-alpha.20221102.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "788e86ab5b5d451ee7b6c23b58cbf444",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "alg": "ES384",
-        "digest": "n-eEc3qIwPGG5W2zrBj79ZqOfdjgg9i2Kp5F3bzsBOhYtyau_KMVuy9KNDRh6i6c",
-        "value": "boMrz8xhoKp9NsBI_liZMyomTdZJSxjG5dl6qQxSe-cpat3s2QvTs78XR4ybQ8GTxvNcenNGozcQL2EEG_gHgNDPyhMbAM6C9IYGrJQz8dPH2VQw_ypaaay2a0N9Iwwd"
+        "digest": "fQPh6PBn5P3fzzOInNjieuER2m56Wbvsv1TrTZi3WmN-CXuVHKSh9CoF4t7td5PC",
+        "value": "K1N_oBeMATZPDyhIoQiqjDYLI2G9p5hJSIV-TYwZhDa5JO8nyS4FXI-gqTMufXedJYgLR_SH46n0QF54aIn2e3zTBX6EaoHO9aTq1U9par6IB5IbXg_m1p_q1nYSbuxH"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "131",
+        "Content-Length": "132",
         "Content-Security-Policy": "default-src \u0027self\u0027",
         "Content-Type": "application/json; charset=utf-8",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "SAMEORIGIN",
-        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=Ipv4;",
-        "x-ms-keyvault-region": "southcentralus",
-        "x-ms-request-id": "78e24cd8-aad2-11ec-8057-000d3aed998e",
-        "x-ms-server-latency": "111"
+        "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=131.107.174.211;act_addr_fam=Ipv4;",
+        "x-ms-keyvault-region": "northus",
+        "x-ms-request-id": "617f4144-5b04-11ed-83e9-0022488df0c4",
+        "x-ms-server-latency": "146"
       },
       "ResponseBody": {
         "alg": "ES384",
-        "kid": "https://heathskeyvaulthsm.managedhsm.azure.net/keys/866490578/fe47011aebf80d3c3ac9c8e7389261c9",
+        "kid": "https://heathskeyvaulthsm.managedhsm.azure.net/keys/1482977912/75a66686efd5045b1eaff3e83e570f75",
         "value": true
       }
     }
   ],
   "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "AZURE_MANAGEDHSM_URL": "https://heathskeyvaulthsm.managedhsm.azure.net/",
-    "RandomSeed": "1196537558"
+    "RandomSeed": "1458733050"
   }
 }

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DataShare.Models
         internal static DataSetList DeserializeDataSetList(JsonElement element)
         {
             Optional<string> nextLink = default;
-            IReadOnlyList<DataSetData> value = default;
+            IReadOnlyList<ShareDataSetData> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
-                    List<DataSetData> array = new List<DataSetData>();
+                    List<ShareDataSetData> array = new List<ShareDataSetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataSetData.DeserializeDataSetData(item));
+                        array.Add(ShareDataSetData.DeserializeShareDataSetData(item));
                     }
                     value = array;
                     continue;

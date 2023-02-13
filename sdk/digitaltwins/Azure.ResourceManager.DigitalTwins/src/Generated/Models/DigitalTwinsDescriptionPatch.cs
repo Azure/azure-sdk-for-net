@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         /// <summary> Instance patch properties. </summary>
         public IDictionary<string, string> Tags { get; set; }
-        /// <summary> The managed identity for the DigitalTwinsInstance. Current supported identity types: None, SystemAssigned. </summary>
+        /// <summary> The managed identity for the DigitalTwinsInstance. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Properties for the DigitalTwinsInstance. </summary>
         internal DigitalTwinsPatchProperties Properties { get; set; }

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -21,8 +20,8 @@ namespace Azure.ResourceManager.Purview
 {
     /// <summary>
     /// A class representing a collection of <see cref="PurviewPrivateLinkResource" /> and their operations.
-    /// Each <see cref="PurviewPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="AccountResource" />.
-    /// To get a <see cref="PurviewPrivateLinkResourceCollection" /> instance call the GetPurviewPrivateLinkResources method from an instance of <see cref="AccountResource" />.
+    /// Each <see cref="PurviewPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="PurviewAccountResource" />.
+    /// To get a <see cref="PurviewPrivateLinkResourceCollection" /> instance call the GetPurviewPrivateLinkResources method from an instance of <see cref="PurviewAccountResource" />.
     /// </summary>
     public partial class PurviewPrivateLinkResourceCollection : ArmCollection, IEnumerable<PurviewPrivateLinkResource>, IAsyncEnumerable<PurviewPrivateLinkResource>
     {
@@ -49,14 +48,22 @@ namespace Azure.ResourceManager.Purview
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AccountResource.ResourceType), nameof(id));
+            if (id.ResourceType != PurviewAccountResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PurviewAccountResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Gets a privately linkable resources for an account with given group identifier
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateLinkResources/{groupId}
-        /// Operation Id: PrivateLinkResources_GetByGroupId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateLinkResources/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_GetByGroupId</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="groupId"> The group identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Gets a privately linkable resources for an account with given group identifier
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateLinkResources/{groupId}
-        /// Operation Id: PrivateLinkResources_GetByGroupId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateLinkResources/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_GetByGroupId</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="groupId"> The group identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,92 +128,60 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Gets a list of privately linkable resources for an account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateLinkResources
-        /// Operation Id: PrivateLinkResources_ListByAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_ListByAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PurviewPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PurviewPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PurviewPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _purviewPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("PurviewPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _purviewPrivateLinkResourcePrivateLinkResourcesRestClient.ListByAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PurviewPrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PurviewPrivateLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _purviewPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("PurviewPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _purviewPrivateLinkResourcePrivateLinkResourcesRestClient.ListByAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PurviewPrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _purviewPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _purviewPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PurviewPrivateLinkResource(Client, PurviewPrivateLinkResourceData.DeserializePurviewPrivateLinkResourceData(e)), _purviewPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "PurviewPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of privately linkable resources for an account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateLinkResources
-        /// Operation Id: PrivateLinkResources_ListByAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_ListByAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PurviewPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PurviewPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PurviewPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _purviewPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("PurviewPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _purviewPrivateLinkResourcePrivateLinkResourcesRestClient.ListByAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PurviewPrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PurviewPrivateLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _purviewPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("PurviewPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _purviewPrivateLinkResourcePrivateLinkResourcesRestClient.ListByAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PurviewPrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _purviewPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _purviewPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PurviewPrivateLinkResource(Client, PurviewPrivateLinkResourceData.DeserializePurviewPrivateLinkResourceData(e)), _purviewPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "PurviewPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateLinkResources/{groupId}
-        /// Operation Id: PrivateLinkResources_GetByGroupId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateLinkResources/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_GetByGroupId</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="groupId"> The group identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -224,8 +207,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateLinkResources/{groupId}
-        /// Operation Id: PrivateLinkResources_GetByGroupId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateLinkResources/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_GetByGroupId</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="groupId"> The group identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

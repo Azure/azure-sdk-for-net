@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static PolicyList DeserializePolicyList(JsonElement element)
         {
-            Optional<IReadOnlyList<PolicyData>> value = default;
+            Optional<IReadOnlyList<DevTestLabPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PolicyData> array = new List<PolicyData>();
+                    List<DevTestLabPolicyData> array = new List<DevTestLabPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyData.DeserializePolicyData(item));
+                        array.Add(DevTestLabPolicyData.DeserializeDevTestLabPolicyData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

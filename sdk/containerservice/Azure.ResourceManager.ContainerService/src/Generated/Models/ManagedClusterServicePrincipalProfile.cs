@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,22 +15,25 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         /// <summary> Initializes a new instance of ManagedClusterServicePrincipalProfile. </summary>
         /// <param name="clientId"> The ID for the service principal. </param>
-        public ManagedClusterServicePrincipalProfile(Guid clientId)
+        /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> is null. </exception>
+        public ManagedClusterServicePrincipalProfile(string clientId)
         {
+            Argument.AssertNotNull(clientId, nameof(clientId));
+
             ClientId = clientId;
         }
 
         /// <summary> Initializes a new instance of ManagedClusterServicePrincipalProfile. </summary>
         /// <param name="clientId"> The ID for the service principal. </param>
         /// <param name="secret"> The secret password associated with the service principal in plain text. </param>
-        internal ManagedClusterServicePrincipalProfile(Guid clientId, string secret)
+        internal ManagedClusterServicePrincipalProfile(string clientId, string secret)
         {
             ClientId = clientId;
             Secret = secret;
         }
 
         /// <summary> The ID for the service principal. </summary>
-        public Guid ClientId { get; set; }
+        public string ClientId { get; set; }
         /// <summary> The secret password associated with the service principal in plain text. </summary>
         public string Secret { get; set; }
     }

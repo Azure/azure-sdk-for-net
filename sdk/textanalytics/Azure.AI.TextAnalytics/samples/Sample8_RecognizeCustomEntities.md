@@ -10,7 +10,7 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 ```C# Snippet:CreateTextAnalyticsClient
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
-var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
 ## Recognizing custom entities in a single or multiple documents
@@ -100,13 +100,6 @@ await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
     }
 }
 ```
-
-To see the full example source files, see:
-
-* [Synchronously RecognizeCustomEntities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample8_RecognizeCustomEntities.cs)
-* [Asynchronously RecognizeCustomEntities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample8_RecognizeCustomEntitiesAsync.cs)
-* [Synchronously RecognizeCustomEntities Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample8_RecognizeCustomEntitiesConvenience.cs)
-* [Asynchronously RecognizeCustomEntities Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample8_RecognizeCustomEntitiesConvenienceAsync.cs)
 
 <!-- LINKS -->
 [train_model]: https://aka.ms/azsdk/textanalytics/customentityrecognition

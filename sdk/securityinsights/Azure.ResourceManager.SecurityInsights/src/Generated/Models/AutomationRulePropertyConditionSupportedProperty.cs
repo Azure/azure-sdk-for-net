@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string IncidentTacticsValue = "IncidentTactics";
         private const string IncidentLabelValue = "IncidentLabel";
         private const string IncidentProviderNameValue = "IncidentProviderName";
+        private const string IncidentUpdatedBySourceValue = "IncidentUpdatedBySource";
         private const string AccountAadTenantIdValue = "AccountAadTenantId";
         private const string AccountAadUserIdValue = "AccountAadUserId";
         private const string AccountNameValue = "AccountName";
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string AccountPuidValue = "AccountPUID";
         private const string AccountSidValue = "AccountSid";
         private const string AccountObjectGuidValue = "AccountObjectGuid";
-        private const string AccountUPNSuffixValue = "AccountUPNSuffix";
+        private const string AccountUpnSuffixValue = "AccountUPNSuffix";
         private const string AlertProductNamesValue = "AlertProductNames";
         private const string AlertAnalyticRuleIdsValue = "AlertAnalyticRuleIds";
         private const string AzureResourceResourceIdValue = "AzureResourceResourceId";
@@ -53,16 +54,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string HostNetBiosNameValue = "HostNetBiosName";
         private const string HostNTDomainValue = "HostNTDomain";
         private const string HostOSVersionValue = "HostOSVersion";
-        private const string IoTDeviceIdValue = "IoTDeviceId";
-        private const string IoTDeviceNameValue = "IoTDeviceName";
-        private const string IoTDeviceTypeValue = "IoTDeviceType";
-        private const string IoTDeviceVendorValue = "IoTDeviceVendor";
-        private const string IoTDeviceModelValue = "IoTDeviceModel";
-        private const string IoTDeviceOperatingSystemValue = "IoTDeviceOperatingSystem";
+        private const string IotDeviceIdValue = "IoTDeviceId";
+        private const string IotDeviceNameValue = "IoTDeviceName";
+        private const string IotDeviceTypeValue = "IoTDeviceType";
+        private const string IotDeviceVendorValue = "IoTDeviceVendor";
+        private const string IotDeviceModelValue = "IoTDeviceModel";
+        private const string IotDeviceOperatingSystemValue = "IoTDeviceOperatingSystem";
         private const string IPAddressValue = "IPAddress";
         private const string MailboxDisplayNameValue = "MailboxDisplayName";
         private const string MailboxPrimaryAddressValue = "MailboxPrimaryAddress";
-        private const string MailboxUPNValue = "MailboxUPN";
+        private const string MailboxUpnValue = "MailboxUPN";
         private const string MailMessageDeliveryActionValue = "MailMessageDeliveryAction";
         private const string MailMessageDeliveryLocationValue = "MailMessageDeliveryLocation";
         private const string MailMessageRecipientValue = "MailMessageRecipient";
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string ProcessIdValue = "ProcessId";
         private const string RegistryKeyValue = "RegistryKey";
         private const string RegistryValueDataValue = "RegistryValueData";
-        private const string UrlValue = "Url";
+        private const string UriValue = "Url";
 
         /// <summary> The title of the incident. </summary>
         public static AutomationRulePropertyConditionSupportedProperty IncidentTitle { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentTitleValue);
@@ -94,6 +95,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static AutomationRulePropertyConditionSupportedProperty IncidentLabel { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentLabelValue);
         /// <summary> The provider name of the incident. </summary>
         public static AutomationRulePropertyConditionSupportedProperty IncidentProviderName { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentProviderNameValue);
+        /// <summary> The update source of the incident. </summary>
+        public static AutomationRulePropertyConditionSupportedProperty IncidentUpdatedBySource { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentUpdatedBySourceValue);
         /// <summary> The account Azure Active Directory tenant id. </summary>
         public static AutomationRulePropertyConditionSupportedProperty AccountAadTenantId { get; } = new AutomationRulePropertyConditionSupportedProperty(AccountAadTenantIdValue);
         /// <summary> The account Azure Active Directory user id. </summary>
@@ -109,7 +112,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> The account unique identifier. </summary>
         public static AutomationRulePropertyConditionSupportedProperty AccountObjectGuid { get; } = new AutomationRulePropertyConditionSupportedProperty(AccountObjectGuidValue);
         /// <summary> The account user principal name suffix. </summary>
-        public static AutomationRulePropertyConditionSupportedProperty AccountUPNSuffix { get; } = new AutomationRulePropertyConditionSupportedProperty(AccountUPNSuffixValue);
+        public static AutomationRulePropertyConditionSupportedProperty AccountUpnSuffix { get; } = new AutomationRulePropertyConditionSupportedProperty(AccountUpnSuffixValue);
         /// <summary> The name of the product of the alert. </summary>
         public static AutomationRulePropertyConditionSupportedProperty AlertProductNames { get; } = new AutomationRulePropertyConditionSupportedProperty(AlertProductNamesValue);
         /// <summary> The analytic rule ids of the alert. </summary>
@@ -141,17 +144,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> The host operating system. </summary>
         public static AutomationRulePropertyConditionSupportedProperty HostOSVersion { get; } = new AutomationRulePropertyConditionSupportedProperty(HostOSVersionValue);
         /// <summary> &quot;The IoT device id. </summary>
-        public static AutomationRulePropertyConditionSupportedProperty IoTDeviceId { get; } = new AutomationRulePropertyConditionSupportedProperty(IoTDeviceIdValue);
+        public static AutomationRulePropertyConditionSupportedProperty IotDeviceId { get; } = new AutomationRulePropertyConditionSupportedProperty(IotDeviceIdValue);
         /// <summary> The IoT device name. </summary>
-        public static AutomationRulePropertyConditionSupportedProperty IoTDeviceName { get; } = new AutomationRulePropertyConditionSupportedProperty(IoTDeviceNameValue);
+        public static AutomationRulePropertyConditionSupportedProperty IotDeviceName { get; } = new AutomationRulePropertyConditionSupportedProperty(IotDeviceNameValue);
         /// <summary> The IoT device type. </summary>
-        public static AutomationRulePropertyConditionSupportedProperty IoTDeviceType { get; } = new AutomationRulePropertyConditionSupportedProperty(IoTDeviceTypeValue);
+        public static AutomationRulePropertyConditionSupportedProperty IotDeviceType { get; } = new AutomationRulePropertyConditionSupportedProperty(IotDeviceTypeValue);
         /// <summary> The IoT device vendor. </summary>
-        public static AutomationRulePropertyConditionSupportedProperty IoTDeviceVendor { get; } = new AutomationRulePropertyConditionSupportedProperty(IoTDeviceVendorValue);
+        public static AutomationRulePropertyConditionSupportedProperty IotDeviceVendor { get; } = new AutomationRulePropertyConditionSupportedProperty(IotDeviceVendorValue);
         /// <summary> The IoT device model. </summary>
-        public static AutomationRulePropertyConditionSupportedProperty IoTDeviceModel { get; } = new AutomationRulePropertyConditionSupportedProperty(IoTDeviceModelValue);
+        public static AutomationRulePropertyConditionSupportedProperty IotDeviceModel { get; } = new AutomationRulePropertyConditionSupportedProperty(IotDeviceModelValue);
         /// <summary> The IoT device operating system. </summary>
-        public static AutomationRulePropertyConditionSupportedProperty IoTDeviceOperatingSystem { get; } = new AutomationRulePropertyConditionSupportedProperty(IoTDeviceOperatingSystemValue);
+        public static AutomationRulePropertyConditionSupportedProperty IotDeviceOperatingSystem { get; } = new AutomationRulePropertyConditionSupportedProperty(IotDeviceOperatingSystemValue);
         /// <summary> The IP address. </summary>
         public static AutomationRulePropertyConditionSupportedProperty IPAddress { get; } = new AutomationRulePropertyConditionSupportedProperty(IPAddressValue);
         /// <summary> The mailbox display name. </summary>
@@ -159,7 +162,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> The mailbox primary address. </summary>
         public static AutomationRulePropertyConditionSupportedProperty MailboxPrimaryAddress { get; } = new AutomationRulePropertyConditionSupportedProperty(MailboxPrimaryAddressValue);
         /// <summary> The mailbox user principal name. </summary>
-        public static AutomationRulePropertyConditionSupportedProperty MailboxUPN { get; } = new AutomationRulePropertyConditionSupportedProperty(MailboxUPNValue);
+        public static AutomationRulePropertyConditionSupportedProperty MailboxUpn { get; } = new AutomationRulePropertyConditionSupportedProperty(MailboxUpnValue);
         /// <summary> The mail message delivery action. </summary>
         public static AutomationRulePropertyConditionSupportedProperty MailMessageDeliveryAction { get; } = new AutomationRulePropertyConditionSupportedProperty(MailMessageDeliveryActionValue);
         /// <summary> The mail message delivery location. </summary>
@@ -187,7 +190,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> The registry key value in string formatted representation. </summary>
         public static AutomationRulePropertyConditionSupportedProperty RegistryValueData { get; } = new AutomationRulePropertyConditionSupportedProperty(RegistryValueDataValue);
         /// <summary> The url. </summary>
-        public static AutomationRulePropertyConditionSupportedProperty Url { get; } = new AutomationRulePropertyConditionSupportedProperty(UrlValue);
+        public static AutomationRulePropertyConditionSupportedProperty Uri { get; } = new AutomationRulePropertyConditionSupportedProperty(UriValue);
         /// <summary> Determines if two <see cref="AutomationRulePropertyConditionSupportedProperty"/> values are the same. </summary>
         public static bool operator ==(AutomationRulePropertyConditionSupportedProperty left, AutomationRulePropertyConditionSupportedProperty right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationRulePropertyConditionSupportedProperty"/> values are not the same. </summary>

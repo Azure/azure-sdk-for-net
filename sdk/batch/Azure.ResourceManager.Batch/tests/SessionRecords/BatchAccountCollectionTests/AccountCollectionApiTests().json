@@ -1,0 +1,2936 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account7056?api-version=2022-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "223",
+        "Content-Type": "application/json",
+        "traceparent": "00-765125b94ac9ab4ea4a6feea61ac7dab-a036c61ead214441-00",
+        "User-Agent": "azsdk-net-ResourceManager.Batch/1.2.0-alpha.20221201.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "4555b93718ba42acc1e9705e218010fd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westus",
+        "properties": {
+          "autoStorage": {
+            "storageAccountId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Storage/storageAccounts/azstorageforbatch4176"
+          }
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Thu, 01 Dec 2022 03:04:57 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account7056/operationResults/54c7da52-f728-4816-827c-1f747af9167c?api-version=2022-10-01",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "cff84f0d-a472-4760-a1d2-ebac0f4e6751",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "54c7da52-f728-4816-827c-1f747af9167c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221201T030458Z:cff84f0d-a472-4760-a1d2-ebac0f4e6751"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account7056/operationResults/54c7da52-f728-4816-827c-1f747af9167c?api-version=2022-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-765125b94ac9ab4ea4a6feea61ac7dab-14ef7ac4437d4b49-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "019bd4171847902590ec578fe9581fca",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Thu, 01 Dec 2022 03:04:58 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account7056/operationResults/54c7da52-f728-4816-827c-1f747af9167c?api-version=2022-10-01",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "bc21226f-9946-4ece-9f68-abeadcf68a04",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "10d8bc64-6941-476a-8010-92852ef1e180",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221201T030458Z:bc21226f-9946-4ece-9f68-abeadcf68a04"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account7056/operationResults/54c7da52-f728-4816-827c-1f747af9167c?api-version=2022-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-765125b94ac9ab4ea4a6feea61ac7dab-e720bc905054214e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "c32b7dc5cc3df50a46498beb4f28f7fc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "3731",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 Dec 2022 03:05:13 GMT",
+        "ETag": "\u00220x8DAD348DE00A961\u0022",
+        "Expires": "-1",
+        "Last-Modified": "Thu, 01 Dec 2022 03:05:14 GMT",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f93d9abc-8f0c-4c46-9e6f-1465deb63101",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "8102323e-7994-412f-99c5-7b98395dd94c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221201T030514Z:f93d9abc-8f0c-4c46-9e6f-1465deb63101"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account7056",
+        "name": "account7056",
+        "type": "Microsoft.Batch/batchAccounts",
+        "location": "westus",
+        "properties": {
+          "accountEndpoint": "account7056.westus.batch.azure.com",
+          "nodeManagementEndpoint": "6e50955d-6849-4bf6-9c38-011a54155e40.westus.service.batch.azure.com",
+          "provisioningState": "Succeeded",
+          "dedicatedCoreQuota": 0,
+          "dedicatedCoreQuotaPerVMFamily": [
+            {
+              "name": "standardAv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDSv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardESv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardA0_A7Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardA8_A11Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardGFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "basicAFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVPromoFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCPromoFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHPromoFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardMSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardGSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardLSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardLSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNDSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCSv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHBSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHCSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVSv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHBrsv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDAv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDASv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEAv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEASv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardMSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEIv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "Standard NCASv3_T4 Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardXEIDSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "Standard NDASv4_A100 Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDCSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHBv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNPSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFXMDVSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCADSA100v4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDADSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEADSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "StandardNVADSA10v5Family",
+              "coreQuota": 0
+            }
+          ],
+          "dedicatedCoreQuotaPerVMFamilyEnforced": true,
+          "lowPriorityCoreQuota": 0,
+          "poolQuota": 100,
+          "activeJobAndJobScheduleQuota": 300,
+          "autoStorage": {
+            "storageAccountId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Storage/storageAccounts/azstorageforbatch4176",
+            "lastKeySync": "2022-12-01T03:04:57.9972577Z",
+            "authenticationMode": "StorageKeys"
+          },
+          "poolAllocationMode": "BatchService",
+          "publicNetworkAccess": "Enabled",
+          "privateEndpointConnections": [],
+          "encryption": {
+            "keySource": "Microsoft.Batch"
+          },
+          "allowedAuthenticationModes": [
+            "SharedKey",
+            "AAD",
+            "TaskAuthenticationToken"
+          ]
+        },
+        "identity": {
+          "type": "None"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account7056?api-version=2022-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ed23ec6c383dd44582dd5206c52298ee-f0a85e1e056d4546-00",
+        "User-Agent": "azsdk-net-ResourceManager.Batch/1.2.0-alpha.20221201.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "4c47950f0fe5f1b67597d82feae32361",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "3731",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 Dec 2022 03:05:14 GMT",
+        "ETag": "\u00220x8DAD348D8BCDB8F\u0022",
+        "Expires": "-1",
+        "Last-Modified": "Thu, 01 Dec 2022 03:05:05 GMT",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6c9d1ae8-293f-4c3d-8b2c-f4a9809b86e8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "f64bab15-fbdc-48d5-bc06-ad17bf6f06ba",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221201T030514Z:6c9d1ae8-293f-4c3d-8b2c-f4a9809b86e8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account7056",
+        "name": "account7056",
+        "type": "Microsoft.Batch/batchAccounts",
+        "location": "westus",
+        "properties": {
+          "accountEndpoint": "account7056.westus.batch.azure.com",
+          "nodeManagementEndpoint": "6e50955d-6849-4bf6-9c38-011a54155e40.westus.service.batch.azure.com",
+          "provisioningState": "Succeeded",
+          "dedicatedCoreQuota": 0,
+          "dedicatedCoreQuotaPerVMFamily": [
+            {
+              "name": "standardAv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDSv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardESv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardA0_A7Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardA8_A11Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardGFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "basicAFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVPromoFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCPromoFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHPromoFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardMSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardGSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardLSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardLSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNDSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCSv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHBSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHCSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVSv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHBrsv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDAv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDASv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEAv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEASv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardMSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEIv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "Standard NCASv3_T4 Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardXEIDSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "Standard NDASv4_A100 Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDCSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHBv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNPSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFXMDVSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCADSA100v4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDADSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEADSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "StandardNVADSA10v5Family",
+              "coreQuota": 0
+            }
+          ],
+          "dedicatedCoreQuotaPerVMFamilyEnforced": true,
+          "lowPriorityCoreQuota": 0,
+          "poolQuota": 100,
+          "activeJobAndJobScheduleQuota": 300,
+          "autoStorage": {
+            "storageAccountId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Storage/storageAccounts/azstorageforbatch4176",
+            "lastKeySync": "2022-12-01T03:04:57.9972577Z",
+            "authenticationMode": "StorageKeys"
+          },
+          "poolAllocationMode": "BatchService",
+          "publicNetworkAccess": "Enabled",
+          "privateEndpointConnections": [],
+          "encryption": {
+            "keySource": "Microsoft.Batch"
+          },
+          "allowedAuthenticationModes": [
+            "SharedKey",
+            "AAD",
+            "TaskAuthenticationToken"
+          ]
+        },
+        "identity": {
+          "type": "None"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account7056?api-version=2022-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "223",
+        "Content-Type": "application/json",
+        "traceparent": "00-5e865021ff10084ebb574b1591e06c5c-d13c21038b5de943-00",
+        "User-Agent": "azsdk-net-ResourceManager.Batch/1.2.0-alpha.20221201.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "cdbffeb017994a9dcaa5bbfd8d394068",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westus",
+        "properties": {
+          "autoStorage": {
+            "storageAccountId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Storage/storageAccounts/azstorageforbatch4176"
+          }
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "3731",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 Dec 2022 03:05:15 GMT",
+        "ETag": "\u00220x8DAD348DF07153F\u0022",
+        "Expires": "-1",
+        "Last-Modified": "Thu, 01 Dec 2022 03:05:15 GMT",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3bbca639-3efa-4397-b722-bdca8256471e",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "c1839951-752a-47f6-a552-87c2a2fc1a6c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221201T030516Z:3bbca639-3efa-4397-b722-bdca8256471e"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account7056",
+        "name": "account7056",
+        "type": "Microsoft.Batch/batchAccounts",
+        "location": "westus",
+        "properties": {
+          "accountEndpoint": "account7056.westus.batch.azure.com",
+          "nodeManagementEndpoint": "6e50955d-6849-4bf6-9c38-011a54155e40.westus.service.batch.azure.com",
+          "provisioningState": "Succeeded",
+          "dedicatedCoreQuota": 0,
+          "dedicatedCoreQuotaPerVMFamily": [
+            {
+              "name": "standardAv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDSv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardESv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardA0_A7Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardA8_A11Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardGFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "basicAFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVPromoFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCPromoFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHPromoFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardMSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardGSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardLSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardLSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNDSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCSv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHBSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHCSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVSv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHBrsv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDAv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDASv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEAv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEASv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardMSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEIv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "Standard NCASv3_T4 Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardXEIDSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "Standard NDASv4_A100 Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDCSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHBv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNPSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFXMDVSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCADSA100v4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDADSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEADSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "StandardNVADSA10v5Family",
+              "coreQuota": 0
+            }
+          ],
+          "dedicatedCoreQuotaPerVMFamilyEnforced": true,
+          "lowPriorityCoreQuota": 0,
+          "poolQuota": 100,
+          "activeJobAndJobScheduleQuota": 300,
+          "autoStorage": {
+            "storageAccountId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Storage/storageAccounts/azstorageforbatch4176",
+            "lastKeySync": "2022-12-01T03:05:15.8957053Z",
+            "authenticationMode": "StorageKeys"
+          },
+          "poolAllocationMode": "BatchService",
+          "publicNetworkAccess": "Enabled",
+          "privateEndpointConnections": [],
+          "encryption": {
+            "keySource": "Microsoft.Batch"
+          },
+          "allowedAuthenticationModes": [
+            "SharedKey",
+            "AAD",
+            "TaskAuthenticationToken"
+          ]
+        },
+        "identity": {
+          "type": "None"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account6574?api-version=2022-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "223",
+        "Content-Type": "application/json",
+        "traceparent": "00-f173bfc34c879e4bac0e6b52ff3c8a8e-d1dc9e5c282dcb45-00",
+        "User-Agent": "azsdk-net-ResourceManager.Batch/1.2.0-alpha.20221201.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "513b29252a68f762f8fd823f53b8643b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westus",
+        "properties": {
+          "autoStorage": {
+            "storageAccountId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Storage/storageAccounts/azstorageforbatch4176"
+          }
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Thu, 01 Dec 2022 03:05:18 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account6574/operationResults/2f7510ca-4578-4eb1-b657-7d48fb85d6ee?api-version=2022-10-01",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "15634153-0bc3-4944-be85-2087a19ff54e",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "2f7510ca-4578-4eb1-b657-7d48fb85d6ee",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221201T030519Z:15634153-0bc3-4944-be85-2087a19ff54e"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account6574/operationResults/2f7510ca-4578-4eb1-b657-7d48fb85d6ee?api-version=2022-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f173bfc34c879e4bac0e6b52ff3c8a8e-ba46021e30af8348-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "63d7599aeffec9fff8895b1350a6620d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Thu, 01 Dec 2022 03:05:19 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account6574/operationResults/2f7510ca-4578-4eb1-b657-7d48fb85d6ee?api-version=2022-10-01",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "29a120e0-9520-4463-ac79-41e939d9e9c0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "68e8d585-7839-4c39-9418-b810c2d8364e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221201T030520Z:29a120e0-9520-4463-ac79-41e939d9e9c0"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account6574/operationResults/2f7510ca-4578-4eb1-b657-7d48fb85d6ee?api-version=2022-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f173bfc34c879e4bac0e6b52ff3c8a8e-04f43374f92eb14f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "844f11d57ca056ffd85d385f24032c01",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "3731",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 Dec 2022 03:05:35 GMT",
+        "ETag": "\u00220x8DAD348EAAFF993\u0022",
+        "Expires": "-1",
+        "Last-Modified": "Thu, 01 Dec 2022 03:05:35 GMT",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6adcf05a-922d-41d0-8b5e-1200979c79ec",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "c044e45a-ac13-4ab5-8cf6-67128a065f94",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221201T030535Z:6adcf05a-922d-41d0-8b5e-1200979c79ec"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account6574",
+        "name": "account6574",
+        "type": "Microsoft.Batch/batchAccounts",
+        "location": "westus",
+        "properties": {
+          "accountEndpoint": "account6574.westus.batch.azure.com",
+          "nodeManagementEndpoint": "3db00bca-5f56-492a-b015-a12f7f086c1c.westus.service.batch.azure.com",
+          "provisioningState": "Succeeded",
+          "dedicatedCoreQuota": 0,
+          "dedicatedCoreQuotaPerVMFamily": [
+            {
+              "name": "standardAv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDSv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardESv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardA0_A7Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardA8_A11Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardGFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "basicAFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVPromoFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCPromoFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHPromoFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardMSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardGSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardLSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardLSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNDSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCSv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHBSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHCSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVSv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHBrsv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDAv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDASv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEAv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEASv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardMSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEIv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "Standard NCASv3_T4 Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardXEIDSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "Standard NDASv4_A100 Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDCSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHBv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNPSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFXMDVSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCADSA100v4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDADSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEADSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "StandardNVADSA10v5Family",
+              "coreQuota": 0
+            }
+          ],
+          "dedicatedCoreQuotaPerVMFamilyEnforced": true,
+          "lowPriorityCoreQuota": 0,
+          "poolQuota": 100,
+          "activeJobAndJobScheduleQuota": 300,
+          "autoStorage": {
+            "storageAccountId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Storage/storageAccounts/azstorageforbatch4176",
+            "lastKeySync": "2022-12-01T03:05:19.4569878Z",
+            "authenticationMode": "StorageKeys"
+          },
+          "poolAllocationMode": "BatchService",
+          "publicNetworkAccess": "Enabled",
+          "privateEndpointConnections": [],
+          "encryption": {
+            "keySource": "Microsoft.Batch"
+          },
+          "allowedAuthenticationModes": [
+            "SharedKey",
+            "AAD",
+            "TaskAuthenticationToken"
+          ]
+        },
+        "identity": {
+          "type": "None"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account4756?api-version=2022-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "223",
+        "Content-Type": "application/json",
+        "traceparent": "00-2dd7f006c9b7234e851b12eaebee1c9e-75892e24dbe10e41-00",
+        "User-Agent": "azsdk-net-ResourceManager.Batch/1.2.0-alpha.20221201.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "faa492a701e1673d707197d9733e8d72",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westus",
+        "properties": {
+          "autoStorage": {
+            "storageAccountId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Storage/storageAccounts/azstorageforbatch4176"
+          }
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Thu, 01 Dec 2022 03:05:38 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account4756/operationResults/c4f55abd-a0ce-47b1-b817-806144b12bd7?api-version=2022-10-01",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ee16fbc6-e74e-4c06-90ef-7fc6bcbebbd4",
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "c4f55abd-a0ce-47b1-b817-806144b12bd7",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221201T030538Z:ee16fbc6-e74e-4c06-90ef-7fc6bcbebbd4"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account4756/operationResults/c4f55abd-a0ce-47b1-b817-806144b12bd7?api-version=2022-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2dd7f006c9b7234e851b12eaebee1c9e-939bde3a6b764a4c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "bd6b5a5c6701d32cd4e7132fe425e299",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Thu, 01 Dec 2022 03:05:38 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account4756/operationResults/c4f55abd-a0ce-47b1-b817-806144b12bd7?api-version=2022-10-01",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b41699e7-52fa-4514-9c62-d26043362428",
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "96a584e9-ce62-44ac-8a14-bdb3d516aa69",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221201T030538Z:b41699e7-52fa-4514-9c62-d26043362428"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account4756/operationResults/c4f55abd-a0ce-47b1-b817-806144b12bd7?api-version=2022-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2dd7f006c9b7234e851b12eaebee1c9e-4f79e0c890a31f48-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "2bb8c6cf7379d55a4386a15f769bb0d0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "3731",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 Dec 2022 03:05:53 GMT",
+        "ETag": "\u00220x8DAD348F5D92611\u0022",
+        "Expires": "-1",
+        "Last-Modified": "Thu, 01 Dec 2022 03:05:54 GMT",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "04c5dcb9-2e51-4f41-ac6e-cc37b5df4589",
+        "x-ms-ratelimit-remaining-subscription-reads": "11990",
+        "x-ms-request-id": "9aefa650-a2fd-43e2-86b5-a4394338382e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221201T030554Z:04c5dcb9-2e51-4f41-ac6e-cc37b5df4589"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account4756",
+        "name": "account4756",
+        "type": "Microsoft.Batch/batchAccounts",
+        "location": "westus",
+        "properties": {
+          "accountEndpoint": "account4756.westus.batch.azure.com",
+          "nodeManagementEndpoint": "b247ac41-d2c2-49a3-bce2-651e51dab652.westus.service.batch.azure.com",
+          "provisioningState": "Succeeded",
+          "dedicatedCoreQuota": 0,
+          "dedicatedCoreQuotaPerVMFamily": [
+            {
+              "name": "standardAv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDSv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardESv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardA0_A7Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardA8_A11Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardGFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "basicAFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVPromoFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCPromoFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHPromoFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardMSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardGSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardLSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardLSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNDSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCSv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHBSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHCSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVSv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHBrsv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDAv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDASv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEAv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEASv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardMSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEIv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "Standard NCASv3_T4 Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardXEIDSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "Standard NDASv4_A100 Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDCSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHBv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNPSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFXMDVSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCADSA100v4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDADSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEADSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "StandardNVADSA10v5Family",
+              "coreQuota": 0
+            }
+          ],
+          "dedicatedCoreQuotaPerVMFamilyEnforced": true,
+          "lowPriorityCoreQuota": 0,
+          "poolQuota": 100,
+          "activeJobAndJobScheduleQuota": 300,
+          "autoStorage": {
+            "storageAccountId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Storage/storageAccounts/azstorageforbatch4176",
+            "lastKeySync": "2022-12-01T03:05:38.2001685Z",
+            "authenticationMode": "StorageKeys"
+          },
+          "poolAllocationMode": "BatchService",
+          "publicNetworkAccess": "Enabled",
+          "privateEndpointConnections": [],
+          "encryption": {
+            "keySource": "Microsoft.Batch"
+          },
+          "allowedAuthenticationModes": [
+            "SharedKey",
+            "AAD",
+            "TaskAuthenticationToken"
+          ]
+        },
+        "identity": {
+          "type": "None"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts?api-version=2022-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-bb3165950a566940a25367ad58b71393-addde79399b6404f-00",
+        "User-Agent": "azsdk-net-ResourceManager.Batch/1.2.0-alpha.20221201.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "197da2cbd0d23f70ccb6e4bfbe1f3933",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "11207",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 Dec 2022 03:05:54 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "697f164a-3a4f-4716-b276-45e24151202a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11989",
+        "x-ms-request-id": "290049b1-55c8-4310-9e80-282e6bbcc82b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221201T030554Z:697f164a-3a4f-4716-b276-45e24151202a"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account4756",
+            "name": "account4756",
+            "type": "Microsoft.Batch/batchAccounts",
+            "location": "westus",
+            "properties": {
+              "accountEndpoint": "account4756.westus.batch.azure.com",
+              "nodeManagementEndpoint": "b247ac41-d2c2-49a3-bce2-651e51dab652.westus.service.batch.azure.com",
+              "provisioningState": "Succeeded",
+              "dedicatedCoreQuota": 0,
+              "dedicatedCoreQuotaPerVMFamily": [
+                {
+                  "name": "standardAv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDSv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDSv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardESv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardFSv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNCFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNVFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDDv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDDSv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEDv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEDSv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardA0_A7Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardA8_A11Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardGFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "basicAFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardFFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNVPromoFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNCPromoFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardHFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardHPromoFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardMSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardFSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardGSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardLSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardLSv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNCSv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNDSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNCSv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardHBSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardHCSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNVSv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardHBrsv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDAv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDASv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEAv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEASv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardMSv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEIv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNVSv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "Standard NCASv3_T4 Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardXEIDSv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "Standard NDASv4_A100 Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDCSv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardHBv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNPSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardFXMDVSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDDv5Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDDSv5Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEDv5Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEDSv5Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNCADSA100v4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDADSv5Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEADSv5Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "StandardNVADSA10v5Family",
+                  "coreQuota": 0
+                }
+              ],
+              "dedicatedCoreQuotaPerVMFamilyEnforced": true,
+              "lowPriorityCoreQuota": 0,
+              "poolQuota": 100,
+              "activeJobAndJobScheduleQuota": 300,
+              "autoStorage": {
+                "storageAccountId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Storage/storageAccounts/azstorageforbatch4176",
+                "lastKeySync": "2022-12-01T03:05:38.2001685Z",
+                "authenticationMode": "StorageKeys"
+              },
+              "poolAllocationMode": "BatchService",
+              "publicNetworkAccess": "Enabled",
+              "privateEndpointConnections": [],
+              "encryption": {
+                "keySource": "Microsoft.Batch"
+              },
+              "allowedAuthenticationModes": [
+                "SharedKey",
+                "AAD",
+                "TaskAuthenticationToken"
+              ]
+            },
+            "identity": {
+              "type": "None"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account6574",
+            "name": "account6574",
+            "type": "Microsoft.Batch/batchAccounts",
+            "location": "westus",
+            "properties": {
+              "accountEndpoint": "account6574.westus.batch.azure.com",
+              "nodeManagementEndpoint": "3db00bca-5f56-492a-b015-a12f7f086c1c.westus.service.batch.azure.com",
+              "provisioningState": "Succeeded",
+              "dedicatedCoreQuota": 0,
+              "dedicatedCoreQuotaPerVMFamily": [
+                {
+                  "name": "standardAv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDSv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDSv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardESv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardFSv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNCFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNVFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDDv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDDSv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEDv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEDSv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardA0_A7Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardA8_A11Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardGFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "basicAFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardFFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNVPromoFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNCPromoFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardHFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardHPromoFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardMSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardFSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardGSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardLSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardLSv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNCSv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNDSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNCSv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardHBSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardHCSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNVSv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardHBrsv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDAv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDASv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEAv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEASv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardMSv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEIv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNVSv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "Standard NCASv3_T4 Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardXEIDSv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "Standard NDASv4_A100 Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDCSv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardHBv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNPSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardFXMDVSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDDv5Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDDSv5Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEDv5Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEDSv5Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNCADSA100v4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDADSv5Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEADSv5Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "StandardNVADSA10v5Family",
+                  "coreQuota": 0
+                }
+              ],
+              "dedicatedCoreQuotaPerVMFamilyEnforced": true,
+              "lowPriorityCoreQuota": 0,
+              "poolQuota": 100,
+              "activeJobAndJobScheduleQuota": 300,
+              "autoStorage": {
+                "storageAccountId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Storage/storageAccounts/azstorageforbatch4176",
+                "lastKeySync": "2022-12-01T03:05:19.4569878Z",
+                "authenticationMode": "StorageKeys"
+              },
+              "poolAllocationMode": "BatchService",
+              "publicNetworkAccess": "Enabled",
+              "privateEndpointConnections": [],
+              "encryption": {
+                "keySource": "Microsoft.Batch"
+              },
+              "allowedAuthenticationModes": [
+                "SharedKey",
+                "AAD",
+                "TaskAuthenticationToken"
+              ]
+            },
+            "identity": {
+              "type": "None"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account7056",
+            "name": "account7056",
+            "type": "Microsoft.Batch/batchAccounts",
+            "location": "westus",
+            "properties": {
+              "accountEndpoint": "account7056.westus.batch.azure.com",
+              "nodeManagementEndpoint": "6e50955d-6849-4bf6-9c38-011a54155e40.westus.service.batch.azure.com",
+              "provisioningState": "Succeeded",
+              "dedicatedCoreQuota": 0,
+              "dedicatedCoreQuotaPerVMFamily": [
+                {
+                  "name": "standardAv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDSv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDSv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardESv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardFSv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNCFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNVFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDDv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDDSv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEDv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEDSv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardA0_A7Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardA8_A11Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardGFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "basicAFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardFFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNVPromoFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNCPromoFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardHFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardHPromoFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardMSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardFSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardGSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardLSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardLSv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNCSv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNDSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNCSv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardHBSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardHCSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNVSv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardHBrsv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDAv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDASv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEAv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEASv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardMSv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEIv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNVSv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "Standard NCASv3_T4 Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardXEIDSv4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "Standard NDASv4_A100 Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDCSv2Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardHBv3Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNPSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardFXMDVSFamily",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDDv5Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDDSv5Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEDv5Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEDSv5Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardNCADSA100v4Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardDADSv5Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "standardEADSv5Family",
+                  "coreQuota": 0
+                },
+                {
+                  "name": "StandardNVADSA10v5Family",
+                  "coreQuota": 0
+                }
+              ],
+              "dedicatedCoreQuotaPerVMFamilyEnforced": true,
+              "lowPriorityCoreQuota": 0,
+              "poolQuota": 100,
+              "activeJobAndJobScheduleQuota": 300,
+              "autoStorage": {
+                "storageAccountId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Storage/storageAccounts/azstorageforbatch4176",
+                "lastKeySync": "2022-12-01T03:05:15.8957053Z",
+                "authenticationMode": "StorageKeys"
+              },
+              "poolAllocationMode": "BatchService",
+              "publicNetworkAccess": "Enabled",
+              "privateEndpointConnections": [],
+              "encryption": {
+                "keySource": "Microsoft.Batch"
+              },
+              "allowedAuthenticationModes": [
+                "SharedKey",
+                "AAD",
+                "TaskAuthenticationToken"
+              ]
+            },
+            "identity": {
+              "type": "None"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account7056?api-version=2022-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-8380e73706dfd340a6d393ab3e5a13cc-7ab2792e9612f44f-00",
+        "User-Agent": "azsdk-net-ResourceManager.Batch/1.2.0-alpha.20221201.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "f0d1f19f79e7e87b0095797ac6cc5d38",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "3731",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 Dec 2022 03:05:54 GMT",
+        "ETag": "\u00220x8DAD348DF02D3FD\u0022",
+        "Expires": "-1",
+        "Last-Modified": "Thu, 01 Dec 2022 03:05:15 GMT",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "8fce7792-62f4-485e-b6d2-53443ec8f0f9",
+        "x-ms-ratelimit-remaining-subscription-reads": "11988",
+        "x-ms-request-id": "32d2b7c2-502a-4fac-a702-441dd64b208e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221201T030555Z:8fce7792-62f4-485e-b6d2-53443ec8f0f9"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account7056",
+        "name": "account7056",
+        "type": "Microsoft.Batch/batchAccounts",
+        "location": "westus",
+        "properties": {
+          "accountEndpoint": "account7056.westus.batch.azure.com",
+          "nodeManagementEndpoint": "6e50955d-6849-4bf6-9c38-011a54155e40.westus.service.batch.azure.com",
+          "provisioningState": "Succeeded",
+          "dedicatedCoreQuota": 0,
+          "dedicatedCoreQuotaPerVMFamily": [
+            {
+              "name": "standardAv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDSv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardESv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardA0_A7Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardA8_A11Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardGFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "basicAFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVPromoFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCPromoFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHPromoFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardMSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardGSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardLSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardLSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNDSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCSv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHBSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHCSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVSv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHBrsv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDAv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDASv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEAv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEASv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardMSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEIv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNVSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "Standard NCASv3_T4 Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardXEIDSv4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "Standard NDASv4_A100 Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDCSv2Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardHBv3Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNPSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardFXMDVSFamily",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDDSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEDSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardNCADSA100v4Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardDADSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "standardEADSv5Family",
+              "coreQuota": 0
+            },
+            {
+              "name": "StandardNVADSA10v5Family",
+              "coreQuota": 0
+            }
+          ],
+          "dedicatedCoreQuotaPerVMFamilyEnforced": true,
+          "lowPriorityCoreQuota": 0,
+          "poolQuota": 100,
+          "activeJobAndJobScheduleQuota": 300,
+          "autoStorage": {
+            "storageAccountId": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Storage/storageAccounts/azstorageforbatch4176",
+            "lastKeySync": "2022-12-01T03:05:15.8957053Z",
+            "authenticationMode": "StorageKeys"
+          },
+          "poolAllocationMode": "BatchService",
+          "publicNetworkAccess": "Enabled",
+          "privateEndpointConnections": [],
+          "encryption": {
+            "keySource": "Microsoft.Batch"
+          },
+          "allowedAuthenticationModes": [
+            "SharedKey",
+            "AAD",
+            "TaskAuthenticationToken"
+          ]
+        },
+        "identity": {
+          "type": "None"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testrg-batch2880/providers/Microsoft.Batch/batchAccounts/account70561?api-version=2022-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-215f973c11641a4b870dd99dcd205f3f-a02877eb23acd24f-00",
+        "User-Agent": "azsdk-net-ResourceManager.Batch/1.2.0-alpha.20221201.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "42634237c8a8ffc755795fc28e9a1724",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "230",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 01 Dec 2022 03:05:54 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5a697600-ead6-4aef-897c-36b43b802e54",
+        "x-ms-failure-cause": "gateway",
+        "x-ms-request-id": "5a697600-ead6-4aef-897c-36b43b802e54",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221201T030555Z:5a697600-ead6-4aef-897c-36b43b802e54"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ResourceNotFound",
+          "message": "The Resource \u0027Microsoft.Batch/batchAccounts/account70561\u0027 under resource group \u0027testrg-batch2880\u0027 was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1602239758",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

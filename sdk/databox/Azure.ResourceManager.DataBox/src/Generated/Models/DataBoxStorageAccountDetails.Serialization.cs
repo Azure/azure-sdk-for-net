@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("storageAccountId");
+            writer.WritePropertyName("storageAccountId"u8);
             writer.WriteStringValue(StorageAccountId);
-            writer.WritePropertyName("dataAccountType");
+            writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
             if (Optional.IsDefined(SharePassword))
             {
-                writer.WritePropertyName("sharePassword");
+                writer.WritePropertyName("sharePassword"u8);
                 writer.WriteStringValue(SharePassword);
             }
             writer.WriteEndObject();
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> sharePassword = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageAccountId"))
+                if (property.NameEquals("storageAccountId"u8))
                 {
                     storageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dataAccountType"))
+                if (property.NameEquals("dataAccountType"u8))
                 {
                     dataAccountType = property.Value.GetString().ToDataAccountType();
                     continue;
                 }
-                if (property.NameEquals("sharePassword"))
+                if (property.NameEquals("sharePassword"u8))
                 {
                     sharePassword = property.Value.GetString();
                     continue;

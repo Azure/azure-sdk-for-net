@@ -36,9 +36,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="rootFolder">Root folder.</param>
         /// <param name="projectName">VSTS project name.</param>
         /// <param name="lastCommitId">Last commit id.</param>
+        /// <param name="disablePublish">Disable manual publish operation in
+        /// ADF studio to favor automated publish.</param>
         /// <param name="tenantId">VSTS tenant id.</param>
-        public FactoryVSTSConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder, string projectName, string lastCommitId = default(string), string tenantId = default(string))
-            : base(accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId)
+        public FactoryVSTSConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder, string projectName, string lastCommitId = default(string), bool? disablePublish = default(bool?), string tenantId = default(string))
+            : base(accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId, disablePublish)
         {
             ProjectName = projectName;
             TenantId = tenantId;

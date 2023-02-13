@@ -45,8 +45,16 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary>
         /// Check the availability of a Front Door resource name.
-        /// Request Path: /providers/Microsoft.Network/checkFrontDoorNameAvailability
-        /// Operation Id: FrontDoorNameAvailability_Check
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Network/checkFrontDoorNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorNameAvailability_Check</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -68,8 +76,16 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary>
         /// Check the availability of a Front Door resource name.
-        /// Request Path: /providers/Microsoft.Network/checkFrontDoorNameAvailability
-        /// Operation Id: FrontDoorNameAvailability_Check
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Network/checkFrontDoorNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorNameAvailability_Check</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

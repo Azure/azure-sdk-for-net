@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -17,10 +16,10 @@ namespace Azure.ResourceManager.Automation.Models
         internal static SoftwareUpdateConfigurationMachineRun DeserializeSoftwareUpdateConfigurationMachineRun(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<string> targetComputer = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<ResourceIdentifier> targetComputer = default;
             Optional<string> targetComputerType = default;
-            Optional<UpdateConfigurationNavigation> softwareUpdateConfiguration = default;
+            Optional<SoftwareUpdateConfigurationNavigation> softwareUpdateConfiguration = default;
             Optional<string> status = default;
             Optional<string> osType = default;
             Optional<Guid> correlationId = default;
@@ -28,25 +27,30 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset?> endTime = default;
             Optional<TimeSpan> configuredDuration = default;
-            Optional<SubResource> job = default;
+            Optional<JobNavigation> job = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<string> createdBy = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<string> lastModifiedBy = default;
-            Optional<ErrorResponse> error = default;
+            Optional<AutomationResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,37 +59,42 @@ namespace Azure.ResourceManager.Automation.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("targetComputer"))
-                        {
-                            targetComputer = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("targetComputerType"))
-                        {
-                            targetComputerType = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("softwareUpdateConfiguration"))
+                        if (property0.NameEquals("targetComputer"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            softwareUpdateConfiguration = UpdateConfigurationNavigation.DeserializeUpdateConfigurationNavigation(property0.Value);
+                            targetComputer = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("targetComputerType"u8))
+                        {
+                            targetComputerType = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("softwareUpdateConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            softwareUpdateConfiguration = SoftwareUpdateConfigurationNavigation.DeserializeSoftwareUpdateConfigurationNavigation(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("status"u8))
                         {
                             status = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("osType"))
+                        if (property0.NameEquals("osType"u8))
                         {
                             osType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("correlationId"))
+                        if (property0.NameEquals("correlationId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -95,7 +104,7 @@ namespace Azure.ResourceManager.Automation.Models
                             correlationId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("sourceComputerId"))
+                        if (property0.NameEquals("sourceComputerId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -105,7 +114,7 @@ namespace Azure.ResourceManager.Automation.Models
                             sourceComputerId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("startTime"))
+                        if (property0.NameEquals("startTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -115,7 +124,7 @@ namespace Azure.ResourceManager.Automation.Models
                             startTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("endTime"))
+                        if (property0.NameEquals("endTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -125,7 +134,7 @@ namespace Azure.ResourceManager.Automation.Models
                             endTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("configuredDuration"))
+                        if (property0.NameEquals("configuredDuration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -135,17 +144,17 @@ namespace Azure.ResourceManager.Automation.Models
                             configuredDuration = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("job"))
+                        if (property0.NameEquals("job"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            job = JsonSerializer.Deserialize<SubResource>(property0.Value.ToString());
+                            job = JobNavigation.DeserializeJobNavigation(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("creationTime"))
+                        if (property0.NameEquals("creationTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -155,12 +164,12 @@ namespace Azure.ResourceManager.Automation.Models
                             creationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("createdBy"))
+                        if (property0.NameEquals("createdBy"u8))
                         {
                             createdBy = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastModifiedTime"))
+                        if (property0.NameEquals("lastModifiedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -170,26 +179,26 @@ namespace Azure.ResourceManager.Automation.Models
                             lastModifiedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastModifiedBy"))
+                        if (property0.NameEquals("lastModifiedBy"u8))
                         {
                             lastModifiedBy = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("error"))
+                        if (property0.NameEquals("error"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            error = ErrorResponse.DeserializeErrorResponse(property0.Value);
+                            error = AutomationResponseError.DeserializeAutomationResponseError(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SoftwareUpdateConfigurationMachineRun(name.Value, id.Value, targetComputer.Value, targetComputerType.Value, softwareUpdateConfiguration.Value, status.Value, osType.Value, Optional.ToNullable(correlationId), Optional.ToNullable(sourceComputerId), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(configuredDuration), job, Optional.ToNullable(creationTime), createdBy.Value, Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, error.Value);
+            return new SoftwareUpdateConfigurationMachineRun(name.Value, id.Value, targetComputer.Value, targetComputerType.Value, softwareUpdateConfiguration.Value, status.Value, osType.Value, Optional.ToNullable(correlationId), Optional.ToNullable(sourceComputerId), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(configuredDuration), job.Value, Optional.ToNullable(creationTime), createdBy.Value, Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, error.Value);
         }
     }
 }

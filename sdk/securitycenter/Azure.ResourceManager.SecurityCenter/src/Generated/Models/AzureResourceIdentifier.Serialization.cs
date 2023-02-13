@@ -14,16 +14,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static AzureResourceIdentifier DeserializeAzureResourceIdentifier(JsonElement element)
         {
-            Optional<string> azureResourceId = default;
+            Optional<ResourceIdentifier> azureResourceId = default;
             ResourceIdentifierType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("azureResourceId"))
+                if (property.NameEquals("azureResourceId"u8))
                 {
-                    azureResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    azureResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceIdentifierType(property.Value.GetString());
                     continue;

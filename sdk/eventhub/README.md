@@ -34,4 +34,4 @@ Use the following library to work with the Azure Event Hubs resource provider:
 
 | Nuget Package | Reference |
 |--------------------------------------|---------------------------------------------------------------|
-| [Azure.ResourceManager.EventHubs](https://www.nuget.org/packages/Azure.ResourceManager.EventHubs)  | [API Reference for Azure.ResourceManager.EventHubs](https://docs.microsoft.com/dotnet/api/overview/azure/eventhubs/management?view=azure-dotnet)  |
+| [Azure.ResourceManager.EventHubs](https://www.nuget.org/packages/Azure.ResourceManager.EventHubs)  | [API Reference for Azure.ResourceManager.EventHubs](https://learn.microsoft.com/dotnet/api/overview/azure/resourcemanager.eventhubs-readme?view=azure-dotnet)  |

@@ -52,32 +52,32 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetCachedClient(Client => new DeviceSecurityGroupCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ComplianceResources in the ArmResource. </summary>
-        /// <returns> An object representing collection of ComplianceResources and their operations over a ComplianceResource. </returns>
-        public virtual ComplianceCollection GetCompliances()
+        /// <summary> Gets a collection of SecurityComplianceResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of SecurityComplianceResources and their operations over a SecurityComplianceResource. </returns>
+        public virtual SecurityComplianceCollection GetSecurityCompliances()
         {
-            return GetCachedClient(Client => new ComplianceCollection(Client, Id));
+            return GetCachedClient(Client => new SecurityComplianceCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of SecurityAssessmentResponseResources in the ArmResource. </summary>
-        /// <returns> An object representing collection of SecurityAssessmentResponseResources and their operations over a SecurityAssessmentResponseResource. </returns>
-        public virtual SecurityAssessmentResponseCollection GetSecurityAssessmentResponses()
+        /// <summary> Gets a collection of SecurityAssessmentResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of SecurityAssessmentResources and their operations over a SecurityAssessmentResource. </returns>
+        public virtual SecurityAssessmentCollection GetSecurityAssessments()
         {
-            return GetCachedClient(Client => new SecurityAssessmentResponseCollection(Client, Id));
+            return GetCachedClient(Client => new SecurityAssessmentCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ScanResources in the ArmResource. </summary>
-        /// <returns> An object representing collection of ScanResources and their operations over a ScanResource. </returns>
-        public virtual ScanCollection GetScans()
+        /// <summary> Gets a collection of SqlVulnerabilityAssessmentScanResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of SqlVulnerabilityAssessmentScanResources and their operations over a SqlVulnerabilityAssessmentScanResource. </returns>
+        public virtual SqlVulnerabilityAssessmentScanCollection GetSqlVulnerabilityAssessmentScans()
         {
-            return GetCachedClient(Client => new ScanCollection(Client, Id));
+            return GetCachedClient(Client => new SqlVulnerabilityAssessmentScanCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of RuleResultResources in the ArmResource. </summary>
-        /// <returns> An object representing collection of RuleResultResources and their operations over a RuleResultResource. </returns>
-        public virtual RuleResultCollection GetRuleResults()
+        /// <summary> Gets a collection of SqlVulnerabilityAssessmentBaselineRuleResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of SqlVulnerabilityAssessmentBaselineRuleResources and their operations over a SqlVulnerabilityAssessmentBaselineRuleResource. </returns>
+        public virtual SqlVulnerabilityAssessmentBaselineRuleCollection GetSqlVulnerabilityAssessmentBaselineRules()
         {
-            return GetCachedClient(Client => new RuleResultCollection(Client, Id));
+            return GetCachedClient(Client => new SqlVulnerabilityAssessmentBaselineRuleCollection(Client, Id));
         }
     }
 }

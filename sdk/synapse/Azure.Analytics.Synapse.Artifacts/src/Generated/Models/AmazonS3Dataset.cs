@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="bucketName"/> is null. </exception>
         public AmazonS3Dataset(LinkedServiceReference linkedServiceName, object bucketName) : base(linkedServiceName)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (bucketName == null)
-            {
-                throw new ArgumentNullException(nameof(bucketName));
-            }
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(bucketName, nameof(bucketName));
 
             BucketName = bucketName;
             Type = "AmazonS3Object";
@@ -48,7 +43,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="version"> The version for the S3 object. Type: string (or Expression with resultType string). </param>
         /// <param name="modifiedDatetimeStart"> The start of S3 object&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
         /// <param name="modifiedDatetimeEnd"> The end of S3 object&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
-        /// <param name="format"> The format of files. </param>
+        /// <param name="format">
+        /// The format of files.
+        /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AvroFormat"/>, <see cref="JsonFormat"/>, <see cref="OrcFormat"/>, <see cref="ParquetFormat"/> and <see cref="TextFormat"/>.
+        /// </param>
         /// <param name="compression"> The data compression method used for the Amazon S3 object. </param>
         internal AmazonS3Dataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, object bucketName, object key, object prefix, object version, object modifiedDatetimeStart, object modifiedDatetimeEnd, DatasetStorageFormat format, DatasetCompression compression) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
@@ -75,7 +74,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object ModifiedDatetimeStart { get; set; }
         /// <summary> The end of S3 object&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
         public object ModifiedDatetimeEnd { get; set; }
-        /// <summary> The format of files. </summary>
+        /// <summary>
+        /// The format of files.
+        /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AvroFormat"/>, <see cref="JsonFormat"/>, <see cref="OrcFormat"/>, <see cref="ParquetFormat"/> and <see cref="TextFormat"/>.
+        /// </summary>
         public DatasetStorageFormat Format { get; set; }
         /// <summary> The data compression method used for the Amazon S3 object. </summary>
         public DatasetCompression Compression { get; set; }

@@ -28,18 +28,26 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             );
         }
 
-        /// <summary> Gets a collection of OfferTypePublisherOfferPlanAgreementResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of MarketplaceAgreementTermResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of OfferTypePublisherOfferPlanAgreementResources and their operations over a OfferTypePublisherOfferPlanAgreementResource. </returns>
-        public static OfferTypePublisherOfferPlanAgreementCollection GetOfferTypePublisherOfferPlanAgreements(this SubscriptionResource subscriptionResource)
+        /// <returns> An object representing collection of MarketplaceAgreementTermResources and their operations over a MarketplaceAgreementTermResource. </returns>
+        public static MarketplaceAgreementTermCollection GetMarketplaceAgreementTerms(this SubscriptionResource subscriptionResource)
         {
-            return GetExtensionClient(subscriptionResource).GetOfferTypePublisherOfferPlanAgreements();
+            return GetExtensionClient(subscriptionResource).GetMarketplaceAgreementTerms();
         }
 
         /// <summary>
         /// Get marketplace terms.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MarketplaceOrdering/offerTypes/{offerType}/publishers/{publisherId}/offers/{offerId}/plans/{planId}/agreements/current
-        /// Operation Id: MarketplaceAgreements_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MarketplaceOrdering/offerTypes/{offerType}/publishers/{publisherId}/offers/{offerId}/plans/{planId}/agreements/current</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceAgreements_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="offerType"> Offer Type, currently only virtualmachine type is supported. </param>
@@ -50,15 +58,23 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <exception cref="ArgumentException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<OfferTypePublisherOfferPlanAgreementResource>> GetOfferTypePublisherOfferPlanAgreementAsync(this SubscriptionResource subscriptionResource, OfferType offerType, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
+        public static async Task<Response<MarketplaceAgreementTermResource>> GetMarketplaceAgreementTermAsync(this SubscriptionResource subscriptionResource, AgreementOfferType offerType, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetOfferTypePublisherOfferPlanAgreements().GetAsync(offerType, publisherId, offerId, planId, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetMarketplaceAgreementTerms().GetAsync(offerType, publisherId, offerId, planId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get marketplace terms.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MarketplaceOrdering/offerTypes/{offerType}/publishers/{publisherId}/offers/{offerId}/plans/{planId}/agreements/current
-        /// Operation Id: MarketplaceAgreements_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MarketplaceOrdering/offerTypes/{offerType}/publishers/{publisherId}/offers/{offerId}/plans/{planId}/agreements/current</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceAgreements_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="offerType"> Offer Type, currently only virtualmachine type is supported. </param>
@@ -69,23 +85,31 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <exception cref="ArgumentException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<OfferTypePublisherOfferPlanAgreementResource> GetOfferTypePublisherOfferPlanAgreement(this SubscriptionResource subscriptionResource, OfferType offerType, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
+        public static Response<MarketplaceAgreementTermResource> GetMarketplaceAgreementTerm(this SubscriptionResource subscriptionResource, AgreementOfferType offerType, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetOfferTypePublisherOfferPlanAgreements().Get(offerType, publisherId, offerId, planId, cancellationToken);
+            return subscriptionResource.GetMarketplaceAgreementTerms().Get(offerType, publisherId, offerId, planId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AgreementOfferPlanResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of MarketplaceAgreementResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of AgreementOfferPlanResources and their operations over a AgreementOfferPlanResource. </returns>
-        public static AgreementOfferPlanCollection GetAgreementOfferPlans(this SubscriptionResource subscriptionResource)
+        /// <returns> An object representing collection of MarketplaceAgreementResources and their operations over a MarketplaceAgreementResource. </returns>
+        public static MarketplaceAgreementCollection GetMarketplaceAgreements(this SubscriptionResource subscriptionResource)
         {
-            return GetExtensionClient(subscriptionResource).GetAgreementOfferPlans();
+            return GetExtensionClient(subscriptionResource).GetMarketplaceAgreements();
         }
 
         /// <summary>
         /// Get marketplace agreement.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MarketplaceOrdering/agreements/{publisherId}/offers/{offerId}/plans/{planId}
-        /// Operation Id: MarketplaceAgreements_GetAgreement
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MarketplaceOrdering/agreements/{publisherId}/offers/{offerId}/plans/{planId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceAgreements_GetAgreement</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="publisherId"> Publisher identifier string of image being deployed. </param>
@@ -95,15 +119,23 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <exception cref="ArgumentException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AgreementOfferPlanResource>> GetAgreementOfferPlanAsync(this SubscriptionResource subscriptionResource, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
+        public static async Task<Response<MarketplaceAgreementResource>> GetMarketplaceAgreementAsync(this SubscriptionResource subscriptionResource, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetAgreementOfferPlans().GetAsync(publisherId, offerId, planId, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetMarketplaceAgreements().GetAsync(publisherId, offerId, planId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get marketplace agreement.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MarketplaceOrdering/agreements/{publisherId}/offers/{offerId}/plans/{planId}
-        /// Operation Id: MarketplaceAgreements_GetAgreement
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MarketplaceOrdering/agreements/{publisherId}/offers/{offerId}/plans/{planId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceAgreements_GetAgreement</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="publisherId"> Publisher identifier string of image being deployed. </param>
@@ -113,44 +145,44 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <exception cref="ArgumentException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AgreementOfferPlanResource> GetAgreementOfferPlan(this SubscriptionResource subscriptionResource, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
+        public static Response<MarketplaceAgreementResource> GetMarketplaceAgreement(this SubscriptionResource subscriptionResource, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetAgreementOfferPlans().Get(publisherId, offerId, planId, cancellationToken);
+            return subscriptionResource.GetMarketplaceAgreements().Get(publisherId, offerId, planId, cancellationToken);
         }
 
-        #region OfferTypePublisherOfferPlanAgreementResource
+        #region MarketplaceAgreementTermResource
         /// <summary>
-        /// Gets an object representing an <see cref="OfferTypePublisherOfferPlanAgreementResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OfferTypePublisherOfferPlanAgreementResource.CreateResourceIdentifier" /> to create an <see cref="OfferTypePublisherOfferPlanAgreementResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MarketplaceAgreementTermResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MarketplaceAgreementTermResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceAgreementTermResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OfferTypePublisherOfferPlanAgreementResource" /> object. </returns>
-        public static OfferTypePublisherOfferPlanAgreementResource GetOfferTypePublisherOfferPlanAgreementResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MarketplaceAgreementTermResource" /> object. </returns>
+        public static MarketplaceAgreementTermResource GetMarketplaceAgreementTermResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                OfferTypePublisherOfferPlanAgreementResource.ValidateResourceId(id);
-                return new OfferTypePublisherOfferPlanAgreementResource(client, id);
+                MarketplaceAgreementTermResource.ValidateResourceId(id);
+                return new MarketplaceAgreementTermResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AgreementOfferPlanResource
+        #region MarketplaceAgreementResource
         /// <summary>
-        /// Gets an object representing an <see cref="AgreementOfferPlanResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AgreementOfferPlanResource.CreateResourceIdentifier" /> to create an <see cref="AgreementOfferPlanResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MarketplaceAgreementResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MarketplaceAgreementResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceAgreementResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AgreementOfferPlanResource" /> object. </returns>
-        public static AgreementOfferPlanResource GetAgreementOfferPlanResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MarketplaceAgreementResource" /> object. </returns>
+        public static MarketplaceAgreementResource GetMarketplaceAgreementResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AgreementOfferPlanResource.ValidateResourceId(id);
-                return new AgreementOfferPlanResource(client, id);
+                MarketplaceAgreementResource.ValidateResourceId(id);
+                return new MarketplaceAgreementResource(client, id);
             }
             );
         }

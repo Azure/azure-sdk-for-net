@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<int> numberOfUpdatesInstalled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("percentComplete"))
+                if (property.NameEquals("percentComplete"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     percentComplete = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("numberOfUpdatesToInstall"))
+                if (property.NameEquals("numberOfUpdatesToInstall"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     numberOfUpdatesToInstall = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("numberOfUpdatesInstalled"))
+                if (property.NameEquals("numberOfUpdatesInstalled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

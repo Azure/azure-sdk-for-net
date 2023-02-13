@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-01-preview";
+            _apiVersion = apiVersion ?? "2022-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.SecurityInsights
             return message;
         }
 
-        /// <summary> Gets all watchlist Items. </summary>
+        /// <summary> Get all watchlist Items. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="watchlistAlias"> Watchlist Alias. </param>
+        /// <param name="watchlistAlias"> The watchlist alias. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="watchlistAlias"/> is null. </exception>
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        /// <summary> Gets all watchlist Items. </summary>
+        /// <summary> Get all watchlist Items. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="watchlistAlias"> Watchlist Alias. </param>
+        /// <param name="watchlistAlias"> The watchlist alias. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="watchlistAlias"/> is null. </exception>
@@ -152,16 +152,16 @@ namespace Azure.ResourceManager.SecurityInsights
             return message;
         }
 
-        /// <summary> Gets a watchlist, without its watchlist items. </summary>
+        /// <summary> Get a watchlist item. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="watchlistAlias"> Watchlist Alias. </param>
-        /// <param name="watchlistItemId"> Watchlist Item Id (GUID). </param>
+        /// <param name="watchlistAlias"> The watchlist alias. </param>
+        /// <param name="watchlistItemId"> The watchlist item id (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="watchlistAlias"/> or <paramref name="watchlistItemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="watchlistAlias"/> or <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WatchlistItemData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias, string watchlistItemId, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsWatchlistItemData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias, string watchlistItemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -175,28 +175,28 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        WatchlistItemData value = default;
+                        SecurityInsightsWatchlistItemData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WatchlistItemData.DeserializeWatchlistItemData(document.RootElement);
+                        value = SecurityInsightsWatchlistItemData.DeserializeSecurityInsightsWatchlistItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WatchlistItemData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsWatchlistItemData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Gets a watchlist, without its watchlist items. </summary>
+        /// <summary> Get a watchlist item. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="watchlistAlias"> Watchlist Alias. </param>
-        /// <param name="watchlistItemId"> Watchlist Item Id (GUID). </param>
+        /// <param name="watchlistAlias"> The watchlist alias. </param>
+        /// <param name="watchlistItemId"> The watchlist item id (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="watchlistAlias"/> or <paramref name="watchlistItemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="watchlistAlias"/> or <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WatchlistItemData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias, string watchlistItemId, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsWatchlistItemData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias, string watchlistItemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -210,13 +210,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        WatchlistItemData value = default;
+                        SecurityInsightsWatchlistItemData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WatchlistItemData.DeserializeWatchlistItemData(document.RootElement);
+                        value = SecurityInsightsWatchlistItemData.DeserializeSecurityInsightsWatchlistItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WatchlistItemData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsWatchlistItemData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -250,8 +250,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="watchlistAlias"> Watchlist Alias. </param>
-        /// <param name="watchlistItemId"> Watchlist Item Id (GUID). </param>
+        /// <param name="watchlistAlias"> The watchlist alias. </param>
+        /// <param name="watchlistItemId"> The watchlist item id (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="watchlistAlias"/> or <paramref name="watchlistItemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="watchlistAlias"/> or <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -279,8 +279,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="watchlistAlias"> Watchlist Alias. </param>
-        /// <param name="watchlistItemId"> Watchlist Item Id (GUID). </param>
+        /// <param name="watchlistAlias"> The watchlist alias. </param>
+        /// <param name="watchlistItemId"> The watchlist item id (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="watchlistAlias"/> or <paramref name="watchlistItemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="watchlistAlias"/> or <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias, string watchlistItemId, WatchlistItemData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias, string watchlistItemId, SecurityInsightsWatchlistItemData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -332,17 +332,17 @@ namespace Azure.ResourceManager.SecurityInsights
             return message;
         }
 
-        /// <summary> Creates or updates a watchlist item. </summary>
+        /// <summary> Create or update a watchlist item. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="watchlistAlias"> Watchlist Alias. </param>
-        /// <param name="watchlistItemId"> Watchlist Item Id (GUID). </param>
+        /// <param name="watchlistAlias"> The watchlist alias. </param>
+        /// <param name="watchlistItemId"> The watchlist item id (GUID). </param>
         /// <param name="data"> The watchlist item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="watchlistAlias"/>, <paramref name="watchlistItemId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="watchlistAlias"/> or <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WatchlistItemData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias, string watchlistItemId, WatchlistItemData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsWatchlistItemData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias, string watchlistItemId, SecurityInsightsWatchlistItemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -358,9 +358,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        WatchlistItemData value = default;
+                        SecurityInsightsWatchlistItemData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WatchlistItemData.DeserializeWatchlistItemData(document.RootElement);
+                        value = SecurityInsightsWatchlistItemData.DeserializeSecurityInsightsWatchlistItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -368,17 +368,17 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        /// <summary> Creates or updates a watchlist item. </summary>
+        /// <summary> Create or update a watchlist item. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="watchlistAlias"> Watchlist Alias. </param>
-        /// <param name="watchlistItemId"> Watchlist Item Id (GUID). </param>
+        /// <param name="watchlistAlias"> The watchlist alias. </param>
+        /// <param name="watchlistItemId"> The watchlist item id (GUID). </param>
         /// <param name="data"> The watchlist item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="watchlistAlias"/>, <paramref name="watchlistItemId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="watchlistAlias"/> or <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WatchlistItemData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias, string watchlistItemId, WatchlistItemData data, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsWatchlistItemData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias, string watchlistItemId, SecurityInsightsWatchlistItemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -394,9 +394,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        WatchlistItemData value = default;
+                        SecurityInsightsWatchlistItemData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WatchlistItemData.DeserializeWatchlistItemData(document.RootElement);
+                        value = SecurityInsightsWatchlistItemData.DeserializeSecurityInsightsWatchlistItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -418,12 +418,12 @@ namespace Azure.ResourceManager.SecurityInsights
             return message;
         }
 
-        /// <summary> Gets all watchlist Items. </summary>
+        /// <summary> Get all watchlist Items. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="watchlistAlias"> Watchlist Alias. </param>
+        /// <param name="watchlistAlias"> The watchlist alias. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="watchlistAlias"/> is null. </exception>
@@ -452,12 +452,12 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        /// <summary> Gets all watchlist Items. </summary>
+        /// <summary> Get all watchlist Items. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <param name="watchlistAlias"> Watchlist Alias. </param>
+        /// <param name="watchlistAlias"> The watchlist alias. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="watchlistAlias"/> is null. </exception>

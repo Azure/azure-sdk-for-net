@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ActionGroups))
             {
-                writer.WritePropertyName("actionGroups");
+                writer.WritePropertyName("actionGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in ActionGroups)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<IList<ActivityLogAlertActionGroup>> actionGroups = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("actionGroups"))
+                if (property.NameEquals("actionGroups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

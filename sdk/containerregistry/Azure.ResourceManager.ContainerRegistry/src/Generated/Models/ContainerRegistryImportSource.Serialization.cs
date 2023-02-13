@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId");
+                writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(RegistryUri))
+            if (Optional.IsDefined(RegistryAddress))
             {
-                writer.WritePropertyName("registryUri");
-                writer.WriteStringValue(RegistryUri.AbsoluteUri);
+                writer.WritePropertyName("registryUri"u8);
+                writer.WriteStringValue(RegistryAddress);
             }
             if (Optional.IsDefined(Credentials))
             {
-                writer.WritePropertyName("credentials");
+                writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
-            writer.WritePropertyName("sourceImage");
+            writer.WritePropertyName("sourceImage"u8);
             writer.WriteStringValue(SourceImage);
             writer.WriteEndObject();
         }

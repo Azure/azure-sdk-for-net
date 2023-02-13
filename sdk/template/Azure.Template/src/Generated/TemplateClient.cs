@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Template
 {
-    // Data plane generated client. The Template service client.
+    // Data plane generated client.
     /// <summary> The Template service client. </summary>
     public partial class TemplateClient
     {
@@ -67,42 +67,7 @@ namespace Azure.Template
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSecretAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new TemplateClient("<vaultBaseUrl>", credential);
-        /// 
-        /// Response response = await client.GetSecretAsync("<secretName>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("contentType").ToString());
-        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("kid").ToString());
-        /// Console.WriteLine(result.GetProperty("managed").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission.
-        /// 
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SecretBundle</c>:
-        /// <code>{
-        ///   value: string, # Optional. The secret value.
-        ///   id: string, # Optional. The secret id.
-        ///   contentType: string, # Optional. The content type of the secret.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Application specific metadata in the form of key-value pairs.
-        ///   kid: string, # Optional. If this is a secret backing a KV certificate, then this field specifies the corresponding key backing the KV certificate.
-        ///   managed: boolean, # Optional. True if the secret&apos;s lifetime is managed by key vault. If this is a secret backing a certificate, then managed will be true.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/TemplateClient.xml" path="doc/members/member[@name='GetSecretAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetSecretAsync(string secretName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
@@ -128,42 +93,7 @@ namespace Azure.Template
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSecret with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new TemplateClient("<vaultBaseUrl>", credential);
-        /// 
-        /// Response response = client.GetSecret("<secretName>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("contentType").ToString());
-        /// Console.WriteLine(result.GetProperty("tags").GetProperty("<test>").ToString());
-        /// Console.WriteLine(result.GetProperty("kid").ToString());
-        /// Console.WriteLine(result.GetProperty("managed").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission.
-        /// 
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SecretBundle</c>:
-        /// <code>{
-        ///   value: string, # Optional. The secret value.
-        ///   id: string, # Optional. The secret id.
-        ///   contentType: string, # Optional. The content type of the secret.
-        ///   tags: Dictionary&lt;string, string&gt;, # Optional. Application specific metadata in the form of key-value pairs.
-        ///   kid: string, # Optional. If this is a secret backing a KV certificate, then this field specifies the corresponding key backing the KV certificate.
-        ///   managed: boolean, # Optional. True if the secret&apos;s lifetime is managed by key vault. If this is a secret backing a certificate, then managed will be true.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/TemplateClient.xml" path="doc/members/member[@name='GetSecret(String,RequestContext)']/*" />
         public virtual Response GetSecret(string secretName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));

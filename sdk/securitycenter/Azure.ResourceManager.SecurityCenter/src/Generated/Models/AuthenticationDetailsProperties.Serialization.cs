@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("authenticationType");
+            writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             writer.WriteEndObject();
         }
@@ -27,48 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "awsAssumeRole": return AwAssumeRoleAuthenticationDetailsProperties.DeserializeAwAssumeRoleAuthenticationDetailsProperties(element);
+                    case "awsAssumeRole": return AwsAssumeRoleAuthenticationDetailsProperties.DeserializeAwsAssumeRoleAuthenticationDetailsProperties(element);
                     case "awsCreds": return AwsCredsAuthenticationDetailsProperties.DeserializeAwsCredsAuthenticationDetailsProperties(element);
                     case "gcpCredentials": return GcpCredentialsDetailsProperties.DeserializeGcpCredentialsDetailsProperties(element);
                 }
             }
-            Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
-            Optional<IReadOnlyList<PermissionProperty>> grantedPermissions = default;
-            AuthenticationType authenticationType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("authenticationProvisioningState"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    authenticationProvisioningState = new AuthenticationProvisioningState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("grantedPermissions"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<PermissionProperty> array = new List<PermissionProperty>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(new PermissionProperty(item.GetString()));
-                    }
-                    grantedPermissions = array;
-                    continue;
-                }
-                if (property.NameEquals("authenticationType"))
-                {
-                    authenticationType = new AuthenticationType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownAuthenticationDetailsProperties(Optional.ToNullable(authenticationProvisioningState), Optional.ToList(grantedPermissions), authenticationType);
+            return UnknownAuthenticationDetailsProperties.DeserializeUnknownAuthenticationDetailsProperties(element);
         }
     }
 }

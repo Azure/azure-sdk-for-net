@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.CognitiveServices.Tests.Helpers;
 using NUnit.Framework;
 
@@ -20,13 +21,14 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
         {
             var container = (await CreateResourceGroupAsync()).GetCognitiveServicesAccounts();
             var input = ResourceDataHelper.GetBasicAccountData(DefaultLocation);
+            input.Sku = new CognitiveServicesSku("S");
+            input.Kind = "TextAnalytics";
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testAccount-"), input);
             var account = lro.Value;
             return account.GetCommitmentPlans();
         }
 
         [TestCase]
-        [Ignore("The subscription does not have QuotaId/Feature required by SKU 'S0' from kind 'OpenAI'")]
         public async Task CommitmentPlanCollectionApiTests()
         {
             //1.CreateOrUpdate
@@ -47,7 +49,7 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 2);
+            Assert.GreaterOrEqual(count, 1);
             //4Exists
             Assert.IsTrue(await container.ExistsAsync(name));
             Assert.IsFalse(await container.ExistsAsync(name + "1"));

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("rules");
+            writer.WritePropertyName("rules"u8);
             writer.WriteStartArray();
             foreach (var item in Rules)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("networkSecurityGroups");
+            writer.WritePropertyName("networkSecurityGroups"u8);
             writer.WriteStartArray();
             foreach (var item in NetworkSecurityGroups)
             {

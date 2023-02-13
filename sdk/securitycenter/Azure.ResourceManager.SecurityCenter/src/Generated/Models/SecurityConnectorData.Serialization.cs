@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.SecurityCenter
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             if (Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("etag");
+                writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -41,23 +41,23 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(HierarchyIdentifier))
             {
-                writer.WritePropertyName("hierarchyIdentifier");
+                writer.WritePropertyName("hierarchyIdentifier"u8);
                 writer.WriteStringValue(HierarchyIdentifier);
             }
             if (Optional.IsDefined(EnvironmentName))
             {
-                writer.WritePropertyName("environmentName");
+                writer.WritePropertyName("environmentName"u8);
                 writer.WriteStringValue(EnvironmentName.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Offerings))
             {
-                writer.WritePropertyName("offerings");
+                writer.WritePropertyName("offerings"u8);
                 writer.WriteStartArray();
                 foreach (var item in Offerings)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             if (Optional.IsDefined(EnvironmentData))
             {
-                writer.WritePropertyName("environmentData");
+                writer.WritePropertyName("environmentData"u8);
                 writer.WriteObjectValue(EnvironmentData);
             }
             writer.WriteEndObject();
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<SystemData> systemData = default;
             Optional<string> hierarchyIdentifier = default;
             Optional<DateTimeOffset> hierarchyIdentifierTrialEndDate = default;
-            Optional<CloudName> environmentName = default;
-            Optional<IList<CloudOffering>> offerings = default;
-            Optional<EnvironmentData> environmentData = default;
+            Optional<SecurityCenterCloudName> environmentName = default;
+            Optional<IList<SecurityCenterCloudOffering>> offerings = default;
+            Optional<SecurityConnectorEnvironment> environmentData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -121,37 +121,37 @@ namespace Azure.ResourceManager.SecurityCenter
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -160,12 +160,12 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("hierarchyIdentifier"))
+                        if (property0.NameEquals("hierarchyIdentifier"u8))
                         {
                             hierarchyIdentifier = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("hierarchyIdentifierTrialEndDate"))
+                        if (property0.NameEquals("hierarchyIdentifierTrialEndDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -175,39 +175,39 @@ namespace Azure.ResourceManager.SecurityCenter
                             hierarchyIdentifierTrialEndDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("environmentName"))
+                        if (property0.NameEquals("environmentName"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            environmentName = new CloudName(property0.Value.GetString());
+                            environmentName = new SecurityCenterCloudName(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("offerings"))
+                        if (property0.NameEquals("offerings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<CloudOffering> array = new List<CloudOffering>();
+                            List<SecurityCenterCloudOffering> array = new List<SecurityCenterCloudOffering>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CloudOffering.DeserializeCloudOffering(item));
+                                array.Add(SecurityCenterCloudOffering.DeserializeSecurityCenterCloudOffering(item));
                             }
                             offerings = array;
                             continue;
                         }
-                        if (property0.NameEquals("environmentData"))
+                        if (property0.NameEquals("environmentData"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            environmentData = EnvironmentData.DeserializeEnvironmentData(property0.Value);
+                            environmentData = SecurityConnectorEnvironment.DeserializeSecurityConnectorEnvironment(property0.Value);
                             continue;
                         }
                     }

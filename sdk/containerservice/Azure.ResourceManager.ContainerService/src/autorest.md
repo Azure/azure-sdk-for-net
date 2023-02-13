@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: ContainerService
 namespace: Azure.ResourceManager.ContainerService
-require: https://github.com/Azure/azure-rest-api-specs/blob/b9b91929c304f8fb44002267b6c98d9fb9dde014/specification/containerservice/resource-manager/readme.md
-tag: package-2022-04
+require: https://github.com/Azure/azure-rest-api-specs/blob/495363bc011ce917f579adc1a5209073565d37f4/specification/containerservice/resource-manager/readme.md
+tag: package-2022-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -46,16 +46,23 @@ rename-mapping:
   ManagedClusterStorageProfileDiskCSIDriver.enabled: IsEnabled
   ManagedClusterStorageProfileFileCSIDriver.enabled: IsEnabled
   ManagedClusterStorageProfileSnapshotController.enabled: IsEnabled
+  ManagedClusterStorageProfileBlobCSIDriver.enabled: IsEnabled
   KubeletConfig.cpuCfsQuota: IsCpuCfsQuotaEnabled
   OutboundEnvironmentEndpointCollection: OutboundEnvironmentEndpointListResult
   RunCommandRequest: ManagedClusterRunCommandContent
   RunCommandResult: ManagedClusterRunCommandResult
   UserAssignedIdentity.objectId: -|uuid
   UserAssignedIdentity.clientId: -|uuid
-  ManagedClusterServicePrincipalProfile.clientId: -|uuid
+#   ManagedClusterServicePrincipalProfile.clientId: -|uuid
   ManagedClusterAADProfile.serverAppID: -|uuid
   ManagedClusterAADProfile.clientAppID: -|uuid
 #   ManagedClusterAADProfile.adminGroupObjectIDs.items: -|uuid
+  ManagedClusterSecurityProfileDefenderSecurityMonitoring.enabled: IsSecurityMonitoringEnabled
+  AzureKeyVaultKms: ManagedClusterSecurityProfileKeyVaultKms
+  AzureKeyVaultKms.enabled: IsEnabled
+  KeyVaultNetworkAccessTypes: ManagedClusterKeyVaultNetworkAccessType
+  ManagedClusterOidcIssuerProfile.enabled: IsEnabled
+  ManagedClusterOidcIssuerProfile.issuerURL: IssuerUriInfo
 
 format-by-name-rules:
   'tenantId': 'uuid'

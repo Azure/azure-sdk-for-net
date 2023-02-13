@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -22,14 +23,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="transferConfiguration"/> or <paramref name="accountDetails"/> is null. </exception>
         public DataExportDetails(TransferConfiguration transferConfiguration, DataAccountDetails accountDetails)
         {
-            if (transferConfiguration == null)
-            {
-                throw new ArgumentNullException(nameof(transferConfiguration));
-            }
-            if (accountDetails == null)
-            {
-                throw new ArgumentNullException(nameof(accountDetails));
-            }
+            Argument.AssertNotNull(transferConfiguration, nameof(transferConfiguration));
+            Argument.AssertNotNull(accountDetails, nameof(accountDetails));
 
             TransferConfiguration = transferConfiguration;
             AccountDetails = accountDetails;

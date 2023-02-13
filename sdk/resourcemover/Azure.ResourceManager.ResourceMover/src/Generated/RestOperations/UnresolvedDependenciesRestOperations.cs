@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceMover
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string moverResourceSetName, string subscriptionId, string resourceGroupName, MoverDependencyLevel? dependencyLevel, string orderby, string filter)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverDependencyLevel? dependencyLevel, string orderby, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -71,22 +71,22 @@ namespace Azure.ResourceManager.ResourceMover
         }
 
         /// <summary> Gets a list of unresolved dependencies. </summary>
-        /// <param name="moverResourceSetName"> The Move Collection Name. </param>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
+        /// <param name="moverResourceSetName"> The Move Collection Name. </param>
         /// <param name="dependencyLevel"> Defines the dependency level. </param>
         /// <param name="orderby"> OData order by query option. For example, you can use $orderby=Count desc. </param>
         /// <param name="filter"> The filter to apply on the operation. For example, $apply=filter(count eq 2). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moverResourceSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="moverResourceSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MoverUnresolvedDependencyList>> GetAsync(string moverResourceSetName, string subscriptionId, string resourceGroupName, MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<MoverUnresolvedDependencyList>> GetAsync(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
 
-            using var message = CreateGetRequest(moverResourceSetName, subscriptionId, resourceGroupName, dependencyLevel, orderby, filter);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, moverResourceSetName, dependencyLevel, orderby, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -103,22 +103,22 @@ namespace Azure.ResourceManager.ResourceMover
         }
 
         /// <summary> Gets a list of unresolved dependencies. </summary>
-        /// <param name="moverResourceSetName"> The Move Collection Name. </param>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
+        /// <param name="moverResourceSetName"> The Move Collection Name. </param>
         /// <param name="dependencyLevel"> Defines the dependency level. </param>
         /// <param name="orderby"> OData order by query option. For example, you can use $orderby=Count desc. </param>
         /// <param name="filter"> The filter to apply on the operation. For example, $apply=filter(count eq 2). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moverResourceSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="moverResourceSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MoverUnresolvedDependencyList> Get(string moverResourceSetName, string subscriptionId, string resourceGroupName, MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<MoverUnresolvedDependencyList> Get(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
 
-            using var message = CreateGetRequest(moverResourceSetName, subscriptionId, resourceGroupName, dependencyLevel, orderby, filter);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, moverResourceSetName, dependencyLevel, orderby, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
-        internal HttpMessage CreateGetNextPageRequest(string nextLink, string moverResourceSetName, string subscriptionId, string resourceGroupName, MoverDependencyLevel? dependencyLevel, string orderby, string filter)
+        internal HttpMessage CreateGetNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverDependencyLevel? dependencyLevel, string orderby, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -150,23 +150,23 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary> Gets a list of unresolved dependencies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="moverResourceSetName"> The Move Collection Name. </param>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
+        /// <param name="moverResourceSetName"> The Move Collection Name. </param>
         /// <param name="dependencyLevel"> Defines the dependency level. </param>
         /// <param name="orderby"> OData order by query option. For example, you can use $orderby=Count desc. </param>
         /// <param name="filter"> The filter to apply on the operation. For example, $apply=filter(count eq 2). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="moverResourceSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="moverResourceSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MoverUnresolvedDependencyList>> GetNextPageAsync(string nextLink, string moverResourceSetName, string subscriptionId, string resourceGroupName, MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<MoverUnresolvedDependencyList>> GetNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
 
-            using var message = CreateGetNextPageRequest(nextLink, moverResourceSetName, subscriptionId, resourceGroupName, dependencyLevel, orderby, filter);
+            using var message = CreateGetNextPageRequest(nextLink, subscriptionId, resourceGroupName, moverResourceSetName, dependencyLevel, orderby, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -184,23 +184,23 @@ namespace Azure.ResourceManager.ResourceMover
 
         /// <summary> Gets a list of unresolved dependencies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="moverResourceSetName"> The Move Collection Name. </param>
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
+        /// <param name="moverResourceSetName"> The Move Collection Name. </param>
         /// <param name="dependencyLevel"> Defines the dependency level. </param>
         /// <param name="orderby"> OData order by query option. For example, you can use $orderby=Count desc. </param>
         /// <param name="filter"> The filter to apply on the operation. For example, $apply=filter(count eq 2). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="moverResourceSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="moverResourceSetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MoverUnresolvedDependencyList> GetNextPage(string nextLink, string moverResourceSetName, string subscriptionId, string resourceGroupName, MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<MoverUnresolvedDependencyList> GetNextPage(string nextLink, string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(moverResourceSetName, nameof(moverResourceSetName));
 
-            using var message = CreateGetNextPageRequest(nextLink, moverResourceSetName, subscriptionId, resourceGroupName, dependencyLevel, orderby, filter);
+            using var message = CreateGetNextPageRequest(nextLink, subscriptionId, resourceGroupName, moverResourceSetName, dependencyLevel, orderby, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

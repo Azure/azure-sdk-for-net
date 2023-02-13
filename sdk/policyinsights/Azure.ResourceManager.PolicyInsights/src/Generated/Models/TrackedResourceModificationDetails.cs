@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="policyDetails"> The details of the policy that created or modified the tracked resource. </param>
         /// <param name="deploymentId"> The ID of the deployment that created or modified the tracked resource. </param>
         /// <param name="deploymentOn"> Timestamp of the deployment that created or modified the tracked resource. </param>
-        internal TrackedResourceModificationDetails(PolicyDetails policyDetails, string deploymentId, DateTimeOffset? deploymentOn)
+        internal TrackedResourceModificationDetails(PolicyDetails policyDetails, ResourceIdentifier deploymentId, DateTimeOffset? deploymentOn)
         {
             PolicyDetails = policyDetails;
             DeploymentId = deploymentId;
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> The details of the policy that created or modified the tracked resource. </summary>
         public PolicyDetails PolicyDetails { get; }
         /// <summary> The ID of the deployment that created or modified the tracked resource. </summary>
-        public string DeploymentId { get; }
+        public ResourceIdentifier DeploymentId { get; }
         /// <summary> Timestamp of the deployment that created or modified the tracked resource. </summary>
         public DateTimeOffset? DeploymentOn { get; }
     }

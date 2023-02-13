@@ -856,6 +856,20 @@ namespace Azure.Data.AppConfiguration.Tests
             CollectionAssert.Contains(syncTokens, "syncToken1=val2");
         }
 
+        [Test]
+        public async Task VerifyNullClientFilter()
+        {
+            var response = new MockResponse(200);
+            response.SetContent("{\"key\":\".appconfig.featureflag/flagtest\",\"content_type\":\"application/vnd.microsoft.appconfig.ff+json;charset=utf-8\",\"value\":\"{\\\"id\\\":\\\"feature 1829697669\\\",\\\"enabled\\\":true,\\\"conditions\\\":{\\\"client_filters\\\":null}}\"}");
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            var setting = await service.GetConfigurationSettingAsync(".appconfig.featureflag/flagtest");
+            var feature = (FeatureFlagConfigurationSetting)setting.Value;
+            Assert.IsEmpty(feature.ClientFilters);
+        }
+
         private void AssertContent(byte[] expected, MockRequest request, bool compareAsString = true)
         {
             using (var stream = new MemoryStream())

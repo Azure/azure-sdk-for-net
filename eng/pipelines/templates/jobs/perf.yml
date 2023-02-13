@@ -1,8 +1,8 @@
 parameters:
-- name: ServiceDirectory
+- name: LanguageVersion
   type: string
-  default: ''
-- name: Services
+  default: '7'
+- name: ServiceDirectory
   type: string
   default: ''
 - name: PackageVersions
@@ -30,12 +30,12 @@ extends:
     Variables:
     - template: /eng/pipelines/templates/variables/globals.yml
     Language: Net
+    LanguageVersion: ${{ parameters.LanguageVersion }}
     InstallLanguageSteps:
     - template: /eng/pipelines/templates/steps/install-dotnet.yml
       parameters:
         EnableNuGetCache: false
     ServiceDirectory: ${{ parameters.ServiceDirectory }}
-    Services: ${{ parameters.Services }}
     PackageVersions: ${{ parameters.PackageVersions }}
     Tests: ${{ parameters.Tests }}
     Arguments: ${{ parameters.Arguments }}

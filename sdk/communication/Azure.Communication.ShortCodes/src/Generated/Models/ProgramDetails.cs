@@ -45,7 +45,7 @@ namespace Azure.Communication.ShortCodes.Models
         /// Should follow ISO 8601 internet format for datetimes.
         /// e.g. 2021-08-17T22:02:51.316Z, 2021-08-17T16:39:57-08:00, etc.
         /// </param>
-        internal ProgramDetails(bool? isVanity, IList<string> preferredVanityNumbers, NumberType? numberType, bool? isPoliticalCampaign, string name, string description, string url, IList<ProgramSignUpType> signUpTypes, string signUpUrl, string termsOfServiceUrl, string privacyPolicyUrl, DateTimeOffset? expectedDateOfService)
+        internal ProgramDetails(bool? isVanity, IList<string> preferredVanityNumbers, NumberType? numberType, bool? isPoliticalCampaign, string name, string description, Uri url, IList<ProgramSignUpType> signUpTypes, Uri signUpUrl, Uri termsOfServiceUrl, Uri privacyPolicyUrl, DateTimeOffset? expectedDateOfService)
         {
             IsVanity = isVanity;
             PreferredVanityNumbers = preferredVanityNumbers;
@@ -81,15 +81,15 @@ namespace Azure.Communication.ShortCodes.Models
         /// <summary> Describes how and why the number will be used for messaging as part of the program. </summary>
         public string Description { get; set; }
         /// <summary> URL for the program or company. </summary>
-        public string Url { get; set; }
+        public Uri Url { get; set; }
         /// <summary> Indicates how the consumer can sign up to the program e.g. &apos;website&apos;, &apos;pointOfSale&apos; and/or &apos;sms&apos;. </summary>
         public IList<ProgramSignUpType> SignUpTypes { get; }
         /// <summary> URL for &quot;call to action&quot; image for the program. </summary>
-        public string SignUpUrl { get; set; }
+        public Uri SignUpUrl { get; set; }
         /// <summary> URL for program terms of service. </summary>
-        public string TermsOfServiceUrl { get; set; }
+        public Uri TermsOfServiceUrl { get; set; }
         /// <summary> URL for privacy policy. </summary>
-        public string PrivacyPolicyUrl { get; set; }
+        public Uri PrivacyPolicyUrl { get; set; }
         /// <summary>
         /// Date in which SMS messages will start to be sent out.
         /// Should follow ISO 8601 internet format for datetimes.

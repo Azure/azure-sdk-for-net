@@ -3,8 +3,9 @@ trigger: none
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
+    SDKType: client
     ServiceDirectory: maps
     BuildInParallel: true
     TimeoutInMinutes: 180
     Clouds: 'Public'
-    SupportedClouds: 'Public,UsGov,Canary'
+    SupportedClouds: 'Public,Canary'

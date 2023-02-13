@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -20,10 +21,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="labelSelectors"/> is null. </exception>
         public WorkerWeightedAllocation(double weight, IEnumerable<WorkerSelector> labelSelectors)
         {
-            if (labelSelectors == null)
-            {
-                throw new ArgumentNullException(nameof(labelSelectors));
-            }
+            Argument.AssertNotNull(labelSelectors, nameof(labelSelectors));
 
             Weight = weight;
             LabelSelectors = labelSelectors.ToList();

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,13 +15,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("url");
+            writer.WritePropertyName("url"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Uri);
 #else
             JsonSerializer.Serialize(writer, JsonDocument.Parse(Uri.ToString()).RootElement);
 #endif
-            writer.WritePropertyName("authenticationType");
+            writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             writer.WriteEndObject();
         }
@@ -38,22 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "ClientCertificate": return WebClientCertificateAuthentication.DeserializeWebClientCertificateAuthentication(element);
                 }
             }
-            BinaryData url = default;
-            WebAuthenticationType authenticationType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("url"))
-                {
-                    url = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("authenticationType"))
-                {
-                    authenticationType = new WebAuthenticationType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownWebLinkedServiceTypeProperties(url, authenticationType);
+            return UnknownWebLinkedServiceTypeProperties.DeserializeUnknownWebLinkedServiceTypeProperties(element);
         }
     }
 }

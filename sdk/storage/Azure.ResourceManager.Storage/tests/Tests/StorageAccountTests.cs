@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage.Tests
         private ResourceGroupResource _resourceGroup;
         private const string namePrefix = "teststoragemgmt";
         public StorageAccountTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
@@ -1415,7 +1415,7 @@ namespace Azure.ResourceManager.Storage.Tests
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2);
+            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2, location: "eastus2euap", sku: new StorageSku(StorageSkuName.StandardLrs));
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
 
             //Enable LAT
@@ -1435,6 +1435,34 @@ namespace Azure.ResourceManager.Storage.Tests
                     }
                 }
             };
+            ManagementPolicyAction action2 = new ManagementPolicyAction()
+            {
+                BaseBlob = new ManagementPolicyBaseBlob()
+                {
+                    Delete = new DateAfterModification()
+                    {
+                        DaysAfterModificationGreaterThan = 1000,
+                    },
+                    TierToCold = new DateAfterModification()
+                    {
+                        DaysAfterCreationGreaterThan = 100,
+                    },
+                    TierToCool = new DateAfterModification()
+                    {
+                        DaysAfterCreationGreaterThan = 500,
+                    }
+                },
+                Snapshot = new ManagementPolicySnapShot()
+                {
+                    TierToCool = new DateAfterCreation(100),
+                    TierToCold = new DateAfterCreation(500),
+                },
+                Version = new ManagementPolicyVersion()
+                {
+                    TierToArchive = new DateAfterCreation(200),
+                }
+            };
+
             ManagementPolicyDefinition definition1 = new ManagementPolicyDefinition(action)
             {
                 Filters = new ManagementPolicyFilter(blobTypes: new List<string>() { "blockBlob", "appendBlob" }),
@@ -1449,7 +1477,7 @@ namespace Azure.ResourceManager.Storage.Tests
             ManagementPolicyRule rule2 = new ManagementPolicyRule("rule2", "Lifecycle", definition2);
             rules.Add(rule2);
 
-            ManagementPolicyDefinition definition3 = new ManagementPolicyDefinition(action)
+            ManagementPolicyDefinition definition3 = new ManagementPolicyDefinition(action2)
             {
                 Filters = new ManagementPolicyFilter(blobTypes: new List<string>() { "blockBlob" }),
             };
@@ -1465,6 +1493,52 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountManagementPolicyResource managementPolicy = (await account.GetStorageAccountManagementPolicy().CreateOrUpdateAsync(WaitUntil.Completed, parameter)).Value;
             Assert.NotNull(managementPolicy);
             Assert.AreEqual(managementPolicy.Data.Policy.Rules.Count, 3);
+            Assert.AreEqual(managementPolicy.Data.Rules[0].Definition.Actions.BaseBlob.Delete.DaysAfterModificationGreaterThan, 1000);
+            Assert.AreEqual(managementPolicy.Data.Rules[1].Definition.Actions.BaseBlob.Delete.DaysAfterModificationGreaterThan, 1000);
+            Assert.AreEqual(managementPolicy.Data.Rules[0].Definition.Filters.BlobTypes.Count, 2);
+            Assert.AreEqual(managementPolicy.Data.Rules[1].Definition.Filters.BlobTypes.Count, 1);
+            Assert.AreEqual(managementPolicy.Data.Rules[2].Definition.Actions.BaseBlob.Delete.DaysAfterModificationGreaterThan, 1000);
+            Assert.AreEqual(managementPolicy.Data.Rules[2].Definition.Actions.BaseBlob.TierToCold.DaysAfterCreationGreaterThan ,100);
+            Assert.AreEqual(managementPolicy.Data.Rules[2].Definition.Actions.BaseBlob.TierToCool.DaysAfterCreationGreaterThan, 500);
+            Assert.AreEqual(managementPolicy.Data.Rules[2].Definition.Actions.Snapshot.TierToCool.DaysAfterCreationGreaterThan, 100);
+            Assert.AreEqual(managementPolicy.Data.Rules[2].Definition.Actions.Snapshot.TierToCold.DaysAfterCreationGreaterThan, 500);
+            Assert.AreEqual(managementPolicy.Data.Rules[2].Definition.Actions.Version.TierToArchive.DaysAfterCreationGreaterThan, 200);
+
+            // Create block blob storage premium Storage account for TierToHot test
+            string accountName2 = await CreateValidAccountNameAsync(namePrefix);
+            ResourceGroupResource resourceGroup2 = await CreateResourceGroupAsync();
+            storageAccountCollection = resourceGroup2.GetStorageAccounts();
+            StorageAccountCreateOrUpdateContent createAccountParams2 = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.PremiumLrs), StorageKind.BlockBlobStorage, "eastus2");
+            StorageAccountResource account2 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName2, createAccountParams2)).Value;
+            ManagementPolicyAction action3 = new ManagementPolicyAction()
+            {
+                BaseBlob = new ManagementPolicyBaseBlob()
+                {
+                    TierToCool = new DateAfterModification()
+                    {
+                        DaysAfterCreationGreaterThan = 100,
+                    },
+                    TierToHot = new DateAfterModification()
+                    {
+                        DaysAfterCreationGreaterThan = 50,
+                    }
+                }
+            };
+            ManagementPolicyDefinition definition4 = new ManagementPolicyDefinition(action3)
+            {
+                Filters = new ManagementPolicyFilter(blobTypes: new List<string>() { "blockBlob" }),
+            };
+            ManagementPolicyRule rule4 = new ManagementPolicyRule("rule4", "Lifecycle", definition4);
+            List<ManagementPolicyRule> rules2 = new List<ManagementPolicyRule>();
+            rules2.Add(rule4);
+            parameter = new StorageAccountManagementPolicyData()
+            {
+                Policy = new ManagementPolicySchema(rules2)
+            };
+            StorageAccountManagementPolicyResource managementPolicy2 = (await account2.GetStorageAccountManagementPolicy().CreateOrUpdateAsync(WaitUntil.Completed, parameter)).Value;
+            Assert.AreEqual(50, managementPolicy2.Data.Rules[0].Definition.Actions.BaseBlob.TierToHot.DaysAfterCreationGreaterThan);
+            Assert.AreEqual(100, managementPolicy2.Data.Rules[0].Definition.Actions.BaseBlob.TierToCool.DaysAfterCreationGreaterThan);
+            Assert.AreEqual(1, managementPolicy2.Data.Rules[0].Definition.Filters.BlobTypes.Count);
 
             //delete namagement policy
             await managementPolicy.DeleteAsync(WaitUntil.Completed);
@@ -1513,12 +1587,34 @@ namespace Azure.ResourceManager.Storage.Tests
             encryptionScope = await encryptionScope.UpdateAsync(encryptionScope.Data);
             Assert.AreEqual(encryptionScope.Data.State, EncryptionScopeState.Disabled);
 
+            EncryptionScopeResource encryptionScope2 = (await encryptionScopeCollection.CreateOrUpdateAsync(WaitUntil.Completed, "scope2", parameter)).Value;
+            EncryptionScopeResource encryptionScope3 = (await encryptionScopeCollection.CreateOrUpdateAsync(WaitUntil.Completed, "testscope3", parameter)).Value;
+
             //get all encryption scopes
             List<EncryptionScopeResource> encryptionScopes = await encryptionScopeCollection.GetAllAsync().ToEnumerableAsync();
             encryptionScope = encryptionScopes.First();
+            Assert.AreEqual(3, encryptionScopes.Count);
             Assert.AreEqual("scope", encryptionScope.Id.Name);
             Assert.AreEqual(EncryptionScopeState.Disabled, encryptionScope.Data.State);
             Assert.AreEqual(EncryptionScopeSource.Storage, encryptionScope.Data.Source);
+            Assert.AreEqual("scope2", encryptionScopes[1].Data.Name);
+            Assert.AreEqual(EncryptionScopeState.Enabled, encryptionScopes[1].Data.State);
+            Assert.AreEqual(EncryptionScopeSource.Storage, encryptionScopes[1].Data.Source);
+            Assert.AreEqual("testscope3", encryptionScopes[2].Data.Name);
+            Assert.AreEqual(EncryptionScopeState.Enabled, encryptionScopes[2].Data.State);
+            Assert.AreEqual(EncryptionScopeSource.Storage, encryptionScopes[2].Data.Source);
+
+            encryptionScopes = await encryptionScopeCollection.GetAllAsync(maxpagesize: 5, include: EncryptionScopesIncludeType.Enabled, filter: "startswith(name, test)").ToEnumerableAsync();
+            Assert.AreEqual(1, encryptionScopes.Count);
+            Assert.AreEqual("testscope3", encryptionScopes[0].Data.Name);
+            Assert.AreEqual(EncryptionScopeState.Enabled, encryptionScopes[0].Data.State);
+            Assert.AreEqual(EncryptionScopeSource.Storage, encryptionScopes[0].Data.Source);
+
+            encryptionScopes = await encryptionScopeCollection.GetAllAsync(maxpagesize: 10, include: EncryptionScopesIncludeType.Disabled, filter: "startswith(name, scope)").ToEnumerableAsync();
+            Assert.AreEqual(1, encryptionScopes.Count);
+            Assert.AreEqual("scope", encryptionScopes[0].Data.Name);
+            Assert.AreEqual(EncryptionScopeState.Disabled, encryptionScopes[0].Data.State);
+            Assert.AreEqual(EncryptionScopeSource.Storage, encryptionScopes[0].Data.Source);
         }
 
         [Test]

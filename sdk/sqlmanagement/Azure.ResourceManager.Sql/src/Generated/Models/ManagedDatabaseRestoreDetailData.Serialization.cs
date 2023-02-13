@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Sql
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -30,44 +31,56 @@ namespace Azure.ResourceManager.Sql
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Optional<string> type0 = default;
             Optional<string> status = default;
-            Optional<string> currentRestoringFileName = default;
-            Optional<string> lastRestoredFileName = default;
-            Optional<DateTimeOffset> lastRestoredFileTime = default;
-            Optional<double> percentCompleted = default;
-            Optional<IReadOnlyList<string>> unrestorableFiles = default;
-            Optional<long> numberOfFilesDetected = default;
+            Optional<string> blockReason = default;
             Optional<string> lastUploadedFileName = default;
             Optional<DateTimeOffset> lastUploadedFileTime = default;
-            Optional<string> blockReason = default;
+            Optional<string> lastRestoredFileName = default;
+            Optional<DateTimeOffset> lastRestoredFileTime = default;
+            Optional<int> percentCompleted = default;
+            Optional<int> currentRestoredSizeMB = default;
+            Optional<int> currentRestorePlanSizeMB = default;
+            Optional<string> currentBackupType = default;
+            Optional<string> currentRestoringFileName = default;
+            Optional<int> numberOfFilesDetected = default;
+            Optional<int> numberOfFilesQueued = default;
+            Optional<int> numberOfFilesSkipped = default;
+            Optional<int> numberOfFilesRestoring = default;
+            Optional<int> numberOfFilesRestored = default;
+            Optional<int> numberOfFilesUnrestorable = default;
+            Optional<IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties>> fullBackupSets = default;
+            Optional<IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties>> diffBackupSets = default;
+            Optional<IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties>> logBackupSets = default;
+            Optional<IReadOnlyList<ManagedDatabaseRestoreDetailUnrestorableFileProperties>> unrestorableFiles = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,72 +89,27 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("type"u8))
+                        {
+                            type0 = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("status"u8))
                         {
                             status = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("currentRestoringFileName"))
+                        if (property0.NameEquals("blockReason"u8))
                         {
-                            currentRestoringFileName = property0.Value.GetString();
+                            blockReason = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastRestoredFileName"))
-                        {
-                            lastRestoredFileName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("lastRestoredFileTime"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            lastRestoredFileTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("percentCompleted"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            percentCompleted = property0.Value.GetDouble();
-                            continue;
-                        }
-                        if (property0.NameEquals("unrestorableFiles"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            unrestorableFiles = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("numberOfFilesDetected"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            numberOfFilesDetected = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("lastUploadedFileName"))
+                        if (property0.NameEquals("lastUploadedFileName"u8))
                         {
                             lastUploadedFileName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastUploadedFileTime"))
+                        if (property0.NameEquals("lastUploadedFileTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -151,16 +119,186 @@ namespace Azure.ResourceManager.Sql
                             lastUploadedFileTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("blockReason"))
+                        if (property0.NameEquals("lastRestoredFileName"u8))
                         {
-                            blockReason = property0.Value.GetString();
+                            lastRestoredFileName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("lastRestoredFileTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            lastRestoredFileTime = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("percentCompleted"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            percentCompleted = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("currentRestoredSizeMB"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            currentRestoredSizeMB = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("currentRestorePlanSizeMB"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            currentRestorePlanSizeMB = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("currentBackupType"u8))
+                        {
+                            currentBackupType = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("currentRestoringFileName"u8))
+                        {
+                            currentRestoringFileName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("numberOfFilesDetected"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            numberOfFilesDetected = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("numberOfFilesQueued"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            numberOfFilesQueued = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("numberOfFilesSkipped"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            numberOfFilesSkipped = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("numberOfFilesRestoring"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            numberOfFilesRestoring = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("numberOfFilesRestored"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            numberOfFilesRestored = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("numberOfFilesUnrestorable"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            numberOfFilesUnrestorable = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("fullBackupSets"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<ManagedDatabaseRestoreDetailBackupSetProperties> array = new List<ManagedDatabaseRestoreDetailBackupSetProperties>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item));
+                            }
+                            fullBackupSets = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("diffBackupSets"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<ManagedDatabaseRestoreDetailBackupSetProperties> array = new List<ManagedDatabaseRestoreDetailBackupSetProperties>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item));
+                            }
+                            diffBackupSets = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("logBackupSets"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<ManagedDatabaseRestoreDetailBackupSetProperties> array = new List<ManagedDatabaseRestoreDetailBackupSetProperties>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item));
+                            }
+                            logBackupSets = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("unrestorableFiles"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<ManagedDatabaseRestoreDetailUnrestorableFileProperties> array = new List<ManagedDatabaseRestoreDetailUnrestorableFileProperties>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ManagedDatabaseRestoreDetailUnrestorableFileProperties.DeserializeManagedDatabaseRestoreDetailUnrestorableFileProperties(item));
+                            }
+                            unrestorableFiles = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ManagedDatabaseRestoreDetailData(id, name, type, systemData.Value, status.Value, currentRestoringFileName.Value, lastRestoredFileName.Value, Optional.ToNullable(lastRestoredFileTime), Optional.ToNullable(percentCompleted), Optional.ToList(unrestorableFiles), Optional.ToNullable(numberOfFilesDetected), lastUploadedFileName.Value, Optional.ToNullable(lastUploadedFileTime), blockReason.Value);
+            return new ManagedDatabaseRestoreDetailData(id, name, type, systemData.Value, type0.Value, status.Value, blockReason.Value, lastUploadedFileName.Value, Optional.ToNullable(lastUploadedFileTime), lastRestoredFileName.Value, Optional.ToNullable(lastRestoredFileTime), Optional.ToNullable(percentCompleted), Optional.ToNullable(currentRestoredSizeMB), Optional.ToNullable(currentRestorePlanSizeMB), currentBackupType.Value, currentRestoringFileName.Value, Optional.ToNullable(numberOfFilesDetected), Optional.ToNullable(numberOfFilesQueued), Optional.ToNullable(numberOfFilesSkipped), Optional.ToNullable(numberOfFilesRestoring), Optional.ToNullable(numberOfFilesRestored), Optional.ToNullable(numberOfFilesUnrestorable), Optional.ToList(fullBackupSets), Optional.ToList(diffBackupSets), Optional.ToList(logBackupSets), Optional.ToList(unrestorableFiles));
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Batch
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-01";
+            _apiVersion = apiVersion ?? "2022-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Batch
             return message;
         }
 
-        /// <summary> Lists all of the certificates in the specified account. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        /// <summary> Lists all of the certificates in the specified account. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Batch
             return message;
         }
 
-        /// <summary> Creates a new certificate inside the specified account. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        /// <summary> Creates a new certificate inside the specified account. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Batch
             return message;
         }
 
-        /// <summary> Updates the properties of an existing certificate. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        /// <summary> Updates the properties of an existing certificate. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Batch
             return message;
         }
 
-        /// <summary> Deletes the specified certificate. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        /// <summary> Deletes the specified certificate. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Batch
             return message;
         }
 
-        /// <summary> Gets information about the specified certificate. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        /// <summary> Gets information about the specified certificate. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -525,7 +525,11 @@ namespace Azure.ResourceManager.Batch
             return message;
         }
 
-        /// <summary> If you try to delete a certificate that is being used by a pool or compute node, the status of the certificate changes to deleteFailed. If you decide that you want to continue using the certificate, you can use this operation to set the status of the certificate back to active. If you intend to delete the certificate, you do not need to run this operation after the deletion failed. You must make sure that the certificate is not being used by any resources, and then you can try again to delete the certificate. </summary>
+        /// <summary>
+        /// If you try to delete a certificate that is being used by a pool or compute node, the status of the certificate changes to deleteFailed. If you decide that you want to continue using the certificate, you can use this operation to set the status of the certificate back to active. If you intend to delete the certificate, you do not need to run this operation after the deletion failed. You must make sure that the certificate is not being used by any resources, and then you can try again to delete the certificate.
+        /// 
+        /// Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
+        /// </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -556,7 +560,11 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        /// <summary> If you try to delete a certificate that is being used by a pool or compute node, the status of the certificate changes to deleteFailed. If you decide that you want to continue using the certificate, you can use this operation to set the status of the certificate back to active. If you intend to delete the certificate, you do not need to run this operation after the deletion failed. You must make sure that the certificate is not being used by any resources, and then you can try again to delete the certificate. </summary>
+        /// <summary>
+        /// If you try to delete a certificate that is being used by a pool or compute node, the status of the certificate changes to deleteFailed. If you decide that you want to continue using the certificate, you can use this operation to set the status of the certificate back to active. If you intend to delete the certificate, you do not need to run this operation after the deletion failed. You must make sure that the certificate is not being used by any resources, and then you can try again to delete the certificate.
+        /// 
+        /// Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
+        /// </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -601,7 +609,7 @@ namespace Azure.ResourceManager.Batch
             return message;
         }
 
-        /// <summary> Lists all of the certificates in the specified account. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
@@ -635,7 +643,7 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
-        /// <summary> Lists all of the certificates in the specified account. </summary>
+        /// <summary> Warning: This operation is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>

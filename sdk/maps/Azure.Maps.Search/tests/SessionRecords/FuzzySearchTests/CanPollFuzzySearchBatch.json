@@ -6,18 +6,18 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "146",
+        "Content-Length": "149",
         "Content-Type": "application/json",
-        "traceparent": "00-57a0dfccb8c1e00ed70a9467b2cbad00-016b5153088b3202-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220908.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
-        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "063ef1d9ede9ff38f561b449d3672b11",
+        "traceparent": "00-69d38a5d11dd1041b83b2561290173b9-5650689b1b677741-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20221012.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+        "x-ms-client-request-id": "737138f757b6c8efa25633b49adf5d75",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "batchItems": [
           {
-            "query": "?query=coffee\u0026lat=25.04\u0026lon=121.56\u0026language=en"
+            "query": "?query=coffee\u0026lat=25.04\u0026lon=121.56\u0026language=en-US"
           },
           {
             "query": "?query=pizza\u0026lat=25.04\u0026lon=121.56"
@@ -28,38 +28,39 @@
       "ResponseHeaders": {
         "Content-Length": "2",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 08 Sep 2022 18:56:00 GMT",
-        "Location": "https://atlas.microsoft.com/search/fuzzy/batch/381ff10d-9fc7-4902-8b41-0610667cf71f?api-version=1.0",
+        "Date": "Wed, 12 Oct 2022 15:53:16 GMT",
+        "Location": "https://atlas.microsoft.com/search/fuzzy/batch/d70c2a6f-050f-4fd6-b620-43104d792b6e?api-version=1.0",
+        "Retry-After": "120",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: FBFC2F8846DE42A18199ABA00254BB32 Ref B: PAOEDGE0610 Ref C: 2022-09-08T18:56:01Z"
+        "X-MSEdge-Ref": "Ref A: 9CEED7106C4042528014DBD4EA7C5774 Ref B: TPE30EDGE0912 Ref C: 2022-10-12T15:53:17Z"
       },
       "ResponseBody": "\u0022\u0022"
     },
     {
-      "RequestUri": "https://atlas.microsoft.com/search/fuzzy/batch/381ff10d-9fc7-4902-8b41-0610667cf71f?api-version=1.0",
+      "RequestUri": "https://atlas.microsoft.com/search/fuzzy/batch/d70c2a6f-050f-4fd6-b620-43104d792b6e?api-version=1.0",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220908.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
-        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "824ee8a27e9a8f9996ed79415058eb54",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20221012.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+        "x-ms-client-request-id": "610e01c44fb89faf2fbade65baae6715",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Thu, 08 Sep 2022 18:56:05 GMT",
+        "Date": "Wed, 12 Oct 2022 15:53:17 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 1B0B96726DFB44E0B5291299435826E5 Ref B: PAOEDGE0610 Ref C: 2022-09-08T18:56:01Z"
+        "X-MSEdge-Ref": "Ref A: 44FB8C87F2984A58A167AE18F26B3714 Ref B: TPE30EDGE0912 Ref C: 2022-10-12T15:53:18Z"
       },
       "ResponseBody": {
         "batchItems": [
@@ -69,10 +70,10 @@
               "summary": {
                 "query": "coffee",
                 "queryType": "NON_NEAR",
-                "queryTime": 8,
+                "queryTime": 12,
                 "numResults": 10,
                 "offset": 0,
-                "totalResults": 1792334,
+                "totalResults": 1792279,
                 "fuzzyLevel": 1,
                 "geoBias": {
                   "lat": 25.04,
@@ -371,12 +372,13 @@
                 },
                 {
                   "type": "POI",
-                  "id": "158009001771249",
+                  "id": "158009001789613",
                   "score": 2.5745120049,
                   "dist": 220.2243834162837,
-                  "info": "search:ta:158009001771249-TW",
+                  "info": "search:ta:158009001789613-TW",
                   "poi": {
-                    "name": "fa dou ka fei qing shi guan",
+                    "name": "louisacoffee yi xian dian",
+                    "phone": "\u002B886 2 8780 4613",
                     "categorySet": [
                       {
                         "id": 9376006
@@ -513,13 +515,12 @@
                 },
                 {
                   "type": "POI",
-                  "id": "158009001789613",
+                  "id": "158009001771249",
                   "score": 2.5745120049,
                   "dist": 220.2243834162837,
-                  "info": "search:ta:158009001789613-TW",
+                  "info": "search:ta:158009001771249-TW",
                   "poi": {
-                    "name": "louisacoffee yi xian dian",
-                    "phone": "\u002B886 2 8780 4613",
+                    "name": "fa dou ka fei qing shi guan",
                     "categorySet": [
                       {
                         "id": 9376006
@@ -810,10 +811,10 @@
               "summary": {
                 "query": "pizza",
                 "queryType": "NON_NEAR",
-                "queryTime": 9,
+                "queryTime": 12,
                 "numResults": 10,
                 "offset": 0,
-                "totalResults": 377230,
+                "totalResults": 377155,
                 "fuzzyLevel": 1,
                 "geoBias": {
                   "lat": 25.04,
@@ -1554,9 +1555,8 @@
     }
   ],
   "Variables": {
-    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
-    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "911023046"
+    "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "864888353"
   }
 }

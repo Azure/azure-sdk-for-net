@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("source");
+            writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source.ToString());
             writer.WriteEndObject();
         }
 
         internal static UnknownResourceDetails DeserializeUnknownResourceDetails(JsonElement element)
         {
-            Source source = default;
+            Source source = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     source = new Source(property.Value.GetString());
                     continue;

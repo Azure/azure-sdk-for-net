@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-05-01\u0026showStats=false",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-10-01-preview\u0026showStats=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "251",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-80c38a923a942d304150636bbdebb3cf-057ac36e473479dd-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "bd89278fb7b6f6dc08e60e63fbc5b7b3",
+        "traceparent": "00-2ef3c6f0278282e2db005d6eca680e52-302e33cb5becc852-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "45e476a8391f3c51b7451af46b473081",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -33,11 +33,12 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "cf935701-130c-4ff9-935b-129cd0394a38",
+        "apim-request-id": "562c1694-2309-448a-bdf5-f663dcf547cc",
         "Content-Length": "250",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2,CognitiveServices.TextAnalytics.TextRecords=2",
-        "Date": "Thu, 21 Jul 2022 23:23:12 GMT",
+        "Date": "Fri, 14 Oct 2022 22:16:59 GMT",
+        "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
         "x-envoy-upstream-service-time": "12"
@@ -66,13 +67,13 @@
             }
           ],
           "errors": [],
-          "modelVersion": "2022-07-01"
+          "modelVersion": "2022-10-01"
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "1772516452",
+    "RandomSeed": "2098953943",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }

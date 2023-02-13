@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -156,6 +157,86 @@ namespace Azure.Security.KeyVault.Administration.Samples
 
             #region Snippet:DeleteRoleAssignmentAsync
             await client.DeleteRoleAssignmentAsync(KeyVaultRoleScope.Global, createdAssignment.Name);
+            #endregion
+        }
+
+        [RecordedTest]
+        [SyncOnly]
+        public void CrudRoleDefinition()
+        {
+            // Replace client with the Instrumented Client.
+            client = Client;
+
+            #region Snippet:CreateRoleDefinition
+#if SNIPPET
+            CreateOrUpdateRoleDefinitionOptions options = new CreateOrUpdateRoleDefinitionOptions(KeyVaultRoleScope.Global)
+#else
+            CreateOrUpdateRoleDefinitionOptions options = new CreateOrUpdateRoleDefinitionOptions(KeyVaultRoleScope.Global, Recording.Random.NewGuid())
+#endif
+            {
+                RoleName = "Managed HSM Data Decryptor",
+                Description = "Can only decrypt data using the private key stored in Managed HSM",
+                Permissions =
+                {
+                    new KeyVaultPermission()
+                    {
+                        DataActions =
+                        {
+                            KeyVaultDataAction.DecryptHsmKey
+                        }
+                    }
+                }
+            };
+            KeyVaultRoleDefinition createdDefinition = client.CreateOrUpdateRoleDefinition(options);
+#endregion
+
+            #region Snippet:GetRoleDefinition
+            Guid roleDefinitionId = new Guid(createdDefinition.Name);
+            KeyVaultRoleDefinition fetchedDefinition = client.GetRoleDefinition(KeyVaultRoleScope.Global, roleDefinitionId);
+            #endregion
+
+            #region Snippet:DeleteRoleDefinition
+            client.DeleteRoleDefinition(KeyVaultRoleScope.Global, roleDefinitionId);
+            #endregion
+        }
+
+        [RecordedTest]
+        [AsyncOnly]
+        public async Task CrudRoleDefinitionAsync()
+        {
+            // Replace client with the Instrumented Client.
+            client = Client;
+
+            #region Snippet:CreateRoleDefinitionAsync
+#if SNIPPET
+            CreateOrUpdateRoleDefinitionOptions options = new CreateOrUpdateRoleDefinitionOptions(KeyVaultRoleScope.Global)
+#else
+            CreateOrUpdateRoleDefinitionOptions options = new CreateOrUpdateRoleDefinitionOptions(KeyVaultRoleScope.Global, Recording.Random.NewGuid())
+#endif
+            {
+                RoleName = "Managed HSM Data Decryptor",
+                Description = "Can only decrypt data using the private key stored in Managed HSM",
+                Permissions =
+                {
+                    new KeyVaultPermission()
+                    {
+                        DataActions =
+                        {
+                            KeyVaultDataAction.DecryptHsmKey
+                        }
+                    }
+                }
+            };
+            KeyVaultRoleDefinition createdDefinition = await client.CreateOrUpdateRoleDefinitionAsync(options);
+            #endregion
+
+            #region Snippet:GetRoleDefinitionAsync
+            Guid roleDefinitionId = new Guid(createdDefinition.Name);
+            KeyVaultRoleDefinition fetchedDefinition = await client.GetRoleDefinitionAsync(KeyVaultRoleScope.Global, roleDefinitionId);
+            #endregion
+
+            #region Snippet:DeleteRoleDefinitionAsync
+            await client.DeleteRoleDefinitionAsync(KeyVaultRoleScope.Global, roleDefinitionId);
             #endregion
         }
     }

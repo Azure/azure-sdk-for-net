@@ -124,7 +124,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await using (var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, connectionString))
                 {
-                    var readState = await ReadEventsAsync(receiver, 1, cancellationSource.Token);
+                    var readState = await ReadEventsAsync(receiver, new HashSet<string> { singleEvent.MessageId }, cancellationSource.Token);
 
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
                     Assert.That(readState.Events.Count, Is.EqualTo(1), "A single event was sent.");
@@ -156,7 +156,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await using (var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, connectionString))
                 {
-                    var readState = await ReadEventsAsync(receiver, 1, cancellationSource.Token);
+                    var readState = await ReadEventsAsync(receiver, new HashSet<string> { singleEvent.MessageId }, cancellationSource.Token);
 
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
                     Assert.That(readState.Events.Count, Is.EqualTo(1), "A single event was sent.");
@@ -191,7 +191,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await using (var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, connectionString))
                 {
-                    var readState = await ReadEventsAsync(receiver, 1, cancellationSource.Token);
+                    var readState = await ReadEventsAsync(receiver, new HashSet<string> { singleEvent.MessageId }, cancellationSource.Token);
 
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
                     Assert.That(readState.Events.Count, Is.EqualTo(1), "A single event was sent.");
@@ -226,12 +226,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await using (var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, connectionString))
                 {
-                    var readState = await ReadEventsAsync(receiver, sourceEvents.Count, cancellationSource.Token);
+                    var readState = await ReadEventsAsync(receiver,sourceEvents.Select(evt => evt.MessageId), cancellationSource.Token);
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
                     foreach (var sourceEvent in sourceEvents)
                     {
-                        var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                        var sourceId = sourceEvent.MessageId;
                         Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                         Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
                     }
@@ -262,12 +262,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await using (var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, connectionString))
                 {
-                    var readState = await ReadEventsAsync(receiver, sourceEvents.Count, cancellationSource.Token);
+                    var readState = await ReadEventsAsync(receiver,sourceEvents.Select(evt => evt.MessageId), cancellationSource.Token);
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
                     foreach (var sourceEvent in sourceEvents)
                     {
-                        var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                        var sourceId = sourceEvent.MessageId;
                         Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                         Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
                     }
@@ -303,12 +303,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await using (var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, connectionString, recieverOptions))
                 {
-                    var readState = await ReadEventsAsync(receiver, sourceEvents.Count, cancellationSource.Token);
+                    var readState = await ReadEventsAsync(receiver,sourceEvents.Select(evt => evt.MessageId), cancellationSource.Token);
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
                     foreach (var sourceEvent in sourceEvents)
                     {
-                        var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                        var sourceId = sourceEvent.MessageId;
                         Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                         Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
                     }
@@ -347,12 +347,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await using (var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, connectionString))
                 {
-                    var readState = await ReadEventsAsync(receiver, sourceEvents.Count, cancellationSource.Token);
+                    var readState = await ReadEventsAsync(receiver,sourceEvents.Select(evt => evt.MessageId), cancellationSource.Token);
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
                     foreach (var sourceEvent in sourceEvents)
                     {
-                        var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                        var sourceId = sourceEvent.MessageId;
                         Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                         Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
                     }
@@ -384,12 +384,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await using (var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential))
                 {
-                    var readState = await ReadEventsAsync(receiver, sourceEvents.Count, cancellationSource.Token);
+                    var readState = await ReadEventsAsync(receiver,sourceEvents.Select(evt => evt.MessageId), cancellationSource.Token);
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
                     foreach (var sourceEvent in sourceEvents)
                     {
-                        var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                        var sourceId = sourceEvent.MessageId;
                         Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                         Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
                     }
@@ -421,12 +421,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await using (var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential))
                 {
-                    var readState = await ReadEventsAsync(receiver, sourceEvents.Count, cancellationSource.Token);
+                    var readState = await ReadEventsAsync(receiver,sourceEvents.Select(evt => evt.MessageId), cancellationSource.Token);
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
                     foreach (var sourceEvent in sourceEvents)
                     {
-                        var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                        var sourceId = sourceEvent.MessageId;
                         Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                         Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
                     }
@@ -461,12 +461,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await using (var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential, options))
                 {
-                    var readState = await ReadEventsAsync(receiver, sourceEvents.Count, cancellationSource.Token);
+                    var readState = await ReadEventsAsync(receiver,sourceEvents.Select(evt => evt.MessageId), cancellationSource.Token);
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
                     foreach (var sourceEvent in sourceEvents)
                     {
-                        var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                        var sourceId = sourceEvent.MessageId;
                         Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                         Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
                     }
@@ -497,12 +497,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await using (var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, connectionString))
                 {
-                    var readState = await ReadEventsAsync(receiver, sourceEvents.Count, cancellationSource.Token);
+                    var readState = await ReadEventsAsync(receiver,sourceEvents.Select(evt => evt.MessageId), cancellationSource.Token);
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
                     foreach (var sourceEvent in sourceEvents)
                     {
-                        var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                        var sourceId = sourceEvent.MessageId;
                         Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                         Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
                     }
@@ -538,7 +538,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     // Begin reading though no events have been published.  This is necessary to open the connection and
                     // ensure that the receiver is watching the partition.
 
-                    var readTask = ReadEventsAsync(receiver, sourceEvents.Count, cancellationSource.Token);
+                    var readTask = ReadEventsAsync(receiver,sourceEvents.Select(evt => evt.MessageId), cancellationSource.Token);
 
                     // Give the receiver a moment to ensure that it is established and then send events for it to read.
 
@@ -553,7 +553,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     foreach (var sourceEvent in sourceEvents)
                     {
-                        var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                        var sourceId = sourceEvent.MessageId;
                         Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                         Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
                     }
@@ -608,8 +608,16 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await using (var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, startingPosition, connectionString))
                 {
-                    var expectedCount = (isInclusive) ? sourceEvents.Count + 1 : sourceEvents.Count;
-                    var readState = await ReadEventsAsync(receiver, expectedCount, cancellationSource.Token);
+                    var expectedCount = sourceEvents.Count;
+                    var expectedEvents = sourceEvents.Select(evt => evt.MessageId);
+
+                    if (isInclusive)
+                    {
+                       ++expectedCount;
+                       expectedEvents = expectedEvents.Concat(new[] { seedEvents.Last().MessageId });
+                    }
+
+                    var readState = await ReadEventsAsync(receiver, expectedEvents, cancellationSource.Token);
 
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
                     Assert.That(readState.Events.Count, Is.EqualTo(expectedCount), "The wrong number of events was read for the value of the inclusive flag.");
@@ -617,7 +625,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     foreach (var sourceEvent in sourceEvents)
                     {
-                        var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                        var sourceId = sourceEvent.MessageId;
                         Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                         Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
                     }
@@ -672,8 +680,16 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await using (var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, startingPosition, connectionString))
                 {
-                    var expectedCount = (isInclusive) ? sourceEvents.Count + 1 : sourceEvents.Count;
-                    var readState = await ReadEventsAsync(receiver, expectedCount, cancellationSource.Token);
+                    var expectedCount = sourceEvents.Count;
+                    var expectedEvents = sourceEvents.Select(evt => evt.MessageId);
+
+                    if (isInclusive)
+                    {
+                       ++expectedCount;
+                       expectedEvents = expectedEvents.Concat(new[] { seedEvents.Last().MessageId });
+                    }
+
+                    var readState = await ReadEventsAsync(receiver, expectedEvents, cancellationSource.Token);
 
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
                     Assert.That(readState.Events.Count, Is.EqualTo(expectedCount), "The wrong number of events was read for the value of the inclusive flag.");
@@ -681,7 +697,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     foreach (var sourceEvent in sourceEvents)
                     {
-                        var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                        var sourceId = sourceEvent.MessageId;
                         Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                         Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
                     }
@@ -722,7 +738,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var producer = new EventHubProducerClient(connectionString))
                 {
                     await SendEventsAsync(connectionString, seedEvents, new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
-                    await Task.Delay(250);
+                    await Task.Delay(TimeSpan.FromSeconds(2));
 
                     lastEnqueuedTime = (await producer.GetPartitionPropertiesAsync(partition, cancellationSource.Token)).LastEnqueuedTime;
                     startingPosition = EventPosition.FromEnqueuedTime(lastEnqueuedTime);
@@ -734,13 +750,17 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await using (var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, startingPosition, connectionString))
                 {
-                    var readState = await ReadEventsAsync(receiver, sourceEvents.Count, cancellationSource.Token);
+                    var readState = await ReadEventsAsync(receiver,sourceEvents.Select(evt => evt.MessageId), cancellationSource.Token);
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-                    Assert.That(readState.Events.Count, Is.EqualTo(sourceEvents.Count), "The number of events received should match.");
+
+                    // The exact number of events returned by the service may vary due to clock skew and how reader is positioned; ensure that
+                    // at least the expected source events were read and ignore any additional events.
+
+                    Assert.That(readState.Events.Count, Is.AtLeast(sourceEvents.Count), "The number of events received should match.");
 
                     foreach (var sourceEvent in sourceEvents)
                     {
-                        var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                        var sourceId = sourceEvent.MessageId;
                         Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                         Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
                     }
@@ -774,17 +794,19 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var customReceiver = new PartitionReceiver(customConsumerGroup, partition, EventPosition.Earliest, connectionString))
                 await using (var defaultReceiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, connectionString))
                 {
+                    var expectedEvents = sourceEvents.Select(evt => evt.MessageId);
+
                     var readState = await Task.WhenAll
                     (
-                        ReadEventsAsync(customReceiver, sourceEvents.Count, cancellationSource.Token),
-                        ReadEventsAsync(defaultReceiver, sourceEvents.Count, cancellationSource.Token)
+                        ReadEventsAsync(customReceiver, expectedEvents, cancellationSource.Token),
+                        ReadEventsAsync(defaultReceiver, expectedEvents, cancellationSource.Token)
                     );
 
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
                     foreach (var sourceEvent in sourceEvents)
                     {
-                        var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                        var sourceId = sourceEvent.MessageId;
                         Assert.That(readState[0].Events.TryGetValue(sourceId, out var customReadEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed for the custom receiver group.");
                         Assert.That(sourceEvent.IsEquivalentTo(customReadEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event for the custom receiver group.");
 
@@ -890,7 +912,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     using var readCancellation = CancellationTokenSource.CreateLinkedTokenSource(cancellationSource.Token);
                     readCancellation.CancelAfter(TimeSpan.FromSeconds(15));
 
-                    var readState = await ReadEventsAsync(receiver, sourceEvents.Count, readCancellation.Token, waitTime: TimeSpan.FromMilliseconds(250));
+                    var readState = await ReadEventsAsync(receiver,sourceEvents.Select(evt => evt.MessageId), readCancellation.Token, waitTime: TimeSpan.FromMilliseconds(250));
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The main cancellation token should not have been signaled.");
 
                     Assert.That(readState.Events.Count, Is.Zero, "No events should have been read from the empty partition.");
@@ -926,7 +948,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     // been read.  Because the close happens during the read loop, allow for a short
                     // delay to ensure that the state transition has been fully captured.
 
-                    async Task<bool> closeAfterFiveRead(ReadState state)
+                    async Task<bool> closeAfterFewRead(ReadState state)
                     {
                         if (state.Events.Count >= 2)
                         {
@@ -937,7 +959,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         return true;
                     }
 
-                    var readTask = ReadEventsAsync(receiver, sourceEvents.Count, cancellationSource.Token, iterationCallback: closeAfterFiveRead);
+                    var readTask = ReadEventsAsync(receiver,sourceEvents.Select(evt => evt.MessageId), cancellationSource.Token, iterationCallback: closeAfterFewRead);
 
                     Assert.That(async () => await readTask, Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -973,7 +995,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     // been read.  Because the close happens during the read loop, allow for a short
                     // delay to ensure that the state transition has been fully captured.
 
-                    async Task<bool> closeAfterFiveRead(ReadState state)
+                    async Task<bool> closeAfterFewRead(ReadState state)
                     {
                         if (state.Events.Count >= 2)
                         {
@@ -984,7 +1006,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         return true;
                     }
 
-                    var readTask = ReadEventsAsync(receiver, sourceEvents.Count, cancellationSource.Token, iterationCallback: closeAfterFiveRead);
+                    var readTask = ReadEventsAsync(receiver,sourceEvents.Select(evt => evt.MessageId), cancellationSource.Token, iterationCallback: closeAfterFewRead);
 
                     Assert.That(async () => await readTask, Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1040,7 +1062,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 await using (var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, connectionString, new PartitionReceiverOptions { Identifier = "first" }))
                 {
-                    var monitor = MonitorReadingEvents(receiver, sourceEvents.Count, cancellationSource.Token);
+                    var monitor = MonitorReadingEvents(receiver,sourceEvents.Select(evt => evt.MessageId), cancellationSource.Token);
 
                     await Task.WhenAny(monitor.EndCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1050,7 +1072,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     foreach (var sourceEvent in sourceEvents)
                     {
-                        var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                        var sourceId = sourceEvent.MessageId;
                         Assert.That(firstState.Events.TryGetValue(sourceId, out var firstReadEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed by the receiver.");
                         Assert.That(sourceEvent.IsEquivalentTo(firstReadEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event for the receiver.");
                     }
@@ -1084,8 +1106,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var firstReceiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partitions[0], EventPosition.Earliest, connectionString, new PartitionReceiverOptions { Identifier = "first" }))
                 await using (var secondReceiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partitions[1], EventPosition.Earliest, connectionString, new PartitionReceiverOptions { Identifier = "second" }))
                 {
-                    var firstMonitor = MonitorReadingEvents(firstReceiver, sourceEvents.Count, cancellationSource.Token);
-                    var secondMonitor = MonitorReadingEvents(secondReceiver, sourceEvents.Count, cancellationSource.Token);
+                    var expectedEvents = sourceEvents.Select(evt => evt.MessageId);
+                    var firstMonitor = MonitorReadingEvents(firstReceiver, expectedEvents, cancellationSource.Token);
+                    var secondMonitor = MonitorReadingEvents(secondReceiver, expectedEvents, cancellationSource.Token);
 
                     await Task.WhenAny(firstMonitor.EndCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1099,7 +1122,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     foreach (var sourceEvent in sourceEvents)
                     {
-                        var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                        var sourceId = sourceEvent.MessageId;
                         Assert.That(firstState.Events.TryGetValue(sourceId, out var firstReadEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed by the first receiver.");
                         Assert.That(sourceEvent.IsEquivalentTo(firstReadEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event for the first receiver.");
 
@@ -1133,11 +1156,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var exclusiveReceiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, connectionString, exclusiveOptions))
                 await using (var nonExclusiveReceiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, connectionString, LowPrefetchOptions))
                 {
-                    var exclusiveMonitor = MonitorReadingEvents(exclusiveReceiver, int.MaxValue, cancellationSource.Token);
+                    var exclusiveMonitor = MonitorReadingEvents(exclusiveReceiver, null, cancellationSource.Token);
                     await Task.WhenAny(exclusiveMonitor.StartCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-                    var nonExclusiveReadTask = ReadEventsAsync(nonExclusiveReceiver, int.MaxValue, cancellationSource.Token);
+                    var nonExclusiveReadTask = ReadEventsAsync(nonExclusiveReceiver, null, cancellationSource.Token);
                     Assert.That(async () => await nonExclusiveReadTask, Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ConsumerDisconnected), "The non-exclusive read should be rejected.");
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
@@ -1171,11 +1194,13 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var higherReceiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, connectionString, higherOptions))
                 await using (var lowerReceiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, connectionString, lowerOptions))
                 {
-                    var higherMonitor = MonitorReadingEvents(higherReceiver, int.MaxValue, cancellationSource.Token);
+                    var expectedEvents = sourceEvents.Select(evt => evt.MessageId);
+
+                    var higherMonitor = MonitorReadingEvents(higherReceiver, expectedEvents, cancellationSource.Token);
                     await Task.WhenAny(higherMonitor.StartCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-                    var lowerReadTask = ReadEventsAsync(lowerReceiver, int.MaxValue, cancellationSource.Token);
+                    var lowerReadTask = ReadEventsAsync(lowerReceiver, expectedEvents, cancellationSource.Token);
                     Assert.That(async () => await lowerReadTask, Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ConsumerDisconnected), "The lower-level read should be rejected.");
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
@@ -1218,8 +1243,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var higherReceiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partitions[0], EventPosition.Earliest, connectionString, higherOptions))
                 await using (var lowerReceiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partitions[1], EventPosition.Earliest, connectionString, lowerOptions))
                 {
-                    var higherMonitor = MonitorReadingEvents(higherReceiver, sourceEvents.Count, cancellationSource.Token);
-                    var lowerMonitor = MonitorReadingEvents(lowerReceiver, sourceEvents.Count, cancellationSource.Token);
+                    var expectedEvents = sourceEvents.Select(evt => evt.MessageId);
+                    var higherMonitor = MonitorReadingEvents(higherReceiver, expectedEvents, cancellationSource.Token);
+                    var lowerMonitor = MonitorReadingEvents(lowerReceiver, expectedEvents, cancellationSource.Token);
 
                     var readsCompleteTask = Task.WhenAll(higherMonitor.EndCompletion.Task, lowerMonitor.EndCompletion.Task);
                     await Task.WhenAny(readsCompleteTask, Task.Delay(Timeout.Infinite, cancellationSource.Token));
@@ -1265,8 +1291,9 @@ namespace Azure.Messaging.EventHubs.Tests
                     // Read from each partition, allowing the higher level operation to begin first.  Both read operations should be
                     // successful and read all events from their respective partition.
 
-                    var higherMonitor = MonitorReadingEvents(higherReceiver, sourceEvents.Count, cancellationSource.Token);
-                    var lowerMonitor = MonitorReadingEvents(lowerReceiver, sourceEvents.Count, cancellationSource.Token);
+                    var expectedEvents = sourceEvents.Select(evt => evt.MessageId);
+                    var higherMonitor = MonitorReadingEvents(higherReceiver, expectedEvents, cancellationSource.Token);
+                    var lowerMonitor = MonitorReadingEvents(lowerReceiver, expectedEvents, cancellationSource.Token);
 
                     var readsCompleteTask = Task.WhenAll(higherMonitor.EndCompletion.Task, lowerMonitor.EndCompletion.Task);
                     await Task.WhenAny(readsCompleteTask, Task.Delay(Timeout.Infinite, cancellationSource.Token));
@@ -1299,6 +1326,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 var exclusiveOptions = new PartitionReceiverOptions { OwnerLevel = 20, PrefetchCount = LowPrefetchCount };
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
                 var sourceEvents = EventGenerator.CreateSmallEvents(200).ToList();
+                var expectedEvents = sourceEvents.Select(evt => evt.MessageId);
 
                 var partition = (await QueryPartitionsAsync(connectionString, cancellationSource.Token)).First();
                 await SendEventsAsync(connectionString, sourceEvents, new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
@@ -1308,14 +1336,14 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     // Start the non-exclusive read, waiting until at least some events were read before starting the exclusive reader.
 
-                    var nonExclusiveMonitor = MonitorReadingEvents(nonExclusiveReceiver, sourceEvents.Count, cancellationSource.Token);
+                    var nonExclusiveMonitor = MonitorReadingEvents(nonExclusiveReceiver, expectedEvents, cancellationSource.Token);
 
                     await Task.WhenAny(nonExclusiveMonitor.StartCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
                     // The non-exclusive reader has been confirmed to be active; start the exclusive level reader and validate that it supersedes the lower.
 
-                    var exclusiveMonitor = MonitorReadingEvents(exclusiveReceiver, sourceEvents.Count, cancellationSource.Token);
+                    var exclusiveMonitor = MonitorReadingEvents(exclusiveReceiver, expectedEvents, cancellationSource.Token);
                     await Task.WhenAny(exclusiveMonitor.StartCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
 
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1331,7 +1359,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     foreach (var sourceEvent in sourceEvents)
                     {
-                        var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                        var sourceId = sourceEvent.MessageId;
                         Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                         Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
                     }
@@ -1356,6 +1384,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 var lowerOptions = new PartitionReceiverOptions { OwnerLevel = 20, PrefetchCount = LowPrefetchCount };
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
                 var sourceEvents = EventGenerator.CreateSmallEvents(200).ToList();
+                var expectedEvents = sourceEvents.Select(evt => evt.MessageId);
 
                 var partition = (await QueryPartitionsAsync(connectionString, cancellationSource.Token)).First();
                 await SendEventsAsync(connectionString, sourceEvents, new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
@@ -1365,14 +1394,14 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     // Start the lower level read, waiting until at least some events were read before starting the higher reader.
 
-                    var lowerMonitor = MonitorReadingEvents(lowerReceiver, sourceEvents.Count, cancellationSource.Token);
+                    var lowerMonitor = MonitorReadingEvents(lowerReceiver, expectedEvents, cancellationSource.Token);
 
                     await Task.WhenAny(lowerMonitor.StartCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
                     // The lower reader has been confirmed to be active; start the higher level reader and validate that it supersedes the lower.
 
-                    var higherMonitor = MonitorReadingEvents(higherReceiver, sourceEvents.Count, cancellationSource.Token);
+                    var higherMonitor = MonitorReadingEvents(higherReceiver, expectedEvents, cancellationSource.Token);
                     await Task.WhenAny(higherMonitor.StartCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
 
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1388,7 +1417,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     foreach (var sourceEvent in sourceEvents)
                     {
-                        var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                        var sourceId = sourceEvent.MessageId;
                         Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                         Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
                     }
@@ -1412,6 +1441,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 var exclusiveOptions = new PartitionReceiverOptions { OwnerLevel = 20, PrefetchCount = LowPrefetchCount };
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
                 var sourceEvents = EventGenerator.CreateSmallEvents(200).ToList();
+                var expectedEvents = sourceEvents.Select(evt => evt.MessageId);
                 var partitions = await QueryPartitionsAsync(connectionString, cancellationSource.Token);
 
                 // Send the same set of events to both partitions.
@@ -1427,7 +1457,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     // Start the non-exclusive read, waiting until at least some events were read before starting the exclusive reader.
 
-                    var nonExclusiveMonitor = MonitorReadingEvents(nonExclusiveReceiver, sourceEvents.Count, cancellationSource.Token);
+                    var nonExclusiveMonitor = MonitorReadingEvents(nonExclusiveReceiver, expectedEvents, cancellationSource.Token);
 
                     await Task.WhenAny(nonExclusiveMonitor.StartCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1435,7 +1465,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     // The non-exclusive reader has been confirmed to be active; start the exclusive level reader and ensure that it is active so that
                     // both readers are confirmed to be running at the same time.
 
-                    var exclusiveMonitor = MonitorReadingEvents(exclusiveReceiver, sourceEvents.Count, cancellationSource.Token);
+                    var exclusiveMonitor = MonitorReadingEvents(exclusiveReceiver, expectedEvents, cancellationSource.Token);
 
                     await Task.WhenAny(exclusiveMonitor.StartCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1475,6 +1505,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 var exclusiveOptions = new PartitionReceiverOptions { OwnerLevel = 20, PrefetchCount = LowPrefetchCount };
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
                 var sourceEvents = EventGenerator.CreateSmallEvents(200).ToList();
+                var expectedEvents = sourceEvents.Select(evt => evt.MessageId);
 
                 var partition = (await QueryPartitionsAsync(connectionString, cancellationSource.Token)).First();
                 await SendEventsAsync(connectionString, sourceEvents, new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
@@ -1484,7 +1515,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     // Start the non-exclusive read, waiting until at least some events were read before starting the exclusive reader.
 
-                    var nonExclusiveMonitor = MonitorReadingEvents(nonExclusiveReceiver, sourceEvents.Count, cancellationSource.Token);
+                    var nonExclusiveMonitor = MonitorReadingEvents(nonExclusiveReceiver, expectedEvents, cancellationSource.Token);
 
                     await Task.WhenAny(nonExclusiveMonitor.StartCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1492,7 +1523,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     // The non-exclusive reader has been confirmed to be active; start the exclusive level reader and ensure that it is active so that
                     // both readers are confirmed to be running at the same time.
 
-                    var exclusiveMonitor = MonitorReadingEvents(exclusiveReceiver, sourceEvents.Count, cancellationSource.Token);
+                    var exclusiveMonitor = MonitorReadingEvents(exclusiveReceiver, expectedEvents, cancellationSource.Token);
 
                     await Task.WhenAny(exclusiveMonitor.StartCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1531,6 +1562,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 var lowerOptions = new PartitionReceiverOptions { OwnerLevel = 20, PrefetchCount = LowPrefetchCount };
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
                 var sourceEvents = EventGenerator.CreateSmallEvents(200).ToList();
+                var expectedEvents = sourceEvents.Select(evt => evt.MessageId);
 
                 var partition = (await QueryPartitionsAsync(connectionString, cancellationSource.Token)).First();
                 await SendEventsAsync(connectionString, sourceEvents, new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
@@ -1540,7 +1572,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     // Start the lower level read, waiting until at least some events were read before starting the higher reader.
 
-                    var lowerMonitor = MonitorReadingEvents(lowerReceiver, int.MaxValue, cancellationSource.Token);
+                    var lowerMonitor = MonitorReadingEvents(lowerReceiver, expectedEvents, cancellationSource.Token);
 
                     await Task.WhenAny(lowerMonitor.StartCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1549,7 +1581,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     using var higherCancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationSource.Token);
 
-                    var higherMonitor = MonitorReadingEvents(higherReceiver, int.MaxValue, higherCancellationSource.Token);
+                    var higherMonitor = MonitorReadingEvents(higherReceiver, expectedEvents, higherCancellationSource.Token);
                     await Task.WhenAny(higherMonitor.StartCompletion.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
 
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1813,7 +1845,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     using var readCancellation = CancellationTokenSource.CreateLinkedTokenSource(cancellationSource.Token);
                     readCancellation.CancelAfter(readTime);
 
-                    var readState = await ReadEventsAsync(receiver, int.MaxValue, readCancellation.Token, waitTime: waitTime);
+                    var readState = await ReadEventsAsync(receiver, null, readCancellation.Token, waitTime: waitTime);
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The main cancellation token should not have been signaled.");
 
                     Assert.That(readState.Events.Count, Is.Zero, "No events should have been read from the empty partition.");
@@ -1893,7 +1925,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 await producer.SendAsync(new[] { eventData }, new SendEventOptions { PartitionId = partition });
 
                 await using var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, connectionString);
-                var readState = await ReadEventsAsync(receiver, 1, cancellationSource.Token);
+                var readState = await ReadEventsAsync(receiver, new HashSet<string> { eventData.MessageId }, cancellationSource.Token);
 
                 Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
                 Assert.That(readState.Events.Count, Is.EqualTo(1), "A single event was sent.");
@@ -1952,9 +1984,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 var partition = (await QueryPartitionsAsync(connectionString, cancellationSource.Token)).First();
                 var value = new Dictionary<string, string> { { "key", "value" } };
                 var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(value));
-                var eventData = new EventData(message);
+                var eventData = new EventData(message) { MessageId = Guid.NewGuid().ToString() };
 
-                message.ApplicationProperties.Add("EventGenerator::Identifier", Guid.NewGuid().ToString());
+                message.ApplicationProperties.Add("EventGenerator::Identifier", eventData.MessageId);
 
                 // Publish the event and then read it back.
 
@@ -1962,7 +1994,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 await producer.SendAsync(new[] { eventData }, new SendEventOptions { PartitionId = partition });
 
                 await using var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, connectionString);
-                var readState = await ReadEventsAsync(receiver, 1, cancellationSource.Token);
+                var readState = await ReadEventsAsync(receiver, new HashSet<string> { eventData.MessageId }, cancellationSource.Token);
 
                 Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
                 Assert.That(readState.Events.Count, Is.EqualTo(1), "A single event was sent.");
@@ -1996,9 +2028,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 var partition = (await QueryPartitionsAsync(connectionString, cancellationSource.Token)).First();
                 var value = new[] { new List<object> { "1", 2 } };
                 var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromSequence(value));
-                var eventData = new EventData(message);
+                var eventData = new EventData(message) { MessageId = Guid.NewGuid().ToString() };
 
-                message.ApplicationProperties.Add("EventGenerator::Identifier", Guid.NewGuid().ToString());
+                message.ApplicationProperties.Add("EventGenerator::Identifier", eventData.MessageId);
 
                 // Publish the event and then read it back.
 
@@ -2006,7 +2038,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 await producer.SendAsync(new[] { eventData }, new SendEventOptions { PartitionId = partition });
 
                 await using var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, connectionString);
-                var readState = await ReadEventsAsync(receiver, 1, cancellationSource.Token);
+                var readState = await ReadEventsAsync(receiver, new HashSet<string> { eventData.MessageId }, cancellationSource.Token);
 
                 Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
                 Assert.That(readState.Events.Count, Is.EqualTo(1), "A single event was sent.");
@@ -2211,7 +2243,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         /// <param name="receiver">The receiver to use for reading.</param>
-        /// <param name="expectedEventCount">The expected count of events; when this number of events has been read, reading will cease.</param>
+        /// <param name="expectedEvents">The set of identifiers for the events expected to be read; when all events have been accounted for, reading will cease.  If <c>null</c>, reading will continue until canceled.</param>
         /// <param name="cancellationToken">The token used to signal cancellation of the read.</param>
         /// <param name="batchSize">The size to use when requesting the event batch; if not provided, a default will be assumed.</param>
         /// <param name="waitTime">The amount of time to wait for a full batch before processing events; if not provided, a default will be assumed.</param>
@@ -2220,16 +2252,16 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <returns>The final state when reading has ceased.</returns>
         ///
         private async Task<ReadState> ReadEventsAsync(PartitionReceiver receiver,
-                                                      int expectedEventCount,
+                                                      IEnumerable<string> expectedEvents,
                                                       CancellationToken cancellationToken,
                                                       int? batchSize = default,
                                                       TimeSpan? waitTime = default,
                                                       Func<ReadState, Task<bool>> iterationCallback = default)
         {
-            batchSize ??= Math.Min(expectedEventCount, 25);
+            batchSize ??= 25;
             waitTime ??= TimeSpan.FromSeconds(1);
 
-            var result = new ReadState();
+            var result = new ReadState(expectedEvents);
             var shouldReadNextEventBatch = true;
 
             IEnumerable<EventData> batch;
@@ -2246,17 +2278,21 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         batchHasEvents = true;
 
-                        var eventId = eventData.Properties[EventGenerator.IdPropertyName].ToString();
-
-                        if ((result.Events.TryAdd(eventId, eventData)) && (result.Events.Count >= expectedEventCount))
-                        {
-                            shouldReadNextEventBatch = false;
-                        }
+                        result.RemainingEvents?.Remove(eventData.MessageId);
+                        result.Events.TryAdd(eventData.MessageId, eventData);
 
                         // If there's a callback registered per-tick, invoke it and respect its
                         // decision on whether iteration should continue.
 
                         if ((iterationCallback != null) && (!(await iterationCallback(result).ConfigureAwait(false))))
+                        {
+                            shouldReadNextEventBatch = false;
+                        }
+
+                        // If there are no events remaining, there's no need to continue
+                        // reading, regardless of the callback result.
+
+                        if ((result.RemainingEvents?.Count ?? 1) == 0)
                         {
                             shouldReadNextEventBatch = false;
                         }
@@ -2282,7 +2318,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         /// <param name="receiver">The receiver to use for reading.</param>
-        /// <param name="expectedEventCount">The expected count of events; when this number of events has been read, reading will cease.</param>
+        /// <param name="expectedEvents">The set of identifiers for the events expected to be read; when all events have been accounted for, reading will cease.  If <c>null</c>, reading will continue until canceled.</param>
         /// <param name="cancellationToken">The token used to signal cancellation of the read.</param>
         /// <param name="batchSize">The size to use when requesting the event batch; if not provided, a default will be assumed.</param>
         /// <param name="waitTime">The amount of time to wait for a full batch before processing events; if not provided, a default will be assumed.</param>
@@ -2295,7 +2331,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </remarks>
         ///
         private ReadMonitor MonitorReadingEvents(PartitionReceiver receiver,
-                                                 int expectedEventCount,
+                                                 IEnumerable<string> expectedEvents,
                                                  CancellationToken cancellationToken,
                                                  int? batchSize = default,
                                                  TimeSpan? waitTime = default)
@@ -2309,7 +2345,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     monitor.StartCompletion.TrySetResult(true);
                 }
 
-                if (currentState.Events.Count >= expectedEventCount)
+                if ((currentState.RemainingEvents?.Count ?? 1) == 0)
                 {
                     monitor.EndCompletion.TrySetResult(true);
                 }
@@ -2317,7 +2353,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 return Task.FromResult(true);
             }
 
-            monitor.ReadTask = ReadEventsAsync(receiver, int.MaxValue, cancellationToken, batchSize, waitTime, readCallback);
+            monitor.ReadTask = ReadEventsAsync(receiver, expectedEvents, cancellationToken, batchSize, waitTime, readCallback);
             return monitor;
         }
 
@@ -2327,8 +2363,14 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private class ReadState
         {
-            public readonly ConcurrentDictionary<string, EventData> Events = new ConcurrentDictionary<string, EventData>();
+            public readonly HashSet<string> RemainingEvents;
+            public readonly ConcurrentDictionary<string, EventData> Events = new();
             public long EmptyCount = 0;
+
+            public ReadState(IEnumerable<string> expectedEvents) =>
+                RemainingEvents = (expectedEvents == null)
+                    ? null
+                    : new(expectedEvents);
         }
 
         /// <summary>

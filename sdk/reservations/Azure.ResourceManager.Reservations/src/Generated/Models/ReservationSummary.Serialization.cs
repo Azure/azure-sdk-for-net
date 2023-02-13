@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<float> processingCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("succeededCount"))
+                if (property.NameEquals("succeededCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     succeededCount = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("failedCount"))
+                if (property.NameEquals("failedCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     failedCount = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("expiringCount"))
+                if (property.NameEquals("expiringCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     expiringCount = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("expiredCount"))
+                if (property.NameEquals("expiredCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     expiredCount = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("pendingCount"))
+                if (property.NameEquals("pendingCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     pendingCount = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("cancelledCount"))
+                if (property.NameEquals("cancelledCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     cancelledCount = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("processingCount"))
+                if (property.NameEquals("processingCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

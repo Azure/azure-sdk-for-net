@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Communication.NetworkTraversal
 {
@@ -20,10 +21,7 @@ namespace Azure.Communication.NetworkTraversal
         /// <exception cref="ArgumentNullException"> <paramref name="iceServers"/> is null. </exception>
         public CommunicationRelayConfiguration(DateTimeOffset expiresOn, IEnumerable<CommunicationIceServer> iceServers)
         {
-            if (iceServers == null)
-            {
-                throw new ArgumentNullException(nameof(iceServers));
-            }
+            Argument.AssertNotNull(iceServers, nameof(iceServers));
 
             ExpiresOn = expiresOn;
             IceServers = iceServers.ToList();

@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.Maps.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
             writer.WriteEndObject();
         }
 
         internal static MapsSku DeserializeMapsSku(JsonElement element)
         {
-            Name name = default;
+            MapsSkuName name = default;
             Optional<string> tier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
-                    name = new Name(property.Value.GetString());
+                    name = new MapsSkuName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     tier = property.Value.GetString();
                     continue;

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of ShareList. </summary>
         internal ShareList()
         {
-            Value = new ChangeTrackingList<ShareData>();
+            Value = new ChangeTrackingList<DataBoxEdgeShareData>();
         }
 
         /// <summary> Initializes a new instance of ShareList. </summary>
         /// <param name="value"> The list of shares. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal ShareList(IReadOnlyList<ShareData> value, string nextLink)
+        internal ShareList(IReadOnlyList<DataBoxEdgeShareData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of shares. </summary>
-        public IReadOnlyList<ShareData> Value { get; }
+        public IReadOnlyList<DataBoxEdgeShareData> Value { get; }
         /// <summary> Link to the next set of results. </summary>
         public string NextLink { get; }
     }

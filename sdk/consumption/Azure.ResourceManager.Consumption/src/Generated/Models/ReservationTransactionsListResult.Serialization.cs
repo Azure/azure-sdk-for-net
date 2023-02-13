@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static ReservationTransactionsListResult DeserializeReservationTransactionsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ReservationTransaction>> value = default;
+            Optional<IReadOnlyList<ConsumptionReservationTransaction>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ReservationTransaction> array = new List<ReservationTransaction>();
+                    List<ConsumptionReservationTransaction> array = new List<ConsumptionReservationTransaction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationTransaction.DeserializeReservationTransaction(item));
+                        array.Add(ConsumptionReservationTransaction.DeserializeConsumptionReservationTransaction(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

@@ -22,10 +22,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public AvsPrivateCloudData(AzureLocation location, AvsSku sku) : base(location)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
             IdentitySources = new ChangeTrackingList<SingleSignOnIdentitySource>();
@@ -59,7 +56,8 @@ namespace Azure.ResourceManager.Avs
         /// <param name="nsxtCertificateThumbprint"> Thumbprint of the NSX-T Manager SSL certificate. </param>
         /// <param name="externalCloudLinks"> Array of cloud link IDs from other clouds that connect to this one. </param>
         /// <param name="secondaryCircuit"> A secondary expressRoute circuit from a separate AZ. Only present in a stretched private cloud. </param>
-        internal AvsPrivateCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AvsSku sku, ManagedServiceIdentity identity, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, AvsPrivateCloudProvisioningState? provisioningState, ExpressRouteCircuit circuit, AvsPrivateCloudEndpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vMotionNetwork, string vCenterPassword, string nsxtPassword, string vCenterCertificateThumbprint, string nsxtCertificateThumbprint, IReadOnlyList<ResourceIdentifier> externalCloudLinks, ExpressRouteCircuit secondaryCircuit) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="nsxPublicIPQuotaRaised"> Flag to indicate whether the private cloud has the quota for provisioned NSX Public IP count raised from 64 to 1024. </param>
+        internal AvsPrivateCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AvsSku sku, ManagedServiceIdentity identity, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, AvsPrivateCloudProvisioningState? provisioningState, ExpressRouteCircuit circuit, AvsPrivateCloudEndpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vMotionNetwork, string vCenterPassword, string nsxtPassword, string vCenterCertificateThumbprint, string nsxtCertificateThumbprint, IReadOnlyList<ResourceIdentifier> externalCloudLinks, ExpressRouteCircuit secondaryCircuit, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -81,6 +79,7 @@ namespace Azure.ResourceManager.Avs
             NsxtCertificateThumbprint = nsxtCertificateThumbprint;
             ExternalCloudLinks = externalCloudLinks;
             SecondaryCircuit = secondaryCircuit;
+            NsxPublicIPQuotaRaised = nsxPublicIPQuotaRaised;
         }
 
         /// <summary> The private cloud SKU. </summary>
@@ -130,5 +129,7 @@ namespace Azure.ResourceManager.Avs
         public IReadOnlyList<ResourceIdentifier> ExternalCloudLinks { get; }
         /// <summary> A secondary expressRoute circuit from a separate AZ. Only present in a stretched private cloud. </summary>
         public ExpressRouteCircuit SecondaryCircuit { get; set; }
+        /// <summary> Flag to indicate whether the private cloud has the quota for provisioned NSX Public IP count raised from 64 to 1024. </summary>
+        public NsxPublicIPQuotaRaisedEnum? NsxPublicIPQuotaRaised { get; }
     }
 }

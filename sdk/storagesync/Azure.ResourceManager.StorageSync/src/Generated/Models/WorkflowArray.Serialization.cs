@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static WorkflowArray DeserializeWorkflowArray(JsonElement element)
         {
-            Optional<IReadOnlyList<WorkflowData>> value = default;
+            Optional<IReadOnlyList<StorageSyncWorkflowData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WorkflowData> array = new List<WorkflowData>();
+                    List<StorageSyncWorkflowData> array = new List<StorageSyncWorkflowData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkflowData.DeserializeWorkflowData(item));
+                        array.Add(StorageSyncWorkflowData.DeserializeStorageSyncWorkflowData(item));
                     }
                     value = array;
                     continue;

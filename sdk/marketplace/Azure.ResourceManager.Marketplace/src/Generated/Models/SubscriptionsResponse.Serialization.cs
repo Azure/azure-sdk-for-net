@@ -15,32 +15,32 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static SubscriptionsResponse DeserializeSubscriptionsResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<Subscription>> value = default;
+            Optional<IReadOnlyList<MarketplaceSubscription>> value = default;
             Optional<string> skipToken = default;
             Optional<long> count = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Subscription> array = new List<Subscription>();
+                    List<MarketplaceSubscription> array = new List<MarketplaceSubscription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Subscription.DeserializeSubscription(item));
+                        array.Add(MarketplaceSubscription.DeserializeMarketplaceSubscription(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("skipToken"))
+                if (property.NameEquals("skipToken"u8))
                 {
                     skipToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

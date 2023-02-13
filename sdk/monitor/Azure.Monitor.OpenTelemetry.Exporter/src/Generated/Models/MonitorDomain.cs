@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> The abstract common base of all domains. </summary>
@@ -15,9 +18,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         public MonitorDomain(int version)
         {
             Version = version;
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Schema version. </summary>
         public int Version { get; }
+        /// <summary> Additional Properties. </summary>
+        public IDictionary<string, object> AdditionalProperties { get; }
     }
 }

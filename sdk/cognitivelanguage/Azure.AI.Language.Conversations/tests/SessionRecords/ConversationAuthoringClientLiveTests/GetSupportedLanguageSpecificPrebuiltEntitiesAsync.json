@@ -1,28 +1,29 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/global/prebuilt-entities?language=es\u0026multilingual=false\u0026api-version=2022-05-01",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/global/prebuilt-entities?language=es\u0026multilingual=false\u0026api-version=2022-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c9a4cfa135f71eb4203514dbb6002262-230e57cbb5817982-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220616.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "04648486c45cc8e33856dc0faac8ddef",
+        "traceparent": "00-723743bae6e0e8ea5ebf84919888638d-b046b5c6a82a2469-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6ebded243cfd59e9445a32909f8d4eb1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "3b0e3323-a78a-4aca-81e3-0e9ec9b91741",
+        "apim-request-id": "e89d596e-0ccb-4cdf-b1d9-ff2055dd52ad",
         "Content-Length": "1656",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 17 Jun 2022 00:30:34 GMT",
-        "request-id": "3b0e3323-a78a-4aca-81e3-0e9ec9b91741",
+        "Date": "Thu, 20 Oct 2022 00:18:33 GMT",
+        "request-id": "e89d596e-0ccb-4cdf-b1d9-ff2055dd52ad",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "179"
+        "x-envoy-upstream-service-time": "11",
+        "x-ms-region": "UK South"
       },
       "ResponseBody": {
         "value": [
@@ -99,6 +100,6 @@
   "Variables": {
     "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
     "CONVERSATIONS_KEY": "Sanitized",
-    "RandomSeed": "898833194"
+    "RandomSeed": "1761330120"
   }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -21,26 +22,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="repositoryName"/>, <paramref name="collaborationBranch"/>, <paramref name="rootFolder"/> or <paramref name="projectName"/> is null. </exception>
         public FactoryVstsConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder, string projectName) : base(accountName, repositoryName, collaborationBranch, rootFolder)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (repositoryName == null)
-            {
-                throw new ArgumentNullException(nameof(repositoryName));
-            }
-            if (collaborationBranch == null)
-            {
-                throw new ArgumentNullException(nameof(collaborationBranch));
-            }
-            if (rootFolder == null)
-            {
-                throw new ArgumentNullException(nameof(rootFolder));
-            }
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
+            Argument.AssertNotNull(accountName, nameof(accountName));
+            Argument.AssertNotNull(repositoryName, nameof(repositoryName));
+            Argument.AssertNotNull(collaborationBranch, nameof(collaborationBranch));
+            Argument.AssertNotNull(rootFolder, nameof(rootFolder));
+            Argument.AssertNotNull(projectName, nameof(projectName));
 
             ProjectName = projectName;
             FactoryRepoConfigurationType = "FactoryVSTSConfiguration";

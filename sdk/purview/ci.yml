@@ -8,6 +8,8 @@ trigger:
   paths:
     include:
     - sdk/purview/
+    exclude:
+    - sdk/purview/Azure.ResourceManager.Purview/
 
 pr:
   branches:
@@ -19,12 +21,13 @@ pr:
   paths:
     include:
     - sdk/purview/
+    exclude:
+    - sdk/purview/Azure.ResourceManager.Purview/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: purview
-    BuildSnippets: true
     ArtifactName: packages
     Artifacts:
     - name: Azure.Analytics.Purview.Share

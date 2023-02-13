@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static StorageAccountCredentialList DeserializeStorageAccountCredentialList(JsonElement element)
         {
-            Optional<IReadOnlyList<StorageAccountCredentialData>> value = default;
+            Optional<IReadOnlyList<DataBoxEdgeStorageAccountCredentialData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<StorageAccountCredentialData> array = new List<StorageAccountCredentialData>();
+                    List<DataBoxEdgeStorageAccountCredentialData> array = new List<DataBoxEdgeStorageAccountCredentialData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageAccountCredentialData.DeserializeStorageAccountCredentialData(item));
+                        array.Add(DataBoxEdgeStorageAccountCredentialData.DeserializeDataBoxEdgeStorageAccountCredentialData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

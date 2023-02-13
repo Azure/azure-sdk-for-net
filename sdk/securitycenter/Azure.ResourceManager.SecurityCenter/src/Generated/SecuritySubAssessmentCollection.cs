@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -21,8 +20,8 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A class representing a collection of <see cref="SecuritySubAssessmentResource" /> and their operations.
-    /// Each <see cref="SecuritySubAssessmentResource" /> in the collection will belong to the same instance of <see cref="SecurityAssessmentResponseResource" />.
-    /// To get a <see cref="SecuritySubAssessmentCollection" /> instance call the GetSecuritySubAssessments method from an instance of <see cref="SecurityAssessmentResponseResource" />.
+    /// Each <see cref="SecuritySubAssessmentResource" /> in the collection will belong to the same instance of <see cref="SecurityAssessmentResource" />.
+    /// To get a <see cref="SecuritySubAssessmentCollection" /> instance call the GetSecuritySubAssessments method from an instance of <see cref="SecurityAssessmentResource" />.
     /// </summary>
     public partial class SecuritySubAssessmentCollection : ArmCollection, IEnumerable<SecuritySubAssessmentResource>, IAsyncEnumerable<SecuritySubAssessmentResource>
     {
@@ -49,14 +48,22 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SecurityAssessmentResponseResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SecurityAssessmentResponseResource.ResourceType), nameof(id));
+            if (id.ResourceType != SecurityAssessmentResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SecurityAssessmentResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get a security sub-assessment on your scanned resource
-        /// Request Path: /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments/{subAssessmentName}
-        /// Operation Id: SubAssessments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments/{subAssessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubAssessments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subAssessmentName"> The Sub-Assessment Key - Unique key for the sub-assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get a security sub-assessment on your scanned resource
-        /// Request Path: /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments/{subAssessmentName}
-        /// Operation Id: SubAssessments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments/{subAssessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubAssessments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subAssessmentName"> The Sub-Assessment Key - Unique key for the sub-assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,92 +128,60 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get security sub-assessments on all your scanned resources inside a scope
-        /// Request Path: /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments
-        /// Operation Id: SubAssessments_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubAssessments_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecuritySubAssessmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecuritySubAssessmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SecuritySubAssessmentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securitySubAssessmentSubAssessmentsClientDiagnostics.CreateScope("SecuritySubAssessmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securitySubAssessmentSubAssessmentsRestClient.ListAsync(Id.Parent, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecuritySubAssessmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SecuritySubAssessmentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securitySubAssessmentSubAssessmentsClientDiagnostics.CreateScope("SecuritySubAssessmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securitySubAssessmentSubAssessmentsRestClient.ListNextPageAsync(nextLink, Id.Parent, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecuritySubAssessmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securitySubAssessmentSubAssessmentsRestClient.CreateListRequest(Id.Parent, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securitySubAssessmentSubAssessmentsRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecuritySubAssessmentResource(Client, SecuritySubAssessmentData.DeserializeSecuritySubAssessmentData(e)), _securitySubAssessmentSubAssessmentsClientDiagnostics, Pipeline, "SecuritySubAssessmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get security sub-assessments on all your scanned resources inside a scope
-        /// Request Path: /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments
-        /// Operation Id: SubAssessments_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubAssessments_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecuritySubAssessmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecuritySubAssessmentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SecuritySubAssessmentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securitySubAssessmentSubAssessmentsClientDiagnostics.CreateScope("SecuritySubAssessmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securitySubAssessmentSubAssessmentsRestClient.List(Id.Parent, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecuritySubAssessmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SecuritySubAssessmentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securitySubAssessmentSubAssessmentsClientDiagnostics.CreateScope("SecuritySubAssessmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securitySubAssessmentSubAssessmentsRestClient.ListNextPage(nextLink, Id.Parent, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecuritySubAssessmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securitySubAssessmentSubAssessmentsRestClient.CreateListRequest(Id.Parent, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securitySubAssessmentSubAssessmentsRestClient.CreateListNextPageRequest(nextLink, Id.Parent, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecuritySubAssessmentResource(Client, SecuritySubAssessmentData.DeserializeSecuritySubAssessmentData(e)), _securitySubAssessmentSubAssessmentsClientDiagnostics, Pipeline, "SecuritySubAssessmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments/{subAssessmentName}
-        /// Operation Id: SubAssessments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments/{subAssessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubAssessments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subAssessmentName"> The Sub-Assessment Key - Unique key for the sub-assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -224,8 +207,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments/{subAssessmentName}
-        /// Operation Id: SubAssessments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments/{subAssessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubAssessments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subAssessmentName"> The Sub-Assessment Key - Unique key for the sub-assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

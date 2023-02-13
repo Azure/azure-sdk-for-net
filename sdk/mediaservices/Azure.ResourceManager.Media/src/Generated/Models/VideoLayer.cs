@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Describes the settings to be used when encoding the input video into a desired output bitrate layer. </summary>
-    public partial class VideoLayer : VideoOrImageLayerProperties
+    public partial class VideoLayer : MediaLayerBase
     {
         /// <summary> Initializes a new instance of VideoLayer. </summary>
         /// <param name="bitrate"> The average bitrate in bits per second at which to encode the input video when generating this layer. This is a required field. </param>

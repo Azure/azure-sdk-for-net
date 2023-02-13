@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FormulaData>> GetAsync(string subscriptionId, string resourceGroupName, string labName, string name, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DevTestLabFormulaData>> GetAsync(string subscriptionId, string resourceGroupName, string labName, string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -188,13 +188,13 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        FormulaData value = default;
+                        DevTestLabFormulaData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FormulaData.DeserializeFormulaData(document.RootElement);
+                        value = DevTestLabFormulaData.DeserializeDevTestLabFormulaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FormulaData)null, message.Response);
+                    return Response.FromValue((DevTestLabFormulaData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FormulaData> Get(string subscriptionId, string resourceGroupName, string labName, string name, string expand = null, CancellationToken cancellationToken = default)
+        public Response<DevTestLabFormulaData> Get(string subscriptionId, string resourceGroupName, string labName, string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,19 +222,19 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        FormulaData value = default;
+                        DevTestLabFormulaData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FormulaData.DeserializeFormulaData(document.RootElement);
+                        value = DevTestLabFormulaData.DeserializeDevTestLabFormulaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FormulaData)null, message.Response);
+                    return Response.FromValue((DevTestLabFormulaData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string labName, string name, FormulaData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabFormulaData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string labName, string name, FormulaData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabFormulaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string labName, string name, FormulaData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabFormulaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string labName, string name, FormulaPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabFormulaPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FormulaData>> UpdateAsync(string subscriptionId, string resourceGroupName, string labName, string name, FormulaPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<DevTestLabFormulaData>> UpdateAsync(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabFormulaPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -443,9 +443,9 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        FormulaData value = default;
+                        DevTestLabFormulaData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FormulaData.DeserializeFormulaData(document.RootElement);
+                        value = DevTestLabFormulaData.DeserializeDevTestLabFormulaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FormulaData> Update(string subscriptionId, string resourceGroupName, string labName, string name, FormulaPatch patch, CancellationToken cancellationToken = default)
+        public Response<DevTestLabFormulaData> Update(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabFormulaPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -476,9 +476,9 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        FormulaData value = default;
+                        DevTestLabFormulaData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FormulaData.DeserializeFormulaData(document.RootElement);
+                        value = DevTestLabFormulaData.DeserializeDevTestLabFormulaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

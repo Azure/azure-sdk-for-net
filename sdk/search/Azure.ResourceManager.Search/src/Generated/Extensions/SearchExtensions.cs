@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Gets a list of all search services in the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Search/searchServices
-        /// Operation Id: Services_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/searchServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -44,8 +52,16 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Gets a list of all search services in the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Search/searchServices
-        /// Operation Id: Services_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/searchServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -58,36 +74,52 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Checks whether or not the given search service name is available for use. Search service names must be globally unique since they are part of the service URI (https://&lt;name&gt;.search.windows.net).
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Search/checkNameAvailability
-        /// Operation Id: Services_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The resource name and type to check. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityOutput>> CheckNameAvailabilityServiceAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<SearchServiceNameAvailabilityResult>> CheckSearchServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityServiceAsync(content, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckSearchServiceNameAvailabilityAsync(content, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Checks whether or not the given search service name is available for use. Search service names must be globally unique since they are part of the service URI (https://&lt;name&gt;.search.windows.net).
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Search/checkNameAvailability
-        /// Operation Id: Services_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The resource name and type to check. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CheckNameAvailabilityOutput> CheckNameAvailabilityService(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public static Response<SearchServiceNameAvailabilityResult> CheckSearchServiceNameAvailability(this SubscriptionResource subscriptionResource, SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckNameAvailabilityService(content, searchManagementRequestOptions, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckSearchServiceNameAvailability(content, searchManagementRequestOptions, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -109,8 +141,16 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Gets the search service with the given name in the given resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="searchServiceName"> The name of the Azure Cognitive Search service associated with the specified resource group. </param>
@@ -126,8 +166,16 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Gets the search service with the given name in the given resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="searchServiceName"> The name of the Azure Cognitive Search service associated with the specified resource group. </param>
@@ -179,20 +227,20 @@ namespace Azure.ResourceManager.Search
         }
         #endregion
 
-        #region SharedPrivateLinkResource
+        #region SharedSearchServicePrivateLinkResource
         /// <summary>
-        /// Gets an object representing a <see cref="SharedPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SharedPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SharedPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SharedSearchServicePrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SharedSearchServicePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SharedSearchServicePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SharedPrivateLinkResource" /> object. </returns>
-        public static SharedPrivateLinkResource GetSharedPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SharedSearchServicePrivateLinkResource" /> object. </returns>
+        public static SharedSearchServicePrivateLinkResource GetSharedSearchServicePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SharedPrivateLinkResource.ValidateResourceId(id);
-                return new SharedPrivateLinkResource(client, id);
+                SharedSearchServicePrivateLinkResource.ValidateResourceId(id);
+                return new SharedSearchServicePrivateLinkResource(client, id);
             }
             );
         }

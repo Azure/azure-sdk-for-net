@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -44,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task SingleLabelClassifyWithDisableServiceLogs()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -68,7 +69,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task SingleLabelClassifyBatchWithErrorTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             var documents = new List<string>
             {
@@ -103,7 +104,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task SingleLabelClassifyBatchConvenienceTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -130,7 +131,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task SingleLabelClassifyBatchConvenienceWithStatisticsTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -162,7 +163,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task SingleLabelClassifyBatchTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -189,7 +190,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task SingleLabelClassifyBatchWithStatisticsTest()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -222,7 +223,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [Ignore("Issue https://github.com/Azure/azure-sdk-for-net/issues/25152")]
         public async Task SingleLabelClassifyWithMultipleActions()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
@@ -258,7 +259,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task StartSingleLabelClassify()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
             ClassifyDocumentOperation operation = await client.StartSingleLabelClassifyAsync(s_singleLabelClassifyBatchDocuments, TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName);
 
             await PollUntilTimeout(operation);
@@ -272,7 +273,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [RecordedTest]
         public async Task StartSingleLabelClassifyWithName()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
             ClassifyDocumentOperation operation = await client.StartSingleLabelClassifyAsync(s_singleLabelClassifyBatchDocuments, TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName, new SingleLabelClassifyOptions
             {
                 DisplayName = "StartSingleLabelClassifyWithName",
@@ -287,6 +288,80 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateSummaryBatchResult(resultCollection);
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task SingleLabelClassifyBatchConvenienceWithAutoDetectedLanguageTest()
+        {
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
+            SingleLabelClassifyOptions options = new()
+            {
+                AutoDetectionDefaultLanguage = "en"
+            };
+
+            ClassifyDocumentOperation operation = await client.StartSingleLabelClassifyAsync(
+                s_singleLabelClassifyBatchConvenienceDocuments,
+                TestEnvironment.SingleClassificationProjectName,
+                TestEnvironment.SingleClassificationDeploymentName,
+                "auto",
+                options);
+
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page.
+            ClassifyDocumentResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            ValidateSummaryBatchResult(resultCollection, isLanguageAutoDetected: true);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task AnalyzeOperationSingleLabelClassifyWithAutoDetectedLanguageTest()
+        {
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
+            List<string> documents = s_singleLabelClassifyBatchConvenienceDocuments;
+            TextAnalyticsActions actions = new()
+            {
+                SingleLabelClassifyActions = new List<SingleLabelClassifyAction>()
+                {
+                    new SingleLabelClassifyAction(TestEnvironment.SingleClassificationProjectName, TestEnvironment.SingleClassificationDeploymentName)
+                },
+                DisplayName = "SingleLabelClassifyWithAutoDetectedLanguage",
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto");
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page.
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            IReadOnlyCollection<SingleLabelClassifyActionResult> actionResults = resultCollection.SingleLabelClassifyResults;
+            Assert.IsNotNull(actionResults);
+
+            ClassifyDocumentResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
+            ValidateSummaryBatchResult(results, isLanguageAutoDetected: true);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public void SingleLabelClassifyBatchWithDefaultLanguageThrows()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+            SingleLabelClassifyOptions options = new()
+            {
+                AutoDetectionDefaultLanguage = "en"
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(
+                async () => await client.StartSingleLabelClassifyAsync(
+                s_singleLabelClassifyBatchConvenienceDocuments,
+                TestEnvironment.SingleClassificationProjectName,
+                TestEnvironment.SingleClassificationDeploymentName,
+                "auto",
+                options));
+
+            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
+        }
+
         private void ValidateSummaryDocumentResult(ClassificationCategory? classification)
         {
             Assert.IsNotNull(classification);
@@ -296,7 +371,10 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.NotNull(classification.Value.Category);
         }
 
-        private void ValidateSummaryBatchResult(ClassifyDocumentResultCollection results, bool includeStatistics = false)
+        private void ValidateSummaryBatchResult(
+            ClassifyDocumentResultCollection results,
+            bool includeStatistics = default,
+            bool isLanguageAutoDetected = default)
         {
             Assert.AreEqual(results.ProjectName, TestEnvironment.SingleClassificationProjectName);
             Assert.AreEqual(results.DeploymentName, TestEnvironment.SingleClassificationDeploymentName);
@@ -329,6 +407,21 @@ namespace Azure.AI.TextAnalytics.Tests
                 {
                     Assert.AreEqual(0, result.Statistics.CharacterCount);
                     Assert.AreEqual(0, result.Statistics.TransactionCount);
+                }
+
+                if (isLanguageAutoDetected)
+                {
+                    Assert.IsNotNull(result.DetectedLanguage);
+                    Assert.That(result.DetectedLanguage.Value.Name, Is.Not.Null.And.Not.Empty);
+                    Assert.That(result.DetectedLanguage.Value.Iso6391Name, Is.Not.Null.And.Not.Empty);
+                    Assert.GreaterOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 0.0);
+                    Assert.LessOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 1.0);
+                    Assert.IsNotNull(result.DetectedLanguage.Value.Warnings);
+                    Assert.IsEmpty(result.DetectedLanguage.Value.Warnings);
+                }
+                else
+                {
+                    Assert.IsNull(result.DetectedLanguage);
                 }
 
                 ValidateSummaryDocumentResult(result.ClassificationCategories.FirstOrDefault());

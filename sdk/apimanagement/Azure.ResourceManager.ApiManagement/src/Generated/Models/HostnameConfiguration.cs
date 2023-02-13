@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public HostnameConfiguration(HostnameType hostnameType, string hostName)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
+            Argument.AssertNotNull(hostName, nameof(hostName));
 
             HostnameType = hostnameType;
             HostName = hostName;

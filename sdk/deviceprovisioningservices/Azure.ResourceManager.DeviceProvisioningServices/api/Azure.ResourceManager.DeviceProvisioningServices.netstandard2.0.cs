@@ -1,57 +1,120 @@
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
-    public partial class CertificateResponseCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseResource>, System.Collections.IEnumerable
+    public partial class DeviceProvisioningServiceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource>, System.Collections.IEnumerable
     {
-        protected CertificateResponseCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string certificateName, Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string certificateName, Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string certificateName, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string certificateName, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseResource> Get(string certificateName, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseResource>> GetAsync(string certificateName, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseResource>.GetEnumerator() { throw null; }
+        protected DeviceProvisioningServiceCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string provisioningServiceName, Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string provisioningServiceName, Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string provisioningServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string provisioningServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> Get(string provisioningServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource>> GetAsync(string provisioningServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CertificateResponseData : Azure.ResourceManager.Models.ResourceData
+    public partial class DeviceProvisioningServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public CertificateResponseData() { }
-        public Azure.ETag? ETag { get { throw null; } }
-        public Azure.ResourceManager.DeviceProvisioningServices.Models.CertificateProperties Properties { get { throw null; } set { } }
+        public DeviceProvisioningServiceData(Azure.Core.AzureLocation location, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServiceProperties properties, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSkuInfo sku) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ETag? ETag { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServiceProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSkuInfo Sku { get { throw null; } set { } }
     }
-    public partial class CertificateResponseResource : Azure.ResourceManager.ArmResource
+    public partial class DeviceProvisioningServiceResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected CertificateResponseResource() { }
-        public virtual Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseData Data { get { throw null; } }
+        protected DeviceProvisioningServiceResource() { }
+        public virtual Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string provisioningServiceName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource> GetDeviceProvisioningServicesCertificate(string certificateName, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource>> GetDeviceProvisioningServicesCertificateAsync(string certificateName, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateCollection GetDeviceProvisioningServicesCertificates() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionResource> GetDeviceProvisioningServicesPrivateEndpointConnection(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionResource>> GetDeviceProvisioningServicesPrivateEndpointConnectionAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionCollection GetDeviceProvisioningServicesPrivateEndpointConnections() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResource> GetDeviceProvisioningServicesPrivateLinkResource(string groupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResource>> GetDeviceProvisioningServicesPrivateLinkResourceAsync(string groupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResourceCollection GetDeviceProvisioningServicesPrivateLinkResources() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSharedAccessKey> GetKey(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSharedAccessKey>> GetKeyAsync(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSharedAccessKey> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSharedAccessKey> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSkuDefinition> GetValidSkus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSkuDefinition> GetValidSkusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class DeviceProvisioningServicesCertificateCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource>, System.Collections.IEnumerable
+    {
+        protected DeviceProvisioningServicesCertificateCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string certificateName, Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string certificateName, Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string certificateName, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string certificateName, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource> Get(string certificateName, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource>> GetAsync(string certificateName, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class DeviceProvisioningServicesCertificateData : Azure.ResourceManager.Models.ResourceData
+    {
+        public DeviceProvisioningServicesCertificateData() { }
+        public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificateProperties Properties { get { throw null; } set { } }
+    }
+    public partial class DeviceProvisioningServicesCertificateResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DeviceProvisioningServicesCertificateResource() { }
+        public virtual Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, string ifMatch, string certificateName1 = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = default(bool?), Azure.ResourceManager.DeviceProvisioningServices.Models.CertificatePurpose? certificatePurpose = default(Azure.ResourceManager.DeviceProvisioningServices.Models.CertificatePurpose?), System.DateTimeOffset? certificateCreated = default(System.DateTimeOffset?), System.DateTimeOffset? certificateLastUpdated = default(System.DateTimeOffset?), bool? certificateHasPrivateKey = default(bool?), string certificateNonce = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch, string certificateName1 = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = default(bool?), Azure.ResourceManager.DeviceProvisioningServices.Models.CertificatePurpose? certificatePurpose = default(Azure.ResourceManager.DeviceProvisioningServices.Models.CertificatePurpose?), System.DateTimeOffset? certificateCreated = default(System.DateTimeOffset?), System.DateTimeOffset? certificateLastUpdated = default(System.DateTimeOffset?), bool? certificateHasPrivateKey = default(bool?), string certificateNonce = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.VerificationCodeResponse> GenerateVerificationCode(string ifMatch, string certificateName1 = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = default(bool?), Azure.ResourceManager.DeviceProvisioningServices.Models.CertificatePurpose? certificatePurpose = default(Azure.ResourceManager.DeviceProvisioningServices.Models.CertificatePurpose?), System.DateTimeOffset? certificateCreated = default(System.DateTimeOffset?), System.DateTimeOffset? certificateLastUpdated = default(System.DateTimeOffset?), bool? certificateHasPrivateKey = default(bool?), string certificateNonce = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.VerificationCodeResponse>> GenerateVerificationCodeAsync(string ifMatch, string certificateName1 = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = default(bool?), Azure.ResourceManager.DeviceProvisioningServices.Models.CertificatePurpose? certificatePurpose = default(Azure.ResourceManager.DeviceProvisioningServices.Models.CertificatePurpose?), System.DateTimeOffset? certificateCreated = default(System.DateTimeOffset?), System.DateTimeOffset? certificateLastUpdated = default(System.DateTimeOffset?), bool? certificateHasPrivateKey = default(bool?), string certificateNonce = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseResource> Get(string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseResource>> GetAsync(string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseResource> VerifyCertificate(string ifMatch, Azure.ResourceManager.DeviceProvisioningServices.Models.VerificationCodeContent content, string certificateName1 = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = default(bool?), Azure.ResourceManager.DeviceProvisioningServices.Models.CertificatePurpose? certificatePurpose = default(Azure.ResourceManager.DeviceProvisioningServices.Models.CertificatePurpose?), System.DateTimeOffset? certificateCreated = default(System.DateTimeOffset?), System.DateTimeOffset? certificateLastUpdated = default(System.DateTimeOffset?), bool? certificateHasPrivateKey = default(bool?), string certificateNonce = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseResource>> VerifyCertificateAsync(string ifMatch, Azure.ResourceManager.DeviceProvisioningServices.Models.VerificationCodeContent content, string certificateName1 = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = default(bool?), Azure.ResourceManager.DeviceProvisioningServices.Models.CertificatePurpose? certificatePurpose = default(Azure.ResourceManager.DeviceProvisioningServices.Models.CertificatePurpose?), System.DateTimeOffset? certificateCreated = default(System.DateTimeOffset?), System.DateTimeOffset? certificateLastUpdated = default(System.DateTimeOffset?), bool? certificateHasPrivateKey = default(bool?), string certificateNonce = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificateResourceDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, string ifMatch, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = default(bool?), Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose? certificatePurpose = default(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose?), System.DateTimeOffset? certificateCreatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? certificateLastUpdatedOn = default(System.DateTimeOffset?), bool? certificateHasPrivateKey = default(bool?), string certificateNonce = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificateResourceDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = default(bool?), Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose? certificatePurpose = default(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose?), System.DateTimeOffset? certificateCreatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? certificateLastUpdatedOn = default(System.DateTimeOffset?), bool? certificateHasPrivateKey = default(bool?), string certificateNonce = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.CertificateVerificationCodeResult> GenerateVerificationCode(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.CertificateVerificationCodeResult> GenerateVerificationCode(string ifMatch, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = default(bool?), Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose? certificatePurpose = default(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose?), System.DateTimeOffset? certificateCreatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? certificateLastUpdatedOn = default(System.DateTimeOffset?), bool? certificateHasPrivateKey = default(bool?), string certificateNonce = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.CertificateVerificationCodeResult>> GenerateVerificationCodeAsync(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.CertificateVerificationCodeResult>> GenerateVerificationCodeAsync(string ifMatch, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = default(bool?), Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose? certificatePurpose = default(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose?), System.DateTimeOffset? certificateCreatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? certificateLastUpdatedOn = default(System.DateTimeOffset?), bool? certificateHasPrivateKey = default(bool?), string certificateNonce = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource> Get(string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource>> GetAsync(string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource> VerifyCertificate(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificateResourceVerifyCertificateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource> VerifyCertificate(string ifMatch, Azure.ResourceManager.DeviceProvisioningServices.Models.CertificateVerificationCodeContent content, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = default(bool?), Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose? certificatePurpose = default(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose?), System.DateTimeOffset? certificateCreatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? certificateLastUpdatedOn = default(System.DateTimeOffset?), bool? certificateHasPrivateKey = default(bool?), string certificateNonce = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource>> VerifyCertificateAsync(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificateResourceVerifyCertificateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource>> VerifyCertificateAsync(string ifMatch, Azure.ResourceManager.DeviceProvisioningServices.Models.CertificateVerificationCodeContent content, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = default(bool?), Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose? certificatePurpose = default(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose?), System.DateTimeOffset? certificateCreatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? certificateLastUpdatedOn = default(System.DateTimeOffset?), bool? certificateHasPrivateKey = default(bool?), string certificateNonce = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class DeviceProvisioningServicesExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.NameAvailabilityInfo> CheckProvisioningServiceNameAvailabilityIotDpsResource(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.DeviceProvisioningServices.Models.OperationInputs arguments, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.NameAvailabilityInfo>> CheckProvisioningServiceNameAvailabilityIotDpsResourceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.DeviceProvisioningServices.Models.OperationInputs arguments, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseResource GetCertificateResponseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameAvailabilityResult> CheckDeviceProvisioningServicesNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameAvailabilityResult>> CheckDeviceProvisioningServicesNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> GetDeviceProvisioningService(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string provisioningServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource>> GetDeviceProvisioningServiceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string provisioningServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource GetDeviceProvisioningServiceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceCollection GetDeviceProvisioningServices(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> GetDeviceProvisioningServices(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> GetDeviceProvisioningServicesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource GetDeviceProvisioningServicesCertificateResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionResource GetDeviceProvisioningServicesPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DeviceProvisioningServices.GroupIdInformationResource GetGroupIdInformationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource> GetProvisioningServiceDescription(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string provisioningServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource>> GetProvisioningServiceDescriptionAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string provisioningServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource GetProvisioningServiceDescriptionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionCollection GetProvisioningServiceDescriptions(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource> GetProvisioningServiceDescriptions(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource> GetProvisioningServiceDescriptionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResource GetDeviceProvisioningServicesPrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class DeviceProvisioningServicesPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
@@ -70,8 +133,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     }
     public partial class DeviceProvisioningServicesPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
-        public DeviceProvisioningServicesPrivateEndpointConnectionData(Azure.ResourceManager.DeviceProvisioningServices.Models.PrivateEndpointConnectionProperties properties) { }
-        public Azure.ResourceManager.DeviceProvisioningServices.Models.PrivateEndpointConnectionProperties Properties { get { throw null; } set { } }
+        public DeviceProvisioningServicesPrivateEndpointConnectionData(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateEndpointConnectionProperties properties) { }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateEndpointConnectionProperties Properties { get { throw null; } set { } }
     }
     public partial class DeviceProvisioningServicesPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
     {
@@ -87,237 +150,362 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class GroupIdInformationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DeviceProvisioningServices.GroupIdInformationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.GroupIdInformationResource>, System.Collections.IEnumerable
-    {
-        protected GroupIdInformationCollection() { }
-        public virtual Azure.Response<bool> Exists(string groupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string groupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.GroupIdInformationResource> Get(string groupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DeviceProvisioningServices.GroupIdInformationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DeviceProvisioningServices.GroupIdInformationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.GroupIdInformationResource>> GetAsync(string groupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DeviceProvisioningServices.GroupIdInformationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DeviceProvisioningServices.GroupIdInformationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DeviceProvisioningServices.GroupIdInformationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.GroupIdInformationResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class GroupIdInformationData : Azure.ResourceManager.Models.ResourceData
-    {
-        internal GroupIdInformationData() { }
-        public Azure.ResourceManager.DeviceProvisioningServices.Models.GroupIdInformationProperties Properties { get { throw null; } }
-    }
-    public partial class GroupIdInformationResource : Azure.ResourceManager.ArmResource
+    public partial class DeviceProvisioningServicesPrivateLinkResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected GroupIdInformationResource() { }
-        public virtual Azure.ResourceManager.DeviceProvisioningServices.GroupIdInformationData Data { get { throw null; } }
+        protected DeviceProvisioningServicesPrivateLinkResource() { }
+        public virtual Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResourceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string groupId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.GroupIdInformationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.GroupIdInformationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ProvisioningServiceDescriptionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource>, System.Collections.IEnumerable
+    public partial class DeviceProvisioningServicesPrivateLinkResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResource>, System.Collections.IEnumerable
     {
-        protected ProvisioningServiceDescriptionCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string provisioningServiceName, Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string provisioningServiceName, Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string provisioningServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string provisioningServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource> Get(string provisioningServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource>> GetAsync(string provisioningServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource>.GetEnumerator() { throw null; }
+        protected DeviceProvisioningServicesPrivateLinkResourceCollection() { }
+        public virtual Azure.Response<bool> Exists(string groupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string groupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResource> Get(string groupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResource>> GetAsync(string groupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ProvisioningServiceDescriptionData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class DeviceProvisioningServicesPrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData
     {
-        public ProvisioningServiceDescriptionData(Azure.Core.AzureLocation location, Azure.ResourceManager.DeviceProvisioningServices.Models.IotDpsPropertiesDescription properties, Azure.ResourceManager.DeviceProvisioningServices.Models.IotDpsSkuInfo sku) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ETag? ETag { get { throw null; } set { } }
-        public Azure.ResourceManager.DeviceProvisioningServices.Models.IotDpsPropertiesDescription Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.DeviceProvisioningServices.Models.IotDpsSkuInfo Sku { get { throw null; } set { } }
-    }
-    public partial class ProvisioningServiceDescriptionResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ProvisioningServiceDescriptionResource() { }
-        public virtual Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string provisioningServiceName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DeviceProvisioningServices.GroupIdInformationCollection GetAllGroupIdInformation() { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseResource> GetCertificateResponse(string certificateName, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseResource>> GetCertificateResponseAsync(string certificateName, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DeviceProvisioningServices.CertificateResponseCollection GetCertificateResponses() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionResource> GetDeviceProvisioningServicesPrivateEndpointConnection(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionResource>> GetDeviceProvisioningServicesPrivateEndpointConnectionAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionCollection GetDeviceProvisioningServicesPrivateEndpointConnections() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.GroupIdInformationResource> GetGroupIdInformation(string groupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.GroupIdInformationResource>> GetGroupIdInformationAsync(string groupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DeviceProvisioningServices.Models.SharedAccessSignatureAuthorizationRuleAccessRightsDescription> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DeviceProvisioningServices.Models.SharedAccessSignatureAuthorizationRuleAccessRightsDescription> GetKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.SharedAccessSignatureAuthorizationRuleAccessRightsDescription> GetKeysForKeyName(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.SharedAccessSignatureAuthorizationRuleAccessRightsDescription>> GetKeysForKeyNameAsync(string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.AsyncOperationResult> GetOperationResult(string operationId, string asyncinfo, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.AsyncOperationResult>> GetOperationResultAsync(string operationId, string asyncinfo, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DeviceProvisioningServices.Models.IotDpsSkuDefinition> GetValidSkus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DeviceProvisioningServices.Models.IotDpsSkuDefinition> GetValidSkusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceProvisioningServices.Models.ProvisioningServiceDescriptionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DeviceProvisioningServices.ProvisioningServiceDescriptionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DeviceProvisioningServices.Models.ProvisioningServiceDescriptionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        internal DeviceProvisioningServicesPrivateLinkResourceData() { }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkResourceProperties Properties { get { throw null; } }
     }
 }
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
+    public partial class CertificateVerificationCodeContent
+    {
+        public CertificateVerificationCodeContent() { }
+        public string Certificate { get { throw null; } set { } }
+    }
+    public partial class CertificateVerificationCodeProperties
+    {
+        internal CertificateVerificationCodeProperties() { }
+        public System.BinaryData Certificate { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } }
+        public bool? IsVerified { get { throw null; } }
+        public string Subject { get { throw null; } }
+        public System.BinaryData Thumbprint { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        public string VerificationCode { get { throw null; } }
+    }
+    public partial class CertificateVerificationCodeResult : Azure.ResourceManager.Models.ResourceData
+    {
+        internal CertificateVerificationCodeResult() { }
+        public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.CertificateVerificationCodeProperties Properties { get { throw null; } }
+    }
+    public partial class DeviceProvisioningServicePatch
+    {
+        public DeviceProvisioningServicePatch() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class DeviceProvisioningServiceProperties
+    {
+        public DeviceProvisioningServiceProperties() { }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAllocationPolicy? AllocationPolicy { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSharedAccessKey> AuthorizationPolicies { get { throw null; } }
+        public string DeviceProvisioningHostName { get { throw null; } }
+        public string IdScope { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubDefinitionDescription> IotHubs { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesIPFilterRule> IPFilterRules { get { throw null; } }
+        public bool? IsDataResidencyEnabled { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
+        public string ProvisioningState { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public string ServiceOperationsHostName { get { throw null; } }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState? State { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AccessRightsDescription : System.IEquatable<Azure.ResourceManager.DeviceProvisioningServices.Models.AccessRightsDescription>
+    public readonly partial struct DeviceProvisioningServicesAccessKeyRight : System.IEquatable<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAccessKeyRight>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public AccessRightsDescription(string value) { throw null; }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.AccessRightsDescription DeviceConnect { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.AccessRightsDescription EnrollmentRead { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.AccessRightsDescription EnrollmentWrite { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.AccessRightsDescription RegistrationStatusRead { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.AccessRightsDescription RegistrationStatusWrite { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.AccessRightsDescription ServiceConfig { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.AccessRightsDescription other) { throw null; }
+        public DeviceProvisioningServicesAccessKeyRight(string value) { throw null; }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAccessKeyRight DeviceConnect { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAccessKeyRight EnrollmentRead { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAccessKeyRight EnrollmentWrite { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAccessKeyRight RegistrationStatusRead { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAccessKeyRight RegistrationStatusWrite { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAccessKeyRight ServiceConfig { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAccessKeyRight other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.AccessRightsDescription left, Azure.ResourceManager.DeviceProvisioningServices.Models.AccessRightsDescription right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.AccessRightsDescription (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DeviceProvisioningServices.Models.AccessRightsDescription left, Azure.ResourceManager.DeviceProvisioningServices.Models.AccessRightsDescription right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAccessKeyRight left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAccessKeyRight right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAccessKeyRight (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAccessKeyRight left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAccessKeyRight right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AllocationPolicy : System.IEquatable<Azure.ResourceManager.DeviceProvisioningServices.Models.AllocationPolicy>
+    public readonly partial struct DeviceProvisioningServicesAllocationPolicy : System.IEquatable<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAllocationPolicy>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public AllocationPolicy(string value) { throw null; }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.AllocationPolicy GeoLatency { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.AllocationPolicy Hashed { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.AllocationPolicy Static { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.AllocationPolicy other) { throw null; }
+        public DeviceProvisioningServicesAllocationPolicy(string value) { throw null; }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAllocationPolicy GeoLatency { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAllocationPolicy Hashed { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAllocationPolicy Static { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAllocationPolicy other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.AllocationPolicy left, Azure.ResourceManager.DeviceProvisioningServices.Models.AllocationPolicy right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.AllocationPolicy (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DeviceProvisioningServices.Models.AllocationPolicy left, Azure.ResourceManager.DeviceProvisioningServices.Models.AllocationPolicy right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAllocationPolicy left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAllocationPolicy right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAllocationPolicy (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAllocationPolicy left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAllocationPolicy right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AsyncOperationResult
+    public partial class DeviceProvisioningServicesCertificateProperties
     {
-        internal AsyncOperationResult() { }
-        public Azure.ResourceManager.DeviceProvisioningServices.Models.ErrorMessage Error { get { throw null; } }
-        public string Status { get { throw null; } }
-    }
-    public partial class CertificateProperties
-    {
-        public CertificateProperties() { }
-        public byte[] Certificate { get { throw null; } set { } }
-        public System.DateTimeOffset? Created { get { throw null; } }
-        public System.DateTimeOffset? Expiry { get { throw null; } }
+        public DeviceProvisioningServicesCertificateProperties() { }
+        public System.BinaryData Certificate { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public bool? IsVerified { get { throw null; } set { } }
         public string Subject { get { throw null; } }
-        public string Thumbprint { get { throw null; } }
-        public System.DateTimeOffset? Updated { get { throw null; } }
+        public System.BinaryData Thumbprint { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CertificatePurpose : System.IEquatable<Azure.ResourceManager.DeviceProvisioningServices.Models.CertificatePurpose>
+    public readonly partial struct DeviceProvisioningServicesCertificatePurpose : System.IEquatable<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public CertificatePurpose(string value) { throw null; }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.CertificatePurpose ClientAuthentication { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.CertificatePurpose ServerAuthentication { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.CertificatePurpose other) { throw null; }
+        public DeviceProvisioningServicesCertificatePurpose(string value) { throw null; }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose ClientAuthentication { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose ServerAuthentication { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.CertificatePurpose left, Azure.ResourceManager.DeviceProvisioningServices.Models.CertificatePurpose right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.CertificatePurpose (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DeviceProvisioningServices.Models.CertificatePurpose left, Azure.ResourceManager.DeviceProvisioningServices.Models.CertificatePurpose right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DeviceProvisioningServicesPrivateLinkServiceConnectionState
+    public partial class DeviceProvisioningServicesCertificateResourceDeleteOptions
     {
-        public DeviceProvisioningServicesPrivateLinkServiceConnectionState(Azure.ResourceManager.DeviceProvisioningServices.Models.PrivateLinkServiceConnectionStatus status, string description) { }
-        public string ActionsRequired { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.DeviceProvisioningServices.Models.PrivateLinkServiceConnectionStatus Status { get { throw null; } set { } }
+        public DeviceProvisioningServicesCertificateResourceDeleteOptions(string ifMatch) { }
+        public string CertificateCommonName { get { throw null; } set { } }
+        public System.DateTimeOffset? CertificateCreatedOn { get { throw null; } set { } }
+        public bool? CertificateHasPrivateKey { get { throw null; } set { } }
+        public bool? CertificateIsVerified { get { throw null; } set { } }
+        public System.DateTimeOffset? CertificateLastUpdatedOn { get { throw null; } set { } }
+        public string CertificateNonce { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose? CertificatePurpose { get { throw null; } set { } }
+        public byte[] CertificateRawBytes { get { throw null; } set { } }
+        public string IfMatch { get { throw null; } }
     }
-    public partial class ErrorMessage
+    public partial class DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions
     {
-        internal ErrorMessage() { }
-        public string Code { get { throw null; } }
-        public string Details { get { throw null; } }
+        public DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions(string ifMatch) { }
+        public string CertificateCommonName { get { throw null; } set { } }
+        public System.DateTimeOffset? CertificateCreatedOn { get { throw null; } set { } }
+        public bool? CertificateHasPrivateKey { get { throw null; } set { } }
+        public bool? CertificateIsVerified { get { throw null; } set { } }
+        public System.DateTimeOffset? CertificateLastUpdatedOn { get { throw null; } set { } }
+        public string CertificateNonce { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose? CertificatePurpose { get { throw null; } set { } }
+        public byte[] CertificateRawBytes { get { throw null; } set { } }
+        public string IfMatch { get { throw null; } }
+    }
+    public partial class DeviceProvisioningServicesCertificateResourceVerifyCertificateOptions
+    {
+        public DeviceProvisioningServicesCertificateResourceVerifyCertificateOptions(string ifMatch, Azure.ResourceManager.DeviceProvisioningServices.Models.CertificateVerificationCodeContent content) { }
+        public string CertificateCommonName { get { throw null; } set { } }
+        public System.DateTimeOffset? CertificateCreatedOn { get { throw null; } set { } }
+        public bool? CertificateHasPrivateKey { get { throw null; } set { } }
+        public bool? CertificateIsVerified { get { throw null; } set { } }
+        public System.DateTimeOffset? CertificateLastUpdatedOn { get { throw null; } set { } }
+        public string CertificateNonce { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose? CertificatePurpose { get { throw null; } set { } }
+        public byte[] CertificateRawBytes { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.CertificateVerificationCodeContent Content { get { throw null; } }
+        public string IfMatch { get { throw null; } }
+    }
+    public enum DeviceProvisioningServicesIPFilterActionType
+    {
+        Accept = 0,
+        Reject = 1,
+    }
+    public partial class DeviceProvisioningServicesIPFilterRule
+    {
+        public DeviceProvisioningServicesIPFilterRule(string filterName, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesIPFilterActionType action, string ipMask) { }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesIPFilterActionType Action { get { throw null; } set { } }
+        public string FilterName { get { throw null; } set { } }
+        public string IPMask { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesIPFilterTargetType? Target { get { throw null; } set { } }
+    }
+    public enum DeviceProvisioningServicesIPFilterTargetType
+    {
+        All = 0,
+        ServiceApi = 1,
+        DeviceApi = 2,
+    }
+    public partial class DeviceProvisioningServicesNameAvailabilityContent
+    {
+        public DeviceProvisioningServicesNameAvailabilityContent(string name) { }
+        public string Name { get { throw null; } }
+    }
+    public partial class DeviceProvisioningServicesNameAvailabilityResult
+    {
+        internal DeviceProvisioningServicesNameAvailabilityResult() { }
+        public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameUnavailableReason? Reason { get { throw null; } }
     }
-    public partial class GroupIdInformationProperties
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DeviceProvisioningServicesNameUnavailableReason : System.IEquatable<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameUnavailableReason>
     {
-        internal GroupIdInformationProperties() { }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DeviceProvisioningServicesNameUnavailableReason(string value) { throw null; }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameUnavailableReason AlreadyExists { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameUnavailableReason Invalid { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameUnavailableReason other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameUnavailableReason left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameUnavailableReason right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameUnavailableReason (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameUnavailableReason left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameUnavailableReason right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DeviceProvisioningServicesPrivateEndpointConnectionProperties
+    {
+        public DeviceProvisioningServicesPrivateEndpointConnectionProperties(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkServiceConnectionState connectionState) { }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
+    }
+    public partial class DeviceProvisioningServicesPrivateLinkResourceProperties
+    {
+        internal DeviceProvisioningServicesPrivateLinkResourceProperties() { }
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
     }
-    public partial class IotDpsPropertiesDescription
+    public partial class DeviceProvisioningServicesPrivateLinkServiceConnectionState
     {
-        public IotDpsPropertiesDescription() { }
-        public Azure.ResourceManager.DeviceProvisioningServices.Models.AllocationPolicy? AllocationPolicy { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DeviceProvisioningServices.Models.SharedAccessSignatureAuthorizationRuleAccessRightsDescription> AuthorizationPolicies { get { throw null; } }
-        public string DeviceProvisioningHostName { get { throw null; } }
-        public bool? EnableDataResidency { get { throw null; } set { } }
-        public string IdScope { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DeviceProvisioningServices.Models.IotHubDefinitionDescription> IotHubs { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DeviceProvisioningServices.Models.IPFilterRule> IPFilterRules { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
-        public string ProvisioningState { get { throw null; } set { } }
-        public Azure.ResourceManager.DeviceProvisioningServices.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
-        public string ServiceOperationsHostName { get { throw null; } }
-        public Azure.ResourceManager.DeviceProvisioningServices.Models.State? State { get { throw null; } set { } }
+        public DeviceProvisioningServicesPrivateLinkServiceConnectionState(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkServiceConnectionStatus status, string description) { }
+        public string ActionsRequired { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkServiceConnectionStatus Status { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IotDpsSku : System.IEquatable<Azure.ResourceManager.DeviceProvisioningServices.Models.IotDpsSku>
+    public readonly partial struct DeviceProvisioningServicesPrivateLinkServiceConnectionStatus : System.IEquatable<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkServiceConnectionStatus>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public IotDpsSku(string value) { throw null; }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.IotDpsSku S1 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.IotDpsSku other) { throw null; }
+        public DeviceProvisioningServicesPrivateLinkServiceConnectionStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkServiceConnectionStatus Approved { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkServiceConnectionStatus Disconnected { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkServiceConnectionStatus Pending { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkServiceConnectionStatus Rejected { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkServiceConnectionStatus other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.IotDpsSku left, Azure.ResourceManager.DeviceProvisioningServices.Models.IotDpsSku right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.IotDpsSku (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DeviceProvisioningServices.Models.IotDpsSku left, Azure.ResourceManager.DeviceProvisioningServices.Models.IotDpsSku right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkServiceConnectionStatus left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkServiceConnectionStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkServiceConnectionStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkServiceConnectionStatus left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkServiceConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class IotDpsSkuDefinition
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DeviceProvisioningServicesPublicNetworkAccess : System.IEquatable<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPublicNetworkAccess>
     {
-        internal IotDpsSkuDefinition() { }
-        public Azure.ResourceManager.DeviceProvisioningServices.Models.IotDpsSku? Name { get { throw null; } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DeviceProvisioningServicesPublicNetworkAccess(string value) { throw null; }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPublicNetworkAccess Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPublicNetworkAccess Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPublicNetworkAccess other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPublicNetworkAccess left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPublicNetworkAccess right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPublicNetworkAccess (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPublicNetworkAccess left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPublicNetworkAccess right) { throw null; }
+        public override string ToString() { throw null; }
     }
-    public partial class IotDpsSkuInfo
+    public partial class DeviceProvisioningServicesSharedAccessKey
     {
-        public IotDpsSkuInfo() { }
+        public DeviceProvisioningServicesSharedAccessKey(string keyName, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAccessKeyRight rights) { }
+        public string KeyName { get { throw null; } set { } }
+        public string PrimaryKey { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesAccessKeyRight Rights { get { throw null; } set { } }
+        public string SecondaryKey { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DeviceProvisioningServicesSku : System.IEquatable<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSku>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DeviceProvisioningServicesSku(string value) { throw null; }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSku S1 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSku other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSku left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSku right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSku (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSku left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSku right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DeviceProvisioningServicesSkuDefinition
+    {
+        internal DeviceProvisioningServicesSkuDefinition() { }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSku? Name { get { throw null; } }
+    }
+    public partial class DeviceProvisioningServicesSkuInfo
+    {
+        public DeviceProvisioningServicesSkuInfo() { }
         public long? Capacity { get { throw null; } set { } }
-        public Azure.ResourceManager.DeviceProvisioningServices.Models.IotDpsSku? Name { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesSku? Name { get { throw null; } set { } }
         public string Tier { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DeviceProvisioningServicesState : System.IEquatable<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DeviceProvisioningServicesState(string value) { throw null; }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState Activating { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState ActivationFailed { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState Active { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState Deleted { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState DeletionFailed { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState FailingOver { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState FailoverFailed { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState Resuming { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState Suspended { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState Suspending { get { throw null; } }
+        public static Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState Transitioning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState left, Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class IotHubDefinitionDescription
     {
@@ -327,162 +515,5 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public string ConnectionString { get { throw null; } set { } }
         public Azure.Core.AzureLocation Location { get { throw null; } set { } }
         public string Name { get { throw null; } }
-    }
-    public enum IPFilterActionType
-    {
-        Accept = 0,
-        Reject = 1,
-    }
-    public partial class IPFilterRule
-    {
-        public IPFilterRule(string filterName, Azure.ResourceManager.DeviceProvisioningServices.Models.IPFilterActionType action, string ipMask) { }
-        public Azure.ResourceManager.DeviceProvisioningServices.Models.IPFilterActionType Action { get { throw null; } set { } }
-        public string FilterName { get { throw null; } set { } }
-        public string IPMask { get { throw null; } set { } }
-        public Azure.ResourceManager.DeviceProvisioningServices.Models.IPFilterTargetType? Target { get { throw null; } set { } }
-    }
-    public enum IPFilterTargetType
-    {
-        All = 0,
-        ServiceApi = 1,
-        DeviceApi = 2,
-    }
-    public partial class NameAvailabilityInfo
-    {
-        internal NameAvailabilityInfo() { }
-        public string Message { get { throw null; } }
-        public bool? NameAvailable { get { throw null; } }
-        public Azure.ResourceManager.DeviceProvisioningServices.Models.NameUnavailabilityReason? Reason { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NameUnavailabilityReason : System.IEquatable<Azure.ResourceManager.DeviceProvisioningServices.Models.NameUnavailabilityReason>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public NameUnavailabilityReason(string value) { throw null; }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.NameUnavailabilityReason AlreadyExists { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.NameUnavailabilityReason Invalid { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.NameUnavailabilityReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.NameUnavailabilityReason left, Azure.ResourceManager.DeviceProvisioningServices.Models.NameUnavailabilityReason right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.NameUnavailabilityReason (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DeviceProvisioningServices.Models.NameUnavailabilityReason left, Azure.ResourceManager.DeviceProvisioningServices.Models.NameUnavailabilityReason right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class OperationInputs
-    {
-        public OperationInputs(string name) { }
-        public string Name { get { throw null; } }
-    }
-    public partial class PrivateEndpointConnectionProperties
-    {
-        public PrivateEndpointConnectionProperties(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkServiceConnectionState connectionState) { }
-        public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PrivateLinkServiceConnectionStatus : System.IEquatable<Azure.ResourceManager.DeviceProvisioningServices.Models.PrivateLinkServiceConnectionStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PrivateLinkServiceConnectionStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.PrivateLinkServiceConnectionStatus Approved { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.PrivateLinkServiceConnectionStatus Disconnected { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.PrivateLinkServiceConnectionStatus Pending { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.PrivateLinkServiceConnectionStatus Rejected { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.PrivateLinkServiceConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.PrivateLinkServiceConnectionStatus left, Azure.ResourceManager.DeviceProvisioningServices.Models.PrivateLinkServiceConnectionStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.PrivateLinkServiceConnectionStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DeviceProvisioningServices.Models.PrivateLinkServiceConnectionStatus left, Azure.ResourceManager.DeviceProvisioningServices.Models.PrivateLinkServiceConnectionStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ProvisioningServiceDescriptionPatch
-    {
-        public ProvisioningServiceDescriptionPatch() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PublicNetworkAccess : System.IEquatable<Azure.ResourceManager.DeviceProvisioningServices.Models.PublicNetworkAccess>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PublicNetworkAccess(string value) { throw null; }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.PublicNetworkAccess Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.PublicNetworkAccess Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.PublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.PublicNetworkAccess left, Azure.ResourceManager.DeviceProvisioningServices.Models.PublicNetworkAccess right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.PublicNetworkAccess (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DeviceProvisioningServices.Models.PublicNetworkAccess left, Azure.ResourceManager.DeviceProvisioningServices.Models.PublicNetworkAccess right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class SharedAccessSignatureAuthorizationRuleAccessRightsDescription
-    {
-        public SharedAccessSignatureAuthorizationRuleAccessRightsDescription(string keyName, Azure.ResourceManager.DeviceProvisioningServices.Models.AccessRightsDescription rights) { }
-        public string KeyName { get { throw null; } set { } }
-        public string PrimaryKey { get { throw null; } set { } }
-        public Azure.ResourceManager.DeviceProvisioningServices.Models.AccessRightsDescription Rights { get { throw null; } set { } }
-        public string SecondaryKey { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct State : System.IEquatable<Azure.ResourceManager.DeviceProvisioningServices.Models.State>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public State(string value) { throw null; }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.State Activating { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.State ActivationFailed { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.State Active { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.State Deleted { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.State Deleting { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.State DeletionFailed { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.State FailingOver { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.State FailoverFailed { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.State Resuming { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.State Suspended { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.State Suspending { get { throw null; } }
-        public static Azure.ResourceManager.DeviceProvisioningServices.Models.State Transitioning { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DeviceProvisioningServices.Models.State other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DeviceProvisioningServices.Models.State left, Azure.ResourceManager.DeviceProvisioningServices.Models.State right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DeviceProvisioningServices.Models.State (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DeviceProvisioningServices.Models.State left, Azure.ResourceManager.DeviceProvisioningServices.Models.State right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class VerificationCodeContent
-    {
-        public VerificationCodeContent() { }
-        public string Certificate { get { throw null; } set { } }
-    }
-    public partial class VerificationCodeResponse : Azure.ResourceManager.Models.ResourceData
-    {
-        internal VerificationCodeResponse() { }
-        public Azure.ETag? ETag { get { throw null; } }
-        public Azure.ResourceManager.DeviceProvisioningServices.Models.VerificationCodeResponseProperties Properties { get { throw null; } }
-    }
-    public partial class VerificationCodeResponseProperties
-    {
-        internal VerificationCodeResponseProperties() { }
-        public byte[] Certificate { get { throw null; } }
-        public string Created { get { throw null; } }
-        public string Expiry { get { throw null; } }
-        public bool? IsVerified { get { throw null; } }
-        public string Subject { get { throw null; } }
-        public string Thumbprint { get { throw null; } }
-        public string Updated { get { throw null; } }
-        public string VerificationCode { get { throw null; } }
     }
 }

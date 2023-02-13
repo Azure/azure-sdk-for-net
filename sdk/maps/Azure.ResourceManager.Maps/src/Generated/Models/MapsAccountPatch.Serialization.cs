@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Maps.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -28,40 +28,20 @@ namespace Azure.ResourceManager.Maps.Models
             }
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity");
-                JsonSerializer.Serialize(writer, Identity);
-            }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DisableLocalAuth))
             {
-                writer.WritePropertyName("disableLocalAuth");
+                writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
-            }
-            if (Optional.IsCollectionDefined(LinkedResources))
-            {
-                writer.WritePropertyName("linkedResources");
-                writer.WriteStartArray();
-                foreach (var item in LinkedResources)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Cors))
-            {
-                writer.WritePropertyName("cors");
-                writer.WriteObjectValue(Cors);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

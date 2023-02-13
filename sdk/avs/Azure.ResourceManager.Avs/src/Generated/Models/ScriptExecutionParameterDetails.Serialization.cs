@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Avs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ParameterType.ToString());
             writer.WriteEndObject();
         }
@@ -33,22 +33,7 @@ namespace Azure.ResourceManager.Avs.Models
                     case "Value": return ScriptStringExecutionParameterDetails.DeserializeScriptStringExecutionParameterDetails(element);
                 }
             }
-            string name = default;
-            ScriptExecutionParameterType type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = new ScriptExecutionParameterType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownScriptExecutionParameterDetails(name, type);
+            return UnknownScriptExecutionParameter.DeserializeUnknownScriptExecutionParameter(element);
         }
     }
 }

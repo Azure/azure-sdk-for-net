@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -15,19 +16,29 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(FhirVersion))
+            {
+                writer.WritePropertyName("fhirVersion"u8);
+                writer.WriteStringValue(FhirVersion.Value.ToString());
+            }
+            if (Optional.IsDefined(DocumentType))
+            {
+                writer.WritePropertyName("documentType"u8);
+                writer.WriteStringValue(DocumentType.Value.ToString());
+            }
             if (Optional.IsDefined(StringIndexType))
             {
-                writer.WritePropertyName("stringIndexType");
+                writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
             if (Optional.IsDefined(ModelVersion))
             {
-                writer.WritePropertyName("modelVersion");
+                writer.WritePropertyName("modelVersion"u8);
                 writer.WriteStringValue(ModelVersion);
             }
             if (Optional.IsDefined(LoggingOptOut))
             {
-                writer.WritePropertyName("loggingOptOut");
+                writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
             }
             writer.WriteEndObject();
@@ -35,12 +46,34 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static HealthcareTaskParameters DeserializeHealthcareTaskParameters(JsonElement element)
         {
+            Optional<WellKnownFhirVersion> fhirVersion = default;
+            Optional<HealthcareDocumentType> documentType = default;
             Optional<StringIndexType> stringIndexType = default;
             Optional<string> modelVersion = default;
             Optional<bool> loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("stringIndexType"))
+                if (property.NameEquals("fhirVersion"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    fhirVersion = new WellKnownFhirVersion(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("documentType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    documentType = new HealthcareDocumentType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("stringIndexType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,12 +83,12 @@ namespace Azure.AI.TextAnalytics.Models
                     stringIndexType = new StringIndexType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("modelVersion"))
+                if (property.NameEquals("modelVersion"u8))
                 {
                     modelVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("loggingOptOut"))
+                if (property.NameEquals("loggingOptOut"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +99,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, Optional.ToNullable(stringIndexType));
+            return new HealthcareTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, Optional.ToNullable(fhirVersion), Optional.ToNullable(documentType), Optional.ToNullable(stringIndexType));
         }
     }
 }

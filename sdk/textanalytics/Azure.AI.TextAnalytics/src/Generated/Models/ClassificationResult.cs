@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="category"/> is null. </exception>
         public ClassificationResult(string category, double confidenceScore)
         {
-            if (category == null)
-            {
-                throw new ArgumentNullException(nameof(category));
-            }
+            Argument.AssertNotNull(category, nameof(category));
 
             Category = category;
             ConfidenceScore = confidenceScore;

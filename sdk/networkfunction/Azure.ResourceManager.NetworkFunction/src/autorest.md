@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: NetworkFunction
 namespace: Azure.ResourceManager.NetworkFunction
-require: https://github.com/Azure/azure-rest-api-specs/blob/8dac2febba482c00f1a472cc62a63ca5d83dc9f9/specification/networkfunction/resource-manager/readme.md
-tag: package-2021-09-01-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/fa7609844bc20b126037dfb180ef7155c2174f7b/specification/networkfunction/resource-manager/readme.md
+tag: package-2022-11-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true

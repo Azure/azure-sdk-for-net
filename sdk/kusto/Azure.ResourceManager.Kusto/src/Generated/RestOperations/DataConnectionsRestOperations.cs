@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Kusto
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-02-01";
+            _apiVersion = apiVersion ?? "2022-12-29";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Kusto
             }
         }
 
-        internal HttpMessage CreateDataConnectionValidationRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, DataConnectionValidation dataConnectionValidation)
+        internal HttpMessage CreateDataConnectionValidationRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, DataConnectionValidationContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -142,9 +142,9 @@ namespace Azure.ResourceManager.Kusto
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(dataConnectionValidation);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -154,19 +154,19 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
-        /// <param name="dataConnectionValidation"> The data connection parameters supplied to the CreateOrUpdate operation. </param>
+        /// <param name="content"> The data connection parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="dataConnectionValidation"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DataConnectionValidationAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, DataConnectionValidation dataConnectionValidation, CancellationToken cancellationToken = default)
+        public async Task<Response> DataConnectionValidationAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, DataConnectionValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(dataConnectionValidation, nameof(dataConnectionValidation));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateDataConnectionValidationRequest(subscriptionId, resourceGroupName, clusterName, databaseName, dataConnectionValidation);
+            using var message = CreateDataConnectionValidationRequest(subscriptionId, resourceGroupName, clusterName, databaseName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -183,19 +183,19 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
-        /// <param name="dataConnectionValidation"> The data connection parameters supplied to the CreateOrUpdate operation. </param>
+        /// <param name="content"> The data connection parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="dataConnectionValidation"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DataConnectionValidation(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, DataConnectionValidation dataConnectionValidation, CancellationToken cancellationToken = default)
+        public Response DataConnectionValidation(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, DataConnectionValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(dataConnectionValidation, nameof(dataConnectionValidation));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateDataConnectionValidationRequest(subscriptionId, resourceGroupName, clusterName, databaseName, dataConnectionValidation);
+            using var message = CreateDataConnectionValidationRequest(subscriptionId, resourceGroupName, clusterName, databaseName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Kusto
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, DataConnectionCheckNameContent content)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, KustoDataConnectionNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckNameResult>> CheckNameAvailabilityAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, DataConnectionCheckNameContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<KustoNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, KustoDataConnectionNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -257,9 +257,9 @@ namespace Azure.ResourceManager.Kusto
             {
                 case 200:
                     {
-                        CheckNameResult value = default;
+                        KustoNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckNameResult.DeserializeCheckNameResult(document.RootElement);
+                        value = KustoNameAvailabilityResult.DeserializeKustoNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckNameResult> CheckNameAvailability(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, DataConnectionCheckNameContent content, CancellationToken cancellationToken = default)
+        public Response<KustoNameAvailabilityResult> CheckNameAvailability(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, KustoDataConnectionNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -290,9 +290,9 @@ namespace Azure.ResourceManager.Kusto
             {
                 case 200:
                     {
-                        CheckNameResult value = default;
+                        KustoNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckNameResult.DeserializeCheckNameResult(document.RootElement);
+                        value = KustoNameAvailabilityResult.DeserializeKustoNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="dataConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataConnectionData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<KustoDataConnectionData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -347,13 +347,13 @@ namespace Azure.ResourceManager.Kusto
             {
                 case 200:
                     {
-                        DataConnectionData value = default;
+                        KustoDataConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataConnectionData.DeserializeDataConnectionData(document.RootElement);
+                        value = KustoDataConnectionData.DeserializeKustoDataConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DataConnectionData)null, message.Response);
+                    return Response.FromValue((KustoDataConnectionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="dataConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataConnectionData> Get(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, CancellationToken cancellationToken = default)
+        public Response<KustoDataConnectionData> Get(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -382,19 +382,19 @@ namespace Azure.ResourceManager.Kusto
             {
                 case 200:
                     {
-                        DataConnectionData value = default;
+                        KustoDataConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataConnectionData.DeserializeDataConnectionData(document.RootElement);
+                        value = KustoDataConnectionData.DeserializeKustoDataConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DataConnectionData)null, message.Response);
+                    return Response.FromValue((KustoDataConnectionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnectionData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, KustoDataConnectionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/>, <paramref name="dataConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnectionData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, KustoDataConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/>, <paramref name="dataConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnectionData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, KustoDataConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.Kusto
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnectionData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, KustoDataConnectionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/>, <paramref name="dataConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnectionData data, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, KustoDataConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/>, <paramref name="dataConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnectionData data, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, KustoDataConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

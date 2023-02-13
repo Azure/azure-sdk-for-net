@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs?api-version=2022-05-01",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs?api-version=2022-10-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "348",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-b370adc55ac24489909cc5974c83d5d2-a9548d9433fe8a14-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220729.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "8a829f33ae81a0bb61491709025f9da6",
+        "traceparent": "00-cbd2000af9912c4aa9e11a723a9a7b50-013508c7a3ddef28-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "39b0ab539ca0e9182299531e83baaa1a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -41,42 +41,42 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "1e3c295a-c440-4130-8ec4-6d5b6f89b029",
+        "apim-request-id": "542897bf-6430-40f5-aced-52feb9a2f357",
         "Content-Length": "0",
-        "Date": "Fri, 29 Jul 2022 20:18:03 GMT",
-        "operation-location": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/c4db0179-2d7d-4042-b1d2-ca38cf1c68ec?api-version=2022-05-01",
+        "Date": "Fri, 14 Oct 2022 22:15:40 GMT",
+        "operation-location": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/4270e8b9-dae0-48e5-9ad4-031c8141c9b1?api-version=2022-10-01-preview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "136"
+        "x-envoy-upstream-service-time": "163"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/c4db0179-2d7d-4042-b1d2-ca38cf1c68ec?api-version=2022-05-01",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/4270e8b9-dae0-48e5-9ad4-031c8141c9b1?api-version=2022-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220729.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "b43c940c634c77419961c245a81749ad",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "dceb1edbce579ac78d16ab945134edaa",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "69bf7481-b405-449a-9fca-5981986ab06f",
-        "Content-Length": "341",
+        "apim-request-id": "937a5f48-0167-48c1-8e98-92616bdf2abc",
+        "Content-Length": "340",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 Jul 2022 20:18:03 GMT",
+        "Date": "Fri, 14 Oct 2022 22:15:40 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "8"
+        "x-envoy-upstream-service-time": "7"
       },
       "ResponseBody": {
-        "jobId": "c4db0179-2d7d-4042-b1d2-ca38cf1c68ec",
-        "lastUpdatedDateTime": "2022-07-29T20:18:04Z",
-        "createdDateTime": "2022-07-29T20:18:03Z",
-        "expirationDateTime": "2022-07-30T20:18:03Z",
+        "jobId": "4270e8b9-dae0-48e5-9ad4-031c8141c9b1",
+        "lastUpdateDateTime": "2022-10-14T22:15:41Z",
+        "createdDateTime": "2022-10-14T22:15:41Z",
+        "expirationDateTime": "2022-10-15T22:15:41Z",
         "status": "notStarted",
         "errors": [],
         "displayName": "AnalyzeOperationAnalyzeHealthcareEntities",
@@ -90,345 +90,69 @@
       }
     },
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/c4db0179-2d7d-4042-b1d2-ca38cf1c68ec?api-version=2022-05-01",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/4270e8b9-dae0-48e5-9ad4-031c8141c9b1?api-version=2022-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220729.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "9bd5535f3fad29236ce47bab207fa7e0",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ca70c36e621731f3ce54420347ad63d7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "b3f70c6a-1cfc-44b5-8dc3-4dff0f29a203",
-        "Content-Length": "3208",
+        "apim-request-id": "91887c39-3f1d-4393-b28d-c0b65861f0e9",
+        "Content-Length": "337",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 Jul 2022 20:18:04 GMT",
+        "Date": "Fri, 14 Oct 2022 22:15:42 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "33"
+        "x-envoy-upstream-service-time": "8"
       },
       "ResponseBody": {
-        "jobId": "c4db0179-2d7d-4042-b1d2-ca38cf1c68ec",
-        "lastUpdatedDateTime": "2022-07-29T20:18:05Z",
-        "createdDateTime": "2022-07-29T20:18:03Z",
-        "expirationDateTime": "2022-07-30T20:18:03Z",
+        "jobId": "4270e8b9-dae0-48e5-9ad4-031c8141c9b1",
+        "lastUpdateDateTime": "2022-10-14T22:15:41Z",
+        "createdDateTime": "2022-10-14T22:15:41Z",
+        "expirationDateTime": "2022-10-15T22:15:41Z",
         "status": "running",
         "errors": [],
         "displayName": "AnalyzeOperationAnalyzeHealthcareEntities",
         "tasks": {
-          "completed": 1,
+          "completed": 0,
           "failed": 0,
-          "inProgress": 1,
+          "inProgress": 2,
           "total": 2,
-          "items": [
-            {
-              "kind": "HealthcareLROResults",
-              "lastUpdateDateTime": "2022-07-29T20:18:05.0346961Z",
-              "status": "succeeded",
-              "results": {
-                "documents": [
-                  {
-                    "id": "0",
-                    "entities": [
-                      {
-                        "offset": 11,
-                        "length": 5,
-                        "text": "100mg",
-                        "category": "Dosage",
-                        "confidenceScore": 0.98
-                      },
-                      {
-                        "offset": 17,
-                        "length": 9,
-                        "text": "ibuprofen",
-                        "category": "MedicationName",
-                        "confidenceScore": 1.0,
-                        "name": "ibuprofen",
-                        "links": [
-                          {
-                            "dataSource": "UMLS",
-                            "id": "C0020740"
-                          },
-                          {
-                            "dataSource": "AOD",
-                            "id": "0000019879"
-                          },
-                          {
-                            "dataSource": "ATC",
-                            "id": "M01AE01"
-                          },
-                          {
-                            "dataSource": "CCPSS",
-                            "id": "0046165"
-                          },
-                          {
-                            "dataSource": "CHV",
-                            "id": "0000006519"
-                          },
-                          {
-                            "dataSource": "CSP",
-                            "id": "2270-2077"
-                          },
-                          {
-                            "dataSource": "DRUGBANK",
-                            "id": "DB01050"
-                          },
-                          {
-                            "dataSource": "GS",
-                            "id": "1611"
-                          },
-                          {
-                            "dataSource": "LCH_NW",
-                            "id": "sh97005926"
-                          },
-                          {
-                            "dataSource": "LNC",
-                            "id": "LP16165-0"
-                          },
-                          {
-                            "dataSource": "MEDCIN",
-                            "id": "40458"
-                          },
-                          {
-                            "dataSource": "MMSL",
-                            "id": "d00015"
-                          },
-                          {
-                            "dataSource": "MSH",
-                            "id": "D007052"
-                          },
-                          {
-                            "dataSource": "MTHSPL",
-                            "id": "WK2XYI10QM"
-                          },
-                          {
-                            "dataSource": "NCI",
-                            "id": "C561"
-                          },
-                          {
-                            "dataSource": "NCI_CTRP",
-                            "id": "C561"
-                          },
-                          {
-                            "dataSource": "NCI_DCP",
-                            "id": "00803"
-                          },
-                          {
-                            "dataSource": "NCI_DTP",
-                            "id": "NSC0256857"
-                          },
-                          {
-                            "dataSource": "NCI_FDA",
-                            "id": "WK2XYI10QM"
-                          },
-                          {
-                            "dataSource": "NCI_NCI-GLOSS",
-                            "id": "CDR0000613511"
-                          },
-                          {
-                            "dataSource": "NDDF",
-                            "id": "002377"
-                          },
-                          {
-                            "dataSource": "PDQ",
-                            "id": "CDR0000040475"
-                          },
-                          {
-                            "dataSource": "RCD",
-                            "id": "x02MO"
-                          },
-                          {
-                            "dataSource": "RXNORM",
-                            "id": "5640"
-                          },
-                          {
-                            "dataSource": "SNM",
-                            "id": "E-7772"
-                          },
-                          {
-                            "dataSource": "SNMI",
-                            "id": "C-603C0"
-                          },
-                          {
-                            "dataSource": "SNOMEDCT_US",
-                            "id": "387207008"
-                          },
-                          {
-                            "dataSource": "USP",
-                            "id": "m39860"
-                          },
-                          {
-                            "dataSource": "USPMG",
-                            "id": "MTHU000060"
-                          },
-                          {
-                            "dataSource": "VANDF",
-                            "id": "4017840"
-                          }
-                        ]
-                      },
-                      {
-                        "offset": 35,
-                        "length": 3,
-                        "text": "Doe",
-                        "category": "SymptomOrSign",
-                        "confidenceScore": 0.96,
-                        "name": "Dyspnea on exertion",
-                        "links": [
-                          {
-                            "dataSource": "UMLS",
-                            "id": "C0231807"
-                          },
-                          {
-                            "dataSource": "BI",
-                            "id": "BI00180"
-                          },
-                          {
-                            "dataSource": "CCPSS",
-                            "id": "0002577"
-                          },
-                          {
-                            "dataSource": "CHV",
-                            "id": "0000022795"
-                          },
-                          {
-                            "dataSource": "COSTAR",
-                            "id": "U000253"
-                          },
-                          {
-                            "dataSource": "DXP",
-                            "id": "U001015"
-                          },
-                          {
-                            "dataSource": "HPO",
-                            "id": "HP:0002875"
-                          },
-                          {
-                            "dataSource": "ICNP",
-                            "id": "10029414"
-                          },
-                          {
-                            "dataSource": "MDR",
-                            "id": "10013971"
-                          },
-                          {
-                            "dataSource": "MEDCIN",
-                            "id": "354"
-                          },
-                          {
-                            "dataSource": "NANDA-I",
-                            "id": "00552"
-                          },
-                          {
-                            "dataSource": "NOC",
-                            "id": "040314"
-                          },
-                          {
-                            "dataSource": "OMIM",
-                            "id": "MTHU057374"
-                          },
-                          {
-                            "dataSource": "QMR",
-                            "id": "Q0200096"
-                          },
-                          {
-                            "dataSource": "RCD",
-                            "id": "X76Gz"
-                          },
-                          {
-                            "dataSource": "RCDAE",
-                            "id": "X76Gz"
-                          },
-                          {
-                            "dataSource": "SNM",
-                            "id": "F-75050"
-                          },
-                          {
-                            "dataSource": "SNMI",
-                            "id": "F-20050"
-                          },
-                          {
-                            "dataSource": "SNOMEDCT_US",
-                            "id": "60845006"
-                          }
-                        ]
-                      },
-                      {
-                        "offset": 46,
-                        "length": 11,
-                        "text": "twice daily",
-                        "category": "Frequency",
-                        "confidenceScore": 1.0
-                      }
-                    ],
-                    "relations": [
-                      {
-                        "relationType": "DosageOfMedication",
-                        "entities": [
-                          {
-                            "ref": "#/results/documents/0/entities/0",
-                            "role": "Dosage"
-                          },
-                          {
-                            "ref": "#/results/documents/0/entities/1",
-                            "role": "Medication"
-                          }
-                        ]
-                      },
-                      {
-                        "relationType": "FrequencyOfMedication",
-                        "entities": [
-                          {
-                            "ref": "#/results/documents/0/entities/1",
-                            "role": "Medication"
-                          },
-                          {
-                            "ref": "#/results/documents/0/entities/3",
-                            "role": "Frequency"
-                          }
-                        ]
-                      }
-                    ],
-                    "warnings": []
-                  }
-                ],
-                "errors": [],
-                "modelVersion": "2022-03-01"
-              }
-            }
-          ]
+          "items": []
         }
       }
     },
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/c4db0179-2d7d-4042-b1d2-ca38cf1c68ec?api-version=2022-05-01",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/4270e8b9-dae0-48e5-9ad4-031c8141c9b1?api-version=2022-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220729.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "afc66b07310bcf8b5e0af120ec76f749",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b5084e743659843ce316ac89f18398ed",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "08ece6e6-2257-45a6-896e-ec72e2514331",
-        "Content-Length": "3694",
+        "apim-request-id": "9f43542d-f589-401e-b662-b14fccf5efca",
+        "Content-Length": "3737",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 Jul 2022 20:18:06 GMT",
+        "Date": "Fri, 14 Oct 2022 22:15:43 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "55"
+        "x-envoy-upstream-service-time": "44"
       },
       "ResponseBody": {
-        "jobId": "c4db0179-2d7d-4042-b1d2-ca38cf1c68ec",
-        "lastUpdatedDateTime": "2022-07-29T20:18:05Z",
-        "createdDateTime": "2022-07-29T20:18:03Z",
-        "expirationDateTime": "2022-07-30T20:18:03Z",
+        "jobId": "4270e8b9-dae0-48e5-9ad4-031c8141c9b1",
+        "lastUpdateDateTime": "2022-10-14T22:15:43Z",
+        "createdDateTime": "2022-10-14T22:15:41Z",
+        "expirationDateTime": "2022-10-15T22:15:41Z",
         "status": "succeeded",
         "errors": [],
         "displayName": "AnalyzeOperationAnalyzeHealthcareEntities",
@@ -440,7 +164,7 @@
           "items": [
             {
               "kind": "PiiEntityRecognitionLROResults",
-              "lastUpdateDateTime": "2022-07-29T20:18:05.7688102Z",
+              "lastUpdateDateTime": "2022-10-14T22:15:42.9512623Z",
               "status": "succeeded",
               "results": {
                 "documents": [
@@ -473,7 +197,7 @@
             },
             {
               "kind": "HealthcareLROResults",
-              "lastUpdateDateTime": "2022-07-29T20:18:05.0346961Z",
+              "lastUpdateDateTime": "2022-10-14T22:15:43.033786Z",
               "status": "succeeded",
               "results": {
                 "documents": [
@@ -713,6 +437,7 @@
                     ],
                     "relations": [
                       {
+                        "confidenceScore": 1.0,
                         "relationType": "DosageOfMedication",
                         "entities": [
                           {
@@ -726,6 +451,7 @@
                         ]
                       },
                       {
+                        "confidenceScore": 0.95,
                         "relationType": "FrequencyOfMedication",
                         "entities": [
                           {
@@ -752,7 +478,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1406604377",
+    "RandomSeed": "595047693",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }

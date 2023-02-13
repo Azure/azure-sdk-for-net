@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [OneTimeTearDown]
-        public void GlobalTeardown()
+        public async Task GlobalTeardown()
         {
-            _mongoDBDatabase.Delete(WaitUntil.Completed);
-            _databaseAccount.Delete(WaitUntil.Completed);
+            await _mongoDBDatabase.DeleteAsync(WaitUntil.Completed);
+            await _databaseAccount.DeleteAsync(WaitUntil.Completed);
         }
 
         [SetUp]

@@ -23,30 +23,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <exception cref="ArgumentNullException"> <paramref name="adxResourceId"/>, <paramref name="adxEndpointUri"/>, <paramref name="adxDatabaseName"/>, <paramref name="eventHubEndpointUri"/>, <paramref name="eventHubEntityPath"/> or <paramref name="eventHubNamespaceResourceId"/> is null. </exception>
         public DataExplorerConnectionProperties(ResourceIdentifier adxResourceId, Uri adxEndpointUri, string adxDatabaseName, Uri eventHubEndpointUri, string eventHubEntityPath, ResourceIdentifier eventHubNamespaceResourceId)
         {
-            if (adxResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(adxResourceId));
-            }
-            if (adxEndpointUri == null)
-            {
-                throw new ArgumentNullException(nameof(adxEndpointUri));
-            }
-            if (adxDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(adxDatabaseName));
-            }
-            if (eventHubEndpointUri == null)
-            {
-                throw new ArgumentNullException(nameof(eventHubEndpointUri));
-            }
-            if (eventHubEntityPath == null)
-            {
-                throw new ArgumentNullException(nameof(eventHubEntityPath));
-            }
-            if (eventHubNamespaceResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(eventHubNamespaceResourceId));
-            }
+            Argument.AssertNotNull(adxResourceId, nameof(adxResourceId));
+            Argument.AssertNotNull(adxEndpointUri, nameof(adxEndpointUri));
+            Argument.AssertNotNull(adxDatabaseName, nameof(adxDatabaseName));
+            Argument.AssertNotNull(eventHubEndpointUri, nameof(eventHubEndpointUri));
+            Argument.AssertNotNull(eventHubEntityPath, nameof(eventHubEntityPath));
+            Argument.AssertNotNull(eventHubNamespaceResourceId, nameof(eventHubNamespaceResourceId));
 
             AdxResourceId = adxResourceId;
             AdxEndpointUri = adxEndpointUri;
@@ -60,15 +42,16 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <summary> Initializes a new instance of DataExplorerConnectionProperties. </summary>
         /// <param name="connectionType"> The type of time series connection resource. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="identity"> Managed identity properties for the time series database connection resource. </param>
         /// <param name="adxResourceId"> The resource ID of the Azure Data Explorer cluster. </param>
         /// <param name="adxEndpointUri"> The URI of the Azure Data Explorer endpoint. </param>
         /// <param name="adxDatabaseName"> The name of the Azure Data Explorer database. </param>
-        /// <param name="adxTableName"> The name of the Azure Data Explorer table. </param>
+        /// <param name="adxTableName"> The name of the Azure Data Explorer table. Defaults to AdtPropertyEvents. </param>
         /// <param name="eventHubEndpointUri"> The URL of the EventHub namespace for identity-based authentication. It must include the protocol sb://. </param>
         /// <param name="eventHubEntityPath"> The EventHub name in the EventHub namespace for identity-based authentication. </param>
         /// <param name="eventHubNamespaceResourceId"> The resource ID of the EventHub namespace. </param>
         /// <param name="eventHubConsumerGroup"> The EventHub consumer group to use when ADX reads from EventHub. Defaults to $Default. </param>
-        internal DataExplorerConnectionProperties(ConnectionType connectionType, TimeSeriesDatabaseConnectionState? provisioningState, ResourceIdentifier adxResourceId, Uri adxEndpointUri, string adxDatabaseName, string adxTableName, Uri eventHubEndpointUri, string eventHubEntityPath, ResourceIdentifier eventHubNamespaceResourceId, string eventHubConsumerGroup) : base(connectionType, provisioningState)
+        internal DataExplorerConnectionProperties(ConnectionType connectionType, TimeSeriesDatabaseConnectionState? provisioningState, DigitalTwinsManagedIdentityReference identity, ResourceIdentifier adxResourceId, Uri adxEndpointUri, string adxDatabaseName, string adxTableName, Uri eventHubEndpointUri, string eventHubEntityPath, ResourceIdentifier eventHubNamespaceResourceId, string eventHubConsumerGroup) : base(connectionType, provisioningState, identity)
         {
             AdxResourceId = adxResourceId;
             AdxEndpointUri = adxEndpointUri;
@@ -87,7 +70,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public Uri AdxEndpointUri { get; set; }
         /// <summary> The name of the Azure Data Explorer database. </summary>
         public string AdxDatabaseName { get; set; }
-        /// <summary> The name of the Azure Data Explorer table. </summary>
+        /// <summary> The name of the Azure Data Explorer table. Defaults to AdtPropertyEvents. </summary>
         public string AdxTableName { get; set; }
         /// <summary> The URL of the EventHub namespace for identity-based authentication. It must include the protocol sb://. </summary>
         public Uri EventHubEndpointUri { get; set; }

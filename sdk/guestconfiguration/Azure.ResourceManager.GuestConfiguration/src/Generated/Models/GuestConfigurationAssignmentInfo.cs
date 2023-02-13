@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> Initializes a new instance of GuestConfigurationAssignmentInfo. </summary>
         /// <param name="name"> Name of the guest configuration assignment. </param>
         /// <param name="configuration"> Information about the configuration. </param>
-        internal GuestConfigurationAssignmentInfo(string name, ConfigurationInfo configuration)
+        internal GuestConfigurationAssignmentInfo(string name, GuestConfigurationInfo configuration)
         {
             Name = name;
             Configuration = configuration;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> Name of the guest configuration assignment. </summary>
         public string Name { get; }
         /// <summary> Information about the configuration. </summary>
-        public ConfigurationInfo Configuration { get; set; }
+        public GuestConfigurationInfo Configuration { get; set; }
     }
 }

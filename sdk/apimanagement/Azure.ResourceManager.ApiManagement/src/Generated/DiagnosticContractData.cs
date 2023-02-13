@@ -33,7 +33,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="httpCorrelationProtocol"> Sets correlation protocol to use for Application Insights diagnostics. </param>
         /// <param name="verbosity"> The verbosity level applied to traces emitted by trace policies. </param>
         /// <param name="operationNameFormat"> The format of the Operation Name for Application Insights telemetries. Default is Name. </param>
-        internal DiagnosticContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlwaysLog? alwaysLog, string loggerId, SamplingSettings sampling, PipelineDiagnosticSettings frontend, PipelineDiagnosticSettings backend, bool? isLogClientIPEnabled, HttpCorrelationProtocol? httpCorrelationProtocol, TraceVerbosityLevel? verbosity, OperationNameFormat? operationNameFormat) : base(id, name, resourceType, systemData)
+        /// <param name="metrics"> Emit custom metrics via emit-metric policy. Applicable only to Application Insights diagnostic settings. </param>
+        internal DiagnosticContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlwaysLog? alwaysLog, string loggerId, SamplingSettings sampling, PipelineDiagnosticSettings frontend, PipelineDiagnosticSettings backend, bool? isLogClientIPEnabled, HttpCorrelationProtocol? httpCorrelationProtocol, TraceVerbosityLevel? verbosity, OperationNameFormat? operationNameFormat, bool? metrics) : base(id, name, resourceType, systemData)
         {
             AlwaysLog = alwaysLog;
             LoggerId = loggerId;
@@ -44,6 +45,7 @@ namespace Azure.ResourceManager.ApiManagement
             HttpCorrelationProtocol = httpCorrelationProtocol;
             Verbosity = verbosity;
             OperationNameFormat = operationNameFormat;
+            Metrics = metrics;
         }
 
         /// <summary> Specifies for what type of messages sampling settings should not apply. </summary>
@@ -64,5 +66,7 @@ namespace Azure.ResourceManager.ApiManagement
         public TraceVerbosityLevel? Verbosity { get; set; }
         /// <summary> The format of the Operation Name for Application Insights telemetries. Default is Name. </summary>
         public OperationNameFormat? OperationNameFormat { get; set; }
+        /// <summary> Emit custom metrics via emit-metric policy. Applicable only to Application Insights diagnostic settings. </summary>
+        public bool? Metrics { get; set; }
     }
 }

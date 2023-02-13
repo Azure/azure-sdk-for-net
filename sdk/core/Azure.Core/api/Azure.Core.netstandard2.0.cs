@@ -113,6 +113,18 @@ namespace Azure
         public Azure.ETag? IfMatch { get { throw null; } set { } }
         public Azure.ETag? IfNoneMatch { get { throw null; } set { } }
     }
+    public abstract partial class NullableResponse<T>
+    {
+        protected NullableResponse() { }
+        public abstract bool HasValue { get; }
+        public abstract T Value { get; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public abstract Azure.Response GetRawResponse();
+        public override string ToString() { throw null; }
+    }
     public abstract partial class Operation
     {
         protected Operation() { }
@@ -239,17 +251,16 @@ namespace Azure
         public string? Message { get { throw null; } }
         public override string ToString() { throw null; }
     }
-    public abstract partial class Response<T>
+    public abstract partial class Response<T> : Azure.NullableResponse<T>
     {
         protected Response() { }
-        public abstract T Value { get; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool HasValue { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public abstract Azure.Response GetRawResponse();
         public static implicit operator T (Azure.Response<T> response) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class SyncAsyncEventArgs : System.EventArgs
     {
@@ -356,6 +367,7 @@ namespace Azure.Core
         public static Azure.Core.ClientOptions Default { get { throw null; } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
         public Azure.Core.RetryOptions Retry { get { throw null; } }
+        public Azure.Core.Pipeline.HttpPipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public Azure.Core.Pipeline.HttpPipelineTransport Transport { get { throw null; } set { } }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -451,19 +463,30 @@ namespace Azure.Core
         public System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public bool HasResponse { get { throw null; } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
+        public Azure.Core.MessageProcessingContext ProcessingContext { get { throw null; } }
         public Azure.Core.Request Request { get { throw null; } }
         public Azure.Response Response { get { throw null; } set { } }
         public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
         public void Dispose() { }
         public System.IO.Stream? ExtractResponseContent() { throw null; }
         public void SetProperty(string name, object value) { }
+        public void SetProperty(System.Type type, object value) { }
         public bool TryGetProperty(string name, out object? value) { throw null; }
+        public bool TryGetProperty(System.Type type, out object? value) { throw null; }
     }
     public enum HttpPipelinePosition
     {
         PerCall = 0,
         PerRetry = 1,
         BeforeTransport = 2,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MessageProcessingContext
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public int RetryNumber { get { throw null; } set { } }
+        public System.DateTimeOffset StartTime { get { throw null; } }
     }
     public static partial class MultipartResponse
     {
@@ -551,14 +574,18 @@ namespace Azure.Core
     public partial class RequestUriBuilder
     {
         public RequestUriBuilder() { }
+        protected bool HasPath { get { throw null; } }
+        protected bool HasQuery { get { throw null; } }
         public string? Host { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
         public string PathAndQuery { get { throw null; } }
         public int Port { get { throw null; } set { } }
         public string Query { get { throw null; } set { } }
         public string? Scheme { get { throw null; } set { } }
+        public void AppendPath(System.ReadOnlySpan<char> value, bool escape) { }
         public void AppendPath(string value) { }
         public void AppendPath(string value, bool escape) { }
+        public void AppendQuery(System.ReadOnlySpan<char> name, System.ReadOnlySpan<char> value, bool escapeValue) { }
         public void AppendQuery(string name, string value) { }
         public void AppendQuery(string name, string value, bool escapeValue) { }
         public void Reset(System.Uri value) { }
@@ -593,7 +620,9 @@ namespace Azure.Core
         public static bool operator !=(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
         public static bool operator <(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
         public static bool operator <=(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
+        public static Azure.Core.ResourceIdentifier Parse(string input) { throw null; }
         public override string ToString() { throw null; }
+        public static bool TryParse(string input, out Azure.Core.ResourceIdentifier? result) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResourceType : System.IEquatable<Azure.Core.ResourceType>
@@ -983,6 +1012,13 @@ namespace Azure.Core.Pipeline
         public HttpPipelineTransportOptions() { }
         public System.Collections.Generic.IList<System.Security.Cryptography.X509Certificates.X509Certificate2> ClientCertificates { get { throw null; } }
         public System.Func<Azure.Core.Pipeline.ServerCertificateCustomValidationArgs, bool>? ServerCertificateCustomValidationCallback { get { throw null; } set { } }
+    }
+    public sealed partial class RedirectPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
+    {
+        internal RedirectPolicy() { }
+        public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
+        public static void SetAllowAutoRedirect(Azure.Core.HttpMessage message, bool allowAutoRedirect) { }
     }
     public partial class ServerCertificateCustomValidationArgs
     {

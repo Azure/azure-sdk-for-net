@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static ArmTemplateList DeserializeArmTemplateList(JsonElement element)
         {
-            Optional<IReadOnlyList<ArmTemplateData>> value = default;
+            Optional<IReadOnlyList<DevTestLabArmTemplateData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ArmTemplateData> array = new List<ArmTemplateData>();
+                    List<DevTestLabArmTemplateData> array = new List<DevTestLabArmTemplateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ArmTemplateData.DeserializeArmTemplateData(item));
+                        array.Add(DevTestLabArmTemplateData.DeserializeDevTestLabArmTemplateData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

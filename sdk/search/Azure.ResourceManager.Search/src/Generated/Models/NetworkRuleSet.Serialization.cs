@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Search.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(IPRules))
             {
-                writer.WritePropertyName("ipRules");
+                writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
@@ -31,20 +31,20 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static NetworkRuleSet DeserializeNetworkRuleSet(JsonElement element)
         {
-            Optional<IList<IPRule>> ipRules = default;
+            Optional<IList<SearchServiceIPRule>> ipRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ipRules"))
+                if (property.NameEquals("ipRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IPRule> array = new List<IPRule>();
+                    List<SearchServiceIPRule> array = new List<SearchServiceIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPRule.DeserializeIPRule(item));
+                        array.Add(SearchServiceIPRule.DeserializeSearchServiceIPRule(item));
                     }
                     ipRules = array;
                     continue;

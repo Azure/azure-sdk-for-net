@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         private readonly ClientDiagnostics _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics;
         private readonly AssessmentsMetadataRestOperations _tenantAssessmentMetadataAssessmentsMetadataRestClient;
-        private readonly SecurityAssessmentMetadataResponseData _data;
+        private readonly SecurityAssessmentMetadataData _data;
 
         /// <summary> Initializes a new instance of the <see cref="TenantAssessmentMetadataResource"/> class for mocking. </summary>
         protected TenantAssessmentMetadataResource()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of the <see cref = "TenantAssessmentMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TenantAssessmentMetadataResource(ArmClient client, SecurityAssessmentMetadataResponseData data) : this(client, data.Id)
+        internal TenantAssessmentMetadataResource(ArmClient client, SecurityAssessmentMetadataData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SecurityAssessmentMetadataResponseData Data
+        public virtual SecurityAssessmentMetadataData Data
         {
             get
             {
@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get metadata information on an assessment type
-        /// Request Path: /providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}
-        /// Operation Id: AssessmentsMetadata_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssessmentsMetadata_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TenantAssessmentMetadataResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -113,8 +121,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get metadata information on an assessment type
-        /// Request Path: /providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}
-        /// Operation Id: AssessmentsMetadata_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AssessmentsMetadata_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TenantAssessmentMetadataResource> Get(CancellationToken cancellationToken = default)

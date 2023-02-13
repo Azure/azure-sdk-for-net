@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.Rooms
 {
@@ -17,10 +18,7 @@ namespace Azure.Communication.Rooms
         /// <exception cref="ArgumentNullException"> <paramref name="communicationIdentifier"/> is null. </exception>
         public RoomParticipantInternal(CommunicationIdentifierModel communicationIdentifier)
         {
-            if (communicationIdentifier == null)
-            {
-                throw new ArgumentNullException(nameof(communicationIdentifier));
-            }
+            Argument.AssertNotNull(communicationIdentifier, nameof(communicationIdentifier));
 
             CommunicationIdentifier = communicationIdentifier;
         }

@@ -142,9 +142,3 @@ A topic can be deleted using the topic name. Deleting a topic will automatically
 ```C# Snippet:DeleteTopic
 await client.DeleteTopicAsync(topicName);
 ```
-
-## Source
-
-To see the full example source, see:
-
-* [Sample07_CrudOperations.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample07_CrudOperations.cs)

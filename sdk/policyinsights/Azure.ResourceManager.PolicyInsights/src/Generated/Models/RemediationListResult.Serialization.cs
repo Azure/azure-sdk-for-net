@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static RemediationListResult DeserializeRemediationListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<RemediationData>> value = default;
+            Optional<IReadOnlyList<PolicyRemediationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RemediationData> array = new List<RemediationData>();
+                    List<PolicyRemediationData> array = new List<PolicyRemediationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RemediationData.DeserializeRemediationData(item));
+                        array.Add(PolicyRemediationData.DeserializePolicyRemediationData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

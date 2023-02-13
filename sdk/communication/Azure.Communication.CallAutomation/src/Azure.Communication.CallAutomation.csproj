@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>
+      This client library enables working with the Microsoft Azure Communication Call Automation service. 
+      For this release, see notes - https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.CallAutomation/README.md and https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.CallAutomation/CHANGELOG.md.
+      Microsoft Azure Communication Call Automation quickstart - https://learn.microsoft.com/azure/communication-services/quickstarts/voice-video-calling/callflows-for-customer-interactions?pivots=programming-language-csharp
+    </Description>
+    <AssemblyTitle>Azure Communication CallAutomation Service</AssemblyTitle>
+    <Version>1.0.0-beta.2</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <PackageTags>Microsoft Azure Communication CallAutomation Service;Microsoft;Azure;Azure Communication Service;Azure Communication CallAutomation Service;Calling;Communication;$(PackageCommonTags)</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Link="README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\Shared\src\ClientOptionsExtensions.cs" LinkBase="Shared\Communication" />
+    <Compile Include="..\..\Shared\src\HMACAuthenticationPolicy.cs" LinkBase="Shared\Communication" />
+    <Compile Include="..\..\Shared\src\CommunicationIdentifierSerializer.cs" LinkBase="Shared\Communication" />
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)RetriableStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)CancellationHelper.cs" LinkBase="Shared" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.Communication.Common" />
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Generated\" />
+  </ItemGroup>
+</Project>

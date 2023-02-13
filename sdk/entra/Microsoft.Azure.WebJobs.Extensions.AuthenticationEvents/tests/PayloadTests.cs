@@ -1,12 +1,10 @@
 ﻿using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart.Legacy;
 using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using Xunit;
 using static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper;
-using payloads = Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 {
@@ -59,12 +57,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             switch (testTypes)
             {
-                case TestTypes.Valid: return (TokenIssuanceStartLegacy.ActionResponse, TokenIssuanceStartLegacy.ExpectedPayload, HttpStatusCode.OK);
-                case TestTypes.Conversion: return (payloads.TokenIssuanceStart.ConversionPayload, TokenIssuanceStartLegacy.ExpectedPayload, HttpStatusCode.OK);//
-                case TestTypes.InvalidAction: return (payloads.TokenIssuanceStart.InvalidActionResponse, @"{'errors':['The action \'ProvideClaims\' is invalid, please use one of the following actions: \'microsoft.graph.provideclaimsfortoken\', \'provideclaimsfortoken\'']}", HttpStatusCode.BadRequest);
-                case TestTypes.NoAction: return (payloads.TokenIssuanceStart.NoActionResponse, @"{'errors':['No Actions Found. Please supply atleast one action.']}", HttpStatusCode.BadRequest);
-                case TestTypes.Empty: return (string.Empty, @"{'errors':['Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return.']}", HttpStatusCode.BadRequest);
-                case TestTypes.ValidCloudEvent: return (payloads.TokenIssuanceStart.ActionResponse, payloads.TokenIssuanceStart.ExpectedPayload, HttpStatusCode.OK);
+                case TestTypes.Valid: return (Payloads.TokenIssuanceStart.TokenIssuanceStart.ActionResponse, Payloads.TokenIssuanceStart.TokenIssuanceStart.ExpectedPayload, HttpStatusCode.OK);
+                case TestTypes.Conversion: return (Payloads.TokenIssuanceStart.TokenIssuanceStart.ConversionPayload, Payloads.TokenIssuanceStart.TokenIssuanceStart.ExpectedPayload, HttpStatusCode.OK);//
+                case TestTypes.InvalidAction: return (Payloads.TokenIssuanceStart.TokenIssuanceStart.InvalidActionResponse, @"{'errors':['The action \'ProvideClaims\' is invalid, please use one of the following actions: \'microsoft.graph.provideclaimsfortoken\'']}", HttpStatusCode.InternalServerError);
+                case TestTypes.NoAction: return (Payloads.TokenIssuanceStart.TokenIssuanceStart.NoActionResponse, @"{'errors':['No Actions Found. Please supply atleast one action.']}", HttpStatusCode.InternalServerError);
+                case TestTypes.Empty: return (string.Empty, @"{'errors':['Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return.']}", HttpStatusCode.InternalServerError);
+                case TestTypes.ValidCloudEvent: return (Payloads.TokenIssuanceStart.TokenIssuanceStart.ActionResponse, Payloads.TokenIssuanceStart.TokenIssuanceStart.ExpectedPayload, HttpStatusCode.OK);
                 default: return (string.Empty, string.Empty, HttpStatusCode.NotFound);
             }
         }

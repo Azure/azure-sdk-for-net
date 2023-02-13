@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
@@ -18,12 +19,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of RelationList. </summary>
         /// <param name="value"> Array of relations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal RelationList(IEnumerable<RelationData> value)
+        internal RelationList(IEnumerable<SecurityInsightsIncidentRelationData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
@@ -31,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of RelationList. </summary>
         /// <param name="nextLink"> URL to fetch the next set of relations. </param>
         /// <param name="value"> Array of relations. </param>
-        internal RelationList(string nextLink, IReadOnlyList<RelationData> value)
+        internal RelationList(string nextLink, IReadOnlyList<SecurityInsightsIncidentRelationData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -40,6 +38,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> URL to fetch the next set of relations. </summary>
         public string NextLink { get; }
         /// <summary> Array of relations. </summary>
-        public IReadOnlyList<RelationData> Value { get; }
+        public IReadOnlyList<SecurityInsightsIncidentRelationData> Value { get; }
     }
 }

@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of FollowerDatabaseListResult. </summary>
         internal FollowerDatabaseListResult()
         {
-            Value = new ChangeTrackingList<FollowerDatabaseDefinition>();
+            Value = new ChangeTrackingList<KustoFollowerDatabaseDefinition>();
         }
 
         /// <summary> Initializes a new instance of FollowerDatabaseListResult. </summary>
         /// <param name="value"> The list of follower database result. </param>
-        internal FollowerDatabaseListResult(IReadOnlyList<FollowerDatabaseDefinition> value)
+        internal FollowerDatabaseListResult(IReadOnlyList<KustoFollowerDatabaseDefinition> value)
         {
             Value = value;
         }
 
         /// <summary> The list of follower database result. </summary>
-        public IReadOnlyList<FollowerDatabaseDefinition> Value { get; }
+        public IReadOnlyList<KustoFollowerDatabaseDefinition> Value { get; }
     }
 }

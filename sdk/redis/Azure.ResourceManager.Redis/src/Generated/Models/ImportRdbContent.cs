@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <exception cref="ArgumentNullException"> <paramref name="files"/> is null. </exception>
         public ImportRdbContent(IEnumerable<string> files)
         {
-            if (files == null)
-            {
-                throw new ArgumentNullException(nameof(files));
-            }
+            Argument.AssertNotNull(files, nameof(files));
 
             Files = files.ToList();
         }
@@ -31,5 +29,7 @@ namespace Azure.ResourceManager.Redis.Models
         public string Format { get; set; }
         /// <summary> files to import. </summary>
         public IList<string> Files { get; }
+        /// <summary> Preferred auth method to communicate to storage account used for data archive, specify SAS or ManagedIdentity, default value is SAS. </summary>
+        public string PreferredDataArchiveAuthMethod { get; set; }
     }
 }

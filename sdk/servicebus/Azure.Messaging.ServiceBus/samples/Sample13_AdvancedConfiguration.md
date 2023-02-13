@@ -4,7 +4,7 @@ This sample demonstrates how to use some of the advanced configuration options a
 
 ## Configuring the transport
 
-By default, the Service Bus client library communicates with the service using the AMQP protocol over TCP. Some application host environments prefer to restrict raw TCP socket use, especially in many enterprise or VPN scenarios. In these environments, or when a proxy is in use, communication with the Event Hubs service can make use of web sockets by configuring the client's connection settings.
+By default, the Service Bus client library communicates with the service using the AMQP protocol over TCP. Some application host environments prefer to restrict raw TCP socket use, especially in many enterprise or VPN scenarios. In these environments, or when a proxy is in use, communication with the Service Bus service can make use of web sockets by configuring the client's connection settings.
 
 In the example shown below, the transport is configured to use web sockets and a proxy is specified. You can also use websockets without specifying a proxy, but the proxy should only be used when using websockets.
 
@@ -74,9 +74,3 @@ ServiceBusProcessor processor = client.CreateProcessor("<queue-name>", new Servi
     PrefetchCount = 10
 });
 ```
-
-## Source
-
-To see the full example source, see:
-
-* [Sample13_AdvancedConfiguration.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample13_AdvancedConfiguration.cs)

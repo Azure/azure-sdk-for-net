@@ -1,0 +1,263 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs?api-version=2022-10-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "292",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-5ed4769239c34b45ecb83b0d3c633bb5-eb1b8c74ff74bf72-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221121.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "cca571bcdeb36472e8721ad396446496",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "displayName": "AnalyzeSentimentWithAutoDetectedLanguage",
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "The park was clean and pretty. The bathrooms and restaurant were not clean.",
+              "language": "auto"
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "parameters": {
+              "stringIndexType": "Utf16CodeUnit"
+            },
+            "kind": "SentimentAnalysis"
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "3b98e4f1-d726-4981-b534-2cf93971e4d1",
+        "Content-Length": "0",
+        "Date": "Tue, 22 Nov 2022 05:33:59 GMT",
+        "operation-location": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/b98d06d5-c01a-45c4-8f04-83e80e957664?api-version=2022-10-01-preview",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "131",
+        "x-ms-region": "West US 2"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/b98d06d5-c01a-45c4-8f04-83e80e957664?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221121.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c06023c6fc76d2f9621a035b138b1222",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "144d6bc5-1ed4-47ca-84b7-29a34113d802",
+        "Content-Length": "339",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 22 Nov 2022 05:33:59 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "11",
+        "x-ms-region": "West US 2"
+      },
+      "ResponseBody": {
+        "jobId": "b98d06d5-c01a-45c4-8f04-83e80e957664",
+        "lastUpdateDateTime": "2022-11-22T05:34:00Z",
+        "createdDateTime": "2022-11-22T05:34:00Z",
+        "expirationDateTime": "2022-11-23T05:34:00Z",
+        "status": "notStarted",
+        "errors": [],
+        "displayName": "AnalyzeSentimentWithAutoDetectedLanguage",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/b98d06d5-c01a-45c4-8f04-83e80e957664?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221121.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "29b265bbf98a8d4283f87c03e0838e11",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "31b06faa-8ebe-4954-9774-114be6eabb56",
+        "Content-Length": "336",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 22 Nov 2022 05:34:00 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "11",
+        "x-ms-region": "West US 2"
+      },
+      "ResponseBody": {
+        "jobId": "b98d06d5-c01a-45c4-8f04-83e80e957664",
+        "lastUpdateDateTime": "2022-11-22T05:34:00Z",
+        "createdDateTime": "2022-11-22T05:34:00Z",
+        "expirationDateTime": "2022-11-23T05:34:00Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "AnalyzeSentimentWithAutoDetectedLanguage",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/b98d06d5-c01a-45c4-8f04-83e80e957664?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221121.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "30c29d43d05bc0d877d26a99da16515c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "69ed9fbe-337c-4c54-9cdb-9a26c1bc9be3",
+        "Content-Length": "336",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 22 Nov 2022 05:34:01 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "12",
+        "x-ms-region": "West US 2"
+      },
+      "ResponseBody": {
+        "jobId": "b98d06d5-c01a-45c4-8f04-83e80e957664",
+        "lastUpdateDateTime": "2022-11-22T05:34:00Z",
+        "createdDateTime": "2022-11-22T05:34:00Z",
+        "expirationDateTime": "2022-11-23T05:34:00Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "AnalyzeSentimentWithAutoDetectedLanguage",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/b98d06d5-c01a-45c4-8f04-83e80e957664?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221121.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3117f75f3b91cc0ce0d33c7d7ff6f1de",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "7ddd742a-1a0b-4e99-843e-c4ff3509c3c6",
+        "Content-Length": "1069",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 22 Nov 2022 05:34:03 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "51",
+        "x-ms-region": "West US 2"
+      },
+      "ResponseBody": {
+        "jobId": "b98d06d5-c01a-45c4-8f04-83e80e957664",
+        "lastUpdateDateTime": "2022-11-22T05:34:02Z",
+        "createdDateTime": "2022-11-22T05:34:00Z",
+        "expirationDateTime": "2022-11-23T05:34:00Z",
+        "status": "succeeded",
+        "errors": [],
+        "displayName": "AnalyzeSentimentWithAutoDetectedLanguage",
+        "tasks": {
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 1,
+          "items": [
+            {
+              "kind": "SentimentAnalysisLROResults",
+              "lastUpdateDateTime": "2022-11-22T05:34:02.5616305Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "id": "0",
+                    "sentiment": "mixed",
+                    "confidenceScores": {
+                      "positive": 0.5,
+                      "neutral": 0.0,
+                      "negative": 0.5
+                    },
+                    "sentences": [
+                      {
+                        "sentiment": "positive",
+                        "confidenceScores": {
+                          "positive": 1.0,
+                          "neutral": 0.0,
+                          "negative": 0.0
+                        },
+                        "offset": 0,
+                        "length": 31,
+                        "text": "The park was clean and pretty. "
+                      },
+                      {
+                        "sentiment": "negative",
+                        "confidenceScores": {
+                          "positive": 0.0,
+                          "neutral": 0.0,
+                          "negative": 1.0
+                        },
+                        "offset": 31,
+                        "length": 44,
+                        "text": "The bathrooms and restaurant were not clean."
+                      }
+                    ],
+                    "warnings": [],
+                    "detectedLanguage": {
+                      "name": "English",
+                      "iso6391Name": "en",
+                      "confidenceScore": 0.99
+                    },
+                    "isLanguageDefaulted": false
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2022-10-01"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "681706866",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
+  }
+}

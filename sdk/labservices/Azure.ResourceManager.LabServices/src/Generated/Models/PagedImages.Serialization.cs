@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         internal static PagedImages DeserializePagedImages(JsonElement element)
         {
-            Optional<IReadOnlyList<ImageData>> value = default;
+            Optional<IReadOnlyList<LabVirtualMachineImageData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ImageData> array = new List<ImageData>();
+                    List<LabVirtualMachineImageData> array = new List<LabVirtualMachineImageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImageData.DeserializeImageData(item));
+                        array.Add(LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

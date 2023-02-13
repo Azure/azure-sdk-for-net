@@ -17,25 +17,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         internal static BatchEndpointTrackedResourceArmPaginatedResult DeserializeBatchEndpointTrackedResourceArmPaginatedResult(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<BatchEndpointData>> value = default;
+            Optional<IReadOnlyList<MachineLearningBatchEndpointData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<BatchEndpointData> array = new List<BatchEndpointData>();
+                    List<MachineLearningBatchEndpointData> array = new List<MachineLearningBatchEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchEndpointData.DeserializeBatchEndpointData(item));
+                        array.Add(MachineLearningBatchEndpointData.DeserializeMachineLearningBatchEndpointData(item));
                     }
                     value = array;
                     continue;

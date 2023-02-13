@@ -22,24 +22,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> errorMessage = default;
             Optional<object> startTime = default;
             Optional<object> stopTime = default;
+            Optional<string> linkTableId = default;
+            Optional<string> errorCode = default;
+            Optional<DateTimeOffset> lastProcessedData = default;
+            Optional<DateTimeOffset> lastTransactionCommitTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     startTime = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("stopTime"))
+                if (property.NameEquals("stopTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,8 +63,38 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     stopTime = property.Value.GetObject();
                     continue;
                 }
+                if (property.NameEquals("linkTableId"u8))
+                {
+                    linkTableId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("errorCode"u8))
+                {
+                    errorCode = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("lastProcessedData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lastProcessedData = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("lastTransactionCommitTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lastTransactionCommitTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
             }
-            return new LinkTableStatus(id.Value, status.Value, errorMessage.Value, startTime.Value, stopTime.Value);
+            return new LinkTableStatus(id.Value, status.Value, errorMessage.Value, startTime.Value, stopTime.Value, linkTableId.Value, errorCode.Value, Optional.ToNullable(lastProcessedData), Optional.ToNullable(lastTransactionCommitTime));
         }
 
         internal partial class LinkTableStatusConverter : JsonConverter<LinkTableStatus>

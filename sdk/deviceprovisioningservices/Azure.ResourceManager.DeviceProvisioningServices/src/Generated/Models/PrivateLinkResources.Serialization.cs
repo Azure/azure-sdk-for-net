@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     {
         internal static PrivateLinkResources DeserializePrivateLinkResources(JsonElement element)
         {
-            Optional<IReadOnlyList<GroupIdInformationData>> value = default;
+            Optional<IReadOnlyList<DeviceProvisioningServicesPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<GroupIdInformationData> array = new List<GroupIdInformationData>();
+                    List<DeviceProvisioningServicesPrivateLinkResourceData> array = new List<DeviceProvisioningServicesPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GroupIdInformationData.DeserializeGroupIdInformationData(item));
+                        array.Add(DeviceProvisioningServicesPrivateLinkResourceData.DeserializeDeviceProvisioningServicesPrivateLinkResourceData(item));
                     }
                     value = array;
                     continue;

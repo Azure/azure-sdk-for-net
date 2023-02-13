@@ -15,23 +15,122 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
+            if (Optional.IsDefined(FileName))
+            {
+                writer.WritePropertyName("fileName"u8);
+                writer.WriteStringValue(FileName);
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(LanguageCode))
+            {
+                writer.WritePropertyName("languageCode"u8);
+                writer.WriteStringValue(LanguageCode);
+            }
+            if (Optional.IsDefined(HlsSettings))
+            {
+                writer.WritePropertyName("hlsSettings"u8);
+                writer.WriteObjectValue(HlsSettings);
+            }
+            if (Optional.IsDefined(DashSettings))
+            {
+                writer.WritePropertyName("dashSettings"u8);
+                writer.WriteObjectValue(DashSettings);
+            }
+            if (Optional.IsDefined(Mpeg4TrackId))
+            {
+                if (Mpeg4TrackId != null)
+                {
+                    writer.WritePropertyName("mpeg4TrackId"u8);
+                    writer.WriteNumberValue(Mpeg4TrackId.Value);
+                }
+                else
+                {
+                    writer.WriteNull("mpeg4TrackId");
+                }
+            }
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
 
         internal static AudioTrack DeserializeAudioTrack(JsonElement element)
         {
+            Optional<string> fileName = default;
+            Optional<string> displayName = default;
+            Optional<string> languageCode = default;
+            Optional<HlsSettings> hlsSettings = default;
+            Optional<TrackDashSettings> dashSettings = default;
+            Optional<int?> mpeg4TrackId = default;
+            Optional<int> bitRate = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("fileName"u8))
+                {
+                    fileName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("displayName"u8))
+                {
+                    displayName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("languageCode"u8))
+                {
+                    languageCode = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("hlsSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    hlsSettings = HlsSettings.DeserializeHlsSettings(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("dashSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dashSettings = TrackDashSettings.DeserializeTrackDashSettings(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("mpeg4TrackId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        mpeg4TrackId = null;
+                        continue;
+                    }
+                    mpeg4TrackId = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("bitRate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    bitRate = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
             }
-            return new AudioTrack(odataType);
+            return new AudioTrack(odataType, fileName.Value, displayName.Value, languageCode.Value, hlsSettings.Value, dashSettings.Value, Optional.ToNullable(mpeg4TrackId), Optional.ToNullable(bitRate));
         }
     }
 }

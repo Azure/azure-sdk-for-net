@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Initializes a new instance of Authentication. </summary>
         /// <param name="symmetricKey"> Symmetric key for authentication. </param>
-        internal Authentication(SymmetricKey symmetricKey)
+        internal Authentication(DataBoxEdgeSymmetricKey symmetricKey)
         {
             SymmetricKey = symmetricKey;
         }
 
         /// <summary> Symmetric key for authentication. </summary>
-        internal SymmetricKey SymmetricKey { get; set; }
+        internal DataBoxEdgeSymmetricKey SymmetricKey { get; set; }
         /// <summary> Connection string based on the symmetric key. </summary>
         public AsymmetricEncryptedSecret SymmetricKeyConnectionString
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             set
             {
                 if (SymmetricKey is null)
-                    SymmetricKey = new SymmetricKey();
+                    SymmetricKey = new DataBoxEdgeSymmetricKey();
                 SymmetricKey.ConnectionString = value;
             }
         }

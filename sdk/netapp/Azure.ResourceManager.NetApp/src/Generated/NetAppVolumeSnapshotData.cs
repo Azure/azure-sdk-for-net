@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="snapshotId"> UUID v4 used to identify the Snapshot. </param>
         /// <param name="created"> The creation date of the snapshot. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
-        internal NetAppVolumeSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, Guid? snapshotId, DateTimeOffset? created, string provisioningState) : base(id, name, resourceType, systemData)
+        internal NetAppVolumeSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, string snapshotId, DateTimeOffset? created, string provisioningState) : base(id, name, resourceType, systemData)
         {
             Location = location;
             SnapshotId = snapshotId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> Resource location. </summary>
         public AzureLocation Location { get; set; }
         /// <summary> UUID v4 used to identify the Snapshot. </summary>
-        public Guid? SnapshotId { get; }
+        public string SnapshotId { get; }
         /// <summary> The creation date of the snapshot. </summary>
         public DateTimeOffset? Created { get; }
         /// <summary> Azure lifecycle management. </summary>

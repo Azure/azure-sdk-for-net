@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.TextAnalytics.Models;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -20,20 +21,11 @@ namespace Azure.AI.TextAnalytics
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/>, <paramref name="modelVersion"/> or <paramref name="documents"/> is null. </exception>
-        public PiiEntitiesResult(IEnumerable<DocumentError> errors, string modelVersion, IEnumerable<PiiResultDocumentsItem> documents) : base(errors, modelVersion)
+        public PiiEntitiesResult(IEnumerable<InputError> errors, string modelVersion, IEnumerable<PIIResultWithDetectedLanguage> documents) : base(errors, modelVersion)
         {
-            if (errors == null)
-            {
-                throw new ArgumentNullException(nameof(errors));
-            }
-            if (modelVersion == null)
-            {
-                throw new ArgumentNullException(nameof(modelVersion));
-            }
-            if (documents == null)
-            {
-                throw new ArgumentNullException(nameof(documents));
-            }
+            Argument.AssertNotNull(errors, nameof(errors));
+            Argument.AssertNotNull(modelVersion, nameof(modelVersion));
+            Argument.AssertNotNull(documents, nameof(documents));
 
             Documents = documents.ToList();
         }
@@ -43,12 +35,12 @@ namespace Azure.AI.TextAnalytics
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
-        internal PiiEntitiesResult(IList<DocumentError> errors, TextDocumentBatchStatistics statistics, string modelVersion, IList<PiiResultDocumentsItem> documents) : base(errors, statistics, modelVersion)
+        internal PiiEntitiesResult(IList<InputError> errors, TextDocumentBatchStatistics statistics, string modelVersion, IList<PIIResultWithDetectedLanguage> documents) : base(errors, statistics, modelVersion)
         {
             Documents = documents;
         }
 
         /// <summary> Response by document. </summary>
-        public IList<PiiResultDocumentsItem> Documents { get; }
+        public IList<PIIResultWithDetectedLanguage> Documents { get; }
     }
 }

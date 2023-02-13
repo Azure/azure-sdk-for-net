@@ -3,13 +3,13 @@ AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/netapp/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --use:@microsoft.azure/autorest.csharp@2.3.90 --csharp-sdks-folder=D:\GitRepos\AzureSdkForNet1\sdk
-2022-07-12 21:02:36 UTC
-Autorest CSharp Version: 2.3.90
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/network/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=D:\GitRepos\ForkAzureSDKForNet_2022_07_01\sdk
+Autorest CSharp Version: 2.3.82
+2022-11-09 18:09:03 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      main
-Commit:      df898cb9c4fb7ad0ee03a9e4d0e25607f130018d
+Commit:      3c560b167d153ca3f3d7a8dee387465289f143dd
 AutoRest information
 Requested version: 2.0.4421
 Bootstrapper version:    autorest@2.0.4413

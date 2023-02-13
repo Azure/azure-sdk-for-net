@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-11-01";
+            _apiVersion = apiVersion ?? "2022-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="transformName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MediaTransformJobListResult>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, string transformName, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MediaJobListResult>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, string transformName, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        MediaTransformJobListResult value = default;
+                        MediaJobListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MediaTransformJobListResult.DeserializeMediaTransformJobListResult(document.RootElement);
+                        value = MediaJobListResult.DeserializeMediaJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="transformName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MediaTransformJobListResult> List(string subscriptionId, string resourceGroupName, string accountName, string transformName, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
+        public Response<MediaJobListResult> List(string subscriptionId, string resourceGroupName, string accountName, string transformName, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        MediaTransformJobListResult value = default;
+                        MediaJobListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MediaTransformJobListResult.DeserializeMediaTransformJobListResult(document.RootElement);
+                        value = MediaJobListResult.DeserializeMediaJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MediaTransformJobData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, CancellationToken cancellationToken = default)
+        public async Task<Response<MediaJobData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -181,13 +181,13 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        MediaTransformJobData value = default;
+                        MediaJobData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MediaTransformJobData.DeserializeMediaTransformJobData(document.RootElement);
+                        value = MediaJobData.DeserializeMediaJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MediaTransformJobData)null, message.Response);
+                    return Response.FromValue((MediaJobData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MediaTransformJobData> Get(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, CancellationToken cancellationToken = default)
+        public Response<MediaJobData> Get(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -216,19 +216,19 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        MediaTransformJobData value = default;
+                        MediaJobData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MediaTransformJobData.DeserializeMediaTransformJobData(document.RootElement);
+                        value = MediaJobData.DeserializeMediaJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MediaTransformJobData)null, message.Response);
+                    return Response.FromValue((MediaJobData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, MediaTransformJobData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, MediaJobData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/>, <paramref name="jobName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MediaTransformJobData>> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, MediaTransformJobData data, CancellationToken cancellationToken = default)
+        public async Task<Response<MediaJobData>> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, MediaJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -281,9 +281,9 @@ namespace Azure.ResourceManager.Media
             {
                 case 201:
                     {
-                        MediaTransformJobData value = default;
+                        MediaJobData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MediaTransformJobData.DeserializeMediaTransformJobData(document.RootElement);
+                        value = MediaJobData.DeserializeMediaJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/>, <paramref name="jobName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MediaTransformJobData> Create(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, MediaTransformJobData data, CancellationToken cancellationToken = default)
+        public Response<MediaJobData> Create(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, MediaJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -316,9 +316,9 @@ namespace Azure.ResourceManager.Media
             {
                 case 201:
                     {
-                        MediaTransformJobData value = default;
+                        MediaJobData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MediaTransformJobData.DeserializeMediaTransformJobData(document.RootElement);
+                        value = MediaJobData.DeserializeMediaJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Media
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, MediaTransformJobData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, MediaJobData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/>, <paramref name="jobName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MediaTransformJobData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, MediaTransformJobData data, CancellationToken cancellationToken = default)
+        public async Task<Response<MediaJobData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, MediaJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -461,9 +461,9 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        MediaTransformJobData value = default;
+                        MediaJobData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MediaTransformJobData.DeserializeMediaTransformJobData(document.RootElement);
+                        value = MediaJobData.DeserializeMediaJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/>, <paramref name="jobName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MediaTransformJobData> Update(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, MediaTransformJobData data, CancellationToken cancellationToken = default)
+        public Response<MediaJobData> Update(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, MediaJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -496,9 +496,9 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        MediaTransformJobData value = default;
+                        MediaJobData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MediaTransformJobData.DeserializeMediaTransformJobData(document.RootElement);
+                        value = MediaJobData.DeserializeMediaJobData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="transformName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MediaTransformJobListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string transformName, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MediaJobListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string transformName, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -626,9 +626,9 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        MediaTransformJobListResult value = default;
+                        MediaJobListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MediaTransformJobListResult.DeserializeMediaTransformJobListResult(document.RootElement);
+                        value = MediaJobListResult.DeserializeMediaJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="transformName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MediaTransformJobListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string transformName, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
+        public Response<MediaJobListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string transformName, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -661,9 +661,9 @@ namespace Azure.ResourceManager.Media
             {
                 case 200:
                     {
-                        MediaTransformJobListResult value = default;
+                        MediaJobListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MediaTransformJobListResult.DeserializeMediaTransformJobListResult(document.RootElement);
+                        value = MediaJobListResult.DeserializeMediaJobListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

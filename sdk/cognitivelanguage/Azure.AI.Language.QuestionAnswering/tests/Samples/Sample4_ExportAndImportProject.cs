@@ -5,23 +5,23 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using Azure.AI.Language.QuestionAnswering.Projects;
+using Azure.AI.Language.QuestionAnswering.Authoring;
 using Azure.Core;
 using System.Text.Json;
 
 namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 {
-    public partial class QuestionAnsweringProjectsClientSamples : QuestionAnsweringProjectsLiveTestBase
+    public partial class QuestionAnsweringAuthoringClientSamples : QuestionAnsweringAuthoringLiveTestBase
     {
         [RecordedTest]
         [SyncOnly]
         public void ExportAndImport()
         {
-            QuestionAnsweringProjectsClient client = Client;
+            QuestionAnsweringAuthoringClient client = Client;
             string exportedProjectName = CreateTestProjectName();
             CreateProject(exportedProjectName);
 
-            #region Snippet:QuestionAnsweringProjectsClient_ExportProject
+            #region Snippet:QuestionAnsweringAuthoringClient_ExportProject
             Operation<BinaryData> exportOperation = client.Export(WaitUntil.Completed, exportedProjectName, format: "json");
 
             // retrieve export operation response, and extract url of exported file
@@ -32,7 +32,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Assert.True(exportOperation.HasCompleted);
             Assert.True(!string.IsNullOrEmpty(exportedFileUrl));
 
-            #region Snippet:QuestionAnsweringProjectsClient_ImportProject
+            #region Snippet:QuestionAnsweringAuthoringClient_ImportProject
             // Set import project name and request content
             string importedProjectName = "{ProjectNameToBeImported}";
 #if !SNIPPET
@@ -63,7 +63,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Assert.True(importOperation.HasCompleted);
             Assert.AreEqual(200, importOperation.GetRawResponse().Status);
 
-            #region Snippet:QuestionAnsweringProjectsClient_GetProjectDetails
+            #region Snippet:QuestionAnsweringAuthoringClient_GetProjectDetails
             Response projectDetails = client.GetProjectDetails(importedProjectName);
 
             Console.WriteLine(projectDetails.Content);
@@ -76,11 +76,11 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
         [AsyncOnly]
         public async Task ExportAndImportAsync()
         {
-            QuestionAnsweringProjectsClient client = Client;
+            QuestionAnsweringAuthoringClient client = Client;
             string exportedProjectName = CreateTestProjectName();
             await CreateProjectAsync(exportedProjectName);
 
-            #region Snippet:QuestionAnsweringProjectsClient_ExportProjectAsync
+            #region Snippet:QuestionAnsweringAuthoringClient_ExportProjectAsync
             Operation<BinaryData> exportOperation = await client.ExportAsync(WaitUntil.Completed, exportedProjectName, format : "json");
 
             // retrieve export operation response, and extract url of exported file
@@ -91,7 +91,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Assert.True(exportOperation.HasCompleted);
             Assert.True(!string.IsNullOrEmpty(exportedFileUrl));
 
-            #region Snippet:QuestionAnsweringProjectsClient_ImportProjectAsync
+            #region Snippet:QuestionAnsweringAuthoringClient_ImportProjectAsync
             // Set import project name and request content
             string importedProjectName = "{ProjectNameToBeImported}";
 #if !SNIPPET
@@ -122,7 +122,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Assert.True(importOperation.HasCompleted);
             Assert.AreEqual(200, importOperation.GetRawResponse().Status);
 
-            #region Snippet:QuestionAnsweringProjectsClient_GetProjectDetailsAsync
+            #region Snippet:QuestionAnsweringAuthoringClient_GetProjectDetailsAsync
             Response projectDetails = await client.GetProjectDetailsAsync(importedProjectName);
 
             Console.WriteLine(projectDetails.Content);

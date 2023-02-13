@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Communication;
+using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
@@ -18,10 +19,7 @@ namespace Azure.Communication.CallingServer
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
         public CallSourceInternal(CommunicationIdentifierModel identifier)
         {
-            if (identifier == null)
-            {
-                throw new ArgumentNullException(nameof(identifier));
-            }
+            Argument.AssertNotNull(identifier, nameof(identifier));
 
             Identifier = identifier;
         }

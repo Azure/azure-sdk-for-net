@@ -1,0 +1,42 @@
+{
+    "ambari-conf": {
+        "database-server": "scustestsqlserver.database.windows.net",
+        "database-name": "ambaridb1",
+        "database-user-name": "sqlserveruser",
+        "database-user-password": "HDInsight123!"
+    },
+    "gateway": {
+        "restAuthCredential.isEnabled": "true",
+        "restAuthCredential.username": "admin3366",
+        "restAuthCredential.password": "Password1!8462"
+    },
+    "hive-site": {
+        "javax.jdo.option.ConnectionURL": "jdbc:sqlserver://scustestsqlserver.database.windows.net;database=hivemetastore1;encrypt=true;trustServerCertificate=true;create=false;loginTimeout=300;sendStringParametersAsUnicode=true;prepareSQL=0",
+        "javax.jdo.option.ConnectionUserName": "sqlserveruser",
+        "javax.jdo.option.ConnectionPassword": "HDInsight123!",
+        "javax.jdo.option.ConnectionDriverName": "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+    },
+    "hive-env": {
+        "hive_database": "Existing MSSQL Server database with SQL authentication",
+        "hive_database_name": "hivemetastore1",
+        "hive_database_type": "mssql",
+        "hive_existing_mssql_server_database": "hivemetastore1",
+        "hive_existing_mssql_server_host": "scustestsqlserver.database.windows.net",
+        "hive_hostname": "scustestsqlserver.database.windows.net"
+    },
+    "oozie-site": {
+        "oozie.service.JPAService.jdbc.url": "jdbc:sqlserver://scustestsqlserver.database.windows.net;database=ooziemetastore1;encrypt=true;trustServerCertificate=true;create=false;loginTimeout=300;sendStringParametersAsUnicode=true;prepareSQL=0",
+        "oozie.service.JPAService.jdbc.username": "sqlserveruser",
+        "oozie.service.JPAService.jdbc.password": "HDInsight123!",
+        "oozie.service.JPAService.jdbc.driver": "com.microsoft.sqlserver.jdbc.SQLServerDriver",
+        "oozie.db.schema.name": "oozie"
+    },
+    "oozie-env": {
+        "oozie_database": "Existing MSSQL Server database with SQL authentication",
+        "oozie_database_name": "ooziemetastore1",
+        "oozie_database_type": "mssql",
+        "oozie_existing_mssql_server_database": "ooziemetastore1",
+        "oozie_existing_mssql_server_host": "scustestsqlserver.database.windows.net",
+        "oozie_hostname": "scustestsqlserver.database.windows.net"
+    }
+}

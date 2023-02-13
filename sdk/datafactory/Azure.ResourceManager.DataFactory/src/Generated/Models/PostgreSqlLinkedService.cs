@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public PostgreSqlLinkedService(BinaryData connectionString)
         {
-            if (connectionString == null)
-            {
-                throw new ArgumentNullException(nameof(connectionString));
-            }
+            Argument.AssertNotNull(connectionString, nameof(connectionString));
 
             ConnectionString = connectionString;
             LinkedServiceType = "PostgreSql";

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -14,21 +15,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         /// <summary> Initializes a new instance of ContainerGroupImageRegistryCredential. </summary>
         /// <param name="server"> The Docker image registry server without a protocol such as &quot;http&quot; and &quot;https&quot;. </param>
-        /// <param name="username"> The username for the private registry. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="server"/> or <paramref name="username"/> is null. </exception>
-        public ContainerGroupImageRegistryCredential(string server, string username)
+        /// <exception cref="ArgumentNullException"> <paramref name="server"/> is null. </exception>
+        public ContainerGroupImageRegistryCredential(string server)
         {
-            if (server == null)
-            {
-                throw new ArgumentNullException(nameof(server));
-            }
-            if (username == null)
-            {
-                throw new ArgumentNullException(nameof(username));
-            }
+            Argument.AssertNotNull(server, nameof(server));
 
             Server = server;
-            Username = username;
         }
 
         /// <summary> Initializes a new instance of ContainerGroupImageRegistryCredential. </summary>

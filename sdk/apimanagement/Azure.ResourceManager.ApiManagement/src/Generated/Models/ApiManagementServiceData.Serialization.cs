@@ -21,33 +21,26 @@ namespace Azure.ResourceManager.ApiManagement
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sku");
+            writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
-                if (Zones != null)
+                writer.WritePropertyName("zones"u8);
+                writer.WriteStartArray();
+                foreach (var item in Zones)
                 {
-                    writer.WritePropertyName("zones");
-                    writer.WriteStartArray();
-                    foreach (var item in Zones)
-                    {
-                        writer.WriteStringValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("zones");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -56,18 +49,18 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(NotificationSenderEmail))
             {
-                writer.WritePropertyName("notificationSenderEmail");
+                writer.WritePropertyName("notificationSenderEmail"u8);
                 writer.WriteStringValue(NotificationSenderEmail);
             }
             if (Optional.IsCollectionDefined(HostnameConfigurations))
             {
-                writer.WritePropertyName("hostnameConfigurations");
+                writer.WritePropertyName("hostnameConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in HostnameConfigurations)
                 {
@@ -77,53 +70,32 @@ namespace Azure.ResourceManager.ApiManagement
             }
             if (Optional.IsDefined(PublicIPAddressId))
             {
-                if (PublicIPAddressId != null)
-                {
-                    writer.WritePropertyName("publicIpAddressId");
-                    writer.WriteStringValue(PublicIPAddressId);
-                }
-                else
-                {
-                    writer.WriteNull("publicIpAddressId");
-                }
+                writer.WritePropertyName("publicIpAddressId"u8);
+                writer.WriteStringValue(PublicIPAddressId);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             if (Optional.IsDefined(VirtualNetworkConfiguration))
             {
-                if (VirtualNetworkConfiguration != null)
-                {
-                    writer.WritePropertyName("virtualNetworkConfiguration");
-                    writer.WriteObjectValue(VirtualNetworkConfiguration);
-                }
-                else
-                {
-                    writer.WriteNull("virtualNetworkConfiguration");
-                }
+                writer.WritePropertyName("virtualNetworkConfiguration"u8);
+                writer.WriteObjectValue(VirtualNetworkConfiguration);
             }
             if (Optional.IsCollectionDefined(AdditionalLocations))
             {
-                if (AdditionalLocations != null)
+                writer.WritePropertyName("additionalLocations"u8);
+                writer.WriteStartArray();
+                foreach (var item in AdditionalLocations)
                 {
-                    writer.WritePropertyName("additionalLocations");
-                    writer.WriteStartArray();
-                    foreach (var item in AdditionalLocations)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("additionalLocations");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(CustomProperties))
             {
-                writer.WritePropertyName("customProperties");
+                writer.WritePropertyName("customProperties"u8);
                 writer.WriteStartObject();
                 foreach (var item in CustomProperties)
                 {
@@ -134,69 +106,488 @@ namespace Azure.ResourceManager.ApiManagement
             }
             if (Optional.IsCollectionDefined(Certificates))
             {
-                if (Certificates != null)
+                writer.WritePropertyName("certificates"u8);
+                writer.WriteStartArray();
+                foreach (var item in Certificates)
                 {
-                    writer.WritePropertyName("certificates");
-                    writer.WriteStartArray();
-                    foreach (var item in Certificates)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("certificates");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(EnableClientCertificate))
             {
-                writer.WritePropertyName("enableClientCertificate");
+                writer.WritePropertyName("enableClientCertificate"u8);
                 writer.WriteBooleanValue(EnableClientCertificate.Value);
             }
             if (Optional.IsDefined(DisableGateway))
             {
-                writer.WritePropertyName("disableGateway");
+                writer.WritePropertyName("disableGateway"u8);
                 writer.WriteBooleanValue(DisableGateway.Value);
             }
             if (Optional.IsDefined(VirtualNetworkType))
             {
-                writer.WritePropertyName("virtualNetworkType");
+                writer.WritePropertyName("virtualNetworkType"u8);
                 writer.WriteStringValue(VirtualNetworkType.Value.ToString());
             }
             if (Optional.IsDefined(ApiVersionConstraint))
             {
-                writer.WritePropertyName("apiVersionConstraint");
+                writer.WritePropertyName("apiVersionConstraint"u8);
                 writer.WriteObjectValue(ApiVersionConstraint);
             }
             if (Optional.IsDefined(Restore))
             {
-                writer.WritePropertyName("restore");
+                writer.WritePropertyName("restore"u8);
                 writer.WriteBooleanValue(Restore.Value);
             }
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
-                if (PrivateEndpointConnections != null)
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WritePropertyName("privateEndpointConnections");
-                    writer.WriteStartArray();
-                    foreach (var item in PrivateEndpointConnections)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("privateEndpointConnections");
-                }
+                writer.WriteEndArray();
             }
-            writer.WritePropertyName("publisherEmail");
+            writer.WritePropertyName("publisherEmail"u8);
             writer.WriteStringValue(PublisherEmail);
-            writer.WritePropertyName("publisherName");
+            writer.WritePropertyName("publisherName"u8);
             writer.WriteStringValue(PublisherName);
             writer.WriteEndObject();
             writer.WriteEndObject();
+        }
+
+        internal static ApiManagementServiceData DeserializeApiManagementServiceData(JsonElement element)
+        {
+            ApiManagementServiceSkuProperties sku = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<ETag> etag = default;
+            Optional<IList<string>> zones = default;
+            Optional<IDictionary<string, string>> tags = default;
+            AzureLocation location = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> notificationSenderEmail = default;
+            Optional<string> provisioningState = default;
+            Optional<string> targetProvisioningState = default;
+            Optional<DateTimeOffset> createdAtUtc = default;
+            Optional<Uri> gatewayUri = default;
+            Optional<Uri> gatewayRegionalUri = default;
+            Optional<Uri> portalUri = default;
+            Optional<Uri> managementApiUri = default;
+            Optional<Uri> scmUri = default;
+            Optional<Uri> developerPortalUri = default;
+            Optional<IList<HostnameConfiguration>> hostnameConfigurations = default;
+            Optional<IReadOnlyList<IPAddress>> publicIPAddresses = default;
+            Optional<IReadOnlyList<IPAddress>> privateIPAddresses = default;
+            Optional<ResourceIdentifier> publicIPAddressId = default;
+            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<VirtualNetworkConfiguration> virtualNetworkConfiguration = default;
+            Optional<IList<AdditionalLocation>> additionalLocations = default;
+            Optional<IDictionary<string, string>> customProperties = default;
+            Optional<IList<CertificateConfiguration>> certificates = default;
+            Optional<bool> enableClientCertificate = default;
+            Optional<bool> disableGateway = default;
+            Optional<VirtualNetworkType> virtualNetworkType = default;
+            Optional<ApiVersionConstraint> apiVersionConstraint = default;
+            Optional<bool> restore = default;
+            Optional<IList<RemotePrivateEndpointConnectionWrapper>> privateEndpointConnections = default;
+            Optional<PlatformVersion> platformVersion = default;
+            string publisherEmail = default;
+            string publisherName = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sku"u8))
+                {
+                    sku = ApiManagementServiceSkuProperties.DeserializeApiManagementServiceSkuProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("etag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("zones"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    zones = array;
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("notificationSenderEmail"u8))
+                        {
+                            notificationSenderEmail = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            provisioningState = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("targetProvisioningState"u8))
+                        {
+                            targetProvisioningState = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("createdAtUtc"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            createdAtUtc = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("gatewayUrl"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                gatewayUri = null;
+                                continue;
+                            }
+                            gatewayUri = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("gatewayRegionalUrl"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                gatewayRegionalUri = null;
+                                continue;
+                            }
+                            gatewayRegionalUri = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("portalUrl"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                portalUri = null;
+                                continue;
+                            }
+                            portalUri = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("managementApiUrl"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                managementApiUri = null;
+                                continue;
+                            }
+                            managementApiUri = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("scmUrl"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                scmUri = null;
+                                continue;
+                            }
+                            scmUri = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("developerPortalUrl"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                developerPortalUri = null;
+                                continue;
+                            }
+                            developerPortalUri = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("hostnameConfigurations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<HostnameConfiguration> array = new List<HostnameConfiguration>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(HostnameConfiguration.DeserializeHostnameConfiguration(item));
+                            }
+                            hostnameConfigurations = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("publicIPAddresses"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<IPAddress> array = new List<IPAddress>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(IPAddress.Parse(item.GetString()));
+                            }
+                            publicIPAddresses = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("privateIPAddresses"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<IPAddress> array = new List<IPAddress>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(IPAddress.Parse(item.GetString()));
+                            }
+                            privateIPAddresses = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("publicIpAddressId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            publicIPAddressId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("publicNetworkAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("virtualNetworkConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            virtualNetworkConfiguration = VirtualNetworkConfiguration.DeserializeVirtualNetworkConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("additionalLocations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<AdditionalLocation> array = new List<AdditionalLocation>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(AdditionalLocation.DeserializeAdditionalLocation(item));
+                            }
+                            additionalLocations = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("customProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            customProperties = dictionary;
+                            continue;
+                        }
+                        if (property0.NameEquals("certificates"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<CertificateConfiguration> array = new List<CertificateConfiguration>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(CertificateConfiguration.DeserializeCertificateConfiguration(item));
+                            }
+                            certificates = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("enableClientCertificate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            enableClientCertificate = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("disableGateway"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            disableGateway = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("virtualNetworkType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            virtualNetworkType = new VirtualNetworkType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("apiVersionConstraint"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            apiVersionConstraint = ApiVersionConstraint.DeserializeApiVersionConstraint(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("restore"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            restore = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("privateEndpointConnections"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<RemotePrivateEndpointConnectionWrapper> array = new List<RemotePrivateEndpointConnectionWrapper>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(RemotePrivateEndpointConnectionWrapper.DeserializeRemotePrivateEndpointConnectionWrapper(item));
+                            }
+                            privateEndpointConnections = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("platformVersion"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            platformVersion = new PlatformVersion(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("publisherEmail"u8))
+                        {
+                            publisherEmail = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("publisherName"u8))
+                        {
+                            publisherName = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+            }
+            return new ApiManagementServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, Optional.ToNullable(etag), Optional.ToList(zones), notificationSenderEmail.Value, provisioningState.Value, targetProvisioningState.Value, Optional.ToNullable(createdAtUtc), gatewayUri.Value, gatewayRegionalUri.Value, portalUri.Value, managementApiUri.Value, scmUri.Value, developerPortalUri.Value, Optional.ToList(hostnameConfigurations), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, Optional.ToNullable(publicNetworkAccess), virtualNetworkConfiguration.Value, Optional.ToList(additionalLocations), Optional.ToDictionary(customProperties), Optional.ToList(certificates), Optional.ToNullable(enableClientCertificate), Optional.ToNullable(disableGateway), Optional.ToNullable(virtualNetworkType), apiVersionConstraint.Value, Optional.ToNullable(restore), Optional.ToList(privateEndpointConnections), Optional.ToNullable(platformVersion), publisherEmail, publisherName);
         }
     }
 }

@@ -20,34 +20,34 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccountUri))
             {
-                writer.WritePropertyName("storageAccountUrl");
+                writer.WritePropertyName("storageAccountUrl"u8);
                 writer.WriteStringValue(StorageAccountUri.AbsoluteUri);
             }
             if (Optional.IsDefined(BlobName))
             {
-                writer.WritePropertyName("blobName");
+                writer.WritePropertyName("blobName"u8);
                 writer.WriteStringValue(BlobName);
             }
-            if (Optional.IsDefined(Overwrite))
+            if (Optional.IsDefined(CanOverwrite))
             {
-                writer.WritePropertyName("overwrite");
-                writer.WriteBooleanValue(Overwrite.Value);
+                writer.WritePropertyName("overwrite"u8);
+                writer.WriteBooleanValue(CanOverwrite.Value);
             }
             if (Optional.IsDefined(SiteName))
             {
-                writer.WritePropertyName("siteName");
+                writer.WritePropertyName("siteName"u8);
                 writer.WriteStringValue(SiteName);
             }
             if (Optional.IsCollectionDefined(Databases))
             {
-                writer.WritePropertyName("databases");
+                writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
                 foreach (var item in Databases)
                 {
@@ -57,32 +57,32 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(IgnoreConflictingHostNames))
             {
-                writer.WritePropertyName("ignoreConflictingHostNames");
+                writer.WritePropertyName("ignoreConflictingHostNames"u8);
                 writer.WriteBooleanValue(IgnoreConflictingHostNames.Value);
             }
             if (Optional.IsDefined(IgnoreDatabases))
             {
-                writer.WritePropertyName("ignoreDatabases");
+                writer.WritePropertyName("ignoreDatabases"u8);
                 writer.WriteBooleanValue(IgnoreDatabases.Value);
             }
             if (Optional.IsDefined(AppServicePlan))
             {
-                writer.WritePropertyName("appServicePlan");
+                writer.WritePropertyName("appServicePlan"u8);
                 writer.WriteStringValue(AppServicePlan);
             }
             if (Optional.IsDefined(OperationType))
             {
-                writer.WritePropertyName("operationType");
+                writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToSerialString());
             }
             if (Optional.IsDefined(AdjustConnectionStrings))
             {
-                writer.WritePropertyName("adjustConnectionStrings");
+                writer.WritePropertyName("adjustConnectionStrings"u8);
                 writer.WriteBooleanValue(AdjustConnectionStrings.Value);
             }
             if (Optional.IsDefined(HostingEnvironment))
             {
-                writer.WritePropertyName("hostingEnvironment");
+                writer.WritePropertyName("hostingEnvironment"u8);
                 writer.WriteStringValue(HostingEnvironment);
             }
             writer.WriteEndObject();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> blobName = default;
             Optional<bool> overwrite = default;
             Optional<string> siteName = default;
-            Optional<IList<DatabaseBackupSetting>> databases = default;
+            Optional<IList<AppServiceDatabaseBackupSetting>> databases = default;
             Optional<bool> ignoreConflictingHostNames = default;
             Optional<bool> ignoreDatabases = default;
             Optional<string> appServicePlan = default;
@@ -109,37 +109,37 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> hostingEnvironment = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("storageAccountUrl"))
+                        if (property0.NameEquals("storageAccountUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -158,12 +158,12 @@ namespace Azure.ResourceManager.AppService.Models
                             storageAccountUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("blobName"))
+                        if (property0.NameEquals("blobName"u8))
                         {
                             blobName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("overwrite"))
+                        if (property0.NameEquals("overwrite"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -173,27 +173,27 @@ namespace Azure.ResourceManager.AppService.Models
                             overwrite = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("siteName"))
+                        if (property0.NameEquals("siteName"u8))
                         {
                             siteName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("databases"))
+                        if (property0.NameEquals("databases"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<DatabaseBackupSetting> array = new List<DatabaseBackupSetting>();
+                            List<AppServiceDatabaseBackupSetting> array = new List<AppServiceDatabaseBackupSetting>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DatabaseBackupSetting.DeserializeDatabaseBackupSetting(item));
+                                array.Add(AppServiceDatabaseBackupSetting.DeserializeAppServiceDatabaseBackupSetting(item));
                             }
                             databases = array;
                             continue;
                         }
-                        if (property0.NameEquals("ignoreConflictingHostNames"))
+                        if (property0.NameEquals("ignoreConflictingHostNames"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService.Models
                             ignoreConflictingHostNames = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("ignoreDatabases"))
+                        if (property0.NameEquals("ignoreDatabases"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -213,12 +213,12 @@ namespace Azure.ResourceManager.AppService.Models
                             ignoreDatabases = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("appServicePlan"))
+                        if (property0.NameEquals("appServicePlan"u8))
                         {
                             appServicePlan = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("operationType"))
+                        if (property0.NameEquals("operationType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AppService.Models
                             operationType = property0.Value.GetString().ToBackupRestoreOperationType();
                             continue;
                         }
-                        if (property0.NameEquals("adjustConnectionStrings"))
+                        if (property0.NameEquals("adjustConnectionStrings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AppService.Models
                             adjustConnectionStrings = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("hostingEnvironment"))
+                        if (property0.NameEquals("hostingEnvironment"u8))
                         {
                             hostingEnvironment = property0.Value.GetString();
                             continue;

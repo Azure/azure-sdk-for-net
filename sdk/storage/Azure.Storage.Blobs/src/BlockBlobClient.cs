@@ -351,14 +351,14 @@ namespace Azure.Storage.Blobs.Specialized
             return new BlockBlobClient(
                 blobUri,
                 new BlobClientConfiguration(
-                    pipeline,
-                    null,
-                    new StorageClientDiagnostics(options),
-                    options.Version,
-                    options.CustomerProvidedKey,
-                    options.TransferValidation,
-                    null,
-                    options.PreserveBlobNameSlashes));
+                    pipeline: pipeline,
+                    sharedKeyCredential: null,
+                    clientDiagnostics: new ClientDiagnostics(options),
+                    version: options.Version,
+                    customerProvidedKey: options.CustomerProvidedKey,
+                    transferValidation: options.TransferValidation,
+                    encryptionScope: null,
+                    trimBlobNameSlashes: options.TrimBlobNameSlashes));
         }
 
         private static void AssertNoClientSideEncryption(BlobClientOptions options)
@@ -530,7 +530,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
 
             return uploader.UploadInternal(
@@ -587,7 +587,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
@@ -795,7 +795,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
-        /// <param name="validationOptionsOverride">
+        /// <param name="transferValidationOverride">
         /// Options for sending a checksum to validate request contents.
         /// </param>
         /// <param name="immutabilityPolicy">
@@ -836,12 +836,12 @@ namespace Azure.Storage.Blobs.Specialized
             BlobImmutabilityPolicy immutabilityPolicy,
             bool? legalHold,
             IProgress<long> progressHandler,
-            UploadTransferValidationOptions validationOptionsOverride,
+            UploadTransferValidationOptions transferValidationOverride,
             string operationName,
             bool async,
             CancellationToken cancellationToken)
         {
-            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.TransferValidation.Upload;
+            UploadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Upload;
 
             content = content?.WithNoDispose().WithProgress(progressHandler);
             operationName ??= $"{nameof(BlockBlobClient)}.{nameof(Upload)}";
@@ -1145,7 +1145,7 @@ namespace Azure.Storage.Blobs.Specialized
             StageBlockInternal(
                 base64BlockId,
                 content,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 options?.Conditions,
                 options?.ProgressHandler,
                 false, // async
@@ -1196,7 +1196,7 @@ namespace Azure.Storage.Blobs.Specialized
             await StageBlockInternal(
                 base64BlockId,
                 content,
-                options?.TransferValidationOptions,
+                options?.TransferValidation,
                 options?.Conditions,
                 options?.ProgressHandler,
                 true, // async
@@ -1230,7 +1230,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="progressHandler">
         /// Progress handler for stage block progress.
         /// </param>
-        /// <param name="validationOptionsOverride">
+        /// <param name="transferValidationOverride">
         /// Override for client configured transfer validation options.
         /// </param>
         /// <param name="async">
@@ -1251,13 +1251,13 @@ namespace Azure.Storage.Blobs.Specialized
         internal virtual async Task<Response<BlockInfo>> StageBlockInternal(
             string base64BlockId,
             Stream content,
-            UploadTransferValidationOptions validationOptionsOverride,
+            UploadTransferValidationOptions transferValidationOverride,
             BlobRequestConditions conditions,
             IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)
         {
-            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.TransferValidation.Upload;
+            UploadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Upload;
 
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
@@ -2762,7 +2762,7 @@ namespace Azure.Storage.Blobs.Specialized
                     immutabilityPolicy: default,
                     legalHold: default,
                     progressHandler: default,
-                    validationOptionsOverride: default,
+                    transferValidationOverride: default,
                     operationName: default,
                     async: async,
                     cancellationToken: cancellationToken)
@@ -2783,7 +2783,7 @@ namespace Azure.Storage.Blobs.Specialized
                     blobHttpHeaders: options?.HttpHeaders,
                     metadata: options?.Metadata,
                     tags: options?.Tags,
-                    options?.TransferValidationOptions
+                    options?.TransferValidation
                     );
             }
             catch (Exception ex)

@@ -64,11 +64,4 @@ UnwrapResult unwrapResult = cryptoClient.UnwrapKey(KeyWrapAlgorithm.RsaOaep, wra
 Debug.WriteLine($"Decrypted data using the algorithm {unwrapResult.Algorithm}, with key {unwrapResult.KeyId}. The resulting decrypted data is {Encoding.UTF8.GetString(unwrapResult.Key)}");
 ```
 
-## Source
-
-To see the full example source, see:
-
-* [Synchronous Sample6_WrapUnwrap.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample6_WrapUnwrap.cs)
-* [Asynchronous Sample6_WrapUnwrapAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample6_WrapUnwrapAsync.cs)
-
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

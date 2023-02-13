@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,31 +17,26 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomLicenseAcquisitionUriTemplate))
             {
-                writer.WritePropertyName("customLicenseAcquisitionUrlTemplate");
-                writer.WriteStringValue(CustomLicenseAcquisitionUriTemplate.AbsoluteUri);
+                writer.WritePropertyName("customLicenseAcquisitionUrlTemplate"u8);
+                writer.WriteStringValue(CustomLicenseAcquisitionUriTemplate);
             }
-            writer.WritePropertyName("allowPersistentLicense");
+            writer.WritePropertyName("allowPersistentLicense"u8);
             writer.WriteBooleanValue(AllowPersistentLicense);
             writer.WriteEndObject();
         }
 
         internal static StreamingPolicyFairPlayConfiguration DeserializeStreamingPolicyFairPlayConfiguration(JsonElement element)
         {
-            Optional<Uri> customLicenseAcquisitionUriTemplate = default;
+            Optional<string> customLicenseAcquisitionUriTemplate = default;
             bool allowPersistentLicense = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("customLicenseAcquisitionUrlTemplate"))
+                if (property.NameEquals("customLicenseAcquisitionUrlTemplate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        customLicenseAcquisitionUriTemplate = null;
-                        continue;
-                    }
-                    customLicenseAcquisitionUriTemplate = new Uri(property.Value.GetString());
+                    customLicenseAcquisitionUriTemplate = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("allowPersistentLicense"))
+                if (property.NameEquals("allowPersistentLicense"u8))
                 {
                     allowPersistentLicense = property.Value.GetBoolean();
                     continue;

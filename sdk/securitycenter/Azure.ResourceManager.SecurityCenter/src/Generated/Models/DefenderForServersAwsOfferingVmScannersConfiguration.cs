@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -15,13 +16,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of DefenderForServersAwsOfferingVmScannersConfiguration. </summary>
         public DefenderForServersAwsOfferingVmScannersConfiguration()
         {
+            ExclusionTags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DefenderForServersAwsOfferingVmScannersConfiguration. </summary>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
         /// <param name="scanningMode"> The scanning mode for the vm scan. </param>
         /// <param name="exclusionTags"> VM tags that indicates that VM should not be scanned. </param>
-        internal DefenderForServersAwsOfferingVmScannersConfiguration(string cloudRoleArn, ScanningMode? scanningMode, BinaryData exclusionTags)
+        internal DefenderForServersAwsOfferingVmScannersConfiguration(string cloudRoleArn, DefenderForServersScanningMode? scanningMode, IDictionary<string, string> exclusionTags)
         {
             CloudRoleArn = cloudRoleArn;
             ScanningMode = scanningMode;
@@ -31,37 +33,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> The cloud role ARN in AWS for this feature. </summary>
         public string CloudRoleArn { get; set; }
         /// <summary> The scanning mode for the vm scan. </summary>
-        public ScanningMode? ScanningMode { get; set; }
-        /// <summary>
-        /// VM tags that indicates that VM should not be scanned
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ExclusionTags { get; set; }
+        public DefenderForServersScanningMode? ScanningMode { get; set; }
+        /// <summary> VM tags that indicates that VM should not be scanned. </summary>
+        public IDictionary<string, string> ExclusionTags { get; }
     }
 }

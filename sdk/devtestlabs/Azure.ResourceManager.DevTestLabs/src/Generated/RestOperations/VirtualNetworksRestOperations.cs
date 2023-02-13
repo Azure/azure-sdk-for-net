@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualNetworkData>> GetAsync(string subscriptionId, string resourceGroupName, string labName, string name, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DevTestLabVirtualNetworkData>> GetAsync(string subscriptionId, string resourceGroupName, string labName, string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -188,13 +188,13 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        VirtualNetworkData value = default;
+                        DevTestLabVirtualNetworkData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VirtualNetworkData.DeserializeVirtualNetworkData(document.RootElement);
+                        value = DevTestLabVirtualNetworkData.DeserializeDevTestLabVirtualNetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VirtualNetworkData)null, message.Response);
+                    return Response.FromValue((DevTestLabVirtualNetworkData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualNetworkData> Get(string subscriptionId, string resourceGroupName, string labName, string name, string expand = null, CancellationToken cancellationToken = default)
+        public Response<DevTestLabVirtualNetworkData> Get(string subscriptionId, string resourceGroupName, string labName, string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,19 +222,19 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        VirtualNetworkData value = default;
+                        DevTestLabVirtualNetworkData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VirtualNetworkData.DeserializeVirtualNetworkData(document.RootElement);
+                        value = DevTestLabVirtualNetworkData.DeserializeDevTestLabVirtualNetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VirtualNetworkData)null, message.Response);
+                    return Response.FromValue((DevTestLabVirtualNetworkData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string labName, string name, VirtualNetworkData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabVirtualNetworkData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string labName, string name, VirtualNetworkData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string labName, string name, VirtualNetworkData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string labName, string name, VirtualNetworkPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabVirtualNetworkPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualNetworkData>> UpdateAsync(string subscriptionId, string resourceGroupName, string labName, string name, VirtualNetworkPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<DevTestLabVirtualNetworkData>> UpdateAsync(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabVirtualNetworkPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -445,9 +445,9 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        VirtualNetworkData value = default;
+                        DevTestLabVirtualNetworkData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VirtualNetworkData.DeserializeVirtualNetworkData(document.RootElement);
+                        value = DevTestLabVirtualNetworkData.DeserializeDevTestLabVirtualNetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="name"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualNetworkData> Update(string subscriptionId, string resourceGroupName, string labName, string name, VirtualNetworkPatch patch, CancellationToken cancellationToken = default)
+        public Response<DevTestLabVirtualNetworkData> Update(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabVirtualNetworkPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -478,9 +478,9 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 case 200:
                     {
-                        VirtualNetworkData value = default;
+                        DevTestLabVirtualNetworkData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VirtualNetworkData.DeserializeVirtualNetworkData(document.RootElement);
+                        value = DevTestLabVirtualNetworkData.DeserializeDevTestLabVirtualNetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

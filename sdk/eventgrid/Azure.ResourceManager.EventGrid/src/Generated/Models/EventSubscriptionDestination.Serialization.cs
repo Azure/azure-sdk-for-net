@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("endpointType");
+            writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
             writer.WriteEndObject();
         }
@@ -35,16 +35,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     case "WebHook": return WebHookEventSubscriptionDestination.DeserializeWebHookEventSubscriptionDestination(element);
                 }
             }
-            EndpointType endpointType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("endpointType"))
-                {
-                    endpointType = new EndpointType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownEventSubscriptionDestination(endpointType);
+            return UnknownEventSubscriptionDestination.DeserializeUnknownEventSubscriptionDestination(element);
         }
     }
 }

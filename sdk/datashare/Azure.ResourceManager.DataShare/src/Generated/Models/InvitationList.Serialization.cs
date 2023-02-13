@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DataShare.Models
         internal static InvitationList DeserializeInvitationList(JsonElement element)
         {
             Optional<string> nextLink = default;
-            IReadOnlyList<InvitationData> value = default;
+            IReadOnlyList<DataShareInvitationData> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
-                    List<InvitationData> array = new List<InvitationData>();
+                    List<DataShareInvitationData> array = new List<DataShareInvitationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InvitationData.DeserializeInvitationData(item));
+                        array.Add(DataShareInvitationData.DeserializeDataShareInvitationData(item));
                     }
                     value = array;
                     continue;

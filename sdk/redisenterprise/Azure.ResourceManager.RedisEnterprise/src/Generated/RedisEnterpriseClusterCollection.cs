@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -56,8 +55,16 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         /// <summary>
         /// Creates or updates an existing (overwrite/recreate, with potential downtime) cache cluster
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}
-        /// Operation Id: RedisEnterprise_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RedisEnterprise_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
@@ -89,8 +96,16 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         /// <summary>
         /// Creates or updates an existing (overwrite/recreate, with potential downtime) cache cluster
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}
-        /// Operation Id: RedisEnterprise_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RedisEnterprise_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
@@ -122,8 +137,16 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         /// <summary>
         /// Gets information about a RedisEnterprise cluster
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}
-        /// Operation Id: RedisEnterprise_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RedisEnterprise_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,8 +174,16 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         /// <summary>
         /// Gets information about a RedisEnterprise cluster
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}
-        /// Operation Id: RedisEnterprise_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RedisEnterprise_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -180,92 +211,60 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         /// <summary>
         /// Lists all RedisEnterprise clusters in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise
-        /// Operation Id: RedisEnterprise_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RedisEnterprise_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RedisEnterpriseClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisEnterpriseClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RedisEnterpriseClusterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _redisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _redisEnterpriseClusterRedisEnterpriseRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisEnterpriseClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RedisEnterpriseClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _redisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _redisEnterpriseClusterRedisEnterpriseRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisEnterpriseClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisEnterpriseClusterRedisEnterpriseRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisEnterpriseClusterRedisEnterpriseRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisEnterpriseClusterResource(Client, RedisEnterpriseClusterData.DeserializeRedisEnterpriseClusterData(e)), _redisEnterpriseClusterRedisEnterpriseClientDiagnostics, Pipeline, "RedisEnterpriseClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all RedisEnterprise clusters in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise
-        /// Operation Id: RedisEnterprise_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RedisEnterprise_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RedisEnterpriseClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisEnterpriseClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<RedisEnterpriseClusterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _redisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _redisEnterpriseClusterRedisEnterpriseRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisEnterpriseClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RedisEnterpriseClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _redisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _redisEnterpriseClusterRedisEnterpriseRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RedisEnterpriseClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisEnterpriseClusterRedisEnterpriseRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisEnterpriseClusterRedisEnterpriseRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisEnterpriseClusterResource(Client, RedisEnterpriseClusterData.DeserializeRedisEnterpriseClusterData(e)), _redisEnterpriseClusterRedisEnterpriseClientDiagnostics, Pipeline, "RedisEnterpriseClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}
-        /// Operation Id: RedisEnterprise_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RedisEnterprise_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -291,8 +290,16 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}
-        /// Operation Id: RedisEnterprise_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RedisEnterprise_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the RedisEnterprise cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

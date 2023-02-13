@@ -34,9 +34,67 @@ namespace Azure.ResourceManager.DataFactory.Models
             ImportSettingsType = importSettingsType ?? "SnowflakeImportCopyCommand";
         }
 
-        /// <summary> Additional copy options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalCopyOptions&quot;: { &quot;DATE_FORMAT&quot;: &quot;MM/DD/YYYY&quot;, &quot;TIME_FORMAT&quot;: &quot;&apos;HH24:MI:SS.FF&apos;&quot; }. </summary>
+        /// <summary>
+        /// Additional copy options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalCopyOptions&quot;: { &quot;DATE_FORMAT&quot;: &quot;MM/DD/YYYY&quot;, &quot;TIME_FORMAT&quot;: &quot;&apos;HH24:MI:SS.FF&apos;&quot; }
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IDictionary<string, BinaryData> AdditionalCopyOptions { get; }
-        /// <summary> Additional format options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalFormatOptions&quot;: { &quot;FORCE&quot;: &quot;TRUE&quot;, &quot;LOAD_UNCERTAIN_FILES&quot;: &quot;&apos;FALSE&apos;&quot; }. </summary>
+        /// <summary>
+        /// Additional format options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalFormatOptions&quot;: { &quot;FORCE&quot;: &quot;TRUE&quot;, &quot;LOAD_UNCERTAIN_FILES&quot;: &quot;&apos;FALSE&apos;&quot; }
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IDictionary<string, BinaryData> AdditionalFormatOptions { get; }
     }
 }

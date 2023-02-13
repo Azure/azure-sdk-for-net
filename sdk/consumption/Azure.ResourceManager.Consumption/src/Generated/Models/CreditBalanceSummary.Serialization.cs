@@ -14,39 +14,39 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static CreditBalanceSummary DeserializeCreditBalanceSummary(JsonElement element)
         {
-            Optional<Amount> estimatedBalance = default;
-            Optional<Amount> currentBalance = default;
-            Optional<AmountWithExchangeRate> estimatedBalanceInBillingCurrency = default;
+            Optional<ConsumptionAmount> estimatedBalance = default;
+            Optional<ConsumptionAmount> currentBalance = default;
+            Optional<ConsumptionAmountWithExchangeRate> estimatedBalanceInBillingCurrency = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("estimatedBalance"))
+                if (property.NameEquals("estimatedBalance"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    estimatedBalance = Amount.DeserializeAmount(property.Value);
+                    estimatedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property.Value);
                     continue;
                 }
-                if (property.NameEquals("currentBalance"))
+                if (property.NameEquals("currentBalance"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    currentBalance = Amount.DeserializeAmount(property.Value);
+                    currentBalance = ConsumptionAmount.DeserializeConsumptionAmount(property.Value);
                     continue;
                 }
-                if (property.NameEquals("estimatedBalanceInBillingCurrency"))
+                if (property.NameEquals("estimatedBalanceInBillingCurrency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    estimatedBalanceInBillingCurrency = AmountWithExchangeRate.DeserializeAmountWithExchangeRate(property.Value);
+                    estimatedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property.Value);
                     continue;
                 }
             }

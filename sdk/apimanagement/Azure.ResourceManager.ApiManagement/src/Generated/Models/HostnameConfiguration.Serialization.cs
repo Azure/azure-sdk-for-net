@@ -16,96 +16,54 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(HostnameType.ToString());
-            writer.WritePropertyName("hostName");
+            writer.WritePropertyName("hostName"u8);
             writer.WriteStringValue(HostName);
             if (Optional.IsDefined(KeyVaultSecretUri))
             {
-                if (KeyVaultSecretUri != null)
-                {
-                    writer.WritePropertyName("keyVaultId");
-                    writer.WriteStringValue(KeyVaultSecretUri.AbsoluteUri);
-                }
-                else
-                {
-                    writer.WriteNull("keyVaultId");
-                }
+                writer.WritePropertyName("keyVaultId"u8);
+                writer.WriteStringValue(KeyVaultSecretUri.AbsoluteUri);
             }
             if (Optional.IsDefined(IdentityClientId))
             {
-                if (IdentityClientId != null)
-                {
-                    writer.WritePropertyName("identityClientId");
-                    writer.WriteStringValue(IdentityClientId);
-                }
-                else
-                {
-                    writer.WriteNull("identityClientId");
-                }
+                writer.WritePropertyName("identityClientId"u8);
+                writer.WriteStringValue(IdentityClientId);
             }
             if (Optional.IsDefined(EncodedCertificate))
             {
-                if (EncodedCertificate != null)
-                {
-                    writer.WritePropertyName("encodedCertificate");
-                    writer.WriteStringValue(EncodedCertificate);
-                }
-                else
-                {
-                    writer.WriteNull("encodedCertificate");
-                }
+                writer.WritePropertyName("encodedCertificate"u8);
+                writer.WriteStringValue(EncodedCertificate);
             }
             if (Optional.IsDefined(CertificatePassword))
             {
-                if (CertificatePassword != null)
-                {
-                    writer.WritePropertyName("certificatePassword");
-                    writer.WriteStringValue(CertificatePassword);
-                }
-                else
-                {
-                    writer.WriteNull("certificatePassword");
-                }
+                writer.WritePropertyName("certificatePassword"u8);
+                writer.WriteStringValue(CertificatePassword);
             }
             if (Optional.IsDefined(IsDefaultSslBindingEnabled))
             {
-                writer.WritePropertyName("defaultSslBinding");
+                writer.WritePropertyName("defaultSslBinding"u8);
                 writer.WriteBooleanValue(IsDefaultSslBindingEnabled.Value);
             }
             if (Optional.IsDefined(IsClientCertificateNegotiationEnabled))
             {
-                writer.WritePropertyName("negotiateClientCertificate");
+                writer.WritePropertyName("negotiateClientCertificate"u8);
                 writer.WriteBooleanValue(IsClientCertificateNegotiationEnabled.Value);
             }
             if (Optional.IsDefined(Certificate))
             {
-                if (Certificate != null)
-                {
-                    writer.WritePropertyName("certificate");
-                    writer.WriteObjectValue(Certificate);
-                }
-                else
-                {
-                    writer.WriteNull("certificate");
-                }
+                writer.WritePropertyName("certificate"u8);
+                writer.WriteObjectValue(Certificate);
             }
             if (Optional.IsDefined(CertificateSource))
             {
-                writer.WritePropertyName("certificateSource");
+                writer.WritePropertyName("certificateSource"u8);
                 writer.WriteStringValue(CertificateSource.Value.ToString());
             }
             if (Optional.IsDefined(CertificateStatus))
             {
-                if (CertificateStatus != null)
-                {
-                    writer.WritePropertyName("certificateStatus");
-                    writer.WriteStringValue(CertificateStatus.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("certificateStatus");
-                }
+                writer.WritePropertyName("certificateStatus"u8);
+                writer.WriteStringValue(CertificateStatus.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -122,20 +80,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<bool> negotiateClientCertificate = default;
             Optional<CertificateInformation> certificate = default;
             Optional<CertificateSource> certificateSource = default;
-            Optional<CertificateStatus?> certificateStatus = default;
+            Optional<CertificateStatus> certificateStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new HostnameType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hostName"))
+                if (property.NameEquals("hostName"u8))
                 {
                     hostName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVaultId"))
+                if (property.NameEquals("keyVaultId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -145,37 +103,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     keyVaultId = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("identityClientId"))
+                if (property.NameEquals("identityClientId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        identityClientId = null;
-                        continue;
-                    }
                     identityClientId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encodedCertificate"))
+                if (property.NameEquals("encodedCertificate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        encodedCertificate = null;
-                        continue;
-                    }
                     encodedCertificate = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("certificatePassword"))
+                if (property.NameEquals("certificatePassword"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        certificatePassword = null;
-                        continue;
-                    }
                     certificatePassword = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultSslBinding"))
+                if (property.NameEquals("defaultSslBinding"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -185,7 +128,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     defaultSslBinding = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("negotiateClientCertificate"))
+                if (property.NameEquals("negotiateClientCertificate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -195,17 +138,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     negotiateClientCertificate = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("certificate"))
+                if (property.NameEquals("certificate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        certificate = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     certificate = CertificateInformation.DeserializeCertificateInformation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("certificateSource"))
+                if (property.NameEquals("certificateSource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -215,11 +158,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     certificateSource = new CertificateSource(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("certificateStatus"))
+                if (property.NameEquals("certificateStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        certificateStatus = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     certificateStatus = new CertificateStatus(property.Value.GetString());

@@ -19,24 +19,24 @@ namespace Azure.ResourceManager.ContainerRegistry
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RunRequest))
             {
-                writer.WritePropertyName("runRequest");
+                writer.WritePropertyName("runRequest"u8);
                 writer.WriteObjectValue(RunRequest);
             }
             if (Optional.IsDefined(ForceUpdateTag))
             {
-                writer.WritePropertyName("forceUpdateTag");
+                writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
             writer.WriteEndObject();
@@ -57,17 +57,17 @@ namespace Azure.ResourceManager.ContainerRegistry
             Optional<string> forceUpdateTag = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,32 +77,32 @@ namespace Azure.ResourceManager.ContainerRegistry
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             provisioningState = new ContainerRegistryProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("runRequest"))
+                        if (property0.NameEquals("runRequest"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             runRequest = ContainerRegistryRunContent.DeserializeContainerRegistryRunContent(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("runResult"))
+                        if (property0.NameEquals("runResult"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             runResult = ContainerRegistryRunData.DeserializeContainerRegistryRunData(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("forceUpdateTag"))
+                        if (property0.NameEquals("forceUpdateTag"u8))
                         {
                             forceUpdateTag = property0.Value.GetString();
                             continue;

@@ -51,8 +51,8 @@ namespace Compute.Tests
 
                     //Create CapacityReservation within the CapacityReservationGroup and validate
                     var createdCR = CreateCapacityReservation(rgName, crgName, crName, "Standard_DS1_v2", availabilityZone: "1");
-                    var returnedCR = m_CrpClient.CapacityReservations.Get(rgName, crgName, crName);
-                    ValidateCapacityReservation(createdCR, returnedCR);
+                    var returnedCRWithInstanceView = m_CrpClient.CapacityReservations.Get(rgName, crgName, crName, expand: "instanceView");
+                    ValidateCapacityReservation(createdCR, returnedCRWithInstanceView, isInstanceViewIncluded : true);
 
                     //List CapacityReservations
                     var listCRsResponse = m_CrpClient.CapacityReservations.ListByCapacityReservationGroup(rgName, crgName);
@@ -78,7 +78,7 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "southcentralus");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus");
                 EnsureClientsInitialized(context);
 
                 string baseRGName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
@@ -95,8 +95,8 @@ namespace Compute.Tests
 
                     //Create CapacityReservation within the CapacityReservationGroup and validate
                     var createdCR = CreateCapacityReservation(rgName, crgName, crName, "Standard_DS1_v2");
-                    var returnedCR = m_CrpClient.CapacityReservations.Get(rgName, crgName, crName);
-                    ValidateCapacityReservation(createdCR, returnedCR);
+                    var returnedCR = m_CrpClient.CapacityReservations.Get(rgName, crgName, crName, expand: "instanceView");
+                    ValidateCapacityReservation(createdCR, returnedCR, isInstanceViewIncluded: true);
 
                     // Validate Capacity Reservation group instance view
                     CapacityReservationGroup returnedCRGWithInstanceView = m_CrpClient.CapacityReservationGroups.Get(rgName, crgName, CapacityReservationGroupInstanceViewTypes.InstanceView);
@@ -153,7 +153,7 @@ namespace Compute.Tests
             }
         }
 
-        private void ValidateCapacityReservation(CapacityReservation expectedCR, CapacityReservation actualCR)
+        private void ValidateCapacityReservation(CapacityReservation expectedCR, CapacityReservation actualCR, bool isInstanceViewIncluded = false)
         {
             if (expectedCR == null)
             {
@@ -176,7 +176,14 @@ namespace Compute.Tests
                 Assert.Equal(expectedCR.ReservationId, actualCR.ReservationId);
                 Assert.NotNull(actualCR.Sku);
                 Assert.Equal(expectedCR.Sku.Name, actualCR.Sku.Name);
+                Assert.NotNull(actualCR.PlatformFaultDomainCount);
+                Assert.Equal(expectedCR.PlatformFaultDomainCount, actualCR.PlatformFaultDomainCount);
                 Assert.Equal(expectedCR.Sku.Capacity, actualCR.Sku.Capacity);
+                if(isInstanceViewIncluded)
+                {
+                    Assert.NotNull(actualCR.InstanceView.UtilizationInfo.CurrentCapacity);
+                    Assert.Equal(actualCR.Sku.Capacity, actualCR.InstanceView.UtilizationInfo.CurrentCapacity);
+                }
                 if (expectedCR.Zones != null)
                 {
                     Assert.Equal(1, actualCR.Zones.Count);

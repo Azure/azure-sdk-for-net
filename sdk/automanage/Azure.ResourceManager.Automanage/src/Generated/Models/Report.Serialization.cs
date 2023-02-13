@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.Automanage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StartTime))
             {
-                writer.WritePropertyName("startTime");
+                writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
             }
             if (Optional.IsDefined(EndTime))
             {
-                writer.WritePropertyName("endTime");
+                writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndTime);
             }
             writer.WriteEndObject();
@@ -53,32 +53,32 @@ namespace Azure.ResourceManager.Automanage.Models
             Optional<string> reportFormatVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,22 +87,22 @@ namespace Azure.ResourceManager.Automanage.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("startTime"))
+                        if (property0.NameEquals("startTime"u8))
                         {
                             startTime = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("endTime"))
+                        if (property0.NameEquals("endTime"u8))
                         {
                             endTime = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastModifiedTime"))
+                        if (property0.NameEquals("lastModifiedTime"u8))
                         {
                             lastModifiedTime = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("duration"))
+                        if (property0.NameEquals("duration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -112,22 +112,22 @@ namespace Azure.ResourceManager.Automanage.Models
                             duration = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("type"))
+                        if (property0.NameEquals("type"u8))
                         {
                             type0 = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             status = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("configurationProfile"))
+                        if (property0.NameEquals("configurationProfile"u8))
                         {
                             configurationProfile = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("resources"))
+                        if (property0.NameEquals("resources"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -142,17 +142,17 @@ namespace Azure.ResourceManager.Automanage.Models
                             resources = array;
                             continue;
                         }
-                        if (property0.NameEquals("error"))
+                        if (property0.NameEquals("error"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            error = JsonSerializer.Deserialize<ResponseError>(property0.Value.ToString());
+                            error = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("reportFormatVersion"))
+                        if (property0.NameEquals("reportFormatVersion"u8))
                         {
                             reportFormatVersion = property0.Value.GetString();
                             continue;

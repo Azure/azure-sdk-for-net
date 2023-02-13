@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.Media
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Track))
             {
-                writer.WritePropertyName("track");
+                writer.WritePropertyName("track"u8);
                 writer.WriteObjectValue(Track);
             }
             writer.WriteEndObject();
@@ -34,36 +34,36 @@ namespace Azure.ResourceManager.Media
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<AssetTrackInfo> track = default;
-            Optional<MediaProvisioningState> provisioningState = default;
+            Optional<MediaAssetTrackBase> track = default;
+            Optional<MediaServicesProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,24 +72,24 @@ namespace Azure.ResourceManager.Media
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("track"))
+                        if (property0.NameEquals("track"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            track = AssetTrackInfo.DeserializeAssetTrackInfo(property0.Value);
+                            track = MediaAssetTrackBase.DeserializeMediaAssetTrackBase(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new MediaProvisioningState(property0.Value.GetString());
+                            provisioningState = new MediaServicesProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

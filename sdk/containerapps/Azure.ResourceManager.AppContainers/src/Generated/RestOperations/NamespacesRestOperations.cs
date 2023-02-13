@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.AppContainers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01";
+            _apiVersion = apiVersion ?? "2022-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string resourceGroupName, string environmentName, CheckNameAvailabilityContent content)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string resourceGroupName, string environmentName, ContainerAppNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityAsync(string subscriptionId, string resourceGroupName, string environmentName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerAppNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, string resourceGroupName, string environmentName, ContainerAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResponse value = default;
+                        ContainerAppNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckNameAvailabilityResponse.DeserializeCheckNameAvailabilityResponse(document.RootElement);
+                        value = ContainerAppNameAvailabilityResult.DeserializeContainerAppNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="environmentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckNameAvailabilityResponse> CheckNameAvailability(string subscriptionId, string resourceGroupName, string environmentName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<ContainerAppNameAvailabilityResult> CheckNameAvailability(string subscriptionId, string resourceGroupName, string environmentName, ContainerAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResponse value = default;
+                        ContainerAppNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckNameAvailabilityResponse.DeserializeCheckNameAvailabilityResponse(document.RootElement);
+                        value = ContainerAppNameAvailabilityResult.DeserializeContainerAppNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

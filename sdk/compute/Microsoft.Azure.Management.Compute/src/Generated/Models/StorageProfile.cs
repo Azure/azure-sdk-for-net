@@ -47,11 +47,23 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// information about disks, see [About disks and VHDs for Azure
         /// virtual
         /// machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview).</param>
-        public StorageProfile(ImageReference imageReference = default(ImageReference), OSDisk osDisk = default(OSDisk), IList<DataDisk> dataDisks = default(IList<DataDisk>))
+        /// <param name="diskControllerType">Specifies the disk controller type
+        /// configured for the VM. &lt;br&gt;&lt;br&gt;NOTE: This property will
+        /// be set to the default disk controller type if not specified
+        /// provided virtual machine is being created as a hyperVGeneration: V2
+        /// based on the capabilities of the operating system disk and VM size
+        /// from the the specified minimum api version. &lt;br&gt;You need to
+        /// deallocate the VM before updating its disk controller type unless
+        /// you are updating the VM size in the VM configuration which
+        /// implicitly deallocates and reallocates the VM. &lt;br&gt;&lt;br&gt;
+        /// Minimum api-version: 2022-08-01. Possible values include: 'SCSI',
+        /// 'NVMe'</param>
+        public StorageProfile(ImageReference imageReference = default(ImageReference), OSDisk osDisk = default(OSDisk), IList<DataDisk> dataDisks = default(IList<DataDisk>), string diskControllerType = default(string))
         {
             ImageReference = imageReference;
             OsDisk = osDisk;
             DataDisks = dataDisks;
+            DiskControllerType = diskControllerType;
             CustomInit();
         }
 
@@ -89,6 +101,22 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "dataDisks")]
         public IList<DataDisk> DataDisks { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the disk controller type configured for the
+        /// VM. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;NOTE: This property will be
+        /// set to the default disk controller type if not specified provided
+        /// virtual machine is being created as a hyperVGeneration: V2 based on
+        /// the capabilities of the operating system disk and VM size from the
+        /// the specified minimum api version. &amp;lt;br&amp;gt;You need to
+        /// deallocate the VM before updating its disk controller type unless
+        /// you are updating the VM size in the VM configuration which
+        /// implicitly deallocates and reallocates the VM.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Minimum api-version:
+        /// 2022-08-01. Possible values include: 'SCSI', 'NVMe'
+        /// </summary>
+        [JsonProperty(PropertyName = "diskControllerType")]
+        public string DiskControllerType { get; set; }
 
         /// <summary>
         /// Validate the object.

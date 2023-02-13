@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Subscription
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateRequest(string aliasName, SubscriptionAliasResponseCreateOrUpdateContent content)
+        internal HttpMessage CreateCreateRequest(string aliasName, SubscriptionAliasCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary> Create Alias Subscription. </summary>
         /// <param name="aliasName"> AliasName is the name for the subscription creation request. Note that this is not the same as subscription name and this doesn’t have any other lifecycle need beyond the request for subscription creation. </param>
-        /// <param name="content"> The SubscriptionAliasResponseCreateOrUpdateContent to use. </param>
+        /// <param name="content"> The SubscriptionAliasCreateOrUpdateContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string aliasName, SubscriptionAliasResponseCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string aliasName, SubscriptionAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
             Argument.AssertNotNull(content, nameof(content));
@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary> Create Alias Subscription. </summary>
         /// <param name="aliasName"> AliasName is the name for the subscription creation request. Note that this is not the same as subscription name and this doesn’t have any other lifecycle need beyond the request for subscription creation. </param>
-        /// <param name="content"> The SubscriptionAliasResponseCreateOrUpdateContent to use. </param>
+        /// <param name="content"> The SubscriptionAliasCreateOrUpdateContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string aliasName, SubscriptionAliasResponseCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public Response Create(string aliasName, SubscriptionAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
             Argument.AssertNotNull(content, nameof(content));
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SubscriptionAliasResponseData>> GetAsync(string aliasName, CancellationToken cancellationToken = default)
+        public async Task<Response<SubscriptionAliasData>> GetAsync(string aliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.Subscription
             {
                 case 200:
                     {
-                        SubscriptionAliasResponseData value = default;
+                        SubscriptionAliasData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SubscriptionAliasResponseData.DeserializeSubscriptionAliasResponseData(document.RootElement);
+                        value = SubscriptionAliasData.DeserializeSubscriptionAliasData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SubscriptionAliasResponseData)null, message.Response);
+                    return Response.FromValue((SubscriptionAliasData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SubscriptionAliasResponseData> Get(string aliasName, CancellationToken cancellationToken = default)
+        public Response<SubscriptionAliasData> Get(string aliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
@@ -161,13 +161,13 @@ namespace Azure.ResourceManager.Subscription
             {
                 case 200:
                     {
-                        SubscriptionAliasResponseData value = default;
+                        SubscriptionAliasData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SubscriptionAliasResponseData.DeserializeSubscriptionAliasResponseData(document.RootElement);
+                        value = SubscriptionAliasData.DeserializeSubscriptionAliasData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SubscriptionAliasResponseData)null, message.Response);
+                    return Response.FromValue((SubscriptionAliasData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

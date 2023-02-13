@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Purview.Models
         {
             Optional<long> count = default;
             Optional<string> nextLink = default;
-            IReadOnlyList<AccountData> value = default;
+            IReadOnlyList<PurviewAccountData> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.Purview.Models
                     count = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
-                    List<AccountData> array = new List<AccountData>();
+                    List<PurviewAccountData> array = new List<PurviewAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccountData.DeserializeAccountData(item));
+                        array.Add(PurviewAccountData.DeserializePurviewAccountData(item));
                     }
                     value = array;
                     continue;

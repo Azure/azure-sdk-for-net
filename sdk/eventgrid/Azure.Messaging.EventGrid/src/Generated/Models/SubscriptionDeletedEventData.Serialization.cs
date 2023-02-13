@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> eventSubscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eventSubscriptionId"))
+                if (property.NameEquals("eventSubscriptionId"u8))
                 {
                     eventSubscriptionId = property.Value.GetString();
                     continue;

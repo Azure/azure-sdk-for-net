@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="value"> Summarize action results. </param>
         internal SummarizeResults(string odataContext, int? odataCount, IReadOnlyList<PolicySummary> value)
         {
-            OdataContext = odataContext;
-            OdataCount = odataCount;
+            ODataContext = odataContext;
+            ODataCount = odataCount;
             Value = value;
         }
 
         /// <summary> OData context string; used by OData clients to resolve type information based on metadata. </summary>
-        public string OdataContext { get; }
+        public string ODataContext { get; }
         /// <summary> OData entity count; represents the number of summaries returned; always set to 1. </summary>
-        public int? OdataCount { get; }
+        public int? ODataCount { get; }
         /// <summary> Summarize action results. </summary>
         public IReadOnlyList<PolicySummary> Value { get; }
     }

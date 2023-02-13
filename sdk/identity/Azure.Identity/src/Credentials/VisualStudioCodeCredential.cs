@@ -15,7 +15,13 @@ using Microsoft.Identity.Client;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using data from Visual Studio Code.
+    /// Enables authentication to Azure Active Directory as the user signed in to Visual Studio Code via
+    /// the 'Azure Account' extension.
+    ///
+    /// It's a <see href="https://github.com/Azure/azure-sdk-for-net/issues/27263">known issue</see> that `VisualStudioCodeCredential`
+    /// doesn't work with <see href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account">Azure Account extension</see>
+    /// versions newer than <b>0.9.11</b>. A long-term fix to this problem is in progress. In the meantime, consider authenticating
+    /// with <see cref="AzureCliCredential"/>.
     /// </summary>
     public class VisualStudioCodeCredential : TokenCredential
     {
@@ -24,7 +30,8 @@ namespace Azure.Identity
         private readonly IVisualStudioCodeAdapter _vscAdapter;
         private readonly IFileSystemService _fileSystem;
         private readonly CredentialPipeline _pipeline;
-        private readonly string _tenantId;
+        internal string TenantId { get; }
+        internal string[] AdditionallyAllowedTenantIds { get; }
         private const string _commonTenant = "common";
         private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/vscodecredential/troubleshoot";
         internal MsalPublicClient Client { get; }
@@ -43,11 +50,12 @@ namespace Azure.Identity
         internal VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client, IFileSystemService fileSystem,
             IVisualStudioCodeAdapter vscAdapter)
         {
-            _tenantId = options?.TenantId ?? _commonTenant;
+            TenantId = options?.TenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-            Client = client ?? new MsalPublicClient(_pipeline, options?.TenantId, ClientId, null, options);
+            Client = client ?? new MsalPublicClient(_pipeline, TenantId, ClientId, null, options);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _vscAdapter = vscAdapter ?? GetVscAdapter();
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
         }
 
         /// <inheritdoc />
@@ -65,7 +73,8 @@ namespace Azure.Identity
             try
             {
                 GetUserSettings(out var tenant, out var environmentName);
-                var tenantId = TenantIdResolver.Resolve(tenant, requestContext);
+
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds) ?? tenant;
 
                 if (string.Equals(tenantId, Constants.AdfsTenantId, StringComparison.Ordinal))
                 {
@@ -128,7 +137,7 @@ namespace Azure.Identity
         private void GetUserSettings(out string tenant, out string environmentName)
         {
             var path = _vscAdapter.GetUserSettingsPath();
-            tenant = _tenantId;
+            tenant = TenantId ?? _commonTenant;
             environmentName = "AzureCloud";
 
             try

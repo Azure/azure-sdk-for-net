@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(HostName))
             {
-                writer.WritePropertyName("hostName");
+                writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(EffectiveAvailableMemoryMbOnHost))
+            if (Optional.IsDefined(EffectiveAvailableMemoryInMBOnHost))
             {
-                writer.WritePropertyName("effectiveAvailableMemoryMbOnHost");
-                writer.WriteNumberValue(EffectiveAvailableMemoryMbOnHost.Value);
+                writer.WritePropertyName("effectiveAvailableMemoryMbOnHost"u8);
+                writer.WriteNumberValue(EffectiveAvailableMemoryInMBOnHost.Value);
             }
             if (Optional.IsDefined(AvailableGpuCount))
             {
-                writer.WritePropertyName("availableGpuCount");
+                writer.WritePropertyName("availableGpuCount"u8);
                 writer.WriteNumberValue(AvailableGpuCount.Value);
             }
             if (Optional.IsCollectionDefined(VmUsedMemory))
             {
-                writer.WritePropertyName("vmUsedMemory");
+                writer.WritePropertyName("vmUsedMemory"u8);
                 writer.WriteStartObject();
                 foreach (var item in VmUsedMemory)
                 {
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             if (Optional.IsDefined(GpuType))
             {
-                writer.WritePropertyName("gpuType");
+                writer.WritePropertyName("gpuType"u8);
                 writer.WriteStringValue(GpuType);
             }
             if (Optional.IsCollectionDefined(NumaNodesData))
             {
-                writer.WritePropertyName("numaNodesData");
+                writer.WritePropertyName("numaNodesData"u8);
                 writer.WriteStartArray();
                 foreach (var item in NumaNodesData)
                 {
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<string> hostName = default;
             Optional<long> effectiveAvailableMemoryMbOnHost = default;
             Optional<int> availableGpuCount = default;
-            Optional<IDictionary<string, VmMemory>> vmUsedMemory = default;
+            Optional<IDictionary<string, DataBoxEdgeVmMemory>> vmUsedMemory = default;
             Optional<string> gpuType = default;
-            Optional<IList<NumaNodeData>> numaNodesData = default;
+            Optional<IList<NumaNodeInfo>> numaNodesData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hostName"))
+                if (property.NameEquals("hostName"u8))
                 {
                     hostName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("effectiveAvailableMemoryMbOnHost"))
+                if (property.NameEquals("effectiveAvailableMemoryMbOnHost"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     effectiveAvailableMemoryMbOnHost = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("availableGpuCount"))
+                if (property.NameEquals("availableGpuCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,37 +95,37 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     availableGpuCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("vmUsedMemory"))
+                if (property.NameEquals("vmUsedMemory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, VmMemory> dictionary = new Dictionary<string, VmMemory>();
+                    Dictionary<string, DataBoxEdgeVmMemory> dictionary = new Dictionary<string, DataBoxEdgeVmMemory>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, VmMemory.DeserializeVmMemory(property0.Value));
+                        dictionary.Add(property0.Name, DataBoxEdgeVmMemory.DeserializeDataBoxEdgeVmMemory(property0.Value));
                     }
                     vmUsedMemory = dictionary;
                     continue;
                 }
-                if (property.NameEquals("gpuType"))
+                if (property.NameEquals("gpuType"u8))
                 {
                     gpuType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("numaNodesData"))
+                if (property.NameEquals("numaNodesData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NumaNodeData> array = new List<NumaNodeData>();
+                    List<NumaNodeInfo> array = new List<NumaNodeInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NumaNodeData.DeserializeNumaNodeData(item));
+                        array.Add(NumaNodeInfo.DeserializeNumaNodeInfo(item));
                     }
                     numaNodesData = array;
                     continue;

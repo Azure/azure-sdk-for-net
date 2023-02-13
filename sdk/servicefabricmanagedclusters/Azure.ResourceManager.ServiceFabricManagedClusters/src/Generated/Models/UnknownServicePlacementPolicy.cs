@@ -8,13 +8,13 @@
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> The UnknownServicePlacementPolicy. </summary>
-    internal partial class UnknownServicePlacementPolicy : ServicePlacementPolicy
+    internal partial class UnknownServicePlacementPolicy : ManagedServicePlacementPolicy
     {
         /// <summary> Initializes a new instance of UnknownServicePlacementPolicy. </summary>
-        /// <param name="policyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
-        internal UnknownServicePlacementPolicy(ServicePlacementPolicyType policyType) : base(policyType)
+        /// <param name="servicePlacementPolicyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
+        internal UnknownServicePlacementPolicy(ServicePlacementPolicyType servicePlacementPolicyType) : base(servicePlacementPolicyType)
         {
-            PolicyType = policyType;
+            ServicePlacementPolicyType = servicePlacementPolicyType;
         }
     }
 }

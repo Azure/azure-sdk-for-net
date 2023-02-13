@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Balance>> GetByBillingAccountAsync(string billingAccountId, CancellationToken cancellationToken = default)
+        public async Task<Response<ConsumptionBalanceResult>> GetByBillingAccountAsync(string billingAccountId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.Consumption
             {
                 case 200:
                     {
-                        Balance value = default;
+                        ConsumptionBalanceResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Balance.DeserializeBalance(document.RootElement);
+                        value = ConsumptionBalanceResult.DeserializeConsumptionBalanceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Balance> GetByBillingAccount(string billingAccountId, CancellationToken cancellationToken = default)
+        public Response<ConsumptionBalanceResult> GetByBillingAccount(string billingAccountId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Consumption
             {
                 case 200:
                     {
-                        Balance value = default;
+                        ConsumptionBalanceResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Balance.DeserializeBalance(document.RootElement);
+                        value = ConsumptionBalanceResult.DeserializeConsumptionBalanceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingPeriodName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Balance>> GetForBillingPeriodByBillingAccountAsync(string billingAccountId, string billingPeriodName, CancellationToken cancellationToken = default)
+        public async Task<Response<ConsumptionBalanceResult>> GetForBillingPeriodByBillingAccountAsync(string billingAccountId, string billingPeriodName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
@@ -140,9 +140,9 @@ namespace Azure.ResourceManager.Consumption
             {
                 case 200:
                     {
-                        Balance value = default;
+                        ConsumptionBalanceResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Balance.DeserializeBalance(document.RootElement);
+                        value = ConsumptionBalanceResult.DeserializeConsumptionBalanceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="billingPeriodName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Balance> GetForBillingPeriodByBillingAccount(string billingAccountId, string billingPeriodName, CancellationToken cancellationToken = default)
+        public Response<ConsumptionBalanceResult> GetForBillingPeriodByBillingAccount(string billingAccountId, string billingPeriodName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
@@ -167,9 +167,9 @@ namespace Azure.ResourceManager.Consumption
             {
                 case 200:
                     {
-                        Balance value = default;
+                        ConsumptionBalanceResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Balance.DeserializeBalance(document.RootElement);
+                        value = ConsumptionBalanceResult.DeserializeConsumptionBalanceResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

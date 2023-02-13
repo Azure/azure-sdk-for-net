@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> or <paramref name="sshPublicKey"/> is null. </exception>
         public UserProfile(string userName, string sshPublicKey)
         {
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-            if (sshPublicKey == null)
-            {
-                throw new ArgumentNullException(nameof(sshPublicKey));
-            }
+            Argument.AssertNotNull(userName, nameof(userName));
+            Argument.AssertNotNull(sshPublicKey, nameof(sshPublicKey));
 
             UserName = userName;
             SshPublicKey = sshPublicKey;

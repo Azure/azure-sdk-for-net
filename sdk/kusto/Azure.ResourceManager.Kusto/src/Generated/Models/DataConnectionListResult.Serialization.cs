@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static DataConnectionListResult DeserializeDataConnectionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DataConnectionData>> value = default;
+            Optional<IReadOnlyList<KustoDataConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DataConnectionData> array = new List<DataConnectionData>();
+                    List<KustoDataConnectionData> array = new List<KustoDataConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataConnectionData.DeserializeDataConnectionData(item));
+                        array.Add(KustoDataConnectionData.DeserializeKustoDataConnectionData(item));
                     }
                     value = array;
                     continue;

@@ -15,19 +15,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location.Value);
-            }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -36,37 +36,62 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AdministratorLoginPassword))
             {
-                writer.WritePropertyName("administratorLoginPassword");
+                writer.WritePropertyName("administratorLoginPassword"u8);
                 writer.WriteStringValue(AdministratorLoginPassword);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version.Value.ToString());
             }
             if (Optional.IsDefined(Storage))
             {
-                writer.WritePropertyName("storage");
+                writer.WritePropertyName("storage"u8);
                 writer.WriteObjectValue(Storage);
             }
             if (Optional.IsDefined(Backup))
             {
-                writer.WritePropertyName("backup");
+                writer.WritePropertyName("backup"u8);
                 writer.WriteObjectValue(Backup);
             }
             if (Optional.IsDefined(HighAvailability))
             {
-                writer.WritePropertyName("highAvailability");
+                writer.WritePropertyName("highAvailability"u8);
                 writer.WriteObjectValue(HighAvailability);
             }
             if (Optional.IsDefined(MaintenanceWindow))
             {
-                writer.WritePropertyName("maintenanceWindow");
+                writer.WritePropertyName("maintenanceWindow"u8);
                 writer.WriteObjectValue(MaintenanceWindow);
+            }
+            if (Optional.IsDefined(AuthConfig))
+            {
+                writer.WritePropertyName("authConfig"u8);
+                writer.WriteObjectValue(AuthConfig);
+            }
+            if (Optional.IsDefined(DataEncryption))
+            {
+                writer.WritePropertyName("dataEncryption"u8);
+                writer.WriteObjectValue(DataEncryption);
             }
             if (Optional.IsDefined(CreateMode))
             {
-                writer.WritePropertyName("createMode");
+                writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
+            }
+            if (Optional.IsDefined(ReplicationRole))
+            {
+                writer.WritePropertyName("replicationRole"u8);
+                writer.WriteStringValue(ReplicationRole.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

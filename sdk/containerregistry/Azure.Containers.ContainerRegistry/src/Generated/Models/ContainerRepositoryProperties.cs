@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -22,14 +23,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="registryLoginServer"/> or <paramref name="name"/> is null. </exception>
         internal ContainerRepositoryProperties(string registryLoginServer, string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int manifestCount, int tagCount)
         {
-            if (registryLoginServer == null)
-            {
-                throw new ArgumentNullException(nameof(registryLoginServer));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(registryLoginServer, nameof(registryLoginServer));
+            Argument.AssertNotNull(name, nameof(name));
 
             RegistryLoginServer = registryLoginServer;
             Name = name;

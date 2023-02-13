@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
@@ -20,18 +21,9 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="snapshot"/> or <paramref name="properties"/> is null. </exception>
         internal BlobItemInternal(string name, bool deleted, string snapshot, BlobPropertiesInternal properties)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (snapshot == null)
-            {
-                throw new ArgumentNullException(nameof(snapshot));
-            }
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(snapshot, nameof(snapshot));
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Name = name;
             Deleted = deleted;

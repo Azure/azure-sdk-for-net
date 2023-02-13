@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="output"/> is null. </exception>
         public StreamAnalyticsTestOutput(StreamingJobOutputData output)
         {
-            if (output == null)
-            {
-                throw new ArgumentNullException(nameof(output));
-            }
+            Argument.AssertNotNull(output, nameof(output));
 
             Output = output;
         }

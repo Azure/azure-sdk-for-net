@@ -28,168 +28,200 @@ namespace Azure.ResourceManager.DataShare
             );
         }
 
-        /// <summary> Gets a collection of ConsumerInvitationResources in the TenantResource. </summary>
+        /// <summary> Gets a collection of DataShareConsumerInvitationResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ConsumerInvitationResources and their operations over a ConsumerInvitationResource. </returns>
-        public static ConsumerInvitationCollection GetConsumerInvitations(this TenantResource tenantResource)
+        /// <returns> An object representing collection of DataShareConsumerInvitationResources and their operations over a DataShareConsumerInvitationResource. </returns>
+        public static DataShareConsumerInvitationCollection GetDataShareConsumerInvitations(this TenantResource tenantResource)
         {
-            return GetExtensionClient(tenantResource).GetConsumerInvitations();
+            return GetExtensionClient(tenantResource).GetDataShareConsumerInvitations();
         }
 
         /// <summary>
         /// Get an invitation
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}
-        /// Operation Id: ConsumerInvitations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the invitation. </param>
         /// <param name="invitationId"> An invitation id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="invitationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="invitationId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ConsumerInvitationResource>> GetConsumerInvitationAsync(this TenantResource tenantResource, AzureLocation location, string invitationId, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataShareConsumerInvitationResource>> GetDataShareConsumerInvitationAsync(this TenantResource tenantResource, AzureLocation location, Guid invitationId, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetConsumerInvitations().GetAsync(location, invitationId, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetDataShareConsumerInvitations().GetAsync(location, invitationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get an invitation
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}
-        /// Operation Id: ConsumerInvitations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the invitation. </param>
         /// <param name="invitationId"> An invitation id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="invitationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="invitationId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ConsumerInvitationResource> GetConsumerInvitation(this TenantResource tenantResource, AzureLocation location, string invitationId, CancellationToken cancellationToken = default)
+        public static Response<DataShareConsumerInvitationResource> GetDataShareConsumerInvitation(this TenantResource tenantResource, AzureLocation location, Guid invitationId, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetConsumerInvitations().Get(location, invitationId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists invitations
-        /// Request Path: /providers/Microsoft.DataShare/listInvitations
-        /// Operation Id: ConsumerInvitations_ListInvitations
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="skipToken"> The continuation token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConsumerInvitationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ConsumerInvitationResource> GetConsumerInvitationsByListInvitationAsync(this TenantResource tenantResource, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetConsumerInvitationsByListInvitationAsync(skipToken, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists invitations
-        /// Request Path: /providers/Microsoft.DataShare/listInvitations
-        /// Operation Id: ConsumerInvitations_ListInvitations
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="skipToken"> The continuation token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConsumerInvitationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ConsumerInvitationResource> GetConsumerInvitationsByListInvitation(this TenantResource tenantResource, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetConsumerInvitationsByListInvitation(skipToken, cancellationToken);
+            return tenantResource.GetDataShareConsumerInvitations().Get(location, invitationId, cancellationToken);
         }
 
         /// <summary>
         /// Reject an invitation
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/rejectInvitation
-        /// Operation Id: ConsumerInvitations_RejectInvitation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/rejectInvitation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerInvitations_RejectInvitation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the invitation. </param>
         /// <param name="data"> An invitation payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public static async Task<Response<ConsumerInvitationResource>> RejectInvitationConsumerInvitationAsync(this TenantResource tenantResource, AzureLocation location, ConsumerInvitationData data, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataShareConsumerInvitationResource>> RejectConsumerInvitationAsync(this TenantResource tenantResource, AzureLocation location, DataShareConsumerInvitationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            return await GetExtensionClient(tenantResource).RejectInvitationConsumerInvitationAsync(location, data, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(tenantResource).RejectConsumerInvitationAsync(location, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Reject an invitation
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/rejectInvitation
-        /// Operation Id: ConsumerInvitations_RejectInvitation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/rejectInvitation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerInvitations_RejectInvitation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the invitation. </param>
         /// <param name="data"> An invitation payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public static Response<ConsumerInvitationResource> RejectInvitationConsumerInvitation(this TenantResource tenantResource, AzureLocation location, ConsumerInvitationData data, CancellationToken cancellationToken = default)
+        public static Response<DataShareConsumerInvitationResource> RejectConsumerInvitation(this TenantResource tenantResource, AzureLocation location, DataShareConsumerInvitationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            return GetExtensionClient(tenantResource).RejectInvitationConsumerInvitation(location, data, cancellationToken);
+            return GetExtensionClient(tenantResource).RejectConsumerInvitation(location, data, cancellationToken);
         }
 
         /// <summary>
         /// Activate the email registration for the current tenant
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/activateEmail
-        /// Operation Id: EmailRegistrations_ActivateEmail
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/activateEmail</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailRegistrations_ActivateEmail</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the activation. </param>
         /// <param name="emailRegistration"> The payload for tenant domain activation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="emailRegistration"/> is null. </exception>
-        public static async Task<Response<EmailRegistration>> ActivateEmailEmailRegistrationAsync(this TenantResource tenantResource, AzureLocation location, EmailRegistration emailRegistration, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataShareEmailRegistration>> ActivateEmailAsync(this TenantResource tenantResource, AzureLocation location, DataShareEmailRegistration emailRegistration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(emailRegistration, nameof(emailRegistration));
 
-            return await GetExtensionClient(tenantResource).ActivateEmailEmailRegistrationAsync(location, emailRegistration, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(tenantResource).ActivateEmailAsync(location, emailRegistration, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Activate the email registration for the current tenant
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/activateEmail
-        /// Operation Id: EmailRegistrations_ActivateEmail
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/activateEmail</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailRegistrations_ActivateEmail</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the activation. </param>
         /// <param name="emailRegistration"> The payload for tenant domain activation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="emailRegistration"/> is null. </exception>
-        public static Response<EmailRegistration> ActivateEmailEmailRegistration(this TenantResource tenantResource, AzureLocation location, EmailRegistration emailRegistration, CancellationToken cancellationToken = default)
+        public static Response<DataShareEmailRegistration> ActivateEmail(this TenantResource tenantResource, AzureLocation location, DataShareEmailRegistration emailRegistration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(emailRegistration, nameof(emailRegistration));
 
-            return GetExtensionClient(tenantResource).ActivateEmailEmailRegistration(location, emailRegistration, cancellationToken);
+            return GetExtensionClient(tenantResource).ActivateEmail(location, emailRegistration, cancellationToken);
         }
 
         /// <summary>
         /// Register an email for the current tenant
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/registerEmail
-        /// Operation Id: EmailRegistrations_RegisterEmail
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/registerEmail</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailRegistrations_RegisterEmail</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<EmailRegistration>> RegisterEmailEmailRegistrationAsync(this TenantResource tenantResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataShareEmailRegistration>> RegisterEmailAsync(this TenantResource tenantResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetExtensionClient(tenantResource).RegisterEmailEmailRegistrationAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(tenantResource).RegisterEmailAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Register an email for the current tenant
-        /// Request Path: /providers/Microsoft.DataShare/locations/{location}/registerEmail
-        /// Operation Id: EmailRegistrations_RegisterEmail
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/registerEmail</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EmailRegistrations_RegisterEmail</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location of the registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<EmailRegistration> RegisterEmailEmailRegistration(this TenantResource tenantResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Response<DataShareEmailRegistration> RegisterEmail(this TenantResource tenantResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(tenantResource).RegisterEmailEmailRegistration(location, cancellationToken);
+            return GetExtensionClient(tenantResource).RegisterEmail(location, cancellationToken);
         }
 
         private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
@@ -203,30 +235,46 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// List Accounts in Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataShare/accounts
-        /// Operation Id: Accounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataShare/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skipToken"> Continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AccountResource> GetAccountsAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataShareAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DataShareAccountResource> GetDataShareAccountsAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAccountsAsync(skipToken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetDataShareAccountsAsync(skipToken, cancellationToken);
         }
 
         /// <summary>
         /// List Accounts in Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataShare/accounts
-        /// Operation Id: Accounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataShare/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skipToken"> Continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AccountResource> GetAccounts(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataShareAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DataShareAccountResource> GetDataShareAccounts(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetAccounts(skipToken, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetDataShareAccounts(skipToken, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -238,18 +286,26 @@ namespace Azure.ResourceManager.DataShare
             );
         }
 
-        /// <summary> Gets a collection of AccountResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of DataShareAccountResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of AccountResources and their operations over a AccountResource. </returns>
-        public static AccountCollection GetAccounts(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DataShareAccountResources and their operations over a DataShareAccountResource. </returns>
+        public static DataShareAccountCollection GetDataShareAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetAccounts();
+            return GetExtensionClient(resourceGroupResource).GetDataShareAccounts();
         }
 
         /// <summary>
         /// Get an account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}
-        /// Operation Id: Accounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the share account. </param>
@@ -257,15 +313,23 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AccountResource>> GetAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataShareAccountResource>> GetDataShareAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDataShareAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get an account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}
-        /// Operation Id: Accounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the share account. </param>
@@ -273,120 +337,120 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AccountResource> GetAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
+        public static Response<DataShareAccountResource> GetDataShareAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetAccounts().Get(accountName, cancellationToken);
+            return resourceGroupResource.GetDataShareAccounts().Get(accountName, cancellationToken);
         }
 
-        #region AccountResource
+        #region DataShareAccountResource
         /// <summary>
-        /// Gets an object representing an <see cref="AccountResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AccountResource.CreateResourceIdentifier" /> to create an <see cref="AccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataShareAccountResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataShareAccountResource.CreateResourceIdentifier" /> to create a <see cref="DataShareAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AccountResource" /> object. </returns>
-        public static AccountResource GetAccountResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataShareAccountResource" /> object. </returns>
+        public static DataShareAccountResource GetDataShareAccountResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AccountResource.ValidateResourceId(id);
-                return new AccountResource(client, id);
+                DataShareAccountResource.ValidateResourceId(id);
+                return new DataShareAccountResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ConsumerInvitationResource
+        #region DataShareConsumerInvitationResource
         /// <summary>
-        /// Gets an object representing a <see cref="ConsumerInvitationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConsumerInvitationResource.CreateResourceIdentifier" /> to create a <see cref="ConsumerInvitationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataShareConsumerInvitationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataShareConsumerInvitationResource.CreateResourceIdentifier" /> to create a <see cref="DataShareConsumerInvitationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConsumerInvitationResource" /> object. </returns>
-        public static ConsumerInvitationResource GetConsumerInvitationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataShareConsumerInvitationResource" /> object. </returns>
+        public static DataShareConsumerInvitationResource GetDataShareConsumerInvitationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ConsumerInvitationResource.ValidateResourceId(id);
-                return new ConsumerInvitationResource(client, id);
+                DataShareConsumerInvitationResource.ValidateResourceId(id);
+                return new DataShareConsumerInvitationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataSetResource
+        #region ShareDataSetResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataSetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataSetResource.CreateResourceIdentifier" /> to create a <see cref="DataSetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ShareDataSetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ShareDataSetResource.CreateResourceIdentifier" /> to create a <see cref="ShareDataSetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataSetResource" /> object. </returns>
-        public static DataSetResource GetDataSetResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ShareDataSetResource" /> object. </returns>
+        public static ShareDataSetResource GetShareDataSetResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataSetResource.ValidateResourceId(id);
-                return new DataSetResource(client, id);
+                ShareDataSetResource.ValidateResourceId(id);
+                return new ShareDataSetResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataSetMappingResource
+        #region ShareDataSetMappingResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataSetMappingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataSetMappingResource.CreateResourceIdentifier" /> to create a <see cref="DataSetMappingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ShareDataSetMappingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ShareDataSetMappingResource.CreateResourceIdentifier" /> to create a <see cref="ShareDataSetMappingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataSetMappingResource" /> object. </returns>
-        public static DataSetMappingResource GetDataSetMappingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ShareDataSetMappingResource" /> object. </returns>
+        public static ShareDataSetMappingResource GetShareDataSetMappingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataSetMappingResource.ValidateResourceId(id);
-                return new DataSetMappingResource(client, id);
+                ShareDataSetMappingResource.ValidateResourceId(id);
+                return new ShareDataSetMappingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region InvitationResource
+        #region DataShareInvitationResource
         /// <summary>
-        /// Gets an object representing an <see cref="InvitationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InvitationResource.CreateResourceIdentifier" /> to create an <see cref="InvitationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataShareInvitationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataShareInvitationResource.CreateResourceIdentifier" /> to create a <see cref="DataShareInvitationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InvitationResource" /> object. </returns>
-        public static InvitationResource GetInvitationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataShareInvitationResource" /> object. </returns>
+        public static DataShareInvitationResource GetDataShareInvitationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                InvitationResource.ValidateResourceId(id);
-                return new InvitationResource(client, id);
+                DataShareInvitationResource.ValidateResourceId(id);
+                return new DataShareInvitationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ShareResource
+        #region DataShareResource
         /// <summary>
-        /// Gets an object representing a <see cref="ShareResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ShareResource.CreateResourceIdentifier" /> to create a <see cref="ShareResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataShareResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataShareResource.CreateResourceIdentifier" /> to create a <see cref="DataShareResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ShareResource" /> object. </returns>
-        public static ShareResource GetShareResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataShareResource" /> object. </returns>
+        public static DataShareResource GetDataShareResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ShareResource.ValidateResourceId(id);
-                return new ShareResource(client, id);
+                DataShareResource.ValidateResourceId(id);
+                return new DataShareResource(client, id);
             }
             );
         }
@@ -430,39 +494,39 @@ namespace Azure.ResourceManager.DataShare
         }
         #endregion
 
-        #region SynchronizationSettingResource
+        #region DataShareSynchronizationSettingResource
         /// <summary>
-        /// Gets an object representing a <see cref="SynchronizationSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynchronizationSettingResource.CreateResourceIdentifier" /> to create a <see cref="SynchronizationSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataShareSynchronizationSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataShareSynchronizationSettingResource.CreateResourceIdentifier" /> to create a <see cref="DataShareSynchronizationSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynchronizationSettingResource" /> object. </returns>
-        public static SynchronizationSettingResource GetSynchronizationSettingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataShareSynchronizationSettingResource" /> object. </returns>
+        public static DataShareSynchronizationSettingResource GetDataShareSynchronizationSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SynchronizationSettingResource.ValidateResourceId(id);
-                return new SynchronizationSettingResource(client, id);
+                DataShareSynchronizationSettingResource.ValidateResourceId(id);
+                return new DataShareSynchronizationSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region TriggerResource
+        #region DataShareTriggerResource
         /// <summary>
-        /// Gets an object representing a <see cref="TriggerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TriggerResource.CreateResourceIdentifier" /> to create a <see cref="TriggerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataShareTriggerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataShareTriggerResource.CreateResourceIdentifier" /> to create a <see cref="DataShareTriggerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TriggerResource" /> object. </returns>
-        public static TriggerResource GetTriggerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataShareTriggerResource" /> object. </returns>
+        public static DataShareTriggerResource GetDataShareTriggerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                TriggerResource.ValidateResourceId(id);
-                return new TriggerResource(client, id);
+                DataShareTriggerResource.ValidateResourceId(id);
+                return new DataShareTriggerResource(client, id);
             }
             );
         }

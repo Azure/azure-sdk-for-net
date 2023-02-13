@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static OrderList DeserializeOrderList(JsonElement element)
         {
-            Optional<IReadOnlyList<OrderData>> value = default;
+            Optional<IReadOnlyList<DataBoxEdgeOrderData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OrderData> array = new List<OrderData>();
+                    List<DataBoxEdgeOrderData> array = new List<DataBoxEdgeOrderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OrderData.DeserializeOrderData(item));
+                        array.Add(DataBoxEdgeOrderData.DeserializeDataBoxEdgeOrderData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

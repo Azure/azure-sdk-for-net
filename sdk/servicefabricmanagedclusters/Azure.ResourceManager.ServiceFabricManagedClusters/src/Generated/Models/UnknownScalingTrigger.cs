@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> The UnknownScalingTrigger. </summary>
-    internal partial class UnknownScalingTrigger : ScalingTrigger
+    internal partial class UnknownScalingTrigger : ManagedServiceScalingTrigger
     {
         /// <summary> Initializes a new instance of UnknownScalingTrigger. </summary>
         /// <param name="kind"> Specifies the trigger associated with this scaling policy. </param>

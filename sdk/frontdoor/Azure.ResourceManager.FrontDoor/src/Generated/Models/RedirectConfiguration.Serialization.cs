@@ -17,35 +17,35 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RedirectType))
             {
-                writer.WritePropertyName("redirectType");
+                writer.WritePropertyName("redirectType"u8);
                 writer.WriteStringValue(RedirectType.Value.ToString());
             }
             if (Optional.IsDefined(RedirectProtocol))
             {
-                writer.WritePropertyName("redirectProtocol");
+                writer.WritePropertyName("redirectProtocol"u8);
                 writer.WriteStringValue(RedirectProtocol.Value.ToString());
             }
             if (Optional.IsDefined(CustomHost))
             {
-                writer.WritePropertyName("customHost");
+                writer.WritePropertyName("customHost"u8);
                 writer.WriteStringValue(CustomHost);
             }
             if (Optional.IsDefined(CustomPath))
             {
-                writer.WritePropertyName("customPath");
+                writer.WritePropertyName("customPath"u8);
                 writer.WriteStringValue(CustomPath);
             }
             if (Optional.IsDefined(CustomFragment))
             {
-                writer.WritePropertyName("customFragment");
+                writer.WritePropertyName("customFragment"u8);
                 writer.WriteStringValue(CustomFragment);
             }
             if (Optional.IsDefined(CustomQueryString))
             {
-                writer.WritePropertyName("customQueryString");
+                writer.WritePropertyName("customQueryString"u8);
                 writer.WriteStringValue(CustomQueryString);
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("redirectType"))
+                if (property.NameEquals("redirectType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     redirectType = new FrontDoorRedirectType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("redirectProtocol"))
+                if (property.NameEquals("redirectProtocol"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,27 +81,27 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     redirectProtocol = new FrontDoorRedirectProtocol(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("customHost"))
+                if (property.NameEquals("customHost"u8))
                 {
                     customHost = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customPath"))
+                if (property.NameEquals("customPath"u8))
                 {
                     customPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customFragment"))
+                if (property.NameEquals("customFragment"u8))
                 {
                     customFragment = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customQueryString"))
+                if (property.NameEquals("customQueryString"u8))
                 {
                     customQueryString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="blobContainerSasUri"/> is null. </exception>
         public LogAnalyticsInputBase(Uri blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime)
         {
-            if (blobContainerSasUri == null)
-            {
-                throw new ArgumentNullException(nameof(blobContainerSasUri));
-            }
+            Argument.AssertNotNull(blobContainerSasUri, nameof(blobContainerSasUri));
 
             BlobContainerSasUri = blobContainerSasUri;
             FromTime = fromTime;

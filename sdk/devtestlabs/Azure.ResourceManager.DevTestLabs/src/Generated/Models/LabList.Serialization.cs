@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static LabList DeserializeLabList(JsonElement element)
         {
-            Optional<IReadOnlyList<LabData>> value = default;
+            Optional<IReadOnlyList<DevTestLabData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LabData> array = new List<LabData>();
+                    List<DevTestLabData> array = new List<DevTestLabData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LabData.DeserializeLabData(item));
+                        array.Add(DevTestLabData.DeserializeDevTestLabData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

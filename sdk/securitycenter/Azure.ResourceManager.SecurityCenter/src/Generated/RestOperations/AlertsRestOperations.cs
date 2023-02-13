@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateListSubscriptionLevelByRegionRequest(string subscriptionId, string ascLocation)
+        internal HttpMessage CreateListSubscriptionLevelByRegionRequest(string subscriptionId, AzureLocation ascLocation)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -200,12 +200,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AlertList>> ListSubscriptionLevelByRegionAsync(string subscriptionId, string ascLocation, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AlertList>> ListSubscriptionLevelByRegionAsync(string subscriptionId, AzureLocation ascLocation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
 
             using var message = CreateListSubscriptionLevelByRegionRequest(subscriptionId, ascLocation);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -227,12 +226,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AlertList> ListSubscriptionLevelByRegion(string subscriptionId, string ascLocation, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AlertList> ListSubscriptionLevelByRegion(string subscriptionId, AzureLocation ascLocation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
 
             using var message = CreateListSubscriptionLevelByRegionRequest(subscriptionId, ascLocation);
             _pipeline.Send(message, cancellationToken);
@@ -250,7 +248,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateListResourceGroupLevelByRegionRequest(string subscriptionId, string resourceGroupName, string ascLocation)
+        internal HttpMessage CreateListResourceGroupLevelByRegionRequest(string subscriptionId, string resourceGroupName, AzureLocation ascLocation)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -276,13 +274,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AlertList>> ListResourceGroupLevelByRegionAsync(string subscriptionId, string resourceGroupName, string ascLocation, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AlertList>> ListResourceGroupLevelByRegionAsync(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
 
             using var message = CreateListResourceGroupLevelByRegionRequest(subscriptionId, resourceGroupName, ascLocation);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -305,13 +302,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AlertList> ListResourceGroupLevelByRegion(string subscriptionId, string resourceGroupName, string ascLocation, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AlertList> ListResourceGroupLevelByRegion(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
 
             using var message = CreateListResourceGroupLevelByRegionRequest(subscriptionId, resourceGroupName, ascLocation);
             _pipeline.Send(message, cancellationToken);
@@ -329,7 +325,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateGetSubscriptionLevelRequest(string subscriptionId, string ascLocation, string alertName)
+        internal HttpMessage CreateGetSubscriptionLevelRequest(string subscriptionId, AzureLocation ascLocation, string alertName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -354,12 +350,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AlertData>> GetSubscriptionLevelAsync(string subscriptionId, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SecurityAlertData>> GetSubscriptionLevelAsync(string subscriptionId, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateGetSubscriptionLevelRequest(subscriptionId, ascLocation, alertName);
@@ -368,13 +363,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        AlertData value = default;
+                        SecurityAlertData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AlertData.DeserializeAlertData(document.RootElement);
+                        value = SecurityAlertData.DeserializeSecurityAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AlertData)null, message.Response);
+                    return Response.FromValue((SecurityAlertData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -385,12 +380,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AlertData> GetSubscriptionLevel(string subscriptionId, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SecurityAlertData> GetSubscriptionLevel(string subscriptionId, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateGetSubscriptionLevelRequest(subscriptionId, ascLocation, alertName);
@@ -399,19 +393,19 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        AlertData value = default;
+                        SecurityAlertData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AlertData.DeserializeAlertData(document.RootElement);
+                        value = SecurityAlertData.DeserializeSecurityAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AlertData)null, message.Response);
+                    return Response.FromValue((SecurityAlertData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetResourceGroupLevelRequest(string subscriptionId, string resourceGroupName, string ascLocation, string alertName)
+        internal HttpMessage CreateGetResourceGroupLevelRequest(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -439,13 +433,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AlertData>> GetResourceGroupLevelAsync(string subscriptionId, string resourceGroupName, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SecurityAlertData>> GetResourceGroupLevelAsync(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateGetResourceGroupLevelRequest(subscriptionId, resourceGroupName, ascLocation, alertName);
@@ -454,13 +447,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        AlertData value = default;
+                        SecurityAlertData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AlertData.DeserializeAlertData(document.RootElement);
+                        value = SecurityAlertData.DeserializeSecurityAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AlertData)null, message.Response);
+                    return Response.FromValue((SecurityAlertData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -472,13 +465,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AlertData> GetResourceGroupLevel(string subscriptionId, string resourceGroupName, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SecurityAlertData> GetResourceGroupLevel(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateGetResourceGroupLevelRequest(subscriptionId, resourceGroupName, ascLocation, alertName);
@@ -487,19 +479,19 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        AlertData value = default;
+                        SecurityAlertData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AlertData.DeserializeAlertData(document.RootElement);
+                        value = SecurityAlertData.DeserializeSecurityAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AlertData)null, message.Response);
+                    return Response.FromValue((SecurityAlertData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateSubscriptionLevelStateToDismissRequest(string subscriptionId, string ascLocation, string alertName)
+        internal HttpMessage CreateUpdateSubscriptionLevelStateToDismissRequest(string subscriptionId, AzureLocation ascLocation, string alertName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -525,12 +517,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateSubscriptionLevelStateToDismissAsync(string subscriptionId, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateSubscriptionLevelStateToDismissAsync(string subscriptionId, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateSubscriptionLevelStateToDismissRequest(subscriptionId, ascLocation, alertName);
@@ -549,12 +540,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateSubscriptionLevelStateToDismiss(string subscriptionId, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response UpdateSubscriptionLevelStateToDismiss(string subscriptionId, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateSubscriptionLevelStateToDismissRequest(subscriptionId, ascLocation, alertName);
@@ -568,7 +558,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateUpdateSubscriptionLevelStateToResolveRequest(string subscriptionId, string ascLocation, string alertName)
+        internal HttpMessage CreateUpdateSubscriptionLevelStateToResolveRequest(string subscriptionId, AzureLocation ascLocation, string alertName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -594,12 +584,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateSubscriptionLevelStateToResolveAsync(string subscriptionId, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateSubscriptionLevelStateToResolveAsync(string subscriptionId, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateSubscriptionLevelStateToResolveRequest(subscriptionId, ascLocation, alertName);
@@ -618,12 +607,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateSubscriptionLevelStateToResolve(string subscriptionId, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response UpdateSubscriptionLevelStateToResolve(string subscriptionId, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateSubscriptionLevelStateToResolveRequest(subscriptionId, ascLocation, alertName);
@@ -637,7 +625,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateUpdateSubscriptionLevelStateToActivateRequest(string subscriptionId, string ascLocation, string alertName)
+        internal HttpMessage CreateUpdateSubscriptionLevelStateToActivateRequest(string subscriptionId, AzureLocation ascLocation, string alertName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -663,12 +651,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateSubscriptionLevelStateToActivateAsync(string subscriptionId, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateSubscriptionLevelStateToActivateAsync(string subscriptionId, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateSubscriptionLevelStateToActivateRequest(subscriptionId, ascLocation, alertName);
@@ -687,12 +674,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateSubscriptionLevelStateToActivate(string subscriptionId, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response UpdateSubscriptionLevelStateToActivate(string subscriptionId, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateSubscriptionLevelStateToActivateRequest(subscriptionId, ascLocation, alertName);
@@ -706,7 +692,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateUpdateSubscriptionLevelStateToInProgressRequest(string subscriptionId, string ascLocation, string alertName)
+        internal HttpMessage CreateUpdateSubscriptionLevelStateToInProgressRequest(string subscriptionId, AzureLocation ascLocation, string alertName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -732,12 +718,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateSubscriptionLevelStateToInProgressAsync(string subscriptionId, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateSubscriptionLevelStateToInProgressAsync(string subscriptionId, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateSubscriptionLevelStateToInProgressRequest(subscriptionId, ascLocation, alertName);
@@ -756,12 +741,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateSubscriptionLevelStateToInProgress(string subscriptionId, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response UpdateSubscriptionLevelStateToInProgress(string subscriptionId, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateSubscriptionLevelStateToInProgressRequest(subscriptionId, ascLocation, alertName);
@@ -775,7 +759,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateUpdateResourceGroupLevelStateToResolveRequest(string subscriptionId, string resourceGroupName, string ascLocation, string alertName)
+        internal HttpMessage CreateUpdateResourceGroupLevelStateToResolveRequest(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -804,13 +788,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateResourceGroupLevelStateToResolveAsync(string subscriptionId, string resourceGroupName, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateResourceGroupLevelStateToResolveAsync(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateResourceGroupLevelStateToResolveRequest(subscriptionId, resourceGroupName, ascLocation, alertName);
@@ -830,13 +813,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateResourceGroupLevelStateToResolve(string subscriptionId, string resourceGroupName, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response UpdateResourceGroupLevelStateToResolve(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateResourceGroupLevelStateToResolveRequest(subscriptionId, resourceGroupName, ascLocation, alertName);
@@ -850,7 +832,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateUpdateResourceGroupLevelStateToDismissRequest(string subscriptionId, string resourceGroupName, string ascLocation, string alertName)
+        internal HttpMessage CreateUpdateResourceGroupLevelStateToDismissRequest(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -879,13 +861,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateResourceGroupLevelStateToDismissAsync(string subscriptionId, string resourceGroupName, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateResourceGroupLevelStateToDismissAsync(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateResourceGroupLevelStateToDismissRequest(subscriptionId, resourceGroupName, ascLocation, alertName);
@@ -905,13 +886,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateResourceGroupLevelStateToDismiss(string subscriptionId, string resourceGroupName, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response UpdateResourceGroupLevelStateToDismiss(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateResourceGroupLevelStateToDismissRequest(subscriptionId, resourceGroupName, ascLocation, alertName);
@@ -925,7 +905,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateUpdateResourceGroupLevelStateToActivateRequest(string subscriptionId, string resourceGroupName, string ascLocation, string alertName)
+        internal HttpMessage CreateUpdateResourceGroupLevelStateToActivateRequest(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -954,13 +934,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateResourceGroupLevelStateToActivateAsync(string subscriptionId, string resourceGroupName, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateResourceGroupLevelStateToActivateAsync(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateResourceGroupLevelStateToActivateRequest(subscriptionId, resourceGroupName, ascLocation, alertName);
@@ -980,13 +959,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateResourceGroupLevelStateToActivate(string subscriptionId, string resourceGroupName, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response UpdateResourceGroupLevelStateToActivate(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateResourceGroupLevelStateToActivateRequest(subscriptionId, resourceGroupName, ascLocation, alertName);
@@ -1000,7 +978,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateUpdateResourceGroupLevelStateToInProgressRequest(string subscriptionId, string resourceGroupName, string ascLocation, string alertName)
+        internal HttpMessage CreateUpdateResourceGroupLevelStateToInProgressRequest(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1029,13 +1007,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateResourceGroupLevelStateToInProgressAsync(string subscriptionId, string resourceGroupName, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateResourceGroupLevelStateToInProgressAsync(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateResourceGroupLevelStateToInProgressRequest(subscriptionId, resourceGroupName, ascLocation, alertName);
@@ -1055,13 +1032,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateResourceGroupLevelStateToInProgress(string subscriptionId, string resourceGroupName, string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response UpdateResourceGroupLevelStateToInProgress(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
             using var message = CreateUpdateResourceGroupLevelStateToInProgressRequest(subscriptionId, resourceGroupName, ascLocation, alertName);
@@ -1075,7 +1051,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateSimulateRequest(string subscriptionId, string ascLocation, AlertSimulatorRequestBody alertSimulatorRequestBody)
+        internal HttpMessage CreateSimulateRequest(string subscriptionId, AzureLocation ascLocation, SecurityAlertSimulatorContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1091,9 +1067,9 @@ namespace Azure.ResourceManager.SecurityCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(alertSimulatorRequestBody);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1101,17 +1077,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Simulate security alerts. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="alertSimulatorRequestBody"> Alert Simulator Request Properties. </param>
+        /// <param name="content"> Alert Simulator Request Properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertSimulatorRequestBody"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> SimulateAsync(string subscriptionId, string ascLocation, AlertSimulatorRequestBody alertSimulatorRequestBody, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> SimulateAsync(string subscriptionId, AzureLocation ascLocation, SecurityAlertSimulatorContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
-            Argument.AssertNotNull(alertSimulatorRequestBody, nameof(alertSimulatorRequestBody));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSimulateRequest(subscriptionId, ascLocation, alertSimulatorRequestBody);
+            using var message = CreateSimulateRequest(subscriptionId, ascLocation, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1125,17 +1100,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Simulate security alerts. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="alertSimulatorRequestBody"> Alert Simulator Request Properties. </param>
+        /// <param name="content"> Alert Simulator Request Properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="ascLocation"/> or <paramref name="alertSimulatorRequestBody"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Simulate(string subscriptionId, string ascLocation, AlertSimulatorRequestBody alertSimulatorRequestBody, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Simulate(string subscriptionId, AzureLocation ascLocation, SecurityAlertSimulatorContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
-            Argument.AssertNotNull(alertSimulatorRequestBody, nameof(alertSimulatorRequestBody));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSimulateRequest(subscriptionId, ascLocation, alertSimulatorRequestBody);
+            using var message = CreateSimulateRequest(subscriptionId, ascLocation, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1286,7 +1260,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateListSubscriptionLevelByRegionNextPageRequest(string nextLink, string subscriptionId, string ascLocation)
+        internal HttpMessage CreateListSubscriptionLevelByRegionNextPageRequest(string nextLink, string subscriptionId, AzureLocation ascLocation)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1305,13 +1279,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AlertList>> ListSubscriptionLevelByRegionNextPageAsync(string nextLink, string subscriptionId, string ascLocation, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AlertList>> ListSubscriptionLevelByRegionNextPageAsync(string nextLink, string subscriptionId, AzureLocation ascLocation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
 
             using var message = CreateListSubscriptionLevelByRegionNextPageRequest(nextLink, subscriptionId, ascLocation);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1334,13 +1307,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AlertList> ListSubscriptionLevelByRegionNextPage(string nextLink, string subscriptionId, string ascLocation, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AlertList> ListSubscriptionLevelByRegionNextPage(string nextLink, string subscriptionId, AzureLocation ascLocation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
 
             using var message = CreateListSubscriptionLevelByRegionNextPageRequest(nextLink, subscriptionId, ascLocation);
             _pipeline.Send(message, cancellationToken);
@@ -1358,7 +1330,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateListResourceGroupLevelByRegionNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string ascLocation)
+        internal HttpMessage CreateListResourceGroupLevelByRegionNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation ascLocation)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1378,14 +1350,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AlertList>> ListResourceGroupLevelByRegionNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string ascLocation, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AlertList>> ListResourceGroupLevelByRegionNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation ascLocation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
 
             using var message = CreateListResourceGroupLevelByRegionNextPageRequest(nextLink, subscriptionId, resourceGroupName, ascLocation);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1409,14 +1380,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AlertList> ListResourceGroupLevelByRegionNextPage(string nextLink, string subscriptionId, string resourceGroupName, string ascLocation, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AlertList> ListResourceGroupLevelByRegionNextPage(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation ascLocation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
 
             using var message = CreateListResourceGroupLevelByRegionNextPageRequest(nextLink, subscriptionId, resourceGroupName, ascLocation);
             _pipeline.Send(message, cancellationToken);

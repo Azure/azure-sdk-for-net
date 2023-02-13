@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,17 +16,17 @@ namespace Azure.ResourceManager.StorageCache.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("primingJobName");
+            writer.WritePropertyName("primingJobName"u8);
             writer.WriteStringValue(PrimingJobName);
-            writer.WritePropertyName("primingManifestUrl");
-            writer.WriteStringValue(PrimingManifestUri);
+            writer.WritePropertyName("primingManifestUrl"u8);
+            writer.WriteStringValue(PrimingManifestUri.AbsoluteUri);
             writer.WriteEndObject();
         }
 
         internal static PrimingJob DeserializePrimingJob(JsonElement element)
         {
             string primingJobName = default;
-            string primingManifestUrl = default;
+            Uri primingManifestUrl = default;
             Optional<string> primingJobId = default;
             Optional<PrimingJobState> primingJobState = default;
             Optional<string> primingJobStatus = default;
@@ -33,22 +34,22 @@ namespace Azure.ResourceManager.StorageCache.Models
             Optional<double> primingJobPercentComplete = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primingJobName"))
+                if (property.NameEquals("primingJobName"u8))
                 {
                     primingJobName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primingManifestUrl"))
+                if (property.NameEquals("primingManifestUrl"u8))
                 {
-                    primingManifestUrl = property.Value.GetString();
+                    primingManifestUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("primingJobId"))
+                if (property.NameEquals("primingJobId"u8))
                 {
                     primingJobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primingJobState"))
+                if (property.NameEquals("primingJobState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,17 +59,17 @@ namespace Azure.ResourceManager.StorageCache.Models
                     primingJobState = new PrimingJobState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("primingJobStatus"))
+                if (property.NameEquals("primingJobStatus"u8))
                 {
                     primingJobStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primingJobDetails"))
+                if (property.NameEquals("primingJobDetails"u8))
                 {
                     primingJobDetails = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primingJobPercentComplete"))
+                if (property.NameEquals("primingJobPercentComplete"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

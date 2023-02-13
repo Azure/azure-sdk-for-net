@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,16 +15,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Structure))
             {
-                writer.WritePropertyName("structure");
+                writer.WritePropertyName("structure"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Structure);
 #else
@@ -35,18 +33,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Schema))
             {
-                writer.WritePropertyName("schema");
+                writer.WritePropertyName("schema"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Schema);
 #else
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Schema.ToString()).RootElement);
 #endif
             }
-            writer.WritePropertyName("linkedServiceName");
+            writer.WritePropertyName("linkedServiceName"u8);
             writer.WriteObjectValue(LinkedServiceName);
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
@@ -57,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(Annotations))
             {
-                writer.WritePropertyName("annotations");
+                writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
@@ -71,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Folder))
             {
-                writer.WritePropertyName("folder");
+                writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
             foreach (var item in AdditionalProperties)
@@ -190,97 +188,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "ZohoObject": return ZohoObjectDataset.DeserializeZohoObjectDataset(element);
                 }
             }
-            string type = default;
-            Optional<string> description = default;
-            Optional<BinaryData> structure = default;
-            Optional<BinaryData> schema = default;
-            FactoryLinkedServiceReference linkedServiceName = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<DatasetFolder> folder = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("structure"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    structure = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("schema"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    schema = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("linkedServiceName"))
-                {
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("parameters"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
-                    }
-                    parameters = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("annotations"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<BinaryData> array = new List<BinaryData>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(BinaryData.FromString(item.GetRawText()));
-                    }
-                    annotations = array;
-                    continue;
-                }
-                if (property.NameEquals("folder"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    folder = DatasetFolder.DeserializeDatasetFolder(property.Value);
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new FactoryDatasetDefinition(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties);
+            return UnknownDataset.DeserializeUnknownDataset(element);
         }
     }
 }

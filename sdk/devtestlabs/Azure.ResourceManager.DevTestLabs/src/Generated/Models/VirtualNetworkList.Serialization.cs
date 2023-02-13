@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static VirtualNetworkList DeserializeVirtualNetworkList(JsonElement element)
         {
-            Optional<IReadOnlyList<VirtualNetworkData>> value = default;
+            Optional<IReadOnlyList<DevTestLabVirtualNetworkData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VirtualNetworkData> array = new List<VirtualNetworkData>();
+                    List<DevTestLabVirtualNetworkData> array = new List<DevTestLabVirtualNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualNetworkData.DeserializeVirtualNetworkData(item));
+                        array.Add(DevTestLabVirtualNetworkData.DeserializeDevTestLabVirtualNetworkData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

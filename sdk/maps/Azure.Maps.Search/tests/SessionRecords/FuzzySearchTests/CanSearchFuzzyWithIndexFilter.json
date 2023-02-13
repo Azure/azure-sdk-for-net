@@ -1,0 +1,373 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/fuzzy/json?api-version=1.0\u0026query=Peachtree%20Road\u0026countrySet=USA\u0026idxSet=Str",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-1bdcb04892151c46a67816fbdb876844-f81c65b5f8439445-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20221110.1 (.NET Framework 4.8.9082.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-id": "7f8f2547-1a34-4352-b94d-316b088ef87e",
+        "x-ms-client-request-id": "973662838791d3eeb01b8462f85f150b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "6431",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 10 Nov 2022 15:57:19 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "East US",
+        "X-MSEdge-Ref": "Ref A: C7040A2AC4B04773BF9AD8F962FC7FE4 Ref B: BL2AA2030109021 Ref C: 2022-11-10T15:57:19Z"
+      },
+      "ResponseBody": {
+        "summary": {
+          "query": "peachtree road",
+          "queryType": "NON_NEAR",
+          "queryTime": 53,
+          "numResults": 10,
+          "offset": 0,
+          "totalResults": 171,
+          "fuzzyLevel": 1
+        },
+        "results": [
+          {
+            "type": "Street",
+            "id": "US/STR/p0/219951",
+            "score": 4.6116523743,
+            "address": {
+              "streetName": "Peachtree Road",
+              "countrySecondarySubdivision": "Lehigh",
+              "countrySubdivision": "PA",
+              "countrySubdivisionName": "Pennsylvania",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Peachtree Road, Lehigh, PA"
+            },
+            "position": {
+              "lat": 40.65348,
+              "lon": -75.53304
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 40.65595,
+                "lon": -75.53771
+              },
+              "btmRightPoint": {
+                "lat": 40.65019,
+                "lon": -75.52907
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "US/STR/p0/219954",
+            "score": 4.6116523743,
+            "address": {
+              "streetName": "Peachtree Road",
+              "municipality": "Jackson",
+              "countrySecondarySubdivision": "Snyder",
+              "countrySubdivision": "PA",
+              "countrySubdivisionName": "Pennsylvania",
+              "postalCode": "17870",
+              "extendedPostalCode": "17870-8571, 17870-8572, 17870-8574",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Peachtree Road, Selinsgrove, PA 17870",
+              "localName": "Selinsgrove"
+            },
+            "position": {
+              "lat": 40.85809,
+              "lon": -76.88686
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 40.85844,
+                "lon": -76.88845
+              },
+              "btmRightPoint": {
+                "lat": 40.85727,
+                "lon": -76.8852
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "US/STR/p0/326741",
+            "score": 4.6116523743,
+            "address": {
+              "streetName": "Peachtree Road",
+              "municipality": "Fitzgerald",
+              "countrySecondarySubdivision": "Ben Hill",
+              "countrySubdivision": "GA",
+              "countrySubdivisionName": "Georgia",
+              "postalCode": "31750",
+              "extendedPostalCode": "31750-9200, 31750-9201, 31750-9204, 31750-9205, 31750-9235, 31750-9236, 31750-9237, 31750-9238",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Peachtree Road, Fitzgerald, GA 31750",
+              "localName": "Fitzgerald"
+            },
+            "position": {
+              "lat": 31.69817,
+              "lon": -83.20535
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 31.70724,
+                "lon": -83.21582
+              },
+              "btmRightPoint": {
+                "lat": 31.68925,
+                "lon": -83.19469
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "US/STR/p0/786914",
+            "score": 4.6116523743,
+            "address": {
+              "streetName": "Peachtree Road",
+              "municipality": "Stevenson",
+              "countrySecondarySubdivision": "Marion",
+              "countrySubdivision": "IL",
+              "countrySubdivisionName": "Illinois",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Peachtree Road, Stevenson, IL",
+              "localName": "Stevenson"
+            },
+            "position": {
+              "lat": 38.61159,
+              "lon": -88.88322
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 38.61886,
+                "lon": -88.89456
+              },
+              "btmRightPoint": {
+                "lat": 38.60087,
+                "lon": -88.87154
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "US/STR/p0/992077",
+            "score": 4.6116523743,
+            "address": {
+              "streetName": "Peachtree Road",
+              "municipality": "Lynchburg",
+              "countrySecondarySubdivision": "Lynchburg",
+              "countrySubdivision": "VA",
+              "countrySubdivisionName": "Virginia",
+              "postalCode": "24502",
+              "extendedPostalCode": "24502-2013, 24502-2014, 24502-2042, 24502-2043",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Peachtree Road, Lynchburg, VA 24502",
+              "localName": "Lynchburg"
+            },
+            "position": {
+              "lat": 37.36592,
+              "lon": -79.21675
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.36601,
+                "lon": -79.22003
+              },
+              "btmRightPoint": {
+                "lat": 37.36432,
+                "lon": -79.21288
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "US/STR/p0/992080",
+            "score": 4.6116523743,
+            "address": {
+              "streetName": "Peachtree Road",
+              "municipality": "North Grundy",
+              "countrySecondarySubdivision": "Buchanan",
+              "countrySubdivision": "VA",
+              "countrySubdivisionName": "Virginia",
+              "postalCode": "24614",
+              "extendedPostalCode": "24614-7071, 24614-7074, 24614-7256",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Peachtree Road, Grundy, VA 24614",
+              "localName": "Grundy"
+            },
+            "position": {
+              "lat": 37.2774,
+              "lon": -82.05787
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.27828,
+                "lon": -82.05855
+              },
+              "btmRightPoint": {
+                "lat": 37.27628,
+                "lon": -82.05787
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "US/STR/p0/3137806",
+            "score": 4.6116523743,
+            "address": {
+              "streetName": "Peachtree Road",
+              "municipality": "Ashland",
+              "countrySecondarySubdivision": "Boyd",
+              "countrySubdivision": "KY",
+              "countrySubdivisionName": "Kentucky",
+              "postalCode": "41102",
+              "extendedPostalCode": "41102-6100, 41102-6103, 41102-6145, 41102-6146, 41102-6147, 41102-6148",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Peachtree Road, Ashland, KY 41102",
+              "localName": "Ashland"
+            },
+            "position": {
+              "lat": 38.45124,
+              "lon": -82.63773
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 38.45134,
+                "lon": -82.63921
+              },
+              "btmRightPoint": {
+                "lat": 38.45098,
+                "lon": -82.63627
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "US/STR/p0/3137813",
+            "score": 4.6116523743,
+            "address": {
+              "streetName": "Peachtree Road",
+              "municipality": "Nicholasville",
+              "countrySecondarySubdivision": "Jessamine",
+              "countrySubdivision": "KY",
+              "countrySubdivisionName": "Kentucky",
+              "postalCode": "40356",
+              "extendedPostalCode": "40356-2346, 40356-2378, 40356-2380, 40356-2381, 40356-2382, 40356-2384, 40356-2386, 40356-2388, 40356-2401, 40356-2402, 40356-2409",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Peachtree Road, Nicholasville, KY 40356",
+              "localName": "Nicholasville"
+            },
+            "position": {
+              "lat": 37.89399,
+              "lon": -84.56337
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.89749,
+                "lon": -84.5657
+              },
+              "btmRightPoint": {
+                "lat": 37.89134,
+                "lon": -84.56322
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "US/STR/p0/3153850",
+            "score": 4.6116523743,
+            "address": {
+              "streetName": "Peachtree Road",
+              "municipality": "Bernards",
+              "countrySecondarySubdivision": "Somerset",
+              "countrySubdivision": "NJ",
+              "countrySubdivisionName": "New Jersey",
+              "postalCode": "07920",
+              "extendedPostalCode": "07920-1500, 07920-1510, 07920-1520, 07920-1521, 07920-1522, 07920-1550, 07920-1556, 07920-1557",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Peachtree Road, Basking Ridge, NJ 07920",
+              "localName": "Basking Ridge"
+            },
+            "position": {
+              "lat": 40.69022,
+              "lon": -74.54614
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 40.69214,
+                "lon": -74.54765
+              },
+              "btmRightPoint": {
+                "lat": 40.68775,
+                "lon": -74.54417
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "US/STR/p0/3153857",
+            "score": 4.6116523743,
+            "address": {
+              "streetName": "Peachtree Road",
+              "municipality": "Washington",
+              "countrySecondarySubdivision": "Morris",
+              "countrySubdivision": "NJ",
+              "countrySubdivisionName": "New Jersey",
+              "postalCode": "07840",
+              "extendedPostalCode": "07840-4500, 07840-4505, 07840-4512, 07840-4513, 07840-4514, 07840-4517, 07840-4518",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "Peachtree Road, Hackettstown, NJ 07840",
+              "localName": "Hackettstown"
+            },
+            "position": {
+              "lat": 40.84396,
+              "lon": -74.81462
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 40.84497,
+                "lon": -74.81764
+              },
+              "btmRightPoint": {
+                "lat": 40.84289,
+                "lon": -74.81187
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "7f8f2547-1a34-4352-b94d-316b088ef87e",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "561316768"
+  }
+}

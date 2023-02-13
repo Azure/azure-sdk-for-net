@@ -105,7 +105,7 @@ using (HttpClient httpClient = new HttpClient())
 
 ### Creating certificate policies
 
-Before creating or importing a certificate, you need to define a certificate policy that defines the subject (e.g. web site, email address), lifetime management properties, and [more](https://docs.microsoft.com/azure/key-vault/certificates/about-certificates#certificate-policy). You can define your own policy or, as is common in testing applications, use a self-signed certificate policy.
+Before creating or importing a certificate, you need to define a certificate policy that defines the subject (e.g. web site, email address), lifetime management properties, and [more](https://learn.microsoft.com/azure/key-vault/certificates/about-certificates#certificate-policy). You can define your own policy or, as is common in testing applications, use a self-signed certificate policy.
 
 #### Custom policy
 
@@ -394,5 +394,5 @@ Synchronous methods are also available on `CertificateClient`, though we recomme
 
 ## Additional samples
 
-- [Key Vault certificates samples for .NET](https://docs.microsoft.com/samples/azure/azure-sdk-for-net/azuresecuritykeyvaultcertificates-samples/)
-- [All Key Vault samples for .NET](https://docs.microsoft.com/samples/browse/?products=azure-key-vault&languages=csharp)
+- [Key Vault certificates samples for .NET](https://learn.microsoft.com/samples/azure/azure-sdk-for-net/azuresecuritykeyvaultcertificates-samples/)
+- [All Key Vault samples for .NET](https://learn.microsoft.com/samples/browse/?products=azure-key-vault&languages=csharp)

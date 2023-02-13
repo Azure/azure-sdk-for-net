@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Initializes a new instance of ServerEndpointArray. </summary>
         internal ServerEndpointArray()
         {
-            Value = new ChangeTrackingList<ServerEndpointData>();
+            Value = new ChangeTrackingList<StorageSyncServerEndpointData>();
         }
 
         /// <summary> Initializes a new instance of ServerEndpointArray. </summary>
         /// <param name="value"> Collection of ServerEndpoint. </param>
-        internal ServerEndpointArray(IReadOnlyList<ServerEndpointData> value)
+        internal ServerEndpointArray(IReadOnlyList<StorageSyncServerEndpointData> value)
         {
             Value = value;
         }
 
         /// <summary> Collection of ServerEndpoint. </summary>
-        public IReadOnlyList<ServerEndpointData> Value { get; }
+        public IReadOnlyList<StorageSyncServerEndpointData> Value { get; }
     }
 }

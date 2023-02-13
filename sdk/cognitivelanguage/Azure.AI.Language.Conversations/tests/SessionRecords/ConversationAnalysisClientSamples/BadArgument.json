@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-15-preview",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-10-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "261",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220628.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "4fd342cfbf937ecc9a56049a3fca5bd2",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221019.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "484688e5317d216298b296d3febc6d21",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -29,16 +29,16 @@
       },
       "StatusCode": 404,
       "ResponseHeaders": {
-        "apim-request-id": "0e16d877-84f1-41dc-9028-5026e656f211",
+        "apim-request-id": "af50b9c7-58bc-4ca2-bcc2-6259a8e217d7",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json",
-        "Date": "Wed, 29 Jun 2022 00:01:18 GMT",
+        "Date": "Thu, 20 Oct 2022 17:18:36 GMT",
         "Pragma": "no-cache",
-        "request-id": "0e16d877-84f1-41dc-9028-5026e656f211",
+        "request-id": "af50b9c7-58bc-4ca2-bcc2-6259a8e217d7",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "401"
+        "x-envoy-upstream-service-time": "188"
       },
       "ResponseBody": {
         "error": {
@@ -51,6 +51,6 @@
   "Variables": {
     "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
     "CONVERSATIONS_KEY": "Sanitized",
-    "RandomSeed": "1983927413"
+    "RandomSeed": "2084801039"
   }
 }

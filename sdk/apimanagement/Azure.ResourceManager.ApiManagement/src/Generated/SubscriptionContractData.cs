@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// Subscription activation date. The setting is for audit purposes only and the subscription is not automatically activated. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         /// 
         /// </param>
-        /// <param name="expiresOn">
+        /// <param name="expireOn">
         /// Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         /// 
         /// </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="secondaryKey"> Subscription secondary key. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </param>
         /// <param name="stateComment"> Optional subscription comment added by an administrator when the state is changed to the &apos;rejected&apos;. </param>
         /// <param name="allowTracing"> Determines whether tracing is enabled. </param>
-        internal SubscriptionContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string ownerId, string scope, string displayName, SubscriptionState? state, DateTimeOffset? createdOn, DateTimeOffset? startOn, DateTimeOffset? expiresOn, DateTimeOffset? endOn, DateTimeOffset? notifiesOn, string primaryKey, string secondaryKey, string stateComment, bool? allowTracing) : base(id, name, resourceType, systemData)
+        internal SubscriptionContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string ownerId, string scope, string displayName, SubscriptionState? state, DateTimeOffset? createdOn, DateTimeOffset? startOn, DateTimeOffset? expireOn, DateTimeOffset? endOn, DateTimeOffset? notifiesOn, string primaryKey, string secondaryKey, string stateComment, bool? allowTracing) : base(id, name, resourceType, systemData)
         {
             OwnerId = ownerId;
             Scope = scope;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ApiManagement
             State = state;
             CreatedOn = createdOn;
             StartOn = startOn;
-            ExpiresOn = expiresOn;
+            ExpireOn = expireOn;
             EndOn = endOn;
             NotifiesOn = notifiesOn;
             PrimaryKey = primaryKey;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         /// 
         /// </summary>
-        public DateTimeOffset? ExpiresOn { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
         /// <summary>
         /// Date when subscription was cancelled or expired. The setting is for audit purposes only and the subscription is not automatically cancelled. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         /// 

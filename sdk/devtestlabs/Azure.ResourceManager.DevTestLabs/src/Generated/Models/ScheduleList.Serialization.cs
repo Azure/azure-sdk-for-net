@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static ScheduleList DeserializeScheduleList(JsonElement element)
         {
-            Optional<IReadOnlyList<ScheduleData>> value = default;
+            Optional<IReadOnlyList<DevTestLabScheduleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ScheduleData> array = new List<ScheduleData>();
+                    List<DevTestLabScheduleData> array = new List<DevTestLabScheduleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScheduleData.DeserializeScheduleData(item));
+                        array.Add(DevTestLabScheduleData.DeserializeDevTestLabScheduleData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

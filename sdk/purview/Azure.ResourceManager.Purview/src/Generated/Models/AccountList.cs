@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
@@ -18,12 +19,9 @@ namespace Azure.ResourceManager.Purview.Models
         /// <summary> Initializes a new instance of AccountList. </summary>
         /// <param name="value"> Collection of items of type results. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AccountList(IEnumerable<AccountData> value)
+        internal AccountList(IEnumerable<PurviewAccountData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
@@ -32,7 +30,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="count"> Total item count. </param>
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value"> Collection of items of type results. </param>
-        internal AccountList(long? count, string nextLink, IReadOnlyList<AccountData> value)
+        internal AccountList(long? count, string nextLink, IReadOnlyList<PurviewAccountData> value)
         {
             Count = count;
             NextLink = nextLink;
@@ -44,6 +42,6 @@ namespace Azure.ResourceManager.Purview.Models
         /// <summary> The Url of next result page. </summary>
         public string NextLink { get; }
         /// <summary> Collection of items of type results. </summary>
-        public IReadOnlyList<AccountData> Value { get; }
+        public IReadOnlyList<PurviewAccountData> Value { get; }
     }
 }

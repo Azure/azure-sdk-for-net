@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Communication.MediaComposition;
+using Azure.Core;
 
 namespace Azure.Communication.MediaComposition.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.Communication.MediaComposition.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public ImageInput(string uri)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
+            Argument.AssertNotNull(uri, nameof(uri));
 
             Uri = uri;
             Kind = MediaInputType.Image;

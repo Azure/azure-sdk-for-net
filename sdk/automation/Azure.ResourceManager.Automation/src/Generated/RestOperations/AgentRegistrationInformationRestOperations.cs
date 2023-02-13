@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        internal HttpMessage CreateRegenerateKeyRequest(string subscriptionId, string resourceGroupName, string automationAccountName, AgentRegistrationRegenerateKeyParameter agentRegistrationRegenerateKeyParameter)
+        internal HttpMessage CreateRegenerateKeyRequest(string subscriptionId, string resourceGroupName, string automationAccountName, AgentRegistrationRegenerateKeyContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -134,9 +134,9 @@ namespace Azure.ResourceManager.Automation
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(agentRegistrationRegenerateKeyParameter);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -145,18 +145,18 @@ namespace Azure.ResourceManager.Automation
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
-        /// <param name="agentRegistrationRegenerateKeyParameter"> The name of the agent registration key to be regenerated. </param>
+        /// <param name="content"> The name of the agent registration key to be regenerated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="agentRegistrationRegenerateKeyParameter"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AgentRegistration>> RegenerateKeyAsync(string subscriptionId, string resourceGroupName, string automationAccountName, AgentRegistrationRegenerateKeyParameter agentRegistrationRegenerateKeyParameter, CancellationToken cancellationToken = default)
+        public async Task<Response<AgentRegistration>> RegenerateKeyAsync(string subscriptionId, string resourceGroupName, string automationAccountName, AgentRegistrationRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNull(agentRegistrationRegenerateKeyParameter, nameof(agentRegistrationRegenerateKeyParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegenerateKeyRequest(subscriptionId, resourceGroupName, automationAccountName, agentRegistrationRegenerateKeyParameter);
+            using var message = CreateRegenerateKeyRequest(subscriptionId, resourceGroupName, automationAccountName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -176,18 +176,18 @@ namespace Azure.ResourceManager.Automation
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
-        /// <param name="agentRegistrationRegenerateKeyParameter"> The name of the agent registration key to be regenerated. </param>
+        /// <param name="content"> The name of the agent registration key to be regenerated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="agentRegistrationRegenerateKeyParameter"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AgentRegistration> RegenerateKey(string subscriptionId, string resourceGroupName, string automationAccountName, AgentRegistrationRegenerateKeyParameter agentRegistrationRegenerateKeyParameter, CancellationToken cancellationToken = default)
+        public Response<AgentRegistration> RegenerateKey(string subscriptionId, string resourceGroupName, string automationAccountName, AgentRegistrationRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNull(agentRegistrationRegenerateKeyParameter, nameof(agentRegistrationRegenerateKeyParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegenerateKeyRequest(subscriptionId, resourceGroupName, automationAccountName, agentRegistrationRegenerateKeyParameter);
+            using var message = CreateRegenerateKeyRequest(subscriptionId, resourceGroupName, automationAccountName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

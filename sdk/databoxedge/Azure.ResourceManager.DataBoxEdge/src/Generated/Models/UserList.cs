@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of UserList. </summary>
         internal UserList()
         {
-            Value = new ChangeTrackingList<UserData>();
+            Value = new ChangeTrackingList<DataBoxEdgeUserData>();
         }
 
         /// <summary> Initializes a new instance of UserList. </summary>
         /// <param name="value"> The list of users. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal UserList(IReadOnlyList<UserData> value, string nextLink)
+        internal UserList(IReadOnlyList<DataBoxEdgeUserData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of users. </summary>
-        public IReadOnlyList<UserData> Value { get; }
+        public IReadOnlyList<DataBoxEdgeUserData> Value { get; }
         /// <summary> Link to the next set of results. </summary>
         public string NextLink { get; }
     }

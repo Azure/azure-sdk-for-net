@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static ArtifactSourceList DeserializeArtifactSourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<ArtifactSourceData>> value = default;
+            Optional<IReadOnlyList<DevTestLabArtifactSourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ArtifactSourceData> array = new List<ArtifactSourceData>();
+                    List<DevTestLabArtifactSourceData> array = new List<DevTestLabArtifactSourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ArtifactSourceData.DeserializeArtifactSourceData(item));
+                        array.Add(DevTestLabArtifactSourceData.DeserializeDevTestLabArtifactSourceData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

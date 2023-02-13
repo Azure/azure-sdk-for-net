@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ReferenceInputDataSourceType);
             writer.WriteEndObject();
         }
@@ -31,16 +31,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     case "Raw": return RawReferenceInputDataSource.DeserializeRawReferenceInputDataSource(element);
                 }
             }
-            string type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownReferenceInputDataSource(type);
+            return UnknownReferenceInputDataSource.DeserializeUnknownReferenceInputDataSource(element);
         }
     }
 }

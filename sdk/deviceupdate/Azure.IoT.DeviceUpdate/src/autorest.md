@@ -14,6 +14,8 @@ input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d7c9be2
 namespace: Azure.IoT.DeviceUpdate
 security: AADToken
 security-scopes:  https://api.adu.microsoft.com/.default
+# disable renaming pagination parameter "top" since the SDK is GAed
+disable-pagination-top-renaming: true
 ```
 
 ### Fix 304s

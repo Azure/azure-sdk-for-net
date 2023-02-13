@@ -10,7 +10,7 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 ```C# Snippet:CreateTextAnalyticsClient
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
-var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
 ## Performing Custom Multiple Label Classification in one or multiple documents
@@ -89,13 +89,6 @@ await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
     }
 }
 ```
-
-To see the full example source files, see:
-
-* [Synchronously Multi Label Classify](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample10_MultiLabelClassify.cs)
-* [Asynchronously Multi Label Classify](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample10_MultiLabelClassifyAsync.cs)
-* [Synchronously Multi Label Classify Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample10_MultiLabelClassifyConvenience.cs)
-* [Asynchronously Multi Label Classify Convenience](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample10_MultiLabelClassifyConvenienceAsync.cs)
 
 [train_model]: https://aka.ms/azsdk/textanalytics/customfunctionalities
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

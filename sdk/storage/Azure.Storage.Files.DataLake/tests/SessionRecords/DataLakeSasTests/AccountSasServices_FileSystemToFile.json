@@ -33,7 +33,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://amandaadlscanary.dfs.core.windows.net/test-filesystem-0576b7c7-6a4c-c632-0180-bdc7a9bc138e/test-file-df0ce37a-f140-a1d6-4170-b29f804f68cd?sv=2021-10-04\u0026ss=fqb\u0026srt=sco\u0026se=2022-07-28T22%3A26%3A53Z\u0026sp=racwdlxyuptf\u0026sig=Sanitized\u0026resource=file",
+      "RequestUri": "https://amandaadlscanary.dfs.core.windows.net/test-filesystem-0576b7c7-6a4c-c632-0180-bdc7a9bc138e/test-file-df0ce37a-f140-a1d6-4170-b29f804f68cd?sv=2021-12-02\u0026ss=fqb\u0026srt=sco\u0026se=2022-07-28T22%3A26%3A53Z\u0026sp=racwdlxyuptf\u0026sig=Sanitized\u0026resource=file",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",

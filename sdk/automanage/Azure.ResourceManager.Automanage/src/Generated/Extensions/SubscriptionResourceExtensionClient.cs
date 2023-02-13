@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -43,58 +41,53 @@ namespace Azure.ResourceManager.Automanage
             return apiVersion;
         }
 
+        /// <summary> Gets an object representing a ServicePrincipalResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
+        /// <returns> Returns a <see cref="ServicePrincipalResource" /> object. </returns>
+        public virtual ServicePrincipalResource GetServicePrincipal()
+        {
+            return new ServicePrincipalResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Automanage/servicePrincipals/default"));
+        }
+
         /// <summary>
         /// Retrieve a list of configuration profile within a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfiles
-        /// Operation Id: ConfigurationProfiles_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfiles_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConfigurationProfileResource> GetConfigurationProfilesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ConfigurationProfileResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConfigurationProfileClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurationProfiles");
-                scope.Start();
-                try
-                {
-                    var response = await ConfigurationProfileRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationProfileRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConfigurationProfileResource(Client, ConfigurationProfileData.DeserializeConfigurationProfileData(e)), ConfigurationProfileClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurationProfiles", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Retrieve a list of configuration profile within a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfiles
-        /// Operation Id: ConfigurationProfiles_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationProfiles_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConfigurationProfileResource> GetConfigurationProfiles(CancellationToken cancellationToken = default)
         {
-            Page<ConfigurationProfileResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConfigurationProfileClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurationProfiles");
-                scope.Start();
-                try
-                {
-                    var response = ConfigurationProfileRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationProfileResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationProfileRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConfigurationProfileResource(Client, ConfigurationProfileData.DeserializeConfigurationProfileData(e)), ConfigurationProfileClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurationProfiles", "value", null, cancellationToken);
         }
     }
 }

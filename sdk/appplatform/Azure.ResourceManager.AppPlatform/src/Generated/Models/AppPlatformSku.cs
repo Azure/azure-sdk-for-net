@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    /// <summary> Sku of Azure Spring Cloud. </summary>
+    /// <summary> Sku of Azure Spring Apps. </summary>
     public partial class AppPlatformSku
     {
         /// <summary> Initializes a new instance of AppPlatformSku. </summary>

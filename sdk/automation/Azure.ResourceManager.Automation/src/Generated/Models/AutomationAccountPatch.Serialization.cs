@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -41,27 +41,27 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsDefined(Encryption))
             {
-                writer.WritePropertyName("encryption");
+                writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(IsPublicNetworkAccessAllowed))
             {
-                writer.WritePropertyName("publicNetworkAccess");
-                writer.WriteBooleanValue(PublicNetworkAccess.Value);
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteBooleanValue(IsPublicNetworkAccessAllowed.Value);
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
-                writer.WritePropertyName("disableLocalAuth");
-                writer.WriteBooleanValue(DisableLocalAuth.Value);
+                writer.WritePropertyName("disableLocalAuth"u8);
+                writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

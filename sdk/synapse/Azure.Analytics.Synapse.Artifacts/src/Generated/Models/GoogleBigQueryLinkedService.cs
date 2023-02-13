@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="project"/> is null. </exception>
         public GoogleBigQueryLinkedService(object project, GoogleBigQueryAuthenticationType authenticationType)
         {
-            if (project == null)
-            {
-                throw new ArgumentNullException(nameof(project));
-            }
+            Argument.AssertNotNull(project, nameof(project));
 
             Project = project;
             AuthenticationType = authenticationType;
@@ -40,9 +38,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProjects"> A comma-separated list of public BigQuery projects to access. </param>
         /// <param name="requestGoogleDriveScope"> Whether to request access to Google Drive. Allowing Google Drive access enables support for federated tables that combine BigQuery data with data from Google Drive. The default value is false. </param>
         /// <param name="authenticationType"> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </param>
-        /// <param name="refreshToken"> The refresh token obtained from Google for authorizing access to BigQuery for UserAuthentication. </param>
+        /// <param name="refreshToken">
+        /// The refresh token obtained from Google for authorizing access to BigQuery for UserAuthentication.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="clientId"> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </param>
-        /// <param name="clientSecret"> The client secret of the google application used to acquire the refresh token. </param>
+        /// <param name="clientSecret">
+        /// The client secret of the google application used to acquire the refresh token.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="email"> The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR. </param>
         /// <param name="keyFilePath"> The full path to the .p12 key file that is used to authenticate the service account email address and can only be used on self-hosted IR. </param>
         /// <param name="trustedCertPath"> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </param>
@@ -73,11 +79,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object RequestGoogleDriveScope { get; set; }
         /// <summary> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </summary>
         public GoogleBigQueryAuthenticationType AuthenticationType { get; set; }
-        /// <summary> The refresh token obtained from Google for authorizing access to BigQuery for UserAuthentication. </summary>
+        /// <summary>
+        /// The refresh token obtained from Google for authorizing access to BigQuery for UserAuthentication.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase RefreshToken { get; set; }
         /// <summary> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </summary>
         public object ClientId { get; set; }
-        /// <summary> The client secret of the google application used to acquire the refresh token. </summary>
+        /// <summary>
+        /// The client secret of the google application used to acquire the refresh token.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase ClientSecret { get; set; }
         /// <summary> The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR. </summary>
         public object Email { get; set; }

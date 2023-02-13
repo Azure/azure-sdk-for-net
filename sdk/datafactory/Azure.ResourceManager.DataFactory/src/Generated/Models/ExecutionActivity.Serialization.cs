@@ -19,26 +19,26 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
-                writer.WritePropertyName("linkedServiceName");
+                writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteObjectValue(LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
-                writer.WritePropertyName("policy");
+                writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
-                writer.WritePropertyName("dependsOn");
+                writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(UserProperties))
             {
-                writer.WritePropertyName("userProperties");
+                writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<FactoryLinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
-            string type = default;
+            string type = "Execution";
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<ActivityUserProperty>> userProperties = default;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linkedServiceName"))
+                if (property.NameEquals("linkedServiceName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("policy"))
+                if (property.NameEquals("policy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -131,22 +131,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                     policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dependsOn"))
+                if (property.NameEquals("dependsOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     dependsOn = array;
                     continue;
                 }
-                if (property.NameEquals("userProperties"))
+                if (property.NameEquals("userProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

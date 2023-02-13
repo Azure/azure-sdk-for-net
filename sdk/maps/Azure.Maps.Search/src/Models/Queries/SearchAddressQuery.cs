@@ -6,7 +6,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Maps.Search.Models
+namespace Azure.Maps.Search
 {
     /// <summary> Initializes a new instance of SearchAddressQuery. </summary>
     public partial class SearchAddressQuery

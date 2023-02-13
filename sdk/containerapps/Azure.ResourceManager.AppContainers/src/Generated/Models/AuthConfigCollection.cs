@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -18,12 +19,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of AuthConfigCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AuthConfigCollection(IEnumerable<AuthConfigData> value)
+        internal AuthConfigCollection(IEnumerable<ContainerAppAuthConfigData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
@@ -31,14 +29,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of AuthConfigCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal AuthConfigCollection(IReadOnlyList<AuthConfigData> value, string nextLink)
+        internal AuthConfigCollection(IReadOnlyList<ContainerAppAuthConfigData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<AuthConfigData> Value { get; }
+        public IReadOnlyList<ContainerAppAuthConfigData> Value { get; }
         /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }

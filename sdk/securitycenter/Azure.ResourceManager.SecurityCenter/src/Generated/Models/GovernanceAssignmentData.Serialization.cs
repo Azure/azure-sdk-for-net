@@ -18,36 +18,36 @@ namespace Azure.ResourceManager.SecurityCenter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Owner))
             {
-                writer.WritePropertyName("owner");
+                writer.WritePropertyName("owner"u8);
                 writer.WriteStringValue(Owner);
             }
             if (Optional.IsDefined(RemediationDueOn))
             {
-                writer.WritePropertyName("remediationDueDate");
+                writer.WritePropertyName("remediationDueDate"u8);
                 writer.WriteStringValue(RemediationDueOn.Value, "O");
             }
             if (Optional.IsDefined(RemediationEta))
             {
-                writer.WritePropertyName("remediationEta");
+                writer.WritePropertyName("remediationEta"u8);
                 writer.WriteObjectValue(RemediationEta);
             }
             if (Optional.IsDefined(IsGracePeriod))
             {
-                writer.WritePropertyName("isGracePeriod");
+                writer.WritePropertyName("isGracePeriod"u8);
                 writer.WriteBooleanValue(IsGracePeriod.Value);
             }
             if (Optional.IsDefined(GovernanceEmailNotification))
             {
-                writer.WritePropertyName("governanceEmailNotification");
+                writer.WritePropertyName("governanceEmailNotification"u8);
                 writer.WriteObjectValue(GovernanceEmailNotification);
             }
             if (Optional.IsDefined(AdditionalData))
             {
-                writer.WritePropertyName("additionalData");
+                writer.WritePropertyName("additionalData"u8);
                 writer.WriteObjectValue(AdditionalData);
             }
             writer.WriteEndObject();
@@ -65,35 +65,35 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<RemediationEta> remediationEta = default;
             Optional<bool> isGracePeriod = default;
             Optional<GovernanceEmailNotification> governanceEmailNotification = default;
-            Optional<GovernanceAssignmentAdditionalData> additionalData = default;
+            Optional<GovernanceAssignmentAdditionalInfo> additionalData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("owner"))
+                        if (property0.NameEquals("owner"u8))
                         {
                             owner = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("remediationDueDate"))
+                        if (property0.NameEquals("remediationDueDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             remediationDueDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("remediationEta"))
+                        if (property0.NameEquals("remediationEta"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             remediationEta = RemediationEta.DeserializeRemediationEta(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("isGracePeriod"))
+                        if (property0.NameEquals("isGracePeriod"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             isGracePeriod = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("governanceEmailNotification"))
+                        if (property0.NameEquals("governanceEmailNotification"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             governanceEmailNotification = GovernanceEmailNotification.DeserializeGovernanceEmailNotification(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("additionalData"))
+                        if (property0.NameEquals("additionalData"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            additionalData = GovernanceAssignmentAdditionalData.DeserializeGovernanceAssignmentAdditionalData(property0.Value);
+                            additionalData = GovernanceAssignmentAdditionalInfo.DeserializeGovernanceAssignmentAdditionalInfo(property0.Value);
                             continue;
                         }
                     }

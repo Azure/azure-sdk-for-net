@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static RegisteredServerArray DeserializeRegisteredServerArray(JsonElement element)
         {
-            Optional<IReadOnlyList<RegisteredServerData>> value = default;
+            Optional<IReadOnlyList<StorageSyncRegisteredServerData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RegisteredServerData> array = new List<RegisteredServerData>();
+                    List<StorageSyncRegisteredServerData> array = new List<StorageSyncRegisteredServerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegisteredServerData.DeserializeRegisteredServerData(item));
+                        array.Add(StorageSyncRegisteredServerData.DeserializeStorageSyncRegisteredServerData(item));
                     }
                     value = array;
                     continue;

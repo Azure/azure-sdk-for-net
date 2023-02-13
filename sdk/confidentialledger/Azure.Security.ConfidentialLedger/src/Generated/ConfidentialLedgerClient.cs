@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Security.ConfidentialLedger
 {
-    // Data plane generated client. The ConfidentialLedger service client.
+    // Data plane generated client.
     /// <summary> The ConfidentialLedger service client. </summary>
     public partial class ConfidentialLedgerClient
     {
@@ -41,35 +38,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetConstitutionAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// Response response = await client.GetConstitutionAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("digest").ToString());
-        /// Console.WriteLine(result.GetProperty("script").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// The constitution is a script that assesses and applies proposals from consortium members.
-        /// 
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Constitution</c>:
-        /// <code>{
-        ///   digest: string, # Required. SHA256 digest of the constitution script.
-        ///   script: string, # Required. Contents of the constitution.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetConstitutionAsync(RequestContext)']/*" />
         public virtual async Task<Response> GetConstitutionAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
@@ -90,35 +59,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetConstitution and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// Response response = client.GetConstitution();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("digest").ToString());
-        /// Console.WriteLine(result.GetProperty("script").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// The constitution is a script that assesses and applies proposals from consortium members.
-        /// 
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>Constitution</c>:
-        /// <code>{
-        ///   digest: string, # Required. SHA256 digest of the constitution script.
-        ///   script: string, # Required. Contents of the constitution.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetConstitution(RequestContext)']/*" />
         public virtual Response GetConstitution(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetConstitution");
@@ -139,38 +80,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetEnclaveQuotesAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// Response response = await client.GetEnclaveQuotesAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("currentNodeId").ToString());
-        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("nodeId").ToString());
-        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("mrenclave").ToString());
-        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("quoteVersion").ToString());
-        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("raw").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave.
-        /// 
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ConfidentialLedgerEnclaves</c>:
-        /// <code>{
-        ///   currentNodeId: string, # Required. Id of the Confidential Ledger node responding to the request.
-        ///   enclaveQuotes: Dictionary&lt;string, EnclaveQuote&gt;, # Required. Dictionary of enclave quotes, indexed by node id.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetEnclaveQuotesAsync(RequestContext)']/*" />
         public virtual async Task<Response> GetEnclaveQuotesAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
@@ -191,38 +101,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetEnclaveQuotes and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// Response response = client.GetEnclaveQuotes();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("currentNodeId").ToString());
-        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("nodeId").ToString());
-        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("mrenclave").ToString());
-        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("quoteVersion").ToString());
-        /// Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<test>").GetProperty("raw").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave.
-        /// 
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ConfidentialLedgerEnclaves</c>:
-        /// <code>{
-        ///   currentNodeId: string, # Required. Id of the Confidential Ledger node responding to the request.
-        ///   enclaveQuotes: Dictionary&lt;string, EnclaveQuote&gt;, # Required. Dictionary of enclave quotes, indexed by node id.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetEnclaveQuotes(RequestContext)']/*" />
         public virtual Response GetEnclaveQuotes(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetEnclaveQuotes");
@@ -246,62 +125,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateLedgerEntryAsync with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     contents = "<contents>",
-        /// };
-        /// 
-        /// Response response = await client.CreateLedgerEntryAsync(RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("collectionId").ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateLedgerEntryAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     contents = "<contents>",
-        /// };
-        /// 
-        /// Response response = await client.CreateLedgerEntryAsync(RequestContent.Create(data), "<collectionId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("collectionId").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// A collection id may optionally be specified.
-        /// 
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>LedgerEntry</c>:
-        /// <code>{
-        ///   contents: string, # Required. Contents of the ledger entry.
-        ///   collectionId: string, # Optional.
-        ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>LedgerWriteResult</c>:
-        /// <code>{
-        ///   collectionId: string, # Required.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateLedgerEntryAsync(RequestContent,String,RequestContext)']/*" />
         public virtual async Task<Response> CreateLedgerEntryAsync(RequestContent content, string collectionId = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -327,62 +151,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateLedgerEntry with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     contents = "<contents>",
-        /// };
-        /// 
-        /// Response response = client.CreateLedgerEntry(RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("collectionId").ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateLedgerEntry with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     contents = "<contents>",
-        /// };
-        /// 
-        /// Response response = client.CreateLedgerEntry(RequestContent.Create(data), "<collectionId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("collectionId").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// A collection id may optionally be specified.
-        /// 
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>LedgerEntry</c>:
-        /// <code>{
-        ///   contents: string, # Required. Contents of the ledger entry.
-        ///   collectionId: string, # Optional.
-        ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>LedgerWriteResult</c>:
-        /// <code>{
-        ///   collectionId: string, # Required.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateLedgerEntry(RequestContent,String,RequestContext)']/*" />
         public virtual Response CreateLedgerEntry(RequestContent content, string collectionId = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -409,52 +178,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetLedgerEntryAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// Response response = await client.GetLedgerEntryAsync("<transactionId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("state").ToString());
-        /// ]]></code>
-        /// This sample shows how to call GetLedgerEntryAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// Response response = await client.GetLedgerEntryAsync("<transactionId>", "<collectionId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("state").ToString());
-        /// Console.WriteLine(result.GetProperty("entry").GetProperty("contents").ToString());
-        /// Console.WriteLine(result.GetProperty("entry").GetProperty("collectionId").ToString());
-        /// Console.WriteLine(result.GetProperty("entry").GetProperty("transactionId").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// To return older ledger entries, the relevant sections of the ledger must be read from disk and validated. To prevent blocking within the enclave, the response will indicate whether the entry is ready and part of the response, or if the loading is still ongoing.
-        /// 
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>LedgerQueryResult</c>:
-        /// <code>{
-        ///   state: &quot;Loading&quot; | &quot;Ready&quot;, # Required. State of a ledger query.
-        ///   entry: {
-        ///     contents: string, # Required. Contents of the ledger entry.
-        ///     collectionId: string, # Optional.
-        ///     transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
-        ///   }, # Optional. The ledger entry found as a result of the query. This is only available if the query is in Ready state.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntryAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetLedgerEntryAsync(string transactionId, string collectionId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
@@ -481,52 +205,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetLedgerEntry with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// Response response = client.GetLedgerEntry("<transactionId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("state").ToString());
-        /// ]]></code>
-        /// This sample shows how to call GetLedgerEntry with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// Response response = client.GetLedgerEntry("<transactionId>", "<collectionId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("state").ToString());
-        /// Console.WriteLine(result.GetProperty("entry").GetProperty("contents").ToString());
-        /// Console.WriteLine(result.GetProperty("entry").GetProperty("collectionId").ToString());
-        /// Console.WriteLine(result.GetProperty("entry").GetProperty("transactionId").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// To return older ledger entries, the relevant sections of the ledger must be read from disk and validated. To prevent blocking within the enclave, the response will indicate whether the entry is ready and part of the response, or if the loading is still ongoing.
-        /// 
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>LedgerQueryResult</c>:
-        /// <code>{
-        ///   state: &quot;Loading&quot; | &quot;Ready&quot;, # Required. State of a ledger query.
-        ///   entry: {
-        ///     contents: string, # Required. Contents of the ledger entry.
-        ///     collectionId: string, # Optional.
-        ///     transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
-        ///   }, # Optional. The ledger entry found as a result of the query. This is only available if the query is in Ready state.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntry(String,String,RequestContext)']/*" />
         public virtual Response GetLedgerEntry(string transactionId, string collectionId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
@@ -552,63 +231,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetReceiptAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// Response response = await client.GetReceiptAsync("<transactionId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("cert").ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("leaf").ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("leafComponents").GetProperty("claimsDigest").ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("leafComponents").GetProperty("commitEvidence").ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("leafComponents").GetProperty("writeSetDigest").ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("nodeId").ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("proof")[0].GetProperty("left").ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("proof")[0].GetProperty("right").ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("root").ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("serviceEndorsements")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("signature").ToString());
-        /// Console.WriteLine(result.GetProperty("state").ToString());
-        /// Console.WriteLine(result.GetProperty("transactionId").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>TransactionReceipt</c>:
-        /// <code>{
-        ///   receipt: {
-        ///     cert: string, # Optional.
-        ///     leaf: string, # Optional.
-        ///     leafComponents: {
-        ///       claimsDigest: string, # Optional.
-        ///       commitEvidence: string, # Optional.
-        ///       writeSetDigest: string, # Optional.
-        ///     }, # Optional.
-        ///     nodeId: string, # Required.
-        ///     proof: [
-        ///       {
-        ///         left: string, # Optional.
-        ///         right: string, # Optional.
-        ///       }
-        ///     ], # Required.
-        ///     root: string, # Optional.
-        ///     serviceEndorsements: [string], # Optional.
-        ///     signature: string, # Required.
-        ///   }, # Optional.
-        ///   state: &quot;Loading&quot; | &quot;Ready&quot;, # Required. State of a ledger query.
-        ///   transactionId: string, # Required. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetReceiptAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetReceiptAsync(string transactionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
@@ -634,63 +257,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetReceipt with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// Response response = client.GetReceipt("<transactionId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("cert").ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("leaf").ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("leafComponents").GetProperty("claimsDigest").ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("leafComponents").GetProperty("commitEvidence").ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("leafComponents").GetProperty("writeSetDigest").ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("nodeId").ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("proof")[0].GetProperty("left").ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("proof")[0].GetProperty("right").ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("root").ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("serviceEndorsements")[0].ToString());
-        /// Console.WriteLine(result.GetProperty("receipt").GetProperty("signature").ToString());
-        /// Console.WriteLine(result.GetProperty("state").ToString());
-        /// Console.WriteLine(result.GetProperty("transactionId").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>TransactionReceipt</c>:
-        /// <code>{
-        ///   receipt: {
-        ///     cert: string, # Optional.
-        ///     leaf: string, # Optional.
-        ///     leafComponents: {
-        ///       claimsDigest: string, # Optional.
-        ///       commitEvidence: string, # Optional.
-        ///       writeSetDigest: string, # Optional.
-        ///     }, # Optional.
-        ///     nodeId: string, # Required.
-        ///     proof: [
-        ///       {
-        ///         left: string, # Optional.
-        ///         right: string, # Optional.
-        ///       }
-        ///     ], # Required.
-        ///     root: string, # Optional.
-        ///     serviceEndorsements: [string], # Optional.
-        ///     signature: string, # Required.
-        ///   }, # Optional.
-        ///   state: &quot;Loading&quot; | &quot;Ready&quot;, # Required. State of a ledger query.
-        ///   transactionId: string, # Required. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetReceipt(String,RequestContext)']/*" />
         public virtual Response GetReceipt(string transactionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
@@ -716,33 +283,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetTransactionStatusAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// Response response = await client.GetTransactionStatusAsync("<transactionId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("state").ToString());
-        /// Console.WriteLine(result.GetProperty("transactionId").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>TransactionStatus</c>:
-        /// <code>{
-        ///   state: &quot;Committed&quot; | &quot;Pending&quot;, # Required. Represents the state of the transaction.
-        ///   transactionId: string, # Required. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetTransactionStatusAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetTransactionStatusAsync(string transactionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
@@ -768,33 +309,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetTransactionStatus with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// Response response = client.GetTransactionStatus("<transactionId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("state").ToString());
-        /// Console.WriteLine(result.GetProperty("transactionId").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>TransactionStatus</c>:
-        /// <code>{
-        ///   state: &quot;Committed&quot; | &quot;Pending&quot;, # Required. Represents the state of the transaction.
-        ///   transactionId: string, # Required. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetTransactionStatus(String,RequestContext)']/*" />
         public virtual Response GetTransactionStatus(string transactionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
@@ -818,48 +333,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetCurrentLedgerEntryAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// Response response = await client.GetCurrentLedgerEntryAsync();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("contents").ToString());
-        /// ]]></code>
-        /// This sample shows how to call GetCurrentLedgerEntryAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// Response response = await client.GetCurrentLedgerEntryAsync("<collectionId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("contents").ToString());
-        /// Console.WriteLine(result.GetProperty("collectionId").ToString());
-        /// Console.WriteLine(result.GetProperty("transactionId").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// A collection id may optionally be specified.
-        /// 
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>LedgerEntry</c>:
-        /// <code>{
-        ///   contents: string, # Required. Contents of the ledger entry.
-        ///   collectionId: string, # Optional.
-        ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetCurrentLedgerEntryAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetCurrentLedgerEntryAsync(string collectionId = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
@@ -881,48 +355,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetCurrentLedgerEntry and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// Response response = client.GetCurrentLedgerEntry();
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("contents").ToString());
-        /// ]]></code>
-        /// This sample shows how to call GetCurrentLedgerEntry with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// Response response = client.GetCurrentLedgerEntry("<collectionId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("contents").ToString());
-        /// Console.WriteLine(result.GetProperty("collectionId").ToString());
-        /// Console.WriteLine(result.GetProperty("transactionId").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// A collection id may optionally be specified.
-        /// 
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>LedgerEntry</c>:
-        /// <code>{
-        ///   contents: string, # Required. Contents of the ledger entry.
-        ///   collectionId: string, # Optional.
-        ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetCurrentLedgerEntry(String,RequestContext)']/*" />
         public virtual Response GetCurrentLedgerEntry(string collectionId = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetCurrentLedgerEntry");
@@ -945,17 +378,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteUserAsync with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// Response response = await client.DeleteUserAsync("<userId>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='DeleteUserAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> DeleteUserAsync(string userId, RequestContext context = null)
         {
             Argument.AssertNotNull(userId, nameof(userId));
@@ -980,17 +403,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteUser with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// Response response = client.DeleteUser("<userId>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='DeleteUser(String,RequestContext)']/*" />
         public virtual Response DeleteUser(string userId, RequestContext context = null)
         {
             Argument.AssertNotNull(userId, nameof(userId));
@@ -1015,33 +428,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetUserAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// Response response = await client.GetUserAsync("<userId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("assignedRole").ToString());
-        /// Console.WriteLine(result.GetProperty("userId").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>LedgerUser</c>:
-        /// <code>{
-        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;, # Required. Represents an assignable role.
-        ///   userId: string, # Optional. Identifier for the user. This must either be an AAD object id or a certificate fingerprint.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserAsync(String,RequestContext)']/*" />
         public virtual async Task<Response> GetUserAsync(string userId, RequestContext context = null)
         {
             Argument.AssertNotNull(userId, nameof(userId));
@@ -1066,33 +453,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetUser with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// Response response = client.GetUser("<userId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("assignedRole").ToString());
-        /// Console.WriteLine(result.GetProperty("userId").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>LedgerUser</c>:
-        /// <code>{
-        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;, # Required. Represents an assignable role.
-        ///   userId: string, # Optional. Identifier for the user. This must either be an AAD object id or a certificate fingerprint.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUser(String,RequestContext)']/*" />
         public virtual Response GetUser(string userId, RequestContext context = null)
         {
             Argument.AssertNotNull(userId, nameof(userId));
@@ -1118,48 +479,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdateUserAsync with required parameters and request content and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     assignedRole = "Administrator",
-        /// };
-        /// 
-        /// Response response = await client.CreateOrUpdateUserAsync("<userId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("assignedRole").ToString());
-        /// Console.WriteLine(result.GetProperty("userId").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// A JSON merge patch is applied for existing users
-        /// 
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>LedgerUser</c>:
-        /// <code>{
-        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;, # Required. Represents an assignable role.
-        ///   userId: string, # Optional. Identifier for the user. This must either be an AAD object id or a certificate fingerprint.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>LedgerUser</c>:
-        /// <code>{
-        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;, # Required. Represents an assignable role.
-        ///   userId: string, # Optional. Identifier for the user. This must either be an AAD object id or a certificate fingerprint.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateOrUpdateUserAsync(String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateUserAsync(string userId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(userId, nameof(userId));
@@ -1186,48 +506,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdateUser with required parameters and request content and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     assignedRole = "Administrator",
-        /// };
-        /// 
-        /// Response response = client.CreateOrUpdateUser("<userId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("assignedRole").ToString());
-        /// Console.WriteLine(result.GetProperty("userId").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// A JSON merge patch is applied for existing users
-        /// 
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>LedgerUser</c>:
-        /// <code>{
-        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;, # Required. Represents an assignable role.
-        ///   userId: string, # Optional. Identifier for the user. This must either be an AAD object id or a certificate fingerprint.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>LedgerUser</c>:
-        /// <code>{
-        ///   assignedRole: &quot;Administrator&quot; | &quot;Contributor&quot; | &quot;Reader&quot;, # Required. Represents an assignable role.
-        ///   userId: string, # Optional. Identifier for the user. This must either be an AAD object id or a certificate fingerprint.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateOrUpdateUser(String,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateUser(string userId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(userId, nameof(userId));
@@ -1251,220 +530,48 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetConsortiumMembersAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetConsortiumMembersAsync())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("certificate").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Consortium members can manage the Confidential Ledger.
-        /// 
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ConsortiumMembers</c>:
-        /// <code>{
-        ///   certificate: string, # Required. PEM-encoded certificate associated with the member.
-        ///   id: string, # Required. Identifier assigned to the member.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetConsortiumMembersAsync(RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetConsortiumMembersAsync(RequestContext context = null)
         {
-            return GetConsortiumMembersImplementationAsync("ConfidentialLedgerClient.GetConsortiumMembers", context);
-        }
-
-        private AsyncPageable<BinaryData> GetConsortiumMembersImplementationAsync(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetConsortiumMembersRequest(context)
-                        : CreateGetConsortiumMembersNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "members", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConsortiumMembersRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConsortiumMembersNextPageRequest(nextLink, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetConsortiumMembers", "members", "nextLink", context);
         }
 
         /// <summary> Lists the consortium members. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetConsortiumMembers and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetConsortiumMembers())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("certificate").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Consortium members can manage the Confidential Ledger.
-        /// 
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>ConsortiumMembers</c>:
-        /// <code>{
-        ///   certificate: string, # Required. PEM-encoded certificate associated with the member.
-        ///   id: string, # Required. Identifier assigned to the member.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetConsortiumMembers(RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetConsortiumMembers(RequestContext context = null)
         {
-            return GetConsortiumMembersImplementation("ConfidentialLedgerClient.GetConsortiumMembers", context);
-        }
-
-        private Pageable<BinaryData> GetConsortiumMembersImplementation(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetConsortiumMembersRequest(context)
-                        : CreateGetConsortiumMembersNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "members", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConsortiumMembersRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConsortiumMembersNextPageRequest(nextLink, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetConsortiumMembers", "members", "nextLink", context);
         }
 
         /// <summary> Retrieves a list of collection ids present in the Confidential Ledger. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetCollectionsAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetCollectionsAsync())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("collectionId").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Collection ids are user-created collections of ledger entries
-        /// 
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>PagedCollections</c>:
-        /// <code>{
-        ///   collectionId: string, # Required.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetCollectionsAsync(RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetCollectionsAsync(RequestContext context = null)
         {
-            return GetCollectionsImplementationAsync("ConfidentialLedgerClient.GetCollections", context);
-        }
-
-        private AsyncPageable<BinaryData> GetCollectionsImplementationAsync(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetCollectionsRequest(context)
-                        : CreateGetCollectionsNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "collections", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCollectionsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCollectionsNextPageRequest(nextLink, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetCollections", "collections", "nextLink", context);
         }
 
         /// <summary> Retrieves a list of collection ids present in the Confidential Ledger. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetCollections and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetCollections())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("collectionId").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Collection ids are user-created collections of ledger entries
-        /// 
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>PagedCollections</c>:
-        /// <code>{
-        ///   collectionId: string, # Required.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetCollections(RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetCollections(RequestContext context = null)
         {
-            return GetCollectionsImplementation("ConfidentialLedgerClient.GetCollections", context);
-        }
-
-        private Pageable<BinaryData> GetCollectionsImplementation(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetCollectionsRequest(context)
-                        : CreateGetCollectionsNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "collections", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCollectionsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCollectionsNextPageRequest(nextLink, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetCollections", "collections", "nextLink", context);
         }
 
         /// <summary> Gets ledger entries from a collection corresponding to a range. </summary>
@@ -1474,70 +581,12 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetLedgerEntriesAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetLedgerEntriesAsync())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("contents").ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetLedgerEntriesAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetLedgerEntriesAsync("<collectionId>", "<fromTransactionId>", "<toTransactionId>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("contents").ToString());
-        ///     Console.WriteLine(result.GetProperty("collectionId").ToString());
-        ///     Console.WriteLine(result.GetProperty("transactionId").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// A collection id may optionally be specified. Only entries in the specified (or default) collection will be returned.
-        /// 
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>LedgerEntries</c>:
-        /// <code>{
-        ///   contents: string, # Required. Contents of the ledger entry.
-        ///   collectionId: string, # Optional.
-        ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntriesAsync(String,String,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetLedgerEntriesAsync(string collectionId = null, string fromTransactionId = null, string toTransactionId = null, RequestContext context = null)
         {
-            return GetLedgerEntriesImplementationAsync("ConfidentialLedgerClient.GetLedgerEntries", collectionId, fromTransactionId, toTransactionId, context);
-        }
-
-        private AsyncPageable<BinaryData> GetLedgerEntriesImplementationAsync(string diagnosticsScopeName, string collectionId, string fromTransactionId, string toTransactionId, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetLedgerEntriesRequest(collectionId, fromTransactionId, toTransactionId, context)
-                        : CreateGetLedgerEntriesNextPageRequest(nextLink, collectionId, fromTransactionId, toTransactionId, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "entries", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLedgerEntriesRequest(collectionId, fromTransactionId, toTransactionId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLedgerEntriesNextPageRequest(nextLink, collectionId, fromTransactionId, toTransactionId, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetLedgerEntries", "entries", "nextLink", context);
         }
 
         /// <summary> Gets ledger entries from a collection corresponding to a range. </summary>
@@ -1547,70 +596,12 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetLedgerEntries and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetLedgerEntries())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("contents").ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetLedgerEntries with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new ConfidentialLedgerClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetLedgerEntries("<collectionId>", "<fromTransactionId>", "<toTransactionId>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("contents").ToString());
-        ///     Console.WriteLine(result.GetProperty("collectionId").ToString());
-        ///     Console.WriteLine(result.GetProperty("transactionId").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// A collection id may optionally be specified. Only entries in the specified (or default) collection will be returned.
-        /// 
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>LedgerEntries</c>:
-        /// <code>{
-        ///   contents: string, # Required. Contents of the ledger entry.
-        ///   collectionId: string, # Optional.
-        ///   transactionId: string, # Optional. A unique identifier for the state of the ledger. If returned as part of a LedgerEntry, it indicates the state from which the entry was read.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntries(String,String,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetLedgerEntries(string collectionId = null, string fromTransactionId = null, string toTransactionId = null, RequestContext context = null)
         {
-            return GetLedgerEntriesImplementation("ConfidentialLedgerClient.GetLedgerEntries", collectionId, fromTransactionId, toTransactionId, context);
-        }
-
-        private Pageable<BinaryData> GetLedgerEntriesImplementation(string diagnosticsScopeName, string collectionId, string fromTransactionId, string toTransactionId, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetLedgerEntriesRequest(collectionId, fromTransactionId, toTransactionId, context)
-                        : CreateGetLedgerEntriesNextPageRequest(nextLink, collectionId, fromTransactionId, toTransactionId, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "entries", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLedgerEntriesRequest(collectionId, fromTransactionId, toTransactionId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLedgerEntriesNextPageRequest(nextLink, collectionId, fromTransactionId, toTransactionId, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetLedgerEntries", "entries", "nextLink", context);
         }
 
         internal HttpMessage CreateGetConstitutionRequest(RequestContext context)

@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static BuildServiceAgentPoolResourceList DeserializeBuildServiceAgentPoolResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<AppBuildServiceAgentPoolResourceData>> value = default;
+            Optional<IReadOnlyList<AppPlatformBuildServiceAgentPoolData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AppBuildServiceAgentPoolResourceData> array = new List<AppBuildServiceAgentPoolResourceData>();
+                    List<AppPlatformBuildServiceAgentPoolData> array = new List<AppPlatformBuildServiceAgentPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppBuildServiceAgentPoolResourceData.DeserializeAppBuildServiceAgentPoolResourceData(item));
+                        array.Add(AppPlatformBuildServiceAgentPoolData.DeserializeAppPlatformBuildServiceAgentPoolData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

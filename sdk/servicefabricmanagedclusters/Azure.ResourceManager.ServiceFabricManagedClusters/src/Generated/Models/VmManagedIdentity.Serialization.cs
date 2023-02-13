@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
-                writer.WritePropertyName("userAssignedIdentities");
+                writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserAssignedIdentities)
                 {
@@ -31,20 +31,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static VmManagedIdentity DeserializeVmManagedIdentity(JsonElement element)
         {
-            Optional<IList<string>> userAssignedIdentities = default;
+            Optional<IList<ResourceIdentifier>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userAssignedIdentities"))
+                if (property.NameEquals("userAssignedIdentities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new ResourceIdentifier(item.GetString()));
                     }
                     userAssignedIdentities = array;
                     continue;

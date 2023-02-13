@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Marketplace.Models
         internal static PrivateStoreNotificationsState DeserializePrivateStoreNotificationsState(JsonElement element)
         {
             Optional<IReadOnlyList<StopSellNotifications>> stopSellNotifications = default;
-            Optional<IReadOnlyList<NewNotifications>> newNotifications = default;
+            Optional<IReadOnlyList<NewPlanNotification>> newNotifications = default;
             Optional<IReadOnlyList<RequestApprovalsDetails>> approvalRequests = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("stopSellNotifications"))
+                if (property.NameEquals("stopSellNotifications"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,22 +35,22 @@ namespace Azure.ResourceManager.Marketplace.Models
                     stopSellNotifications = array;
                     continue;
                 }
-                if (property.NameEquals("newNotifications"))
+                if (property.NameEquals("newNotifications"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NewNotifications> array = new List<NewNotifications>();
+                    List<NewPlanNotification> array = new List<NewPlanNotification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.NewNotifications.DeserializeNewNotifications(item));
+                        array.Add(NewPlanNotification.DeserializeNewPlanNotification(item));
                     }
                     newNotifications = array;
                     continue;
                 }
-                if (property.NameEquals("approvalRequests"))
+                if (property.NameEquals("approvalRequests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,20 +18,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientCertificateId))
             {
-                writer.WritePropertyName("clientCertificateId");
+                writer.WritePropertyName("clientCertificateId"u8);
                 writer.WriteStringValue(ClientCertificateId);
             }
             if (Optional.IsDefined(ClientCertificatethumbprint))
             {
-                writer.WritePropertyName("clientCertificatethumbprint");
+                writer.WritePropertyName("clientCertificatethumbprint"u8);
                 writer.WriteStringValue(ClientCertificatethumbprint);
             }
             if (Optional.IsDefined(MaxPartitionResolutionRetries))
             {
-                writer.WritePropertyName("maxPartitionResolutionRetries");
+                writer.WritePropertyName("maxPartitionResolutionRetries"u8);
                 writer.WriteNumberValue(MaxPartitionResolutionRetries.Value);
             }
-            writer.WritePropertyName("managementEndpoints");
+            writer.WritePropertyName("managementEndpoints"u8);
             writer.WriteStartArray();
             foreach (var item in ManagementEndpoints)
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ServerCertificateThumbprints))
             {
-                writer.WritePropertyName("serverCertificateThumbprints");
+                writer.WritePropertyName("serverCertificateThumbprints"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServerCertificateThumbprints)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsCollectionDefined(ServerX509Names))
             {
-                writer.WritePropertyName("serverX509Names");
+                writer.WritePropertyName("serverX509Names"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServerX509Names)
                 {
@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<IList<X509CertificateName>> serverX509Names = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientCertificateId"))
+                if (property.NameEquals("clientCertificateId"u8))
                 {
                     clientCertificateId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientCertificatethumbprint"))
+                if (property.NameEquals("clientCertificatethumbprint"u8))
                 {
                     clientCertificatethumbprint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxPartitionResolutionRetries"))
+                if (property.NameEquals("maxPartitionResolutionRetries"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     maxPartitionResolutionRetries = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("managementEndpoints"))
+                if (property.NameEquals("managementEndpoints"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     managementEndpoints = array;
                     continue;
                 }
-                if (property.NameEquals("serverCertificateThumbprints"))
+                if (property.NameEquals("serverCertificateThumbprints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     serverCertificateThumbprints = array;
                     continue;
                 }
-                if (property.NameEquals("serverX509Names"))
+                if (property.NameEquals("serverX509Names"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

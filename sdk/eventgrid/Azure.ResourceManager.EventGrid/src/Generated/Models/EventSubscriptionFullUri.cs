@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Initializes a new instance of EventSubscriptionFullUri. </summary>
-        /// <param name="endpointUri"> The URL that represents the endpoint of the destination of an event subscription. </param>
-        internal EventSubscriptionFullUri(Uri endpointUri)
+        /// <param name="endpoint"> The URL that represents the endpoint of the destination of an event subscription. </param>
+        internal EventSubscriptionFullUri(Uri endpoint)
         {
-            EndpointUri = endpointUri;
+            Endpoint = endpoint;
         }
 
         /// <summary> The URL that represents the endpoint of the destination of an event subscription. </summary>
-        public Uri EndpointUri { get; }
+        public Uri Endpoint { get; }
     }
 }

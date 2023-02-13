@@ -1,14 +1,23 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
 trigger: none
-
-pr: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/reservations/ci.mgmt.yml
+    - sdk/reservations/Azure.ResourceManager.Reservations/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: reservations
-    BuildSnippets: true
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.Reservations
       safeName: AzureResourceManagerReservations

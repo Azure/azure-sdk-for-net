@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.TrafficManager
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2018-08-01";
+            _apiVersion = apiVersion ?? "2022-04-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCheckTrafficManagerRelativeDnsNameAvailabilityRequest(CheckTrafficManagerRelativeDnsNameAvailabilityContent content)
+        internal HttpMessage CreateCheckTrafficManagerRelativeDnsNameAvailabilityRequest(TrafficManagerRelativeDnsNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public async Task<Response<TrafficManagerNameAvailability>> CheckTrafficManagerRelativeDnsNameAvailabilityAsync(CheckTrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerRelativeDnsNameAvailabilityAsync(TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 case 200:
                     {
-                        TrafficManagerNameAvailability value = default;
+                        TrafficManagerNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TrafficManagerNameAvailability.DeserializeTrafficManagerNameAvailability(document.RootElement);
+                        value = TrafficManagerNameAvailabilityResult.DeserializeTrafficManagerNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public Response<TrafficManagerNameAvailability> CheckTrafficManagerRelativeDnsNameAvailability(CheckTrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerRelativeDnsNameAvailability(TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 case 200:
                     {
-                        TrafficManagerNameAvailability value = default;
+                        TrafficManagerNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TrafficManagerNameAvailability.DeserializeTrafficManagerNameAvailability(document.RootElement);
+                        value = TrafficManagerNameAvailabilityResult.DeserializeTrafficManagerNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Lists all Traffic Manager profiles within a resource group. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager profiles to be listed. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProfileListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<TrafficManagerProfileListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -140,9 +140,9 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 case 200:
                     {
-                        ProfileListResult value = default;
+                        TrafficManagerProfileListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProfileListResult.DeserializeProfileListResult(document.RootElement);
+                        value = TrafficManagerProfileListResult.DeserializeTrafficManagerProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Lists all Traffic Manager profiles within a resource group. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager profiles to be listed. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProfileListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<TrafficManagerProfileListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -167,9 +167,9 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 case 200:
                     {
-                        ProfileListResult value = default;
+                        TrafficManagerProfileListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProfileListResult.DeserializeProfileListResult(document.RootElement);
+                        value = TrafficManagerProfileListResult.DeserializeTrafficManagerProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -195,11 +195,11 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Lists all Traffic Manager profiles within a subscription. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProfileListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<TrafficManagerProfileListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -209,9 +209,9 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 case 200:
                     {
-                        ProfileListResult value = default;
+                        TrafficManagerProfileListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProfileListResult.DeserializeProfileListResult(document.RootElement);
+                        value = TrafficManagerProfileListResult.DeserializeTrafficManagerProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -220,11 +220,11 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Lists all Traffic Manager profiles within a subscription. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProfileListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<TrafficManagerProfileListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -234,9 +234,9 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 case 200:
                     {
-                        ProfileListResult value = default;
+                        TrafficManagerProfileListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProfileListResult.DeserializeProfileListResult(document.RootElement);
+                        value = TrafficManagerProfileListResult.DeserializeTrafficManagerProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -265,13 +265,13 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Gets a Traffic Manager profile. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager profile. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProfileData>> GetAsync(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        public async Task<Response<TrafficManagerProfileData>> GetAsync(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -283,26 +283,26 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 case 200:
                     {
-                        ProfileData value = default;
+                        TrafficManagerProfileData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProfileData.DeserializeProfileData(document.RootElement);
+                        value = TrafficManagerProfileData.DeserializeTrafficManagerProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProfileData)null, message.Response);
+                    return Response.FromValue((TrafficManagerProfileData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Gets a Traffic Manager profile. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager profile. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProfileData> Get(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        public Response<TrafficManagerProfileData> Get(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -314,19 +314,19 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 case 200:
                     {
-                        ProfileData value = default;
+                        TrafficManagerProfileData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProfileData.DeserializeProfileData(document.RootElement);
+                        value = TrafficManagerProfileData.DeserializeTrafficManagerProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProfileData)null, message.Response);
+                    return Response.FromValue((TrafficManagerProfileData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string profileName, ProfileData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string profileName, TrafficManagerProfileData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -351,14 +351,14 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Create or update a Traffic Manager profile. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager profile. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="data"> The Traffic Manager profile parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProfileData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string profileName, ProfileData data, CancellationToken cancellationToken = default)
+        public async Task<Response<TrafficManagerProfileData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string profileName, TrafficManagerProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -372,9 +372,9 @@ namespace Azure.ResourceManager.TrafficManager
                 case 200:
                 case 201:
                     {
-                        ProfileData value = default;
+                        TrafficManagerProfileData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProfileData.DeserializeProfileData(document.RootElement);
+                        value = TrafficManagerProfileData.DeserializeTrafficManagerProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -383,14 +383,14 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Create or update a Traffic Manager profile. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager profile. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="data"> The Traffic Manager profile parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProfileData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string profileName, ProfileData data, CancellationToken cancellationToken = default)
+        public Response<TrafficManagerProfileData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string profileName, TrafficManagerProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -404,9 +404,9 @@ namespace Azure.ResourceManager.TrafficManager
                 case 200:
                 case 201:
                     {
-                        ProfileData value = default;
+                        TrafficManagerProfileData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProfileData.DeserializeProfileData(document.RootElement);
+                        value = TrafficManagerProfileData.DeserializeTrafficManagerProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -435,8 +435,8 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Deletes a Traffic Manager profile. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager profile to be deleted. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
@@ -460,8 +460,8 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Deletes a Traffic Manager profile. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager profile to be deleted. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.TrafficManager
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string profileName, ProfileData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string profileName, TrafficManagerProfileData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -509,14 +509,14 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Update a Traffic Manager profile. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager profile. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="data"> The Traffic Manager profile parameters supplied to the Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProfileData>> UpdateAsync(string subscriptionId, string resourceGroupName, string profileName, ProfileData data, CancellationToken cancellationToken = default)
+        public async Task<Response<TrafficManagerProfileData>> UpdateAsync(string subscriptionId, string resourceGroupName, string profileName, TrafficManagerProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -529,9 +529,9 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 case 200:
                     {
-                        ProfileData value = default;
+                        TrafficManagerProfileData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProfileData.DeserializeProfileData(document.RootElement);
+                        value = TrafficManagerProfileData.DeserializeTrafficManagerProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -540,14 +540,14 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Update a Traffic Manager profile. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager profile. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="data"> The Traffic Manager profile parameters supplied to the Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProfileData> Update(string subscriptionId, string resourceGroupName, string profileName, ProfileData data, CancellationToken cancellationToken = default)
+        public Response<TrafficManagerProfileData> Update(string subscriptionId, string resourceGroupName, string profileName, TrafficManagerProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -560,9 +560,9 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 case 200:
                     {
-                        ProfileData value = default;
+                        TrafficManagerProfileData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProfileData.DeserializeProfileData(document.RootElement);
+                        value = TrafficManagerProfileData.DeserializeTrafficManagerProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

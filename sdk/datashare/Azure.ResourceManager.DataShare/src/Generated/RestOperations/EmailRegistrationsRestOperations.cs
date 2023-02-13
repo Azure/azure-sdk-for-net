@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataShare
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateActivateEmailRequest(AzureLocation location, EmailRegistration emailRegistration)
+        internal HttpMessage CreateActivateEmailRequest(AzureLocation location, DataShareEmailRegistration emailRegistration)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="emailRegistration"> The payload for tenant domain activation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="emailRegistration"/> is null. </exception>
-        public async Task<Response<EmailRegistration>> ActivateEmailAsync(AzureLocation location, EmailRegistration emailRegistration, CancellationToken cancellationToken = default)
+        public async Task<Response<DataShareEmailRegistration>> ActivateEmailAsync(AzureLocation location, DataShareEmailRegistration emailRegistration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(emailRegistration, nameof(emailRegistration));
 
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.DataShare
             {
                 case 200:
                     {
-                        EmailRegistration value = default;
+                        DataShareEmailRegistration value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EmailRegistration.DeserializeEmailRegistration(document.RootElement);
+                        value = DataShareEmailRegistration.DeserializeDataShareEmailRegistration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="emailRegistration"> The payload for tenant domain activation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="emailRegistration"/> is null. </exception>
-        public Response<EmailRegistration> ActivateEmail(AzureLocation location, EmailRegistration emailRegistration, CancellationToken cancellationToken = default)
+        public Response<DataShareEmailRegistration> ActivateEmail(AzureLocation location, DataShareEmailRegistration emailRegistration, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(emailRegistration, nameof(emailRegistration));
 
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.DataShare
             {
                 case 200:
                     {
-                        EmailRegistration value = default;
+                        DataShareEmailRegistration value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EmailRegistration.DeserializeEmailRegistration(document.RootElement);
+                        value = DataShareEmailRegistration.DeserializeDataShareEmailRegistration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataShare
         /// <summary> Register an email for the current tenant. </summary>
         /// <param name="location"> Location of the registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<EmailRegistration>> RegisterEmailAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<DataShareEmailRegistration>> RegisterEmailAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             using var message = CreateRegisterEmailRequest(location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -136,9 +136,9 @@ namespace Azure.ResourceManager.DataShare
             {
                 case 200:
                     {
-                        EmailRegistration value = default;
+                        DataShareEmailRegistration value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EmailRegistration.DeserializeEmailRegistration(document.RootElement);
+                        value = DataShareEmailRegistration.DeserializeDataShareEmailRegistration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataShare
         /// <summary> Register an email for the current tenant. </summary>
         /// <param name="location"> Location of the registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<EmailRegistration> RegisterEmail(AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<DataShareEmailRegistration> RegisterEmail(AzureLocation location, CancellationToken cancellationToken = default)
         {
             using var message = CreateRegisterEmailRequest(location);
             _pipeline.Send(message, cancellationToken);
@@ -157,9 +157,9 @@ namespace Azure.ResourceManager.DataShare
             {
                 case 200:
                     {
-                        EmailRegistration value = default;
+                        DataShareEmailRegistration value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EmailRegistration.DeserializeEmailRegistration(document.RootElement);
+                        value = DataShareEmailRegistration.DeserializeDataShareEmailRegistration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

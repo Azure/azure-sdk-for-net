@@ -23,14 +23,23 @@ namespace Azure.Data.AppConfiguration
 
         [TestCase("INVALID")]
         [TestCase(ReferenceValue)]
-        [TestCase(ReferenceValueWithFormatting)]
         [TestCase("")]
+        [TestCase(null)]
         public void CanRountripValue(string value)
         {
             var featureFlag = new SecretReferenceConfigurationSetting();
             featureFlag.Value = value;
 
             Assert.AreEqual(value, featureFlag.Value);
+        }
+
+        [Test]
+        public void CanFormatValue()
+        {
+            var featureFlag = new SecretReferenceConfigurationSetting();
+            featureFlag.Value = ReferenceValueWithFormatting;
+
+            Assert.AreEqual(ReferenceValue, featureFlag.Value);
         }
 
         [Test]
@@ -55,7 +64,7 @@ namespace Azure.Data.AppConfiguration
             feature.Value = ReferenceValueWithFormatting;
             _ = feature.SecretId;
 
-            Assert.AreEqual(ReferenceValueWithFormatting, feature.Value);
+            Assert.AreEqual(ReferenceValue, feature.Value);
         }
 
         [Test]

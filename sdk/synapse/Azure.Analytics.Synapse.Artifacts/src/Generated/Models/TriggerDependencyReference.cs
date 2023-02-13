@@ -6,10 +6,15 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Trigger referenced dependency. </summary>
+    /// <summary>
+    /// Trigger referenced dependency.
+    /// Please note <see cref="TriggerDependencyReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="TumblingWindowTriggerDependencyReference"/>.
+    /// </summary>
     public partial class TriggerDependencyReference : DependencyReference
     {
         /// <summary> Initializes a new instance of TriggerDependencyReference. </summary>
@@ -17,10 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="referenceTrigger"/> is null. </exception>
         public TriggerDependencyReference(TriggerReference referenceTrigger)
         {
-            if (referenceTrigger == null)
-            {
-                throw new ArgumentNullException(nameof(referenceTrigger));
-            }
+            Argument.AssertNotNull(referenceTrigger, nameof(referenceTrigger));
 
             ReferenceTrigger = referenceTrigger;
             Type = "TriggerDependencyReference";

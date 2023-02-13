@@ -25,7 +25,7 @@ namespace Azure.AI.Language.QuestionAnswering
             Optional<AnswerSpan> answerSpan = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("questions"))
+                if (property.NameEquals("questions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,12 +40,12 @@ namespace Azure.AI.Language.QuestionAnswering
                     questions = array;
                     continue;
                 }
-                if (property.NameEquals("answer"))
+                if (property.NameEquals("answer"u8))
                 {
                     answer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("confidenceScore"))
+                if (property.NameEquals("confidenceScore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.AI.Language.QuestionAnswering
                     confidenceScore = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,12 +65,12 @@ namespace Azure.AI.Language.QuestionAnswering
                     id = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     source = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +85,7 @@ namespace Azure.AI.Language.QuestionAnswering
                     metadata = dictionary;
                     continue;
                 }
-                if (property.NameEquals("dialog"))
+                if (property.NameEquals("dialog"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,7 +95,7 @@ namespace Azure.AI.Language.QuestionAnswering
                     dialog = KnowledgeBaseAnswerDialog.DeserializeKnowledgeBaseAnswerDialog(property.Value);
                     continue;
                 }
-                if (property.NameEquals("answerSpan"))
+                if (property.NameEquals("answerSpan"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

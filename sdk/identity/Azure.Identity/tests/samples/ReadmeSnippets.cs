@@ -65,5 +65,39 @@ namespace Azure.Identity.Samples
 
             #endregion
         }
+
+        [Test]
+        public void AuthenticatingWithAuthorityHost()
+        {
+            #region Snippet:AuthenticatingWithAuthorityHost
+
+            var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { AuthorityHost = AzureAuthorityHosts.AzureGovernment });
+
+            #endregion
+        }
+
+        [Test]
+        public void AuthenticatingWithManagedIdentityCredentialUserAssigned()
+        {
+            string userAssignedClientId = "";
+
+            #region Snippet:AuthenticatingWithManagedIdentityCredentialUserAssigned
+
+            var credential = new ManagedIdentityCredential(clientId: userAssignedClientId);
+            var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
+
+            #endregion
+        }
+
+        [Test]
+        public void AuthenticatingWithManagedIdentityCredentialSystemAssigned()
+        {
+            #region Snippet:AuthenticatingWithManagedIdentityCredentialSystemAssigned
+
+            var credential = new ManagedIdentityCredential();
+            var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
+
+            #endregion
+        }
     }
 }

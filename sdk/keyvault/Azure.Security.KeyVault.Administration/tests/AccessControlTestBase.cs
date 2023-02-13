@@ -35,7 +35,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 (new KeyVaultAccessControlClient(
                     Uri,
                     TestEnvironment.Credential,
-                    InstrumentClientOptions(new KeyVaultAdministrationClientOptions
+                    InstrumentClientOptions(new KeyVaultAdministrationClientOptions(ServiceVersion)
                     {
                         Diagnostics =
                         {

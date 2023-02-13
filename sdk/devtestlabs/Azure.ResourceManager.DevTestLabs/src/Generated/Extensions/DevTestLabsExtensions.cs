@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.DevTestLabs.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevTestLabs
@@ -19,41 +18,6 @@ namespace Azure.ResourceManager.DevTestLabs
     /// <summary> A class to add extension methods to Azure.ResourceManager.DevTestLabs. </summary>
     public static partial class DevTestLabsExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
-        {
-            return tenantResource.GetCachedClient((client) =>
-            {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
-            }
-            );
-        }
-
-        /// <summary>
-        /// Result of the request to list REST API operations
-        /// Request Path: /providers/Microsoft.DevTestLab/operations
-        /// Operation Id: ProviderOperations_List
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationMetadata" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OperationMetadata> GetProviderOperationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetProviderOperationsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Result of the request to list REST API operations
-        /// Request Path: /providers/Microsoft.DevTestLab/operations
-        /// Operation Id: ProviderOperations_List
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationMetadata" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OperationMetadata> GetProviderOperations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetProviderOperations(cancellationToken);
-        }
-
         private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
         {
             return subscriptionResource.GetCachedClient((client) =>
@@ -65,8 +29,16 @@ namespace Azure.ResourceManager.DevTestLabs
 
         /// <summary>
         /// List labs in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/labs
-        /// Operation Id: Labs_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/labs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=defaultStorageAccount)&apos;. </param>
@@ -74,16 +46,24 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LabResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LabResource> GetLabsAsync(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DevTestLabResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DevTestLabResource> GetDevTestLabsAsync(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetLabsAsync(expand, filter, top, orderby, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetDevTestLabsAsync(expand, filter, top, orderby, cancellationToken);
         }
 
         /// <summary>
         /// List labs in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/labs
-        /// Operation Id: Labs_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/labs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=defaultStorageAccount)&apos;. </param>
@@ -91,16 +71,24 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LabResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LabResource> GetLabs(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DevTestLabResource> GetDevTestLabs(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetLabs(expand, filter, top, orderby, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetDevTestLabs(expand, filter, top, orderby, cancellationToken);
         }
 
         /// <summary>
         /// List schedules in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/schedules
-        /// Operation Id: GlobalSchedules_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/schedules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GlobalSchedules_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
@@ -108,16 +96,24 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScheduleResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ScheduleResource> GetSchedulesAsync(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DevTestLabGlobalScheduleResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedulesAsync(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSchedulesAsync(expand, filter, top, orderby, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetDevTestLabGlobalSchedulesAsync(expand, filter, top, orderby, cancellationToken);
         }
 
         /// <summary>
         /// List schedules in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/schedules
-        /// Operation Id: GlobalSchedules_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/schedules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GlobalSchedules_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
@@ -125,10 +121,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScheduleResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ScheduleResource> GetSchedules(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedules(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSchedules(expand, filter, top, orderby, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetDevTestLabGlobalSchedules(expand, filter, top, orderby, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -140,18 +136,26 @@ namespace Azure.ResourceManager.DevTestLabs
             );
         }
 
-        /// <summary> Gets a collection of LabResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of DevTestLabResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of LabResources and their operations over a LabResource. </returns>
-        public static LabCollection GetLabs(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DevTestLabResources and their operations over a DevTestLabResource. </returns>
+        public static DevTestLabCollection GetDevTestLabs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetLabs();
+            return GetExtensionClient(resourceGroupResource).GetDevTestLabs();
         }
 
         /// <summary>
         /// Get lab.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}
-        /// Operation Id: Labs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> The name of the lab. </param>
@@ -160,15 +164,23 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<LabResource>> GetLabAsync(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<DevTestLabResource>> GetDevTestLabAsync(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetLabs().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDevTestLabs().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get lab.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}
-        /// Operation Id: Labs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> The name of the lab. </param>
@@ -177,23 +189,31 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<LabResource> GetLab(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<DevTestLabResource> GetDevTestLab(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetLabs().Get(name, expand, cancellationToken);
+            return resourceGroupResource.GetDevTestLabs().Get(name, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ScheduleResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of DevTestLabGlobalScheduleResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ScheduleResources and their operations over a ScheduleResource. </returns>
-        public static ScheduleCollection GetSchedules(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DevTestLabGlobalScheduleResources and their operations over a DevTestLabGlobalScheduleResource. </returns>
+        public static DevTestLabGlobalScheduleCollection GetDevTestLabGlobalSchedules(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetSchedules();
+            return GetExtensionClient(resourceGroupResource).GetDevTestLabGlobalSchedules();
         }
 
         /// <summary>
         /// Get schedule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}
-        /// Operation Id: GlobalSchedules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GlobalSchedules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> The name of the schedule. </param>
@@ -202,15 +222,23 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ScheduleResource>> GetScheduleAsync(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<DevTestLabGlobalScheduleResource>> GetDevTestLabGlobalScheduleAsync(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSchedules().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDevTestLabGlobalSchedules().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get schedule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}
-        /// Operation Id: GlobalSchedules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GlobalSchedules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> The name of the schedule. </param>
@@ -219,405 +247,405 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ScheduleResource> GetSchedule(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedule(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSchedules().Get(name, expand, cancellationToken);
+            return resourceGroupResource.GetDevTestLabGlobalSchedules().Get(name, expand, cancellationToken);
         }
 
-        #region LabResource
+        #region DevTestLabResource
         /// <summary>
-        /// Gets an object representing a <see cref="LabResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LabResource.CreateResourceIdentifier" /> to create a <see cref="LabResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LabResource" /> object. </returns>
-        public static LabResource GetLabResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevTestLabResource" /> object. </returns>
+        public static DevTestLabResource GetDevTestLabResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LabResource.ValidateResourceId(id);
-                return new LabResource(client, id);
+                DevTestLabResource.ValidateResourceId(id);
+                return new DevTestLabResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ScheduleResource
+        #region DevTestLabGlobalScheduleResource
         /// <summary>
-        /// Gets an object representing a <see cref="ScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScheduleResource.CreateResourceIdentifier" /> to create a <see cref="ScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabGlobalScheduleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabGlobalScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabGlobalScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScheduleResource" /> object. </returns>
-        public static ScheduleResource GetScheduleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevTestLabGlobalScheduleResource" /> object. </returns>
+        public static DevTestLabGlobalScheduleResource GetDevTestLabGlobalScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ScheduleResource.ValidateResourceId(id);
-                return new ScheduleResource(client, id);
+                DevTestLabGlobalScheduleResource.ValidateResourceId(id);
+                return new DevTestLabGlobalScheduleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LabScheduleResource
+        #region DevTestLabScheduleResource
         /// <summary>
-        /// Gets an object representing a <see cref="LabScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LabScheduleResource.CreateResourceIdentifier" /> to create a <see cref="LabScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabScheduleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LabScheduleResource" /> object. </returns>
-        public static LabScheduleResource GetLabScheduleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevTestLabScheduleResource" /> object. </returns>
+        public static DevTestLabScheduleResource GetDevTestLabScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LabScheduleResource.ValidateResourceId(id);
-                return new LabScheduleResource(client, id);
+                DevTestLabScheduleResource.ValidateResourceId(id);
+                return new DevTestLabScheduleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LabUserServicefabricScheduleResource
+        #region DevTestLabServiceFabricScheduleResource
         /// <summary>
-        /// Gets an object representing a <see cref="LabUserServicefabricScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LabUserServicefabricScheduleResource.CreateResourceIdentifier" /> to create a <see cref="LabUserServicefabricScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabServiceFabricScheduleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabServiceFabricScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabServiceFabricScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LabUserServicefabricScheduleResource" /> object. </returns>
-        public static LabUserServicefabricScheduleResource GetLabUserServicefabricScheduleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevTestLabServiceFabricScheduleResource" /> object. </returns>
+        public static DevTestLabServiceFabricScheduleResource GetDevTestLabServiceFabricScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LabUserServicefabricScheduleResource.ValidateResourceId(id);
-                return new LabUserServicefabricScheduleResource(client, id);
+                DevTestLabServiceFabricScheduleResource.ValidateResourceId(id);
+                return new DevTestLabServiceFabricScheduleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LabVirtualmachineScheduleResource
+        #region DevTestLabVmScheduleResource
         /// <summary>
-        /// Gets an object representing a <see cref="LabVirtualmachineScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LabVirtualmachineScheduleResource.CreateResourceIdentifier" /> to create a <see cref="LabVirtualmachineScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabVmScheduleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabVmScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabVmScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LabVirtualmachineScheduleResource" /> object. </returns>
-        public static LabVirtualmachineScheduleResource GetLabVirtualmachineScheduleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevTestLabVmScheduleResource" /> object. </returns>
+        public static DevTestLabVmScheduleResource GetDevTestLabVmScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LabVirtualmachineScheduleResource.ValidateResourceId(id);
-                return new LabVirtualmachineScheduleResource(client, id);
+                DevTestLabVmScheduleResource.ValidateResourceId(id);
+                return new DevTestLabVmScheduleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ArtifactSourceResource
+        #region DevTestLabArtifactSourceResource
         /// <summary>
-        /// Gets an object representing an <see cref="ArtifactSourceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ArtifactSourceResource.CreateResourceIdentifier" /> to create an <see cref="ArtifactSourceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabArtifactSourceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabArtifactSourceResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabArtifactSourceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArtifactSourceResource" /> object. </returns>
-        public static ArtifactSourceResource GetArtifactSourceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevTestLabArtifactSourceResource" /> object. </returns>
+        public static DevTestLabArtifactSourceResource GetDevTestLabArtifactSourceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ArtifactSourceResource.ValidateResourceId(id);
-                return new ArtifactSourceResource(client, id);
+                DevTestLabArtifactSourceResource.ValidateResourceId(id);
+                return new DevTestLabArtifactSourceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ArmTemplateResource
+        #region DevTestLabArmTemplateResource
         /// <summary>
-        /// Gets an object representing an <see cref="ArmTemplateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ArmTemplateResource.CreateResourceIdentifier" /> to create an <see cref="ArmTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabArmTemplateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabArmTemplateResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabArmTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArmTemplateResource" /> object. </returns>
-        public static ArmTemplateResource GetArmTemplateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevTestLabArmTemplateResource" /> object. </returns>
+        public static DevTestLabArmTemplateResource GetDevTestLabArmTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ArmTemplateResource.ValidateResourceId(id);
-                return new ArmTemplateResource(client, id);
+                DevTestLabArmTemplateResource.ValidateResourceId(id);
+                return new DevTestLabArmTemplateResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ArtifactResource
+        #region DevTestLabArtifactResource
         /// <summary>
-        /// Gets an object representing an <see cref="ArtifactResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ArtifactResource.CreateResourceIdentifier" /> to create an <see cref="ArtifactResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabArtifactResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabArtifactResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabArtifactResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArtifactResource" /> object. </returns>
-        public static ArtifactResource GetArtifactResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevTestLabArtifactResource" /> object. </returns>
+        public static DevTestLabArtifactResource GetDevTestLabArtifactResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ArtifactResource.ValidateResourceId(id);
-                return new ArtifactResource(client, id);
+                DevTestLabArtifactResource.ValidateResourceId(id);
+                return new DevTestLabArtifactResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LabCostResource
+        #region DevTestLabCostResource
         /// <summary>
-        /// Gets an object representing a <see cref="LabCostResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LabCostResource.CreateResourceIdentifier" /> to create a <see cref="LabCostResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabCostResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabCostResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabCostResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LabCostResource" /> object. </returns>
-        public static LabCostResource GetLabCostResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevTestLabCostResource" /> object. </returns>
+        public static DevTestLabCostResource GetDevTestLabCostResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LabCostResource.ValidateResourceId(id);
-                return new LabCostResource(client, id);
+                DevTestLabCostResource.ValidateResourceId(id);
+                return new DevTestLabCostResource(client, id);
             }
             );
         }
         #endregion
 
-        #region CustomImageResource
+        #region DevTestLabCustomImageResource
         /// <summary>
-        /// Gets an object representing a <see cref="CustomImageResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CustomImageResource.CreateResourceIdentifier" /> to create a <see cref="CustomImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabCustomImageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabCustomImageResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabCustomImageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CustomImageResource" /> object. </returns>
-        public static CustomImageResource GetCustomImageResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevTestLabCustomImageResource" /> object. </returns>
+        public static DevTestLabCustomImageResource GetDevTestLabCustomImageResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CustomImageResource.ValidateResourceId(id);
-                return new CustomImageResource(client, id);
+                DevTestLabCustomImageResource.ValidateResourceId(id);
+                return new DevTestLabCustomImageResource(client, id);
             }
             );
         }
         #endregion
 
-        #region FormulaResource
+        #region DevTestLabFormulaResource
         /// <summary>
-        /// Gets an object representing a <see cref="FormulaResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FormulaResource.CreateResourceIdentifier" /> to create a <see cref="FormulaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabFormulaResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabFormulaResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabFormulaResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FormulaResource" /> object. </returns>
-        public static FormulaResource GetFormulaResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevTestLabFormulaResource" /> object. </returns>
+        public static DevTestLabFormulaResource GetDevTestLabFormulaResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                FormulaResource.ValidateResourceId(id);
-                return new FormulaResource(client, id);
+                DevTestLabFormulaResource.ValidateResourceId(id);
+                return new DevTestLabFormulaResource(client, id);
             }
             );
         }
         #endregion
 
-        #region NotificationChannelResource
+        #region DevTestLabNotificationChannelResource
         /// <summary>
-        /// Gets an object representing a <see cref="NotificationChannelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NotificationChannelResource.CreateResourceIdentifier" /> to create a <see cref="NotificationChannelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabNotificationChannelResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabNotificationChannelResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabNotificationChannelResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NotificationChannelResource" /> object. </returns>
-        public static NotificationChannelResource GetNotificationChannelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevTestLabNotificationChannelResource" /> object. </returns>
+        public static DevTestLabNotificationChannelResource GetDevTestLabNotificationChannelResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NotificationChannelResource.ValidateResourceId(id);
-                return new NotificationChannelResource(client, id);
+                DevTestLabNotificationChannelResource.ValidateResourceId(id);
+                return new DevTestLabNotificationChannelResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PolicyResource
+        #region DevTestLabPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="PolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PolicyResource.CreateResourceIdentifier" /> to create a <see cref="PolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyResource" /> object. </returns>
-        public static PolicyResource GetPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevTestLabPolicyResource" /> object. </returns>
+        public static DevTestLabPolicyResource GetDevTestLabPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PolicyResource.ValidateResourceId(id);
-                return new PolicyResource(client, id);
+                DevTestLabPolicyResource.ValidateResourceId(id);
+                return new DevTestLabPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServiceRunnerResource
+        #region DevTestLabServiceRunnerResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceRunnerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceRunnerResource.CreateResourceIdentifier" /> to create a <see cref="ServiceRunnerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabServiceRunnerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabServiceRunnerResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabServiceRunnerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceRunnerResource" /> object. </returns>
-        public static ServiceRunnerResource GetServiceRunnerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevTestLabServiceRunnerResource" /> object. </returns>
+        public static DevTestLabServiceRunnerResource GetDevTestLabServiceRunnerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServiceRunnerResource.ValidateResourceId(id);
-                return new ServiceRunnerResource(client, id);
+                DevTestLabServiceRunnerResource.ValidateResourceId(id);
+                return new DevTestLabServiceRunnerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region UserResource
+        #region DevTestLabUserResource
         /// <summary>
-        /// Gets an object representing an <see cref="UserResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="UserResource.CreateResourceIdentifier" /> to create an <see cref="UserResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabUserResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabUserResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabUserResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="UserResource" /> object. </returns>
-        public static UserResource GetUserResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevTestLabUserResource" /> object. </returns>
+        public static DevTestLabUserResource GetDevTestLabUserResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                UserResource.ValidateResourceId(id);
-                return new UserResource(client, id);
+                DevTestLabUserResource.ValidateResourceId(id);
+                return new DevTestLabUserResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DiskResource
+        #region DevTestLabDiskResource
         /// <summary>
-        /// Gets an object representing a <see cref="DiskResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DiskResource.CreateResourceIdentifier" /> to create a <see cref="DiskResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabDiskResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabDiskResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabDiskResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiskResource" /> object. </returns>
-        public static DiskResource GetDiskResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevTestLabDiskResource" /> object. </returns>
+        public static DevTestLabDiskResource GetDevTestLabDiskResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DiskResource.ValidateResourceId(id);
-                return new DiskResource(client, id);
+                DevTestLabDiskResource.ValidateResourceId(id);
+                return new DevTestLabDiskResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DtlEnvironmentResource
+        #region DevTestLabEnvironmentResource
         /// <summary>
-        /// Gets an object representing a <see cref="DtlEnvironmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DtlEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="DtlEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabEnvironmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DtlEnvironmentResource" /> object. </returns>
-        public static DtlEnvironmentResource GetDtlEnvironmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevTestLabEnvironmentResource" /> object. </returns>
+        public static DevTestLabEnvironmentResource GetDevTestLabEnvironmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DtlEnvironmentResource.ValidateResourceId(id);
-                return new DtlEnvironmentResource(client, id);
+                DevTestLabEnvironmentResource.ValidateResourceId(id);
+                return new DevTestLabEnvironmentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SecretResource
+        #region DevTestLabSecretResource
         /// <summary>
-        /// Gets an object representing a <see cref="SecretResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecretResource.CreateResourceIdentifier" /> to create a <see cref="SecretResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabSecretResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabSecretResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabSecretResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecretResource" /> object. </returns>
-        public static SecretResource GetSecretResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevTestLabSecretResource" /> object. </returns>
+        public static DevTestLabSecretResource GetDevTestLabSecretResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SecretResource.ValidateResourceId(id);
-                return new SecretResource(client, id);
+                DevTestLabSecretResource.ValidateResourceId(id);
+                return new DevTestLabSecretResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServiceFabricResource
+        #region DevTestLabServiceFabricResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceFabricResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceFabricResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabServiceFabricResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabServiceFabricResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabServiceFabricResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceFabricResource" /> object. </returns>
-        public static ServiceFabricResource GetServiceFabricResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevTestLabServiceFabricResource" /> object. </returns>
+        public static DevTestLabServiceFabricResource GetDevTestLabServiceFabricResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServiceFabricResource.ValidateResourceId(id);
-                return new ServiceFabricResource(client, id);
+                DevTestLabServiceFabricResource.ValidateResourceId(id);
+                return new DevTestLabServiceFabricResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LabVirtualMachineResource
+        #region DevTestLabVmResource
         /// <summary>
-        /// Gets an object representing a <see cref="LabVirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LabVirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="LabVirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabVmResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabVmResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabVmResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LabVirtualMachineResource" /> object. </returns>
-        public static LabVirtualMachineResource GetLabVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevTestLabVmResource" /> object. </returns>
+        public static DevTestLabVmResource GetDevTestLabVmResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LabVirtualMachineResource.ValidateResourceId(id);
-                return new LabVirtualMachineResource(client, id);
+                DevTestLabVmResource.ValidateResourceId(id);
+                return new DevTestLabVmResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VirtualNetworkResource
+        #region DevTestLabVirtualNetworkResource
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DevTestLabVirtualNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DevTestLabVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="DevTestLabVirtualNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkResource" /> object. </returns>
-        public static VirtualNetworkResource GetVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DevTestLabVirtualNetworkResource" /> object. </returns>
+        public static DevTestLabVirtualNetworkResource GetDevTestLabVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VirtualNetworkResource.ValidateResourceId(id);
-                return new VirtualNetworkResource(client, id);
+                DevTestLabVirtualNetworkResource.ValidateResourceId(id);
+                return new DevTestLabVirtualNetworkResource(client, id);
             }
             );
         }

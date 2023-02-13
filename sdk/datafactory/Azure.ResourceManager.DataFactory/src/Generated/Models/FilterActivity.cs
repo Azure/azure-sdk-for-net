@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,18 +21,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="items"/> or <paramref name="condition"/> is null. </exception>
         public FilterActivity(string name, FactoryExpressionDefinition items, FactoryExpressionDefinition condition) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (items == null)
-            {
-                throw new ArgumentNullException(nameof(items));
-            }
-            if (condition == null)
-            {
-                throw new ArgumentNullException(nameof(condition));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(items, nameof(items));
+            Argument.AssertNotNull(condition, nameof(condition));
 
             Items = items;
             Condition = condition;

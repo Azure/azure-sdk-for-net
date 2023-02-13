@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllowedPorts))
             {
-                writer.WritePropertyName("allowedPorts");
+                writer.WritePropertyName("allowedPorts"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedPorts)
                 {
@@ -31,20 +31,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static SubnetSharedPublicIPAddressConfiguration DeserializeSubnetSharedPublicIPAddressConfiguration(JsonElement element)
         {
-            Optional<IList<Port>> allowedPorts = default;
+            Optional<IList<DevTestLabPort>> allowedPorts = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowedPorts"))
+                if (property.NameEquals("allowedPorts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Port> array = new List<Port>();
+                    List<DevTestLabPort> array = new List<DevTestLabPort>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Port.DeserializePort(item));
+                        array.Add(DevTestLabPort.DeserializeDevTestLabPort(item));
                     }
                     allowedPorts = array;
                     continue;

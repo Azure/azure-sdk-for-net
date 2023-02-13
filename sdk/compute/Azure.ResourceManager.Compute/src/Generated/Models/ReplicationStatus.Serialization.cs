@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IReadOnlyList<RegionalReplicationStatus>> summary = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("aggregatedState"))
+                if (property.NameEquals("aggregatedState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
                     aggregatedState = new AggregatedReplicationState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("summary"))
+                if (property.NameEquals("summary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

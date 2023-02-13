@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -19,18 +20,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="publisher"/>, <paramref name="name"/> or <paramref name="product"/> is null. </exception>
         public PurchasePlan(string publisher, string name, string product)
         {
-            if (publisher == null)
-            {
-                throw new ArgumentNullException(nameof(publisher));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (product == null)
-            {
-                throw new ArgumentNullException(nameof(product));
-            }
+            Argument.AssertNotNull(publisher, nameof(publisher));
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(product, nameof(product));
 
             Publisher = publisher;
             Name = name;

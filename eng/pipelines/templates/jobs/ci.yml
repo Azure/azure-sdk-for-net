@@ -14,12 +14,9 @@ parameters:
 - name: ServiceDirectory
   type: string
   default: not-specified
-- name: ServiceToTest
-  type: string
-  default: ''
 - name: BuildSnippets
   type: boolean
-  default: false
+  default: true
 - name: TestSetupSteps
   type: stepList
   default: []
@@ -39,11 +36,15 @@ parameters:
 - name: TestDependsOnDependency
   type: string
   default: not-specified
+- name: LimitForPullRequest
+  type: boolean
+  default: false
+
 jobs:
   - job: Build
     pool:
-      name: azsdk-pool-mms-win-2019-general
-      vmImage: MMS2019
+      name: azsdk-pool-mms-win-2022-general
+      vmImage: MMS2022
 
     variables:
       Codeql.Enabled: true
@@ -62,9 +63,11 @@ jobs:
           echo "##vso[build.addbuildtag]Scheduled"
         displayName: "Tag scheduled builds"
         condition: and(eq(variables['Build.SourceBranchName'],variables['DefaultBranch']),eq(variables['Build.Reason'],'Schedule'))
+      # Both 'Dump property properties' and 'Update package properties with dev version' serve the same purpose of generating package json.
+      # We decided to only run the later one (update properties) in all pipelines for the following reasons:
+      # 1. 'Update properties' happens after 'build', we will have more information at the 'update properties' step.
+      # 2. We did not find any usage of package json before 'update properties' in .NET, so it is safe to skip the 'dump properties' for now.
       - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
-        parameters:
-          ServiceDirectory: ${{ parameters.ServiceDirectory }}
       - pwsh: |
           $skipDevBuildNumber = "false"
           # For .NET builds the only case we want to not have dev build numbers on our packages is when it is manually queued and
@@ -79,6 +82,9 @@ jobs:
         displayName: 'Use Python 3.6'
         inputs:
           versionSpec: '3.6'
+      - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
+        parameters:
+          LogFilePath: $(Build.ArtifactStagingDirectory)/pack.binlog
       - script: >-
           dotnet pack eng/service.proj -warnaserror
           /p:SDKType=${{ parameters.SDKType }}
@@ -88,6 +94,7 @@ jobs:
           /p:Configuration=$(BuildConfiguration)
           /p:CommitSHA=$(Build.SourceVersion)
           /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
+          $(DiagnosticArguments)
         displayName: "Build and Package"
 
       - task: Powershell@2
@@ -96,11 +103,10 @@ jobs:
           arguments: >
             -ServiceDirectory ${{parameters.ServiceDirectory}}
             -OutDirectory $(Build.ArtifactStagingDirectory)/PackageInfo
-            -AddDevVersion
+            -AddDevVersion:$$(SetDevVersion)
           pwsh: true
           workingDirectory: $(Pipeline.Workspace)
         displayName: Update package properties with dev version
-        condition: and(succeeded(),eq(variables['SetDevVersion'],'true'))
 
       - template: /eng/common/pipelines/templates/steps/create-apireview.yml
         parameters:
@@ -155,42 +161,30 @@ jobs:
               Paths:
                 - "/*"
                 - "!SessionRecords"
-      - template: /eng/common/pipelines/templates/steps/validate-filename.yml
-      - template: /eng/common/pipelines/templates/steps/check-spelling.yml
-      - task: UsePythonVersion@0
-        displayName: "Use Python 3.6"
-        inputs:
-          versionSpec: "3.6"
-      - template: /eng/common/pipelines/templates/steps/verify-links.yml
-        parameters:
-          ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-            Directory: ''
-            Urls: (eng/common/scripts/get-markdown-files-from-changed-files.ps1)
-          ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-            Directory: sdk/${{ parameters.ServiceDirectory }}
-          CheckLinkGuidance: $true
+
       - template: /eng/common/pipelines/templates/steps/verify-samples.yml
         parameters:
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
+
       - template: /eng/common/pipelines/templates/steps/verify-readme.yml
         parameters:
           ScanPath: $(Build.SourcesDirectory)/sdk/${{ parameters.ServiceDirectory }}
-      - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
-        parameters:
-          SourceDirectory: $(Build.SourcesDirectory)
+
       - task: NodeTool@0
         inputs:
-          # https://github.com/nodejs/node/issues/40468
-          versionSpec: '16.6.2'
-        displayName: 'Install NodeJS'
+          versionSpec: 18.x
+        displayName: 'Use Node 18.x'
+
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
+
       - task: DotNetCoreCLI@2
         displayName: 'Install Snippet Generator Tool'
         inputs:
           command: custom
           custom: 'tool'
-          arguments: 'install --global --add-source "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json" --version "1.0.0-dev.20211119.1" "Azure.Sdk.Tools.SnippetGenerator"'
+          arguments: 'restore'
           workingDirectory: '$(Agent.BuildDirectory)'
+
       - task: PowerShell@2
         displayName: "Verify generated code"
         env:
@@ -198,11 +192,12 @@ jobs:
         inputs:
           filePath: "eng/scripts/CodeChecks.ps1"
           arguments: >
-           -ServiceDirectory ${{ parameters.ServiceToTest }}
+           -ServiceDirectory ${{ parameters.ServiceDirectory }}
            -SDKType ${{ parameters.SDKType }}
            -SpellCheckPublicApiSurface
           pwsh: true
           failOnStderr: false
+
       - script: >-
           dotnet build eng/service.proj -warnaserror
           /t:rebuild
@@ -217,59 +212,91 @@ jobs:
           /p:BuildSnippets=true
         displayName: Build snippets
         condition: and(succeeded(), eq(${{ parameters.BuildSnippets }}, true))
-      - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
-  - job: Compliance
-    pool:
-      name: azsdk-pool-mms-win-2019-general
-      vmImage: MMS2019
-    steps:
-      - template: /eng/common/pipelines/templates/steps/credscan.yml
-        parameters:
-          BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
-          ServiceDirectory: ${{ parameters.ServiceDirectory }}
-  - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
-    parameters:
-      GenerateJobName: generate_target_service_test_matrix
-      JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
-      MatrixConfigs: ${{ parameters.MatrixConfigs }}
-      MatrixFilters: ${{ parameters.MatrixFilters }}
-      MatrixReplace: ${{ parameters.MatrixReplace }}
-      CloudConfig:
-        Cloud: public
-      AdditionalParameters:
-        SDKType: ${{ parameters.SDKType }}
-        ServiceDirectory: ${{ parameters.ServiceDirectory }}
-        TestSetupSteps: ${{ parameters.TestSetupSteps }}
-        TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }} 
-  - ${{ if ne(parameters.TestDependsOnDependency, 'not-specified') }}:
+  # For some pipelines like mgmt which are tested in aggregate we want to limit the pipeline to no tests or
+  # other stages that are aggregate in nature as those are tested in another aggregate pipeline
+  - ${{ if or(ne(variables['Build.Reason'], 'PullRequest'), ne(parameters.LimitForPullRequest, 'true')) }}:
+    - job: Compliance
+      pool:
+        name: azsdk-pool-mms-win-2022-general
+        vmImage: MMS2022
+      steps:
+        - task: UsePythonVersion@0
+          displayName: "Use Python 3.6"
+          inputs:
+            versionSpec: "3.6"
+
+        - template: /eng/common/pipelines/templates/steps/validate-filename.yml
+
+        - template: /eng/common/pipelines/templates/steps/check-spelling.yml
+
+        - template: /eng/common/pipelines/templates/steps/verify-links.yml
+          parameters:
+            ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+              Directory: ''
+              Urls: (eng/common/scripts/get-markdown-files-from-changed-files.ps1)
+            ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+              Directory: sdk/${{ parameters.ServiceDirectory }}
+            CheckLinkGuidance: $true
+
+        - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
+          parameters:
+            SourceDirectory: $(Build.SourcesDirectory)
+
+        - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
+
+        - template: /eng/common/pipelines/templates/steps/credscan.yml
+          parameters:
+            BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
+            ServiceDirectory: ${{ parameters.ServiceDirectory }}
+
     - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
       parameters:
-        GenerateJobName: generate_target_dependencies_test_matrix 
+        GenerateJobName: generate_target_service_test_matrix
         JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
         MatrixConfigs: ${{ parameters.MatrixConfigs }}
         MatrixFilters: ${{ parameters.MatrixFilters }}
         MatrixReplace: ${{ parameters.MatrixReplace }}
         CloudConfig:
           Cloud: public
-        SparseCheckoutPaths: 
-          - "/*"
-          - "!/sdk/*/**/SessionRecords"
-        PreGenerationSteps: 
-        - ${{ each config in parameters.MatrixConfigs }}:
-          - template: /eng/pipelines/templates/steps/dependency.tests.yml
-            parameters:
-              TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
-              # The value for ProjectListOverrideFilePropertyName should be the same as AdditionalParameters ProjectListOverrideFilePropertyName below
-              ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
-              ProjectFilesOutputFolder: $(Build.ArtifactStagingDirectory)
-              ExcludeTargetTestProjects: true
-              ServiceDirectory: ${{ parameters.ServiceDirectory }}
-              MatrixConfigsFile: ${{ config.Path }}
         AdditionalParameters:
           SDKType: ${{ parameters.SDKType }}
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
           TestSetupSteps: ${{ parameters.TestSetupSteps }}
           TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
-          # The value for ProjectListOverrideFilePropertyName should be the same as dependency.tests.yml parameter ProjectListOverrideFilePropertyName
-          ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'                                     
+
+    - ${{ if ne(parameters.TestDependsOnDependency, 'not-specified') }}:
+      - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
+        parameters:
+          GenerateJobName: generate_target_dependencies_test_matrix
+          JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
+          MatrixConfigs: ${{ parameters.MatrixConfigs }}
+          MatrixFilters: ${{ parameters.MatrixFilters }}
+          MatrixReplace:
+            # Force UseProjectReferenceToAzureClients option to always be true because we only want to test with ProjectReference for dependency tests
+            - AdditionalTestArguments=\/p:UseProjectReferenceToAzureClients\=false/\/p:UseProjectReferenceToAzureClients\=true
+            - ${{ each matrixReplace in parameters.MatrixReplace }}:
+              - ${{ matrixReplace }}
+          CloudConfig:
+            Cloud: public
+          SparseCheckoutPaths:
+            - "/*"
+            - "!/sdk/*/**/SessionRecords/*"
+          PreGenerationSteps:
+          - ${{ each config in parameters.MatrixConfigs }}:
+            - template: /eng/pipelines/templates/steps/dependency.tests.yml
+              parameters:
+                TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
+                # The value for ProjectListOverrideFilePropertyName should be the same as AdditionalParameters ProjectListOverrideFilePropertyName below
+                ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
+                ProjectFilesOutputFolder: $(Build.ArtifactStagingDirectory)
+                ExcludeTargetTestProjects: true
+                ServiceDirectory: ${{ parameters.ServiceDirectory }}
+                MatrixConfigsFile: ${{ config.Path }}
+          AdditionalParameters:
+            SDKType: ${{ parameters.SDKType }}
+            ServiceDirectory: ${{ parameters.ServiceDirectory }}
+            TestSetupSteps: ${{ parameters.TestSetupSteps }}
+            TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+            # The value for ProjectListOverrideFilePropertyName should be the same as dependency.tests.yml parameter ProjectListOverrideFilePropertyName
+            ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'

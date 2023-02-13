@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("template"))
+                if (property.NameEquals("template"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Resources.Models
                     template = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
             }

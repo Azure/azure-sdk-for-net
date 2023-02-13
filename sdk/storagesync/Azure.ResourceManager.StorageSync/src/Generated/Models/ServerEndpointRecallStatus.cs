@@ -21,18 +21,18 @@ namespace Azure.ResourceManager.StorageSync.Models
         }
 
         /// <summary> Initializes a new instance of ServerEndpointRecallStatus. </summary>
-        /// <param name="lastUpdatedTimestamp"> Last updated timestamp. </param>
+        /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="totalRecallErrorsCount"> Total count of recall errors. </param>
         /// <param name="recallErrors"> Array of recall errors. </param>
-        internal ServerEndpointRecallStatus(DateTimeOffset? lastUpdatedTimestamp, long? totalRecallErrorsCount, IReadOnlyList<ServerEndpointRecallError> recallErrors)
+        internal ServerEndpointRecallStatus(DateTimeOffset? lastUpdatedOn, long? totalRecallErrorsCount, IReadOnlyList<ServerEndpointRecallError> recallErrors)
         {
-            LastUpdatedTimestamp = lastUpdatedTimestamp;
+            LastUpdatedOn = lastUpdatedOn;
             TotalRecallErrorsCount = totalRecallErrorsCount;
             RecallErrors = recallErrors;
         }
 
         /// <summary> Last updated timestamp. </summary>
-        public DateTimeOffset? LastUpdatedTimestamp { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> Total count of recall errors. </summary>
         public long? TotalRecallErrorsCount { get; }
         /// <summary> Array of recall errors. </summary>

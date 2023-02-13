@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of ManagedPrivateEndpointListResult. </summary>
         internal ManagedPrivateEndpointListResult()
         {
-            Value = new ChangeTrackingList<ManagedPrivateEndpointData>();
+            Value = new ChangeTrackingList<KustoManagedPrivateEndpointData>();
         }
 
         /// <summary> Initializes a new instance of ManagedPrivateEndpointListResult. </summary>
         /// <param name="value"> The list of managed private endpoints. </param>
-        internal ManagedPrivateEndpointListResult(IReadOnlyList<ManagedPrivateEndpointData> value)
+        internal ManagedPrivateEndpointListResult(IReadOnlyList<KustoManagedPrivateEndpointData> value)
         {
             Value = value;
         }
 
         /// <summary> The list of managed private endpoints. </summary>
-        public IReadOnlyList<ManagedPrivateEndpointData> Value { get; }
+        public IReadOnlyList<KustoManagedPrivateEndpointData> Value { get; }
     }
 }

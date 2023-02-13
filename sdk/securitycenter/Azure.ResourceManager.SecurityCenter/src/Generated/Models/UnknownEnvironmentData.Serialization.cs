@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("environmentType");
+            writer.WritePropertyName("environmentType"u8);
             writer.WriteStringValue(EnvironmentType.ToString());
             writer.WriteEndObject();
         }
 
         internal static UnknownEnvironmentData DeserializeUnknownEnvironmentData(JsonElement element)
         {
-            EnvironmentType environmentType = default;
+            EnvironmentType environmentType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("environmentType"))
+                if (property.NameEquals("environmentType"u8))
                 {
                     environmentType = new EnvironmentType(property.Value.GetString());
                     continue;

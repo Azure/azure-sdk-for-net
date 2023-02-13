@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -22,9 +23,10 @@ namespace Azure.Identity
         private readonly string _clientId;
         private readonly CredentialPipeline _pipeline;
         private AuthenticationRecord _record;
-        private readonly MsalConfidentialClient _client;
+        internal MsalConfidentialClient Client { get; }
         private readonly string _redirectUri;
         private readonly string _tenantId;
+        internal readonly string[] AdditionallyAllowedTenantIds;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -93,7 +95,7 @@ namespace Azure.Identity
                 _ => null
             };
 
-            _client = client ??
+            Client = client ??
                       new MsalConfidentialClient(
                           _pipeline,
                           tenantId,
@@ -101,6 +103,8 @@ namespace Azure.Identity
                           clientSecret,
                           _redirectUri,
                           options);
+
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
         }
 
         /// <summary>
@@ -136,11 +140,11 @@ namespace Azure.Identity
             try
             {
                 AccessToken token;
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
 
                 if (_record is null)
                 {
-                    AuthenticationResult result = await _client
+                    AuthenticationResult result = await Client
                         .AcquireTokenByAuthorizationCodeAsync(requestContext.Scopes, _authCode, tenantId, _redirectUri, async, cancellationToken)
                         .ConfigureAwait(false);
                     _record = new AuthenticationRecord(result, _clientId);
@@ -149,7 +153,7 @@ namespace Azure.Identity
                 }
                 else
                 {
-                    AuthenticationResult result = await _client
+                    AuthenticationResult result = await Client
                         .AcquireTokenSilentAsync(requestContext.Scopes, (AuthenticationAccount)_record, tenantId, _redirectUri, async, cancellationToken)
                         .ConfigureAwait(false);
                     token = new AccessToken(result.AccessToken, result.ExpiresOn);

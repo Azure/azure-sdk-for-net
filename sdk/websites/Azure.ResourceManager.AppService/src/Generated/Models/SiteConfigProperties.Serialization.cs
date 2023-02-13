@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (NumberOfWorkers != null)
                 {
-                    writer.WritePropertyName("numberOfWorkers");
+                    writer.WritePropertyName("numberOfWorkers"u8);
                     writer.WriteNumberValue(NumberOfWorkers.Value);
                 }
                 else
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (DefaultDocuments != null)
                 {
-                    writer.WritePropertyName("defaultDocuments");
+                    writer.WritePropertyName("defaultDocuments"u8);
                     writer.WriteStartArray();
                     foreach (var item in DefaultDocuments)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (NetFrameworkVersion != null)
                 {
-                    writer.WritePropertyName("netFrameworkVersion");
+                    writer.WritePropertyName("netFrameworkVersion"u8);
                     writer.WriteStringValue(NetFrameworkVersion);
                 }
                 else
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (PhpVersion != null)
                 {
-                    writer.WritePropertyName("phpVersion");
+                    writer.WritePropertyName("phpVersion"u8);
                     writer.WriteStringValue(PhpVersion);
                 }
                 else
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (PythonVersion != null)
                 {
-                    writer.WritePropertyName("pythonVersion");
+                    writer.WritePropertyName("pythonVersion"u8);
                     writer.WriteStringValue(PythonVersion);
                 }
                 else
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (NodeVersion != null)
                 {
-                    writer.WritePropertyName("nodeVersion");
+                    writer.WritePropertyName("nodeVersion"u8);
                     writer.WriteStringValue(NodeVersion);
                 }
                 else
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (PowerShellVersion != null)
                 {
-                    writer.WritePropertyName("powerShellVersion");
+                    writer.WritePropertyName("powerShellVersion"u8);
                     writer.WriteStringValue(PowerShellVersion);
                 }
                 else
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (LinuxFxVersion != null)
                 {
-                    writer.WritePropertyName("linuxFxVersion");
+                    writer.WritePropertyName("linuxFxVersion"u8);
                     writer.WriteStringValue(LinuxFxVersion);
                 }
                 else
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (WindowsFxVersion != null)
                 {
-                    writer.WritePropertyName("windowsFxVersion");
+                    writer.WritePropertyName("windowsFxVersion"u8);
                     writer.WriteStringValue(WindowsFxVersion);
                 }
                 else
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (IsRequestTracingEnabled != null)
                 {
-                    writer.WritePropertyName("requestTracingEnabled");
+                    writer.WritePropertyName("requestTracingEnabled"u8);
                     writer.WriteBooleanValue(IsRequestTracingEnabled.Value);
                 }
                 else
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (RequestTracingExpirationOn != null)
                 {
-                    writer.WritePropertyName("requestTracingExpirationTime");
+                    writer.WritePropertyName("requestTracingExpirationTime"u8);
                     writer.WriteStringValue(RequestTracingExpirationOn.Value, "O");
                 }
                 else
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (IsRemoteDebuggingEnabled != null)
                 {
-                    writer.WritePropertyName("remoteDebuggingEnabled");
+                    writer.WritePropertyName("remoteDebuggingEnabled"u8);
                     writer.WriteBooleanValue(IsRemoteDebuggingEnabled.Value);
                 }
                 else
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (RemoteDebuggingVersion != null)
                 {
-                    writer.WritePropertyName("remoteDebuggingVersion");
+                    writer.WritePropertyName("remoteDebuggingVersion"u8);
                     writer.WriteStringValue(RemoteDebuggingVersion);
                 }
                 else
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (IsHttpLoggingEnabled != null)
                 {
-                    writer.WritePropertyName("httpLoggingEnabled");
+                    writer.WritePropertyName("httpLoggingEnabled"u8);
                     writer.WriteBooleanValue(IsHttpLoggingEnabled.Value);
                 }
                 else
@@ -190,12 +190,12 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("httpLoggingEnabled");
                 }
             }
-            if (Optional.IsDefined(AcrUseManagedIdentityCreds))
+            if (Optional.IsDefined(UseManagedIdentityCreds))
             {
-                if (AcrUseManagedIdentityCreds != null)
+                if (UseManagedIdentityCreds != null)
                 {
-                    writer.WritePropertyName("acrUseManagedIdentityCreds");
-                    writer.WriteBooleanValue(AcrUseManagedIdentityCreds.Value);
+                    writer.WritePropertyName("acrUseManagedIdentityCreds"u8);
+                    writer.WriteBooleanValue(UseManagedIdentityCreds.Value);
                 }
                 else
                 {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (AcrUserManagedIdentityId != null)
                 {
-                    writer.WritePropertyName("acrUserManagedIdentityID");
+                    writer.WritePropertyName("acrUserManagedIdentityID"u8);
                     writer.WriteStringValue(AcrUserManagedIdentityId);
                 }
                 else
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (LogsDirectorySizeLimit != null)
                 {
-                    writer.WritePropertyName("logsDirectorySizeLimit");
+                    writer.WritePropertyName("logsDirectorySizeLimit"u8);
                     writer.WriteNumberValue(LogsDirectorySizeLimit.Value);
                 }
                 else
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (IsDetailedErrorLoggingEnabled != null)
                 {
-                    writer.WritePropertyName("detailedErrorLoggingEnabled");
+                    writer.WritePropertyName("detailedErrorLoggingEnabled"u8);
                     writer.WriteBooleanValue(IsDetailedErrorLoggingEnabled.Value);
                 }
                 else
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (PublishingUsername != null)
                 {
-                    writer.WritePropertyName("publishingUsername");
+                    writer.WritePropertyName("publishingUsername"u8);
                     writer.WriteStringValue(PublishingUsername);
                 }
                 else
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (AppSettings != null)
                 {
-                    writer.WritePropertyName("appSettings");
+                    writer.WritePropertyName("appSettings"u8);
                     writer.WriteStartArray();
                     foreach (var item in AppSettings)
                     {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (ConnectionStrings != null)
                 {
-                    writer.WritePropertyName("connectionStrings");
+                    writer.WritePropertyName("connectionStrings"u8);
                     writer.WriteStartArray();
                     foreach (var item in ConnectionStrings)
                     {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (HandlerMappings != null)
                 {
-                    writer.WritePropertyName("handlerMappings");
+                    writer.WritePropertyName("handlerMappings"u8);
                     writer.WriteStartArray();
                     foreach (var item in HandlerMappings)
                     {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (DocumentRoot != null)
                 {
-                    writer.WritePropertyName("documentRoot");
+                    writer.WritePropertyName("documentRoot"u8);
                     writer.WriteStringValue(DocumentRoot);
                 }
                 else
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (ScmType != null)
                 {
-                    writer.WritePropertyName("scmType");
+                    writer.WritePropertyName("scmType"u8);
                     writer.WriteStringValue(ScmType.Value.ToString());
                 }
                 else
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (Use32BitWorkerProcess != null)
                 {
-                    writer.WritePropertyName("use32BitWorkerProcess");
+                    writer.WritePropertyName("use32BitWorkerProcess"u8);
                     writer.WriteBooleanValue(Use32BitWorkerProcess.Value);
                 }
                 else
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (IsWebSocketsEnabled != null)
                 {
-                    writer.WritePropertyName("webSocketsEnabled");
+                    writer.WritePropertyName("webSocketsEnabled"u8);
                     writer.WriteBooleanValue(IsWebSocketsEnabled.Value);
                 }
                 else
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (IsAlwaysOn != null)
                 {
-                    writer.WritePropertyName("alwaysOn");
+                    writer.WritePropertyName("alwaysOn"u8);
                     writer.WriteBooleanValue(IsAlwaysOn.Value);
                 }
                 else
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (JavaVersion != null)
                 {
-                    writer.WritePropertyName("javaVersion");
+                    writer.WritePropertyName("javaVersion"u8);
                     writer.WriteStringValue(JavaVersion);
                 }
                 else
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (JavaContainer != null)
                 {
-                    writer.WritePropertyName("javaContainer");
+                    writer.WritePropertyName("javaContainer"u8);
                     writer.WriteStringValue(JavaContainer);
                 }
                 else
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (JavaContainerVersion != null)
                 {
-                    writer.WritePropertyName("javaContainerVersion");
+                    writer.WritePropertyName("javaContainerVersion"u8);
                     writer.WriteStringValue(JavaContainerVersion);
                 }
                 else
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (AppCommandLine != null)
                 {
-                    writer.WritePropertyName("appCommandLine");
+                    writer.WritePropertyName("appCommandLine"u8);
                     writer.WriteStringValue(AppCommandLine);
                 }
                 else
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (ManagedPipelineMode != null)
                 {
-                    writer.WritePropertyName("managedPipelineMode");
+                    writer.WritePropertyName("managedPipelineMode"u8);
                     writer.WriteStringValue(ManagedPipelineMode.Value.ToSerialString());
                 }
                 else
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (VirtualApplications != null)
                 {
-                    writer.WritePropertyName("virtualApplications");
+                    writer.WritePropertyName("virtualApplications"u8);
                     writer.WriteStartArray();
                     foreach (var item in VirtualApplications)
                     {
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (LoadBalancing != null)
                 {
-                    writer.WritePropertyName("loadBalancing");
+                    writer.WritePropertyName("loadBalancing"u8);
                     writer.WriteStringValue(LoadBalancing.Value.ToSerialString());
                 }
                 else
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (Experiments != null)
                 {
-                    writer.WritePropertyName("experiments");
+                    writer.WritePropertyName("experiments"u8);
                     writer.WriteObjectValue(Experiments);
                 }
                 else
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (Limits != null)
                 {
-                    writer.WritePropertyName("limits");
+                    writer.WritePropertyName("limits"u8);
                     writer.WriteObjectValue(Limits);
                 }
                 else
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (IsAutoHealEnabled != null)
                 {
-                    writer.WritePropertyName("autoHealEnabled");
+                    writer.WritePropertyName("autoHealEnabled"u8);
                     writer.WriteBooleanValue(IsAutoHealEnabled.Value);
                 }
                 else
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (AutoHealRules != null)
                 {
-                    writer.WritePropertyName("autoHealRules");
+                    writer.WritePropertyName("autoHealRules"u8);
                     writer.WriteObjectValue(AutoHealRules);
                 }
                 else
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (TracingOptions != null)
                 {
-                    writer.WritePropertyName("tracingOptions");
+                    writer.WritePropertyName("tracingOptions"u8);
                     writer.WriteStringValue(TracingOptions);
                 }
                 else
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (VnetName != null)
                 {
-                    writer.WritePropertyName("vnetName");
+                    writer.WritePropertyName("vnetName"u8);
                     writer.WriteStringValue(VnetName);
                 }
                 else
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (IsVnetRouteAllEnabled != null)
                 {
-                    writer.WritePropertyName("vnetRouteAllEnabled");
+                    writer.WritePropertyName("vnetRouteAllEnabled"u8);
                     writer.WriteBooleanValue(IsVnetRouteAllEnabled.Value);
                 }
                 else
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (VnetPrivatePortsCount != null)
                 {
-                    writer.WritePropertyName("vnetPrivatePortsCount");
+                    writer.WritePropertyName("vnetPrivatePortsCount"u8);
                     writer.WriteNumberValue(VnetPrivatePortsCount.Value);
                 }
                 else
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (Cors != null)
                 {
-                    writer.WritePropertyName("cors");
+                    writer.WritePropertyName("cors"u8);
                     writer.WriteObjectValue(Cors);
                 }
                 else
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (Push != null)
                 {
-                    writer.WritePropertyName("push");
+                    writer.WritePropertyName("push"u8);
                     writer.WriteObjectValue(Push);
                 }
                 else
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (ApiDefinition != null)
                 {
-                    writer.WritePropertyName("apiDefinition");
+                    writer.WritePropertyName("apiDefinition"u8);
                     writer.WriteObjectValue(ApiDefinition);
                 }
                 else
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (ApiManagementConfig != null)
                 {
-                    writer.WritePropertyName("apiManagementConfig");
+                    writer.WritePropertyName("apiManagementConfig"u8);
                     writer.WriteObjectValue(ApiManagementConfig);
                 }
                 else
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (AutoSwapSlotName != null)
                 {
-                    writer.WritePropertyName("autoSwapSlotName");
+                    writer.WritePropertyName("autoSwapSlotName"u8);
                     writer.WriteStringValue(AutoSwapSlotName);
                 }
                 else
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (IsLocalMySqlEnabled != null)
                 {
-                    writer.WritePropertyName("localMySqlEnabled");
+                    writer.WritePropertyName("localMySqlEnabled"u8);
                     writer.WriteBooleanValue(IsLocalMySqlEnabled.Value);
                 }
                 else
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (ManagedServiceIdentityId != null)
                 {
-                    writer.WritePropertyName("managedServiceIdentityId");
+                    writer.WritePropertyName("managedServiceIdentityId"u8);
                     writer.WriteNumberValue(ManagedServiceIdentityId.Value);
                 }
                 else
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (XManagedServiceIdentityId != null)
                 {
-                    writer.WritePropertyName("xManagedServiceIdentityId");
+                    writer.WritePropertyName("xManagedServiceIdentityId"u8);
                     writer.WriteNumberValue(XManagedServiceIdentityId.Value);
                 }
                 else
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (KeyVaultReferenceIdentity != null)
                 {
-                    writer.WritePropertyName("keyVaultReferenceIdentity");
+                    writer.WritePropertyName("keyVaultReferenceIdentity"u8);
                     writer.WriteStringValue(KeyVaultReferenceIdentity);
                 }
                 else
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (IPSecurityRestrictions != null)
                 {
-                    writer.WritePropertyName("ipSecurityRestrictions");
+                    writer.WritePropertyName("ipSecurityRestrictions"u8);
                     writer.WriteStartArray();
                     foreach (var item in IPSecurityRestrictions)
                     {
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (ScmIPSecurityRestrictions != null)
                 {
-                    writer.WritePropertyName("scmIpSecurityRestrictions");
+                    writer.WritePropertyName("scmIpSecurityRestrictions"u8);
                     writer.WriteStartArray();
                     foreach (var item in ScmIPSecurityRestrictions)
                     {
@@ -688,12 +688,12 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("scmIpSecurityRestrictions");
                 }
             }
-            if (Optional.IsDefined(ScmIPSecurityRestrictionsUseMain))
+            if (Optional.IsDefined(AllowIPSecurityRestrictionsForScmToUseMain))
             {
-                if (ScmIPSecurityRestrictionsUseMain != null)
+                if (AllowIPSecurityRestrictionsForScmToUseMain != null)
                 {
-                    writer.WritePropertyName("scmIpSecurityRestrictionsUseMain");
-                    writer.WriteBooleanValue(ScmIPSecurityRestrictionsUseMain.Value);
+                    writer.WritePropertyName("scmIpSecurityRestrictionsUseMain"u8);
+                    writer.WriteBooleanValue(AllowIPSecurityRestrictionsForScmToUseMain.Value);
                 }
                 else
                 {
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (IsHttp20Enabled != null)
                 {
-                    writer.WritePropertyName("http20Enabled");
+                    writer.WritePropertyName("http20Enabled"u8);
                     writer.WriteBooleanValue(IsHttp20Enabled.Value);
                 }
                 else
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (MinTlsVersion != null)
                 {
-                    writer.WritePropertyName("minTlsVersion");
+                    writer.WritePropertyName("minTlsVersion"u8);
                     writer.WriteStringValue(MinTlsVersion.Value.ToString());
                 }
                 else
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (ScmMinTlsVersion != null)
                 {
-                    writer.WritePropertyName("scmMinTlsVersion");
+                    writer.WritePropertyName("scmMinTlsVersion"u8);
                     writer.WriteStringValue(ScmMinTlsVersion.Value.ToString());
                 }
                 else
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (FtpsState != null)
                 {
-                    writer.WritePropertyName("ftpsState");
+                    writer.WritePropertyName("ftpsState"u8);
                     writer.WriteStringValue(FtpsState.Value.ToString());
                 }
                 else
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (PreWarmedInstanceCount != null)
                 {
-                    writer.WritePropertyName("preWarmedInstanceCount");
+                    writer.WritePropertyName("preWarmedInstanceCount"u8);
                     writer.WriteNumberValue(PreWarmedInstanceCount.Value);
                 }
                 else
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (FunctionAppScaleLimit != null)
                 {
-                    writer.WritePropertyName("functionAppScaleLimit");
+                    writer.WritePropertyName("functionAppScaleLimit"u8);
                     writer.WriteNumberValue(FunctionAppScaleLimit.Value);
                 }
                 else
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (HealthCheckPath != null)
                 {
-                    writer.WritePropertyName("healthCheckPath");
+                    writer.WritePropertyName("healthCheckPath"u8);
                     writer.WriteStringValue(HealthCheckPath);
                 }
                 else
@@ -788,7 +788,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (IsFunctionsRuntimeScaleMonitoringEnabled != null)
                 {
-                    writer.WritePropertyName("functionsRuntimeScaleMonitoringEnabled");
+                    writer.WritePropertyName("functionsRuntimeScaleMonitoringEnabled"u8);
                     writer.WriteBooleanValue(IsFunctionsRuntimeScaleMonitoringEnabled.Value);
                 }
                 else
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (WebsiteTimeZone != null)
                 {
-                    writer.WritePropertyName("websiteTimeZone");
+                    writer.WritePropertyName("websiteTimeZone"u8);
                     writer.WriteStringValue(WebsiteTimeZone);
                 }
                 else
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (MinimumElasticInstanceCount != null)
                 {
-                    writer.WritePropertyName("minimumElasticInstanceCount");
+                    writer.WritePropertyName("minimumElasticInstanceCount"u8);
                     writer.WriteNumberValue(MinimumElasticInstanceCount.Value);
                 }
                 else
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (AzureStorageAccounts != null)
                 {
-                    writer.WritePropertyName("azureStorageAccounts");
+                    writer.WritePropertyName("azureStorageAccounts"u8);
                     writer.WriteStartObject();
                     foreach (var item in AzureStorageAccounts)
                     {
@@ -842,7 +842,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (PublicNetworkAccess != null)
                 {
-                    writer.WritePropertyName("publicNetworkAccess");
+                    writer.WritePropertyName("publicNetworkAccess"u8);
                     writer.WriteStringValue(PublicNetworkAccess);
                 }
                 else
@@ -874,10 +874,10 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<int?> logsDirectorySizeLimit = default;
             Optional<bool?> detailedErrorLoggingEnabled = default;
             Optional<string> publishingUsername = default;
-            Optional<IList<NameValuePair>> appSettings = default;
+            Optional<IList<AppServiceNameValuePair>> appSettings = default;
             Optional<IList<ConnStringInfo>> connectionStrings = default;
             Optional<SiteMachineKey> machineKey = default;
-            Optional<IList<HandlerMapping>> handlerMappings = default;
+            Optional<IList<HttpRequestHandlerMapping>> handlerMappings = default;
             Optional<string> documentRoot = default;
             Optional<ScmType?> scmType = default;
             Optional<bool?> use32BitWorkerProcess = default;
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<ManagedPipelineMode?> managedPipelineMode = default;
             Optional<IList<VirtualApplication>> virtualApplications = default;
             Optional<SiteLoadBalancing?> loadBalancing = default;
-            Optional<Experiments> experiments = default;
+            Optional<RoutingRuleExperiments> experiments = default;
             Optional<SiteLimits> limits = default;
             Optional<bool?> autoHealEnabled = default;
             Optional<AutoHealRules> autoHealRules = default;
@@ -898,33 +898,33 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> vnetName = default;
             Optional<bool?> vnetRouteAllEnabled = default;
             Optional<int?> vnetPrivatePortsCount = default;
-            Optional<CorsSettings> cors = default;
-            Optional<PushSettings> push = default;
-            Optional<ApiDefinitionInfo> apiDefinition = default;
+            Optional<AppServiceCorsSettings> cors = default;
+            Optional<WebAppPushSettings> push = default;
+            Optional<AppServiceApiDefinitionInfo> apiDefinition = default;
             Optional<ApiManagementConfig> apiManagementConfig = default;
             Optional<string> autoSwapSlotName = default;
             Optional<bool?> localMySqlEnabled = default;
             Optional<int?> managedServiceIdentityId = default;
             Optional<int?> xManagedServiceIdentityId = default;
             Optional<string> keyVaultReferenceIdentity = default;
-            Optional<IList<IPSecurityRestriction>> ipSecurityRestrictions = default;
-            Optional<IList<IPSecurityRestriction>> scmIPSecurityRestrictions = default;
+            Optional<IList<AppServiceIPSecurityRestriction>> ipSecurityRestrictions = default;
+            Optional<IList<AppServiceIPSecurityRestriction>> scmIPSecurityRestrictions = default;
             Optional<bool?> scmIPSecurityRestrictionsUseMain = default;
             Optional<bool?> http20Enabled = default;
-            Optional<SupportedTlsVersion?> minTlsVersion = default;
-            Optional<SupportedTlsVersion?> scmMinTlsVersion = default;
-            Optional<FtpsState?> ftpsState = default;
+            Optional<AppServiceSupportedTlsVersion?> minTlsVersion = default;
+            Optional<AppServiceSupportedTlsVersion?> scmMinTlsVersion = default;
+            Optional<AppServiceFtpsState?> ftpsState = default;
             Optional<int?> preWarmedInstanceCount = default;
             Optional<int?> functionAppScaleLimit = default;
             Optional<string> healthCheckPath = default;
             Optional<bool?> functionsRuntimeScaleMonitoringEnabled = default;
             Optional<string> websiteTimeZone = default;
             Optional<int?> minimumElasticInstanceCount = default;
-            Optional<IDictionary<string, AzureStorageInfoValue>> azureStorageAccounts = default;
+            Optional<IDictionary<string, AppServiceStorageAccessInfo>> azureStorageAccounts = default;
             Optional<string> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("numberOfWorkers"))
+                if (property.NameEquals("numberOfWorkers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -934,7 +934,7 @@ namespace Azure.ResourceManager.AppService.Models
                     numberOfWorkers = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("defaultDocuments"))
+                if (property.NameEquals("defaultDocuments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.AppService.Models
                     defaultDocuments = array;
                     continue;
                 }
-                if (property.NameEquals("netFrameworkVersion"))
+                if (property.NameEquals("netFrameworkVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -959,7 +959,7 @@ namespace Azure.ResourceManager.AppService.Models
                     netFrameworkVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phpVersion"))
+                if (property.NameEquals("phpVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -969,7 +969,7 @@ namespace Azure.ResourceManager.AppService.Models
                     phpVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pythonVersion"))
+                if (property.NameEquals("pythonVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -979,7 +979,7 @@ namespace Azure.ResourceManager.AppService.Models
                     pythonVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nodeVersion"))
+                if (property.NameEquals("nodeVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -989,7 +989,7 @@ namespace Azure.ResourceManager.AppService.Models
                     nodeVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("powerShellVersion"))
+                if (property.NameEquals("powerShellVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -999,7 +999,7 @@ namespace Azure.ResourceManager.AppService.Models
                     powerShellVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("linuxFxVersion"))
+                if (property.NameEquals("linuxFxVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1009,7 +1009,7 @@ namespace Azure.ResourceManager.AppService.Models
                     linuxFxVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("windowsFxVersion"))
+                if (property.NameEquals("windowsFxVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1019,7 +1019,7 @@ namespace Azure.ResourceManager.AppService.Models
                     windowsFxVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requestTracingEnabled"))
+                if (property.NameEquals("requestTracingEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1029,7 +1029,7 @@ namespace Azure.ResourceManager.AppService.Models
                     requestTracingEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("requestTracingExpirationTime"))
+                if (property.NameEquals("requestTracingExpirationTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1039,7 +1039,7 @@ namespace Azure.ResourceManager.AppService.Models
                     requestTracingExpirationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("remoteDebuggingEnabled"))
+                if (property.NameEquals("remoteDebuggingEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1049,7 +1049,7 @@ namespace Azure.ResourceManager.AppService.Models
                     remoteDebuggingEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("remoteDebuggingVersion"))
+                if (property.NameEquals("remoteDebuggingVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1059,7 +1059,7 @@ namespace Azure.ResourceManager.AppService.Models
                     remoteDebuggingVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("httpLoggingEnabled"))
+                if (property.NameEquals("httpLoggingEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1069,7 +1069,7 @@ namespace Azure.ResourceManager.AppService.Models
                     httpLoggingEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("acrUseManagedIdentityCreds"))
+                if (property.NameEquals("acrUseManagedIdentityCreds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1079,7 +1079,7 @@ namespace Azure.ResourceManager.AppService.Models
                     acrUseManagedIdentityCreds = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("acrUserManagedIdentityID"))
+                if (property.NameEquals("acrUserManagedIdentityID"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1089,7 +1089,7 @@ namespace Azure.ResourceManager.AppService.Models
                     acrUserManagedIdentityId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("logsDirectorySizeLimit"))
+                if (property.NameEquals("logsDirectorySizeLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1099,7 +1099,7 @@ namespace Azure.ResourceManager.AppService.Models
                     logsDirectorySizeLimit = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("detailedErrorLoggingEnabled"))
+                if (property.NameEquals("detailedErrorLoggingEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1109,7 +1109,7 @@ namespace Azure.ResourceManager.AppService.Models
                     detailedErrorLoggingEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("publishingUsername"))
+                if (property.NameEquals("publishingUsername"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1119,22 +1119,22 @@ namespace Azure.ResourceManager.AppService.Models
                     publishingUsername = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appSettings"))
+                if (property.NameEquals("appSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         appSettings = null;
                         continue;
                     }
-                    List<NameValuePair> array = new List<NameValuePair>();
+                    List<AppServiceNameValuePair> array = new List<AppServiceNameValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NameValuePair.DeserializeNameValuePair(item));
+                        array.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item));
                     }
                     appSettings = array;
                     continue;
                 }
-                if (property.NameEquals("connectionStrings"))
+                if (property.NameEquals("connectionStrings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1149,7 +1149,7 @@ namespace Azure.ResourceManager.AppService.Models
                     connectionStrings = array;
                     continue;
                 }
-                if (property.NameEquals("machineKey"))
+                if (property.NameEquals("machineKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1159,22 +1159,22 @@ namespace Azure.ResourceManager.AppService.Models
                     machineKey = SiteMachineKey.DeserializeSiteMachineKey(property.Value);
                     continue;
                 }
-                if (property.NameEquals("handlerMappings"))
+                if (property.NameEquals("handlerMappings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         handlerMappings = null;
                         continue;
                     }
-                    List<HandlerMapping> array = new List<HandlerMapping>();
+                    List<HttpRequestHandlerMapping> array = new List<HttpRequestHandlerMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HandlerMapping.DeserializeHandlerMapping(item));
+                        array.Add(HttpRequestHandlerMapping.DeserializeHttpRequestHandlerMapping(item));
                     }
                     handlerMappings = array;
                     continue;
                 }
-                if (property.NameEquals("documentRoot"))
+                if (property.NameEquals("documentRoot"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1184,7 +1184,7 @@ namespace Azure.ResourceManager.AppService.Models
                     documentRoot = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scmType"))
+                if (property.NameEquals("scmType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1194,7 +1194,7 @@ namespace Azure.ResourceManager.AppService.Models
                     scmType = new ScmType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("use32BitWorkerProcess"))
+                if (property.NameEquals("use32BitWorkerProcess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1204,7 +1204,7 @@ namespace Azure.ResourceManager.AppService.Models
                     use32BitWorkerProcess = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("webSocketsEnabled"))
+                if (property.NameEquals("webSocketsEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1214,7 +1214,7 @@ namespace Azure.ResourceManager.AppService.Models
                     webSocketsEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("alwaysOn"))
+                if (property.NameEquals("alwaysOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1224,7 +1224,7 @@ namespace Azure.ResourceManager.AppService.Models
                     alwaysOn = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("javaVersion"))
+                if (property.NameEquals("javaVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1234,7 +1234,7 @@ namespace Azure.ResourceManager.AppService.Models
                     javaVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("javaContainer"))
+                if (property.NameEquals("javaContainer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1244,7 +1244,7 @@ namespace Azure.ResourceManager.AppService.Models
                     javaContainer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("javaContainerVersion"))
+                if (property.NameEquals("javaContainerVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1254,7 +1254,7 @@ namespace Azure.ResourceManager.AppService.Models
                     javaContainerVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appCommandLine"))
+                if (property.NameEquals("appCommandLine"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1264,7 +1264,7 @@ namespace Azure.ResourceManager.AppService.Models
                     appCommandLine = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managedPipelineMode"))
+                if (property.NameEquals("managedPipelineMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1274,7 +1274,7 @@ namespace Azure.ResourceManager.AppService.Models
                     managedPipelineMode = property.Value.GetString().ToManagedPipelineMode();
                     continue;
                 }
-                if (property.NameEquals("virtualApplications"))
+                if (property.NameEquals("virtualApplications"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1289,7 +1289,7 @@ namespace Azure.ResourceManager.AppService.Models
                     virtualApplications = array;
                     continue;
                 }
-                if (property.NameEquals("loadBalancing"))
+                if (property.NameEquals("loadBalancing"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1299,17 +1299,17 @@ namespace Azure.ResourceManager.AppService.Models
                     loadBalancing = property.Value.GetString().ToSiteLoadBalancing();
                     continue;
                 }
-                if (property.NameEquals("experiments"))
+                if (property.NameEquals("experiments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         experiments = null;
                         continue;
                     }
-                    experiments = Experiments.DeserializeExperiments(property.Value);
+                    experiments = RoutingRuleExperiments.DeserializeRoutingRuleExperiments(property.Value);
                     continue;
                 }
-                if (property.NameEquals("limits"))
+                if (property.NameEquals("limits"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1319,7 +1319,7 @@ namespace Azure.ResourceManager.AppService.Models
                     limits = SiteLimits.DeserializeSiteLimits(property.Value);
                     continue;
                 }
-                if (property.NameEquals("autoHealEnabled"))
+                if (property.NameEquals("autoHealEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1329,7 +1329,7 @@ namespace Azure.ResourceManager.AppService.Models
                     autoHealEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("autoHealRules"))
+                if (property.NameEquals("autoHealRules"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1339,7 +1339,7 @@ namespace Azure.ResourceManager.AppService.Models
                     autoHealRules = AutoHealRules.DeserializeAutoHealRules(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tracingOptions"))
+                if (property.NameEquals("tracingOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1349,7 +1349,7 @@ namespace Azure.ResourceManager.AppService.Models
                     tracingOptions = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vnetName"))
+                if (property.NameEquals("vnetName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1359,7 +1359,7 @@ namespace Azure.ResourceManager.AppService.Models
                     vnetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vnetRouteAllEnabled"))
+                if (property.NameEquals("vnetRouteAllEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1369,7 +1369,7 @@ namespace Azure.ResourceManager.AppService.Models
                     vnetRouteAllEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("vnetPrivatePortsCount"))
+                if (property.NameEquals("vnetPrivatePortsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1379,37 +1379,37 @@ namespace Azure.ResourceManager.AppService.Models
                     vnetPrivatePortsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("cors"))
+                if (property.NameEquals("cors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         cors = null;
                         continue;
                     }
-                    cors = CorsSettings.DeserializeCorsSettings(property.Value);
+                    cors = AppServiceCorsSettings.DeserializeAppServiceCorsSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("push"))
+                if (property.NameEquals("push"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         push = null;
                         continue;
                     }
-                    push = PushSettings.DeserializePushSettings(property.Value);
+                    push = WebAppPushSettings.DeserializeWebAppPushSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("apiDefinition"))
+                if (property.NameEquals("apiDefinition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         apiDefinition = null;
                         continue;
                     }
-                    apiDefinition = ApiDefinitionInfo.DeserializeApiDefinitionInfo(property.Value);
+                    apiDefinition = AppServiceApiDefinitionInfo.DeserializeAppServiceApiDefinitionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("apiManagementConfig"))
+                if (property.NameEquals("apiManagementConfig"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1419,7 +1419,7 @@ namespace Azure.ResourceManager.AppService.Models
                     apiManagementConfig = ApiManagementConfig.DeserializeApiManagementConfig(property.Value);
                     continue;
                 }
-                if (property.NameEquals("autoSwapSlotName"))
+                if (property.NameEquals("autoSwapSlotName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1429,7 +1429,7 @@ namespace Azure.ResourceManager.AppService.Models
                     autoSwapSlotName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("localMySqlEnabled"))
+                if (property.NameEquals("localMySqlEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1439,7 +1439,7 @@ namespace Azure.ResourceManager.AppService.Models
                     localMySqlEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("managedServiceIdentityId"))
+                if (property.NameEquals("managedServiceIdentityId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1449,7 +1449,7 @@ namespace Azure.ResourceManager.AppService.Models
                     managedServiceIdentityId = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("xManagedServiceIdentityId"))
+                if (property.NameEquals("xManagedServiceIdentityId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1459,7 +1459,7 @@ namespace Azure.ResourceManager.AppService.Models
                     xManagedServiceIdentityId = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("keyVaultReferenceIdentity"))
+                if (property.NameEquals("keyVaultReferenceIdentity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1469,37 +1469,37 @@ namespace Azure.ResourceManager.AppService.Models
                     keyVaultReferenceIdentity = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipSecurityRestrictions"))
+                if (property.NameEquals("ipSecurityRestrictions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         ipSecurityRestrictions = null;
                         continue;
                     }
-                    List<IPSecurityRestriction> array = new List<IPSecurityRestriction>();
+                    List<AppServiceIPSecurityRestriction> array = new List<AppServiceIPSecurityRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPSecurityRestriction.DeserializeIPSecurityRestriction(item));
+                        array.Add(AppServiceIPSecurityRestriction.DeserializeAppServiceIPSecurityRestriction(item));
                     }
                     ipSecurityRestrictions = array;
                     continue;
                 }
-                if (property.NameEquals("scmIpSecurityRestrictions"))
+                if (property.NameEquals("scmIpSecurityRestrictions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         scmIPSecurityRestrictions = null;
                         continue;
                     }
-                    List<IPSecurityRestriction> array = new List<IPSecurityRestriction>();
+                    List<AppServiceIPSecurityRestriction> array = new List<AppServiceIPSecurityRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPSecurityRestriction.DeserializeIPSecurityRestriction(item));
+                        array.Add(AppServiceIPSecurityRestriction.DeserializeAppServiceIPSecurityRestriction(item));
                     }
                     scmIPSecurityRestrictions = array;
                     continue;
                 }
-                if (property.NameEquals("scmIpSecurityRestrictionsUseMain"))
+                if (property.NameEquals("scmIpSecurityRestrictionsUseMain"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1509,7 +1509,7 @@ namespace Azure.ResourceManager.AppService.Models
                     scmIPSecurityRestrictionsUseMain = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("http20Enabled"))
+                if (property.NameEquals("http20Enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1519,37 +1519,37 @@ namespace Azure.ResourceManager.AppService.Models
                     http20Enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("minTlsVersion"))
+                if (property.NameEquals("minTlsVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         minTlsVersion = null;
                         continue;
                     }
-                    minTlsVersion = new SupportedTlsVersion(property.Value.GetString());
+                    minTlsVersion = new AppServiceSupportedTlsVersion(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scmMinTlsVersion"))
+                if (property.NameEquals("scmMinTlsVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         scmMinTlsVersion = null;
                         continue;
                     }
-                    scmMinTlsVersion = new SupportedTlsVersion(property.Value.GetString());
+                    scmMinTlsVersion = new AppServiceSupportedTlsVersion(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ftpsState"))
+                if (property.NameEquals("ftpsState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         ftpsState = null;
                         continue;
                     }
-                    ftpsState = new FtpsState(property.Value.GetString());
+                    ftpsState = new AppServiceFtpsState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("preWarmedInstanceCount"))
+                if (property.NameEquals("preWarmedInstanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1559,7 +1559,7 @@ namespace Azure.ResourceManager.AppService.Models
                     preWarmedInstanceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("functionAppScaleLimit"))
+                if (property.NameEquals("functionAppScaleLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1569,7 +1569,7 @@ namespace Azure.ResourceManager.AppService.Models
                     functionAppScaleLimit = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("healthCheckPath"))
+                if (property.NameEquals("healthCheckPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1579,7 +1579,7 @@ namespace Azure.ResourceManager.AppService.Models
                     healthCheckPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("functionsRuntimeScaleMonitoringEnabled"))
+                if (property.NameEquals("functionsRuntimeScaleMonitoringEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1589,7 +1589,7 @@ namespace Azure.ResourceManager.AppService.Models
                     functionsRuntimeScaleMonitoringEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("websiteTimeZone"))
+                if (property.NameEquals("websiteTimeZone"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1599,7 +1599,7 @@ namespace Azure.ResourceManager.AppService.Models
                     websiteTimeZone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("minimumElasticInstanceCount"))
+                if (property.NameEquals("minimumElasticInstanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -1609,22 +1609,22 @@ namespace Azure.ResourceManager.AppService.Models
                     minimumElasticInstanceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("azureStorageAccounts"))
+                if (property.NameEquals("azureStorageAccounts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         azureStorageAccounts = null;
                         continue;
                     }
-                    Dictionary<string, AzureStorageInfoValue> dictionary = new Dictionary<string, AzureStorageInfoValue>();
+                    Dictionary<string, AppServiceStorageAccessInfo> dictionary = new Dictionary<string, AppServiceStorageAccessInfo>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, AzureStorageInfoValue.DeserializeAzureStorageInfoValue(property0.Value));
+                        dictionary.Add(property0.Name, AppServiceStorageAccessInfo.DeserializeAppServiceStorageAccessInfo(property0.Value));
                     }
                     azureStorageAccounts = dictionary;
                     continue;
                 }
-                if (property.NameEquals("publicNetworkAccess"))
+                if (property.NameEquals("publicNetworkAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

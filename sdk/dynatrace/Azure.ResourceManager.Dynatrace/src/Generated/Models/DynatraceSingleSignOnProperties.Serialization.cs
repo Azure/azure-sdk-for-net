@@ -19,22 +19,22 @@ namespace Azure.ResourceManager.Dynatrace.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SingleSignOnState))
             {
-                writer.WritePropertyName("singleSignOnState");
+                writer.WritePropertyName("singleSignOnState"u8);
                 writer.WriteStringValue(SingleSignOnState.Value.ToString());
             }
             if (Optional.IsDefined(EnterpriseAppId))
             {
-                writer.WritePropertyName("enterpriseAppId");
+                writer.WritePropertyName("enterpriseAppId"u8);
                 writer.WriteStringValue(EnterpriseAppId.Value);
             }
             if (Optional.IsDefined(SingleSignOnUri))
             {
-                writer.WritePropertyName("singleSignOnUrl");
+                writer.WritePropertyName("singleSignOnUrl"u8);
                 writer.WriteStringValue(SingleSignOnUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(AadDomains))
             {
-                writer.WritePropertyName("aadDomains");
+                writer.WritePropertyName("aadDomains"u8);
                 writer.WriteStartArray();
                 foreach (var item in AadDomains)
                 {
@@ -47,24 +47,24 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceSingleSignOnProperties DeserializeDynatraceSingleSignOnProperties(JsonElement element)
         {
-            Optional<SingleSignOnState> singleSignOnState = default;
+            Optional<DynatraceSingleSignOnState> singleSignOnState = default;
             Optional<Guid> enterpriseAppId = default;
             Optional<Uri> singleSignOnUrl = default;
             Optional<IList<string>> aadDomains = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<DynatraceProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("singleSignOnState"))
+                if (property.NameEquals("singleSignOnState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    singleSignOnState = new SingleSignOnState(property.Value.GetString());
+                    singleSignOnState = new DynatraceSingleSignOnState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("enterpriseAppId"))
+                if (property.NameEquals("enterpriseAppId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     enterpriseAppId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("singleSignOnUrl"))
+                if (property.NameEquals("singleSignOnUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     singleSignOnUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("aadDomains"))
+                if (property.NameEquals("aadDomains"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,14 +99,14 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     aadDomains = array;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new DynatraceProvisioningState(property.Value.GetString());
                     continue;
                 }
             }

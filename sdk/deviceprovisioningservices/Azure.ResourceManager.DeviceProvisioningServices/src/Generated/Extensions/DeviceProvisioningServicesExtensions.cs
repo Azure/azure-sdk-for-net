@@ -30,60 +30,92 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 
         /// <summary>
         /// List all the provisioning services for a given subscription id.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/provisioningServices
-        /// Operation Id: IotDpsResource_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Devices/provisioningServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotDpsResource_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProvisioningServiceDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ProvisioningServiceDescriptionResource> GetProvisioningServiceDescriptionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DeviceProvisioningServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DeviceProvisioningServiceResource> GetDeviceProvisioningServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetProvisioningServiceDescriptionsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetDeviceProvisioningServicesAsync(cancellationToken);
         }
 
         /// <summary>
         /// List all the provisioning services for a given subscription id.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/provisioningServices
-        /// Operation Id: IotDpsResource_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Devices/provisioningServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotDpsResource_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProvisioningServiceDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ProvisioningServiceDescriptionResource> GetProvisioningServiceDescriptions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DeviceProvisioningServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DeviceProvisioningServiceResource> GetDeviceProvisioningServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetProvisioningServiceDescriptions(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetDeviceProvisioningServices(cancellationToken);
         }
 
         /// <summary>
         /// Check if a provisioning service name is available. This will validate if the name is syntactically valid and if the name is usable
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkProvisioningServiceNameAvailability
-        /// Operation Id: IotDpsResource_CheckProvisioningServiceNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkProvisioningServiceNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotDpsResource_CheckProvisioningServiceNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="arguments"> Set the name parameter in the OperationInputs structure to the name of the provisioning service to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the provisioning service to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="arguments"/> is null. </exception>
-        public static async Task<Response<NameAvailabilityInfo>> CheckProvisioningServiceNameAvailabilityIotDpsResourceAsync(this SubscriptionResource subscriptionResource, OperationInputs arguments, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<DeviceProvisioningServicesNameAvailabilityResult>> CheckDeviceProvisioningServicesNameAvailabilityAsync(this SubscriptionResource subscriptionResource, DeviceProvisioningServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(arguments, nameof(arguments));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckProvisioningServiceNameAvailabilityIotDpsResourceAsync(arguments, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckDeviceProvisioningServicesNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Check if a provisioning service name is available. This will validate if the name is syntactically valid and if the name is usable
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkProvisioningServiceNameAvailability
-        /// Operation Id: IotDpsResource_CheckProvisioningServiceNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkProvisioningServiceNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotDpsResource_CheckProvisioningServiceNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="arguments"> Set the name parameter in the OperationInputs structure to the name of the provisioning service to check. </param>
+        /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the provisioning service to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="arguments"/> is null. </exception>
-        public static Response<NameAvailabilityInfo> CheckProvisioningServiceNameAvailabilityIotDpsResource(this SubscriptionResource subscriptionResource, OperationInputs arguments, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<DeviceProvisioningServicesNameAvailabilityResult> CheckDeviceProvisioningServicesNameAvailability(this SubscriptionResource subscriptionResource, DeviceProvisioningServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(arguments, nameof(arguments));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckProvisioningServiceNameAvailabilityIotDpsResource(arguments, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckDeviceProvisioningServicesNameAvailability(content, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -95,18 +127,26 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             );
         }
 
-        /// <summary> Gets a collection of ProvisioningServiceDescriptionResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of DeviceProvisioningServiceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ProvisioningServiceDescriptionResources and their operations over a ProvisioningServiceDescriptionResource. </returns>
-        public static ProvisioningServiceDescriptionCollection GetProvisioningServiceDescriptions(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DeviceProvisioningServiceResources and their operations over a DeviceProvisioningServiceResource. </returns>
+        public static DeviceProvisioningServiceCollection GetDeviceProvisioningServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetProvisioningServiceDescriptions();
+            return GetExtensionClient(resourceGroupResource).GetDeviceProvisioningServices();
         }
 
         /// <summary>
         /// Get the metadata of the provisioning service without SAS keys.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}
-        /// Operation Id: IotDpsResource_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotDpsResource_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
@@ -114,15 +154,23 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ProvisioningServiceDescriptionResource>> GetProvisioningServiceDescriptionAsync(this ResourceGroupResource resourceGroupResource, string provisioningServiceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DeviceProvisioningServiceResource>> GetDeviceProvisioningServiceAsync(this ResourceGroupResource resourceGroupResource, string provisioningServiceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetProvisioningServiceDescriptions().GetAsync(provisioningServiceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDeviceProvisioningServices().GetAsync(provisioningServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the metadata of the provisioning service without SAS keys.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}
-        /// Operation Id: IotDpsResource_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotDpsResource_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
@@ -130,63 +178,63 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ProvisioningServiceDescriptionResource> GetProvisioningServiceDescription(this ResourceGroupResource resourceGroupResource, string provisioningServiceName, CancellationToken cancellationToken = default)
+        public static Response<DeviceProvisioningServiceResource> GetDeviceProvisioningService(this ResourceGroupResource resourceGroupResource, string provisioningServiceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetProvisioningServiceDescriptions().Get(provisioningServiceName, cancellationToken);
+            return resourceGroupResource.GetDeviceProvisioningServices().Get(provisioningServiceName, cancellationToken);
         }
 
-        #region CertificateResponseResource
+        #region DeviceProvisioningServicesCertificateResource
         /// <summary>
-        /// Gets an object representing a <see cref="CertificateResponseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CertificateResponseResource.CreateResourceIdentifier" /> to create a <see cref="CertificateResponseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DeviceProvisioningServicesCertificateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceProvisioningServicesCertificateResource.CreateResourceIdentifier" /> to create a <see cref="DeviceProvisioningServicesCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CertificateResponseResource" /> object. </returns>
-        public static CertificateResponseResource GetCertificateResponseResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeviceProvisioningServicesCertificateResource" /> object. </returns>
+        public static DeviceProvisioningServicesCertificateResource GetDeviceProvisioningServicesCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CertificateResponseResource.ValidateResourceId(id);
-                return new CertificateResponseResource(client, id);
+                DeviceProvisioningServicesCertificateResource.ValidateResourceId(id);
+                return new DeviceProvisioningServicesCertificateResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ProvisioningServiceDescriptionResource
+        #region DeviceProvisioningServiceResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProvisioningServiceDescriptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProvisioningServiceDescriptionResource.CreateResourceIdentifier" /> to create a <see cref="ProvisioningServiceDescriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DeviceProvisioningServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceProvisioningServiceResource.CreateResourceIdentifier" /> to create a <see cref="DeviceProvisioningServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProvisioningServiceDescriptionResource" /> object. </returns>
-        public static ProvisioningServiceDescriptionResource GetProvisioningServiceDescriptionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeviceProvisioningServiceResource" /> object. </returns>
+        public static DeviceProvisioningServiceResource GetDeviceProvisioningServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ProvisioningServiceDescriptionResource.ValidateResourceId(id);
-                return new ProvisioningServiceDescriptionResource(client, id);
+                DeviceProvisioningServiceResource.ValidateResourceId(id);
+                return new DeviceProvisioningServiceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region GroupIdInformationResource
+        #region DeviceProvisioningServicesPrivateLinkResource
         /// <summary>
-        /// Gets an object representing a <see cref="GroupIdInformationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GroupIdInformationResource.CreateResourceIdentifier" /> to create a <see cref="GroupIdInformationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DeviceProvisioningServicesPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceProvisioningServicesPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="DeviceProvisioningServicesPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GroupIdInformationResource" /> object. </returns>
-        public static GroupIdInformationResource GetGroupIdInformationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeviceProvisioningServicesPrivateLinkResource" /> object. </returns>
+        public static DeviceProvisioningServicesPrivateLinkResource GetDeviceProvisioningServicesPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                GroupIdInformationResource.ValidateResourceId(id);
-                return new GroupIdInformationResource(client, id);
+                DeviceProvisioningServicesPrivateLinkResource.ValidateResourceId(id);
+                return new DeviceProvisioningServicesPrivateLinkResource(client, id);
             }
             );
         }

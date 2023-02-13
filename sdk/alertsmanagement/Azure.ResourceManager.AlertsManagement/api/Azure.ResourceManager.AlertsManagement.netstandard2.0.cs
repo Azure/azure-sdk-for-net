@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AlertsManagement
     public partial class AlertProcessingRuleData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public AlertProcessingRuleData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertProcessingRuleProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleProperties Properties { get { throw null; } set { } }
     }
     public partial class AlertProcessingRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -55,7 +55,9 @@ namespace Azure.ResourceManager.AlertsManagement
         public static Azure.ResourceManager.AlertsManagement.ServiceAlertResource GetServiceAlertResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AlertsManagement.ServiceAlertCollection GetServiceAlerts(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
         public static Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary> GetServiceAlertSummary(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = default(bool?), string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert? monitorService = default(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert?), Azure.ResourceManager.AlertsManagement.Models.MonitorCondition? monitorCondition = default(Azure.ResourceManager.AlertsManagement.Models.MonitorCondition?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? severity = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState? alertState = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState?), string alertRule = null, Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter? timeRange = default(Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter?), string customTimeRange = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary> GetServiceAlertSummary(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.AlertsManagement.Models.SubscriptionGetServiceAlertSummaryOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary>> GetServiceAlertSummaryAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = default(bool?), string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert? monitorService = default(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert?), Azure.ResourceManager.AlertsManagement.Models.MonitorCondition? monitorCondition = default(Azure.ResourceManager.AlertsManagement.Models.MonitorCondition?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? severity = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState? alertState = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState?), string alertRule = null, Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter? timeRange = default(Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter?), string customTimeRange = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSummary>> GetServiceAlertSummaryAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.AlertsManagement.Models.SubscriptionGetServiceAlertSummaryOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.AlertsManagement.SmartGroupResource> GetSmartGroup(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Guid smartGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.SmartGroupResource>> GetSmartGroupAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Guid smartGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AlertsManagement.SmartGroupResource GetSmartGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -67,7 +69,9 @@ namespace Azure.ResourceManager.AlertsManagement
         public virtual Azure.Response<bool> Exists(System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource> Get(System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AlertsManagement.ServiceAlertResource> GetAll(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AlertsManagement.ServiceAlertResource> GetAll(string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert? monitorService = default(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert?), Azure.ResourceManager.AlertsManagement.Models.MonitorCondition? monitorCondition = default(Azure.ResourceManager.AlertsManagement.Models.MonitorCondition?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? severity = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState? alertState = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState?), string alertRule = null, string smartGroupId = null, bool? includeContext = default(bool?), bool? includeEgressConfig = default(bool?), long? pageCount = default(long?), Azure.ResourceManager.AlertsManagement.Models.ListServiceAlertsSortByField? sortBy = default(Azure.ResourceManager.AlertsManagement.Models.ListServiceAlertsSortByField?), Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder? sortOrder = default(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder?), string select = null, Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter? timeRange = default(Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter?), string customTimeRange = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AlertsManagement.ServiceAlertResource> GetAllAsync(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AlertsManagement.ServiceAlertResource> GetAllAsync(string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert? monitorService = default(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert?), Azure.ResourceManager.AlertsManagement.Models.MonitorCondition? monitorCondition = default(Azure.ResourceManager.AlertsManagement.Models.MonitorCondition?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? severity = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState? alertState = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState?), string alertRule = null, string smartGroupId = null, bool? includeContext = default(bool?), bool? includeEgressConfig = default(bool?), long? pageCount = default(long?), Azure.ResourceManager.AlertsManagement.Models.ListServiceAlertsSortByField? sortBy = default(Azure.ResourceManager.AlertsManagement.Models.ListServiceAlertsSortByField?), Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder? sortOrder = default(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder?), string select = null, Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter? timeRange = default(Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter?), string customTimeRange = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource>> GetAsync(System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AlertsManagement.ServiceAlertResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AlertsManagement.ServiceAlertResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -99,7 +103,9 @@ namespace Azure.ResourceManager.AlertsManagement
         public virtual Azure.Response<bool> Exists(System.Guid smartGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(System.Guid smartGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.SmartGroupResource> Get(System.Guid smartGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AlertsManagement.SmartGroupResource> GetAll(Azure.ResourceManager.AlertsManagement.Models.SmartGroupCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AlertsManagement.SmartGroupResource> GetAll(string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert? monitorService = default(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert?), Azure.ResourceManager.AlertsManagement.Models.MonitorCondition? monitorCondition = default(Azure.ResourceManager.AlertsManagement.Models.MonitorCondition?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? severity = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState? smartGroupState = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState?), Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter? timeRange = default(Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter?), long? pageCount = default(long?), Azure.ResourceManager.AlertsManagement.Models.SmartGroupsSortByField? sortBy = default(Azure.ResourceManager.AlertsManagement.Models.SmartGroupsSortByField?), Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder? sortOrder = default(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AlertsManagement.SmartGroupResource> GetAllAsync(Azure.ResourceManager.AlertsManagement.Models.SmartGroupCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AlertsManagement.SmartGroupResource> GetAllAsync(string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert? monitorService = default(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert?), Azure.ResourceManager.AlertsManagement.Models.MonitorCondition? monitorCondition = default(Azure.ResourceManager.AlertsManagement.Models.MonitorCondition?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? severity = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity?), Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState? smartGroupState = default(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState?), Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter? timeRange = default(Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter?), long? pageCount = default(long?), Azure.ResourceManager.AlertsManagement.Models.SmartGroupsSortByField? sortBy = default(Azure.ResourceManager.AlertsManagement.Models.SmartGroupsSortByField?), Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder? sortOrder = default(Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.SmartGroupResource>> GetAsync(System.Guid smartGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AlertsManagement.SmartGroupResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AlertsManagement.SmartGroupResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -141,14 +147,14 @@ namespace Azure.ResourceManager.AlertsManagement
 }
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class AddActionGroups : Azure.ResourceManager.AlertsManagement.Models.AlertProcessingAction
+    public abstract partial class AlertProcessingRuleAction
     {
-        public AddActionGroups(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> actionGroupIds) { }
-        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ActionGroupIds { get { throw null; } }
+        protected AlertProcessingRuleAction() { }
     }
-    public abstract partial class AlertProcessingAction
+    public partial class AlertProcessingRuleAddGroupsAction : Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleAction
     {
-        protected AlertProcessingAction() { }
+        public AlertProcessingRuleAddGroupsAction(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> actionGroupIds) { }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ActionGroupIds { get { throw null; } }
     }
     public partial class AlertProcessingRuleCondition
     {
@@ -215,11 +221,25 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public bool? IsEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
+    public partial class AlertProcessingRuleProperties
+    {
+        public AlertProcessingRuleProperties(System.Collections.Generic.IEnumerable<string> scopes, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleAction> actions) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleAction> Actions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleCondition> Conditions { get { throw null; } }
+        public string Description { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleSchedule Schedule { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
+    }
     public abstract partial class AlertProcessingRuleRecurrence
     {
         protected AlertProcessingRuleRecurrence() { }
         public System.TimeSpan? EndOn { get { throw null; } set { } }
         public System.TimeSpan? StartOn { get { throw null; } set { } }
+    }
+    public partial class AlertProcessingRuleRemoveAllGroupsAction : Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleAction
+    {
+        public AlertProcessingRuleRemoveAllGroupsAction() { }
     }
     public partial class AlertProcessingRuleSchedule
     {
@@ -386,10 +406,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static bool operator !=(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert left, Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RemoveAllActionGroups : Azure.ResourceManager.AlertsManagement.Models.AlertProcessingAction
-    {
-        public RemoveAllActionGroups() { }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RetrievedInformationIdentifier : System.IEquatable<Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier>
     {
@@ -406,6 +422,27 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier left, Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ServiceAlertCollectionGetAllOptions
+    {
+        public ServiceAlertCollectionGetAllOptions() { }
+        public string AlertRule { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState? AlertState { get { throw null; } set { } }
+        public string CustomTimeRange { get { throw null; } set { } }
+        public bool? IncludeContext { get { throw null; } set { } }
+        public bool? IncludeEgressConfig { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.MonitorCondition? MonitorCondition { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert? MonitorService { get { throw null; } set { } }
+        public long? PageCount { get { throw null; } set { } }
+        public string Select { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? Severity { get { throw null; } set { } }
+        public string SmartGroupId { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.ListServiceAlertsSortByField? SortBy { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder? SortOrder { get { throw null; } set { } }
+        public string TargetResource { get { throw null; } set { } }
+        public string TargetResourceGroup { get { throw null; } set { } }
+        public string TargetResourceType { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter? TimeRange { get { throw null; } set { } }
     }
     public partial class ServiceAlertEssentials
     {
@@ -472,16 +509,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public ServiceAlertModificationProperties() { }
         public System.Guid? AlertId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationItemInfo> Modifications { get { throw null; } }
-    }
-    public partial class ServiceAlertProcessingRuleProperties
-    {
-        public ServiceAlertProcessingRuleProperties(System.Collections.Generic.IEnumerable<string> scopes, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingAction> actions) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingAction> Actions { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleCondition> Conditions { get { throw null; } }
-        public string Description { get { throw null; } set { } }
-        public bool? IsEnabled { get { throw null; } set { } }
-        public Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleSchedule Schedule { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
     }
     public partial class ServiceAlertProperties
     {
@@ -576,6 +603,21 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public long? Count { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
+    public partial class SmartGroupCollectionGetAllOptions
+    {
+        public SmartGroupCollectionGetAllOptions() { }
+        public Azure.ResourceManager.AlertsManagement.Models.MonitorCondition? MonitorCondition { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert? MonitorService { get { throw null; } set { } }
+        public long? PageCount { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? Severity { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState? SmartGroupState { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.SmartGroupsSortByField? SortBy { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.AlertsManagementQuerySortOrder? SortOrder { get { throw null; } set { } }
+        public string TargetResource { get { throw null; } set { } }
+        public string TargetResourceGroup { get { throw null; } set { } }
+        public string TargetResourceType { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter? TimeRange { get { throw null; } set { } }
+    }
     public partial class SmartGroupModification : Azure.ResourceManager.Models.ResourceData
     {
         public SmartGroupModification() { }
@@ -645,6 +687,22 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static implicit operator Azure.ResourceManager.AlertsManagement.Models.SmartGroupState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AlertsManagement.Models.SmartGroupState left, Azure.ResourceManager.AlertsManagement.Models.SmartGroupState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class SubscriptionGetServiceAlertSummaryOptions
+    {
+        public SubscriptionGetServiceAlertSummaryOptions(Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField groupby) { }
+        public string AlertRule { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState? AlertState { get { throw null; } set { } }
+        public string CustomTimeRange { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.AlertsSummaryGroupByField Groupby { get { throw null; } }
+        public bool? IncludeSmartGroupsCount { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.MonitorCondition? MonitorCondition { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert? MonitorService { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertSeverity? Severity { get { throw null; } set { } }
+        public string TargetResource { get { throw null; } set { } }
+        public string TargetResourceGroup { get { throw null; } set { } }
+        public string TargetResourceType { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter? TimeRange { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TimeRangeFilter : System.IEquatable<Azure.ResourceManager.AlertsManagement.Models.TimeRangeFilter>

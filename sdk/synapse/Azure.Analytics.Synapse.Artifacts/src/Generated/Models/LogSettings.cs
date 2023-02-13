@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="logLocationSettings"/> is null. </exception>
         public LogSettings(LogLocationSettings logLocationSettings)
         {
-            if (logLocationSettings == null)
-            {
-                throw new ArgumentNullException(nameof(logLocationSettings));
-            }
+            Argument.AssertNotNull(logLocationSettings, nameof(logLocationSettings));
 
             LogLocationSettings = logLocationSettings;
         }

@@ -12,17 +12,17 @@ Use the client library for Azure Service Bus to:
 
 - Implement complex workflows: message sessions support scenarios that require message ordering or message deferral.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/servicebus/Azure.Messaging.ServiceBus/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) | [API reference documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus) | [Product documentation](https://docs.microsoft.com/azure/service-bus/) | [Migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/MigrationGuide.md)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/servicebus/Azure.Messaging.ServiceBus/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) | [API reference documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus) | [Product documentation](https://docs.microsoft.com/azure/service-bus/) | [Migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/MigrationGuide.md) | [Troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/TROUBLESHOOTING.md)
 
 ## Getting started
 
 ### Prerequisites
 
-- **Microsoft Azure Subscription:** To use Azure services, including Azure Service Bus, you'll need a subscription. If you do not have an existing Azure account, you may sign up for a free trial or use your MSDN subscriber benefits when you [create an account](https://account.windowsazure.com/Home/Index).
+- **Microsoft Azure Subscription:** To use Azure services, including Azure Service Bus, you'll need a subscription. If you do not have an existing Azure account, you may sign up for a free trial or use your MSDN subscriber benefits when you [create an account](https://azure.microsoft.com/account).
 
 - **Service Bus namespace:** To interact with Azure Service Bus, you'll also need to have a namespace available. If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [creating a Service Bus namespace using the Azure portal](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-create-namespace-portal). There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create a Service bus entity.
 
-- **C# 8.0:** The Azure Service Bus client library makes use of new features that were introduced in C# 8.0.  In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.   
+- **C# 8.0:** The Azure Service Bus client library makes use of new features that were introduced in C# 8.0.  In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.
 
   Visual Studio users wishing to take full advantage of the C# 8.0 syntax will need to use Visual Studio 2019 or later.  Visual Studio 2019, including the free Community edition, can be downloaded [here](https://visualstudio.microsoft.com).  Users of Visual Studio 2017 can take advantage of the C# 8 syntax by making use of the [Microsoft.Net.Compilers NuGet package](https://www.nuget.org/packages/Microsoft.Net.Compilers/) and setting the language version, though the editing experience may not be ideal.
 
@@ -51,12 +51,12 @@ Once you have a connection string, you can authenticate your client with it.
 ```C# Snippet:ServiceBusAuthConnString
 // Create a ServiceBusClient that will authenticate using a connection string
 string connectionString = "<connection_string>";
-ServiceBusClient client = new ServiceBusClient(connectionString);
+await using var client = new ServiceBusClient(connectionString);
 ```
 
 To see how to authenticate using Azure.Identity, view this [example](#authenticating-with-azureidentity).
 
-To see how to initiate the connection with a custom endpoint, view this [example](#initiating-the-connection-with-a-custom-endpoint).
+To see how to initiate the connection with a custom endpoint, view this [sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample13_AdvancedConfiguration.md#initiating-the-connection-with-a-custom-endpoint).
 
 ### ASP.NET Core
 
@@ -137,7 +137,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 ### Additional concepts
 
 <!-- CLIENT COMMON BAR -->
-[Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) | [Handling failures](#exception-handling) | [Diagnostics](#logging-and-diagnostics) |
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) | [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
 [Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) 
 <!-- CLIENT COMMON BAR -->
 
@@ -415,7 +415,7 @@ The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/mai
 ```C# Snippet:ServiceBusAuthAAD
 // Create a ServiceBusClient that will authenticate through Active Directory
 string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
-ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 ```
 
 ### Working with Sessions
@@ -427,47 +427,7 @@ ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new Defa
 
 ## Troubleshooting
 
-### Exception handling
-
-#### Service Bus Exception
-
-A `ServiceBusException` is triggered when an operation specific to Service Bus has encountered an issue, including both errors within the service and specific to the client.  The exception includes some contextual information to assist in understanding the context of the error and its relative severity.  These are:
-
-- `IsTransient` : This identifies whether or not the exception is considered recoverable.  In the case where it was deemed transient, the appropriate retry policy has already been applied and retries were unsuccessful.
-
-- `Reason` : Provides a set of well-known reasons for the failure that help to categorize and clarify the root cause.  These are intended to allow for applying exception filtering and other logic where inspecting the text of an exception message wouldn't be ideal.   Some key failure reasons are:
-
-  - **Service Timeout** : This indicates that the Service Bus service did not respond to an operation within the expected amount of time.  This may have been caused by a transient network issue or service problem.  The Service Bus service may or may not have successfully completed the request; the status is not known.  It is recommended to attempt to verify the current state and retry if necessary.
-
-  - **Message Lock Lost** : This can occur if the processing takes longer than the lock duration specified at the entity level for a message. If this error occurs consistently, it may be worth increasing the message lock duration. Otherwise, callers can renew the message lock while they are processing the message to ensure that this error doesn't occur.
-
-  - **Messaging Entity Not Found**: A Service Bus resource, such as a queue, topic, or subscription could not be found by the Service Bus service. This may indicate that it has been deleted from the service or that there is an issue with the Service Bus service itself.
-
-Reacting to a specific failure reason for the `ServiceBusException` can be accomplished in several ways, such as by applying an exception filter clause as part of the `catch` block:
-
-```C# Snippet:ServiceBusExceptionFailureReasonUsage
-try
-{
-    // Receive messages using the receiver client
-}
-catch (ServiceBusException ex) when
-    (ex.Reason == ServiceBusFailureReason.ServiceTimeout)
-{
-    // Take action based on a service timeout
-}
-```
-
-#### Other exceptions
-
-For detailed information about the failures represented by the `ServiceBusException` and other exceptions that may occur, please refer to [Service Bus messaging exceptions](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messaging-exceptions).
-
-### Logging and diagnostics
-
-The Service Bus client library is fully instrumented for logging information at various levels of detail using the .NET `EventSource` to emit information.  Logging is performed for each operation and follows the pattern of marking the starting point of the operation and either it's completion or exceptions encountered.  Additional information that may offer insight is also logged in the context of the associated operation.
-
-The Service Bus client logs are available to any `EventListener` by opting into the source named "Azure-Messaging-ServiceBus" or opting into all sources that have the trait "AzureEventSource".  To make capturing logs from the Azure client libraries easier, the `Azure.Core` library used by Service Bus offers an `AzureEventSourceListener`.  More information can be found in the [Azure.Core Diagnostics sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging).
-
-The Service Bus client library is also instrumented for distributed tracing using Application Insights or OpenTelemetry.  More information can be found in the [Azure.Core Diagnostics sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#distributed-tracing).
+Please refer to the [Service Bus Troubleshooting Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/TROUBLESHOOTING.md).
 
 ## Next steps
 

@@ -19,27 +19,27 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// frontend IP address is supported. Each load balancer configuration must
     /// have exactly one frontend IP configuration.
     /// </summary>
-    public partial class LoadBalancerFrontendIPConfiguration
+    public partial class LoadBalancerFrontendIpConfiguration
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// LoadBalancerFrontendIPConfiguration class.
+        /// LoadBalancerFrontendIpConfiguration class.
         /// </summary>
-        public LoadBalancerFrontendIPConfiguration()
+        public LoadBalancerFrontendIpConfiguration()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// LoadBalancerFrontendIPConfiguration class.
+        /// LoadBalancerFrontendIpConfiguration class.
         /// </summary>
         /// <param name="name">The name of the resource that is unique within
         /// the set of frontend IP configurations used by the load balancer.
         /// This name can be used to access the resource.</param>
         /// <param name="properties">Properties of load balancer frontend ip
         /// configuration.</param>
-        public LoadBalancerFrontendIPConfiguration(string name, LoadBalancerFrontendIPConfigurationProperties properties)
+        public LoadBalancerFrontendIpConfiguration(string name, LoadBalancerFrontendIpConfigurationProperties properties)
         {
             Name = name;
             Properties = properties;
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets properties of load balancer frontend ip configuration.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public LoadBalancerFrontendIPConfigurationProperties Properties { get; set; }
+        public LoadBalancerFrontendIpConfigurationProperties Properties { get; set; }
 
         /// <summary>
         /// Validate the object.

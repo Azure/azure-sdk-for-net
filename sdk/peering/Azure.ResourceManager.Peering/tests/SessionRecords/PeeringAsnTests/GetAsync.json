@@ -1,0 +1,267 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/e815e305-b43a-49c4-8b1a-4e61f1aec1e8?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9b81cc208f318d408e7d0a8222c7588c-ecc00229674d9948-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "dea4df321c3cfe22a5a8a0a5f473b5c8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "440",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 30 Nov 2022 02:00:22 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5982c9c6-cd8c-4b0b-8ffb-8d3df8a75697",
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "5982c9c6-cd8c-4b0b-8ffb-8d3df8a75697",
+        "x-ms-routing-request-id": "WESTUS:20221130T020022Z:5982c9c6-cd8c-4b0b-8ffb-8d3df8a75697"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/e815e305-b43a-49c4-8b1a-4e61f1aec1e8",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "NRMSBreakGlass": "299334392"
+        },
+        "subscriptionId": "e815e305-b43a-49c4-8b1a-4e61f1aec1e8",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "WANTeam-Subscription-2",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/e815e305-b43a-49c4-8b1a-4e61f1aec1e8/providers/Microsoft.Peering/peerAsns/peerAsn6901?api-version=2022-10-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "147",
+        "Content-Type": "application/json",
+        "traceparent": "00-00b9fd885e087f4a90d2bdafaba08b73-d56a905be225f245-00",
+        "User-Agent": "azsdk-net-ResourceManager.Peering/1.1.0-alpha.20221129.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "2cf30c6cdcb489eff5c0d7cba46ec8e6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "peerAsn": 839030,
+          "peerContactDetail": [
+            {
+              "role": "Noc",
+              "email": "noc65003@contoso.com",
+              "phone": "8888988888"
+            }
+          ],
+          "peerName": "peerAsn6901"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "449",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 30 Nov 2022 02:00:23 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "dcd98498-81a0-47a7-a192-23bc1d7bd494",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "91",
+        "x-ms-request-id": "f398c55b-c0e6-48e6-88c5-4b891ba4f140",
+        "x-ms-routing-request-id": "WESTUS:20221130T020023Z:dcd98498-81a0-47a7-a192-23bc1d7bd494"
+      },
+      "ResponseBody": {
+        "properties": {
+          "peerAsn": 839030,
+          "peerContactDetail": [
+            {
+              "role": "Noc",
+              "email": "noc65003@contoso.com",
+              "phone": "8888988888"
+            }
+          ],
+          "peerName": "peerAsn6901",
+          "validationState": "Pending"
+        },
+        "name": "peerAsn6901",
+        "id": "/subscriptions/e815e305-b43a-49c4-8b1a-4e61f1aec1e8/providers/Microsoft.Peering/peerAsns/peerAsn6901",
+        "type": "Microsoft.Peering/peerAsns"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/e815e305-b43a-49c4-8b1a-4e61f1aec1e8/providers/Microsoft.Peering/peerAsns/peerAsn6901?api-version=2022-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9acf64acc7a0b045a76a71b69712f7c2-9ea3bc20629e9144-00",
+        "User-Agent": "azsdk-net-ResourceManager.Peering/1.1.0-alpha.20221129.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "4a28aefe853b6445a42734e533101af2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "449",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 30 Nov 2022 02:00:23 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2f30f78c-01e8-4631-8dc2-1a4c1e3d1927",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "575",
+        "x-ms-request-id": "ff2f8c50-7582-4a87-a281-ba00aded1791",
+        "x-ms-routing-request-id": "WESTUS:20221130T020023Z:2f30f78c-01e8-4631-8dc2-1a4c1e3d1927"
+      },
+      "ResponseBody": {
+        "properties": {
+          "peerAsn": 839030,
+          "peerContactDetail": [
+            {
+              "role": "Noc",
+              "email": "noc65003@contoso.com",
+              "phone": "8888988888"
+            }
+          ],
+          "peerName": "peerAsn6901",
+          "validationState": "Pending"
+        },
+        "name": "peerAsn6901",
+        "id": "/subscriptions/e815e305-b43a-49c4-8b1a-4e61f1aec1e8/providers/Microsoft.Peering/peerAsns/peerAsn6901",
+        "type": "Microsoft.Peering/peerAsns"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/e815e305-b43a-49c4-8b1a-4e61f1aec1e8/providers/Microsoft.Peering/peerAsns?api-version=2022-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-812e962e8d35564b8001a615eb2b3914-2cd7335ba2f98b4f-00",
+        "User-Agent": "azsdk-net-ResourceManager.Peering/1.1.0-alpha.20221129.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "6c056c650548c82aeeb2266226d90332",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "542",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 30 Nov 2022 02:00:23 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "67952979-b837-4bba-ad41-759018081999",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "574",
+        "x-ms-request-id": "08656fbe-2619-44e9-8f24-701cb4dab1c8",
+        "x-ms-routing-request-id": "WESTUS:20221130T020023Z:67952979-b837-4bba-ad41-759018081999"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "peerAsn": 839030,
+              "peerContactDetail": [
+                {
+                  "role": "Noc",
+                  "email": "noc65003@contoso.com",
+                  "phone": "8888988888"
+                }
+              ],
+              "peerName": "peerAsn6901",
+              "validationState": "Pending"
+            },
+            "name": "peerAsn6901",
+            "id": "/subscriptions/e815e305-b43a-49c4-8b1a-4e61f1aec1e8/providers/Microsoft.Peering/peerAsns/peerAsn6901",
+            "type": "Microsoft.Peering/peerAsns"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/e815e305-b43a-49c4-8b1a-4e61f1aec1e8/providers/Microsoft.Peering/peerAsns/peerAsn6901?api-version=2022-10-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-c8614236052fe8478fd4181dba5a7b83-faa0da9498d11d41-00",
+        "User-Agent": "azsdk-net-ResourceManager.Peering/1.1.0-alpha.20221129.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "07740edc1e9fe690c78f888ca70a56e5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Wed, 30 Nov 2022 02:00:23 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "10118861-ed4f-4502-b88b-d17f72abd853",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14984",
+        "x-ms-request-id": "5d39a262-4572-45b8-aef6-d88327df2e3a",
+        "x-ms-routing-request-id": "WESTUS:20221130T020023Z:10118861-ed4f-4502-b88b-d17f72abd853"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/e815e305-b43a-49c4-8b1a-4e61f1aec1e8/providers/Microsoft.Peering/peerAsns?api-version=2022-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-09a6d40bd2265e4fa836550ec707d69d-f1b5b74c3e139b48-00",
+        "User-Agent": "azsdk-net-ResourceManager.Peering/1.1.0-alpha.20221129.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "3866e4a55b68f99d83605b885ee23dcb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "19",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 30 Nov 2022 02:00:23 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c073e4a1-9905-4384-b156-1a86a4aa19ee",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "573",
+        "x-ms-request-id": "29a2a579-007a-4a24-8562-2467f5698b2a",
+        "x-ms-routing-request-id": "WESTUS:20221130T020024Z:c073e4a1-9905-4384-b156-1a86a4aa19ee"
+      },
+      "ResponseBody": {
+        "value": []
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.windows.net",
+    "RandomSeed": "3427486",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "e815e305-b43a-49c4-8b1a-4e61f1aec1e8"
+  }
+}

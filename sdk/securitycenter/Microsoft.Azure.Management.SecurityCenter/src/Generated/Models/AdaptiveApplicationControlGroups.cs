@@ -16,8 +16,8 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a list of machine groups and set of rules that are
-    /// recommended by Azure Security Center to be allowed
+    /// Represents a list of VM/server groups and set of rules that are
+    /// Recommended by Microsoft Defender for Cloud to be allowed
     /// </summary>
     public partial class AdaptiveApplicationControlGroups
     {

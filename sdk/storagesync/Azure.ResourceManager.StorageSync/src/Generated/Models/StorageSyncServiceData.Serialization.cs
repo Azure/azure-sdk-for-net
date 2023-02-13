@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.StorageSync
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,13 +30,13 @@ namespace Azure.ResourceManager.StorageSync
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IncomingTrafficPolicy))
             {
-                writer.WritePropertyName("incomingTrafficPolicy");
+                writer.WritePropertyName("incomingTrafficPolicy"u8);
                 writer.WriteStringValue(IncomingTrafficPolicy.Value.ToString());
             }
             writer.WriteEndObject();
@@ -52,14 +53,14 @@ namespace Azure.ResourceManager.StorageSync
             Optional<SystemData> systemData = default;
             Optional<IncomingTrafficPolicy> incomingTrafficPolicy = default;
             Optional<int> storageSyncServiceStatus = default;
-            Optional<string> storageSyncServiceUid = default;
+            Optional<Guid> storageSyncServiceUid = default;
             Optional<string> provisioningState = default;
             Optional<string> lastWorkflowId = default;
             Optional<string> lastOperationName = default;
             Optional<IReadOnlyList<StorageSyncPrivateEndpointConnectionData>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,37 +75,37 @@ namespace Azure.ResourceManager.StorageSync
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.StorageSync
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("incomingTrafficPolicy"))
+                        if (property0.NameEquals("incomingTrafficPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.StorageSync
                             incomingTrafficPolicy = new IncomingTrafficPolicy(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("storageSyncServiceStatus"))
+                        if (property0.NameEquals("storageSyncServiceStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -133,27 +134,32 @@ namespace Azure.ResourceManager.StorageSync
                             storageSyncServiceStatus = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("storageSyncServiceUid"))
+                        if (property0.NameEquals("storageSyncServiceUid"u8))
                         {
-                            storageSyncServiceUid = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            storageSyncServiceUid = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastWorkflowId"))
+                        if (property0.NameEquals("lastWorkflowId"u8))
                         {
                             lastWorkflowId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastOperationName"))
+                        if (property0.NameEquals("lastOperationName"u8))
                         {
                             lastOperationName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("privateEndpointConnections"))
+                        if (property0.NameEquals("privateEndpointConnections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -172,7 +178,7 @@ namespace Azure.ResourceManager.StorageSync
                     continue;
                 }
             }
-            return new StorageSyncServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(incomingTrafficPolicy), Optional.ToNullable(storageSyncServiceStatus), storageSyncServiceUid.Value, provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, Optional.ToList(privateEndpointConnections));
+            return new StorageSyncServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(incomingTrafficPolicy), Optional.ToNullable(storageSyncServiceStatus), Optional.ToNullable(storageSyncServiceUid), provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, Optional.ToList(privateEndpointConnections));
         }
     }
 }

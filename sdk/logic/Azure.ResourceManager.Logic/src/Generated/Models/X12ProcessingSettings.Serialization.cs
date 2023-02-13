@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("maskSecurityInfo");
+            writer.WritePropertyName("maskSecurityInfo"u8);
             writer.WriteBooleanValue(MaskSecurityInfo);
-            writer.WritePropertyName("convertImpliedDecimal");
+            writer.WritePropertyName("convertImpliedDecimal"u8);
             writer.WriteBooleanValue(ConvertImpliedDecimal);
-            writer.WritePropertyName("preserveInterchange");
+            writer.WritePropertyName("preserveInterchange"u8);
             writer.WriteBooleanValue(PreserveInterchange);
-            writer.WritePropertyName("suspendInterchangeOnError");
+            writer.WritePropertyName("suspendInterchangeOnError"u8);
             writer.WriteBooleanValue(SuspendInterchangeOnError);
-            writer.WritePropertyName("createEmptyXmlTagsForTrailingSeparators");
+            writer.WritePropertyName("createEmptyXmlTagsForTrailingSeparators"u8);
             writer.WriteBooleanValue(CreateEmptyXmlTagsForTrailingSeparators);
-            writer.WritePropertyName("useDotAsDecimalSeparator");
+            writer.WritePropertyName("useDotAsDecimalSeparator"u8);
             writer.WriteBooleanValue(UseDotAsDecimalSeparator);
             writer.WriteEndObject();
         }
@@ -40,32 +40,32 @@ namespace Azure.ResourceManager.Logic.Models
             bool useDotAsDecimalSeparator = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maskSecurityInfo"))
+                if (property.NameEquals("maskSecurityInfo"u8))
                 {
                     maskSecurityInfo = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("convertImpliedDecimal"))
+                if (property.NameEquals("convertImpliedDecimal"u8))
                 {
                     convertImpliedDecimal = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("preserveInterchange"))
+                if (property.NameEquals("preserveInterchange"u8))
                 {
                     preserveInterchange = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("suspendInterchangeOnError"))
+                if (property.NameEquals("suspendInterchangeOnError"u8))
                 {
                     suspendInterchangeOnError = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("createEmptyXmlTagsForTrailingSeparators"))
+                if (property.NameEquals("createEmptyXmlTagsForTrailingSeparators"u8))
                 {
                     createEmptyXmlTagsForTrailingSeparators = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("useDotAsDecimalSeparator"))
+                if (property.NameEquals("useDotAsDecimalSeparator"u8))
                 {
                     useDotAsDecimalSeparator = property.Value.GetBoolean();
                     continue;

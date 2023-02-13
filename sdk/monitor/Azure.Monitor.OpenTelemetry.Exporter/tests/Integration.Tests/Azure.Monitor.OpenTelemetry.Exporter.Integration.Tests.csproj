@@ -26,18 +26,22 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc" VersionOverride="[2.1.1,2.2)" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="3.1.0" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="6.0.0" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="5.0.0" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" VersionOverride="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
     <ProjectReference Include="..\Integration.Tests.AspNetCoreWebApp\Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.AspNetCoreWebApp.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Azure.Monitor.OpenTelemetry.Exporter.Tests\CommonTestFramework\**" Link="CommonTestFramework\%(Filename)%(Extension)" />
   </ItemGroup>
 
 </Project>

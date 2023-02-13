@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,18 +15,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
-                writer.WritePropertyName("dependsOn");
+                writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
@@ -38,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(UserProperties))
             {
-                writer.WritePropertyName("userProperties");
+                writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
@@ -105,64 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "WebHook": return WebHookActivity.DeserializeWebHookActivity(element);
                 }
             }
-            string name = default;
-            string type = default;
-            Optional<string> description = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<ActivityUserProperty>> userProperties = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("dependsOn"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<ActivityDependency> array = new List<ActivityDependency>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ActivityDependency.DeserializeActivityDependency(item));
-                    }
-                    dependsOn = array;
-                    continue;
-                }
-                if (property.NameEquals("userProperties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<ActivityUserProperty> array = new List<ActivityUserProperty>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ActivityUserProperty.DeserializeActivityUserProperty(item));
-                    }
-                    userProperties = array;
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new PipelineActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties);
+            return UnknownActivity.DeserializeUnknownActivity(element);
         }
     }
 }

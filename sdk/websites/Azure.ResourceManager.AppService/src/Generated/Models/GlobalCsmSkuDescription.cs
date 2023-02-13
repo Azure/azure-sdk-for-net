@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of GlobalCsmSkuDescription. </summary>
         internal GlobalCsmSkuDescription()
         {
-            Locations = new ChangeTrackingList<string>();
-            Capabilities = new ChangeTrackingList<Capability>();
+            Locations = new ChangeTrackingList<AzureLocation>();
+            Capabilities = new ChangeTrackingList<AppServiceSkuCapability>();
         }
 
         /// <summary> Initializes a new instance of GlobalCsmSkuDescription. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="capacity"> Min, max, and default scale values of the SKU. </param>
         /// <param name="locations"> Locations of the SKU. </param>
         /// <param name="capabilities"> Capabilities of the SKU, e.g., is traffic manager enabled?. </param>
-        internal GlobalCsmSkuDescription(string name, string tier, string size, string family, AppServiceSkuCapacity capacity, IReadOnlyList<string> locations, IReadOnlyList<Capability> capabilities)
+        internal GlobalCsmSkuDescription(string name, string tier, string size, string family, AppServiceSkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<AppServiceSkuCapability> capabilities)
         {
             Name = name;
             Tier = tier;
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Min, max, and default scale values of the SKU. </summary>
         public AppServiceSkuCapacity Capacity { get; }
         /// <summary> Locations of the SKU. </summary>
-        public IReadOnlyList<string> Locations { get; }
+        public IReadOnlyList<AzureLocation> Locations { get; }
         /// <summary> Capabilities of the SKU, e.g., is traffic manager enabled?. </summary>
-        public IReadOnlyList<Capability> Capabilities { get; }
+        public IReadOnlyList<AppServiceSkuCapability> Capabilities { get; }
     }
 }

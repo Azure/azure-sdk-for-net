@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -50,100 +49,68 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Lists the DNS zones in all resource groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnszones
-        /// Operation Id: Zones_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/dnszones</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Zones_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of DNS zones to return. If not specified, returns up to 100 zones. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DnsZoneResource> GetDnsZonesByDnszoneAsync(int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DnsZoneResource> GetDnsZonesAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DnsZoneResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DnsZoneZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsZonesByDnszone");
-                scope.Start();
-                try
-                {
-                    var response = await DnsZoneZonesRestClient.ListAsync(Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DnsZoneResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DnsZoneZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsZonesByDnszone");
-                scope.Start();
-                try
-                {
-                    var response = await DnsZoneZonesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DnsZoneZonesRestClient.CreateListRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsZoneZonesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsZoneResource(Client, DnsZoneData.DeserializeDnsZoneData(e)), DnsZoneZonesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDnsZones", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists the DNS zones in all resource groups in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnszones
-        /// Operation Id: Zones_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/dnszones</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Zones_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of DNS zones to return. If not specified, returns up to 100 zones. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DnsZoneResource> GetDnsZonesByDnszone(int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DnsZoneResource> GetDnsZones(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<DnsZoneResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DnsZoneZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsZonesByDnszone");
-                scope.Start();
-                try
-                {
-                    var response = DnsZoneZonesRestClient.List(Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DnsZoneResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DnsZoneZonesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsZonesByDnszone");
-                scope.Start();
-                try
-                {
-                    var response = DnsZoneZonesRestClient.ListNextPage(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsZoneResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DnsZoneZonesRestClient.CreateListRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DnsZoneZonesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsZoneResource(Client, DnsZoneData.DeserializeDnsZoneData(e)), DnsZoneZonesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDnsZones", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns the DNS records specified by the referencing targetResourceIds.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/getDnsResourceReference
-        /// Operation Id: DnsResourceReference_GetByTargetResources
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/getDnsResourceReference</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DnsResourceReference_GetByTargetResources</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Properties for dns resource reference request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DnsResourceReferenceResult>> GetByTargetResourcesDnsResourceReferenceAsync(DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DnsResourceReferenceResult>> GetDnsResourceReferencesByTargetResourcesAsync(DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DnsResourceReferenceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetByTargetResourcesDnsResourceReference");
+            using var scope = DnsResourceReferenceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsResourceReferencesByTargetResources");
             scope.Start();
             try
             {
@@ -159,14 +126,22 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary>
         /// Returns the DNS records specified by the referencing targetResourceIds.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/getDnsResourceReference
-        /// Operation Id: DnsResourceReference_GetByTargetResources
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/getDnsResourceReference</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DnsResourceReference_GetByTargetResources</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Properties for dns resource reference request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DnsResourceReferenceResult> GetByTargetResourcesDnsResourceReference(DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DnsResourceReferenceResult> GetDnsResourceReferencesByTargetResources(DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DnsResourceReferenceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetByTargetResourcesDnsResourceReference");
+            using var scope = DnsResourceReferenceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDnsResourceReferencesByTargetResources");
             scope.Start();
             try
             {

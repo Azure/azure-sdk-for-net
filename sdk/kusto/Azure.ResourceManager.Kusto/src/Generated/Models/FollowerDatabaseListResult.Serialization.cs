@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static FollowerDatabaseListResult DeserializeFollowerDatabaseListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<FollowerDatabaseDefinition>> value = default;
+            Optional<IReadOnlyList<KustoFollowerDatabaseDefinition>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<FollowerDatabaseDefinition> array = new List<FollowerDatabaseDefinition>();
+                    List<KustoFollowerDatabaseDefinition> array = new List<KustoFollowerDatabaseDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FollowerDatabaseDefinition.DeserializeFollowerDatabaseDefinition(item));
+                        array.Add(KustoFollowerDatabaseDefinition.DeserializeKustoFollowerDatabaseDefinition(item));
                     }
                     value = array;
                     continue;

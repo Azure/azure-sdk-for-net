@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> Properties pertaining to the ClfsTarget. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Initializes a new instance of ClfsTarget. </summary>
         /// <param name="target"> Resource ID of storage container. </param>
-        internal ClfsTarget(string target)
+        internal ClfsTarget(ResourceIdentifier target)
         {
             Target = target;
         }
 
         /// <summary> Resource ID of storage container. </summary>
-        public string Target { get; set; }
+        public ResourceIdentifier Target { get; set; }
     }
 }

@@ -10,6 +10,24 @@ namespace Azure.Core.Perf
     public class ResourceIdentifierBenchmark
     {
         [Benchmark]
+        public void TryParseInvalidWithCatch()
+        {
+            try
+            {
+                ResourceIdentifier.Parse("/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg/providers/virtualMachines/myVm");
+            }
+            catch
+            {
+            }
+        }
+
+        [Benchmark]
+        public void TryParseInvalid()
+        {
+            ResourceIdentifier.TryParse("/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg/providers/virtualMachines/myVm", out var resourceIdentifier);
+        }
+
+        [Benchmark]
         public ResourceIdentifier Create()
         {
             return new ResourceIdentifier("/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg/providers/Microsoft.Compute/virtualMachines/myVm");

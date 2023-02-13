@@ -18,24 +18,24 @@ namespace Azure.ResourceManager.TrafficManager
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(ResourceType))
             {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(ResourceType);
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(GeographicHierarchy))
             {
-                writer.WritePropertyName("geographicHierarchy");
+                writer.WritePropertyName("geographicHierarchy"u8);
                 writer.WriteObjectValue(GeographicHierarchy);
             }
             writer.WriteEndObject();
@@ -44,28 +44,38 @@ namespace Azure.ResourceManager.TrafficManager
 
         internal static TrafficManagerGeographicHierarchyData DeserializeTrafficManagerGeographicHierarchyData(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<Region> geographicHierarchy = default;
+            Optional<ResourceType> type = default;
+            Optional<TrafficManagerRegion> geographicHierarchy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,21 +84,21 @@ namespace Azure.ResourceManager.TrafficManager
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("geographicHierarchy"))
+                        if (property0.NameEquals("geographicHierarchy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            geographicHierarchy = Region.DeserializeRegion(property0.Value);
+                            geographicHierarchy = TrafficManagerRegion.DeserializeTrafficManagerRegion(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new TrafficManagerGeographicHierarchyData(id.Value, name.Value, type.Value, geographicHierarchy.Value);
+            return new TrafficManagerGeographicHierarchyData(id.Value, name.Value, Optional.ToNullable(type), geographicHierarchy.Value);
         }
     }
 }

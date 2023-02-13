@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("value");
+            writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
             if (Optional.IsDefined(EncryptionCertThumbprint))
             {
-                writer.WritePropertyName("encryptionCertThumbprint");
+                writer.WritePropertyName("encryptionCertThumbprint"u8);
                 writer.WriteStringValue(EncryptionCertThumbprint);
             }
-            writer.WritePropertyName("encryptionAlgorithm");
+            writer.WritePropertyName("encryptionAlgorithm"u8);
             writer.WriteStringValue(EncryptionAlgorithm.ToString());
             writer.WriteEndObject();
         }
@@ -31,22 +31,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             string value = default;
             Optional<string> encryptionCertThumbprint = default;
-            EncryptionAlgorithm encryptionAlgorithm = default;
+            DataBoxEdgeEncryptionAlgorithm encryptionAlgorithm = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptionCertThumbprint"))
+                if (property.NameEquals("encryptionCertThumbprint"u8))
                 {
                     encryptionCertThumbprint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptionAlgorithm"))
+                if (property.NameEquals("encryptionAlgorithm"u8))
                 {
-                    encryptionAlgorithm = new EncryptionAlgorithm(property.Value.GetString());
+                    encryptionAlgorithm = new DataBoxEdgeEncryptionAlgorithm(property.Value.GetString());
                     continue;
                 }
             }

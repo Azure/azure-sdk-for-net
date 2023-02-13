@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="mainClassName"/> is null. </exception>
         public DatabricksSparkJarActivity(string name, BinaryData mainClassName) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (mainClassName == null)
-            {
-                throw new ArgumentNullException(nameof(mainClassName));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(mainClassName, nameof(mainClassName));
 
             MainClassName = mainClassName;
             Parameters = new ChangeTrackingList<BinaryData>();
@@ -86,7 +80,36 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData MainClassName { get; set; }
-        /// <summary> Parameters that will be passed to the main method. </summary>
+        /// <summary>
+        /// Parameters that will be passed to the main method.
+        /// <para>
+        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IList<BinaryData> Parameters { get; }
         /// <summary> A list of libraries to be installed on the cluster that will execute the job. </summary>
         public IList<IDictionary<string, BinaryData>> Libraries { get; }

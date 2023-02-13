@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.Sql
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -36,58 +36,58 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AdministratorLogin))
             {
-                writer.WritePropertyName("administratorLogin");
+                writer.WritePropertyName("administratorLogin"u8);
                 writer.WriteStringValue(AdministratorLogin);
             }
             if (Optional.IsDefined(AdministratorLoginPassword))
             {
-                writer.WritePropertyName("administratorLoginPassword");
+                writer.WritePropertyName("administratorLoginPassword"u8);
                 writer.WriteStringValue(AdministratorLoginPassword);
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
             if (Optional.IsDefined(MinimalTlsVersion))
             {
-                writer.WritePropertyName("minimalTlsVersion");
+                writer.WritePropertyName("minimalTlsVersion"u8);
                 writer.WriteStringValue(MinimalTlsVersion);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
             {
-                writer.WritePropertyName("primaryUserAssignedIdentityId");
+                writer.WritePropertyName("primaryUserAssignedIdentityId"u8);
                 writer.WriteStringValue(PrimaryUserAssignedIdentityId);
             }
             if (Optional.IsDefined(FederatedClientId))
             {
-                writer.WritePropertyName("federatedClientId");
+                writer.WritePropertyName("federatedClientId"u8);
                 writer.WriteStringValue(FederatedClientId.Value);
             }
             if (Optional.IsDefined(KeyId))
             {
-                writer.WritePropertyName("keyId");
+                writer.WritePropertyName("keyId"u8);
                 writer.WriteStringValue(KeyId.AbsoluteUri);
             }
             if (Optional.IsDefined(Administrators))
             {
-                writer.WritePropertyName("administrators");
+                writer.WritePropertyName("administrators"u8);
                 writer.WriteObjectValue(Administrators);
             }
             if (Optional.IsDefined(RestrictOutboundNetworkAccess))
             {
-                writer.WritePropertyName("restrictOutboundNetworkAccess");
+                writer.WritePropertyName("restrictOutboundNetworkAccess"u8);
                 writer.WriteStringValue(RestrictOutboundNetworkAccess.Value.ToString());
             }
             writer.WriteEndObject();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
             Optional<ServerNetworkAccessFlag> restrictOutboundNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -128,15 +128,15 @@ namespace Azure.ResourceManager.Sql
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString(), serializeOptions);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -151,37 +151,37 @@ namespace Azure.ResourceManager.Sql
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -190,32 +190,32 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("administratorLogin"))
+                        if (property0.NameEquals("administratorLogin"u8))
                         {
                             administratorLogin = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("administratorLoginPassword"))
+                        if (property0.NameEquals("administratorLoginPassword"u8))
                         {
                             administratorLoginPassword = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("version"))
+                        if (property0.NameEquals("version"u8))
                         {
                             version = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             state = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("fullyQualifiedDomainName"))
+                        if (property0.NameEquals("fullyQualifiedDomainName"u8))
                         {
                             fullyQualifiedDomainName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("privateEndpointConnections"))
+                        if (property0.NameEquals("privateEndpointConnections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -230,12 +230,12 @@ namespace Azure.ResourceManager.Sql
                             privateEndpointConnections = array;
                             continue;
                         }
-                        if (property0.NameEquals("minimalTlsVersion"))
+                        if (property0.NameEquals("minimalTlsVersion"u8))
                         {
                             minimalTlsVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("publicNetworkAccess"))
+                        if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Sql
                             publicNetworkAccess = new ServerNetworkAccessFlag(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("workspaceFeature"))
+                        if (property0.NameEquals("workspaceFeature"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Sql
                             workspaceFeature = new ServerWorkspaceFeature(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("primaryUserAssignedIdentityId"))
+                        if (property0.NameEquals("primaryUserAssignedIdentityId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Sql
                             primaryUserAssignedIdentityId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("federatedClientId"))
+                        if (property0.NameEquals("federatedClientId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Sql
                             federatedClientId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("keyId"))
+                        if (property0.NameEquals("keyId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Sql
                             keyId = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("administrators"))
+                        if (property0.NameEquals("administrators"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Sql
                             administrators = ServerExternalAdministrator.DeserializeServerExternalAdministrator(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("restrictOutboundNetworkAccess"))
+                        if (property0.NameEquals("restrictOutboundNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

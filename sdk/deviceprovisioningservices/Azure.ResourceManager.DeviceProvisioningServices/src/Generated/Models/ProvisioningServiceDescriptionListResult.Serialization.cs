@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     {
         internal static ProvisioningServiceDescriptionListResult DeserializeProvisioningServiceDescriptionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ProvisioningServiceDescriptionData>> value = default;
+            Optional<IReadOnlyList<DeviceProvisioningServiceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ProvisioningServiceDescriptionData> array = new List<ProvisioningServiceDescriptionData>();
+                    List<DeviceProvisioningServiceData> array = new List<DeviceProvisioningServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProvisioningServiceDescriptionData.DeserializeProvisioningServiceDescriptionData(item));
+                        array.Add(DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

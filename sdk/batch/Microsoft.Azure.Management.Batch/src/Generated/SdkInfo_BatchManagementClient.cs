@@ -19,15 +19,15 @@ namespace Microsoft.Azure.Management.Batch
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Batch", "Application", "2022-06-01"),
-                new Tuple<string, string, string>("Batch", "ApplicationPackage", "2022-06-01"),
-                new Tuple<string, string, string>("Batch", "BatchAccount", "2022-06-01"),
-                new Tuple<string, string, string>("Batch", "Certificate", "2022-06-01"),
-                new Tuple<string, string, string>("Batch", "Location", "2022-06-01"),
-                new Tuple<string, string, string>("Batch", "Operations", "2022-06-01"),
-                new Tuple<string, string, string>("Batch", "Pool", "2022-06-01"),
-                new Tuple<string, string, string>("Batch", "PrivateEndpointConnection", "2022-06-01"),
-                new Tuple<string, string, string>("Batch", "PrivateLinkResource", "2022-06-01"),
+                new Tuple<string, string, string>("Batch", "Application", "2022-10-01"),
+                new Tuple<string, string, string>("Batch", "ApplicationPackage", "2022-10-01"),
+                new Tuple<string, string, string>("Batch", "BatchAccount", "2022-10-01"),
+                new Tuple<string, string, string>("Batch", "Certificate", "2022-10-01"),
+                new Tuple<string, string, string>("Batch", "Location", "2022-10-01"),
+                new Tuple<string, string, string>("Batch", "Operations", "2022-10-01"),
+                new Tuple<string, string, string>("Batch", "Pool", "2022-10-01"),
+                new Tuple<string, string, string>("Batch", "PrivateEndpointConnection", "2022-10-01"),
+                new Tuple<string, string, string>("Batch", "PrivateLinkResource", "2022-10-01"),
               }.AsEnumerable();
           }
       }
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Batch
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/batch/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=E:\\hpc\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "898587c563d7b1941e1a10779ea7b122dce8ad6f";
+      public static readonly String GithubCommidId = "19aa8ab5d14b22bdeb67eab31c65b47c5380fd06";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

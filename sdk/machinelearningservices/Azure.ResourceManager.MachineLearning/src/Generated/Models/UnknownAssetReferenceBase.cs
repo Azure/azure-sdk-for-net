@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownAssetReferenceBase. </summary>
-    internal partial class UnknownAssetReferenceBase : AssetReferenceBase
+    internal partial class UnknownAssetReferenceBase : MachineLearningAssetReferenceBase
     {
         /// <summary> Initializes a new instance of UnknownAssetReferenceBase. </summary>
         /// <param name="referenceType"> [Required] Specifies the type of asset reference. </param>

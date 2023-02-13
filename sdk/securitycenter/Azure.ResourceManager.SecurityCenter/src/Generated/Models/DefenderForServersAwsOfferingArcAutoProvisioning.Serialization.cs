@@ -15,20 +15,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WritePropertyName("enabled"u8);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(CloudRoleArn))
             {
-                writer.WritePropertyName("cloudRoleArn");
+                writer.WritePropertyName("cloudRoleArn"u8);
                 writer.WriteStringValue(CloudRoleArn);
-            }
-            if (Optional.IsDefined(ServicePrincipalSecretMetadata))
-            {
-                writer.WritePropertyName("servicePrincipalSecretMetadata");
-                writer.WriteObjectValue(ServicePrincipalSecretMetadata);
             }
             writer.WriteEndObject();
         }
@@ -37,10 +32,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             Optional<bool> enabled = default;
             Optional<string> cloudRoleArn = default;
-            Optional<DefenderForServersAwsOfferingArcAutoProvisioningServicePrincipalSecretMetadata> servicePrincipalSecretMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,23 +44,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("cloudRoleArn"))
+                if (property.NameEquals("cloudRoleArn"u8))
                 {
                     cloudRoleArn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("servicePrincipalSecretMetadata"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    servicePrincipalSecretMetadata = DefenderForServersAwsOfferingArcAutoProvisioningServicePrincipalSecretMetadata.DeserializeDefenderForServersAwsOfferingArcAutoProvisioningServicePrincipalSecretMetadata(property.Value);
-                    continue;
-                }
             }
-            return new DefenderForServersAwsOfferingArcAutoProvisioning(Optional.ToNullable(enabled), cloudRoleArn.Value, servicePrincipalSecretMetadata.Value);
+            return new DefenderForServersAwsOfferingArcAutoProvisioning(Optional.ToNullable(enabled), cloudRoleArn.Value);
         }
     }
 }

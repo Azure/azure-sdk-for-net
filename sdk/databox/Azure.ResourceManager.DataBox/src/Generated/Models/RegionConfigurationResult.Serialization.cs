@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<DataCenterAddressResult> dataCenterAddressResponse = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scheduleAvailabilityResponse"))
+                if (property.NameEquals("scheduleAvailabilityResponse"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     scheduleAvailabilityResponse = ScheduleAvailabilityResponse.DeserializeScheduleAvailabilityResponse(property.Value);
                     continue;
                 }
-                if (property.NameEquals("transportAvailabilityResponse"))
+                if (property.NameEquals("transportAvailabilityResponse"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     transportAvailabilityResponse = TransportAvailabilityResponse.DeserializeTransportAvailabilityResponse(property.Value);
                     continue;
                 }
-                if (property.NameEquals("datacenterAddressResponse"))
+                if (property.NameEquals("datacenterAddressResponse"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

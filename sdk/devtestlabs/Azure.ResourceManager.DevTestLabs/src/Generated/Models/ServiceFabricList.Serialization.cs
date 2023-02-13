@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static ServiceFabricList DeserializeServiceFabricList(JsonElement element)
         {
-            Optional<IReadOnlyList<ServiceFabricData>> value = default;
+            Optional<IReadOnlyList<DevTestLabServiceFabricData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServiceFabricData> array = new List<ServiceFabricData>();
+                    List<DevTestLabServiceFabricData> array = new List<DevTestLabServiceFabricData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceFabricData.DeserializeServiceFabricData(item));
+                        array.Add(DevTestLabServiceFabricData.DeserializeDevTestLabServiceFabricData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

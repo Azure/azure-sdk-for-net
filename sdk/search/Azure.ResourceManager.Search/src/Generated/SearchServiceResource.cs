@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Search/searchServices";
+        public static readonly ResourceType ResourceType = "Microsoft.Search/searchServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -110,8 +110,16 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Gets the details of the private endpoint connection to the search service in the given resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/privateEndpointConnections/{privateEndpointConnectionName}
-        /// Operation Id: PrivateEndpointConnections_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection to the Azure Cognitive Search service with the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -126,8 +134,16 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Gets the details of the private endpoint connection to the search service in the given resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/privateEndpointConnections/{privateEndpointConnectionName}
-        /// Operation Id: PrivateEndpointConnections_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection to the Azure Cognitive Search service with the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -140,17 +156,25 @@ namespace Azure.ResourceManager.Search
             return GetSearchPrivateEndpointConnections().Get(privateEndpointConnectionName, searchManagementRequestOptions, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SharedPrivateLinkResources in the SearchService. </summary>
-        /// <returns> An object representing collection of SharedPrivateLinkResources and their operations over a SharedPrivateLinkResource. </returns>
-        public virtual SharedPrivateLinkResourceCollection GetSharedPrivateLinkResources()
+        /// <summary> Gets a collection of SharedSearchServicePrivateLinkResources in the SearchService. </summary>
+        /// <returns> An object representing collection of SharedSearchServicePrivateLinkResources and their operations over a SharedSearchServicePrivateLinkResource. </returns>
+        public virtual SharedSearchServicePrivateLinkResourceCollection GetSharedSearchServicePrivateLinkResources()
         {
-            return GetCachedClient(Client => new SharedPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(Client => new SharedSearchServicePrivateLinkResourceCollection(Client, Id));
         }
 
         /// <summary>
         /// Gets the details of the shared private link resource managed by the search service in the given resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}
-        /// Operation Id: SharedPrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedPrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure Cognitive Search service within the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -158,15 +182,23 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SharedPrivateLinkResource>> GetSharedPrivateLinkResourceAsync(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SharedSearchServicePrivateLinkResource>> GetSharedSearchServicePrivateLinkResourceAsync(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            return await GetSharedPrivateLinkResources().GetAsync(sharedPrivateLinkResourceName, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
+            return await GetSharedSearchServicePrivateLinkResources().GetAsync(sharedPrivateLinkResourceName, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the details of the shared private link resource managed by the search service in the given resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}
-        /// Operation Id: SharedPrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedPrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure Cognitive Search service within the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -174,15 +206,23 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SharedPrivateLinkResource> GetSharedPrivateLinkResource(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual Response<SharedSearchServicePrivateLinkResource> GetSharedSearchServicePrivateLinkResource(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetSharedPrivateLinkResources().Get(sharedPrivateLinkResourceName, searchManagementRequestOptions, cancellationToken);
+            return GetSharedSearchServicePrivateLinkResources().Get(sharedPrivateLinkResourceName, searchManagementRequestOptions, cancellationToken);
         }
 
         /// <summary>
         /// Gets the search service with the given name in the given resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -206,8 +246,16 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Gets the search service with the given name in the given resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -231,8 +279,16 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Deletes a search service in the given resource group, along with its associated resources.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}
-        /// Operation Id: Services_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -258,8 +314,16 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Deletes a search service in the given resource group, along with its associated resources.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}
-        /// Operation Id: Services_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -285,8 +349,16 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Updates an existing search service in the given resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}
-        /// Operation Id: Services_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="patch"> The definition of the search service to update. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -312,8 +384,16 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Updates an existing search service in the given resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}
-        /// Operation Id: Services_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="patch"> The definition of the search service to update. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -339,12 +419,20 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Gets the primary and secondary admin API keys for the specified Azure Cognitive Search service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/listAdminKeys
-        /// Operation Id: AdminKeys_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/listAdminKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdminKeys_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AdminKeyResult>> GetAdminKeyAsync(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchServiceAdminKeyResult>> GetAdminKeyAsync(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             using var scope = _adminKeysClientDiagnostics.CreateScope("SearchServiceResource.GetAdminKey");
             scope.Start();
@@ -362,12 +450,20 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Gets the primary and secondary admin API keys for the specified Azure Cognitive Search service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/listAdminKeys
-        /// Operation Id: AdminKeys_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/listAdminKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdminKeys_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AdminKeyResult> GetAdminKey(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchServiceAdminKeyResult> GetAdminKey(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             using var scope = _adminKeysClientDiagnostics.CreateScope("SearchServiceResource.GetAdminKey");
             scope.Start();
@@ -385,13 +481,21 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Regenerates either the primary or secondary admin API key. You can only regenerate one key at a time.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/regenerateAdminKey/{keyKind}
-        /// Operation Id: AdminKeys_Regenerate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/regenerateAdminKey/{keyKind}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdminKeys_Regenerate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="keyKind"> Specifies which key to regenerate. Valid values include &apos;primary&apos; and &apos;secondary&apos;. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AdminKeyResult>> RegenerateAdminKeyAsync(AdminKeyKind keyKind, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchServiceAdminKeyResult>> RegenerateAdminKeyAsync(SearchServiceAdminKeyKind keyKind, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             using var scope = _adminKeysClientDiagnostics.CreateScope("SearchServiceResource.RegenerateAdminKey");
             scope.Start();
@@ -409,13 +513,21 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Regenerates either the primary or secondary admin API key. You can only regenerate one key at a time.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/regenerateAdminKey/{keyKind}
-        /// Operation Id: AdminKeys_Regenerate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/regenerateAdminKey/{keyKind}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdminKeys_Regenerate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="keyKind"> Specifies which key to regenerate. Valid values include &apos;primary&apos; and &apos;secondary&apos;. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AdminKeyResult> RegenerateAdminKey(AdminKeyKind keyKind, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchServiceAdminKeyResult> RegenerateAdminKey(SearchServiceAdminKeyKind keyKind, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             using var scope = _adminKeysClientDiagnostics.CreateScope("SearchServiceResource.RegenerateAdminKey");
             scope.Start();
@@ -433,15 +545,23 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Generates a new query key for the specified search service. You can create up to 50 query keys per service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/createQueryKey/{name}
-        /// Operation Id: QueryKeys_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/createQueryKey/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QueryKeys_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the new query API key. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<QueryKey>> CreateQueryKeyAsync(string name, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchServiceQueryKey>> CreateQueryKeyAsync(string name, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -461,15 +581,23 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Generates a new query key for the specified search service. You can create up to 50 query keys per service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/createQueryKey/{name}
-        /// Operation Id: QueryKeys_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/createQueryKey/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QueryKeys_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> The name of the new query API key. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<QueryKey> CreateQueryKey(string name, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchServiceQueryKey> CreateQueryKey(string name, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -489,94 +617,62 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Returns the list of query API keys for the given Azure Cognitive Search service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/listQueryKeys
-        /// Operation Id: QueryKeys_ListBySearchService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/listQueryKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QueryKeys_ListBySearchService</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="QueryKey" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<QueryKey> GetQueryKeysBySearchServiceAsync(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SearchServiceQueryKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SearchServiceQueryKey> GetQueryKeysBySearchServiceAsync(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<QueryKey>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _queryKeysClientDiagnostics.CreateScope("SearchServiceResource.GetQueryKeysBySearchService");
-                scope.Start();
-                try
-                {
-                    var response = await _queryKeysRestClient.ListBySearchServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<QueryKey>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _queryKeysClientDiagnostics.CreateScope("SearchServiceResource.GetQueryKeysBySearchService");
-                scope.Start();
-                try
-                {
-                    var response = await _queryKeysRestClient.ListBySearchServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _queryKeysRestClient.CreateListBySearchServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _queryKeysRestClient.CreateListBySearchServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SearchServiceQueryKey.DeserializeSearchServiceQueryKey, _queryKeysClientDiagnostics, Pipeline, "SearchServiceResource.GetQueryKeysBySearchService", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns the list of query API keys for the given Azure Cognitive Search service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/listQueryKeys
-        /// Operation Id: QueryKeys_ListBySearchService
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/listQueryKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QueryKeys_ListBySearchService</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="QueryKey" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<QueryKey> GetQueryKeysBySearchService(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SearchServiceQueryKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SearchServiceQueryKey> GetQueryKeysBySearchService(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Page<QueryKey> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _queryKeysClientDiagnostics.CreateScope("SearchServiceResource.GetQueryKeysBySearchService");
-                scope.Start();
-                try
-                {
-                    var response = _queryKeysRestClient.ListBySearchService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<QueryKey> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _queryKeysClientDiagnostics.CreateScope("SearchServiceResource.GetQueryKeysBySearchService");
-                scope.Start();
-                try
-                {
-                    var response = _queryKeysRestClient.ListBySearchServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _queryKeysRestClient.CreateListBySearchServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _queryKeysRestClient.CreateListBySearchServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SearchServiceQueryKey.DeserializeSearchServiceQueryKey, _queryKeysClientDiagnostics, Pipeline, "SearchServiceResource.GetQueryKeysBySearchService", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Deletes the specified query key. Unlike admin keys, query keys are not regenerated. The process for regenerating a query key is to delete and then recreate it.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/deleteQueryKey/{key}
-        /// Operation Id: QueryKeys_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/deleteQueryKey/{key}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QueryKeys_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The query key to be deleted. Query keys are identified by value, not by name. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -603,8 +699,16 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Deletes the specified query key. Unlike admin keys, query keys are not regenerated. The process for regenerating a query key is to delete and then recreate it.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/deleteQueryKey/{key}
-        /// Operation Id: QueryKeys_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/deleteQueryKey/{key}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QueryKeys_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The query key to be deleted. Query keys are identified by value, not by name. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -631,64 +735,60 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Gets a list of all supported private link resource types for the given service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/privateLinkResources
-        /// Operation Id: PrivateLinkResources_ListSupported
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_ListSupported</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SearchPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SearchPrivateLinkResource> GetSupportedPrivateLinkResourcesAsync(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SearchPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("SearchServiceResource.GetSupportedPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = await _privateLinkResourcesRestClient.ListSupportedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListSupportedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SearchPrivateLinkResource.DeserializeSearchPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "SearchServiceResource.GetSupportedPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of all supported private link resource types for the given service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/privateLinkResources
-        /// Operation Id: PrivateLinkResources_ListSupported
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_ListSupported</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SearchPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SearchPrivateLinkResource> GetSupportedPrivateLinkResources(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Page<SearchPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("SearchServiceResource.GetSupportedPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = _privateLinkResourcesRestClient.ListSupported(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListSupportedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SearchPrivateLinkResource.DeserializeSearchPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "SearchServiceResource.GetSupportedPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -733,8 +833,16 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -779,8 +887,16 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -820,8 +936,16 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -861,8 +985,16 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -905,8 +1037,16 @@ namespace Azure.ResourceManager.Search
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

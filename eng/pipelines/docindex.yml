@@ -5,7 +5,8 @@ jobs:
 
   - job: UpdateDocsMsBuildConfig
     pool:
-      vmImage: ubuntu-20.04
+      name: azsdk-pool-mms-ubuntu-2004-general
+      vmImage: Ubuntu20.04
     variables:
       DocRepoLocation: $(Pipeline.Workspace)/docs
       DocRepoOwner: Azure
@@ -15,6 +16,9 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
         parameters:
           SkipCheckoutNone: true
+          Paths: 
+            # This is for retrieving code owners for service level readme metadata
+            - .github/CODEOWNERS
 
       # Sync docs repo
       - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
@@ -22,19 +26,46 @@ jobs:
           Paths:
             - bundlepackages/
             - metadata/
+            - docs-ref-toc/
+            - api/overview/azure
           Repositories:
             - Name: $(DocRepoOwner)/$(DocRepoName)
               WorkingDirectory: $(DocRepoLocation)
-
+      # Install the tool for toc step to use
+      - task: NuGetToolInstaller@1
+        inputs:
+          versionSpec: 6.3.1
       # Call update docs ci script to onboard packages
+      - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
       - task: Powershell@2
         inputs:
           pwsh: true
           filePath: eng/common/scripts/Update-DocsMsPackages.ps1
           arguments: -DocRepoLocation $(DocRepoLocation)
-        displayName: Update Docs Onboarding
-
-      - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
+        displayName: Update Docs Onboarding for main branch
+        condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Force.MainUpdate'], 'true')))
+      - task: Powershell@2
+        inputs:
+          pwsh: true
+          filePath: eng/common/scripts/Service-Level-Readme-Automation.ps1
+          arguments: >-
+            -DocRepoLocation $(DocRepoLocation)
+            -TenantId '$(opensource-aad-tenant-id)'
+            -ClientId '$(opensource-aad-app-id)'
+            -ClientSecret '$(opensource-aad-secret)'
+            -ReadmeFolderRoot 'api/overview/azure'
+        displayName: Generate Service Level Readme for main branch
+        condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Force.MainUpdate'], 'true')))
+      - task: Powershell@2
+        inputs:
+          pwsh: true
+          filePath: eng/common/scripts/Update-DocsMsToc.ps1
+          arguments: >-
+            -DocRepoLocation $(DocRepoLocation)
+            -OutputLocation $(DocRepoLocation)/docs-ref-toc/reference-unified.yml
+            -ReadmeFolderRoot "api/overview/azure"
+        displayName: Generate ToC for main branch
+        condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Force.MainUpdate'], 'true')))
 
       - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
         parameters:
@@ -56,6 +87,13 @@ jobs:
           git status
         displayName: Checkout daily branch if it exists
         workingDirectory: $(DocRepoLocation)
+
+      - pwsh: |
+          $publicFeedUrl = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json"
+          Write-Host "##vso[task.setvariable variable=PackageSourceOverride]$publicFeedUrl"
+        displayName: Set package source variable
+        workingDirectory: $(DocRepoLocation)
+        
       - task: Powershell@2
         inputs:
           pwsh: true
@@ -64,8 +102,30 @@ jobs:
           # updated packages.
           arguments: >
             -DocRepoLocation $(DocRepoLocation)
-            -PackageSourceOverride 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json'
-        displayName: Update Docs Onboarding for Daily branch
+            -PackageSourceOverride $(PackageSourceOverride)
+        displayName: Update Docs Onboarding for Daily docs
+      - task: Powershell@2
+        inputs:
+          pwsh: true
+          filePath: eng/common/scripts/Service-Level-Readme-Automation.ps1
+          arguments: >-
+            -DocRepoLocation $(DocRepoLocation)
+            -TenantId '$(opensource-aad-tenant-id)'
+            -ClientId '$(opensource-aad-app-id)'
+            -ClientSecret '$(opensource-aad-secret)'
+            -ReadmeFolderRoot 'api/overview/azure'
+        displayName: Generate Service Level Readme for Daily docs
+      - task: Powershell@2
+        inputs:
+          pwsh: true
+          filePath: eng/common/scripts/Update-DocsMsToc.ps1
+          arguments: >-
+            -DocRepoLocation $(DocRepoLocation)
+            -OutputLocation $(DocRepoLocation)/docs-ref-toc/reference-unified.yml
+            -ReadmeFolderRoot "api/overview/azure"
+            -PackageSourceOverride $(PackageSourceOverride)
+        displayName: Generate ToC for Daily docs
+
       - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
         parameters:
           BaseRepoBranch: $(DailyDocsBranchName)
@@ -75,6 +135,7 @@ jobs:
           TargetRepoOwner: $(DocRepoOwner)
           WorkingDirectory: $(DocRepoLocation)
           ScriptDirectory: $(Build.SourcesDirectory)/eng/common/scripts
+          PushArgs: -f
 
       - task: PowerShell@2
         displayName: Queue Docs CI build

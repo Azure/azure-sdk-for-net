@@ -2,13 +2,13 @@
 
 The Azure Monitor Query client library is used to execute read-only queries against [Azure Monitor][azure_monitor_overview]'s two data platforms:
 
-- [Logs](https://docs.microsoft.com/azure/azure-monitor/logs/data-platform-logs) - Collects and organizes log and performance data from monitored resources. Data from different sources such as platform logs from Azure services, log and performance data from virtual machines agents, and usage and performance data from apps can be consolidated into a single [Azure Log Analytics workspace](https://docs.microsoft.com/azure/azure-monitor/logs/data-platform-logs#log-analytics-and-workspaces). The various data types can be analyzed together using the [Kusto Query Language][kusto_query_language].
-- [Metrics](https://docs.microsoft.com/azure/azure-monitor/essentials/data-platform-metrics) - Collects numeric data from monitored resources into a time series database. Metrics are numerical values that are collected at regular intervals and describe some aspect of a system at a particular time. Metrics are lightweight and capable of supporting near real-time scenarios, making them useful for alerting and fast detection of issues.
+- [Logs](https://learn.microsoft.com/azure/azure-monitor/logs/data-platform-logs) - Collects and organizes log and performance data from monitored resources. Data from different sources such as platform logs from Azure services, log and performance data from virtual machines agents, and usage and performance data from apps can be consolidated into a single [Azure Log Analytics workspace](https://learn.microsoft.com/azure/azure-monitor/logs/data-platform-logs#log-analytics-and-workspaces). The various data types can be analyzed together using the [Kusto Query Language][kusto_query_language].
+- [Metrics](https://learn.microsoft.com/azure/azure-monitor/essentials/data-platform-metrics) - Collects numeric data from monitored resources into a time series database. Metrics are numerical values that are collected at regular intervals and describe some aspect of a system at a particular time. Metrics are lightweight and capable of supporting near real-time scenarios, making them useful for alerting and fast detection of issues.
 
 **Resources:**
 
 - [Source code][source]
-- [Package (NuGet)][package]
+- [NuGet package][package]
 - [API reference documentation][msdocs_apiref]
 - [Service documentation][azure_monitor_overview]
 - [Change log][changelog]
@@ -20,13 +20,13 @@ The Azure Monitor Query client library is used to execute read-only queries agai
 ### Prerequisites
 
 - An [Azure subscription][azure_subscription]
-- A [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) implementation, such as an [Azure Identity library credential type](https://docs.microsoft.com/dotnet/api/overview/azure/Identity-readme#credential-classes).
+- A [TokenCredential](https://learn.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) implementation, such as an [Azure Identity library credential type](https://learn.microsoft.com/dotnet/api/overview/azure/Identity-readme#credential-classes).
 - To query Logs, you need an [Azure Log Analytics workspace][azure_monitor_create_using_portal].
 - To query Metrics, you need an Azure resource of any kind (Storage Account, Key Vault, Cosmos DB, etc.).
 
 ### Install the package
 
-Install the Azure Monitor Query client library for .NET with [NuGet][package]:
+Install the Azure Monitor Query client library for .NET with NuGet:
 
 ```dotnetcli
 dotnet add package Azure.Monitor.Query
@@ -34,7 +34,7 @@ dotnet add package Azure.Monitor.Query
 
 ### Authenticate the client
 
-An authenticated client is required to query Logs or Metrics. To authenticate, create an instance of a `TokenCredential` class. Pass it to the constructor of your `LogsQueryClient` or `MetricsQueryClient` class.
+An authenticated client is required to query Logs or Metrics. To authenticate, create an instance of a `TokenCredential` class. Pass it to the constructor of the `LogsQueryClient` or `MetricsQueryClient` class.
 
 To authenticate, the following examples use `DefaultAzureCredential` from the `Azure.Identity` package:
 
@@ -54,7 +54,7 @@ For examples of Logs and Metrics queries, see the [Examples](#examples) section.
 
 ### Logs query rate limits and throttling
 
-The Log Analytics service applies throttling when the request rate is too high. Limits, such as the maximum number of rows returned, are also applied on the Kusto queries. For more information, see [Query API](https://docs.microsoft.com/azure/azure-monitor/service-limits#la-query-api).
+The Log Analytics service applies throttling when the request rate is too high. Limits, such as the maximum number of rows returned, are also applied on the Kusto queries. For more information, see [Query API](https://learn.microsoft.com/azure/azure-monitor/service-limits#la-query-api).
 
 ### Metrics data structure
 
@@ -69,7 +69,7 @@ Each set of metric values is a time series with the following characteristics:
 
 ### Thread safety
 
-All client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+All client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This design ensures that the recommendation of reusing client instances is always safe, even across threads.
 
 ### Additional concepts
 
@@ -135,12 +135,12 @@ LogsQueryResult
         |---Type
     |---Rows (list of `LogsTableRows` objects)
         |---Count
-|---AllTables (list of `LogsTable` objects)    
+|---AllTables (list of `LogsTable` objects)
 ```
 
 #### Map logs query results to a model
 
-You can map logs query results to a model using the `LogsQueryClient.QueryWorkspaceAsync<T>` method.
+You can map logs query results to a model using the `LogsQueryClient.QueryWorkspaceAsync<T>` method:
 
 ```C# Snippet:QueryLogsAsModelsModel
 public class MyLogEntryModel
@@ -357,7 +357,7 @@ Because the structure of the statistics payload varies by query, a `BinaryData` 
 
 #### Include visualization
 
-To get visualization data for logs queries using the [render operator](https://docs.microsoft.com/azure/data-explorer/kusto/query/renderoperator?pivots=azuremonitor):
+To get visualization data for logs queries using the [render operator](https://learn.microsoft.com/azure/data-explorer/kusto/query/renderoperator?pivots=azuremonitor):
 
 1. Set the `LogsQueryOptions.IncludeVisualization` property to `true`.
 2. Invoke the `GetVisualization` method on the `LogsQueryResult` object.
@@ -516,16 +516,18 @@ To learn more about Azure Monitor, see the [Azure Monitor service documentation]
 
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
 
-This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For more information, see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
+When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately with labels and comments. Follow the instructions provided by the bot. You'll only need to sign the CLA once across all Microsoft repos.
 
-[azure_monitor_create_using_portal]: https://docs.microsoft.com/azure/azure-monitor/logs/quick-create-workspace
-[azure_monitor_overview]: https://docs.microsoft.com/azure/azure-monitor/overview
+This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For more information, see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any questions or comments.
+
+[azure_monitor_create_using_portal]: https://learn.microsoft.com/azure/azure-monitor/logs/quick-create-workspace
+[azure_monitor_overview]: https://learn.microsoft.com/azure/azure-monitor/overview
 [azure_subscription]: https://azure.microsoft.com/free/dotnet/
 [changelog]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/CHANGELOG.md
-[kusto_query_language]: https://docs.microsoft.com/azure/data-explorer/kusto/query/
+[kusto_query_language]: https://learn.microsoft.com/azure/data-explorer/kusto/query/
 [migration_guide_app_insights]: https://aka.ms/azsdk/net/migrate/ai-monitor-query
 [migration_guide_opp_insights]: https://aka.ms/azsdk/net/migrate/monitor-query
-[msdocs_apiref]: https://docs.microsoft.com/dotnet/api/overview/azure/monitor/query?view=azure-dotnet
+[msdocs_apiref]: https://learn.microsoft.com/dotnet/api/overview/azure/monitor.query-readme?view=azure-dotnet
 [package]: https://www.nuget.org/packages/Azure.Monitor.Query
 [source]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/src
 

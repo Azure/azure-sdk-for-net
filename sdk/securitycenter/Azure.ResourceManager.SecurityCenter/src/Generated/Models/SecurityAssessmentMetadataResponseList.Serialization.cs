@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static SecurityAssessmentMetadataResponseList DeserializeSecurityAssessmentMetadataResponseList(JsonElement element)
         {
-            Optional<IReadOnlyList<SecurityAssessmentMetadataResponseData>> value = default;
+            Optional<IReadOnlyList<SecurityAssessmentMetadataData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SecurityAssessmentMetadataResponseData> array = new List<SecurityAssessmentMetadataResponseData>();
+                    List<SecurityAssessmentMetadataData> array = new List<SecurityAssessmentMetadataData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityAssessmentMetadataResponseData.DeserializeSecurityAssessmentMetadataResponseData(item));
+                        array.Add(SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

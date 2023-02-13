@@ -55,8 +55,8 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <param name="deploymentConfiguration">This property describes how
         /// the pool nodes will be deployed - using Cloud Services or Virtual
         /// Machines.</param>
-        /// <param name="currentDedicatedNodes">The number of compute nodes
-        /// currently in the pool.</param>
+        /// <param name="currentDedicatedNodes">The number of dedicated compute
+        /// nodes currently in the pool.</param>
         /// <param name="currentLowPriorityNodes">The number of
         /// Spot/low-priority compute nodes currently in the pool.</param>
         /// <param name="scaleSettings">Settings which configure the number of
@@ -89,9 +89,13 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// current or last completed resize operation.</param>
         /// <param name="mountConfiguration">A list of file systems to mount on
         /// each node in the pool.</param>
+        /// <param name="targetNodeCommunicationMode">The desired node
+        /// communication mode for the pool.</param>
+        /// <param name="currentNodeCommunicationMode">The current state of the
+        /// pool communication mode.</param>
         /// <param name="identity">The type of identity used for the Batch
         /// Pool.</param>
-        public Pool(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string displayName = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolProvisioningState? provisioningState = default(PoolProvisioningState?), System.DateTime? provisioningStateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), DeploymentConfiguration deploymentConfiguration = default(DeploymentConfiguration), int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), ScaleSettings scaleSettings = default(ScaleSettings), AutoScaleRun autoScaleRun = default(AutoScaleRun), InterNodeCommunicationState? interNodeCommunication = default(InterNodeCommunicationState?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), int? taskSlotsPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), StartTask startTask = default(StartTask), IList<CertificateReference> certificates = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackages = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), ResizeOperationStatus resizeOperationStatus = default(ResizeOperationStatus), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>), BatchPoolIdentity identity = default(BatchPoolIdentity))
+        public Pool(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string displayName = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolProvisioningState? provisioningState = default(PoolProvisioningState?), System.DateTime? provisioningStateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), DeploymentConfiguration deploymentConfiguration = default(DeploymentConfiguration), int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), ScaleSettings scaleSettings = default(ScaleSettings), AutoScaleRun autoScaleRun = default(AutoScaleRun), InterNodeCommunicationState? interNodeCommunication = default(InterNodeCommunicationState?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), int? taskSlotsPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), StartTask startTask = default(StartTask), IList<CertificateReference> certificates = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackages = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), ResizeOperationStatus resizeOperationStatus = default(ResizeOperationStatus), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>), NodeCommunicationMode? targetNodeCommunicationMode = default(NodeCommunicationMode?), NodeCommunicationMode? currentNodeCommunicationMode = default(NodeCommunicationMode?), BatchPoolIdentity identity = default(BatchPoolIdentity))
             : base(id, name, type, etag)
         {
             DisplayName = displayName;
@@ -119,6 +123,8 @@ namespace Microsoft.Azure.Management.Batch.Models
             ApplicationLicenses = applicationLicenses;
             ResizeOperationStatus = resizeOperationStatus;
             MountConfiguration = mountConfiguration;
+            TargetNodeCommunicationMode = targetNodeCommunicationMode;
+            CurrentNodeCommunicationMode = currentNodeCommunicationMode;
             Identity = identity;
             CustomInit();
         }
@@ -222,7 +228,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         public DeploymentConfiguration DeploymentConfiguration { get; set; }
 
         /// <summary>
-        /// Gets the number of compute nodes currently in the pool.
+        /// Gets the number of dedicated compute nodes currently in the pool.
         /// </summary>
         [JsonProperty(PropertyName = "properties.currentDedicatedNodes")]
         public int? CurrentDedicatedNodes { get; private set; }
@@ -336,6 +342,11 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// 'certs' directory is created in the user's home directory (e.g.,
         /// /home/{user-name}/certs) and certificates are placed in that
         /// directory.
+        ///
+        /// Warning: This property is deprecated and will be removed after
+        /// February, 2024. Please use the [Azure KeyVault
+        /// Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide)
+        /// instead.
         /// </remarks>
         [JsonProperty(PropertyName = "properties.certificates")]
         public IList<CertificateReference> Certificates { get; set; }
@@ -381,6 +392,25 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </remarks>
         [JsonProperty(PropertyName = "properties.mountConfiguration")]
         public IList<MountConfiguration> MountConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the desired node communication mode for the pool.
+        /// </summary>
+        /// <remarks>
+        /// If omitted, the default value is Default. Possible values include:
+        /// 'Default', 'Classic', 'Simplified'
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.targetNodeCommunicationMode")]
+        public NodeCommunicationMode? TargetNodeCommunicationMode { get; set; }
+
+        /// <summary>
+        /// Gets the current state of the pool communication mode.
+        /// </summary>
+        /// <remarks>
+        /// Possible values include: 'Default', 'Classic', 'Simplified'
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.currentNodeCommunicationMode")]
+        public NodeCommunicationMode? CurrentNodeCommunicationMode { get; private set; }
 
         /// <summary>
         /// Gets or sets the type of identity used for the Batch Pool.

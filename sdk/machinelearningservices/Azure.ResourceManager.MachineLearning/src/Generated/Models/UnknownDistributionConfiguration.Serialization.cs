@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("distributionType");
+            writer.WritePropertyName("distributionType"u8);
             writer.WriteStringValue(DistributionType.ToString());
             writer.WriteEndObject();
         }
 
         internal static UnknownDistributionConfiguration DeserializeUnknownDistributionConfiguration(JsonElement element)
         {
-            DistributionType distributionType = default;
+            DistributionType distributionType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("distributionType"))
+                if (property.NameEquals("distributionType"u8))
                 {
                     distributionType = new DistributionType(property.Value.GetString());
                     continue;

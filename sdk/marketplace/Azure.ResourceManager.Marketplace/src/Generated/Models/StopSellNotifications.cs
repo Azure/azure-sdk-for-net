@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -24,15 +25,15 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="displayName"> Gets offer display name. </param>
         /// <param name="isEntire"> Gets a value indicating whether entire offer is in stop sell or only few of its plans. </param>
         /// <param name="messageCode"> Gets or sets the notification message id. </param>
-        /// <param name="icon"> Gets or sets the icon url. </param>
+        /// <param name="iconUri"> Gets or sets the icon url. </param>
         /// <param name="plans"> Gets or sets removed plans notifications. </param>
-        internal StopSellNotifications(string offerId, string displayName, bool? isEntire, long? messageCode, string icon, IReadOnlyList<PlanNotificationDetails> plans)
+        internal StopSellNotifications(string offerId, string displayName, bool? isEntire, long? messageCode, Uri iconUri, IReadOnlyList<PlanNotificationDetails> plans)
         {
             OfferId = offerId;
             DisplayName = displayName;
             IsEntire = isEntire;
             MessageCode = messageCode;
-            Icon = icon;
+            IconUri = iconUri;
             Plans = plans;
         }
 
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Gets or sets the notification message id. </summary>
         public long? MessageCode { get; }
         /// <summary> Gets or sets the icon url. </summary>
-        public string Icon { get; }
+        public Uri IconUri { get; }
         /// <summary> Gets or sets removed plans notifications. </summary>
         public IReadOnlyList<PlanNotificationDetails> Plans { get; }
     }

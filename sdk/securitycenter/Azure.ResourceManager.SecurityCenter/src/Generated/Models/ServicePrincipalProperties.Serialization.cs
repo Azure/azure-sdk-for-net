@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,12 +18,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ApplicationId))
             {
-                writer.WritePropertyName("applicationId");
-                writer.WriteStringValue(ApplicationId);
+                writer.WritePropertyName("applicationId"u8);
+                writer.WriteStringValue(ApplicationId.Value);
             }
             if (Optional.IsDefined(Secret))
             {
-                writer.WritePropertyName("secret");
+                writer.WritePropertyName("secret"u8);
                 writer.WriteStringValue(Secret);
             }
             writer.WriteEndObject();
@@ -30,22 +31,27 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static ServicePrincipalProperties DeserializeServicePrincipalProperties(JsonElement element)
         {
-            Optional<string> applicationId = default;
+            Optional<Guid> applicationId = default;
             Optional<string> secret = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("applicationId"))
+                if (property.NameEquals("applicationId"u8))
                 {
-                    applicationId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    applicationId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("secret"))
+                if (property.NameEquals("secret"u8))
                 {
                     secret = property.Value.GetString();
                     continue;
                 }
             }
-            return new ServicePrincipalProperties(applicationId.Value, secret.Value);
+            return new ServicePrincipalProperties(Optional.ToNullable(applicationId), secret.Value);
         }
     }
 }

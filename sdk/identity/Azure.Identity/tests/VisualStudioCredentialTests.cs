@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -14,7 +15,7 @@ using NUnit.Framework;
 namespace Azure.Identity.Tests
 {
     [RunOnlyOnPlatforms(Windows = true)] // VisualStudioCredential works only on Windows
-    public class VisualStudioCredentialTests : CredentialTestBase
+    public class VisualStudioCredentialTests : CredentialTestBase<VisualStudioCredentialOptions>
     {
         public VisualStudioCredentialTests(bool isAsync) : base(isAsync) { }
 
@@ -29,6 +30,17 @@ namespace Azure.Identity.Tests
             };
             return InstrumentClient(new VisualStudioCredential(TenantId, default, fileSystem, new TestProcessService(testProcess, true), vsOptions));
         }
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
+        {
+            var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
+            var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForVisualStudio();
+            var testProcess = new TestProcess { Output = processOutput };
+            var vsOptions = new VisualStudioCredentialOptions
+            {
+                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants,
+            };
+            return InstrumentClient(new VisualStudioCredential(config.TenantId, default, fileSystem, new TestProcessService(testProcess, true), vsOptions));
+        }
 
         [Test]
         public async Task AuthenticateWithVsCredential([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
@@ -36,10 +48,10 @@ namespace Azure.Identity.Tests
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForVisualStudio();
             var testProcess = new TestProcess { Output = processOutput };
-            var options = new VisualStudioCredentialOptions();
+            var options = new VisualStudioCredentialOptions() { AdditionallyAllowedTenants = { TenantIdHint } };
             var credential = InstrumentClient(new VisualStudioCredential(TenantId, default, fileSystem, new TestProcessService(testProcess, true), options));
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
 
             var token = await credential.GetTokenAsync(context, default);
 

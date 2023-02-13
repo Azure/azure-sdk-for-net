@@ -16,25 +16,25 @@ namespace Azure.ResourceManager.AppService.Models
         internal static OutboundEnvironmentEndpoint DeserializeOutboundEnvironmentEndpoint(JsonElement element)
         {
             Optional<string> category = default;
-            Optional<IReadOnlyList<EndpointDependency>> endpoints = default;
+            Optional<IReadOnlyList<AppServiceEndpointDependency>> endpoints = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     category = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpoints"))
+                if (property.NameEquals("endpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EndpointDependency> array = new List<EndpointDependency>();
+                    List<AppServiceEndpointDependency> array = new List<AppServiceEndpointDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EndpointDependency.DeserializeEndpointDependency(item));
+                        array.Add(AppServiceEndpointDependency.DeserializeAppServiceEndpointDependency(item));
                     }
                     endpoints = array;
                     continue;

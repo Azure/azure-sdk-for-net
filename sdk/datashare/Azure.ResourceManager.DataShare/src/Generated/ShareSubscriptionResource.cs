@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataShare
     /// A Class representing a ShareSubscription along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ShareSubscriptionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetShareSubscriptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AccountResource" /> using the GetShareSubscription method.
+    /// Otherwise you can get one from its parent resource <see cref="DataShareAccountResource" /> using the GetShareSubscription method.
     /// </summary>
     public partial class ShareSubscriptionResource : ArmResource
     {
@@ -91,84 +91,124 @@ namespace Azure.ResourceManager.DataShare
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DataSetMappingResources in the ShareSubscription. </summary>
-        /// <returns> An object representing collection of DataSetMappingResources and their operations over a DataSetMappingResource. </returns>
-        public virtual DataSetMappingCollection GetDataSetMappings()
+        /// <summary> Gets a collection of ShareDataSetMappingResources in the ShareSubscription. </summary>
+        /// <returns> An object representing collection of ShareDataSetMappingResources and their operations over a ShareDataSetMappingResource. </returns>
+        public virtual ShareDataSetMappingCollection GetShareDataSetMappings()
         {
-            return GetCachedClient(Client => new DataSetMappingCollection(Client, Id));
+            return GetCachedClient(Client => new ShareDataSetMappingCollection(Client, Id));
         }
 
         /// <summary>
         /// Get a DataSetMapping in a shareSubscription
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/dataSetMappings/{dataSetMappingName}
-        /// Operation Id: DataSetMappings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/dataSetMappings/{dataSetMappingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataSetMappings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataSetMappingName"> The name of the dataSetMapping. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataSetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetMappingName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataSetMappingResource>> GetDataSetMappingAsync(string dataSetMappingName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ShareDataSetMappingResource>> GetShareDataSetMappingAsync(string dataSetMappingName, CancellationToken cancellationToken = default)
         {
-            return await GetDataSetMappings().GetAsync(dataSetMappingName, cancellationToken).ConfigureAwait(false);
+            return await GetShareDataSetMappings().GetAsync(dataSetMappingName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a DataSetMapping in a shareSubscription
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/dataSetMappings/{dataSetMappingName}
-        /// Operation Id: DataSetMappings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/dataSetMappings/{dataSetMappingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataSetMappings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataSetMappingName"> The name of the dataSetMapping. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataSetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSetMappingName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DataSetMappingResource> GetDataSetMapping(string dataSetMappingName, CancellationToken cancellationToken = default)
+        public virtual Response<ShareDataSetMappingResource> GetShareDataSetMapping(string dataSetMappingName, CancellationToken cancellationToken = default)
         {
-            return GetDataSetMappings().Get(dataSetMappingName, cancellationToken);
+            return GetShareDataSetMappings().Get(dataSetMappingName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TriggerResources in the ShareSubscription. </summary>
-        /// <returns> An object representing collection of TriggerResources and their operations over a TriggerResource. </returns>
-        public virtual TriggerCollection GetTriggers()
+        /// <summary> Gets a collection of DataShareTriggerResources in the ShareSubscription. </summary>
+        /// <returns> An object representing collection of DataShareTriggerResources and their operations over a DataShareTriggerResource. </returns>
+        public virtual DataShareTriggerCollection GetDataShareTriggers()
         {
-            return GetCachedClient(Client => new TriggerCollection(Client, Id));
+            return GetCachedClient(Client => new DataShareTriggerCollection(Client, Id));
         }
 
         /// <summary>
         /// Get a Trigger in a shareSubscription
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/triggers/{triggerName}
-        /// Operation Id: Triggers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/triggers/{triggerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Triggers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="triggerName"> The name of the trigger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<TriggerResource>> GetTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataShareTriggerResource>> GetDataShareTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
         {
-            return await GetTriggers().GetAsync(triggerName, cancellationToken).ConfigureAwait(false);
+            return await GetDataShareTriggers().GetAsync(triggerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a Trigger in a shareSubscription
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/triggers/{triggerName}
-        /// Operation Id: Triggers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/triggers/{triggerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Triggers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="triggerName"> The name of the trigger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TriggerResource> GetTrigger(string triggerName, CancellationToken cancellationToken = default)
+        public virtual Response<DataShareTriggerResource> GetDataShareTrigger(string triggerName, CancellationToken cancellationToken = default)
         {
-            return GetTriggers().Get(triggerName, cancellationToken);
+            return GetDataShareTriggers().Get(triggerName, cancellationToken);
         }
 
         /// <summary>
         /// Get a shareSubscription in an account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}
-        /// Operation Id: ShareSubscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ShareSubscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ShareSubscriptionResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -191,8 +231,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Get a shareSubscription in an account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}
-        /// Operation Id: ShareSubscriptions_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ShareSubscriptions_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ShareSubscriptionResource> Get(CancellationToken cancellationToken = default)
@@ -215,19 +263,27 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Delete a shareSubscription in an account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}
-        /// Operation Id: ShareSubscriptions_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ShareSubscriptions_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<OperationResponse>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataShareOperationResult>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.Delete");
             scope.Start();
             try
             {
                 var response = await _shareSubscriptionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<OperationResponse>(new OperationResponseOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataShareArmOperation<DataShareOperationResult>(new DataShareOperationResultOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -241,19 +297,27 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Delete a shareSubscription in an account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}
-        /// Operation Id: ShareSubscriptions_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ShareSubscriptions_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<OperationResponse> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataShareOperationResult> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.Delete");
             scope.Start();
             try
             {
                 var response = _shareSubscriptionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataShareArmOperation<OperationResponse>(new OperationResponseOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataShareArmOperation<DataShareOperationResult>(new DataShareOperationResultOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -267,8 +331,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Create a shareSubscription in an account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}
-        /// Operation Id: ShareSubscriptions_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ShareSubscriptions_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> create parameters for shareSubscription. </param>
@@ -297,8 +369,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Create a shareSubscription in an account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}
-        /// Operation Id: ShareSubscriptions_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ShareSubscriptions_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> create parameters for shareSubscription. </param>
@@ -327,8 +407,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Request to cancel a synchronization.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/cancelSynchronization
-        /// Operation Id: ShareSubscriptions_CancelSynchronization
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/cancelSynchronization</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ShareSubscriptions_CancelSynchronization</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="shareSubscriptionSynchronization"> Share Subscription Synchronization payload. </param>
@@ -357,8 +445,16 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Request to cancel a synchronization.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/cancelSynchronization
-        /// Operation Id: ShareSubscriptions_CancelSynchronization
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/cancelSynchronization</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ShareSubscriptions_CancelSynchronization</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="shareSubscriptionSynchronization"> Share Subscription Synchronization payload. </param>
@@ -387,94 +483,62 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Get synchronization settings set on a share
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/listSourceShareSynchronizationSettings
-        /// Operation Id: ShareSubscriptions_ListSourceShareSynchronizationSettings
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/listSourceShareSynchronizationSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ShareSubscriptions_ListSourceShareSynchronizationSettings</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SourceShareSynchronizationSetting" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SourceShareSynchronizationSetting> GetSourceShareSynchronizationSettingsAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SourceShareSynchronizationSetting>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSourceShareSynchronizationSettings");
-                scope.Start();
-                try
-                {
-                    var response = await _shareSubscriptionRestClient.ListSourceShareSynchronizationSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SourceShareSynchronizationSetting>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSourceShareSynchronizationSettings");
-                scope.Start();
-                try
-                {
-                    var response = await _shareSubscriptionRestClient.ListSourceShareSynchronizationSettingsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSourceShareSynchronizationSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSourceShareSynchronizationSettingsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SourceShareSynchronizationSetting.DeserializeSourceShareSynchronizationSetting, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSourceShareSynchronizationSettings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get synchronization settings set on a share
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/listSourceShareSynchronizationSettings
-        /// Operation Id: ShareSubscriptions_ListSourceShareSynchronizationSettings
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/listSourceShareSynchronizationSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ShareSubscriptions_ListSourceShareSynchronizationSettings</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SourceShareSynchronizationSetting" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SourceShareSynchronizationSetting> GetSourceShareSynchronizationSettings(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<SourceShareSynchronizationSetting> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSourceShareSynchronizationSettings");
-                scope.Start();
-                try
-                {
-                    var response = _shareSubscriptionRestClient.ListSourceShareSynchronizationSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SourceShareSynchronizationSetting> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSourceShareSynchronizationSettings");
-                scope.Start();
-                try
-                {
-                    var response = _shareSubscriptionRestClient.ListSourceShareSynchronizationSettingsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSourceShareSynchronizationSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSourceShareSynchronizationSettingsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SourceShareSynchronizationSetting.DeserializeSourceShareSynchronizationSetting, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSourceShareSynchronizationSettings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List synchronization details
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/listSynchronizationDetails
-        /// Operation Id: ShareSubscriptions_ListSynchronizationDetails
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/listSynchronizationDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ShareSubscriptions_ListSynchronizationDetails</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="shareSubscriptionSynchronization"> Share Subscription Synchronization payload. </param>
         /// <param name="skipToken"> Continuation token. </param>
@@ -487,43 +551,23 @@ namespace Azure.ResourceManager.DataShare
         {
             Argument.AssertNotNull(shareSubscriptionSynchronization, nameof(shareSubscriptionSynchronization));
 
-            async Task<Page<SynchronizationDetails>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSynchronizationDetails");
-                scope.Start();
-                try
-                {
-                    var response = await _shareSubscriptionRestClient.ListSynchronizationDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SynchronizationDetails>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSynchronizationDetails");
-                scope.Start();
-                try
-                {
-                    var response = await _shareSubscriptionRestClient.ListSynchronizationDetailsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSynchronizationDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSynchronizationDetailsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SynchronizationDetails.DeserializeSynchronizationDetails, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizationDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List synchronization details
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/listSynchronizationDetails
-        /// Operation Id: ShareSubscriptions_ListSynchronizationDetails
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/listSynchronizationDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ShareSubscriptions_ListSynchronizationDetails</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="shareSubscriptionSynchronization"> Share Subscription Synchronization payload. </param>
         /// <param name="skipToken"> Continuation token. </param>
@@ -536,43 +580,23 @@ namespace Azure.ResourceManager.DataShare
         {
             Argument.AssertNotNull(shareSubscriptionSynchronization, nameof(shareSubscriptionSynchronization));
 
-            Page<SynchronizationDetails> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSynchronizationDetails");
-                scope.Start();
-                try
-                {
-                    var response = _shareSubscriptionRestClient.ListSynchronizationDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SynchronizationDetails> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSynchronizationDetails");
-                scope.Start();
-                try
-                {
-                    var response = _shareSubscriptionRestClient.ListSynchronizationDetailsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSynchronizationDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSynchronizationDetailsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SynchronizationDetails.DeserializeSynchronizationDetails, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizationDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List synchronizations of a share subscription
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/listSynchronizations
-        /// Operation Id: ShareSubscriptions_ListSynchronizations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/listSynchronizations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ShareSubscriptions_ListSynchronizations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -581,43 +605,23 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An async collection of <see cref="ShareSubscriptionSynchronization" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ShareSubscriptionSynchronization> GetSynchronizationsAsync(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ShareSubscriptionSynchronization>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSynchronizations");
-                scope.Start();
-                try
-                {
-                    var response = await _shareSubscriptionRestClient.ListSynchronizationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ShareSubscriptionSynchronization>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSynchronizations");
-                scope.Start();
-                try
-                {
-                    var response = await _shareSubscriptionRestClient.ListSynchronizationsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSynchronizationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSynchronizationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ShareSubscriptionSynchronization.DeserializeShareSubscriptionSynchronization, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List synchronizations of a share subscription
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/listSynchronizations
-        /// Operation Id: ShareSubscriptions_ListSynchronizations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/listSynchronizations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ShareSubscriptions_ListSynchronizations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
@@ -626,58 +630,38 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> A collection of <see cref="ShareSubscriptionSynchronization" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ShareSubscriptionSynchronization> GetSynchronizations(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Page<ShareSubscriptionSynchronization> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSynchronizations");
-                scope.Start();
-                try
-                {
-                    var response = _shareSubscriptionRestClient.ListSynchronizations(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ShareSubscriptionSynchronization> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.GetSynchronizations");
-                scope.Start();
-                try
-                {
-                    var response = _shareSubscriptionRestClient.ListSynchronizationsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSynchronizationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSynchronizationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ShareSubscriptionSynchronization.DeserializeShareSubscriptionSynchronization, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Initiate a copy
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/synchronize
-        /// Operation Id: ShareSubscriptions_Synchronize
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/synchronize</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ShareSubscriptions_Synchronize</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="synchronize"> Synchronize payload. </param>
+        /// <param name="content"> Synchronize payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="synchronize"/> is null. </exception>
-        public virtual async Task<ArmOperation<ShareSubscriptionSynchronization>> SynchronizeAsync(WaitUntil waitUntil, Synchronize synchronize, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ShareSubscriptionSynchronization>> SynchronizeAsync(WaitUntil waitUntil, DataShareSynchronizeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(synchronize, nameof(synchronize));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.Synchronize");
             scope.Start();
             try
             {
-                var response = await _shareSubscriptionRestClient.SynchronizeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synchronize, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<ShareSubscriptionSynchronization>(new ShareSubscriptionSynchronizationOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateSynchronizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synchronize).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _shareSubscriptionRestClient.SynchronizeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new DataShareArmOperation<ShareSubscriptionSynchronization>(new ShareSubscriptionSynchronizationOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateSynchronizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -691,23 +675,31 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Initiate a copy
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/synchronize
-        /// Operation Id: ShareSubscriptions_Synchronize
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/synchronize</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ShareSubscriptions_Synchronize</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="synchronize"> Synchronize payload. </param>
+        /// <param name="content"> Synchronize payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="synchronize"/> is null. </exception>
-        public virtual ArmOperation<ShareSubscriptionSynchronization> Synchronize(WaitUntil waitUntil, Synchronize synchronize, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ShareSubscriptionSynchronization> Synchronize(WaitUntil waitUntil, DataShareSynchronizeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(synchronize, nameof(synchronize));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionResource.Synchronize");
             scope.Start();
             try
             {
-                var response = _shareSubscriptionRestClient.Synchronize(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synchronize, cancellationToken);
-                var operation = new DataShareArmOperation<ShareSubscriptionSynchronization>(new ShareSubscriptionSynchronizationOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateSynchronizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synchronize).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _shareSubscriptionRestClient.Synchronize(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new DataShareArmOperation<ShareSubscriptionSynchronization>(new ShareSubscriptionSynchronizationOperationSource(), _shareSubscriptionClientDiagnostics, Pipeline, _shareSubscriptionRestClient.CreateSynchronizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -721,88 +713,48 @@ namespace Azure.ResourceManager.DataShare
 
         /// <summary>
         /// Get source dataSets of a shareSubscription
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/consumerSourceDataSets
-        /// Operation Id: ConsumerSourceDataSets_ListByShareSubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/consumerSourceDataSets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerSourceDataSets_ListByShareSubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConsumerSourceDataSet" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumerSourceDataSet> GetConsumerSourceDataSetsAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ConsumerSourceDataSet>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _consumerSourceDataSetsClientDiagnostics.CreateScope("ShareSubscriptionResource.GetConsumerSourceDataSets");
-                scope.Start();
-                try
-                {
-                    var response = await _consumerSourceDataSetsRestClient.ListByShareSubscriptionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ConsumerSourceDataSet>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _consumerSourceDataSetsClientDiagnostics.CreateScope("ShareSubscriptionResource.GetConsumerSourceDataSets");
-                scope.Start();
-                try
-                {
-                    var response = await _consumerSourceDataSetsRestClient.ListByShareSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _consumerSourceDataSetsRestClient.CreateListByShareSubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _consumerSourceDataSetsRestClient.CreateListByShareSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumerSourceDataSet.DeserializeConsumerSourceDataSet, _consumerSourceDataSetsClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetConsumerSourceDataSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get source dataSets of a shareSubscription
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/consumerSourceDataSets
-        /// Operation Id: ConsumerSourceDataSets_ListByShareSubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/consumerSourceDataSets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerSourceDataSets_ListByShareSubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConsumerSourceDataSet" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumerSourceDataSet> GetConsumerSourceDataSets(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<ConsumerSourceDataSet> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _consumerSourceDataSetsClientDiagnostics.CreateScope("ShareSubscriptionResource.GetConsumerSourceDataSets");
-                scope.Start();
-                try
-                {
-                    var response = _consumerSourceDataSetsRestClient.ListByShareSubscription(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ConsumerSourceDataSet> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _consumerSourceDataSetsClientDiagnostics.CreateScope("ShareSubscriptionResource.GetConsumerSourceDataSets");
-                scope.Start();
-                try
-                {
-                    var response = _consumerSourceDataSetsRestClient.ListByShareSubscriptionNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _consumerSourceDataSetsRestClient.CreateListByShareSubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _consumerSourceDataSetsRestClient.CreateListByShareSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumerSourceDataSet.DeserializeConsumerSourceDataSet, _consumerSourceDataSetsClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetConsumerSourceDataSets", "value", "nextLink", cancellationToken);
         }
     }
 }

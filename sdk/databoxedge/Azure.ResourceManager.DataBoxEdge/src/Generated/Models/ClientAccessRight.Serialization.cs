@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("client");
+            writer.WritePropertyName("client"u8);
             writer.WriteStringValue(Client);
-            writer.WritePropertyName("accessPermission");
+            writer.WritePropertyName("accessPermission"u8);
             writer.WriteStringValue(AccessPermission.ToString());
             writer.WriteEndObject();
         }
@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal static ClientAccessRight DeserializeClientAccessRight(JsonElement element)
         {
             string client = default;
-            ClientPermissionType accessPermission = default;
+            EdgeClientPermissionType accessPermission = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("client"))
+                if (property.NameEquals("client"u8))
                 {
                     client = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accessPermission"))
+                if (property.NameEquals("accessPermission"u8))
                 {
-                    accessPermission = new ClientPermissionType(property.Value.GetString());
+                    accessPermission = new EdgeClientPermissionType(property.Value.GetString());
                     continue;
                 }
             }

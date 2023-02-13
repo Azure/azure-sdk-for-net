@@ -9,19 +9,25 @@ using Azure.Communication.MediaComposition;
 
 namespace Azure.Communication.MediaComposition.Models
 {
-    /// <summary> Configure a layout. </summary>
-    public partial class MediaCompositionLayout
+    /// <summary>
+    /// Configure a layout
+    /// Please note <see cref="MediaCompositionLayout"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AutoGridLayout"/>, <see cref="CustomLayout"/>, <see cref="GridLayout"/>, <see cref="PresentationLayout"/> and <see cref="PresenterLayout"/>.
+    /// </summary>
+    public abstract partial class MediaCompositionLayout
     {
 
         /// <summary> Initializes a new instance of MediaCompositionLayout. </summary>
         /// <param name="kind"> Kind of layout. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>
-        internal MediaCompositionLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri)
+        /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
+        internal MediaCompositionLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, ScalingMode? scalingMode)
         {
             Kind = kind;
             Resolution = resolution;
             PlaceholderImageUri = placeholderImageUri;
+            ScalingMode = scalingMode;
         }
 
         /// <summary> Kind of layout. </summary>
@@ -30,5 +36,7 @@ namespace Azure.Communication.MediaComposition.Models
         public LayoutResolution Resolution { get; set; }
         /// <summary> Set global placeholder image. </summary>
         public string PlaceholderImageUri { get; set; }
+        /// <summary> The scaling mode for the view of a video stream in a cell. </summary>
+        public ScalingMode? ScalingMode { get; set; }
     }
 }

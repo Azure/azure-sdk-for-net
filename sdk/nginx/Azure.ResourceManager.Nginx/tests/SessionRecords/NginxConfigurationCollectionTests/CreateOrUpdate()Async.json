@@ -1,0 +1,2421 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-4d198c0387e0679986cf1d10dc1d80bc-7d5660c159f5a417-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "6861dfb90c1d131b9d05febf3e0db49e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "396",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:42:13 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "dae2ffa5-9dd6-480f-8e8d-29e4127ebef5",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "dae2ffa5-9dd6-480f-8e8d-29e4127ebef5",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224213Z:dae2ffa5-9dd6-480f-8e8d-29e4127ebef5"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "subscriptionId": "e3853e83-0d02-4fb3-b88f-05b5fd21aee2",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "Liftr-Nginx-Test",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourcegroups/Default-Nginx-9747?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "28",
+        "Content-Type": "application/json",
+        "traceparent": "00-985c9d86692a0eba39288efc46f49efe-e00b2bcc04314f29-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "7f750a0ad66894a3c0934c82aa2c7c3a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westcentralus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "240",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:42:16 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a226070c-3aed-4432-a5a1-babc8d3846b2",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "a226070c-3aed-4432-a5a1-babc8d3846b2",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224216Z:a226070c-3aed-4432-a5a1-babc8d3846b2"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747",
+        "name": "Default-Nginx-9747",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "westcentralus",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/publicIPAddresses/testPublicIP-3030?api-version=2021-02-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "137",
+        "Content-Type": "application/json",
+        "traceparent": "00-1901cb0b580bd727a81e4857e50db490-396885bacb11244f-00",
+        "User-Agent": "azsdk-net-ResourceManager.Network/1.0.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "48d2b5b7d951cb8f2b0860f41a023e84",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "Standard"
+        },
+        "location": "westcentralus",
+        "properties": {
+          "publicIPAllocationMethod": "Static",
+          "publicIPAddressVersion": "IPv4"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncNotification": "Enabled",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/7e7f6392-bc69-4323-9542-08898af57060?api-version=2021-02-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "659",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:42:23 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "1",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "9f16767e-55fb-4b5b-a881-a64cabafeb33",
+        "x-ms-client-request-id": "48d2b5b7d951cb8f2b0860f41a023e84",
+        "x-ms-correlation-request-id": "81830b3a-be86-4250-b0bf-e4e5be3d4449",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "7e7f6392-bc69-4323-9542-08898af57060",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224223Z:81830b3a-be86-4250-b0bf-e4e5be3d4449"
+      },
+      "ResponseBody": {
+        "name": "testPublicIP-3030",
+        "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/publicIPAddresses/testPublicIP-3030",
+        "etag": "W/\u00226896c139-a19b-406a-b328-e5fca6ed025e\u0022",
+        "location": "westcentralus",
+        "properties": {
+          "provisioningState": "Updating",
+          "resourceGuid": "5bee4c4b-8099-4528-aeeb-8c570a7c0b2f",
+          "publicIPAddressVersion": "IPv4",
+          "publicIPAllocationMethod": "Static",
+          "idleTimeoutInMinutes": 4,
+          "ipTags": []
+        },
+        "type": "Microsoft.Network/publicIPAddresses",
+        "sku": {
+          "name": "Standard",
+          "tier": "Regional"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/7e7f6392-bc69-4323-9542-08898af57060?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-1901cb0b580bd727a81e4857e50db490-8fbab9c58426ccd4-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "e8fc89cac2759bb9ef9caa9a34cc7949",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "29",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:42:23 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "730178c6-50e1-4efe-ae98-f931146cfcf5",
+        "x-ms-client-request-id": "e8fc89cac2759bb9ef9caa9a34cc7949",
+        "x-ms-correlation-request-id": "c61d1e1f-c40e-4518-8ff4-5d19558fa8f8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "b9cbd038-e26e-4500-8367-5ae3f4ad44d0",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224223Z:c61d1e1f-c40e-4518-8ff4-5d19558fa8f8"
+      },
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/publicIPAddresses/testPublicIP-3030?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-1901cb0b580bd727a81e4857e50db490-28dd6e1bcaac9496-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "76b126437c1fae32f7feebd80afed852",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "694",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:42:23 GMT",
+        "ETag": "W/\u002270fb5ac6-8d76-4b83-bfd3-55dccf4bbf7b\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "7ed1e047-0bf2-42aa-ac0d-cc145e7c32ae",
+        "x-ms-client-request-id": "76b126437c1fae32f7feebd80afed852",
+        "x-ms-correlation-request-id": "53855a17-be6c-45f9-af15-b4951ba2d414",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "9f68b6f4-345e-43f1-9d8f-50bf861d92df",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224224Z:53855a17-be6c-45f9-af15-b4951ba2d414"
+      },
+      "ResponseBody": {
+        "name": "testPublicIP-3030",
+        "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/publicIPAddresses/testPublicIP-3030",
+        "etag": "W/\u002270fb5ac6-8d76-4b83-bfd3-55dccf4bbf7b\u0022",
+        "location": "westcentralus",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "5bee4c4b-8099-4528-aeeb-8c570a7c0b2f",
+          "ipAddress": "13.78.202.39",
+          "publicIPAddressVersion": "IPv4",
+          "publicIPAllocationMethod": "Static",
+          "idleTimeoutInMinutes": 4,
+          "ipTags": []
+        },
+        "type": "Microsoft.Network/publicIPAddresses",
+        "sku": {
+          "name": "Standard",
+          "tier": "Regional"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842?api-version=2021-02-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "642",
+        "Content-Type": "application/json",
+        "traceparent": "00-19e925150e8e91138f62b9dcce737c84-2b6893e7653100c6-00",
+        "User-Agent": "azsdk-net-ResourceManager.Network/1.0.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "059029da0e564cb87e07b35e239f90ff",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westcentralus",
+        "properties": {
+          "securityRules": [
+            {
+              "name": "http",
+              "properties": {
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "*",
+                "destinationPortRanges": [
+                  "80"
+                ],
+                "access": "Allow",
+                "priority": 100,
+                "direction": "Inbound"
+              }
+            },
+            {
+              "name": "NRMS-Rule-103",
+              "properties": {
+                "description": "Created by Azure Core Security managed policy, rule can be deleted but do not change source ips, please see aka.ms/cainsgpolicy",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "CorpNetPublic",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 103,
+                "direction": "Inbound"
+              }
+            }
+          ]
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncNotification": "Enabled",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/2b324ccf-784d-49be-ad57-83e23ee0b6e2?api-version=2021-02-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "8549",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:42:25 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "3",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "26aaf58f-3778-4866-b781-b7e030434025",
+        "x-ms-client-request-id": "059029da0e564cb87e07b35e239f90ff",
+        "x-ms-correlation-request-id": "63872f23-3069-4d2c-9bd1-1c0f7fd2a4f4",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "2b324ccf-784d-49be-ad57-83e23ee0b6e2",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224226Z:63872f23-3069-4d2c-9bd1-1c0f7fd2a4f4"
+      },
+      "ResponseBody": {
+        "name": "testNSG-2842",
+        "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842",
+        "etag": "W/\u0022f9e7c084-5fa1-4f50-ba20-6e6db696510c\u0022",
+        "type": "Microsoft.Network/networkSecurityGroups",
+        "location": "westcentralus",
+        "properties": {
+          "provisioningState": "Updating",
+          "resourceGuid": "79a7db7b-3262-484f-8e22-74688945ccf2",
+          "securityRules": [
+            {
+              "name": "http",
+              "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842/securityRules/http",
+              "etag": "W/\u0022f9e7c084-5fa1-4f50-ba20-6e6db696510c\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+              "properties": {
+                "provisioningState": "Updating",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 100,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [
+                  "80"
+                ],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "NRMS-Rule-103",
+              "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842/securityRules/NRMS-Rule-103",
+              "etag": "W/\u0022f9e7c084-5fa1-4f50-ba20-6e6db696510c\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+              "properties": {
+                "provisioningState": "Updating",
+                "description": "Created by Azure Core Security managed policy, rule can be deleted but do not change source ips, please see aka.ms/cainsgpolicy",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "CorpNetPublic",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 103,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            }
+          ],
+          "defaultSecurityRules": [
+            {
+              "name": "AllowVnetInBound",
+              "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842/defaultSecurityRules/AllowVnetInBound",
+              "etag": "W/\u0022f9e7c084-5fa1-4f50-ba20-6e6db696510c\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Updating",
+                "description": "Allow inbound traffic from all VMs in VNET",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "VirtualNetwork",
+                "destinationAddressPrefix": "VirtualNetwork",
+                "access": "Allow",
+                "priority": 65000,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "AllowAzureLoadBalancerInBound",
+              "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842/defaultSecurityRules/AllowAzureLoadBalancerInBound",
+              "etag": "W/\u0022f9e7c084-5fa1-4f50-ba20-6e6db696510c\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Updating",
+                "description": "Allow inbound traffic from azure load balancer",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "AzureLoadBalancer",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 65001,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "DenyAllInBound",
+              "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842/defaultSecurityRules/DenyAllInBound",
+              "etag": "W/\u0022f9e7c084-5fa1-4f50-ba20-6e6db696510c\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Updating",
+                "description": "Deny all inbound traffic",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Deny",
+                "priority": 65500,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "AllowVnetOutBound",
+              "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842/defaultSecurityRules/AllowVnetOutBound",
+              "etag": "W/\u0022f9e7c084-5fa1-4f50-ba20-6e6db696510c\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Updating",
+                "description": "Allow outbound traffic from all VMs to all VMs in VNET",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "VirtualNetwork",
+                "destinationAddressPrefix": "VirtualNetwork",
+                "access": "Allow",
+                "priority": 65000,
+                "direction": "Outbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "AllowInternetOutBound",
+              "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842/defaultSecurityRules/AllowInternetOutBound",
+              "etag": "W/\u0022f9e7c084-5fa1-4f50-ba20-6e6db696510c\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Updating",
+                "description": "Allow outbound traffic from all VMs to Internet",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "Internet",
+                "access": "Allow",
+                "priority": 65001,
+                "direction": "Outbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "DenyAllOutBound",
+              "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842/defaultSecurityRules/DenyAllOutBound",
+              "etag": "W/\u0022f9e7c084-5fa1-4f50-ba20-6e6db696510c\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Updating",
+                "description": "Deny all outbound traffic",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Deny",
+                "priority": 65500,
+                "direction": "Outbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/2b324ccf-784d-49be-ad57-83e23ee0b6e2?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-19e925150e8e91138f62b9dcce737c84-913e0792951c37ea-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "a359135844e817edf92aa1757f50d35e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "29",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:42:26 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "b6b274b2-eac5-4da6-a222-17dfc288a6f8",
+        "x-ms-client-request-id": "a359135844e817edf92aa1757f50d35e",
+        "x-ms-correlation-request-id": "9721f515-4754-47ec-a1f8-ea50999be09c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "d44f66f0-75de-46db-ae8c-83c6adf92372",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224226Z:9721f515-4754-47ec-a1f8-ea50999be09c"
+      },
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-19e925150e8e91138f62b9dcce737c84-11bac2035bc73c9c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "b184d95a2b0b747cdb39b76597e16bec",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "8558",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:42:26 GMT",
+        "ETag": "W/\u0022a180c635-bd8b-4688-a1ac-3a86cc418b2c\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "cdb49db6-9a4a-42ed-89b0-bac72a065a6e",
+        "x-ms-client-request-id": "b184d95a2b0b747cdb39b76597e16bec",
+        "x-ms-correlation-request-id": "1aef7f29-895d-4d2d-af4a-edf4dbf5c36a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11995",
+        "x-ms-request-id": "194ba390-562c-449f-aeb2-b0df1b597d17",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224227Z:1aef7f29-895d-4d2d-af4a-edf4dbf5c36a"
+      },
+      "ResponseBody": {
+        "name": "testNSG-2842",
+        "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842",
+        "etag": "W/\u0022a180c635-bd8b-4688-a1ac-3a86cc418b2c\u0022",
+        "type": "Microsoft.Network/networkSecurityGroups",
+        "location": "westcentralus",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "79a7db7b-3262-484f-8e22-74688945ccf2",
+          "securityRules": [
+            {
+              "name": "http",
+              "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842/securityRules/http",
+              "etag": "W/\u0022a180c635-bd8b-4688-a1ac-3a86cc418b2c\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 100,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [
+                  "80"
+                ],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "NRMS-Rule-103",
+              "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842/securityRules/NRMS-Rule-103",
+              "etag": "W/\u0022a180c635-bd8b-4688-a1ac-3a86cc418b2c\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "description": "Created by Azure Core Security managed policy, rule can be deleted but do not change source ips, please see aka.ms/cainsgpolicy",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "CorpNetPublic",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 103,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            }
+          ],
+          "defaultSecurityRules": [
+            {
+              "name": "AllowVnetInBound",
+              "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842/defaultSecurityRules/AllowVnetInBound",
+              "etag": "W/\u0022a180c635-bd8b-4688-a1ac-3a86cc418b2c\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "description": "Allow inbound traffic from all VMs in VNET",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "VirtualNetwork",
+                "destinationAddressPrefix": "VirtualNetwork",
+                "access": "Allow",
+                "priority": 65000,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "AllowAzureLoadBalancerInBound",
+              "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842/defaultSecurityRules/AllowAzureLoadBalancerInBound",
+              "etag": "W/\u0022a180c635-bd8b-4688-a1ac-3a86cc418b2c\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "description": "Allow inbound traffic from azure load balancer",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "AzureLoadBalancer",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 65001,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "DenyAllInBound",
+              "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842/defaultSecurityRules/DenyAllInBound",
+              "etag": "W/\u0022a180c635-bd8b-4688-a1ac-3a86cc418b2c\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "description": "Deny all inbound traffic",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Deny",
+                "priority": 65500,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "AllowVnetOutBound",
+              "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842/defaultSecurityRules/AllowVnetOutBound",
+              "etag": "W/\u0022a180c635-bd8b-4688-a1ac-3a86cc418b2c\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "description": "Allow outbound traffic from all VMs to all VMs in VNET",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "VirtualNetwork",
+                "destinationAddressPrefix": "VirtualNetwork",
+                "access": "Allow",
+                "priority": 65000,
+                "direction": "Outbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "AllowInternetOutBound",
+              "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842/defaultSecurityRules/AllowInternetOutBound",
+              "etag": "W/\u0022a180c635-bd8b-4688-a1ac-3a86cc418b2c\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "description": "Allow outbound traffic from all VMs to Internet",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "Internet",
+                "access": "Allow",
+                "priority": 65001,
+                "direction": "Outbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "DenyAllOutBound",
+              "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842/defaultSecurityRules/DenyAllOutBound",
+              "etag": "W/\u0022a180c635-bd8b-4688-a1ac-3a86cc418b2c\u0022",
+              "type": "Microsoft.Network/networkSecurityGroups/defaultSecurityRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "description": "Deny all outbound traffic",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Deny",
+                "priority": 65500,
+                "direction": "Outbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/virtualNetworks/testVNet-238?api-version=2021-02-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "1887",
+        "Content-Type": "application/json",
+        "traceparent": "00-9cbb5c7e17a170f70329c4a3fa22d215-2576a4eff1f4d729-00",
+        "User-Agent": "azsdk-net-ResourceManager.Network/1.0.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "ed4510054116b55f2de0c4d8d7fc1d18",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westcentralus",
+        "properties": {
+          "addressSpace": {
+            "addressPrefixes": [
+              "10.0.0.0/16"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "testSubnet-3258",
+              "properties": {
+                "addressPrefix": "10.0.2.0/24",
+                "networkSecurityGroup": {
+                  "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842",
+                  "location": "westcentralus",
+                  "properties": {
+                    "securityRules": [
+                      {
+                        "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842/securityRules/http",
+                        "name": "http",
+                        "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+                        "properties": {
+                          "protocol": "*",
+                          "sourcePortRange": "*",
+                          "sourceAddressPrefix": "*",
+                          "sourceAddressPrefixes": [],
+                          "destinationAddressPrefix": "*",
+                          "destinationAddressPrefixes": [],
+                          "sourcePortRanges": [],
+                          "destinationPortRanges": [
+                            "80"
+                          ],
+                          "access": "Allow",
+                          "priority": 100,
+                          "direction": "Inbound"
+                        }
+                      },
+                      {
+                        "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842/securityRules/NRMS-Rule-103",
+                        "name": "NRMS-Rule-103",
+                        "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+                        "properties": {
+                          "description": "Created by Azure Core Security managed policy, rule can be deleted but do not change source ips, please see aka.ms/cainsgpolicy",
+                          "protocol": "*",
+                          "sourcePortRange": "*",
+                          "destinationPortRange": "*",
+                          "sourceAddressPrefix": "CorpNetPublic",
+                          "sourceAddressPrefixes": [],
+                          "destinationAddressPrefix": "*",
+                          "destinationAddressPrefixes": [],
+                          "sourcePortRanges": [],
+                          "destinationPortRanges": [],
+                          "access": "Allow",
+                          "priority": 103,
+                          "direction": "Inbound"
+                        }
+                      }
+                    ]
+                  }
+                },
+                "delegations": [
+                  {
+                    "name": "NGINX.NGINXPLUS/nginxDeployments",
+                    "properties": {
+                      "serviceName": "NGINX.NGINXPLUS/nginxDeployments"
+                    }
+                  }
+                ],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+              }
+            }
+          ]
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncNotification": "Enabled",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/0a1db127-4cbf-486a-be2b-4e6651d71c68?api-version=2021-02-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "2262",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:42:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "3",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "25d03043-58b6-4388-b5b4-d96e6d218539",
+        "x-ms-client-request-id": "ed4510054116b55f2de0c4d8d7fc1d18",
+        "x-ms-correlation-request-id": "a5f01362-ff26-4a1c-9201-b64b21cd2807",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "0a1db127-4cbf-486a-be2b-4e6651d71c68",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224229Z:a5f01362-ff26-4a1c-9201-b64b21cd2807"
+      },
+      "ResponseBody": {
+        "name": "testVNet-238",
+        "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/virtualNetworks/testVNet-238",
+        "etag": "W/\u00222345689e-386d-4044-92c8-a8db0e674450\u0022",
+        "type": "Microsoft.Network/virtualNetworks",
+        "location": "westcentralus",
+        "properties": {
+          "provisioningState": "Updating",
+          "resourceGuid": "19dcd8c8-7404-4631-a1f5-605d037f602b",
+          "addressSpace": {
+            "addressPrefixes": [
+              "10.0.0.0/16"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "testSubnet-3258",
+              "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/virtualNetworks/testVNet-238/subnets/testSubnet-3258",
+              "etag": "W/\u00222345689e-386d-4044-92c8-a8db0e674450\u0022",
+              "properties": {
+                "provisioningState": "Updating",
+                "addressPrefix": "10.0.2.0/24",
+                "networkSecurityGroup": {
+                  "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842"
+                },
+                "delegations": [
+                  {
+                    "name": "NGINX.NGINXPLUS/nginxDeployments",
+                    "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/virtualNetworks/testVNet-238/subnets/testSubnet-3258/delegations/NGINX.NGINXPLUS/nginxDeployments",
+                    "etag": "W/\u00222345689e-386d-4044-92c8-a8db0e674450\u0022",
+                    "properties": {
+                      "provisioningState": "Succeeded",
+                      "serviceName": "NGINX.NGINXPLUS/nginxDeployments",
+                      "actions": [
+                        "Microsoft.Network/virtualNetworks/subnets/join/action"
+                      ]
+                    },
+                    "type": "Microsoft.Network/virtualNetworks/subnets/delegations"
+                  }
+                ],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets"
+            }
+          ],
+          "virtualNetworkPeerings": [],
+          "enableDdosProtection": false
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/0a1db127-4cbf-486a-be2b-4e6651d71c68?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9cbb5c7e17a170f70329c4a3fa22d215-ed1959ff7f2f84f8-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "c34b905f6d1943c25156fe9cb00361bb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "30",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:42:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "1132efd4-0c49-44e3-92ae-bbcbd3101ad1",
+        "x-ms-client-request-id": "c34b905f6d1943c25156fe9cb00361bb",
+        "x-ms-correlation-request-id": "e843f707-1da1-42d9-b226-0d5b60791659",
+        "x-ms-ratelimit-remaining-subscription-reads": "11994",
+        "x-ms-request-id": "38300501-65ca-4ebb-b4a8-0577152e3a33",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224230Z:e843f707-1da1-42d9-b226-0d5b60791659"
+      },
+      "ResponseBody": {
+        "status": "InProgress"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/providers/Microsoft.Network/locations/westcentralus/operations/0a1db127-4cbf-486a-be2b-4e6651d71c68?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9cbb5c7e17a170f70329c4a3fa22d215-7520d22359993c16-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "64657f47d6dfd83579602566b4d63414",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "29",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:42:39 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "d1dd3102-0bb5-4c27-b2de-e2aa80ec001e",
+        "x-ms-client-request-id": "64657f47d6dfd83579602566b4d63414",
+        "x-ms-correlation-request-id": "6045fa87-5494-4d28-8210-80e727a1c551",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "d7d830b2-1d15-438e-980e-8ec0ee5391f0",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224240Z:6045fa87-5494-4d28-8210-80e727a1c551"
+      },
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/virtualNetworks/testVNet-238?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9cbb5c7e17a170f70329c4a3fa22d215-6bf9bb03bf6898b3-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "47790f2159b10dfe44c9ee622ff934c4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2264",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:42:41 GMT",
+        "ETag": "W/\u002294df93ed-397a-4adf-a49a-98bb60a12415\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "c9924f55-39c8-4eee-8177-1d30568779af",
+        "x-ms-client-request-id": "47790f2159b10dfe44c9ee622ff934c4",
+        "x-ms-correlation-request-id": "c4e5386a-6bc0-41ea-8856-10f20f532222",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "7df6b764-1ee1-43c3-a2df-398ae2b663a4",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224241Z:c4e5386a-6bc0-41ea-8856-10f20f532222"
+      },
+      "ResponseBody": {
+        "name": "testVNet-238",
+        "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/virtualNetworks/testVNet-238",
+        "etag": "W/\u002294df93ed-397a-4adf-a49a-98bb60a12415\u0022",
+        "type": "Microsoft.Network/virtualNetworks",
+        "location": "westcentralus",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "19dcd8c8-7404-4631-a1f5-605d037f602b",
+          "addressSpace": {
+            "addressPrefixes": [
+              "10.0.0.0/16"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "testSubnet-3258",
+              "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/virtualNetworks/testVNet-238/subnets/testSubnet-3258",
+              "etag": "W/\u002294df93ed-397a-4adf-a49a-98bb60a12415\u0022",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "addressPrefix": "10.0.2.0/24",
+                "networkSecurityGroup": {
+                  "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/networkSecurityGroups/testNSG-2842"
+                },
+                "delegations": [
+                  {
+                    "name": "NGINX.NGINXPLUS/nginxDeployments",
+                    "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/virtualNetworks/testVNet-238/subnets/testSubnet-3258/delegations/NGINX.NGINXPLUS/nginxDeployments",
+                    "etag": "W/\u002294df93ed-397a-4adf-a49a-98bb60a12415\u0022",
+                    "properties": {
+                      "provisioningState": "Succeeded",
+                      "serviceName": "NGINX.NGINXPLUS/nginxDeployments",
+                      "actions": [
+                        "Microsoft.Network/virtualNetworks/subnets/join/action"
+                      ]
+                    },
+                    "type": "Microsoft.Network/virtualNetworks/subnets/delegations"
+                  }
+                ],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets"
+            }
+          ],
+          "virtualNetworkPeerings": [],
+          "enableDdosProtection": false
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710?api-version=2022-08-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "803",
+        "Content-Type": "application/json",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-e7e051917cd96ee4-00",
+        "User-Agent": "azsdk-net-ResourceManager.Nginx/1.0.0-alpha.20221026.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "0140d14e59b288d55a7349b8485c8e7a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "identity": {
+          "type": "UserAssigned",
+          "userAssignedIdentities": {
+            "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourcegroups/synthetics-integration-tests/providers/Microsoft.ManagedIdentity/userAssignedIdentities/integration-tests-mi": {}
+          }
+        },
+        "properties": {
+          "networkProfile": {
+            "frontEndIPConfiguration": {
+              "publicIPAddresses": [
+                {
+                  "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/publicIPAddresses/testPublicIP-3030"
+                }
+              ]
+            },
+            "networkInterfaceConfiguration": {
+              "subnetId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/virtualNetworks/testVNet-238/subnets/testSubnet-3258"
+            }
+          },
+          "enableDiagnosticsSupport": true
+        },
+        "sku": {
+          "name": "preview_Monthly"
+        },
+        "tags": {},
+        "location": "westcentralus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1521",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:42:46 GMT",
+        "ETag": "\u002200005f8d-0000-0600-0000-6359b7e50000\u0022",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:0d872b79-fbba-4031-abaa-ef9aa3e0050d",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0140d14e59b288d55a7349b8485c8e7a",
+        "x-ms-correlation-request-id": "845f9ba0-4b6d-4242-a9c4-896051ad89ed",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "21592492-e84d-4748-8ea7-7760add67089",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224246Z:845f9ba0-4b6d-4242-a9c4-896051ad89ed"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "name": "testDeployment-8710",
+        "type": "nginx.nginxplus/nginxdeployments",
+        "sku": {
+          "name": "preview_Monthly"
+        },
+        "location": "westcentralus",
+        "tags": {},
+        "systemData": {
+          "createdBy": "83e1fee6-9cf1-487c-afb2-b5822019b861",
+          "createdByType": "Application",
+          "createdAt": "2022-10-26T22:42:42.4909942Z",
+          "lastModifiedBy": "83e1fee6-9cf1-487c-afb2-b5822019b861",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-10-26T22:42:42.4909942Z"
+        },
+        "identity": {
+          "type": "UserAssigned",
+          "userAssignedIdentities": {
+            "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourcegroups/synthetics-integration-tests/providers/Microsoft.ManagedIdentity/userAssignedIdentities/integration-tests-mi": {
+              "principalId": "9c8c1eab-1b64-4d95-bbba-04843012d190",
+              "clientId": "cfcab166-335a-4af7-a61d-c7c07236688e"
+            }
+          }
+        },
+        "properties": {
+          "provisioningState": "Accepted",
+          "nginxVersion": null,
+          "managedResourceGroup": null,
+          "ipAddress": null,
+          "networkProfile": {
+            "frontEndIPConfiguration": {
+              "publicIPAddresses": [
+                {
+                  "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/publicIPAddresses/testPublicIP-3030"
+                }
+              ]
+            },
+            "networkInterfaceConfiguration": {
+              "subnetId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/virtualNetworks/testVNet-238/subnets/testSubnet-3258"
+            }
+          },
+          "enableDiagnosticsSupport": true,
+          "logging": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-e1f109c8812b6190-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "e318602c3395c7613af0ed3e1046c5e8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "517",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:42:46 GMT",
+        "ETag": "\u00220000eb4c-0000-0600-0000-6359b7e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e318602c3395c7613af0ed3e1046c5e8",
+        "x-ms-correlation-request-id": "aa97c42d-d883-469d-a0dd-e95f82544493",
+        "x-ms-ratelimit-remaining-tenant-reads": "11999",
+        "x-ms-request-id": "d5602c92-0656-4461-ad48-6cc0615dec4a",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224246Z:aa97c42d-d883-469d-a0dd-e95f82544493"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "name": "21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:42:44.7571346Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-8e07e0d28678f399-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "4541733a927e343ac752805b39bfa087",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "517",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:42:47 GMT",
+        "ETag": "\u00220000eb4c-0000-0600-0000-6359b7e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "4541733a927e343ac752805b39bfa087",
+        "x-ms-correlation-request-id": "27a8c2bd-dcb5-4fed-8958-d260054a0677",
+        "x-ms-ratelimit-remaining-tenant-reads": "11998",
+        "x-ms-request-id": "038f48e0-2b66-4b40-aa99-e1657ea0efc2",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224247Z:27a8c2bd-dcb5-4fed-8958-d260054a0677"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "name": "21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:42:44.7571346Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-dd50dcc29d63ad4a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "e78bc9caab43ede587b367992bcbde39",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "517",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:42:49 GMT",
+        "ETag": "\u00220000eb4c-0000-0600-0000-6359b7e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e78bc9caab43ede587b367992bcbde39",
+        "x-ms-correlation-request-id": "4bc57e65-0428-4d2e-bef0-ea9fd71a7a51",
+        "x-ms-ratelimit-remaining-tenant-reads": "11997",
+        "x-ms-request-id": "3b632e25-8981-4203-b37d-080cc0fc18f4",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224249Z:4bc57e65-0428-4d2e-bef0-ea9fd71a7a51"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "name": "21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:42:44.7571346Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-ab9fc2f2308755f6-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "75da38916291990126e41b43b2068e7a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "517",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:42:50 GMT",
+        "ETag": "\u00220000eb4c-0000-0600-0000-6359b7e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "75da38916291990126e41b43b2068e7a",
+        "x-ms-correlation-request-id": "ceeaf82d-cf50-437e-ab23-ee7a003965ae",
+        "x-ms-ratelimit-remaining-tenant-reads": "11996",
+        "x-ms-request-id": "1c937907-c35b-4547-bf4d-0be69b65e29c",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224250Z:ceeaf82d-cf50-437e-ab23-ee7a003965ae"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "name": "21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:42:44.7571346Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-fbd8ef276c3d0d4c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "46736650deba8fa48e54becb2ba008fc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "517",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:42:52 GMT",
+        "ETag": "\u00220000eb4c-0000-0600-0000-6359b7e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "46736650deba8fa48e54becb2ba008fc",
+        "x-ms-correlation-request-id": "a7f3200a-f2cc-4bf6-bded-f49e6177b029",
+        "x-ms-ratelimit-remaining-tenant-reads": "11995",
+        "x-ms-request-id": "f937d47c-ca2e-4162-9861-d6e67cc66947",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224252Z:a7f3200a-f2cc-4bf6-bded-f49e6177b029"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "name": "21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:42:44.7571346Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-5771b36214cfcdf7-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "01c947742ae467f6c8f1c15f8fa13a81",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "517",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:42:56 GMT",
+        "ETag": "\u00220000eb4c-0000-0600-0000-6359b7e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "01c947742ae467f6c8f1c15f8fa13a81",
+        "x-ms-correlation-request-id": "e4997816-206b-403e-9e6c-fced48ed82d3",
+        "x-ms-ratelimit-remaining-tenant-reads": "11994",
+        "x-ms-request-id": "b4aa7d14-812c-44ac-979e-492bf93bd753",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224257Z:e4997816-206b-403e-9e6c-fced48ed82d3"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "name": "21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:42:44.7571346Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-e4a5d555eabbe2f0-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "c549ec249757b37f934ae73ca4356e85",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "517",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:43:04 GMT",
+        "ETag": "\u00220000eb4c-0000-0600-0000-6359b7e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c549ec249757b37f934ae73ca4356e85",
+        "x-ms-correlation-request-id": "f5158155-8916-4609-85a9-d2356cd0e116",
+        "x-ms-ratelimit-remaining-tenant-reads": "11993",
+        "x-ms-request-id": "c5a3f50a-64c4-485c-a60b-16f9e7b7fca6",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224305Z:f5158155-8916-4609-85a9-d2356cd0e116"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "name": "21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:42:44.7571346Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-30893c05679cdde6-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "6bce1fdb8d3d2595700c7dc81d4500ec",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "517",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:43:21 GMT",
+        "ETag": "\u00220000eb4c-0000-0600-0000-6359b7e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "6bce1fdb8d3d2595700c7dc81d4500ec",
+        "x-ms-correlation-request-id": "f4c84e08-f3ce-41d9-9a60-762708a70dc4",
+        "x-ms-ratelimit-remaining-tenant-reads": "11992",
+        "x-ms-request-id": "65109283-e20a-4b83-8572-79c24a0270a0",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224321Z:f4c84e08-f3ce-41d9-9a60-762708a70dc4"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "name": "21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:42:44.7571346Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-1d49cc8a5a262bab-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "3ea73c194256dca4c7156e9943b9c293",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "517",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:43:53 GMT",
+        "ETag": "\u00220000eb4c-0000-0600-0000-6359b7e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3ea73c194256dca4c7156e9943b9c293",
+        "x-ms-correlation-request-id": "d39215bf-edaa-4616-a870-551751537f42",
+        "x-ms-ratelimit-remaining-tenant-reads": "11991",
+        "x-ms-request-id": "3d938682-135e-447d-9c8f-ea3e84cd18dd",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224354Z:d39215bf-edaa-4616-a870-551751537f42"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "name": "21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:42:44.7571346Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-9c9a830c526656ee-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "6f833b83cfd397445624554b1ab6964d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "517",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:44:26 GMT",
+        "ETag": "\u00220000eb4c-0000-0600-0000-6359b7e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "6f833b83cfd397445624554b1ab6964d",
+        "x-ms-correlation-request-id": "172198e6-5dc5-4d60-880b-8f53b424dc15",
+        "x-ms-ratelimit-remaining-tenant-reads": "11990",
+        "x-ms-request-id": "07e4805d-6be2-4515-b8cd-8de8fcfe9181",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224426Z:172198e6-5dc5-4d60-880b-8f53b424dc15"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "name": "21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:42:44.7571346Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-8cb6209a5f4f9b29-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "6723fa4a2f8e982e7af1a3271efbe1b7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "517",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:44:57 GMT",
+        "ETag": "\u00220000eb4c-0000-0600-0000-6359b7e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "6723fa4a2f8e982e7af1a3271efbe1b7",
+        "x-ms-correlation-request-id": "17cbf575-33fd-437b-9240-5de330a8fa50",
+        "x-ms-ratelimit-remaining-tenant-reads": "11989",
+        "x-ms-request-id": "2423b531-dee1-4060-9e43-f9fc13813b62",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224458Z:17cbf575-33fd-437b-9240-5de330a8fa50"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "name": "21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:42:44.7571346Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-eaf78560474e4395-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "e144ea4990c24a18f80fe732ed59c211",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "517",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:45:30 GMT",
+        "ETag": "\u00220000eb4c-0000-0600-0000-6359b7e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e144ea4990c24a18f80fe732ed59c211",
+        "x-ms-correlation-request-id": "f137b3cb-c5b4-4961-b788-e16087ea6c07",
+        "x-ms-ratelimit-remaining-tenant-reads": "11988",
+        "x-ms-request-id": "10e10882-8e1d-470c-a675-a214bc157410",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224530Z:f137b3cb-c5b4-4961-b788-e16087ea6c07"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "name": "21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:42:44.7571346Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-68244ab779aca8f6-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "484f217f5a9554040ceaf4e12b1c785b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "517",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:46:03 GMT",
+        "ETag": "\u00220000eb4c-0000-0600-0000-6359b7e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "484f217f5a9554040ceaf4e12b1c785b",
+        "x-ms-correlation-request-id": "91d046a8-9bd7-4c41-b5ff-f917a9d0cd8b",
+        "x-ms-ratelimit-remaining-tenant-reads": "11987",
+        "x-ms-request-id": "88b233bc-21da-4e61-a2c0-9d756391824d",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224603Z:91d046a8-9bd7-4c41-b5ff-f917a9d0cd8b"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "name": "21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:42:44.7571346Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-949dab86c3e0b997-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "2f019e43b471b98ae1d96f7e47fcab20",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "517",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:46:35 GMT",
+        "ETag": "\u00220000eb4c-0000-0600-0000-6359b7e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "2f019e43b471b98ae1d96f7e47fcab20",
+        "x-ms-correlation-request-id": "b8159025-dced-47b8-acaf-f94cfb97bdb0",
+        "x-ms-ratelimit-remaining-tenant-reads": "11986",
+        "x-ms-request-id": "6c686752-ff86-4a3d-a7bc-e6a74ccdc7df",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224635Z:b8159025-dced-47b8-acaf-f94cfb97bdb0"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "name": "21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:42:44.7571346Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-5ce96b830b90432f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "fda7922e98acee21e5f0d5d89c371edb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "517",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:47:07 GMT",
+        "ETag": "\u00220000eb4c-0000-0600-0000-6359b7e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "fda7922e98acee21e5f0d5d89c371edb",
+        "x-ms-correlation-request-id": "30bc9e69-3713-4a72-84c6-cd0f7f661e59",
+        "x-ms-ratelimit-remaining-tenant-reads": "11985",
+        "x-ms-request-id": "ae17bbee-fc07-43d6-ae4c-67b0760b852c",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224708Z:30bc9e69-3713-4a72-84c6-cd0f7f661e59"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "name": "21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:42:44.7571346Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-7859aad1f8b974f7-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "4eee8c979358cb9f969566bceb860d0f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "517",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:47:40 GMT",
+        "ETag": "\u00220000eb4c-0000-0600-0000-6359b7e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "4eee8c979358cb9f969566bceb860d0f",
+        "x-ms-correlation-request-id": "7660d329-9602-49f8-9775-0564576349af",
+        "x-ms-ratelimit-remaining-tenant-reads": "11984",
+        "x-ms-request-id": "eccd341f-0008-40eb-8ab1-b2155530fc59",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224740Z:7660d329-9602-49f8-9775-0564576349af"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "name": "21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:42:44.7571346Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-59ed9078c0298be8-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "98b3d33e7a74aaae7c134981deb21daa",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "517",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:48:12 GMT",
+        "ETag": "\u00220000eb4c-0000-0600-0000-6359b7e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "98b3d33e7a74aaae7c134981deb21daa",
+        "x-ms-correlation-request-id": "9bc13890-5be1-4134-8ef7-2d715a12e5db",
+        "x-ms-ratelimit-remaining-tenant-reads": "11983",
+        "x-ms-request-id": "47033eb3-ed14-4668-a638-171252943a42",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224812Z:9bc13890-5be1-4134-8ef7-2d715a12e5db"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "name": "21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:42:44.7571346Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-c54d8d26370fc5e6-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "bae693ba5c0d9bc8f2dc67163165025f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "517",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:48:44 GMT",
+        "ETag": "\u00220000eb4c-0000-0600-0000-6359b7e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "bae693ba5c0d9bc8f2dc67163165025f",
+        "x-ms-correlation-request-id": "d37d9b8f-ae83-4cc8-b766-bbbdcb04eb02",
+        "x-ms-ratelimit-remaining-tenant-reads": "11982",
+        "x-ms-request-id": "f1dc7bb6-3576-4699-bb8e-3c96c54046f5",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224845Z:d37d9b8f-ae83-4cc8-b766-bbbdcb04eb02"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "name": "21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:42:44.7571346Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-ca75d437b7ece472-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "c899c5e386841d67de44d145491eece4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "517",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:49:17 GMT",
+        "ETag": "\u00220000eb4c-0000-0600-0000-6359b7e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c899c5e386841d67de44d145491eece4",
+        "x-ms-correlation-request-id": "4a943bb9-f393-44e0-99cc-a394e8112bd5",
+        "x-ms-ratelimit-remaining-tenant-reads": "11981",
+        "x-ms-request-id": "b5700d72-8828-4737-99f7-79d8904f5551",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224917Z:4a943bb9-f393-44e0-99cc-a394e8112bd5"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "name": "21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:42:44.7571346Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-b27f23d6a34d2218-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "5801bc78529fe1010b17a59812977917",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "517",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:49:49 GMT",
+        "ETag": "\u00220000eb4c-0000-0600-0000-6359b7e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "5801bc78529fe1010b17a59812977917",
+        "x-ms-correlation-request-id": "72f939f3-2bf7-4a1d-ab1d-a9d3dfea5712",
+        "x-ms-ratelimit-remaining-tenant-reads": "11980",
+        "x-ms-request-id": "c741fc83-6cc0-458f-9b94-c9e377fd1eab",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T224950Z:72f939f3-2bf7-4a1d-ab1d-a9d3dfea5712"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "name": "21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:42:44.7571346Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-9e3a663548a00da3-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "199eea10551834262cc9dbc98a8351d4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "517",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:50:21 GMT",
+        "ETag": "\u00220000eb4c-0000-0600-0000-6359b7e40000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "199eea10551834262cc9dbc98a8351d4",
+        "x-ms-correlation-request-id": "49566e46-d874-4053-a7f5-0d70dabe061d",
+        "x-ms-ratelimit-remaining-tenant-reads": "11979",
+        "x-ms-request-id": "91ed6040-7a3f-42b0-89a4-bb2b78a784a8",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T225022Z:49566e46-d874-4053-a7f5-0d70dabe061d"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "name": "21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:42:44.7571346Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-3a71356b75923198-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "759e83efaa6390bfc3b7bc6ce0ce0a46",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "588",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:50:54 GMT",
+        "ETag": "\u00220000014d-0000-0600-0000-6359b9ca0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "759e83efaa6390bfc3b7bc6ce0ce0a46",
+        "x-ms-correlation-request-id": "4228cd0f-a727-453c-a4da-d423b4d45e3b",
+        "x-ms-ratelimit-remaining-tenant-reads": "11978",
+        "x-ms-request-id": "47e92a04-1fa9-48a1-a307-41475c77b0bb",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T225054Z:4228cd0f-a727-453c-a4da-d423b4d45e3b"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "name": "21592492-e84d-4748-8ea7-7760add67089*D43C44AD8D1CB32451CE1B2DEF7994D54BB125A8BDCE5CD8EFCD1C8315DE3BB7",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "status": "Succeeded",
+        "startTime": "2022-10-26T22:42:44.7571346Z",
+        "endTime": "2022-10-26T22:50:50.9305833Z",
+        "error": {},
+        "properties": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-6aef3cde01a6e9e637817f84bdef4d3a-7c4d7a345bf9334f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "5f34bacbd38022cb95cd2cd677385787",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1592",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:50:55 GMT",
+        "ETag": "\u00220000348e-0000-0600-0000-6359b9ca0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "5f34bacbd38022cb95cd2cd677385787",
+        "x-ms-correlation-request-id": "73f4fb0d-4e31-4745-837a-e41efab01f8a",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "61f595b4-ec6a-40a2-98b7-c22362b00b8b",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T225055Z:73f4fb0d-4e31-4745-837a-e41efab01f8a"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710",
+        "name": "testDeployment-8710",
+        "type": "nginx.nginxplus/nginxdeployments",
+        "sku": {
+          "name": "preview_Monthly"
+        },
+        "location": "westcentralus",
+        "tags": {},
+        "systemData": {
+          "createdBy": "83e1fee6-9cf1-487c-afb2-b5822019b861",
+          "createdByType": "Application",
+          "createdAt": "2022-10-26T22:42:42.4909942Z",
+          "lastModifiedBy": "83e1fee6-9cf1-487c-afb2-b5822019b861",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-10-26T22:42:42.4909942Z"
+        },
+        "identity": {
+          "type": "UserAssigned",
+          "userAssignedIdentities": {
+            "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourcegroups/synthetics-integration-tests/providers/Microsoft.ManagedIdentity/userAssignedIdentities/integration-tests-mi": {
+              "principalId": "9c8c1eab-1b64-4d95-bbba-04843012d190",
+              "clientId": "cfcab166-335a-4af7-a61d-c7c07236688e"
+            }
+          }
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "nginxVersion": "1.21.6 (nginx-plus-r27)",
+          "managedResourceGroup": "NGX_Default-Nginx-9747_testDeployment-8710_westcentralus",
+          "ipAddress": "13.78.202.39",
+          "networkProfile": {
+            "frontEndIPConfiguration": {
+              "publicIPAddresses": [
+                {
+                  "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/publicIPAddresses/testPublicIP-3030"
+                }
+              ]
+            },
+            "networkInterfaceConfiguration": {
+              "subnetId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Microsoft.Network/virtualNetworks/testVNet-238/subnets/testSubnet-3258"
+            }
+          },
+          "enableDiagnosticsSupport": true
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710/configurations/default?api-version=2022-08-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "445",
+        "Content-Type": "application/json",
+        "traceparent": "00-e32011efcdf6aea93315bae6ee449d28-6f65847e9cf040c7-00",
+        "User-Agent": "azsdk-net-ResourceManager.Nginx/1.0.0-alpha.20221026.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "8fa8d1c603f965b32a0d556198ba545d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "files": [
+            {
+              "content": "aHR0cCB7CiAgICBzZXJ2ZXIgewogICAgICAgIGxpc3RlbiA4MDsKICAgICAgICBsb2NhdGlvbiAvIHsKICAgICAgICAgICAgZGVmYXVsdF90eXBlIHRleHQvaHRtbDsKICAgICAgICAgICAgcmV0dXJuIDIwMCAnPCFET0NUWVBFIGh0bWw\u002BPGgxIHN0eWxlPSJmb250LXNpemU6MzBweDsiPk5naW54IGNvbmZpZyBpcyB3b3JraW5nITwvaDE\u002BJzsKICAgICAgICB9CiAgICB9Cn0=",
+              "virtualPath": "/etc/nginx/nginx.conf"
+            }
+          ],
+          "rootFile": "/etc/nginx/nginx.conf"
+        },
+        "tags": {},
+        "location": "westcentralus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/92333e93-62b3-4328-9140-e112cc61310e*03AC6E8267DC5C05D5C05241B660650B2C589709605C07AEF4F801A062040B3F?api-version=2022-08-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1034",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:50:55 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/92333e93-62b3-4328-9140-e112cc61310e*03AC6E8267DC5C05D5C05241B660650B2C589709605C07AEF4F801A062040B3F?api-version=2022-08-01",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:0d872b79-fbba-4031-abaa-ef9aa3e0050d",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8fa8d1c603f965b32a0d556198ba545d",
+        "x-ms-correlation-request-id": "f53e1d3a-acde-4467-bbef-b8a79079a2fb",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "92333e93-62b3-4328-9140-e112cc61310e",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T225056Z:f53e1d3a-acde-4467-bbef-b8a79079a2fb"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710/configurations/default",
+        "name": "default",
+        "type": "nginx.nginxplus/nginxdeployments/configurations",
+        "location": "westcentralus",
+        "tags": {},
+        "systemData": {
+          "createdBy": "83e1fee6-9cf1-487c-afb2-b5822019b861",
+          "createdByType": "Application",
+          "createdAt": "2022-10-26T22:50:55.6008637Z",
+          "lastModifiedBy": "83e1fee6-9cf1-487c-afb2-b5822019b861",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-10-26T22:50:55.6008637Z"
+        },
+        "properties": {
+          "provisioningState": "Accepted",
+          "files": [
+            {
+              "content": "aHR0cCB7CiAgICBzZXJ2ZXIgewogICAgICAgIGxpc3RlbiA4MDsKICAgICAgICBsb2NhdGlvbiAvIHsKICAgICAgICAgICAgZGVmYXVsdF90eXBlIHRleHQvaHRtbDsKICAgICAgICAgICAgcmV0dXJuIDIwMCAnPCFET0NUWVBFIGh0bWw\u002BPGgxIHN0eWxlPSJmb250LXNpemU6MzBweDsiPk5naW54IGNvbmZpZyBpcyB3b3JraW5nITwvaDE\u002BJzsKICAgICAgICB9CiAgICB9Cn0=",
+              "virtualPath": "/etc/nginx/nginx.conf"
+            }
+          ],
+          "protectedFiles": null,
+          "package": null,
+          "rootFile": "/etc/nginx/nginx.conf"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/92333e93-62b3-4328-9140-e112cc61310e*03AC6E8267DC5C05D5C05241B660650B2C589709605C07AEF4F801A062040B3F?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-e32011efcdf6aea93315bae6ee449d28-8180aecd21157d95-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "0ea535607b26c74d07ce34727d698adb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "540",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:50:56 GMT",
+        "ETag": "\u00220000024d-0000-0600-0000-6359b9cf0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0ea535607b26c74d07ce34727d698adb",
+        "x-ms-correlation-request-id": "b3fb7936-86d2-4abd-afa2-bc46eee88448",
+        "x-ms-ratelimit-remaining-tenant-reads": "11977",
+        "x-ms-request-id": "6fe5392d-e532-428d-89f2-aa9ef6b1f661",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T225056Z:b3fb7936-86d2-4abd-afa2-bc46eee88448"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/92333e93-62b3-4328-9140-e112cc61310e*03AC6E8267DC5C05D5C05241B660650B2C589709605C07AEF4F801A062040B3F",
+        "name": "92333e93-62b3-4328-9140-e112cc61310e*03AC6E8267DC5C05D5C05241B660650B2C589709605C07AEF4F801A062040B3F",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710/configurations/default",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:50:55.8797039Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/92333e93-62b3-4328-9140-e112cc61310e*03AC6E8267DC5C05D5C05241B660650B2C589709605C07AEF4F801A062040B3F?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-e32011efcdf6aea93315bae6ee449d28-719755fb498757aa-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "e216ce798739d4397d8bd67d231ce741",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "540",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:50:57 GMT",
+        "ETag": "\u00220000024d-0000-0600-0000-6359b9cf0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e216ce798739d4397d8bd67d231ce741",
+        "x-ms-correlation-request-id": "182d97f9-0bdf-4b88-aac0-a412e64bdba9",
+        "x-ms-ratelimit-remaining-tenant-reads": "11976",
+        "x-ms-request-id": "14eea603-f98b-4e85-ac4d-1bc6ca7bcf4f",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T225057Z:182d97f9-0bdf-4b88-aac0-a412e64bdba9"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/92333e93-62b3-4328-9140-e112cc61310e*03AC6E8267DC5C05D5C05241B660650B2C589709605C07AEF4F801A062040B3F",
+        "name": "92333e93-62b3-4328-9140-e112cc61310e*03AC6E8267DC5C05D5C05241B660650B2C589709605C07AEF4F801A062040B3F",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710/configurations/default",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:50:55.8797039Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/92333e93-62b3-4328-9140-e112cc61310e*03AC6E8267DC5C05D5C05241B660650B2C589709605C07AEF4F801A062040B3F?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-e32011efcdf6aea93315bae6ee449d28-c6df3d17bd218759-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "6300caf4451443374737c97fbce19f4e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "540",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:50:58 GMT",
+        "ETag": "\u00220000024d-0000-0600-0000-6359b9cf0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "6300caf4451443374737c97fbce19f4e",
+        "x-ms-correlation-request-id": "36bacf02-d9e0-4c8b-a27e-7d0bd3375cb3",
+        "x-ms-ratelimit-remaining-tenant-reads": "11975",
+        "x-ms-request-id": "eed44a48-64a3-4540-9017-3dc03d997b0b",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T225059Z:36bacf02-d9e0-4c8b-a27e-7d0bd3375cb3"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/92333e93-62b3-4328-9140-e112cc61310e*03AC6E8267DC5C05D5C05241B660650B2C589709605C07AEF4F801A062040B3F",
+        "name": "92333e93-62b3-4328-9140-e112cc61310e*03AC6E8267DC5C05D5C05241B660650B2C589709605C07AEF4F801A062040B3F",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710/configurations/default",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:50:55.8797039Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/92333e93-62b3-4328-9140-e112cc61310e*03AC6E8267DC5C05D5C05241B660650B2C589709605C07AEF4F801A062040B3F?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-e32011efcdf6aea93315bae6ee449d28-175c0ac36e956014-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "af1d04f137d2d951fbd1909aa4d0a3ea",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "540",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:51:00 GMT",
+        "ETag": "\u00220000024d-0000-0600-0000-6359b9cf0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "af1d04f137d2d951fbd1909aa4d0a3ea",
+        "x-ms-correlation-request-id": "c8c48d11-97ea-47c1-8842-2cac1ef2cb4e",
+        "x-ms-ratelimit-remaining-tenant-reads": "11974",
+        "x-ms-request-id": "d9990eab-9f3c-43df-b9ca-dfc1cdb2a37f",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T225100Z:c8c48d11-97ea-47c1-8842-2cac1ef2cb4e"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/92333e93-62b3-4328-9140-e112cc61310e*03AC6E8267DC5C05D5C05241B660650B2C589709605C07AEF4F801A062040B3F",
+        "name": "92333e93-62b3-4328-9140-e112cc61310e*03AC6E8267DC5C05D5C05241B660650B2C589709605C07AEF4F801A062040B3F",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710/configurations/default",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:50:55.8797039Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/92333e93-62b3-4328-9140-e112cc61310e*03AC6E8267DC5C05D5C05241B660650B2C589709605C07AEF4F801A062040B3F?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-e32011efcdf6aea93315bae6ee449d28-ae58fddfd8a98476-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "b27df3e7266933c797d29a02bdb9179c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "540",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:51:02 GMT",
+        "ETag": "\u00220000024d-0000-0600-0000-6359b9cf0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b27df3e7266933c797d29a02bdb9179c",
+        "x-ms-correlation-request-id": "e02c286b-9d40-4d69-bb87-ff5bbde74022",
+        "x-ms-ratelimit-remaining-tenant-reads": "11973",
+        "x-ms-request-id": "f85dda91-14fc-4e16-8684-95ee2c274fb3",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T225102Z:e02c286b-9d40-4d69-bb87-ff5bbde74022"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/92333e93-62b3-4328-9140-e112cc61310e*03AC6E8267DC5C05D5C05241B660650B2C589709605C07AEF4F801A062040B3F",
+        "name": "92333e93-62b3-4328-9140-e112cc61310e*03AC6E8267DC5C05D5C05241B660650B2C589709605C07AEF4F801A062040B3F",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710/configurations/default",
+        "status": "Accepted",
+        "startTime": "2022-10-26T22:50:55.8797039Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/92333e93-62b3-4328-9140-e112cc61310e*03AC6E8267DC5C05D5C05241B660650B2C589709605C07AEF4F801A062040B3F?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-e32011efcdf6aea93315bae6ee449d28-897497c1d8d65cec-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "1f8b88eb38febd6e78276743b49c9f76",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "611",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:51:06 GMT",
+        "ETag": "\u00220000044d-0000-0600-0000-6359b9da0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1f8b88eb38febd6e78276743b49c9f76",
+        "x-ms-correlation-request-id": "bbc8c749-848e-4b41-a6a1-56642f129a3b",
+        "x-ms-ratelimit-remaining-tenant-reads": "11972",
+        "x-ms-request-id": "14d114ed-e9d9-40fd-aa18-ae487bc3c339",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T225107Z:bbc8c749-848e-4b41-a6a1-56642f129a3b"
+      },
+      "ResponseBody": {
+        "id": "/providers/Nginx.NginxPlus/locations/WESTCENTRALUS/operationStatuses/92333e93-62b3-4328-9140-e112cc61310e*03AC6E8267DC5C05D5C05241B660650B2C589709605C07AEF4F801A062040B3F",
+        "name": "92333e93-62b3-4328-9140-e112cc61310e*03AC6E8267DC5C05D5C05241B660650B2C589709605C07AEF4F801A062040B3F",
+        "resourceId": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710/configurations/default",
+        "status": "Succeeded",
+        "startTime": "2022-10-26T22:50:55.8797039Z",
+        "endTime": "2022-10-26T22:51:06.1909483Z",
+        "error": {},
+        "properties": null
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/Nginx.NginxPlus/nginxDeployments/testDeployment-8710/configurations/default?api-version=2022-08-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-e32011efcdf6aea93315bae6ee449d28-7167fd5f0ae59b4c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET 6.0.10; Microsoft Windows 10.0.22623)",
+        "x-ms-client-request-id": "c898de93ec63cae53dea17ff9c4f1b42",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "727",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 26 Oct 2022 22:51:06 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:0d872b79-fbba-4031-abaa-ef9aa3e0050d",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c898de93ec63cae53dea17ff9c4f1b42",
+        "x-ms-correlation-request-id": "89b80a5e-c9b4-495a-806b-19f94d34dd7e",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11990",
+        "x-ms-request-id": "30a63f88-cc2f-444d-84be-7b5de42f5b85",
+        "x-ms-routing-request-id": "FRANCESOUTH:20221026T225107Z:89b80a5e-c9b4-495a-806b-19f94d34dd7e"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourceGroups/Default-Nginx-9747/providers/NGINX.NGINXPLUS/nginxDeployments/testDeployment-8710/configurations/default",
+        "name": "default",
+        "type": "NGINX.NGINXPLUS/nginxDeployments/configurations",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "files": [
+            {
+              "content": "aHR0cCB7CiAgICBzZXJ2ZXIgewogICAgICAgIGxpc3RlbiA4MDsKICAgICAgICBsb2NhdGlvbiAvIHsKICAgICAgICAgICAgZGVmYXVsdF90eXBlIHRleHQvaHRtbDsKICAgICAgICAgICAgcmV0dXJuIDIwMCAnPCFET0NUWVBFIGh0bWw\u002BPGgxIHN0eWxlPSJmb250LXNpemU6MzBweDsiPk5naW54IGNvbmZpZyBpcyB3b3JraW5nITwvaDE\u002BJzsKICAgICAgICB9CiAgICB9Cn0=",
+              "virtualPath": "/etc/nginx/nginx.conf"
+            }
+          ],
+          "protectedFiles": [],
+          "package": {
+            "data": null
+          },
+          "rootFile": "/etc/nginx/nginx.conf"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ManagedIdentityResourceID": "/subscriptions/e3853e83-0d02-4fb3-b88f-05b5fd21aee2/resourcegroups/synthetics-integration-tests/providers/Microsoft.ManagedIdentity/userAssignedIdentities/integration-tests-mi",
+    "RandomSeed": "827305746",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "e3853e83-0d02-4fb3-b88f-05b5fd21aee2"
+  }
+}

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary> A SQL DB Table data set mapping. </summary>
-    public partial class SqlDBTableDataSetMapping : DataSetMappingData
+    public partial class SqlDBTableDataSetMapping : ShareDataSetMappingData
     {
         /// <summary> Initializes a new instance of SqlDBTableDataSetMapping. </summary>
         /// <param name="databaseName"> DatabaseName name of the sink data set. </param>
@@ -21,29 +21,13 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="schemaName"> Schema of the table. Default value is dbo. </param>
         /// <param name="sqlServerResourceId"> Resource id of SQL server. </param>
         /// <param name="tableName"> SQL DB table name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/>, <paramref name="dataSetId"/>, <paramref name="schemaName"/>, <paramref name="sqlServerResourceId"/> or <paramref name="tableName"/> is null. </exception>
-        public SqlDBTableDataSetMapping(string databaseName, string dataSetId, string schemaName, string sqlServerResourceId, string tableName)
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="sqlServerResourceId"/> or <paramref name="tableName"/> is null. </exception>
+        public SqlDBTableDataSetMapping(string databaseName, Guid dataSetId, string schemaName, ResourceIdentifier sqlServerResourceId, string tableName)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (dataSetId == null)
-            {
-                throw new ArgumentNullException(nameof(dataSetId));
-            }
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (sqlServerResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(sqlServerResourceId));
-            }
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(schemaName, nameof(schemaName));
+            Argument.AssertNotNull(sqlServerResourceId, nameof(sqlServerResourceId));
+            Argument.AssertNotNull(tableName, nameof(tableName));
 
             DatabaseName = databaseName;
             DataSetId = dataSetId;
@@ -66,7 +50,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="schemaName"> Schema of the table. Default value is dbo. </param>
         /// <param name="sqlServerResourceId"> Resource id of SQL server. </param>
         /// <param name="tableName"> SQL DB table name. </param>
-        internal SqlDBTableDataSetMapping(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetMappingKind kind, string databaseName, string dataSetId, DataSetMappingStatus? dataSetMappingStatus, ProvisioningState? provisioningState, string schemaName, string sqlServerResourceId, string tableName) : base(id, name, resourceType, systemData, kind)
+        internal SqlDBTableDataSetMapping(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetMappingKind kind, string databaseName, Guid dataSetId, DataSetMappingStatus? dataSetMappingStatus, DataShareProvisioningState? provisioningState, string schemaName, ResourceIdentifier sqlServerResourceId, string tableName) : base(id, name, resourceType, systemData, kind)
         {
             DatabaseName = databaseName;
             DataSetId = dataSetId;
@@ -81,15 +65,15 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> DatabaseName name of the sink data set. </summary>
         public string DatabaseName { get; set; }
         /// <summary> The id of the source data set. </summary>
-        public string DataSetId { get; set; }
+        public Guid DataSetId { get; set; }
         /// <summary> Gets the status of the data set mapping. </summary>
         public DataSetMappingStatus? DataSetMappingStatus { get; }
         /// <summary> Provisioning state of the data set mapping. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public DataShareProvisioningState? ProvisioningState { get; }
         /// <summary> Schema of the table. Default value is dbo. </summary>
         public string SchemaName { get; set; }
         /// <summary> Resource id of SQL server. </summary>
-        public string SqlServerResourceId { get; set; }
+        public ResourceIdentifier SqlServerResourceId { get; set; }
         /// <summary> SQL DB table name. </summary>
         public string TableName { get; set; }
     }

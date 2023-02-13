@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
             writer.WriteEndObject();
         }
@@ -37,16 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     case "UrlSigning": return UriSigningAction.DeserializeUriSigningAction(element);
                 }
             }
-            DeliveryRuleActionType name = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("name"))
-                {
-                    name = new DeliveryRuleActionType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new DeliveryRuleAction(name);
+            return UnknownDeliveryRuleAction.DeserializeUnknownDeliveryRuleAction(element);
         }
     }
 }

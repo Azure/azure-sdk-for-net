@@ -22,6 +22,10 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         public const string Active = "Active";
         /// <summary>
+        /// An alert which is in handling state
+        /// </summary>
+        public const string InProgress = "InProgress";
+        /// <summary>
         /// Alert closed after handling
         /// </summary>
         public const string Resolved = "Resolved";

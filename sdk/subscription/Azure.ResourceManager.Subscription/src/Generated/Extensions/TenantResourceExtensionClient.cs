@@ -19,10 +19,6 @@ namespace Azure.ResourceManager.Subscription
     /// <summary> A class to add extension methods to TenantResource. </summary>
     internal partial class TenantResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _subscriptionsClientDiagnostics;
-        private SubscriptionsRestOperations _subscriptionsRestClient;
-        private ClientDiagnostics _tenantsClientDiagnostics;
-        private TenantsRestOperations _tenantsRestClient;
         private ClientDiagnostics _subscriptionClientDiagnostics;
         private SubscriptionRestOperations _subscriptionRestClient;
 
@@ -38,10 +34,6 @@ namespace Azure.ResourceManager.Subscription
         {
         }
 
-        private ClientDiagnostics SubscriptionsClientDiagnostics => _subscriptionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Subscription", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SubscriptionsRestOperations SubscriptionsRestClient => _subscriptionsRestClient ??= new SubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics TenantsClientDiagnostics => _tenantsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Subscription", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private TenantsRestOperations TenantsRestClient => _tenantsRestClient ??= new TenantsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics SubscriptionClientDiagnostics => _subscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Subscription", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SubscriptionRestOperations SubscriptionRestClient => _subscriptionRestClient ??= new SubscriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -51,253 +43,47 @@ namespace Azure.ResourceManager.Subscription
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of SubscriptionAliasResponseResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of SubscriptionAliasResponseResources and their operations over a SubscriptionAliasResponseResource. </returns>
-        public virtual SubscriptionAliasResponseCollection GetSubscriptionAliasResponses()
+        /// <summary> Gets a collection of SubscriptionAliasResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of SubscriptionAliasResources and their operations over a SubscriptionAliasResource. </returns>
+        public virtual SubscriptionAliasCollection GetSubscriptionAliases()
         {
-            return GetCachedClient(Client => new SubscriptionAliasResponseCollection(Client, Id));
+            return GetCachedClient(Client => new SubscriptionAliasCollection(Client, Id));
         }
 
-        /// <summary> Gets an object representing a GetTenantPolicyResponseResource along with the instance operations that can be performed on it in the TenantResource. </summary>
-        /// <returns> Returns a <see cref="GetTenantPolicyResponseResource" /> object. </returns>
-        public virtual GetTenantPolicyResponseResource GetGetTenantPolicyResponse()
+        /// <summary> Gets an object representing a TenantPolicyResource along with the instance operations that can be performed on it in the TenantResource. </summary>
+        /// <returns> Returns a <see cref="TenantPolicyResource" /> object. </returns>
+        public virtual TenantPolicyResource GetTenantPolicy()
         {
-            return new GetTenantPolicyResponseResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Subscription/policies/default"));
+            return new TenantPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Subscription/policies/default"));
         }
 
-        /// <summary> Gets a collection of BillingAccountPoliciesResponseResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of BillingAccountPoliciesResponseResources and their operations over a BillingAccountPoliciesResponseResource. </returns>
-        public virtual BillingAccountPoliciesResponseCollection GetBillingAccountPoliciesResponses()
+        /// <summary> Gets a collection of BillingAccountPolicyResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of BillingAccountPolicyResources and their operations over a BillingAccountPolicyResource. </returns>
+        public virtual BillingAccountPolicyCollection GetBillingAccountPolicies()
         {
-            return GetCachedClient(Client => new BillingAccountPoliciesResponseCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets details about a specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}
-        /// Operation Id: Subscriptions_Get
-        /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Models.Subscription>> GetSubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            using var scope = SubscriptionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetSubscription");
-            scope.Start();
-            try
-            {
-                var response = await SubscriptionsRestClient.GetAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets details about a specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}
-        /// Operation Id: Subscriptions_Get
-        /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Models.Subscription> GetSubscription(string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            using var scope = SubscriptionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetSubscription");
-            scope.Start();
-            try
-            {
-                var response = SubscriptionsRestClient.Get(subscriptionId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets all subscriptions for a tenant.
-        /// Request Path: /subscriptions
-        /// Operation Id: Subscriptions_List
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Models.Subscription" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Models.Subscription> GetSubscriptionsAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<Models.Subscription>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SubscriptionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetSubscriptions");
-                scope.Start();
-                try
-                {
-                    var response = await SubscriptionsRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<Models.Subscription>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SubscriptionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetSubscriptions");
-                scope.Start();
-                try
-                {
-                    var response = await SubscriptionsRestClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Gets all subscriptions for a tenant.
-        /// Request Path: /subscriptions
-        /// Operation Id: Subscriptions_List
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Models.Subscription" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Models.Subscription> GetSubscriptions(CancellationToken cancellationToken = default)
-        {
-            Page<Models.Subscription> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SubscriptionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetSubscriptions");
-                scope.Start();
-                try
-                {
-                    var response = SubscriptionsRestClient.List(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<Models.Subscription> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SubscriptionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetSubscriptions");
-                scope.Start();
-                try
-                {
-                    var response = SubscriptionsRestClient.ListNextPage(nextLink, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Gets the tenants for your account.
-        /// Request Path: /tenants
-        /// Operation Id: Tenants_List
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TenantIdDescription" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TenantIdDescription> GetTenantsAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<TenantIdDescription>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = TenantsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetTenants");
-                scope.Start();
-                try
-                {
-                    var response = await TenantsRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<TenantIdDescription>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = TenantsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetTenants");
-                scope.Start();
-                try
-                {
-                    var response = await TenantsRestClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Gets the tenants for your account.
-        /// Request Path: /tenants
-        /// Operation Id: Tenants_List
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TenantIdDescription" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TenantIdDescription> GetTenants(CancellationToken cancellationToken = default)
-        {
-            Page<TenantIdDescription> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = TenantsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetTenants");
-                scope.Start();
-                try
-                {
-                    var response = TenantsRestClient.List(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<TenantIdDescription> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = TenantsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetTenants");
-                scope.Start();
-                try
-                {
-                    var response = TenantsRestClient.ListNextPage(nextLink, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            return GetCachedClient(Client => new BillingAccountPolicyCollection(Client, Id));
         }
 
         /// <summary>
         /// Accept subscription ownership.
-        /// Request Path: /providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnership
-        /// Operation Id: Subscription_AcceptOwnership
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnership</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_AcceptOwnership</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="content"> The AcceptOwnershipContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> AcceptOwnershipSubscriptionAsync(WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> AcceptSubscriptionOwnershipAsync(WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = SubscriptionClientDiagnostics.CreateScope("TenantResourceExtensionClient.AcceptOwnershipSubscription");
+            using var scope = SubscriptionClientDiagnostics.CreateScope("TenantResourceExtensionClient.AcceptSubscriptionOwnership");
             scope.Start();
             try
             {
@@ -316,16 +102,24 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// Accept subscription ownership.
-        /// Request Path: /providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnership
-        /// Operation Id: Subscription_AcceptOwnership
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnership</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_AcceptOwnership</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="content"> The AcceptOwnershipContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation AcceptOwnershipSubscription(WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation AcceptSubscriptionOwnership(WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = SubscriptionClientDiagnostics.CreateScope("TenantResourceExtensionClient.AcceptOwnershipSubscription");
+            using var scope = SubscriptionClientDiagnostics.CreateScope("TenantResourceExtensionClient.AcceptSubscriptionOwnership");
             scope.Start();
             try
             {
@@ -344,14 +138,22 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// Accept subscription ownership status.
-        /// Request Path: /providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnershipStatus
-        /// Operation Id: Subscription_AcceptOwnershipStatus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnershipStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_AcceptOwnershipStatus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AcceptOwnershipStatusResponse>> AcceptOwnershipStatusSubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AcceptOwnershipStatus>> GetAcceptOwnershipStatusAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var scope = SubscriptionClientDiagnostics.CreateScope("TenantResourceExtensionClient.AcceptOwnershipStatusSubscription");
+            using var scope = SubscriptionClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetAcceptOwnershipStatus");
             scope.Start();
             try
             {
@@ -367,14 +169,22 @@ namespace Azure.ResourceManager.Subscription
 
         /// <summary>
         /// Accept subscription ownership status.
-        /// Request Path: /providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnershipStatus
-        /// Operation Id: Subscription_AcceptOwnershipStatus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Subscription/subscriptions/{subscriptionId}/acceptOwnershipStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_AcceptOwnershipStatus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AcceptOwnershipStatusResponse> AcceptOwnershipStatusSubscription(string subscriptionId, CancellationToken cancellationToken = default)
+        public virtual Response<AcceptOwnershipStatus> GetAcceptOwnershipStatus(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            using var scope = SubscriptionClientDiagnostics.CreateScope("TenantResourceExtensionClient.AcceptOwnershipStatusSubscription");
+            using var scope = SubscriptionClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetAcceptOwnershipStatus");
             scope.Start();
             try
             {

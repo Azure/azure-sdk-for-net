@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PreTask))
             {
-                writer.WritePropertyName("preTask");
+                writer.WritePropertyName("preTask"u8);
                 writer.WriteObjectValue(PreTask);
             }
             if (Optional.IsDefined(PostTask))
             {
-                writer.WritePropertyName("postTask");
+                writer.WritePropertyName("postTask"u8);
                 writer.WriteObjectValue(PostTask);
             }
             writer.WriteEndObject();
@@ -30,28 +30,28 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static SoftwareUpdateConfigurationTasks DeserializeSoftwareUpdateConfigurationTasks(JsonElement element)
         {
-            Optional<TaskProperties> preTask = default;
-            Optional<TaskProperties> postTask = default;
+            Optional<SoftwareUpdateConfigurationTaskProperties> preTask = default;
+            Optional<SoftwareUpdateConfigurationTaskProperties> postTask = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("preTask"))
+                if (property.NameEquals("preTask"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    preTask = TaskProperties.DeserializeTaskProperties(property.Value);
+                    preTask = SoftwareUpdateConfigurationTaskProperties.DeserializeSoftwareUpdateConfigurationTaskProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("postTask"))
+                if (property.NameEquals("postTask"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    postTask = TaskProperties.DeserializeTaskProperties(property.Value);
+                    postTask = SoftwareUpdateConfigurationTaskProperties.DeserializeSoftwareUpdateConfigurationTaskProperties(property.Value);
                     continue;
                 }
             }

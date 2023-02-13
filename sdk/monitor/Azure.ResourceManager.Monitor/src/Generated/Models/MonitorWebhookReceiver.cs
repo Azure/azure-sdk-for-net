@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="serviceUri"/> is null. </exception>
         public MonitorWebhookReceiver(string name, Uri serviceUri)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (serviceUri == null)
-            {
-                throw new ArgumentNullException(nameof(serviceUri));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
 
             Name = name;
             ServiceUri = serviceUri;

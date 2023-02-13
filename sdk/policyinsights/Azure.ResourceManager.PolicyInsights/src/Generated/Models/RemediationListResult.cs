@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Initializes a new instance of RemediationListResult. </summary>
         internal RemediationListResult()
         {
-            Value = new ChangeTrackingList<RemediationData>();
+            Value = new ChangeTrackingList<PolicyRemediationData>();
         }
 
         /// <summary> Initializes a new instance of RemediationListResult. </summary>
         /// <param name="value"> Array of remediation definitions. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal RemediationListResult(IReadOnlyList<RemediationData> value, string nextLink)
+        internal RemediationListResult(IReadOnlyList<PolicyRemediationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of remediation definitions. </summary>
-        public IReadOnlyList<RemediationData> Value { get; }
+        public IReadOnlyList<PolicyRemediationData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

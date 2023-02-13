@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Avs.Models
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
         private const string UpdatingValue = "Updating";
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Succeeded. </summary>
         public static GlobalReachConnectionProvisioningState Succeeded { get; } = new GlobalReachConnectionProvisioningState(SucceededValue);
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.Avs.Models
         public static GlobalReachConnectionProvisioningState Failed { get; } = new GlobalReachConnectionProvisioningState(FailedValue);
         /// <summary> Updating. </summary>
         public static GlobalReachConnectionProvisioningState Updating { get; } = new GlobalReachConnectionProvisioningState(UpdatingValue);
+        /// <summary> Canceled. </summary>
+        public static GlobalReachConnectionProvisioningState Canceled { get; } = new GlobalReachConnectionProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="GlobalReachConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(GlobalReachConnectionProvisioningState left, GlobalReachConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GlobalReachConnectionProvisioningState"/> values are not the same. </summary>

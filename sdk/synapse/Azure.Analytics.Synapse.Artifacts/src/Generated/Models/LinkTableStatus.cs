@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The LinkTableStatus. </summary>
@@ -16,23 +18,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of LinkTableStatus. </summary>
-        /// <param name="id"> Link table id. </param>
-        /// <param name="status"> Link table status. </param>
+        /// <param name="id"> ID provided by the client. </param>
+        /// <param name="status"> Link table status, please refer to this [articles](https://learn.microsoft.com/azure/synapse-analytics/synapse-link/sql-database-synapse-link#monitoring) for details. </param>
         /// <param name="errorMessage"> Link table error message. </param>
         /// <param name="startTime"> Link table start time. </param>
         /// <param name="stopTime"> Link table stop time. </param>
-        internal LinkTableStatus(string id, string status, string errorMessage, object startTime, object stopTime)
+        /// <param name="linkTableId"> Link table ID. </param>
+        /// <param name="errorCode"> Link table error code. </param>
+        /// <param name="lastProcessedData"> Link table last processed data time. </param>
+        /// <param name="lastTransactionCommitTime"> Link table last transaction commit time. </param>
+        internal LinkTableStatus(string id, string status, string errorMessage, object startTime, object stopTime, string linkTableId, string errorCode, DateTimeOffset? lastProcessedData, DateTimeOffset? lastTransactionCommitTime)
         {
             Id = id;
             Status = status;
             ErrorMessage = errorMessage;
             StartTime = startTime;
             StopTime = stopTime;
+            LinkTableId = linkTableId;
+            ErrorCode = errorCode;
+            LastProcessedData = lastProcessedData;
+            LastTransactionCommitTime = lastTransactionCommitTime;
         }
 
-        /// <summary> Link table id. </summary>
+        /// <summary> ID provided by the client. </summary>
         public string Id { get; }
-        /// <summary> Link table status. </summary>
+        /// <summary> Link table status, please refer to this [articles](https://learn.microsoft.com/azure/synapse-analytics/synapse-link/sql-database-synapse-link#monitoring) for details. </summary>
         public string Status { get; }
         /// <summary> Link table error message. </summary>
         public string ErrorMessage { get; }
@@ -40,5 +50,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object StartTime { get; }
         /// <summary> Link table stop time. </summary>
         public object StopTime { get; }
+        /// <summary> Link table ID. </summary>
+        public string LinkTableId { get; }
+        /// <summary> Link table error code. </summary>
+        public string ErrorCode { get; }
+        /// <summary> Link table last processed data time. </summary>
+        public DateTimeOffset? LastProcessedData { get; }
+        /// <summary> Link table last transaction commit time. </summary>
+        public DateTimeOffset? LastTransactionCommitTime { get; }
     }
 }

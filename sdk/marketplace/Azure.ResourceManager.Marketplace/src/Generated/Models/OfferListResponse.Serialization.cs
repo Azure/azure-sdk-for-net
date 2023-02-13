@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static OfferListResponse DeserializeOfferListResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<OfferData>> value = default;
+            Optional<IReadOnlyList<PrivateStoreOfferData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OfferData> array = new List<OfferData>();
+                    List<PrivateStoreOfferData> array = new List<PrivateStoreOfferData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OfferData.DeserializeOfferData(item));
+                        array.Add(PrivateStoreOfferData.DeserializePrivateStoreOfferData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

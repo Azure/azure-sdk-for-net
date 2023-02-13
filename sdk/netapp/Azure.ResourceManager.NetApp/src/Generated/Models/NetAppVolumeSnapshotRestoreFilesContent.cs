@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <exception cref="ArgumentNullException"> <paramref name="filePaths"/> is null. </exception>
         public NetAppVolumeSnapshotRestoreFilesContent(IEnumerable<string> filePaths)
         {
-            if (filePaths == null)
-            {
-                throw new ArgumentNullException(nameof(filePaths));
-            }
+            Argument.AssertNotNull(filePaths, nameof(filePaths));
 
             FilePaths = filePaths.ToList();
         }

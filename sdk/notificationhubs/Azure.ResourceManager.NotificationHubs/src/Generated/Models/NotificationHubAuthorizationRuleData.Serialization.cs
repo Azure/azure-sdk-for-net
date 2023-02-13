@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.NotificationHubs
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.NotificationHubs
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Rights))
             {
-                writer.WritePropertyName("rights");
+                writer.WritePropertyName("rights"u8);
                 writer.WriteStartArray();
                 foreach (var item in Rights)
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NotificationHubs
             Optional<int> revision = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     sku = NotificationHubSku.DeserializeNotificationHubSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,37 +98,37 @@ namespace Azure.ResourceManager.NotificationHubs
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("rights"))
+                        if (property0.NameEquals("rights"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -152,52 +152,52 @@ namespace Azure.ResourceManager.NotificationHubs
                             rights = array;
                             continue;
                         }
-                        if (property0.NameEquals("primaryKey"))
+                        if (property0.NameEquals("primaryKey"u8))
                         {
                             primaryKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("secondaryKey"))
+                        if (property0.NameEquals("secondaryKey"u8))
                         {
                             secondaryKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("keyName"))
+                        if (property0.NameEquals("keyName"u8))
                         {
                             keyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("claimType"))
+                        if (property0.NameEquals("claimType"u8))
                         {
                             claimType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("claimValue"))
+                        if (property0.NameEquals("claimValue"u8))
                         {
                             claimValue = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("modifiedTime"))
+                        if (property0.NameEquals("modifiedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            modifiedTime = property0.Value.GetDateTimeOffset();
+                            modifiedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("createdTime"))
+                        if (property0.NameEquals("createdTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            createdTime = property0.Value.GetDateTimeOffset();
+                            createdTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("revision"))
+                        if (property0.NameEquals("revision"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

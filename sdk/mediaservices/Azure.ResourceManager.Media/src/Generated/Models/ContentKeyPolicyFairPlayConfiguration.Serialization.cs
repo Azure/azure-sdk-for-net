@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (FairPlayApplicationSecretKey != null)
+            if (ApplicationSecretKey != null)
             {
-                writer.WritePropertyName("ask");
-                writer.WriteBase64StringValue(FairPlayApplicationSecretKey, "D");
+                writer.WritePropertyName("ask"u8);
+                writer.WriteBase64StringValue(ApplicationSecretKey, "D");
             }
             else
             {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
             }
             if (FairPlayPfxPassword != null)
             {
-                writer.WritePropertyName("fairPlayPfxPassword");
+                writer.WritePropertyName("fairPlayPfxPassword"u8);
                 writer.WriteStringValue(FairPlayPfxPassword);
             }
             else
@@ -36,23 +36,23 @@ namespace Azure.ResourceManager.Media.Models
             }
             if (FairPlayPfx != null)
             {
-                writer.WritePropertyName("fairPlayPfx");
+                writer.WritePropertyName("fairPlayPfx"u8);
                 writer.WriteStringValue(FairPlayPfx);
             }
             else
             {
                 writer.WriteNull("fairPlayPfx");
             }
-            writer.WritePropertyName("rentalAndLeaseKeyType");
+            writer.WritePropertyName("rentalAndLeaseKeyType"u8);
             writer.WriteStringValue(RentalAndLeaseKeyType.ToString());
-            writer.WritePropertyName("rentalDuration");
+            writer.WritePropertyName("rentalDuration"u8);
             writer.WriteNumberValue(RentalDuration);
             if (Optional.IsDefined(OfflineRentalConfiguration))
             {
-                writer.WritePropertyName("offlineRentalConfiguration");
+                writer.WritePropertyName("offlineRentalConfiguration"u8);
                 writer.WriteObjectValue(OfflineRentalConfiguration);
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Media.Models
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ask"))
+                if (property.NameEquals("ask"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Media.Models
                     ask = property.Value.GetBytesFromBase64("D");
                     continue;
                 }
-                if (property.NameEquals("fairPlayPfxPassword"))
+                if (property.NameEquals("fairPlayPfxPassword"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media.Models
                     fairPlayPfxPassword = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fairPlayPfx"))
+                if (property.NameEquals("fairPlayPfx"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,17 +98,17 @@ namespace Azure.ResourceManager.Media.Models
                     fairPlayPfx = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rentalAndLeaseKeyType"))
+                if (property.NameEquals("rentalAndLeaseKeyType"u8))
                 {
                     rentalAndLeaseKeyType = new ContentKeyPolicyFairPlayRentalAndLeaseKeyType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rentalDuration"))
+                if (property.NameEquals("rentalDuration"u8))
                 {
                     rentalDuration = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("offlineRentalConfiguration"))
+                if (property.NameEquals("offlineRentalConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Media.Models
                     offlineRentalConfiguration = ContentKeyPolicyFairPlayOfflineRentalConfiguration.DeserializeContentKeyPolicyFairPlayOfflineRentalConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;

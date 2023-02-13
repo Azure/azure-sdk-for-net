@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Defender for Servers AWS offering. </summary>
-    public partial class DefenderForServersAwsOffering : CloudOffering
+    public partial class DefenderForServersAwsOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of DefenderForServersAwsOffering. </summary>
         public DefenderForServersAwsOffering()
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="mdeAutoProvisioning"> The Microsoft Defender for Endpoint autoprovisioning configuration. </param>
         /// <param name="subPlan"> configuration for the servers offering subPlan. </param>
         /// <param name="vmScanners"> The Microsoft Defender for Server VM scanning configuration. </param>
-        internal DefenderForServersAwsOffering(OfferingType offeringType, string description, DefenderForServersAwsOfferingDefenderForServers defenderForServers, DefenderForServersAwsOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForServersAwsOfferingVaAutoProvisioning vaAutoProvisioning, DefenderForServersAwsOfferingMdeAutoProvisioning mdeAutoProvisioning, DefenderForServersAwsOfferingSubPlan subPlan, DefenderForServersAwsOfferingVmScanners vmScanners) : base(offeringType, description)
+        internal DefenderForServersAwsOffering(OfferingType offeringType, string description, AwsDefenderForServersInfo defenderForServers, DefenderForServersAwsOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning vaAutoProvisioning, DefenderForServersAwsOfferingMdeAutoProvisioning mdeAutoProvisioning, DefenderForServersAwsOfferingSubPlan subPlan, DefenderForServersAwsOfferingVmScanners vmScanners) : base(offeringType, description)
         {
             DefenderForServers = defenderForServers;
             ArcAutoProvisioning = arcAutoProvisioning;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> The Defender for servers connection configuration. </summary>
-        internal DefenderForServersAwsOfferingDefenderForServers DefenderForServers { get; set; }
+        internal AwsDefenderForServersInfo DefenderForServers { get; set; }
         /// <summary> The cloud role ARN in AWS for this feature. </summary>
         public string DefenderForServersCloudRoleArn
         {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             set
             {
                 if (DefenderForServers is null)
-                    DefenderForServers = new DefenderForServersAwsOfferingDefenderForServers();
+                    DefenderForServers = new AwsDefenderForServersInfo();
                 DefenderForServers.CloudRoleArn = value;
             }
         }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> The ARC autoprovisioning configuration. </summary>
         public DefenderForServersAwsOfferingArcAutoProvisioning ArcAutoProvisioning { get; set; }
         /// <summary> The Vulnerability Assessment autoprovisioning configuration. </summary>
-        public DefenderForServersAwsOfferingVaAutoProvisioning VaAutoProvisioning { get; set; }
+        public DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning VaAutoProvisioning { get; set; }
         /// <summary> The Microsoft Defender for Endpoint autoprovisioning configuration. </summary>
         public DefenderForServersAwsOfferingMdeAutoProvisioning MdeAutoProvisioning { get; set; }
         /// <summary> configuration for the servers offering subPlan. </summary>

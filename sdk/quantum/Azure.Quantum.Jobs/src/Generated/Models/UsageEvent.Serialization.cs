@@ -22,22 +22,22 @@ namespace Azure.Quantum.Jobs.Models
             Optional<float> unitPrice = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dimensionId"))
+                if (property.NameEquals("dimensionId"u8))
                 {
                     dimensionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dimensionName"))
+                if (property.NameEquals("dimensionName"u8))
                 {
                     dimensionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("measureUnit"))
+                if (property.NameEquals("measureUnit"u8))
                 {
                     measureUnit = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("amountBilled"))
+                if (property.NameEquals("amountBilled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +47,7 @@ namespace Azure.Quantum.Jobs.Models
                     amountBilled = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("amountConsumed"))
+                if (property.NameEquals("amountConsumed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.Quantum.Jobs.Models
                     amountConsumed = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("unitPrice"))
+                if (property.NameEquals("unitPrice"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

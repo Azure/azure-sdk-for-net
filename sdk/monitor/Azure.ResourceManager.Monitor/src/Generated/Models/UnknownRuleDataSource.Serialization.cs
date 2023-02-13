@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("odata.type");
+            writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceUri");
+                writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(LegacyResourceId))
             {
-                writer.WritePropertyName("legacyResourceId");
+                writer.WritePropertyName("legacyResourceId"u8);
                 writer.WriteStringValue(LegacyResourceId);
             }
             if (Optional.IsDefined(ResourceLocation))
             {
-                writer.WritePropertyName("resourceLocation");
+                writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation);
             }
             if (Optional.IsDefined(MetricNamespace))
             {
-                writer.WritePropertyName("metricNamespace");
+                writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
             }
             writer.WriteEndObject();
@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static UnknownRuleDataSource DeserializeUnknownRuleDataSource(JsonElement element)
         {
-            string odataType = default;
+            string odataType = "Unknown";
             Optional<ResourceIdentifier> resourceUri = default;
             Optional<ResourceIdentifier> legacyResourceId = default;
             Optional<string> resourceLocation = default;
             Optional<string> metricNamespace = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("odata.type"))
+                if (property.NameEquals("odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceUri"))
+                if (property.NameEquals("resourceUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     resourceUri = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("legacyResourceId"))
+                if (property.NameEquals("legacyResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.Monitor.Models
                     legacyResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceLocation"))
+                if (property.NameEquals("resourceLocation"u8))
                 {
                     resourceLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricNamespace"))
+                if (property.NameEquals("metricNamespace"u8))
                 {
                     metricNamespace = property.Value.GetString();
                     continue;

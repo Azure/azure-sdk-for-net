@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Automation
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, SourceControlCreateOrUpdateContent content)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, AutomationSourceControlCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="sourceControlName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SourceControlData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, SourceControlCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomationSourceControlData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, AutomationSourceControlCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                 case 201:
                     {
-                        SourceControlData value = default;
+                        AutomationSourceControlData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SourceControlData.DeserializeSourceControlData(document.RootElement);
+                        value = AutomationSourceControlData.DeserializeAutomationSourceControlData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="sourceControlName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SourceControlData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, SourceControlCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public Response<AutomationSourceControlData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, AutomationSourceControlCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                 case 201:
                     {
-                        SourceControlData value = default;
+                        AutomationSourceControlData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SourceControlData.DeserializeSourceControlData(document.RootElement);
+                        value = AutomationSourceControlData.DeserializeAutomationSourceControlData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, SourceControlPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, AutomationSourceControlPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="sourceControlName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SourceControlData>> UpdateAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, SourceControlPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomationSourceControlData>> UpdateAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, AutomationSourceControlPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -180,9 +180,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        SourceControlData value = default;
+                        AutomationSourceControlData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SourceControlData.DeserializeSourceControlData(document.RootElement);
+                        value = AutomationSourceControlData.DeserializeAutomationSourceControlData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/>, <paramref name="sourceControlName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SourceControlData> Update(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, SourceControlPatch patch, CancellationToken cancellationToken = default)
+        public Response<AutomationSourceControlData> Update(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, AutomationSourceControlPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -213,9 +213,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        SourceControlData value = default;
+                        AutomationSourceControlData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SourceControlData.DeserializeSourceControlData(document.RootElement);
+                        value = AutomationSourceControlData.DeserializeAutomationSourceControlData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SourceControlData>> GetAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomationSourceControlData>> GetAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -340,13 +340,13 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        SourceControlData value = default;
+                        AutomationSourceControlData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SourceControlData.DeserializeSourceControlData(document.RootElement);
+                        value = AutomationSourceControlData.DeserializeAutomationSourceControlData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SourceControlData)null, message.Response);
+                    return Response.FromValue((AutomationSourceControlData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SourceControlData> Get(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, CancellationToken cancellationToken = default)
+        public Response<AutomationSourceControlData> Get(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -373,13 +373,13 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        SourceControlData value = default;
+                        AutomationSourceControlData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SourceControlData.DeserializeSourceControlData(document.RootElement);
+                        value = AutomationSourceControlData.DeserializeAutomationSourceControlData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SourceControlData)null, message.Response);
+                    return Response.FromValue((AutomationSourceControlData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SourceControlListResult>> ListByAutomationAccountAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomationSourceControlListResult>> ListByAutomationAccountAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -430,9 +430,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        SourceControlListResult value = default;
+                        AutomationSourceControlListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SourceControlListResult.DeserializeSourceControlListResult(document.RootElement);
+                        value = AutomationSourceControlListResult.DeserializeAutomationSourceControlListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SourceControlListResult> ListByAutomationAccount(string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AutomationSourceControlListResult> ListByAutomationAccount(string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -460,9 +460,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        SourceControlListResult value = default;
+                        AutomationSourceControlListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SourceControlListResult.DeserializeSourceControlListResult(document.RootElement);
+                        value = AutomationSourceControlListResult.DeserializeAutomationSourceControlListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SourceControlListResult>> ListByAutomationAccountNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomationSourceControlListResult>> ListByAutomationAccountNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -506,9 +506,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        SourceControlListResult value = default;
+                        AutomationSourceControlListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SourceControlListResult.DeserializeSourceControlListResult(document.RootElement);
+                        value = AutomationSourceControlListResult.DeserializeAutomationSourceControlListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SourceControlListResult> ListByAutomationAccountNextPage(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AutomationSourceControlListResult> ListByAutomationAccountNextPage(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -538,9 +538,9 @@ namespace Azure.ResourceManager.Automation
             {
                 case 200:
                     {
-                        SourceControlListResult value = default;
+                        AutomationSourceControlListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SourceControlListResult.DeserializeSourceControlListResult(document.RootElement);
+                        value = AutomationSourceControlListResult.DeserializeAutomationSourceControlListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

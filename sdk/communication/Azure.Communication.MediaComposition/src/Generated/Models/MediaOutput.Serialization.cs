@@ -16,7 +16,7 @@ namespace Azure.Communication.MediaComposition.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
@@ -34,16 +34,7 @@ namespace Azure.Communication.MediaComposition.Models
                     case "teamsMeeting": return TeamsMeetingOutput.DeserializeTeamsMeetingOutput(element);
                 }
             }
-            MediaOutputType kind = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"))
-                {
-                    kind = new MediaOutputType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new MediaOutput(kind);
+            return UnknownMediaOutput.DeserializeUnknownMediaOutput(element);
         }
     }
 }

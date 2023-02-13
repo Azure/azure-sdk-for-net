@@ -6,19 +6,20 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ElasticSan.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
+        private ClientDiagnostics _skusClientDiagnostics;
+        private SkusRestOperations _skusRestClient;
         private ClientDiagnostics _elasticSanClientDiagnostics;
         private ElasticSansRestOperations _elasticSanRestClient;
 
@@ -34,6 +35,8 @@ namespace Azure.ResourceManager.ElasticSan
         {
         }
 
+        private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private SkusRestOperations SkusRestClient => _skusRestClient ??= new SkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics ElasticSanClientDiagnostics => _elasticSanClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ElasticSanResource.ResourceType.Namespace, Diagnostics);
         private ElasticSansRestOperations ElasticSanRestClient => _elasticSanRestClient ??= new ElasticSansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ElasticSanResource.ResourceType));
 
@@ -44,87 +47,91 @@ namespace Azure.ResourceManager.ElasticSan
         }
 
         /// <summary>
+        /// List all the available Skus in the region and information related to them
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ElasticSan/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Specify $filter=&apos;location eq &lt;location&gt;&apos; to filter on location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ElasticSanSkuInformation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ElasticSanSkuInformation> GetSkusAsync(string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ElasticSanSkuInformation.DeserializeElasticSanSkuInformation, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkus", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the available Skus in the region and information related to them
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ElasticSan/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Specify $filter=&apos;location eq &lt;location&gt;&apos; to filter on location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ElasticSanSkuInformation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ElasticSanSkuInformation> GetSkus(string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ElasticSanSkuInformation.DeserializeElasticSanSkuInformation, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkus", "value", null, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a list of ElasticSans in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ElasticSan/elasticSans
-        /// Operation Id: ElasticSans_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ElasticSan/elasticSans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ElasticSans_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ElasticSanResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ElasticSanResource> GetElasticSansAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ElasticSanResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ElasticSanClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetElasticSans");
-                scope.Start();
-                try
-                {
-                    var response = await ElasticSanRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ElasticSanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ElasticSanResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ElasticSanClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetElasticSans");
-                scope.Start();
-                try
-                {
-                    var response = await ElasticSanRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ElasticSanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ElasticSanRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ElasticSanRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticSanResource(Client, ElasticSanData.DeserializeElasticSanData(e)), ElasticSanClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetElasticSans", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of ElasticSans in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ElasticSan/elasticSans
-        /// Operation Id: ElasticSans_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ElasticSan/elasticSans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ElasticSans_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ElasticSanResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ElasticSanResource> GetElasticSans(CancellationToken cancellationToken = default)
         {
-            Page<ElasticSanResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ElasticSanClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetElasticSans");
-                scope.Start();
-                try
-                {
-                    var response = ElasticSanRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ElasticSanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ElasticSanResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ElasticSanClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetElasticSans");
-                scope.Start();
-                try
-                {
-                    var response = ElasticSanRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ElasticSanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ElasticSanRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ElasticSanRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticSanResource(Client, ElasticSanData.DeserializeElasticSanData(e)), ElasticSanClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetElasticSans", "value", "nextLink", cancellationToken);
         }
     }
 }

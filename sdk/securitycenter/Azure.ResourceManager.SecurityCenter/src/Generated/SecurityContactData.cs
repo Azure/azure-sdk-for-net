@@ -24,25 +24,25 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="email"> The email of this security contact. </param>
-        /// <param name="phone"> The phone number of this security contact. </param>
-        /// <param name="alertNotifications"> Whether to send security alerts notifications to the security contact. </param>
-        /// <param name="alertsToAdmins"> Whether to send security alerts notifications to subscription admins. </param>
-        internal SecurityContactData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string email, string phone, AlertNotification? alertNotifications, AlertsToAdmin? alertsToAdmins) : base(id, name, resourceType, systemData)
+        /// <param name="emails"> List of email addresses which will get notifications from Microsoft Defender for Cloud by the configurations defined in this security contact. </param>
+        /// <param name="phone"> The security contact&apos;s phone number. </param>
+        /// <param name="alertNotifications"> Defines whether to send email notifications about new security alerts. </param>
+        /// <param name="notificationsByRole"> Defines whether to send email notifications from Microsoft Defender for Cloud to persons with specific RBAC roles on the subscription. </param>
+        internal SecurityContactData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string emails, string phone, SecurityContactPropertiesAlertNotifications alertNotifications, SecurityContactPropertiesNotificationsByRole notificationsByRole) : base(id, name, resourceType, systemData)
         {
-            Email = email;
+            Emails = emails;
             Phone = phone;
             AlertNotifications = alertNotifications;
-            AlertsToAdmins = alertsToAdmins;
+            NotificationsByRole = notificationsByRole;
         }
 
-        /// <summary> The email of this security contact. </summary>
-        public string Email { get; set; }
-        /// <summary> The phone number of this security contact. </summary>
+        /// <summary> List of email addresses which will get notifications from Microsoft Defender for Cloud by the configurations defined in this security contact. </summary>
+        public string Emails { get; set; }
+        /// <summary> The security contact&apos;s phone number. </summary>
         public string Phone { get; set; }
-        /// <summary> Whether to send security alerts notifications to the security contact. </summary>
-        public AlertNotification? AlertNotifications { get; set; }
-        /// <summary> Whether to send security alerts notifications to subscription admins. </summary>
-        public AlertsToAdmin? AlertsToAdmins { get; set; }
+        /// <summary> Defines whether to send email notifications about new security alerts. </summary>
+        public SecurityContactPropertiesAlertNotifications AlertNotifications { get; set; }
+        /// <summary> Defines whether to send email notifications from Microsoft Defender for Cloud to persons with specific RBAC roles on the subscription. </summary>
+        public SecurityContactPropertiesNotificationsByRole NotificationsByRole { get; set; }
     }
 }

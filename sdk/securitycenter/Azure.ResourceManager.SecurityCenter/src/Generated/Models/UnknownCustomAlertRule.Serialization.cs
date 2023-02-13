@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("isEnabled");
+            writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            writer.WritePropertyName("ruleType");
+            writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType);
             writer.WriteEndObject();
         }
@@ -27,25 +27,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> displayName = default;
             Optional<string> description = default;
             bool isEnabled = default;
-            string ruleType = default;
+            string ruleType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isEnabled"))
+                if (property.NameEquals("isEnabled"u8))
                 {
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("ruleType"))
+                if (property.NameEquals("ruleType"u8))
                 {
                     ruleType = property.Value.GetString();
                     continue;

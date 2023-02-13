@@ -19,10 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public AnalyzeTextOptions(string text)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
             TokenFilters = new ChangeTrackingList<TokenFilterName>();

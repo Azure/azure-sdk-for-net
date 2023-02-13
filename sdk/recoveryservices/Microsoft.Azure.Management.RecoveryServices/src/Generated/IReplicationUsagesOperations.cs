@@ -27,8 +27,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Fetches the replication usages of the vault.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group where the recovery services vault is
-        /// present.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.

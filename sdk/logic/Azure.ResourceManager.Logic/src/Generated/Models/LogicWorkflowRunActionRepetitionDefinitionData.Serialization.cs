@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Logic
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -30,38 +30,38 @@ namespace Azure.ResourceManager.Logic
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startTime");
+                writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
             if (Optional.IsDefined(EndOn))
             {
-                writer.WritePropertyName("endTime");
+                writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
             if (Optional.IsDefined(Correlation))
             {
-                writer.WritePropertyName("correlation");
+                writer.WritePropertyName("correlation"u8);
                 writer.WriteObjectValue(Correlation);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(Code))
             {
-                writer.WritePropertyName("code");
+                writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
             if (Optional.IsDefined(Error))
             {
-                writer.WritePropertyName("error");
+                writer.WritePropertyName("error"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Error);
 #else
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Logic
             }
             if (Optional.IsCollectionDefined(RetryHistory))
             {
-                writer.WritePropertyName("retryHistory");
+                writer.WritePropertyName("retryHistory"u8);
                 writer.WriteStartArray();
                 foreach (var item in RetryHistory)
                 {
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.Logic
             }
             if (Optional.IsDefined(IterationCount))
             {
-                writer.WritePropertyName("iterationCount");
+                writer.WritePropertyName("iterationCount"u8);
                 writer.WriteNumberValue(IterationCount.Value);
             }
             if (Optional.IsCollectionDefined(RepetitionIndexes))
             {
-                writer.WritePropertyName("repetitionIndexes");
+                writer.WritePropertyName("repetitionIndexes"u8);
                 writer.WriteStartArray();
                 foreach (var item in RepetitionIndexes)
                 {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Logic
             Optional<IList<LogicWorkflowRepetitionIndex>> repetitionIndexes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -137,37 +137,37 @@ namespace Azure.ResourceManager.Logic
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Logic
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("startTime"))
+                        if (property0.NameEquals("startTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Logic
                             startTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("endTime"))
+                        if (property0.NameEquals("endTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Logic
                             endTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("correlation"))
+                        if (property0.NameEquals("correlation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Logic
                             correlation = LogicWorkflowRunActionCorrelation.DeserializeLogicWorkflowRunActionCorrelation(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -216,12 +216,12 @@ namespace Azure.ResourceManager.Logic
                             status = new LogicWorkflowStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("code"))
+                        if (property0.NameEquals("code"u8))
                         {
                             code = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("error"))
+                        if (property0.NameEquals("error"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Logic
                             error = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("trackingId"))
+                        if (property0.NameEquals("trackingId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Logic
                             trackingId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("inputs"))
+                        if (property0.NameEquals("inputs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Logic
                             inputs = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("inputsLink"))
+                        if (property0.NameEquals("inputsLink"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Logic
                             inputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("outputs"))
+                        if (property0.NameEquals("outputs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Logic
                             outputs = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("outputsLink"))
+                        if (property0.NameEquals("outputsLink"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Logic
                             outputsLink = LogicContentLink.DeserializeLogicContentLink(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("trackedProperties"))
+                        if (property0.NameEquals("trackedProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Logic
                             trackedProperties = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("retryHistory"))
+                        if (property0.NameEquals("retryHistory"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Logic
                             retryHistory = array;
                             continue;
                         }
-                        if (property0.NameEquals("iterationCount"))
+                        if (property0.NameEquals("iterationCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Logic
                             iterationCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("repetitionIndexes"))
+                        if (property0.NameEquals("repetitionIndexes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

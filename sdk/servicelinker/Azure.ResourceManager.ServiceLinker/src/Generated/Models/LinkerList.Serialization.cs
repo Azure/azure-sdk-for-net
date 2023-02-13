@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             Optional<IReadOnlyList<LinkerResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

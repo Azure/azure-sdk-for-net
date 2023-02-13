@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="identity"> Identity information for the Event Grid Domain resource. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="provisioningState"> Provisioning state of the Event Grid Domain Resource. </param>
-        /// <param name="endpointUri"> Endpoint for the Event Grid Domain Resource which is used for publishing the events. </param>
+        /// <param name="endpoint"> Endpoint for the Event Grid Domain Resource which is used for publishing the events. </param>
         /// <param name="inputSchema"> This determines the format that Event Grid should expect for incoming events published to the Event Grid Domain Resource. </param>
         /// <param name="inputSchemaMapping">
         /// Information about the InputSchemaMapping which specified the info about mapping event payload.
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.EventGrid
         /// resources by the user.
         /// </param>
         /// <param name="dataResidencyBoundary"> Data Residency Boundary of the resource. </param>
-        internal EventGridDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, EventGridDomainProvisioningState? provisioningState, Uri endpointUri, EventGridInputSchema? inputSchema, EventGridInputSchemaMapping inputSchemaMapping, string metricResourceId, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, bool? autoCreateTopicWithFirstSubscription, bool? autoDeleteTopicWithLastSubscription, DataResidencyBoundary? dataResidencyBoundary) : base(id, name, resourceType, systemData, tags, location)
+        internal EventGridDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, EventGridDomainProvisioningState? provisioningState, Uri endpoint, EventGridInputSchema? inputSchema, EventGridInputSchemaMapping inputSchemaMapping, string metricResourceId, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, bool? autoCreateTopicWithFirstSubscription, bool? autoDeleteTopicWithLastSubscription, DataResidencyBoundary? dataResidencyBoundary) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             PrivateEndpointConnections = privateEndpointConnections;
             ProvisioningState = provisioningState;
-            EndpointUri = endpointUri;
+            Endpoint = endpoint;
             InputSchema = inputSchema;
             InputSchemaMapping = inputSchemaMapping;
             MetricResourceId = metricResourceId;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Provisioning state of the Event Grid Domain Resource. </summary>
         public EventGridDomainProvisioningState? ProvisioningState { get; }
         /// <summary> Endpoint for the Event Grid Domain Resource which is used for publishing the events. </summary>
-        public Uri EndpointUri { get; }
+        public Uri Endpoint { get; }
         /// <summary> This determines the format that Event Grid should expect for incoming events published to the Event Grid Domain Resource. </summary>
         public EventGridInputSchema? InputSchema { get; set; }
         /// <summary>

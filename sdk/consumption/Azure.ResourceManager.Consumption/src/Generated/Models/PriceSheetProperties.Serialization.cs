@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static PriceSheetProperties DeserializePriceSheetProperties(JsonElement element)
         {
-            Optional<string> billingPeriodId = default;
+            Optional<ResourceIdentifier> billingPeriodId = default;
             Optional<Guid> meterId = default;
-            Optional<MeterDetails> meterDetails = default;
+            Optional<ConsumptionMeterDetails> meterDetails = default;
             Optional<string> unitOfMeasure = default;
             Optional<decimal> includedQuantity = default;
             Optional<string> partNumber = default;
@@ -26,12 +26,17 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<string> offerId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("billingPeriodId"))
+                if (property.NameEquals("billingPeriodId"u8))
                 {
-                    billingPeriodId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    billingPeriodId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("meterId"))
+                if (property.NameEquals("meterId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,22 +46,22 @@ namespace Azure.ResourceManager.Consumption.Models
                     meterId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("meterDetails"))
+                if (property.NameEquals("meterDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    meterDetails = MeterDetails.DeserializeMeterDetails(property.Value);
+                    meterDetails = ConsumptionMeterDetails.DeserializeConsumptionMeterDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("unitOfMeasure"))
+                if (property.NameEquals("unitOfMeasure"u8))
                 {
                     unitOfMeasure = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("includedQuantity"))
+                if (property.NameEquals("includedQuantity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,12 +71,12 @@ namespace Azure.ResourceManager.Consumption.Models
                     includedQuantity = property.Value.GetDecimal();
                     continue;
                 }
-                if (property.NameEquals("partNumber"))
+                if (property.NameEquals("partNumber"u8))
                 {
                     partNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("unitPrice"))
+                if (property.NameEquals("unitPrice"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,12 +86,12 @@ namespace Azure.ResourceManager.Consumption.Models
                     unitPrice = property.Value.GetDecimal();
                     continue;
                 }
-                if (property.NameEquals("currencyCode"))
+                if (property.NameEquals("currencyCode"u8))
                 {
                     currencyCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offerId"))
+                if (property.NameEquals("offerId"u8))
                 {
                     offerId = property.Value.GetString();
                     continue;

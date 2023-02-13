@@ -24,7 +24,12 @@ namespace Azure.Core.TestFramework
 
         protected async Task<Response> SendRequestAsync(HttpPipeline pipeline, Action<HttpMessage> messageAction, bool bufferResponse = true, CancellationToken cancellationToken = default)
         {
-            HttpMessage message = pipeline.CreateMessage();
+            return (await SendMessageRequestAsync(pipeline, messageAction, bufferResponse, cancellationToken: cancellationToken)).Response;
+        }
+
+        protected async Task<HttpMessage> SendMessageRequestAsync(HttpPipeline pipeline, Action<HttpMessage> messageAction, bool bufferResponse = true, HttpMessage message = default, CancellationToken cancellationToken = default)
+        {
+            message ??= pipeline.CreateMessage();
             message.BufferResponse = bufferResponse;
             messageAction(message);
 
@@ -37,7 +42,7 @@ namespace Azure.Core.TestFramework
                 pipeline.Send(message, cancellationToken);
             }
 
-            return message.Response;
+            return message;
         }
 
         protected async Task<Response> SendRequestAsync(HttpPipelineTransport transport, Action<HttpMessage> messageAction, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null, bool bufferResponse = true, CancellationToken cancellationToken = default)
@@ -60,6 +65,20 @@ namespace Azure.Core.TestFramework
                 message.Request.Method = RequestMethod.Get;
                 message.Request.Uri.Reset(uri ?? new Uri("http://example.com"));
             }, policy, responseClassifier, bufferResponse, cancellationToken);
+        }
+
+        protected async Task<HttpMessage> SendMessageGetRequest(HttpPipeline pipeline, HttpMessage message, ResponseClassifier responseClassifier = null, bool bufferResponse = true, Uri uri = null, CancellationToken cancellationToken = default)
+        {
+            await Task.Yield();
+
+            return await SendMessageRequestAsync(pipeline, message =>
+                {
+                    message.Request.Method = RequestMethod.Get;
+                    message.Request.Uri.Reset(uri ?? new Uri("http://example.com"));
+                },
+                bufferResponse,
+                message,
+                cancellationToken);
         }
     }
 }

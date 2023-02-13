@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -16,28 +17,28 @@ namespace Azure.ResourceManager.DataShare.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DatabaseName))
             {
-                writer.WritePropertyName("databaseName");
+                writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
             if (Optional.IsDefined(SchemaName))
             {
-                writer.WritePropertyName("schemaName");
+                writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
             }
             if (Optional.IsDefined(SqlServerResourceId))
             {
-                writer.WritePropertyName("sqlServerResourceId");
+                writer.WritePropertyName("sqlServerResourceId"u8);
                 writer.WriteStringValue(SqlServerResourceId);
             }
             if (Optional.IsDefined(TableName))
             {
-                writer.WritePropertyName("tableName");
+                writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
             writer.WriteEndObject();
@@ -52,43 +53,43 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> databaseName = default;
-            Optional<string> dataSetId = default;
+            Optional<Guid> dataSetId = default;
             Optional<string> schemaName = default;
-            Optional<string> sqlServerResourceId = default;
+            Optional<ResourceIdentifier> sqlServerResourceId = default;
             Optional<string> tableName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new DataSetKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,27 +98,37 @@ namespace Azure.ResourceManager.DataShare.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("databaseName"))
+                        if (property0.NameEquals("databaseName"u8))
                         {
                             databaseName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("dataSetId"))
+                        if (property0.NameEquals("dataSetId"u8))
                         {
-                            dataSetId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            dataSetId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("schemaName"))
+                        if (property0.NameEquals("schemaName"u8))
                         {
                             schemaName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sqlServerResourceId"))
+                        if (property0.NameEquals("sqlServerResourceId"u8))
                         {
-                            sqlServerResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sqlServerResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("tableName"))
+                        if (property0.NameEquals("tableName"u8))
                         {
                             tableName = property0.Value.GetString();
                             continue;
@@ -126,7 +137,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new SqlDBTableDataSet(id, name, type, systemData.Value, kind, databaseName.Value, dataSetId.Value, schemaName.Value, sqlServerResourceId.Value, tableName.Value);
+            return new SqlDBTableDataSet(id, name, type, systemData.Value, kind, databaseName.Value, Optional.ToNullable(dataSetId), schemaName.Value, sqlServerResourceId.Value, tableName.Value);
         }
     }
 }

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Purview.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ActionsRequired))
             {
-                writer.WritePropertyName("actionsRequired");
+                writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionsRequired);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             writer.WriteEndObject();
@@ -37,27 +37,27 @@ namespace Azure.ResourceManager.Purview.Models
         {
             Optional<string> actionsRequired = default;
             Optional<string> description = default;
-            Optional<Status> status = default;
+            Optional<PurviewPrivateLinkServiceStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("actionsRequired"))
+                if (property.NameEquals("actionsRequired"u8))
                 {
                     actionsRequired = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new Status(property.Value.GetString());
+                    status = new PurviewPrivateLinkServiceStatus(property.Value.GetString());
                     continue;
                 }
             }

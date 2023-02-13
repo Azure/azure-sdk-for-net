@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,8 +19,8 @@ namespace Azure.ResourceManager.Purview
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _accountClientDiagnostics;
-        private AccountsRestOperations _accountRestClient;
+        private ClientDiagnostics _purviewAccountAccountsClientDiagnostics;
+        private AccountsRestOperations _purviewAccountAccountsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -35,8 +34,8 @@ namespace Azure.ResourceManager.Purview
         {
         }
 
-        private ClientDiagnostics AccountClientDiagnostics => _accountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Purview", AccountResource.ResourceType.Namespace, Diagnostics);
-        private AccountsRestOperations AccountRestClient => _accountRestClient ??= new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AccountResource.ResourceType));
+        private ClientDiagnostics PurviewAccountAccountsClientDiagnostics => _purviewAccountAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Purview", PurviewAccountResource.ResourceType.Namespace, Diagnostics);
+        private AccountsRestOperations PurviewAccountAccountsRestClient => _purviewAccountAccountsRestClient ??= new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PurviewAccountResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -46,104 +45,72 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// List accounts in Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Purview/accounts
-        /// Operation Id: Accounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> The skip token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AccountResource> GetAccountsAsync(string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PurviewAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PurviewAccountResource> GetPurviewAccountsAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AccountResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await AccountRestClient.ListBySubscriptionAsync(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await AccountRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PurviewAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PurviewAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PurviewAccountResource(Client, PurviewAccountData.DeserializePurviewAccountData(e)), PurviewAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPurviewAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List accounts in Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Purview/accounts
-        /// Operation Id: Accounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> The skip token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AccountResource> GetAccounts(string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PurviewAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PurviewAccountResource> GetPurviewAccounts(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<AccountResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAccounts");
-                scope.Start();
-                try
-                {
-                    var response = AccountRestClient.ListBySubscription(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAccounts");
-                scope.Start();
-                try
-                {
-                    var response = AccountRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PurviewAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PurviewAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PurviewAccountResource(Client, PurviewAccountData.DeserializePurviewAccountData(e)), PurviewAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPurviewAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks if account name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Purview/checkNameAvailability
-        /// Operation Id: Accounts_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAccountAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PurviewAccountNameAvailabilityResult>> CheckPurviewAccountNameAvailabilityAsync(PurviewAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = AccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityAccount");
+            using var scope = PurviewAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPurviewAccountNameAvailability");
             scope.Start();
             try
             {
-                var response = await AccountRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                var response = await PurviewAccountAccountsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -155,18 +122,26 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Checks if account name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Purview/checkNameAvailability
-        /// Operation Id: Accounts_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailabilityAccount(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PurviewAccountNameAvailabilityResult> CheckPurviewAccountNameAvailability(PurviewAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = AccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityAccount");
+            using var scope = PurviewAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPurviewAccountNameAvailability");
             scope.Start();
             try
             {
-                var response = AccountRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                var response = PurviewAccountAccountsRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -6,10 +6,15 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Base type for analyzers. </summary>
+    /// <summary>
+    /// Base type for analyzers.
+    /// Please note <see cref="LexicalAnalyzer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="CustomAnalyzer"/>, <see cref="PatternAnalyzer"/>, <see cref="LuceneStandardAnalyzer"/> and <see cref="StopAnalyzer"/>.
+    /// </summary>
     public partial class LexicalAnalyzer
     {
 

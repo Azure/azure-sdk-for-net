@@ -1840,6 +1840,10 @@ namespace Azure.ResourceManager.Network
         public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.Network.Models.CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Network.ApplicationGatewayResource> GetApplicationGateway(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string applicationGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ApplicationGatewayResource>> GetApplicationGatewayAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string applicationGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Network.Models.ApplicationGatewayAvailableSslOptionsInfo> GetApplicationGatewayAvailableSslOptions(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.Models.ApplicationGatewayAvailableSslOptionsInfo>> GetApplicationGatewayAvailableSslOptionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Network.Models.ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPolicies(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRuleSet> GetApplicationGatewayAvailableWafRuleSetsAsyncAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Network.ApplicationGatewayPrivateEndpointConnectionResource GetApplicationGatewayPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1847,6 +1851,8 @@ namespace Azure.ResourceManager.Network
         public static Azure.ResourceManager.Network.ApplicationGatewayCollection GetApplicationGateways(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Network.ApplicationGatewayResource> GetApplicationGateways(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Network.ApplicationGatewayResource> GetApplicationGatewaysAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Network.Models.ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewaySslPredefinedPolicy(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string predefinedPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.Models.ApplicationGatewaySslPredefinedPolicy>> GetApplicationGatewaySslPredefinedPolicyAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string predefinedPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Network.ApplicationSecurityGroupResource> GetApplicationSecurityGroup(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string applicationSecurityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ApplicationSecurityGroupResource>> GetApplicationSecurityGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string applicationSecurityGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Network.ApplicationSecurityGroupResource GetApplicationSecurityGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -4603,6 +4609,14 @@ namespace Azure.ResourceManager.Network.Models
         public int? MaxCapacity { get { throw null; } set { } }
         public int MinCapacity { get { throw null; } set { } }
     }
+    public partial class ApplicationGatewayAvailableSslOptionsInfo : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData
+    {
+        public ApplicationGatewayAvailableSslOptionsInfo() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite> AvailableCipherSuites { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewaySslProtocol> AvailableProtocols { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyName? DefaultPolicy { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> PredefinedPolicies { get { throw null; } }
+    }
     public partial class ApplicationGatewayBackendAddress
     {
         public ApplicationGatewayBackendAddress() { }
@@ -5168,6 +5182,12 @@ namespace Azure.ResourceManager.Network.Models
         public static implicit operator Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyType left, Azure.ResourceManager.Network.Models.ApplicationGatewaySslPolicyType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ApplicationGatewaySslPredefinedPolicy : Azure.ResourceManager.Network.Models.NetworkResourceData
+    {
+        public ApplicationGatewaySslPredefinedPolicy() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite> CipherSuites { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.ApplicationGatewaySslProtocol? MinProtocolVersion { get { throw null; } set { } }
     }
     public partial class ApplicationGatewaySslProfile : Azure.ResourceManager.Network.Models.NetworkResourceData
     {
@@ -6916,9 +6936,9 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ResourceManager.Network.Models.FirewallPolicyNatRuleCollectionActionType? ActionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.FirewallPolicyRule> Rules { get { throw null; } }
     }
-    public partial class FirewallPolicyRule
+    public abstract partial class FirewallPolicyRule
     {
-        public FirewallPolicyRule() { }
+        protected FirewallPolicyRule() { }
         public string Description { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
@@ -6946,9 +6966,9 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator !=(Azure.ResourceManager.Network.Models.FirewallPolicyRuleApplicationProtocolType left, Azure.ResourceManager.Network.Models.FirewallPolicyRuleApplicationProtocolType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class FirewallPolicyRuleCollectionInfo
+    public abstract partial class FirewallPolicyRuleCollectionInfo
     {
-        public FirewallPolicyRuleCollectionInfo() { }
+        protected FirewallPolicyRuleCollectionInfo() { }
         public string Name { get { throw null; } set { } }
         public int? Priority { get { throw null; } set { } }
     }

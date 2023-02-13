@@ -1,14 +1,24 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
 trigger: none
-
-pr: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/servicebus/ci.mgmt.yml
+    - sdk/servicebus/Azure.ResourceManager.ServiceBus/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     SdkType: mgmtclient
     ServiceDirectory: servicebus
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.ServiceBus
       safeName: AzureResourceManagerServiceBus

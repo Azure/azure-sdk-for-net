@@ -370,7 +370,7 @@ namespace Azure.Core.Tests
 
             Response response = await ExecuteRequest(request, transport);
 
-            Assert.True(response.Headers.Contains(headerName));
+            Assert.True(response.Headers.Contains(headerName), $"response.Headers contains the following headers: {string.Join(", ", response.Headers.Select(h => $"\"{h.Name}\": \"{h.Value}\""))}");
 
             Assert.True(response.Headers.TryGetValue(headerName, out var value));
             Assert.AreEqual(headerValue, value);
@@ -1179,6 +1179,37 @@ namespace Azure.Core.Tests
                 request.Uri.Reset(testServer.Address);
                 request.Content = RequestContent.Create("Hello");
                 await ExecuteRequest(request, transport);
+            }
+        }
+
+        [Test]
+        public async Task ResponseSetToNullOnException()
+        {
+            using (TestServer testServer = new TestServer(
+                       context =>
+                       {
+                           // simulate network failure so no response is returned
+                           context.Abort();
+                       }))
+            {
+                var transport = GetTransport();
+                var pipeline = new HttpPipeline(transport);
+                var message = pipeline.CreateMessage();
+                message.Request.Method = RequestMethod.Post;
+                message.Request.Uri.Reset(testServer.Address);
+                message.Request.Content = RequestContent.Create("Hello");
+                message.Response = new MockResponse(200);
+
+                try
+                {
+                    await ProcessAsync(message, transport);
+                }
+                catch (Exception)
+                {
+                }
+
+                // response should have been cleared by transport
+                Assert.IsFalse(message.HasResponse);
             }
         }
 

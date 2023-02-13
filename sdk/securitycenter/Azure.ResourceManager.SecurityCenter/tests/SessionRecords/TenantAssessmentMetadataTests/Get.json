@@ -1,0 +1,158 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f1c602f5721e354a8c29107aea8643e0-d7a72a866bfd674a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "459093d9936ff9b9572eafcefd325ea7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "747",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 24 Oct 2022 07:00:27 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "91890c5a-8b1d-49e6-b449-0cb5bc054182",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "91890c5a-8b1d-49e6-b449-0cb5bc054182",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221024T070028Z:91890c5a-8b1d-49e6-b449-0cb5bc054182"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/tenants?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-109ef7df2c0e3545a85f26080067d052-25b440d7def1884c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2e88d296726c0b6cc91eeb97eb81c6dc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "140",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 24 Oct 2022 07:00:27 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "8ae4d8a7-1edd-4247-ab1b-f18ea2101818",
+        "x-ms-ratelimit-remaining-tenant-reads": "11998",
+        "x-ms-request-id": "8ae4d8a7-1edd-4247-ab1b-f18ea2101818",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221024T070028Z:8ae4d8a7-1edd-4247-ab1b-f18ea2101818"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/tenants/72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "tenantCategory": "Home"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Security/assessmentMetadata/4fb67663-9ab9-475d-b026-8c544cced439?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-dbf472a8fd97704983e27cbf7ed24481-c1e070aa6b940d48-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityCenter/1.0.0-alpha.20221021.1 (.NET Core 3.1.30; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a60573267a4f210f58bbe1326cbc4c6d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1505",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 24 Oct 2022 07:00:28 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3fc2d623-977d-40a5-8177-87e6e4c75d0d",
+        "x-ms-ratelimit-remaining-tenant-resource-requests": "748",
+        "x-ms-request-id": "3fc2d623-977d-40a5-8177-87e6e4c75d0d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221024T070028Z:3fc2d623-977d-40a5-8177-87e6e4c75d0d"
+      },
+      "ResponseBody": {
+        "id": "/providers/Microsoft.Security/assessmentMetadata/4fb67663-9ab9-475d-b026-8c544cced439",
+        "name": "4fb67663-9ab9-475d-b026-8c544cced439",
+        "type": "Microsoft.Security/assessmentMetadata",
+        "properties": {
+          "displayName": "Endpoint protection should be installed on machines",
+          "assessmentType": "BuiltIn",
+          "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/1f7c564c-0a90-4d44-b7e1-9d456cffaee8",
+          "description": "To protect machines from threats and vulnerabilities, install a supported endpoint protection solution.\u003Cbr\u003ELearn more about how endpoint protection for machines is evaluated in \u003Ca target=\u0022_blank\u0022 href=\u0022https://docs.microsoft.com/azure/defender-for-cloud/endpoint-protection-recommendations-technical?wt.mc_id=defenderforcloud_inproduct_portal_recoremediation\u0022\u003EEndpoint protection assessment and recommendations in Microsoft Defender for Cloud\u003C/a\u003E.",
+          "remediationDescription": "To remediate missing endpoint protection:\u003Cbr\u003E1. Confirm that your solution is on the \u003Ca target=\u0022_blank\u0022 href=\u0022https://docs.microsoft.com/azure/defender-for-cloud/supported-machines-endpoint-solutions-clouds-servers?tabs=features-windows#endpoint-supported\u0022\u003Elist of tools supported by Defender for Cloud.\u003C/a\u003E\u003Cbr\u003E2. Install the supported endpoint protection solution or enable an existing tool.",
+          "categories": [
+            "Compute"
+          ],
+          "preview": true,
+          "severity": "High",
+          "userImpact": "Low",
+          "implementationEffort": "Low",
+          "threats": [
+            "ThreatResistance"
+          ],
+          "publishDates": {
+            "public": "06/01/2021"
+          },
+          "cloudProviders": [
+            "Azure"
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "2110948958",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

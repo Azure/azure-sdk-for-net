@@ -28,26 +28,34 @@ namespace Azure.ResourceManager.AppService
             );
         }
 
-        /// <summary> Gets an object representing a UserResource along with the instance operations that can be performed on it in the TenantResource. </summary>
+        /// <summary> Gets an object representing a PublishingUserResource along with the instance operations that can be performed on it in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="UserResource" /> object. </returns>
-        public static UserResource GetUser(this TenantResource tenantResource)
+        /// <returns> Returns a <see cref="PublishingUserResource" /> object. </returns>
+        public static PublishingUserResource GetPublishingUser(this TenantResource tenantResource)
         {
-            return GetExtensionClient(tenantResource).GetUser();
+            return GetExtensionClient(tenantResource).GetPublishingUser();
         }
 
-        /// <summary> Gets a collection of SourceControlResources in the TenantResource. </summary>
+        /// <summary> Gets a collection of AppServiceSourceControlResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SourceControlResources and their operations over a SourceControlResource. </returns>
-        public static SourceControlCollection GetSourceControls(this TenantResource tenantResource)
+        /// <returns> An object representing collection of AppServiceSourceControlResources and their operations over a AppServiceSourceControlResource. </returns>
+        public static AppServiceSourceControlCollection GetAppServiceSourceControls(this TenantResource tenantResource)
         {
-            return GetExtensionClient(tenantResource).GetSourceControls();
+            return GetExtensionClient(tenantResource).GetAppServiceSourceControls();
         }
 
         /// <summary>
         /// Description for Gets source control token
-        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// Operation Id: GetSourceControl
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/sourcecontrols/{sourceControlType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetSourceControl</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="sourceControlType"> Type of source control. </param>
@@ -55,15 +63,23 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SourceControlResource>> GetSourceControlAsync(this TenantResource tenantResource, string sourceControlType, CancellationToken cancellationToken = default)
+        public static async Task<Response<AppServiceSourceControlResource>> GetAppServiceSourceControlAsync(this TenantResource tenantResource, string sourceControlType, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetSourceControls().GetAsync(sourceControlType, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetAppServiceSourceControls().GetAsync(sourceControlType, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Description for Gets source control token
-        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// Operation Id: GetSourceControl
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/sourcecontrols/{sourceControlType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetSourceControl</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="sourceControlType"> Type of source control. </param>
@@ -71,15 +87,23 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SourceControlResource> GetSourceControl(this TenantResource tenantResource, string sourceControlType, CancellationToken cancellationToken = default)
+        public static Response<AppServiceSourceControlResource> GetAppServiceSourceControl(this TenantResource tenantResource, string sourceControlType, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetSourceControls().Get(sourceControlType, cancellationToken);
+            return tenantResource.GetAppServiceSourceControls().Get(sourceControlType, cancellationToken);
         }
 
         /// <summary>
         /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
-        /// Request Path: /providers/Microsoft.CertificateRegistration/operations
-        /// Operation Id: CertificateRegistrationProvider_ListOperations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CertificateRegistration/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CertificateRegistrationProvider_ListOperations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -91,8 +115,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
-        /// Request Path: /providers/Microsoft.CertificateRegistration/operations
-        /// Operation Id: CertificateRegistrationProvider_ListOperations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CertificateRegistration/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CertificateRegistrationProvider_ListOperations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -104,8 +136,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
-        /// Request Path: /providers/Microsoft.DomainRegistration/operations
-        /// Operation Id: DomainRegistrationProvider_ListOperations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DomainRegistration/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DomainRegistrationProvider_ListOperations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -117,8 +157,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
-        /// Request Path: /providers/Microsoft.DomainRegistration/operations
-        /// Operation Id: DomainRegistrationProvider_ListOperations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DomainRegistration/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DomainRegistrationProvider_ListOperations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,8 +178,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available application frameworks and their versions
-        /// Request Path: /providers/Microsoft.Web/availableStacks
-        /// Operation Id: Provider_GetAvailableStacks
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/availableStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetAvailableStacks</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
@@ -144,8 +200,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available application frameworks and their versions
-        /// Request Path: /providers/Microsoft.Web/availableStacks
-        /// Operation Id: Provider_GetAvailableStacks
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/availableStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetAvailableStacks</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
@@ -158,8 +222,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available Function app frameworks and their versions
-        /// Request Path: /providers/Microsoft.Web/functionAppStacks
-        /// Operation Id: Provider_GetFunctionAppStacks
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/functionAppStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetFunctionAppStacks</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
@@ -172,8 +244,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available Function app frameworks and their versions
-        /// Request Path: /providers/Microsoft.Web/functionAppStacks
-        /// Operation Id: Provider_GetFunctionAppStacks
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/functionAppStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetFunctionAppStacks</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
@@ -186,8 +266,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available Function app frameworks and their versions for location
-        /// Request Path: /providers/Microsoft.Web/locations/{location}/functionAppStacks
-        /// Operation Id: Provider_GetFunctionAppStacksForLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/locations/{location}/functionAppStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetFunctionAppStacksForLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Function App stack location. </param>
@@ -201,8 +289,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available Function app frameworks and their versions for location
-        /// Request Path: /providers/Microsoft.Web/locations/{location}/functionAppStacks
-        /// Operation Id: Provider_GetFunctionAppStacksForLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/locations/{location}/functionAppStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetFunctionAppStacksForLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Function App stack location. </param>
@@ -216,8 +312,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available Web app frameworks and their versions for location
-        /// Request Path: /providers/Microsoft.Web/locations/{location}/webAppStacks
-        /// Operation Id: Provider_GetWebAppStacksForLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/locations/{location}/webAppStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetWebAppStacksForLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Web App stack location. </param>
@@ -231,8 +335,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available Web app frameworks and their versions for location
-        /// Request Path: /providers/Microsoft.Web/locations/{location}/webAppStacks
-        /// Operation Id: Provider_GetWebAppStacksForLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/locations/{location}/webAppStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetWebAppStacksForLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Web App stack location. </param>
@@ -246,8 +358,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions
-        /// Request Path: /providers/Microsoft.Web/operations
-        /// Operation Id: Provider_ListOperations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_ListOperations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -259,8 +379,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions
-        /// Request Path: /providers/Microsoft.Web/operations
-        /// Operation Id: Provider_ListOperations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_ListOperations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -272,8 +400,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available Web app frameworks and their versions
-        /// Request Path: /providers/Microsoft.Web/webAppStacks
-        /// Operation Id: Provider_GetWebAppStacks
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/webAppStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetWebAppStacks</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
@@ -286,8 +422,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available Web app frameworks and their versions
-        /// Request Path: /providers/Microsoft.Web/webAppStacks
-        /// Operation Id: Provider_GetWebAppStacks
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Web/webAppStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetWebAppStacks</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
@@ -317,8 +461,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get details of a top-level domain.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
-        /// Operation Id: TopLevelDomains_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopLevelDomains_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the top-level domain. </param>
@@ -333,8 +485,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get details of a top-level domain.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}
-        /// Operation Id: TopLevelDomains_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopLevelDomains_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the top-level domain. </param>
@@ -357,8 +517,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get deleted app for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
-        /// Operation Id: Global_GetDeletedWebApp
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Global_GetDeletedWebApp</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
@@ -373,8 +541,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get deleted app for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
-        /// Operation Id: Global_GetDeletedWebApp
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Global_GetDeletedWebApp</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
@@ -389,8 +565,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for List all certificate orders in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/certificateOrders
-        /// Operation Id: AppServiceCertificateOrders_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/certificateOrders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceCertificateOrders_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -402,8 +586,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for List all certificate orders in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/certificateOrders
-        /// Operation Id: AppServiceCertificateOrders_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/certificateOrders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceCertificateOrders_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -415,8 +607,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Validate information for a certificate order.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/validateCertificateRegistrationInformation
-        /// Operation Id: AppServiceCertificateOrders_ValidatePurchaseInformation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/validateCertificateRegistrationInformation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceCertificateOrders_ValidatePurchaseInformation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="data"> Information for a certificate order. </param>
@@ -431,8 +631,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Validate information for a certificate order.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/validateCertificateRegistrationInformation
-        /// Operation Id: AppServiceCertificateOrders_ValidatePurchaseInformation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/validateCertificateRegistrationInformation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceCertificateOrders_ValidatePurchaseInformation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="data"> Information for a certificate order. </param>
@@ -447,8 +655,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Check if a domain is available for registration.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/checkDomainAvailability
-        /// Operation Id: Domains_CheckAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/checkDomainAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_CheckAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="identifier"> Name of the domain. </param>
@@ -463,8 +679,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Check if a domain is available for registration.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/checkDomainAvailability
-        /// Operation Id: Domains_CheckAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/checkDomainAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_CheckAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="identifier"> Name of the domain. </param>
@@ -479,8 +703,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get all domains in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/domains
-        /// Operation Id: Domains_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/domains</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -492,8 +724,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get all domains in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/domains
-        /// Operation Id: Domains_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/domains</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -505,8 +745,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Generate a single sign-on request for the domain management portal.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/generateSsoRequest
-        /// Operation Id: Domains_GetControlCenterSsoRequest
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/generateSsoRequest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_GetControlCenterSsoRequest</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -517,8 +765,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Generate a single sign-on request for the domain management portal.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/generateSsoRequest
-        /// Operation Id: Domains_GetControlCenterSsoRequest
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/generateSsoRequest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_GetControlCenterSsoRequest</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -529,8 +785,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get domain name recommendations based on keywords.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/listDomainRecommendations
-        /// Operation Id: Domains_ListRecommendations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/listDomainRecommendations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_ListRecommendations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Search parameters for domain name recommendations. </param>
@@ -546,8 +810,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get domain name recommendations based on keywords.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/listDomainRecommendations
-        /// Operation Id: Domains_ListRecommendations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/listDomainRecommendations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_ListRecommendations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Search parameters for domain name recommendations. </param>
@@ -563,8 +835,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get all App Service Environments for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/hostingEnvironments
-        /// Operation Id: AppServiceEnvironments_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/hostingEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -576,8 +856,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get all App Service Environments for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/hostingEnvironments
-        /// Operation Id: AppServiceEnvironments_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/hostingEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -589,8 +877,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get all App Service plans for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/serverfarms
-        /// Operation Id: AppServicePlans_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/serverfarms</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="detailed">
@@ -606,8 +902,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get all App Service plans for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/serverfarms
-        /// Operation Id: AppServicePlans_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/serverfarms</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="detailed">
@@ -623,8 +927,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get all certificates for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/certificates
-        /// Operation Id: Certificates_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/certificates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Certificates_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq &apos;KeyVaultId&apos;. </param>
@@ -637,8 +949,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get all certificates for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/certificates
-        /// Operation Id: Certificates_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/certificates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Certificates_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq &apos;KeyVaultId&apos;. </param>
@@ -651,8 +971,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get all deleted apps for a subscription at location
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites
-        /// Operation Id: DeletedWebApps_ListByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedWebApps_ListByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The String to use. </param>
@@ -665,8 +993,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get all deleted apps for a subscription at location
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites
-        /// Operation Id: DeletedWebApps_ListByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedWebApps_ListByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The String to use. </param>
@@ -679,8 +1015,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get deleted app for a subscription at location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites/{deletedSiteId}
-        /// Operation Id: DeletedWebApps_GetDeletedWebAppByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites/{deletedSiteId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedWebApps_GetDeletedWebAppByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The String to use. </param>
@@ -697,8 +1041,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get deleted app for a subscription at location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites/{deletedSiteId}
-        /// Operation Id: DeletedWebApps_GetDeletedWebAppByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/deletedSites/{deletedSiteId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedWebApps_GetDeletedWebAppByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The String to use. </param>
@@ -715,8 +1067,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get all Kubernetes Environments for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/kubeEnvironments
-        /// Operation Id: KubeEnvironments_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/kubeEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KubeEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -728,8 +1088,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get all Kubernetes Environments for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/kubeEnvironments
-        /// Operation Id: KubeEnvironments_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/kubeEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KubeEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -741,8 +1109,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available application frameworks and their versions
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/availableStacks
-        /// Operation Id: Provider_GetAvailableStacksOnPrem
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/availableStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetAvailableStacksOnPrem</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
@@ -755,8 +1131,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get available application frameworks and their versions
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/availableStacks
-        /// Operation Id: Provider_GetAvailableStacksOnPrem
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/availableStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetAvailableStacksOnPrem</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
@@ -769,8 +1153,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for List all recommendations for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations
-        /// Operation Id: Recommendations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
@@ -784,8 +1176,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for List all recommendations for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations
-        /// Operation Id: Recommendations_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
@@ -799,8 +1199,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Reset all recommendation opt-out settings for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/reset
-        /// Operation Id: Recommendations_ResetAllFilters
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/reset</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_ResetAllFilters</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -811,8 +1219,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Reset all recommendation opt-out settings for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/reset
-        /// Operation Id: Recommendations_ResetAllFilters
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/reset</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_ResetAllFilters</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -823,8 +1239,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Disables the specified rule so it will not apply to a subscription in the future.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/{name}/disable
-        /// Operation Id: Recommendations_DisableRecommendationForSubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/{name}/disable</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_DisableRecommendationForSubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="name"> Rule name. </param>
@@ -840,8 +1264,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Disables the specified rule so it will not apply to a subscription in the future.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/{name}/disable
-        /// Operation Id: Recommendations_DisableRecommendationForSubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/{name}/disable</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_DisableRecommendationForSubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="name"> Rule name. </param>
@@ -857,8 +1289,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for List all ResourceHealthMetadata for all sites in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/resourceHealthMetadata
-        /// Operation Id: ResourceHealthMetadata_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/resourceHealthMetadata</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceHealthMetadata_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -870,8 +1310,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for List all ResourceHealthMetadata for all sites in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/resourceHealthMetadata
-        /// Operation Id: ResourceHealthMetadata_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/resourceHealthMetadata</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceHealthMetadata_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -883,38 +1331,62 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets a list of meters for a given location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/billingMeters
-        /// Operation Id: ListBillingMeters
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/billingMeters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListBillingMeters</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
         /// <param name="osType"> App Service OS type meters used for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingMeter" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BillingMeter> GetBillingMetersAsync(this SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceBillingMeter" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AppServiceBillingMeter> GetBillingMetersAsync(this SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetBillingMetersAsync(billingLocation, osType, cancellationToken);
         }
 
         /// <summary>
         /// Description for Gets a list of meters for a given location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/billingMeters
-        /// Operation Id: ListBillingMeters
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/billingMeters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListBillingMeters</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
         /// <param name="osType"> App Service OS type meters used for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingMeter" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BillingMeter> GetBillingMeters(this SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceBillingMeter" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AppServiceBillingMeter> GetBillingMeters(this SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetBillingMeters(billingLocation, osType, cancellationToken);
         }
 
         /// <summary>
         /// Description for Check if a resource name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/checknameavailability
-        /// Operation Id: CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/checknameavailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Name availability request. </param>
@@ -929,8 +1401,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Check if a resource name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/checknameavailability
-        /// Operation Id: CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/checknameavailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Name availability request. </param>
@@ -945,32 +1425,56 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets list of available geo regions plus ministamps
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deploymentLocations
-        /// Operation Id: GetSubscriptionDeploymentLocations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/deploymentLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetSubscriptionDeploymentLocations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<DeploymentLocations>> GetAppServiceDeploymentLocationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static async Task<Response<AppServiceDeploymentLocations>> GetAppServiceDeploymentLocationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscriptionResource).GetAppServiceDeploymentLocationsAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Description for Gets list of available geo regions plus ministamps
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/deploymentLocations
-        /// Operation Id: GetSubscriptionDeploymentLocations
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/deploymentLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetSubscriptionDeploymentLocations</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<DeploymentLocations> GetAppServiceDeploymentLocations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Response<AppServiceDeploymentLocations> GetAppServiceDeploymentLocations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAppServiceDeploymentLocations(cancellationToken);
         }
 
         /// <summary>
         /// Description for Get a list of available geographical regions.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/geoRegions
-        /// Operation Id: ListGeoRegions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/geoRegions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListGeoRegions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="sku"> Name of SKU used to filter the regions. </param>
@@ -978,16 +1482,24 @@ namespace Azure.ResourceManager.AppService
         /// <param name="xenonWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Xenon workers. </param>
         /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GeoRegion" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GeoRegion> GetGeoRegionsAsync(this SubscriptionResource subscriptionResource, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceGeoRegion" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AppServiceGeoRegion> GetGeoRegionsAsync(this SubscriptionResource subscriptionResource, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetGeoRegionsAsync(sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, cancellationToken);
         }
 
         /// <summary>
         /// Description for Get a list of available geographical regions.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/geoRegions
-        /// Operation Id: ListGeoRegions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/geoRegions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListGeoRegions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="sku"> Name of SKU used to filter the regions. </param>
@@ -995,50 +1507,24 @@ namespace Azure.ResourceManager.AppService
         /// <param name="xenonWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Xenon workers. </param>
         /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GeoRegion" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GeoRegion> GetGeoRegions(this SubscriptionResource subscriptionResource, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceGeoRegion" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AppServiceGeoRegion> GetGeoRegions(this SubscriptionResource subscriptionResource, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetGeoRegions(sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, cancellationToken);
         }
 
         /// <summary>
-        /// Description for List all apps that are assigned to a hostname.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/listSitesAssignedToHostName
-        /// Operation Id: ListSiteIdentifiersAssignedToHostName
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="nameIdentifier"> Hostname information. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
-        /// <returns> An async collection of <see cref="IdentifierData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<IdentifierData> GetSiteIdentifiersAssignedToHostNameAsync(this SubscriptionResource subscriptionResource, AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
-
-            return GetExtensionClient(subscriptionResource).GetSiteIdentifiersAssignedToHostNameAsync(nameIdentifier, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for List all apps that are assigned to a hostname.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/listSitesAssignedToHostName
-        /// Operation Id: ListSiteIdentifiersAssignedToHostName
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="nameIdentifier"> Hostname information. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
-        /// <returns> A collection of <see cref="IdentifierData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<IdentifierData> GetSiteIdentifiersAssignedToHostName(this SubscriptionResource subscriptionResource, AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
-
-            return GetExtensionClient(subscriptionResource).GetSiteIdentifiersAssignedToHostName(nameIdentifier, cancellationToken);
-        }
-
-        /// <summary>
         /// Description for List all premier add-on offers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/premieraddonoffers
-        /// Operation Id: ListPremierAddOnOffers
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/premieraddonoffers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListPremierAddOnOffers</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1050,8 +1536,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for List all premier add-on offers.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/premieraddonoffers
-        /// Operation Id: ListPremierAddOnOffers
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/premieraddonoffers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListPremierAddOnOffers</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1063,8 +1557,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for List all SKUs.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/skus
-        /// Operation Id: ListSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1075,8 +1577,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for List all SKUs.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/skus
-        /// Operation Id: ListSkus
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListSkus</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1087,14 +1597,22 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/verifyHostingEnvironmentVnet
-        /// Operation Id: VerifyHostingEnvironmentVnet
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/verifyHostingEnvironmentVnet</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VerifyHostingEnvironmentVnet</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<VnetValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(this SubscriptionResource subscriptionResource, VnetContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualNetworkValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(this SubscriptionResource subscriptionResource, AppServiceVirtualNetworkValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1103,14 +1621,22 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/verifyHostingEnvironmentVnet
-        /// Operation Id: VerifyHostingEnvironmentVnet
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/verifyHostingEnvironmentVnet</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VerifyHostingEnvironmentVnet</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> VNET information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<VnetValidationFailureDetails> VerifyHostingEnvironmentVnet(this SubscriptionResource subscriptionResource, VnetContent content, CancellationToken cancellationToken = default)
+        public static Response<VirtualNetworkValidationFailureDetails> VerifyHostingEnvironmentVnet(this SubscriptionResource subscriptionResource, AppServiceVirtualNetworkValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1119,8 +1645,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Generates a preview workflow file for the static site
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/previewStaticSiteWorkflowFile
-        /// Operation Id: StaticSites_PreviewWorkflow
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/previewStaticSiteWorkflowFile</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_PreviewWorkflow</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location where you plan to create the static site. </param>
@@ -1136,8 +1670,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Generates a preview workflow file for the static site
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/previewStaticSiteWorkflowFile
-        /// Operation Id: StaticSites_PreviewWorkflow
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/previewStaticSiteWorkflowFile</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_PreviewWorkflow</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Location where you plan to create the static site. </param>
@@ -1153,8 +1695,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get all Static Sites for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/staticSites
-        /// Operation Id: StaticSites_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/staticSites</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1166,8 +1716,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get all Static Sites for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/staticSites
-        /// Operation Id: StaticSites_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/staticSites</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1179,8 +1737,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get all apps for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/sites
-        /// Operation Id: WebApps_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/sites</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1192,8 +1758,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get all apps for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/sites
-        /// Operation Id: WebApps_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/sites</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1222,8 +1796,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get a certificate order.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// Operation Id: AppServiceCertificateOrders_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceCertificateOrders_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="certificateOrderName"> Name of the certificate order.. </param>
@@ -1238,8 +1820,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get a certificate order.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
-        /// Operation Id: AppServiceCertificateOrders_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceCertificateOrders_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="certificateOrderName"> Name of the certificate order.. </param>
@@ -1262,8 +1852,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get a domain.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}
-        /// Operation Id: Domains_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="domainName"> Name of the domain. </param>
@@ -1278,8 +1876,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get a domain.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}
-        /// Operation Id: Domains_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="domainName"> Name of the domain. </param>
@@ -1302,8 +1908,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get the properties of an App Service Environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// Operation Id: AppServiceEnvironments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
@@ -1318,8 +1932,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get the properties of an App Service Environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
-        /// Operation Id: AppServiceEnvironments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
@@ -1342,8 +1964,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// Operation Id: AppServicePlans_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -1358,8 +1988,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get an App Service plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// Operation Id: AppServicePlans_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the App Service plan. </param>
@@ -1382,8 +2020,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get a certificate.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}
-        /// Operation Id: Certificates_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Certificates_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the certificate. </param>
@@ -1398,8 +2044,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get a certificate.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}
-        /// Operation Id: Certificates_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Certificates_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the certificate. </param>
@@ -1422,8 +2076,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get the properties of a Kubernetes Environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
-        /// Operation Id: KubeEnvironments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KubeEnvironments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
@@ -1438,8 +2100,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get the properties of a Kubernetes Environment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
-        /// Operation Id: KubeEnvironments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KubeEnvironments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
@@ -1462,8 +2132,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the details of a static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
-        /// Operation Id: StaticSites_GetStaticSite
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetStaticSite</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the static site. </param>
@@ -1478,8 +2156,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the details of a static site.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
-        /// Operation Id: StaticSites_GetStaticSite
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetStaticSite</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the static site. </param>
@@ -1502,8 +2188,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the details of a web, mobile, or API app.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// Operation Id: WebApps_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the app. </param>
@@ -1518,8 +2212,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets the details of a web, mobile, or API app.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// Operation Id: WebApps_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the app. </param>
@@ -1533,35 +2235,17 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
-        /// Operation Id: ResourceHealthMetadata_ListByResourceGroup
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceHealthMetadataData> GetAllResourceHealthMetadataAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(resourceGroupResource).GetAllResourceHealthMetadataAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
-        /// Operation Id: ResourceHealthMetadata_ListByResourceGroup
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceHealthMetadataData> GetAllResourceHealthMetadata(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(resourceGroupResource).GetAllResourceHealthMetadata(cancellationToken);
-        }
-
-        /// <summary>
         /// Description for Validate if a resource can be created.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate
-        /// Operation Id: Validate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Validate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="content"> Request with the resources to validate. </param>
@@ -1576,8 +2260,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Validate if a resource can be created.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate
-        /// Operation Id: Validate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Validate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="content"> Request with the resources to validate. </param>
@@ -2369,39 +3061,39 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region UserResource
+        #region PublishingUserResource
         /// <summary>
-        /// Gets an object representing an <see cref="UserResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="UserResource.CreateResourceIdentifier" /> to create an <see cref="UserResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PublishingUserResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PublishingUserResource.CreateResourceIdentifier" /> to create a <see cref="PublishingUserResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="UserResource" /> object. </returns>
-        public static UserResource GetUserResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PublishingUserResource" /> object. </returns>
+        public static PublishingUserResource GetPublishingUserResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                UserResource.ValidateResourceId(id);
-                return new UserResource(client, id);
+                PublishingUserResource.ValidateResourceId(id);
+                return new PublishingUserResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SourceControlResource
+        #region AppServiceSourceControlResource
         /// <summary>
-        /// Gets an object representing a <see cref="SourceControlResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SourceControlResource.CreateResourceIdentifier" /> to create a <see cref="SourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppServiceSourceControlResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServiceSourceControlResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceSourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SourceControlResource" /> object. </returns>
-        public static SourceControlResource GetSourceControlResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppServiceSourceControlResource" /> object. </returns>
+        public static AppServiceSourceControlResource GetAppServiceSourceControlResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SourceControlResource.ValidateResourceId(id);
-                return new SourceControlResource(client, id);
+                AppServiceSourceControlResource.ValidateResourceId(id);
+                return new AppServiceSourceControlResource(client, id);
             }
             );
         }

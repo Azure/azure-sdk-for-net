@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01";
+            _apiVersion = apiVersion ?? "2022-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -1444,7 +1444,7 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        internal HttpMessage CreateRelocateRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
+        internal HttpMessage CreateRelocateRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, RelocateVolumeContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1464,6 +1464,13 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/relocate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            if (content != null)
+            {
+                request.Headers.Add("Content-Type", "application/json");
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content);
+                request.Content = content0;
+            }
             _userAgent.Apply(message);
             return message;
         }
@@ -1474,10 +1481,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
         /// <param name="volumeName"> The name of the volume. </param>
+        /// <param name="content"> Relocate volume request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RelocateAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
+        public async Task<Response> RelocateAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, RelocateVolumeContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1485,7 +1493,7 @@ namespace Azure.ResourceManager.NetApp
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
-            using var message = CreateRelocateRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            using var message = CreateRelocateRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1503,10 +1511,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
         /// <param name="volumeName"> The name of the volume. </param>
+        /// <param name="content"> Relocate volume request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Relocate(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
+        public Response Relocate(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, RelocateVolumeContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1514,7 +1523,7 @@ namespace Azure.ResourceManager.NetApp
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
-            using var message = CreateRelocateRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            using var message = CreateRelocateRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

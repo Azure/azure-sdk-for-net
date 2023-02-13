@@ -9,7 +9,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
-    public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
+    public partial class FormRecognizerSamples
     {
         [RecordedTest]
         public async Task StronglyTypingARecognizedForm()

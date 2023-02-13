@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CapacityReservationGroup))
             {
-                writer.WritePropertyName("capacityReservationGroup");
+                writer.WritePropertyName("capacityReservationGroup"u8);
                 JsonSerializer.Serialize(writer, CapacityReservationGroup);
             }
             writer.WriteEndObject();
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<WritableSubResource> capacityReservationGroup = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("capacityReservationGroup"))
+                if (property.NameEquals("capacityReservationGroup"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    capacityReservationGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    capacityReservationGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
             }

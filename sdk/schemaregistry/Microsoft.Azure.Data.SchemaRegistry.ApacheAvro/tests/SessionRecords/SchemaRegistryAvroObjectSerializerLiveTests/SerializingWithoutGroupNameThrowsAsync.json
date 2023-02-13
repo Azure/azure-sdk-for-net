@@ -1,6 +1,7 @@
 {
   "Entries": [],
   "Variables": {
-    "SCHEMAREGISTRY_ENDPOINT": "jolovschemaregistry.servicebus.windows.net"
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "SCHEMAREGISTRY_ENDPOINT_AVRO": "mreddingschemaregistry-avro.servicebus.windows.net"
   }
 }

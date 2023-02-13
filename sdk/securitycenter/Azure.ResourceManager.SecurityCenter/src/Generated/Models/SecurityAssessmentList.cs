@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SecurityAssessmentList. </summary>
         internal SecurityAssessmentList()
         {
-            Value = new ChangeTrackingList<SecurityAssessmentResponseData>();
+            Value = new ChangeTrackingList<SecurityAssessmentData>();
         }
 
         /// <summary> Initializes a new instance of SecurityAssessmentList. </summary>
         /// <param name="value"> Collection of security assessments in this page. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal SecurityAssessmentList(IReadOnlyList<SecurityAssessmentResponseData> value, string nextLink)
+        internal SecurityAssessmentList(IReadOnlyList<SecurityAssessmentData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of security assessments in this page. </summary>
-        public IReadOnlyList<SecurityAssessmentResponseData> Value { get; }
+        public IReadOnlyList<SecurityAssessmentData> Value { get; }
         /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }

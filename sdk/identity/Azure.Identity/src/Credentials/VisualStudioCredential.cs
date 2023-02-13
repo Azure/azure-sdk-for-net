@@ -13,21 +13,23 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Identitiy;
 
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using data from Visual Studio
+    /// Enables authentication to Azure Active Directory using data from Visual Studio 2017 or later. See
+    /// <seealso href="https://learn.microsoft.com/dotnet/azure/configure-visual-studio" /> for more information
+    /// on how to configure Visual Studio for Azure development.
     /// </summary>
     public class VisualStudioCredential : TokenCredential
     {
-        private const string TokenProviderFilePath = @".IdentityService\AzureServiceAuth\tokenprovider.json";
+        private static readonly string TokenProviderFilePath = Path.Combine(".IdentityService", "AzureServiceAuth", "tokenprovider.json");
         private const string ResourceArgumentName = "--resource";
         private const string TenantArgumentName = "--tenant";
 
         private readonly CredentialPipeline _pipeline;
-        private readonly string _tenantId;
+        internal string TenantId { get; }
+        internal string[] AdditionallyAllowedTenantIds { get; }
         private readonly IFileSystemService _fileSystem;
         private readonly IProcessService _processService;
         private readonly bool _logPII;
@@ -52,10 +54,11 @@ namespace Azure.Identity
         {
             _logPII = options?.IsLoggingPIIEnabled ?? false;
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
-            _tenantId = tenantId;
+            TenantId = tenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _processService = processService ?? ProcessService.Default;
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
             VisualStudioProcessTimeout = options?.VisualStudioProcessTimeout ?? TimeSpan.FromSeconds(30);
         }
 
@@ -73,7 +76,7 @@ namespace Azure.Identity
 
             try
             {
-                if (string.Equals(_tenantId, Constants.AdfsTenantId, StringComparison.Ordinal))
+                if (string.Equals(TenantId, Constants.AdfsTenantId, StringComparison.Ordinal))
                 {
                     throw new CredentialUnavailableException("VisualStudioCredential authentication unavailable. ADFS tenant/authorities are not supported.");
                 }
@@ -94,7 +97,7 @@ namespace Azure.Identity
                 if (_logAccountDetails)
                 {
                     var accountDetails = TokenHelper.ParseAccountInfoFromToken(accessToken.Token);
-                    AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId, accountDetails.TenantId ?? _tenantId, accountDetails.Upn, accountDetails.ObjectId);
+                    AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId, accountDetails.TenantId ?? TenantId, accountDetails.Upn, accountDetails.ObjectId);
                 }
 
                 return scope.Succeeded(accessToken);
@@ -107,12 +110,26 @@ namespace Azure.Identity
 
         private static string GetTokenProviderPath()
         {
+            string baseFolder;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), TokenProviderFilePath);
+                baseFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                if (string.IsNullOrEmpty(baseFolder))
+                {
+                    // There is a known issue that Environment.GetFolderPath does not work on Windows Nano: https://github.com/dotnet/runtime/issues/21430
+                    baseFolder = Environment.GetEnvironmentVariable("LOCALAPPDATA");
+                    if (string.IsNullOrEmpty(baseFolder))
+                    {
+                        throw new CredentialUnavailableException("Can't find the Local Application Data folder. See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/vscredential/troubleshoot");
+                    }
+                }
+            }
+            else
+            {
+                baseFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             }
 
-            throw new CredentialUnavailableException($"Operating system {RuntimeInformation.OSDescription} isn't supported.");
+            return Path.Combine(baseFolder, TokenProviderFilePath);
         }
 
         private async Task<AccessToken> RunProcessesAsync(List<ProcessStartInfo> processStartInfos, bool async, CancellationToken cancellationToken)
@@ -177,7 +194,7 @@ namespace Azure.Identity
                 arguments.Clear();
                 arguments.Append(ResourceArgumentName).Append(' ').Append(resource);
 
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
                 if (tenantId != default)
                 {
                     arguments.Append(' ').Append(TenantArgumentName).Append(' ').Append(tenantId);

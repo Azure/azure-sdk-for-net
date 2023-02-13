@@ -17,16 +17,21 @@ namespace Azure.ResourceManager.Redis.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Format))
             {
-                writer.WritePropertyName("format");
+                writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format);
             }
-            writer.WritePropertyName("files");
+            writer.WritePropertyName("files"u8);
             writer.WriteStartArray();
             foreach (var item in Files)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(PreferredDataArchiveAuthMethod))
+            {
+                writer.WritePropertyName("preferred-data-archive-auth-method"u8);
+                writer.WriteStringValue(PreferredDataArchiveAuthMethod);
+            }
             writer.WriteEndObject();
         }
     }

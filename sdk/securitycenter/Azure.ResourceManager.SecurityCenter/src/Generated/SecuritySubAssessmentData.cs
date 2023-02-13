@@ -25,40 +25,40 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="idPropertiesId"> Vulnerability ID. </param>
+        /// <param name="vulnerabilityId"> Vulnerability ID. </param>
         /// <param name="displayName"> User friendly display name of the sub-assessment. </param>
         /// <param name="status"> Status of the sub-assessment. </param>
         /// <param name="remediation"> Information on how to remediate this sub-assessment. </param>
         /// <param name="impact"> Description of the impact of this sub-assessment. </param>
         /// <param name="category"> Category of the sub-assessment. </param>
         /// <param name="description"> Human readable description of the assessment status. </param>
-        /// <param name="timeGenerated"> The date and time the sub-assessment was generated. </param>
+        /// <param name="generatedOn"> The date and time the sub-assessment was generated. </param>
         /// <param name="resourceDetails">
         /// Details of the resource that was assessed
-        /// Please note <see cref="ResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
         /// </param>
         /// <param name="additionalData">
         /// Details of the sub-assessment
-        /// Please note <see cref="AdditionalData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="SecuritySubAssessmentAdditionalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ContainerRegistryVulnerabilityProperties"/>, <see cref="ServerVulnerabilityProperties"/> and <see cref="SqlServerVulnerabilityProperties"/>.
         /// </param>
-        internal SecuritySubAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string idPropertiesId, string displayName, SubAssessmentStatus status, string remediation, string impact, string category, string description, DateTimeOffset? timeGenerated, ResourceDetails resourceDetails, AdditionalData additionalData) : base(id, name, resourceType, systemData)
+        internal SecuritySubAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vulnerabilityId, string displayName, SubAssessmentStatus status, string remediation, string impact, string category, string description, DateTimeOffset? generatedOn, SecurityCenterResourceDetails resourceDetails, SecuritySubAssessmentAdditionalInfo additionalData) : base(id, name, resourceType, systemData)
         {
-            IdPropertiesId = idPropertiesId;
+            VulnerabilityId = vulnerabilityId;
             DisplayName = displayName;
             Status = status;
             Remediation = remediation;
             Impact = impact;
             Category = category;
             Description = description;
-            TimeGenerated = timeGenerated;
+            GeneratedOn = generatedOn;
             ResourceDetails = resourceDetails;
             AdditionalData = additionalData;
         }
 
         /// <summary> Vulnerability ID. </summary>
-        public string IdPropertiesId { get; }
+        public string VulnerabilityId { get; }
         /// <summary> User friendly display name of the sub-assessment. </summary>
         public string DisplayName { get; }
         /// <summary> Status of the sub-assessment. </summary>
@@ -72,18 +72,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Human readable description of the assessment status. </summary>
         public string Description { get; }
         /// <summary> The date and time the sub-assessment was generated. </summary>
-        public DateTimeOffset? TimeGenerated { get; }
+        public DateTimeOffset? GeneratedOn { get; }
         /// <summary>
         /// Details of the resource that was assessed
-        /// Please note <see cref="ResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
         /// </summary>
-        public ResourceDetails ResourceDetails { get; set; }
+        public SecurityCenterResourceDetails ResourceDetails { get; set; }
         /// <summary>
         /// Details of the sub-assessment
-        /// Please note <see cref="AdditionalData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="SecuritySubAssessmentAdditionalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ContainerRegistryVulnerabilityProperties"/>, <see cref="ServerVulnerabilityProperties"/> and <see cref="SqlServerVulnerabilityProperties"/>.
         /// </summary>
-        public AdditionalData AdditionalData { get; set; }
+        public SecuritySubAssessmentAdditionalInfo AdditionalData { get; set; }
     }
 }

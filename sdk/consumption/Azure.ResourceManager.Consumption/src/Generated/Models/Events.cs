@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of Events. </summary>
         internal Events()
         {
-            Value = new ChangeTrackingList<EventSummary>();
+            Value = new ChangeTrackingList<ConsumptionEventSummary>();
         }
 
         /// <summary> Initializes a new instance of Events. </summary>
         /// <param name="value"> The list of event summary. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal Events(IReadOnlyList<EventSummary> value, string nextLink)
+        internal Events(IReadOnlyList<ConsumptionEventSummary> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of event summary. </summary>
-        public IReadOnlyList<EventSummary> Value { get; }
+        public IReadOnlyList<ConsumptionEventSummary> Value { get; }
         /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }

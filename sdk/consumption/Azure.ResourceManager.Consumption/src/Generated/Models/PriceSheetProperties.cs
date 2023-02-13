@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="unitPrice"> Unit Price. </param>
         /// <param name="currencyCode"> Currency Code. </param>
         /// <param name="offerId"> Offer Id. </param>
-        internal PriceSheetProperties(string billingPeriodId, Guid? meterId, MeterDetails meterDetails, string unitOfMeasure, decimal? includedQuantity, string partNumber, decimal? unitPrice, string currencyCode, string offerId)
+        internal PriceSheetProperties(ResourceIdentifier billingPeriodId, Guid? meterId, ConsumptionMeterDetails meterDetails, string unitOfMeasure, decimal? includedQuantity, string partNumber, decimal? unitPrice, string currencyCode, string offerId)
         {
             BillingPeriodId = billingPeriodId;
             MeterId = meterId;
@@ -41,11 +42,11 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> The id of the billing period resource that the usage belongs to. </summary>
-        public string BillingPeriodId { get; }
+        public ResourceIdentifier BillingPeriodId { get; }
         /// <summary> The meter id (GUID). </summary>
         public Guid? MeterId { get; }
         /// <summary> The details about the meter. By default this is not populated, unless it&apos;s specified in $expand. </summary>
-        public MeterDetails MeterDetails { get; }
+        public ConsumptionMeterDetails MeterDetails { get; }
         /// <summary> Unit of measure. </summary>
         public string UnitOfMeasure { get; }
         /// <summary> Included quality for an offer. </summary>

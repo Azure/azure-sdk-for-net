@@ -254,7 +254,7 @@ namespace Azure.Storage.Blobs.Test
             public async Task<Response<BlobDownloadStreamingResult>> GetStreamInternal(
                 HttpRange range,
                 BlobRequestConditions conditions,
-                DownloadTransferValidationOptions validationOptions,
+                DownloadTransferValidationOptions transferValidation,
                 IProgress<long> progress,
                 string operationName,
                 bool async,
@@ -267,7 +267,7 @@ namespace Azure.Storage.Blobs.Test
                 return GetStream(
                     range,
                     conditions,
-                    validationOptions,
+                    transferValidation,
                     progress,
                     cancellationToken);
             }

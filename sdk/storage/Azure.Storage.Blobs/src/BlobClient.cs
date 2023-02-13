@@ -397,7 +397,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream)"/> operation creates a new block blob
-        /// or updates the content of an existing block blob.  Updating an
+        /// or throws an exception if the blob already exists.  Updating an
         /// existing block blob overwrites any existing metadata on the blob.
         ///
         /// For partial block blob updates and other advanced features, please
@@ -425,7 +425,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="UploadAsync(BinaryData)"/> operation creates a new block blob
-        /// or updates the content of an existing block blob.  Updating an
+        /// or throws an exception if the blob already exists.  Updating an
         /// existing block blob overwrites any existing metadata on the blob.
         ///
         /// For partial block blob updates and other advanced features, please
@@ -1622,7 +1622,7 @@ namespace Azure.Storage.Blobs
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            UploadTransferValidationOptions validationOptions = options?.TransferValidationOptions ?? ClientConfiguration.TransferValidation.Upload;
+            UploadTransferValidationOptions validationOptions = options?.TransferValidation ?? ClientConfiguration.TransferValidation.Upload;
 
             long? expectedContentLength = null;
             if (UsingClientSideEncryption)

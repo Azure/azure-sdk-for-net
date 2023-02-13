@@ -20,21 +20,25 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="azureQueue"> Azure Queue based scaling. </param>
         /// <param name="custom"> Custom scale rule. </param>
         /// <param name="http"> HTTP requests based scaling. </param>
-        internal ContainerAppScaleRule(string name, QueueScaleRule azureQueue, CustomScaleRule custom, HttpScaleRule http)
+        /// <param name="tcp"> Tcp requests based scaling. </param>
+        internal ContainerAppScaleRule(string name, ContainerAppQueueScaleRule azureQueue, ContainerAppCustomScaleRule custom, ContainerAppHttpScaleRule http, ContainerAppTcpScaleRule tcp)
         {
             Name = name;
             AzureQueue = azureQueue;
             Custom = custom;
             Http = http;
+            Tcp = tcp;
         }
 
         /// <summary> Scale Rule Name. </summary>
         public string Name { get; set; }
         /// <summary> Azure Queue based scaling. </summary>
-        public QueueScaleRule AzureQueue { get; set; }
+        public ContainerAppQueueScaleRule AzureQueue { get; set; }
         /// <summary> Custom scale rule. </summary>
-        public CustomScaleRule Custom { get; set; }
+        public ContainerAppCustomScaleRule Custom { get; set; }
         /// <summary> HTTP requests based scaling. </summary>
-        public HttpScaleRule Http { get; set; }
+        public ContainerAppHttpScaleRule Http { get; set; }
+        /// <summary> Tcp requests based scaling. </summary>
+        public ContainerAppTcpScaleRule Tcp { get; set; }
     }
 }

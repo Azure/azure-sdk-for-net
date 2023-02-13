@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.Network
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocation))
             {
-                writer.WritePropertyName("extendedLocation");
+                writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -46,26 +46,26 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AddressSpace))
             {
-                writer.WritePropertyName("addressSpace");
+                writer.WritePropertyName("addressSpace"u8);
                 writer.WriteObjectValue(AddressSpace);
             }
             if (Optional.IsDefined(DhcpOptions))
             {
-                writer.WritePropertyName("dhcpOptions");
+                writer.WritePropertyName("dhcpOptions"u8);
                 writer.WriteObjectValue(DhcpOptions);
             }
             if (Optional.IsDefined(FlowTimeoutInMinutes))
             {
-                writer.WritePropertyName("flowTimeoutInMinutes");
+                writer.WritePropertyName("flowTimeoutInMinutes"u8);
                 writer.WriteNumberValue(FlowTimeoutInMinutes.Value);
             }
             if (Optional.IsCollectionDefined(Subnets))
             {
-                writer.WritePropertyName("subnets");
+                writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsCollectionDefined(VirtualNetworkPeerings))
             {
-                writer.WritePropertyName("virtualNetworkPeerings");
+                writer.WritePropertyName("virtualNetworkPeerings"u8);
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkPeerings)
                 {
@@ -85,27 +85,27 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsDefined(EnableDdosProtection))
             {
-                writer.WritePropertyName("enableDdosProtection");
+                writer.WritePropertyName("enableDdosProtection"u8);
                 writer.WriteBooleanValue(EnableDdosProtection.Value);
             }
             if (Optional.IsDefined(EnableVmProtection))
             {
-                writer.WritePropertyName("enableVmProtection");
+                writer.WritePropertyName("enableVmProtection"u8);
                 writer.WriteBooleanValue(EnableVmProtection.Value);
             }
             if (Optional.IsDefined(DdosProtectionPlan))
             {
-                writer.WritePropertyName("ddosProtectionPlan");
+                writer.WritePropertyName("ddosProtectionPlan"u8);
                 JsonSerializer.Serialize(writer, DdosProtectionPlan);
             }
             if (Optional.IsDefined(BgpCommunities))
             {
-                writer.WritePropertyName("bgpCommunities");
+                writer.WritePropertyName("bgpCommunities"u8);
                 writer.WriteObjectValue(BgpCommunities);
             }
             if (Optional.IsCollectionDefined(IPAllocations))
             {
-                writer.WritePropertyName("ipAllocations");
+                writer.WritePropertyName("ipAllocations"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPAllocations)
                 {
@@ -140,17 +140,17 @@ namespace Azure.ResourceManager.Network
             Optional<IList<WritableSubResource>> ipAllocations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("extendedLocation"))
+                if (property.NameEquals("extendedLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.ToString());
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -170,12 +170,12 @@ namespace Azure.ResourceManager.Network
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Network
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Network
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("addressSpace"))
+                        if (property0.NameEquals("addressSpace"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network
                             addressSpace = AddressSpace.DeserializeAddressSpace(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("dhcpOptions"))
+                        if (property0.NameEquals("dhcpOptions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Network
                             dhcpOptions = DhcpOptions.DeserializeDhcpOptions(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("flowTimeoutInMinutes"))
+                        if (property0.NameEquals("flowTimeoutInMinutes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network
                             flowTimeoutInMinutes = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("subnets"))
+                        if (property0.NameEquals("subnets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
                             subnets = array;
                             continue;
                         }
-                        if (property0.NameEquals("virtualNetworkPeerings"))
+                        if (property0.NameEquals("virtualNetworkPeerings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Network
                             virtualNetworkPeerings = array;
                             continue;
                         }
-                        if (property0.NameEquals("resourceGuid"))
+                        if (property0.NameEquals("resourceGuid"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Network
                             resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Network
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("enableDdosProtection"))
+                        if (property0.NameEquals("enableDdosProtection"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Network
                             enableDdosProtection = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("enableVmProtection"))
+                        if (property0.NameEquals("enableVmProtection"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -319,17 +319,17 @@ namespace Azure.ResourceManager.Network
                             enableVmProtection = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("ddosProtectionPlan"))
+                        if (property0.NameEquals("ddosProtectionPlan"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            ddosProtectionPlan = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            ddosProtectionPlan = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("bgpCommunities"))
+                        if (property0.NameEquals("bgpCommunities"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Network
                             bgpCommunities = VirtualNetworkBgpCommunities.DeserializeVirtualNetworkBgpCommunities(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("ipAllocations"))
+                        if (property0.NameEquals("ipAllocations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
                             ipAllocations = array;
                             continue;

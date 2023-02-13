@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.Search.Models
     {
         internal static SharedPrivateLinkResourceListResult DeserializeSharedPrivateLinkResourceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SharedPrivateLinkResourceData>> value = default;
+            Optional<IReadOnlyList<SharedSearchServicePrivateLinkResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SharedPrivateLinkResourceData> array = new List<SharedPrivateLinkResourceData>();
+                    List<SharedSearchServicePrivateLinkResourceData> array = new List<SharedSearchServicePrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SharedPrivateLinkResourceData.DeserializeSharedPrivateLinkResourceData(item));
+                        array.Add(SharedSearchServicePrivateLinkResourceData.DeserializeSharedSearchServicePrivateLinkResourceData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

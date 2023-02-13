@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("softwareInstallationType");
+            writer.WritePropertyName("softwareInstallationType"u8);
             writer.WriteStringValue(SoftwareInstallationType.ToString());
             writer.WriteEndObject();
         }
 
         internal static UnknownSoftwareConfiguration DeserializeUnknownSoftwareConfiguration(JsonElement element)
         {
-            SapSoftwareInstallationType softwareInstallationType = default;
+            SapSoftwareInstallationType softwareInstallationType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("softwareInstallationType"))
+                if (property.NameEquals("softwareInstallationType"u8))
                 {
                     softwareInstallationType = new SapSoftwareInstallationType(property.Value.GetString());
                     continue;

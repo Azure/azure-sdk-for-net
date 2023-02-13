@@ -31,35 +31,32 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="identity"> The identity of the resource. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="activeDirectories"> Active Directories. </param>
         /// <param name="encryption"> Encryption settings. </param>
-        internal NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, AccountEncryption encryption) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="disableShowmount"> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </param>
+        internal NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
+            Identity = identity;
             ProvisioningState = provisioningState;
             ActiveDirectories = activeDirectories;
             Encryption = encryption;
+            DisableShowmount = disableShowmount;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
+        /// <summary> The identity of the resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }
         /// <summary> Active Directories. </summary>
         public IList<NetAppAccountActiveDirectory> ActiveDirectories { get; }
         /// <summary> Encryption settings. </summary>
-        internal AccountEncryption Encryption { get; set; }
-        /// <summary> Encryption Key Source. Possible values are: &apos;Microsoft.NetApp&apos;. </summary>
-        public string EncryptionKeySource
-        {
-            get => Encryption is null ? default : Encryption.KeySource;
-            set
-            {
-                if (Encryption is null)
-                    Encryption = new AccountEncryption();
-                Encryption.KeySource = value;
-            }
-        }
+        public NetAppAccountEncryption Encryption { get; set; }
+        /// <summary> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </summary>
+        public bool? DisableShowmount { get; }
     }
 }

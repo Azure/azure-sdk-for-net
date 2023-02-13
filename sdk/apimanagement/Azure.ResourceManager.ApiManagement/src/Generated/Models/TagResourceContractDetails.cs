@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="tag"/> is null. </exception>
         internal TagResourceContractDetails(AssociatedTagProperties tag)
         {
-            if (tag == null)
-            {
-                throw new ArgumentNullException(nameof(tag));
-            }
+            Argument.AssertNotNull(tag, nameof(tag));
 
             Tag = tag;
         }

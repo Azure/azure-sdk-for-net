@@ -18,111 +18,111 @@ namespace Azure.ResourceManager.ContainerService
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Count))
             {
-                writer.WritePropertyName("count");
+                writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
             if (Optional.IsDefined(VmSize))
             {
-                writer.WritePropertyName("vmSize");
+                writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
             if (Optional.IsDefined(OSDiskSizeInGB))
             {
-                writer.WritePropertyName("osDiskSizeGB");
+                writer.WritePropertyName("osDiskSizeGB"u8);
                 writer.WriteNumberValue(OSDiskSizeInGB.Value);
             }
             if (Optional.IsDefined(OSDiskType))
             {
-                writer.WritePropertyName("osDiskType");
+                writer.WritePropertyName("osDiskType"u8);
                 writer.WriteStringValue(OSDiskType.Value.ToString());
             }
             if (Optional.IsDefined(KubeletDiskType))
             {
-                writer.WritePropertyName("kubeletDiskType");
+                writer.WritePropertyName("kubeletDiskType"u8);
                 writer.WriteStringValue(KubeletDiskType.Value.ToString());
             }
             if (Optional.IsDefined(WorkloadRuntime))
             {
-                writer.WritePropertyName("workloadRuntime");
+                writer.WritePropertyName("workloadRuntime"u8);
                 writer.WriteStringValue(WorkloadRuntime.Value.ToString());
             }
             if (Optional.IsDefined(VnetSubnetId))
             {
-                writer.WritePropertyName("vnetSubnetID");
+                writer.WritePropertyName("vnetSubnetID"u8);
                 writer.WriteStringValue(VnetSubnetId);
             }
             if (Optional.IsDefined(PodSubnetId))
             {
-                writer.WritePropertyName("podSubnetID");
+                writer.WritePropertyName("podSubnetID"u8);
                 writer.WriteStringValue(PodSubnetId);
             }
             if (Optional.IsDefined(MaxPods))
             {
-                writer.WritePropertyName("maxPods");
+                writer.WritePropertyName("maxPods"u8);
                 writer.WriteNumberValue(MaxPods.Value);
             }
             if (Optional.IsDefined(OSType))
             {
-                writer.WritePropertyName("osType");
+                writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
             if (Optional.IsDefined(OSSku))
             {
-                writer.WritePropertyName("osSKU");
+                writer.WritePropertyName("osSKU"u8);
                 writer.WriteStringValue(OSSku.Value.ToString());
             }
             if (Optional.IsDefined(MaxCount))
             {
-                writer.WritePropertyName("maxCount");
+                writer.WritePropertyName("maxCount"u8);
                 writer.WriteNumberValue(MaxCount.Value);
             }
             if (Optional.IsDefined(MinCount))
             {
-                writer.WritePropertyName("minCount");
+                writer.WritePropertyName("minCount"u8);
                 writer.WriteNumberValue(MinCount.Value);
             }
             if (Optional.IsDefined(EnableAutoScaling))
             {
-                writer.WritePropertyName("enableAutoScaling");
+                writer.WritePropertyName("enableAutoScaling"u8);
                 writer.WriteBooleanValue(EnableAutoScaling.Value);
             }
             if (Optional.IsDefined(ScaleDownMode))
             {
-                writer.WritePropertyName("scaleDownMode");
+                writer.WritePropertyName("scaleDownMode"u8);
                 writer.WriteStringValue(ScaleDownMode.Value.ToString());
             }
             if (Optional.IsDefined(TypePropertiesType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypePropertiesType.Value.ToString());
             }
             if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("mode");
+                writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
             if (Optional.IsDefined(OrchestratorVersion))
             {
-                writer.WritePropertyName("orchestratorVersion");
+                writer.WritePropertyName("orchestratorVersion"u8);
                 writer.WriteStringValue(OrchestratorVersion);
             }
             if (Optional.IsDefined(UpgradeSettings))
             {
-                writer.WritePropertyName("upgradeSettings");
+                writer.WritePropertyName("upgradeSettings"u8);
                 writer.WriteObjectValue(UpgradeSettings);
             }
             if (Optional.IsDefined(PowerState))
             {
-                writer.WritePropertyName("powerState");
+                writer.WritePropertyName("powerState"u8);
                 writer.WriteObjectValue(PowerState);
             }
             if (Optional.IsCollectionDefined(AvailabilityZones))
             {
-                writer.WritePropertyName("availabilityZones");
+                writer.WritePropertyName("availabilityZones"u8);
                 writer.WriteStartArray();
                 foreach (var item in AvailabilityZones)
                 {
@@ -132,32 +132,32 @@ namespace Azure.ResourceManager.ContainerService
             }
             if (Optional.IsDefined(EnableNodePublicIP))
             {
-                writer.WritePropertyName("enableNodePublicIP");
+                writer.WritePropertyName("enableNodePublicIP"u8);
                 writer.WriteBooleanValue(EnableNodePublicIP.Value);
             }
             if (Optional.IsDefined(NodePublicIPPrefixId))
             {
-                writer.WritePropertyName("nodePublicIPPrefixID");
+                writer.WritePropertyName("nodePublicIPPrefixID"u8);
                 writer.WriteStringValue(NodePublicIPPrefixId);
             }
             if (Optional.IsDefined(ScaleSetPriority))
             {
-                writer.WritePropertyName("scaleSetPriority");
+                writer.WritePropertyName("scaleSetPriority"u8);
                 writer.WriteStringValue(ScaleSetPriority.Value.ToString());
             }
             if (Optional.IsDefined(ScaleSetEvictionPolicy))
             {
-                writer.WritePropertyName("scaleSetEvictionPolicy");
+                writer.WritePropertyName("scaleSetEvictionPolicy"u8);
                 writer.WriteStringValue(ScaleSetEvictionPolicy.Value.ToString());
             }
             if (Optional.IsDefined(SpotMaxPrice))
             {
-                writer.WritePropertyName("spotMaxPrice");
+                writer.WritePropertyName("spotMaxPrice"u8);
                 writer.WriteNumberValue(SpotMaxPrice.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerService
             }
             if (Optional.IsCollectionDefined(NodeLabels))
             {
-                writer.WritePropertyName("nodeLabels");
+                writer.WritePropertyName("nodeLabels"u8);
                 writer.WriteStartObject();
                 foreach (var item in NodeLabels)
                 {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ContainerService
             }
             if (Optional.IsCollectionDefined(NodeTaints))
             {
-                writer.WritePropertyName("nodeTaints");
+                writer.WritePropertyName("nodeTaints"u8);
                 writer.WriteStartArray();
                 foreach (var item in NodeTaints)
                 {
@@ -189,43 +189,48 @@ namespace Azure.ResourceManager.ContainerService
             }
             if (Optional.IsDefined(ProximityPlacementGroupId))
             {
-                writer.WritePropertyName("proximityPlacementGroupID");
+                writer.WritePropertyName("proximityPlacementGroupID"u8);
                 writer.WriteStringValue(ProximityPlacementGroupId);
             }
             if (Optional.IsDefined(KubeletConfig))
             {
-                writer.WritePropertyName("kubeletConfig");
+                writer.WritePropertyName("kubeletConfig"u8);
                 writer.WriteObjectValue(KubeletConfig);
             }
             if (Optional.IsDefined(LinuxOSConfig))
             {
-                writer.WritePropertyName("linuxOSConfig");
+                writer.WritePropertyName("linuxOSConfig"u8);
                 writer.WriteObjectValue(LinuxOSConfig);
             }
             if (Optional.IsDefined(EnableEncryptionAtHost))
             {
-                writer.WritePropertyName("enableEncryptionAtHost");
+                writer.WritePropertyName("enableEncryptionAtHost"u8);
                 writer.WriteBooleanValue(EnableEncryptionAtHost.Value);
             }
             if (Optional.IsDefined(EnableUltraSsd))
             {
-                writer.WritePropertyName("enableUltraSSD");
+                writer.WritePropertyName("enableUltraSSD"u8);
                 writer.WriteBooleanValue(EnableUltraSsd.Value);
             }
             if (Optional.IsDefined(EnableFips))
             {
-                writer.WritePropertyName("enableFIPS");
+                writer.WritePropertyName("enableFIPS"u8);
                 writer.WriteBooleanValue(EnableFips.Value);
             }
             if (Optional.IsDefined(GpuInstanceProfile))
             {
-                writer.WritePropertyName("gpuInstanceProfile");
+                writer.WritePropertyName("gpuInstanceProfile"u8);
                 writer.WriteStringValue(GpuInstanceProfile.Value.ToString());
             }
             if (Optional.IsDefined(CreationData))
             {
-                writer.WritePropertyName("creationData");
+                writer.WritePropertyName("creationData"u8);
                 writer.WriteObjectValue(CreationData);
+            }
+            if (Optional.IsDefined(HostGroupId))
+            {
+                writer.WritePropertyName("hostGroupID"u8);
+                writer.WriteStringValue(HostGroupId);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -277,34 +282,35 @@ namespace Azure.ResourceManager.ContainerService
             Optional<bool> enableFIPS = default;
             Optional<GpuInstanceProfile> gpuInstanceProfile = default;
             Optional<ContainerServiceCreationData> creationData = default;
+            Optional<ResourceIdentifier> hostGroupId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -313,7 +319,7 @@ namespace Azure.ResourceManager.ContainerService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("count"))
+                        if (property0.NameEquals("count"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -323,12 +329,12 @@ namespace Azure.ResourceManager.ContainerService
                             count = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("vmSize"))
+                        if (property0.NameEquals("vmSize"u8))
                         {
                             vmSize = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("osDiskSizeGB"))
+                        if (property0.NameEquals("osDiskSizeGB"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -338,7 +344,7 @@ namespace Azure.ResourceManager.ContainerService
                             osDiskSizeGB = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("osDiskType"))
+                        if (property0.NameEquals("osDiskType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -348,7 +354,7 @@ namespace Azure.ResourceManager.ContainerService
                             osDiskType = new ContainerServiceOSDiskType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("kubeletDiskType"))
+                        if (property0.NameEquals("kubeletDiskType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -358,7 +364,7 @@ namespace Azure.ResourceManager.ContainerService
                             kubeletDiskType = new KubeletDiskType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("workloadRuntime"))
+                        if (property0.NameEquals("workloadRuntime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -368,7 +374,7 @@ namespace Azure.ResourceManager.ContainerService
                             workloadRuntime = new WorkloadRuntime(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("vnetSubnetID"))
+                        if (property0.NameEquals("vnetSubnetID"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -378,7 +384,7 @@ namespace Azure.ResourceManager.ContainerService
                             vnetSubnetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("podSubnetID"))
+                        if (property0.NameEquals("podSubnetID"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -388,7 +394,7 @@ namespace Azure.ResourceManager.ContainerService
                             podSubnetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("maxPods"))
+                        if (property0.NameEquals("maxPods"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -398,7 +404,7 @@ namespace Azure.ResourceManager.ContainerService
                             maxPods = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("osType"))
+                        if (property0.NameEquals("osType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -408,7 +414,7 @@ namespace Azure.ResourceManager.ContainerService
                             osType = new ContainerServiceOSType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("osSKU"))
+                        if (property0.NameEquals("osSKU"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -418,7 +424,7 @@ namespace Azure.ResourceManager.ContainerService
                             osSku = new ContainerServiceOSSku(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("maxCount"))
+                        if (property0.NameEquals("maxCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -428,7 +434,7 @@ namespace Azure.ResourceManager.ContainerService
                             maxCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("minCount"))
+                        if (property0.NameEquals("minCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -438,7 +444,7 @@ namespace Azure.ResourceManager.ContainerService
                             minCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("enableAutoScaling"))
+                        if (property0.NameEquals("enableAutoScaling"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -448,7 +454,7 @@ namespace Azure.ResourceManager.ContainerService
                             enableAutoScaling = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("scaleDownMode"))
+                        if (property0.NameEquals("scaleDownMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -458,7 +464,7 @@ namespace Azure.ResourceManager.ContainerService
                             scaleDownMode = new ScaleDownMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("type"))
+                        if (property0.NameEquals("type"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -468,7 +474,7 @@ namespace Azure.ResourceManager.ContainerService
                             type0 = new AgentPoolType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("mode"))
+                        if (property0.NameEquals("mode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -478,22 +484,22 @@ namespace Azure.ResourceManager.ContainerService
                             mode = new AgentPoolMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("orchestratorVersion"))
+                        if (property0.NameEquals("orchestratorVersion"u8))
                         {
                             orchestratorVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("currentOrchestratorVersion"))
+                        if (property0.NameEquals("currentOrchestratorVersion"u8))
                         {
                             currentOrchestratorVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("nodeImageVersion"))
+                        if (property0.NameEquals("nodeImageVersion"u8))
                         {
                             nodeImageVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("upgradeSettings"))
+                        if (property0.NameEquals("upgradeSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -503,12 +509,12 @@ namespace Azure.ResourceManager.ContainerService
                             upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("powerState"))
+                        if (property0.NameEquals("powerState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -518,7 +524,7 @@ namespace Azure.ResourceManager.ContainerService
                             powerState = ContainerServicePowerState.DeserializeContainerServicePowerState(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("availabilityZones"))
+                        if (property0.NameEquals("availabilityZones"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -533,7 +539,7 @@ namespace Azure.ResourceManager.ContainerService
                             availabilityZones = array;
                             continue;
                         }
-                        if (property0.NameEquals("enableNodePublicIP"))
+                        if (property0.NameEquals("enableNodePublicIP"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -543,7 +549,7 @@ namespace Azure.ResourceManager.ContainerService
                             enableNodePublicIP = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("nodePublicIPPrefixID"))
+                        if (property0.NameEquals("nodePublicIPPrefixID"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -553,7 +559,7 @@ namespace Azure.ResourceManager.ContainerService
                             nodePublicIPPrefixId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("scaleSetPriority"))
+                        if (property0.NameEquals("scaleSetPriority"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -563,7 +569,7 @@ namespace Azure.ResourceManager.ContainerService
                             scaleSetPriority = new ScaleSetPriority(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("scaleSetEvictionPolicy"))
+                        if (property0.NameEquals("scaleSetEvictionPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -573,7 +579,7 @@ namespace Azure.ResourceManager.ContainerService
                             scaleSetEvictionPolicy = new ScaleSetEvictionPolicy(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("spotMaxPrice"))
+                        if (property0.NameEquals("spotMaxPrice"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -583,7 +589,7 @@ namespace Azure.ResourceManager.ContainerService
                             spotMaxPrice = property0.Value.GetSingle();
                             continue;
                         }
-                        if (property0.NameEquals("tags"))
+                        if (property0.NameEquals("tags"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -598,7 +604,7 @@ namespace Azure.ResourceManager.ContainerService
                             tags = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("nodeLabels"))
+                        if (property0.NameEquals("nodeLabels"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -613,7 +619,7 @@ namespace Azure.ResourceManager.ContainerService
                             nodeLabels = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("nodeTaints"))
+                        if (property0.NameEquals("nodeTaints"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -628,7 +634,7 @@ namespace Azure.ResourceManager.ContainerService
                             nodeTaints = array;
                             continue;
                         }
-                        if (property0.NameEquals("proximityPlacementGroupID"))
+                        if (property0.NameEquals("proximityPlacementGroupID"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -638,7 +644,7 @@ namespace Azure.ResourceManager.ContainerService
                             proximityPlacementGroupId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("kubeletConfig"))
+                        if (property0.NameEquals("kubeletConfig"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -648,7 +654,7 @@ namespace Azure.ResourceManager.ContainerService
                             kubeletConfig = KubeletConfig.DeserializeKubeletConfig(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("linuxOSConfig"))
+                        if (property0.NameEquals("linuxOSConfig"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -658,7 +664,7 @@ namespace Azure.ResourceManager.ContainerService
                             linuxOSConfig = LinuxOSConfig.DeserializeLinuxOSConfig(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("enableEncryptionAtHost"))
+                        if (property0.NameEquals("enableEncryptionAtHost"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -668,7 +674,7 @@ namespace Azure.ResourceManager.ContainerService
                             enableEncryptionAtHost = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("enableUltraSSD"))
+                        if (property0.NameEquals("enableUltraSSD"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -678,7 +684,7 @@ namespace Azure.ResourceManager.ContainerService
                             enableUltraSsd = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("enableFIPS"))
+                        if (property0.NameEquals("enableFIPS"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -688,7 +694,7 @@ namespace Azure.ResourceManager.ContainerService
                             enableFIPS = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("gpuInstanceProfile"))
+                        if (property0.NameEquals("gpuInstanceProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -698,7 +704,7 @@ namespace Azure.ResourceManager.ContainerService
                             gpuInstanceProfile = new GpuInstanceProfile(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("creationData"))
+                        if (property0.NameEquals("creationData"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -708,11 +714,21 @@ namespace Azure.ResourceManager.ContainerService
                             creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("hostGroupID"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            hostGroupId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ContainerServiceAgentPoolData(id, name, type, systemData.Value, Optional.ToNullable(count), vmSize.Value, Optional.ToNullable(osDiskSizeGB), Optional.ToNullable(osDiskType), Optional.ToNullable(kubeletDiskType), Optional.ToNullable(workloadRuntime), vnetSubnetId.Value, podSubnetId.Value, Optional.ToNullable(maxPods), Optional.ToNullable(osType), Optional.ToNullable(osSku), Optional.ToNullable(maxCount), Optional.ToNullable(minCount), Optional.ToNullable(enableAutoScaling), Optional.ToNullable(scaleDownMode), Optional.ToNullable(type0), Optional.ToNullable(mode), orchestratorVersion.Value, currentOrchestratorVersion.Value, nodeImageVersion.Value, upgradeSettings.Value, provisioningState.Value, powerState.Value, Optional.ToList(availabilityZones), Optional.ToNullable(enableNodePublicIP), nodePublicIPPrefixId.Value, Optional.ToNullable(scaleSetPriority), Optional.ToNullable(scaleSetEvictionPolicy), Optional.ToNullable(spotMaxPrice), Optional.ToDictionary(tags), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), proximityPlacementGroupId.Value, kubeletConfig.Value, linuxOSConfig.Value, Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(enableUltraSsd), Optional.ToNullable(enableFIPS), Optional.ToNullable(gpuInstanceProfile), creationData.Value);
+            return new ContainerServiceAgentPoolData(id, name, type, systemData.Value, Optional.ToNullable(count), vmSize.Value, Optional.ToNullable(osDiskSizeGB), Optional.ToNullable(osDiskType), Optional.ToNullable(kubeletDiskType), Optional.ToNullable(workloadRuntime), vnetSubnetId.Value, podSubnetId.Value, Optional.ToNullable(maxPods), Optional.ToNullable(osType), Optional.ToNullable(osSku), Optional.ToNullable(maxCount), Optional.ToNullable(minCount), Optional.ToNullable(enableAutoScaling), Optional.ToNullable(scaleDownMode), Optional.ToNullable(type0), Optional.ToNullable(mode), orchestratorVersion.Value, currentOrchestratorVersion.Value, nodeImageVersion.Value, upgradeSettings.Value, provisioningState.Value, powerState.Value, Optional.ToList(availabilityZones), Optional.ToNullable(enableNodePublicIP), nodePublicIPPrefixId.Value, Optional.ToNullable(scaleSetPriority), Optional.ToNullable(scaleSetEvictionPolicy), Optional.ToNullable(spotMaxPrice), Optional.ToDictionary(tags), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), proximityPlacementGroupId.Value, kubeletConfig.Value, linuxOSConfig.Value, Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(enableUltraSsd), Optional.ToNullable(enableFIPS), Optional.ToNullable(gpuInstanceProfile), creationData.Value, hostGroupId.Value);
         }
     }
 }

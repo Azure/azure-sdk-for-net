@@ -4,6 +4,7 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: search
+    SDKType: client
     TimeoutInMinutes: 240
     MaxParallel: 2
     # TODO: change 'Preview' cloud back to public after search RP fixes deletion metadata issue

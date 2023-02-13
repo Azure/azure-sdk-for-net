@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MixedReality
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-03-01-preview";
+            _apiVersion = apiVersion ?? "2021-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RemoteRenderingAccountPage>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<RemoteRenderingAccountListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.MixedReality
             {
                 case 200:
                     {
-                        RemoteRenderingAccountPage value = default;
+                        RemoteRenderingAccountListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RemoteRenderingAccountPage.DeserializeRemoteRenderingAccountPage(document.RootElement);
+                        value = RemoteRenderingAccountListResult.DeserializeRemoteRenderingAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RemoteRenderingAccountPage> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<RemoteRenderingAccountListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.MixedReality
             {
                 case 200:
                     {
-                        RemoteRenderingAccountPage value = default;
+                        RemoteRenderingAccountListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RemoteRenderingAccountPage.DeserializeRemoteRenderingAccountPage(document.RootElement);
+                        value = RemoteRenderingAccountListResult.DeserializeRemoteRenderingAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RemoteRenderingAccountPage>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<RemoteRenderingAccountListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -140,9 +140,9 @@ namespace Azure.ResourceManager.MixedReality
             {
                 case 200:
                     {
-                        RemoteRenderingAccountPage value = default;
+                        RemoteRenderingAccountListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RemoteRenderingAccountPage.DeserializeRemoteRenderingAccountPage(document.RootElement);
+                        value = RemoteRenderingAccountListResult.DeserializeRemoteRenderingAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RemoteRenderingAccountPage> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<RemoteRenderingAccountListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -167,9 +167,9 @@ namespace Azure.ResourceManager.MixedReality
             {
                 case 200:
                     {
-                        RemoteRenderingAccountPage value = default;
+                        RemoteRenderingAccountListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RemoteRenderingAccountPage.DeserializeRemoteRenderingAccountPage(document.RootElement);
+                        value = RemoteRenderingAccountListResult.DeserializeRemoteRenderingAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccountKeys>> ListKeysAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response<MixedRealityAccountKeys>> ListKeysAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -543,9 +543,9 @@ namespace Azure.ResourceManager.MixedReality
             {
                 case 200:
                     {
-                        AccountKeys value = default;
+                        MixedRealityAccountKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccountKeys.DeserializeAccountKeys(document.RootElement);
+                        value = MixedRealityAccountKeys.DeserializeMixedRealityAccountKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccountKeys> ListKeys(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response<MixedRealityAccountKeys> ListKeys(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -572,9 +572,9 @@ namespace Azure.ResourceManager.MixedReality
             {
                 case 200:
                     {
-                        AccountKeys value = default;
+                        MixedRealityAccountKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccountKeys.DeserializeAccountKeys(document.RootElement);
+                        value = MixedRealityAccountKeys.DeserializeMixedRealityAccountKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.MixedReality
             }
         }
 
-        internal HttpMessage CreateRegenerateKeysRequest(string subscriptionId, string resourceGroupName, string accountName, AccountKeyRegenerateRequest regenerate)
+        internal HttpMessage CreateRegenerateKeysRequest(string subscriptionId, string resourceGroupName, string accountName, MixedRealityAccountKeyRegenerateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -600,9 +600,9 @@ namespace Azure.ResourceManager.MixedReality
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(regenerate);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -611,26 +611,26 @@ namespace Azure.ResourceManager.MixedReality
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of an Azure resource group. </param>
         /// <param name="accountName"> Name of an Mixed Reality Account. </param>
-        /// <param name="regenerate"> Required information for key regeneration. </param>
+        /// <param name="content"> Required information for key regeneration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="regenerate"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccountKeys>> RegenerateKeysAsync(string subscriptionId, string resourceGroupName, string accountName, AccountKeyRegenerateRequest regenerate, CancellationToken cancellationToken = default)
+        public async Task<Response<MixedRealityAccountKeys>> RegenerateKeysAsync(string subscriptionId, string resourceGroupName, string accountName, MixedRealityAccountKeyRegenerateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNull(regenerate, nameof(regenerate));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegenerateKeysRequest(subscriptionId, resourceGroupName, accountName, regenerate);
+            using var message = CreateRegenerateKeysRequest(subscriptionId, resourceGroupName, accountName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AccountKeys value = default;
+                        MixedRealityAccountKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccountKeys.DeserializeAccountKeys(document.RootElement);
+                        value = MixedRealityAccountKeys.DeserializeMixedRealityAccountKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -642,26 +642,26 @@ namespace Azure.ResourceManager.MixedReality
         /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of an Azure resource group. </param>
         /// <param name="accountName"> Name of an Mixed Reality Account. </param>
-        /// <param name="regenerate"> Required information for key regeneration. </param>
+        /// <param name="content"> Required information for key regeneration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="regenerate"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccountKeys> RegenerateKeys(string subscriptionId, string resourceGroupName, string accountName, AccountKeyRegenerateRequest regenerate, CancellationToken cancellationToken = default)
+        public Response<MixedRealityAccountKeys> RegenerateKeys(string subscriptionId, string resourceGroupName, string accountName, MixedRealityAccountKeyRegenerateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNull(regenerate, nameof(regenerate));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRegenerateKeysRequest(subscriptionId, resourceGroupName, accountName, regenerate);
+            using var message = CreateRegenerateKeysRequest(subscriptionId, resourceGroupName, accountName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AccountKeys value = default;
+                        MixedRealityAccountKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccountKeys.DeserializeAccountKeys(document.RootElement);
+                        value = MixedRealityAccountKeys.DeserializeMixedRealityAccountKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RemoteRenderingAccountPage>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<RemoteRenderingAccountListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -700,9 +700,9 @@ namespace Azure.ResourceManager.MixedReality
             {
                 case 200:
                     {
-                        RemoteRenderingAccountPage value = default;
+                        RemoteRenderingAccountListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RemoteRenderingAccountPage.DeserializeRemoteRenderingAccountPage(document.RootElement);
+                        value = RemoteRenderingAccountListResult.DeserializeRemoteRenderingAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RemoteRenderingAccountPage> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<RemoteRenderingAccountListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -727,9 +727,9 @@ namespace Azure.ResourceManager.MixedReality
             {
                 case 200:
                     {
-                        RemoteRenderingAccountPage value = default;
+                        RemoteRenderingAccountListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RemoteRenderingAccountPage.DeserializeRemoteRenderingAccountPage(document.RootElement);
+                        value = RemoteRenderingAccountListResult.DeserializeRemoteRenderingAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -758,7 +758,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RemoteRenderingAccountPage>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<RemoteRenderingAccountListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -770,9 +770,9 @@ namespace Azure.ResourceManager.MixedReality
             {
                 case 200:
                     {
-                        RemoteRenderingAccountPage value = default;
+                        RemoteRenderingAccountListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RemoteRenderingAccountPage.DeserializeRemoteRenderingAccountPage(document.RootElement);
+                        value = RemoteRenderingAccountListResult.DeserializeRemoteRenderingAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RemoteRenderingAccountPage> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<RemoteRenderingAccountListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -799,9 +799,9 @@ namespace Azure.ResourceManager.MixedReality
             {
                 case 200:
                     {
-                        RemoteRenderingAccountPage value = default;
+                        RemoteRenderingAccountListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RemoteRenderingAccountPage.DeserializeRemoteRenderingAccountPage(document.RootElement);
+                        value = RemoteRenderingAccountListResult.DeserializeRemoteRenderingAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

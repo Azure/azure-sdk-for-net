@@ -62,6 +62,10 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='networkManagerName'>
         /// The name of the network manager.
         /// </param>
+        /// <param name='top'>
+        /// An optional query parameter which specifies the maximum number of records
+        /// to be returned by the server.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -83,7 +87,7 @@ namespace Microsoft.Azure.Management.Network
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<NetworkManagerDeploymentStatusListResult>> ListWithHttpMessagesAsync(NetworkManagerDeploymentStatusParameter parameters, string resourceGroupName, string networkManagerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<NetworkManagerDeploymentStatusListResult>> ListWithHttpMessagesAsync(NetworkManagerDeploymentStatusParameter parameters, string resourceGroupName, string networkManagerName, int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (parameters == null)
             {
@@ -101,7 +105,15 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "networkManagerName");
             }
-            string apiVersion = "2022-01-01";
+            if (top > 20)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "top", 20);
+            }
+            if (top < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "top", 1);
+            }
+            string apiVersion = "2022-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -113,6 +125,7 @@ namespace Microsoft.Azure.Management.Network
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("networkManagerName", networkManagerName);
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("top", top);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -126,6 +139,10 @@ namespace Microsoft.Azure.Management.Network
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (top != null)
+            {
+                _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {

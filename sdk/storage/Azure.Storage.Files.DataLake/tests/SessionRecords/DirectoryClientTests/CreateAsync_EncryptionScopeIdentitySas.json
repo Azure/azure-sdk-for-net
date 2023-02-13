@@ -68,7 +68,7 @@
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CUserDelegationKey\u003E\u003CSignedOid\u003Ec4f48289-bb84-4086-b250-6f94a8f64cee\u003C/SignedOid\u003E\u003CSignedTid\u003E72f988bf-86f1-41af-91ab-2d7cd011db47\u003C/SignedTid\u003E\u003CSignedStart\u003E2021-08-24T19:06:07Z\u003C/SignedStart\u003E\u003CSignedExpiry\u003E2021-08-24T20:06:06Z\u003C/SignedExpiry\u003E\u003CSignedService\u003Eb\u003C/SignedService\u003E\u003CSignedVersion\u003E2020-12-06\u003C/SignedVersion\u003E\u003CValue\u003EN4zCOHc5WFPaQeasMMRXpxXk8U1PqA8CwNcaMvAf/wo=\u003C/Value\u003E\u003C/UserDelegationKey\u003E"
     },
     {
-      "RequestUri": "https://seannsecanary.dfs.core.windows.net/test-filesystem-92d09532-af77-0170-eb59-d39d2c6c665b/test-directory-33b7fee9-b156-8547-6f28-f0f33f7e6426?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee\u0026sktid=72f988bf-86f1-41af-91ab-2d7cd011db47\u0026skt=2021-08-24T19%3A06%3A07Z\u0026ske=2021-08-24T20%3A06%3A06Z\u0026sks=b\u0026skv=2020-12-06\u0026sv=2021-10-04\u0026se=2021-08-25T19%3A06%3A06Z\u0026sr=b\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026resource=directory",
+      "RequestUri": "https://seannsecanary.dfs.core.windows.net/test-filesystem-92d09532-af77-0170-eb59-d39d2c6c665b/test-directory-33b7fee9-b156-8547-6f28-f0f33f7e6426?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee\u0026sktid=72f988bf-86f1-41af-91ab-2d7cd011db47\u0026skt=2021-08-24T19%3A06%3A07Z\u0026ske=2021-08-24T20%3A06%3A06Z\u0026sks=b\u0026skv=2020-12-06\u0026sv=2021-12-02\u0026se=2021-08-25T19%3A06%3A06Z\u0026sr=b\u0026sp=racwdlmeop\u0026sig=Sanitized\u0026resource=directory",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",

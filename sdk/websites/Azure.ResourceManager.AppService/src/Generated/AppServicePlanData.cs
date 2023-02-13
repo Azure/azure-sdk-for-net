@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="numberOfSites"> Number of apps assigned to this App Service plan. </param>
         /// <param name="isSpot"> If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot instances. </param>
         /// <param name="spotExpireOn"> The time when the server farm expires. Valid only if it is a spot server farm. </param>
-        /// <param name="freeOfferExpiredOn"> The time when the server farm free offer expires. </param>
+        /// <param name="freeOfferExpireOn"> The time when the server farm free offer expires. </param>
         /// <param name="resourceGroup"> Resource group of the App Service plan. </param>
         /// <param name="isReserved"> If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
         /// <param name="isXenon"> Obsolete: If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppServiceSkuDescription sku, ExtendedLocation extendedLocation, string workerTierName, StatusOption? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, string geoRegion, bool? isPerSiteScaling, bool? isElasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpireOn, DateTimeOffset? freeOfferExpiredOn, string resourceGroup, bool? isReserved, bool? isXenon, bool? isHyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? isZoneRedundant, string kind) : base(id, name, resourceType, systemData, tags, location)
+        internal AppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppServiceSkuDescription sku, ExtendedLocation extendedLocation, string workerTierName, AppServicePlanStatus? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, string geoRegion, bool? isPerSiteScaling, bool? isElasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpireOn, DateTimeOffset? freeOfferExpireOn, string resourceGroup, bool? isReserved, bool? isXenon, bool? isHyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? isZoneRedundant, string kind) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ExtendedLocation = extendedLocation;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService
             NumberOfSites = numberOfSites;
             IsSpot = isSpot;
             SpotExpireOn = spotExpireOn;
-            FreeOfferExpiredOn = freeOfferExpiredOn;
+            FreeOfferExpireOn = freeOfferExpireOn;
             ResourceGroup = resourceGroup;
             IsReserved = isReserved;
             IsXenon = isXenon;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Target worker tier assigned to the App Service plan. </summary>
         public string WorkerTierName { get; set; }
         /// <summary> App Service plan status. </summary>
-        public StatusOption? Status { get; }
+        public AppServicePlanStatus? Status { get; }
         /// <summary> App Service plan subscription. </summary>
         public string Subscription { get; }
         /// <summary> Specification for the App Service Environment to use for the App Service plan. </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> The time when the server farm expires. Valid only if it is a spot server farm. </summary>
         public DateTimeOffset? SpotExpireOn { get; set; }
         /// <summary> The time when the server farm free offer expires. </summary>
-        public DateTimeOffset? FreeOfferExpiredOn { get; set; }
+        public DateTimeOffset? FreeOfferExpireOn { get; set; }
         /// <summary> Resource group of the App Service plan. </summary>
         public string ResourceGroup { get; }
         /// <summary> If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </summary>

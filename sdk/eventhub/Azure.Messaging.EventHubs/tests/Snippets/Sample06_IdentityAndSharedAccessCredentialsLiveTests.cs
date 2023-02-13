@@ -3,10 +3,15 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Net;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Producer;
+using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests.Snippets
@@ -225,6 +230,67 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             }
 
             #endregion
+        }
+
+        /// <summary>
+        ///   Performs basic smoke test validation of the contained snippet.
+        /// </summary>
+        ///
+        [Test]
+        public async Task GenerateSasCredential()
+        {
+            await using var scope = await EventHubScope.CreateAsync(1);
+
+            #region Snippet:EventHubs_Sample06_GenerateSasCredentail
+
+#if SNIPPET
+            var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
+            var eventHubName = "<< NAME OF THE EVENT HUB >>";
+            var sharedAccessKeyName = "<< SHARED ACCESS KEY NAME >>";
+            var sharedAccessKey = "<< SHARED ACCESS KEY STRING >>";
+#else
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
+            var eventHubName = scope.EventHubName;
+            var sharedAccessKeyName = EventHubsTestEnvironment.Instance.SharedAccessKeyName;
+            var sharedAccessKey = EventHubsTestEnvironment.Instance.SharedAccessKey;
+#endif
+            var expirationTime = DateTimeOffset.Now.Add(TimeSpan.FromMinutes(30));
+
+            var builder = new UriBuilder(fullyQualifiedNamespace)
+            {
+                Scheme = "amqps",
+                Path = eventHubName
+            };
+
+            builder.Path = builder.Path.TrimEnd('/');
+
+            string encodedAudience = WebUtility.UrlEncode(builder.Uri.AbsoluteUri.ToLowerInvariant());
+            string expiration = Convert.ToString(expirationTime.ToUnixTimeSeconds(), CultureInfo.InvariantCulture);
+
+            using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(sharedAccessKey));
+
+            string signature = Convert.ToBase64String(
+                hmac.ComputeHash(Encoding.UTF8.GetBytes($"{encodedAudience}\n{expiration}")));
+
+            string sasToken = string.Format(CultureInfo.InvariantCulture, "{0} {1}={2}&{3}={4}&{5}={6}&{7}={8}",
+                "SharedAccessSignature",
+                "sr",
+                encodedAudience,
+                "sig",
+                WebUtility.UrlEncode(signature),
+                "se",
+                WebUtility.UrlEncode(expiration),
+                "skn",
+                WebUtility.UrlEncode(sharedAccessKeyName));
+
+            // To use the token with the Event Hubs client library, a credential instance
+            // is needed.
+
+            var credential = new AzureSasCredential(sasToken);
+            #endregion
+
+            await using var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
+            Assert.That(async () => await producer.GetPartitionIdsAsync(), Throws.Nothing);
         }
     }
 }

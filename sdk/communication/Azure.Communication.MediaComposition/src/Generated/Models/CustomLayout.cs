@@ -16,14 +16,15 @@ namespace Azure.Communication.MediaComposition
     public partial class CustomLayout : MediaCompositionLayout
     {
         /// <summary> Initializes a new instance of CustomLayout. </summary>
-        /// <param name="inputGroups"> Configure input groups of the layout. </param>
+        /// <param name="inputGroups">
+        /// Configure input groups of the layout
+        /// Please note <see cref="InputGroup"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AutoGridInputGroup"/> and <see cref="GridInputGroup"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputGroups"/> is null. </exception>
         public CustomLayout(IDictionary<string, InputGroup> inputGroups)
         {
-            if (inputGroups == null)
-            {
-                throw new ArgumentNullException(nameof(inputGroups));
-            }
+            Argument.AssertNotNull(inputGroups, nameof(inputGroups));
 
             Layers = new ChangeTrackingDictionary<string, LayoutLayer>();
             InputGroups = inputGroups;
@@ -34,9 +35,14 @@ namespace Azure.Communication.MediaComposition
         /// <param name="kind"> Kind of layout. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>
+        /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
         /// <param name="layers"> Configure layer to control the z-position of input groups. </param>
-        /// <param name="inputGroups"> Configure input groups of the layout. </param>
-        internal CustomLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, IDictionary<string, LayoutLayer> layers, IDictionary<string, InputGroup> inputGroups) : base(kind, resolution, placeholderImageUri)
+        /// <param name="inputGroups">
+        /// Configure input groups of the layout
+        /// Please note <see cref="InputGroup"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AutoGridInputGroup"/> and <see cref="GridInputGroup"/>.
+        /// </param>
+        internal CustomLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, ScalingMode? scalingMode, IDictionary<string, LayoutLayer> layers, IDictionary<string, InputGroup> inputGroups) : base(kind, resolution, placeholderImageUri, scalingMode)
         {
             Layers = layers;
             InputGroups = inputGroups;
@@ -45,7 +51,11 @@ namespace Azure.Communication.MediaComposition
 
         /// <summary> Configure layer to control the z-position of input groups. </summary>
         public IDictionary<string, LayoutLayer> Layers { get; }
-        /// <summary> Configure input groups of the layout. </summary>
+        /// <summary>
+        /// Configure input groups of the layout
+        /// Please note <see cref="InputGroup"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AutoGridInputGroup"/> and <see cref="GridInputGroup"/>.
+        /// </summary>
         public IDictionary<string, InputGroup> InputGroups { get; }
     }
 }

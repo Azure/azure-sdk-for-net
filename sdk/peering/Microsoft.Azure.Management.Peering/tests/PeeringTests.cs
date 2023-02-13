@@ -810,22 +810,19 @@ namespace Peering.Tests
 
         private string CreatePeerAsn(int asn = 99999, string name = "AS99999", string peerName = "Contoso", bool isApproved = false)
         {
-            var peerAsn = new PeerAsn(name)
-            {
-                PeerName = peerName,
-                PeerAsnProperty = asn,
-                PeerContactDetail = new List<ContactDetail>
-
-                {
-                    new ContactDetail
-                        {
+            var peerAsn = new PeerAsn(
+                name: name,
+                peerName: peerName,
+                peerAsnProperty: asn,
+                peerContactDetail: new List<ContactDetail>{
+                    new ContactDetail{
                             Role = Role.Noc,
                             Email = $"noc{asn}@contoso.com",
                             Phone = "8888988888"
-                        }
+                    }
                 },
-                ValidationState = isApproved ? ValidationState.Approved : ValidationState.Pending
-            };
+                validationState: isApproved ? ValidationState.Approved : ValidationState.Pending
+            );
 
             try
             {

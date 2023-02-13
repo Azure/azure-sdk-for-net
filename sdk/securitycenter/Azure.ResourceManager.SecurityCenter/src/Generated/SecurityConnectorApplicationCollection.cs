@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Creates or update a security Application on the given security connector.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
-        /// Operation Id: SecurityConnectorApplications_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityConnectorApplications_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
@@ -64,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SecurityConnectorApplicationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationId, ApplicationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SecurityConnectorApplicationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationId, SecurityApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
             Argument.AssertNotNull(data, nameof(data));
@@ -88,8 +95,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Creates or update a security Application on the given security connector.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
-        /// Operation Id: SecurityConnectorApplications_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityConnectorApplications_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
@@ -97,7 +112,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SecurityConnectorApplicationResource> CreateOrUpdate(WaitUntil waitUntil, string applicationId, ApplicationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SecurityConnectorApplicationResource> CreateOrUpdate(WaitUntil waitUntil, string applicationId, SecurityApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
             Argument.AssertNotNull(data, nameof(data));
@@ -121,8 +136,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get a specific application for the requested scope by applicationId
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
-        /// Operation Id: SecurityConnectorApplications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityConnectorApplications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +173,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get a specific application for the requested scope by applicationId
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
-        /// Operation Id: SecurityConnectorApplications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityConnectorApplications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,92 +210,60 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Get a list of all relevant applications over a security connector level scope
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications
-        /// Operation Id: SecurityConnectorApplications_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityConnectorApplications_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityConnectorApplicationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityConnectorApplicationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SecurityConnectorApplicationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securityConnectorApplicationRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityConnectorApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SecurityConnectorApplicationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securityConnectorApplicationRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityConnectorApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityConnectorApplicationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityConnectorApplicationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityConnectorApplicationResource(Client, SecurityApplicationData.DeserializeSecurityApplicationData(e)), _securityConnectorApplicationClientDiagnostics, Pipeline, "SecurityConnectorApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get a list of all relevant applications over a security connector level scope
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications
-        /// Operation Id: SecurityConnectorApplications_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityConnectorApplications_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityConnectorApplicationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityConnectorApplicationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SecurityConnectorApplicationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securityConnectorApplicationRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityConnectorApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SecurityConnectorApplicationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securityConnectorApplicationRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityConnectorApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityConnectorApplicationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityConnectorApplicationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityConnectorApplicationResource(Client, SecurityApplicationData.DeserializeSecurityApplicationData(e)), _securityConnectorApplicationClientDiagnostics, Pipeline, "SecurityConnectorApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
-        /// Operation Id: SecurityConnectorApplications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityConnectorApplications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -290,8 +289,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
-        /// Operation Id: SecurityConnectorApplications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityConnectorApplications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="applicationId"> The security Application key - unique key for the standard application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

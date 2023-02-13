@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,19 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2023-02-13)
+
+### Other Changes
+
+- Upgraded resources API version to `2022-09-01`.
+
+## 1.3.1 (2022-11-11)
+
+### Other Changes
+
+- Minor internal changes.
+- Polished the README and CHANGELOG files.
 
 ## 1.3.0 (2022-08-09)
 
@@ -30,21 +43,21 @@
 - Add Update methods in resource classes.
 
 ## 1.0.0 (2022-04-07)
-This is the first stable release of the Azure Resources management library.
+This package is the first stable release of the Azure Resources management library.
 
 ### Breaking Changes
 
 Minor changes since the public beta release:
 - All `Tag` methods have been removed from `SubscriptionResource` as the service doesn't support these operations.
 - Simplify `type` property names.
-- Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
+- Normalized the body parameter type names for PUT / POST / PATCH operations if it's only used as input.
 - Tweaked some properties to right type.
 
 ## 1.0.0-beta.7 (2022-03-31)
 
 ### Breaking Changes
 
-- Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
+- Now all the resource classes would have a `Resource` suffix (if it previously doesn't have one).
 - Renamed some models to more comprehensive names.
 - `bool waitForCompletion` parameter in all long running operations were changed to `WaitUntil waitUntil`.
 - Removed `GetIfExists` methods from all the resource classes.
@@ -95,18 +108,16 @@ Minor changes since the public beta release:
 
 ## 1.0.0-beta.1 (2021-08-31)
 
--Initial checkin of the new Track 2 SDK.
-
-This package follows the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html) which provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
-
-This is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, please submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
-
 ### General New Features
 
-    - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET
-    - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing
-    - HTTP pipeline with custom policies
-    - Better error-handling
-    - Support uniform telemetry across all languages
+This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
-> NOTE: For more information about unified authentication, please refer to [Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet)
+    - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
+    - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.
+    - HTTP pipeline with custom policies.
+    - Better error-handling.
+    - Support uniform telemetry across all languages.
+
+This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
+
+> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).

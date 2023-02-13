@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Defender for Servers GCP offering configurations. </summary>
-    public partial class DefenderForServersGcpOffering : CloudOffering
+    public partial class DefenderForServersGcpOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of DefenderForServersGcpOffering. </summary>
         public DefenderForServersGcpOffering()
@@ -21,25 +21,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="description"> The offering description. </param>
         /// <param name="defenderForServers"> The Defender for servers connection configuration. </param>
         /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>
-        /// <param name="vaAutoProvisioning"> The Vulnerability Assessment autoprovisioning configuration. </param>
+        /// <param name="vulnerabilityAssessmentAutoProvisioning"> The Vulnerability Assessment autoprovisioning configuration. </param>
         /// <param name="mdeAutoProvisioning"> The Microsoft Defender for Endpoint autoprovisioning configuration. </param>
         /// <param name="subPlan"> configuration for the servers offering subPlan. </param>
-        internal DefenderForServersGcpOffering(OfferingType offeringType, string description, DefenderForServersGcpOfferingDefenderForServers defenderForServers, DefenderForServersGcpOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForServersGcpOfferingVaAutoProvisioning vaAutoProvisioning, DefenderForServersGcpOfferingMdeAutoProvisioning mdeAutoProvisioning, DefenderForServersGcpOfferingSubPlan subPlan) : base(offeringType, description)
+        internal DefenderForServersGcpOffering(OfferingType offeringType, string description, GcpDefenderForServersInfo defenderForServers, DefenderForServersGcpOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning vulnerabilityAssessmentAutoProvisioning, DefenderForServersGcpOfferingMdeAutoProvisioning mdeAutoProvisioning, DefenderForServersGcpOfferingSubPlan subPlan) : base(offeringType, description)
         {
             DefenderForServers = defenderForServers;
             ArcAutoProvisioning = arcAutoProvisioning;
-            VaAutoProvisioning = vaAutoProvisioning;
+            VulnerabilityAssessmentAutoProvisioning = vulnerabilityAssessmentAutoProvisioning;
             MdeAutoProvisioning = mdeAutoProvisioning;
             SubPlan = subPlan;
             OfferingType = offeringType;
         }
 
         /// <summary> The Defender for servers connection configuration. </summary>
-        public DefenderForServersGcpOfferingDefenderForServers DefenderForServers { get; set; }
+        public GcpDefenderForServersInfo DefenderForServers { get; set; }
         /// <summary> The ARC autoprovisioning configuration. </summary>
-        public DefenderForServersGcpOfferingArcAutoProvisioning ArcAutoProvisioning { get; set; }
+        internal DefenderForServersGcpOfferingArcAutoProvisioning ArcAutoProvisioning { get; set; }
+
         /// <summary> The Vulnerability Assessment autoprovisioning configuration. </summary>
-        public DefenderForServersGcpOfferingVaAutoProvisioning VaAutoProvisioning { get; set; }
+        public DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning VulnerabilityAssessmentAutoProvisioning { get; set; }
         /// <summary> The Microsoft Defender for Endpoint autoprovisioning configuration. </summary>
         public DefenderForServersGcpOfferingMdeAutoProvisioning MdeAutoProvisioning { get; set; }
         /// <summary> configuration for the servers offering subPlan. </summary>

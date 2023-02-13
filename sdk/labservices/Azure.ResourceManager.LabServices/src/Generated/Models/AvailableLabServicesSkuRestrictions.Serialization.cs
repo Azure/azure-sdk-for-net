@@ -15,22 +15,22 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         internal static AvailableLabServicesSkuRestrictions DeserializeAvailableLabServicesSkuRestrictions(JsonElement element)
         {
-            Optional<RestrictionType> type = default;
+            Optional<LabServicesSkuRestrictionType> type = default;
             Optional<IReadOnlyList<string>> values = default;
-            Optional<RestrictionReasonCode> reasonCode = default;
+            Optional<LabServicesSkuRestrictionReasonCode> reasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new RestrictionType(property.Value.GetString());
+                    type = new LabServicesSkuRestrictionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.LabServices.Models
                     values = array;
                     continue;
                 }
-                if (property.NameEquals("reasonCode"))
+                if (property.NameEquals("reasonCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reasonCode = new RestrictionReasonCode(property.Value.GetString());
+                    reasonCode = new LabServicesSkuRestrictionReasonCode(property.Value.GetString());
                     continue;
                 }
             }

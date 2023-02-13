@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,27 +18,27 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ReferenceKeyName))
             {
-                writer.WritePropertyName("referenceKeyName");
+                writer.WritePropertyName("referenceKeyName"u8);
                 writer.WriteStringValue(ReferenceKeyName);
             }
             if (Optional.IsDefined(GeneratedKeyName))
             {
-                writer.WritePropertyName("generatedKeyName");
+                writer.WritePropertyName("generatedKeyName"u8);
                 writer.WriteStringValue(GeneratedKeyName);
             }
             if (Optional.IsDefined(Source))
             {
-                writer.WritePropertyName("source");
+                writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
             if (Optional.IsDefined(SourceContext))
             {
-                writer.WritePropertyName("sourceContext");
+                writer.WritePropertyName("sourceContext"u8);
                 writer.WriteStringValue(SourceContext);
             }
             if (Optional.IsCollectionDefined(Inputs))
             {
-                writer.WritePropertyName("inputs");
+                writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
@@ -47,11 +47,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-        }
-
-        internal static KnowledgeStoreProjectionSelector DeserializeKnowledgeStoreProjectionSelector(JsonElement element)
-        {
-            throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Search.Documents.Indexes.Models.KnowledgeStoreProjectionSelector' not supported.");
         }
     }
 }

@@ -21,23 +21,23 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<DataBoxEdgeSkuTier> tier = default;
             Optional<string> size = default;
             Optional<string> family = default;
-            Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<AzureLocation>> locations = default;
             Optional<IReadOnlyList<string>> apiVersions = default;
-            Optional<IReadOnlyList<SkuLocationInfo>> locationInfo = default;
-            Optional<IReadOnlyList<SkuCost>> costs = default;
-            Optional<SkuSignupOption> signupOption = default;
-            Optional<SkuVersion> version = default;
-            Optional<SkuAvailability> availability = default;
-            Optional<IReadOnlyList<ShipmentType>> shipmentTypes = default;
-            Optional<IReadOnlyList<SkuCapability>> capabilities = default;
+            Optional<IReadOnlyList<DataBoxEdgeSkuLocationInfo>> locationInfo = default;
+            Optional<IReadOnlyList<DataBoxEdgeSkuCost>> costs = default;
+            Optional<DataBoxEdgeSkuSignupOption> signupOption = default;
+            Optional<DataBoxEdgeSkuVersion> version = default;
+            Optional<DataBoxEdgeSkuAvailability> availability = default;
+            Optional<IReadOnlyList<DataBoxEdgeShipmentType>> shipmentTypes = default;
+            Optional<IReadOnlyList<DataBoxEdgeSkuCapability>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     name = new DataBoxEdgeSkuName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,32 +62,32 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     tier = new DataBoxEdgeSkuTier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("size"u8))
                 {
                     size = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("family"))
+                if (property.NameEquals("family"u8))
                 {
                     family = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("locations"))
+                if (property.NameEquals("locations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;
                 }
-                if (property.NameEquals("apiVersions"))
+                if (property.NameEquals("apiVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,92 +102,92 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     apiVersions = array;
                     continue;
                 }
-                if (property.NameEquals("locationInfo"))
+                if (property.NameEquals("locationInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SkuLocationInfo> array = new List<SkuLocationInfo>();
+                    List<DataBoxEdgeSkuLocationInfo> array = new List<DataBoxEdgeSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuLocationInfo.DeserializeSkuLocationInfo(item));
+                        array.Add(DataBoxEdgeSkuLocationInfo.DeserializeDataBoxEdgeSkuLocationInfo(item));
                     }
                     locationInfo = array;
                     continue;
                 }
-                if (property.NameEquals("costs"))
+                if (property.NameEquals("costs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SkuCost> array = new List<SkuCost>();
+                    List<DataBoxEdgeSkuCost> array = new List<DataBoxEdgeSkuCost>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuCost.DeserializeSkuCost(item));
+                        array.Add(DataBoxEdgeSkuCost.DeserializeDataBoxEdgeSkuCost(item));
                     }
                     costs = array;
                     continue;
                 }
-                if (property.NameEquals("signupOption"))
+                if (property.NameEquals("signupOption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    signupOption = new SkuSignupOption(property.Value.GetString());
+                    signupOption = new DataBoxEdgeSkuSignupOption(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    version = new SkuVersion(property.Value.GetString());
+                    version = new DataBoxEdgeSkuVersion(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("availability"))
+                if (property.NameEquals("availability"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    availability = new SkuAvailability(property.Value.GetString());
+                    availability = new DataBoxEdgeSkuAvailability(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("shipmentTypes"))
+                if (property.NameEquals("shipmentTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ShipmentType> array = new List<ShipmentType>();
+                    List<DataBoxEdgeShipmentType> array = new List<DataBoxEdgeShipmentType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ShipmentType(item.GetString()));
+                        array.Add(new DataBoxEdgeShipmentType(item.GetString()));
                     }
                     shipmentTypes = array;
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SkuCapability> array = new List<SkuCapability>();
+                    List<DataBoxEdgeSkuCapability> array = new List<DataBoxEdgeSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuCapability.DeserializeSkuCapability(item));
+                        array.Add(DataBoxEdgeSkuCapability.DeserializeDataBoxEdgeSkuCapability(item));
                     }
                     capabilities = array;
                     continue;

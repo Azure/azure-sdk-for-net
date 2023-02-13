@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="passedAssessments"> The number of supported regulatory compliance assessments of the given control with a passed state. </param>
         /// <param name="failedAssessments"> The number of supported regulatory compliance assessments of the given control with a failed state. </param>
         /// <param name="skippedAssessments"> The number of supported regulatory compliance assessments of the given control with a skipped state. </param>
-        internal RegulatoryComplianceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, State? state, int? passedAssessments, int? failedAssessments, int? skippedAssessments) : base(id, name, resourceType, systemData)
+        internal RegulatoryComplianceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, RegulatoryComplianceState? state, int? passedAssessments, int? failedAssessments, int? skippedAssessments) : base(id, name, resourceType, systemData)
         {
             Description = description;
             State = state;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> The description of the regulatory compliance control. </summary>
         public string Description { get; }
         /// <summary> Aggregative state based on the control&apos;s supported assessments states. </summary>
-        public State? State { get; set; }
+        public RegulatoryComplianceState? State { get; set; }
         /// <summary> The number of supported regulatory compliance assessments of the given control with a passed state. </summary>
         public int? PassedAssessments { get; }
         /// <summary> The number of supported regulatory compliance assessments of the given control with a failed state. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         public NonComplianceMessage(string message)
         {
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
+            Argument.AssertNotNull(message, nameof(message));
 
             Message = message;
         }

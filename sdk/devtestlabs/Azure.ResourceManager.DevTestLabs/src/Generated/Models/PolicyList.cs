@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of PolicyList. </summary>
         internal PolicyList()
         {
-            Value = new ChangeTrackingList<PolicyData>();
+            Value = new ChangeTrackingList<DevTestLabPolicyData>();
         }
 
         /// <summary> Initializes a new instance of PolicyList. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
-        internal PolicyList(IReadOnlyList<PolicyData> value, string nextLink)
+        internal PolicyList(IReadOnlyList<DevTestLabPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Results of the list operation. </summary>
-        public IReadOnlyList<PolicyData> Value { get; }
+        public IReadOnlyList<DevTestLabPolicyData> Value { get; }
         /// <summary> Link for next set of results. </summary>
         public string NextLink { get; }
     }

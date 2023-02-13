@@ -5,6 +5,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 using System;
+using System.ComponentModel;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,6 +37,8 @@ namespace Azure.Identity
 
         private readonly CredentialPipeline _pipeline;
 
+        internal readonly string[] AdditionallyAllowedTenantIds;
+
         /// <summary>
         /// Protected constructor for mocking.
         /// </summary>
@@ -49,7 +52,7 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificatePath">The path to a file which contains both the client certificate and private key.</param>
         public ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath)
-            : this(tenantId, clientId, clientCertificatePath, null, null, null)
+            : this(tenantId, clientId, clientCertificatePath, null, null, null, null)
         { }
 
         /// <summary>
@@ -59,8 +62,9 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificatePath">The path to a file which contains both the client certificate and private key.</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath, TokenCredentialOptions options)
-            : this(tenantId, clientId, clientCertificatePath, options, null, null)
+            : this(tenantId, clientId, clientCertificatePath, null, options, null, null)
         { }
 
         /// <summary>
@@ -71,7 +75,7 @@ namespace Azure.Identity
         /// <param name="clientCertificatePath">The path to a file which contains both the client certificate and private key.</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath, ClientCertificateCredentialOptions options)
-            : this(tenantId, clientId, clientCertificatePath, options, null, null)
+            : this(tenantId, clientId, clientCertificatePath, null, options, null, null)
         { }
 
         /// <summary>
@@ -91,6 +95,7 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificate">The authentication X509 Certificate of the service principal</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, TokenCredentialOptions options)
             : this(tenantId, clientId, clientCertificate, options, null, null)
         { }
@@ -110,13 +115,14 @@ namespace Azure.Identity
             string tenantId,
             string clientId,
             string certificatePath,
+            string certificatePassword,
             TokenCredentialOptions options,
             CredentialPipeline pipeline,
             MsalConfidentialClient client)
             : this(
                 tenantId,
                 clientId,
-                new X509Certificate2FromFileProvider(certificatePath ?? throw new ArgumentNullException(nameof(certificatePath))),
+                new X509Certificate2FromFileProvider(certificatePath ?? throw new ArgumentNullException(nameof(certificatePath)), certificatePassword),
                 options,
                 pipeline,
                 client)
@@ -160,6 +166,8 @@ namespace Azure.Identity
                          certificateProvider,
                          certCredOptions?.SendCertificateChain ?? false,
                          options);
+
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
         }
 
         /// <summary>
@@ -176,7 +184,7 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
                 AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, false, cancellationToken).EnsureCompleted();
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
@@ -201,7 +209,7 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
                 AuthenticationResult result = await Client
                     .AcquireTokenForClientAsync(requestContext.Scopes, tenantId, true, cancellationToken)
                     .ConfigureAwait(false);

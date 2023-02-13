@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -19,22 +20,26 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUri"/>, <paramref name="keyName"/> or <paramref name="keyVersion"/> is null. </exception>
         public ContainerGroupEncryptionProperties(Uri vaultBaseUri, string keyName, string keyVersion)
         {
-            if (vaultBaseUri == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUri));
-            }
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
-            if (keyVersion == null)
-            {
-                throw new ArgumentNullException(nameof(keyVersion));
-            }
+            Argument.AssertNotNull(vaultBaseUri, nameof(vaultBaseUri));
+            Argument.AssertNotNull(keyName, nameof(keyName));
+            Argument.AssertNotNull(keyVersion, nameof(keyVersion));
 
             VaultBaseUri = vaultBaseUri;
             KeyName = keyName;
             KeyVersion = keyVersion;
+        }
+
+        /// <summary> Initializes a new instance of ContainerGroupEncryptionProperties. </summary>
+        /// <param name="vaultBaseUri"> The keyvault base url. </param>
+        /// <param name="keyName"> The encryption key name. </param>
+        /// <param name="keyVersion"> The encryption key version. </param>
+        /// <param name="identity"> The keyvault managed identity. </param>
+        internal ContainerGroupEncryptionProperties(Uri vaultBaseUri, string keyName, string keyVersion, string identity)
+        {
+            VaultBaseUri = vaultBaseUri;
+            KeyName = keyName;
+            KeyVersion = keyVersion;
+            Identity = identity;
         }
 
         /// <summary> The keyvault base url. </summary>
@@ -43,5 +48,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public string KeyName { get; set; }
         /// <summary> The encryption key version. </summary>
         public string KeyVersion { get; set; }
+        /// <summary> The keyvault managed identity. </summary>
+        public string Identity { get; set; }
     }
 }

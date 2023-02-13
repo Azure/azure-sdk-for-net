@@ -72,7 +72,17 @@ namespace Azure.Messaging.ServiceBus
         /// The option to auto complete messages is specified when creating the receiver
         /// using <see cref="ServiceBusReceiverOptions.PrefetchCount"/> and has a default value of 0.
         /// </value>
-        public virtual int PrefetchCount { get; }
+        public virtual int PrefetchCount
+        {
+            get
+            {
+                return InnerReceiver.PrefetchCount;
+            }
+            internal set
+            {
+                InnerReceiver.PrefetchCount = value;
+            }
+        }
 
         /// <summary>
         /// A name used to identify the receiver client.  If <c>null</c> or empty, a random unique value will be will be used.
@@ -171,7 +181,6 @@ namespace Azure.Messaging.ServiceBus
                 _connection = connection;
                 _retryPolicy = connection.RetryOptions.ToRetryPolicy();
                 ReceiveMode = options.ReceiveMode;
-                PrefetchCount = options.PrefetchCount;
 
                 EntityPath = EntityNameFormatter.FormatEntityPath(entityPath, options.SubQueue);
 
@@ -180,7 +189,7 @@ namespace Azure.Messaging.ServiceBus
                     entityPath: EntityPath,
                     retryPolicy: _retryPolicy,
                     receiveMode: ReceiveMode,
-                    prefetchCount: (uint)PrefetchCount,
+                    prefetchCount: (uint)options.PrefetchCount,
                     identifier: Identifier,
                     sessionId: sessionId,
                     isSessionReceiver: IsSessionReceiver,
@@ -410,6 +419,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>The <see cref="ServiceBusReceivedMessage" /> that represents the next message to be read. Returns null when nothing to peek.</returns>
+        /// <seealso href="https://aka.ms/azsdk/servicebus/message-browsing">Service Bus message browsing</seealso>
         public virtual async Task<ServiceBusReceivedMessage> PeekMessageAsync(
             long? fromSequenceNumber = default,
             CancellationToken cancellationToken = default)
@@ -442,6 +452,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>An <see cref="IReadOnlyList{ServiceBusReceivedMessage}" /> of messages that were peeked.</returns>
+        /// <seealso href="https://aka.ms/azsdk/servicebus/message-browsing">Service Bus message browsing</seealso>
         public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> PeekMessagesAsync(
             int maxMessages,
             long? fromSequenceNumber = default,
@@ -731,6 +742,15 @@ namespace Azure.Messaging.ServiceBus
         ///     </item>
         ///   </list>
         /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <list type="bullet">
+        ///     <item>
+        ///       <description>
+        ///         The dead letter reason or dead letter error description exceeded the maximum length of 4096.
+        ///       </description>
+        ///     </item>
+        ///   </list>
+        /// </exception>
         public virtual async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify,
@@ -799,6 +819,15 @@ namespace Azure.Messaging.ServiceBus
         ///     </item>
         ///   </list>
         /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <list type="bullet">
+        ///     <item>
+        ///       <description>
+        ///         The dead letter reason or dead letter error description exceeded the maximum length of 4096.
+        ///       </description>
+        ///     </item>
+        ///   </list>
+        /// </exception>
         public virtual async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,
             string deadLetterReason,
@@ -827,7 +856,7 @@ namespace Azure.Messaging.ServiceBus
         /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockTokenGuid"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// In order to receive a message from the dead-letter queue, you will need a new <see cref="ServiceBusReceiver"/>, with the corresponding path.
-        /// You can use EntityNameHelper.FormatDeadLetterPath(string) to help with this.
+        /// You can use <see cref="ServiceBusReceiverOptions.SubQueue"/> with <see cref="SubQueue.DeadLetter"/> to help with this.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
         internal virtual async Task DeadLetterInternalAsync(

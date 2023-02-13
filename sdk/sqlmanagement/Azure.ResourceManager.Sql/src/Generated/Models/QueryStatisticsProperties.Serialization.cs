@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<IReadOnlyList<QueryMetricInterval>> intervals = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("databaseName"))
+                if (property.NameEquals("databaseName"u8))
                 {
                     databaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("queryId"))
+                if (property.NameEquals("queryId"u8))
                 {
                     queryId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     startTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     endTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("intervals"))
+                if (property.NameEquals("intervals"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

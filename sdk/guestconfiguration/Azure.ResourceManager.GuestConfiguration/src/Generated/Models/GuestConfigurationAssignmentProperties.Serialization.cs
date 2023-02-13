@@ -19,24 +19,24 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(GuestConfiguration))
             {
-                writer.WritePropertyName("guestConfiguration");
+                writer.WritePropertyName("guestConfiguration"u8);
                 writer.WriteObjectValue(GuestConfiguration);
             }
             if (Optional.IsDefined(LatestAssignmentReport))
             {
-                writer.WritePropertyName("latestAssignmentReport");
+                writer.WritePropertyName("latestAssignmentReport"u8);
                 writer.WriteObjectValue(LatestAssignmentReport);
             }
             if (Optional.IsDefined(Context))
             {
-                writer.WritePropertyName("context");
+                writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
             if (Optional.IsCollectionDefined(VmssVmList))
             {
                 if (VmssVmList != null)
                 {
-                    writer.WritePropertyName("vmssVMList");
+                    writer.WritePropertyName("vmssVMList"u8);
                     writer.WriteStartArray();
                     foreach (var item in VmssVmList)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Optional<DateTimeOffset?> lastComplianceStatusChecked = default;
             Optional<ResourceIdentifier> latestReportId = default;
             Optional<string> parameterHash = default;
-            Optional<AssignmentReport> latestAssignmentReport = default;
+            Optional<GuestConfigurationAssignmentReportInfo> latestAssignmentReport = default;
             Optional<string> context = default;
             Optional<string> assignmentHash = default;
             Optional<GuestConfigurationProvisioningState?> provisioningState = default;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Optional<IList<GuestConfigurationVmssVmInfo>> vmssVmList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetResourceId"))
+                if (property.NameEquals("targetResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     targetResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("guestConfiguration"))
+                if (property.NameEquals("guestConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     guestConfiguration = GuestConfigurationNavigation.DeserializeGuestConfigurationNavigation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("complianceStatus"))
+                if (property.NameEquals("complianceStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     complianceStatus = new AssignedGuestConfigurationMachineComplianceStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lastComplianceStatusChecked"))
+                if (property.NameEquals("lastComplianceStatusChecked"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     lastComplianceStatusChecked = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("latestReportId"))
+                if (property.NameEquals("latestReportId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     latestReportId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("parameterHash"))
+                if (property.NameEquals("parameterHash"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -128,22 +128,22 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     parameterHash = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("latestAssignmentReport"))
+                if (property.NameEquals("latestAssignmentReport"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    latestAssignmentReport = AssignmentReport.DeserializeAssignmentReport(property.Value);
+                    latestAssignmentReport = GuestConfigurationAssignmentReportInfo.DeserializeGuestConfigurationAssignmentReportInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("context"))
+                if (property.NameEquals("context"u8))
                 {
                     context = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("assignmentHash"))
+                if (property.NameEquals("assignmentHash"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     assignmentHash = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     provisioningState = new GuestConfigurationProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmssVMList"))
+                if (property.NameEquals("vmssVMList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

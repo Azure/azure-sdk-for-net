@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Initializes a new instance of SyncGroupArray. </summary>
         internal SyncGroupArray()
         {
-            Value = new ChangeTrackingList<SyncGroupData>();
+            Value = new ChangeTrackingList<StorageSyncGroupData>();
         }
 
         /// <summary> Initializes a new instance of SyncGroupArray. </summary>
         /// <param name="value"> Collection of SyncGroup. </param>
-        internal SyncGroupArray(IReadOnlyList<SyncGroupData> value)
+        internal SyncGroupArray(IReadOnlyList<StorageSyncGroupData> value)
         {
             Value = value;
         }
 
         /// <summary> Collection of SyncGroup. </summary>
-        public IReadOnlyList<SyncGroupData> Value { get; }
+        public IReadOnlyList<StorageSyncGroupData> Value { get; }
     }
 }

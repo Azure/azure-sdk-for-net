@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of DefenderForServersGcpOfferingMdeAutoProvisioning. </summary>
-        /// <param name="enabled"> Is Microsoft Defender for Endpoint auto provisioning enabled. </param>
+        /// <param name="isEnabled"> Is Microsoft Defender for Endpoint auto provisioning enabled. </param>
         /// <param name="configuration"> configuration for Microsoft Defender for Endpoint autoprovisioning. </param>
-        internal DefenderForServersGcpOfferingMdeAutoProvisioning(bool? enabled, BinaryData configuration)
+        internal DefenderForServersGcpOfferingMdeAutoProvisioning(bool? isEnabled, BinaryData configuration)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Configuration = configuration;
         }
 
         /// <summary> Is Microsoft Defender for Endpoint auto provisioning enabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary>
         /// configuration for Microsoft Defender for Endpoint autoprovisioning
         /// <para>

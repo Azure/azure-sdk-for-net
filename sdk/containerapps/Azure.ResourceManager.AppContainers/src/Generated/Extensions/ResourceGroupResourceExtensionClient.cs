@@ -31,6 +31,13 @@ namespace Azure.ResourceManager.AppContainers
             return apiVersion;
         }
 
+        /// <summary> Gets a collection of ContainerAppConnectedEnvironmentResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ContainerAppConnectedEnvironmentResources and their operations over a ContainerAppConnectedEnvironmentResource. </returns>
+        public virtual ContainerAppConnectedEnvironmentCollection GetContainerAppConnectedEnvironments()
+        {
+            return GetCachedClient(Client => new ContainerAppConnectedEnvironmentCollection(Client, Id));
+        }
+
         /// <summary> Gets a collection of ContainerAppResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ContainerAppResources and their operations over a ContainerAppResource. </returns>
         public virtual ContainerAppCollection GetContainerApps()
@@ -38,11 +45,11 @@ namespace Azure.ResourceManager.AppContainers
             return GetCachedClient(Client => new ContainerAppCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ManagedEnvironmentResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ManagedEnvironmentResources and their operations over a ManagedEnvironmentResource. </returns>
-        public virtual ManagedEnvironmentCollection GetManagedEnvironments()
+        /// <summary> Gets a collection of ContainerAppManagedEnvironmentResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ContainerAppManagedEnvironmentResources and their operations over a ContainerAppManagedEnvironmentResource. </returns>
+        public virtual ContainerAppManagedEnvironmentCollection GetContainerAppManagedEnvironments()
         {
-            return GetCachedClient(Client => new ManagedEnvironmentCollection(Client, Id));
+            return GetCachedClient(Client => new ContainerAppManagedEnvironmentCollection(Client, Id));
         }
     }
 }

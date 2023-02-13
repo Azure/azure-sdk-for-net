@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<long> probesFailed = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hops"))
+                if (property.NameEquals("hops"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     hops = array;
                     continue;
                 }
-                if (property.NameEquals("connectionStatus"))
+                if (property.NameEquals("connectionStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     connectionStatus = new ConnectionStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("avgLatencyInMs"))
+                if (property.NameEquals("avgLatencyInMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     avgLatencyInMs = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("minLatencyInMs"))
+                if (property.NameEquals("minLatencyInMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     minLatencyInMs = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("maxLatencyInMs"))
+                if (property.NameEquals("maxLatencyInMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     maxLatencyInMs = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("probesSent"))
+                if (property.NameEquals("probesSent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     probesSent = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("probesFailed"))
+                if (property.NameEquals("probesFailed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.Avs
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ScriptCmdletId))
             {
-                writer.WritePropertyName("scriptCmdletId");
+                writer.WritePropertyName("scriptCmdletId"u8);
                 writer.WriteStringValue(ScriptCmdletId);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Avs
             }
             if (Optional.IsCollectionDefined(HiddenParameters))
             {
-                writer.WritePropertyName("hiddenParameters");
+                writer.WritePropertyName("hiddenParameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in HiddenParameters)
                 {
@@ -48,22 +48,22 @@ namespace Azure.ResourceManager.Avs
             }
             if (Optional.IsDefined(FailureReason))
             {
-                writer.WritePropertyName("failureReason");
+                writer.WritePropertyName("failureReason"u8);
                 writer.WriteStringValue(FailureReason);
             }
             if (Optional.IsDefined(Timeout))
             {
-                writer.WritePropertyName("timeout");
+                writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout);
             }
             if (Optional.IsDefined(Retention))
             {
-                writer.WritePropertyName("retention");
+                writer.WritePropertyName("retention"u8);
                 writer.WriteStringValue(Retention);
             }
             if (Optional.IsCollectionDefined(Output))
             {
-                writer.WritePropertyName("output");
+                writer.WritePropertyName("output"u8);
                 writer.WriteStartArray();
                 foreach (var item in Output)
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Avs
             }
             if (Optional.IsDefined(NamedOutputs))
             {
-                writer.WritePropertyName("namedOutputs");
+                writer.WritePropertyName("namedOutputs"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(NamedOutputs);
 #else
@@ -107,32 +107,32 @@ namespace Azure.ResourceManager.Avs
             Optional<IReadOnlyList<string>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Avs
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("scriptCmdletId"))
+                        if (property0.NameEquals("scriptCmdletId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Avs
                             scriptCmdletId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("parameters"))
+                        if (property0.NameEquals("parameters"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Avs
                             parameters = array;
                             continue;
                         }
-                        if (property0.NameEquals("hiddenParameters"))
+                        if (property0.NameEquals("hiddenParameters"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -181,22 +181,22 @@ namespace Azure.ResourceManager.Avs
                             hiddenParameters = array;
                             continue;
                         }
-                        if (property0.NameEquals("failureReason"))
+                        if (property0.NameEquals("failureReason"u8))
                         {
                             failureReason = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("timeout"))
+                        if (property0.NameEquals("timeout"u8))
                         {
                             timeout = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("retention"))
+                        if (property0.NameEquals("retention"u8))
                         {
                             retention = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("submittedAt"))
+                        if (property0.NameEquals("submittedAt"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Avs
                             submittedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("startedAt"))
+                        if (property0.NameEquals("startedAt"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Avs
                             startedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("finishedAt"))
+                        if (property0.NameEquals("finishedAt"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Avs
                             finishedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Avs
                             provisioningState = new ScriptExecutionProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("output"))
+                        if (property0.NameEquals("output"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Avs
                             output = array;
                             continue;
                         }
-                        if (property0.NameEquals("namedOutputs"))
+                        if (property0.NameEquals("namedOutputs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Avs
                             namedOutputs = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("information"))
+                        if (property0.NameEquals("information"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Avs
                             information = array;
                             continue;
                         }
-                        if (property0.NameEquals("warnings"))
+                        if (property0.NameEquals("warnings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Avs
                             warnings = array;
                             continue;
                         }
-                        if (property0.NameEquals("errors"))
+                        if (property0.NameEquals("errors"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

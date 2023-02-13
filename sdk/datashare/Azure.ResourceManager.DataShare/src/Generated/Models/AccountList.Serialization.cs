@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DataShare.Models
         internal static AccountList DeserializeAccountList(JsonElement element)
         {
             Optional<string> nextLink = default;
-            IReadOnlyList<AccountData> value = default;
+            IReadOnlyList<DataShareAccountData> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
-                    List<AccountData> array = new List<AccountData>();
+                    List<DataShareAccountData> array = new List<DataShareAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccountData.DeserializeAccountData(item));
+                        array.Add(DataShareAccountData.DeserializeDataShareAccountData(item));
                     }
                     value = array;
                     continue;

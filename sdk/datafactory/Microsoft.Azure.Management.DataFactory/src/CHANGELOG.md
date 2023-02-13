@@ -1,5 +1,29 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 9.1.0
+###  Feature Additions
+- Added AzureBlobStorage containerUri and authenticationType properties in ADF
+- Added support copyComputeScale And pipelineExternalComputeScale in IntegrationRuntime
+
+## Version 9.0.0
+###  Feature Additions
+### Breaking Changes
+- Added support for credential operations in DataFactory
+- Added exportsettings required in Snowflake source
+- Added scan folder and spark config support in Sparkjob activity
+
+## Version 8.0.0
+###  Feature Additions
+### Breaking Changes
+- Added properties to spark job activity
+- Added disablePublish property into FactoryRepoConfiguration
+- Added scriptBlockExecutionTimeout property into Script Activity
+
+## Version 7.0.0
+###  Feature Additions
+### Breaking Changes
+- Fixed Stored Procedure Parameters in ADF
+
 ## Version 6.4.0
 ###  Feature Additions
 - Added GoogleSheets connector in ADF

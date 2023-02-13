@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Share
 {
-    // Data plane generated client. The SentShareInvitations service client.
+    // Data plane generated client.
     /// <summary> The SentShareInvitations service client. </summary>
     public partial class SentShareInvitationsClient
     {
@@ -71,77 +68,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSentShareInvitationAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.GetSentShareInvitationAsync("<sentShareName>", "<sentShareInvitationName>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Get a sent share invitation
-        /// 
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-        /// <details><summary>ApplicationInvitation</summary>Schema for <c>ApplicationInvitation</c>:
-        /// <code>{
-        ///   properties: {
-        ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the invitation
-        ///     invitationId: string, # Optional. Id of the invitation
-        ///     invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
-        ///     senderEmail: string, # Optional. Email address of the sender.
-        ///     senderName: string, # Optional. Name of the sender
-        ///     senderTenantName: string, # Optional. Tenant name of the sender
-        ///     sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-        ///     shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
-        ///     targetActiveDirectoryId: string, # Required. The target azure active directory id the invitation is sent to.
-        ///     targetObjectId: string, # Required. The target object id in the azure active directory the invitation is sent to.
-        ///   }, # Required. Properties of the application invitation type.
-        ///   invitationKind: Application, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>UserInvitation</summary>Schema for <c>UserInvitation</c>:
-        /// <code>{
-        ///   properties: {
-        ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the invitation
-        ///     invitationId: string, # Optional. Id of the invitation
-        ///     invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
-        ///     senderEmail: string, # Optional. Email address of the sender.
-        ///     senderName: string, # Optional. Name of the sender
-        ///     senderTenantName: string, # Optional. Tenant name of the sender
-        ///     sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-        ///     shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
-        ///     targetEmail: string, # Required. The receiver email for the invitation is being sent.
-        ///   }, # Required. Properties of the user invitation type.
-        ///   invitationKind: User, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='GetSentShareInvitationAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetSentShareInvitationAsync(string sentShareName, string sentShareInvitationName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -169,77 +96,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSentShareInvitation with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.GetSentShareInvitation("<sentShareName>", "<sentShareInvitationName>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Get a sent share invitation
-        /// 
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-        /// <details><summary>ApplicationInvitation</summary>Schema for <c>ApplicationInvitation</c>:
-        /// <code>{
-        ///   properties: {
-        ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the invitation
-        ///     invitationId: string, # Optional. Id of the invitation
-        ///     invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
-        ///     senderEmail: string, # Optional. Email address of the sender.
-        ///     senderName: string, # Optional. Name of the sender
-        ///     senderTenantName: string, # Optional. Tenant name of the sender
-        ///     sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-        ///     shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
-        ///     targetActiveDirectoryId: string, # Required. The target azure active directory id the invitation is sent to.
-        ///     targetObjectId: string, # Required. The target object id in the azure active directory the invitation is sent to.
-        ///   }, # Required. Properties of the application invitation type.
-        ///   invitationKind: Application, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>UserInvitation</summary>Schema for <c>UserInvitation</c>:
-        /// <code>{
-        ///   properties: {
-        ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the invitation
-        ///     invitationId: string, # Optional. Id of the invitation
-        ///     invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
-        ///     senderEmail: string, # Optional. Email address of the sender.
-        ///     senderName: string, # Optional. Name of the sender
-        ///     senderTenantName: string, # Optional. Tenant name of the sender
-        ///     sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-        ///     shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
-        ///     targetEmail: string, # Required. The receiver email for the invitation is being sent.
-        ///   }, # Required. Properties of the user invitation type.
-        ///   invitationKind: User, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='GetSentShareInvitation(String,String,RequestContext)']/*" />
         public virtual Response GetSentShareInvitation(string sentShareName, string sentShareInvitationName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -268,156 +125,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdateAsync with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {
-        ///     properties = new {
-        ///         targetActiveDirectoryId = "<targetActiveDirectoryId>",
-        ///         targetObjectId = "<targetObjectId>",
-        ///     },
-        ///     invitationKind = "Application",
-        /// };
-        /// 
-        /// Response response = await client.CreateOrUpdateAsync("<sentShareName>", "<sentShareInvitationName>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {
-        ///     properties = new {
-        ///         expirationDate = "2022-05-10T18:57:31.2311892Z",
-        ///         shareKind = "InPlace",
-        ///         targetActiveDirectoryId = "<targetActiveDirectoryId>",
-        ///         targetObjectId = "<targetObjectId>",
-        ///     },
-        ///     invitationKind = "Application",
-        /// };
-        /// 
-        /// Response response = await client.CreateOrUpdateAsync("<sentShareName>", "<sentShareInvitationName>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Create a sent share invitation
-        /// 
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-        /// <details><summary>ApplicationInvitation</summary>Schema for <c>ApplicationInvitation</c>:
-        /// <code>{
-        ///   properties: {
-        ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the invitation
-        ///     invitationId: string, # Optional. Id of the invitation
-        ///     invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
-        ///     senderEmail: string, # Optional. Email address of the sender.
-        ///     senderName: string, # Optional. Name of the sender
-        ///     senderTenantName: string, # Optional. Tenant name of the sender
-        ///     sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-        ///     shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
-        ///     targetActiveDirectoryId: string, # Required. The target azure active directory id the invitation is sent to.
-        ///     targetObjectId: string, # Required. The target object id in the azure active directory the invitation is sent to.
-        ///   }, # Required. Properties of the application invitation type.
-        ///   invitationKind: Application, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>UserInvitation</summary>Schema for <c>UserInvitation</c>:
-        /// <code>{
-        ///   properties: {
-        ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the invitation
-        ///     invitationId: string, # Optional. Id of the invitation
-        ///     invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
-        ///     senderEmail: string, # Optional. Email address of the sender.
-        ///     senderName: string, # Optional. Name of the sender
-        ///     senderTenantName: string, # Optional. Tenant name of the sender
-        ///     sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-        ///     shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
-        ///     targetEmail: string, # Required. The receiver email for the invitation is being sent.
-        ///   }, # Required. Properties of the user invitation type.
-        ///   invitationKind: User, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// </details>
-        /// 
-        /// Response Body:
-        /// 
-        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-        /// <details><summary>ApplicationInvitation</summary>Schema for <c>ApplicationInvitation</c>:
-        /// <code>{
-        ///   properties: {
-        ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the invitation
-        ///     invitationId: string, # Optional. Id of the invitation
-        ///     invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
-        ///     senderEmail: string, # Optional. Email address of the sender.
-        ///     senderName: string, # Optional. Name of the sender
-        ///     senderTenantName: string, # Optional. Tenant name of the sender
-        ///     sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-        ///     shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
-        ///     targetActiveDirectoryId: string, # Required. The target azure active directory id the invitation is sent to.
-        ///     targetObjectId: string, # Required. The target object id in the azure active directory the invitation is sent to.
-        ///   }, # Required. Properties of the application invitation type.
-        ///   invitationKind: Application, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>UserInvitation</summary>Schema for <c>UserInvitation</c>:
-        /// <code>{
-        ///   properties: {
-        ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the invitation
-        ///     invitationId: string, # Optional. Id of the invitation
-        ///     invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
-        ///     senderEmail: string, # Optional. Email address of the sender.
-        ///     senderName: string, # Optional. Name of the sender
-        ///     senderTenantName: string, # Optional. Tenant name of the sender
-        ///     sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-        ///     shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
-        ///     targetEmail: string, # Required. The receiver email for the invitation is being sent.
-        ///   }, # Required. Properties of the user invitation type.
-        ///   invitationKind: User, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string sentShareName, string sentShareInvitationName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -447,156 +155,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdate with required parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {
-        ///     properties = new {
-        ///         targetActiveDirectoryId = "<targetActiveDirectoryId>",
-        ///         targetObjectId = "<targetObjectId>",
-        ///     },
-        ///     invitationKind = "Application",
-        /// };
-        /// 
-        /// Response response = client.CreateOrUpdate("<sentShareName>", "<sentShareInvitationName>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// var data = new {
-        ///     properties = new {
-        ///         expirationDate = "2022-05-10T18:57:31.2311892Z",
-        ///         shareKind = "InPlace",
-        ///         targetActiveDirectoryId = "<targetActiveDirectoryId>",
-        ///         targetObjectId = "<targetObjectId>",
-        ///     },
-        ///     invitationKind = "Application",
-        /// };
-        /// 
-        /// Response response = client.CreateOrUpdate("<sentShareName>", "<sentShareInvitationName>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Create a sent share invitation
-        /// 
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-        /// <details><summary>ApplicationInvitation</summary>Schema for <c>ApplicationInvitation</c>:
-        /// <code>{
-        ///   properties: {
-        ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the invitation
-        ///     invitationId: string, # Optional. Id of the invitation
-        ///     invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
-        ///     senderEmail: string, # Optional. Email address of the sender.
-        ///     senderName: string, # Optional. Name of the sender
-        ///     senderTenantName: string, # Optional. Tenant name of the sender
-        ///     sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-        ///     shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
-        ///     targetActiveDirectoryId: string, # Required. The target azure active directory id the invitation is sent to.
-        ///     targetObjectId: string, # Required. The target object id in the azure active directory the invitation is sent to.
-        ///   }, # Required. Properties of the application invitation type.
-        ///   invitationKind: Application, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>UserInvitation</summary>Schema for <c>UserInvitation</c>:
-        /// <code>{
-        ///   properties: {
-        ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the invitation
-        ///     invitationId: string, # Optional. Id of the invitation
-        ///     invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
-        ///     senderEmail: string, # Optional. Email address of the sender.
-        ///     senderName: string, # Optional. Name of the sender
-        ///     senderTenantName: string, # Optional. Tenant name of the sender
-        ///     sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-        ///     shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
-        ///     targetEmail: string, # Required. The receiver email for the invitation is being sent.
-        ///   }, # Required. Properties of the user invitation type.
-        ///   invitationKind: User, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// </details>
-        /// 
-        /// Response Body:
-        /// 
-        /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-        /// <details><summary>ApplicationInvitation</summary>Schema for <c>ApplicationInvitation</c>:
-        /// <code>{
-        ///   properties: {
-        ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the invitation
-        ///     invitationId: string, # Optional. Id of the invitation
-        ///     invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
-        ///     senderEmail: string, # Optional. Email address of the sender.
-        ///     senderName: string, # Optional. Name of the sender
-        ///     senderTenantName: string, # Optional. Tenant name of the sender
-        ///     sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-        ///     shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
-        ///     targetActiveDirectoryId: string, # Required. The target azure active directory id the invitation is sent to.
-        ///     targetObjectId: string, # Required. The target object id in the azure active directory the invitation is sent to.
-        ///   }, # Required. Properties of the application invitation type.
-        ///   invitationKind: Application, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 1 more JSON objects</summary><details><summary>UserInvitation</summary>Schema for <c>UserInvitation</c>:
-        /// <code>{
-        ///   properties: {
-        ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the invitation
-        ///     invitationId: string, # Optional. Id of the invitation
-        ///     invitationStatus: &quot;Pending&quot; | &quot;Accepted&quot; | &quot;Rejected&quot;, # Optional. Status of the invitation.
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
-        ///     respondedAt: string (ISO 8601 Format), # Optional. The time the recipient responded to the invitation.
-        ///     senderEmail: string, # Optional. Email address of the sender.
-        ///     senderName: string, # Optional. Name of the sender
-        ///     senderTenantName: string, # Optional. Tenant name of the sender
-        ///     sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-        ///     shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
-        ///     targetEmail: string, # Required. The receiver email for the invitation is being sent.
-        ///   }, # Required. Properties of the user invitation type.
-        ///   invitationKind: User, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// </details>
-        /// </details>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string sentShareName, string sentShareInvitationName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -625,17 +184,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteAsync with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = await client.DeleteAsync("<sentShareName>", "<sentShareInvitationName>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
-        /// <remarks> Delete a sent share invitation. </remarks>
+        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='DeleteAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string sentShareName, string sentShareInvitationName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -663,17 +212,7 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call Delete with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// Response response = client.Delete("<sentShareName>", "<sentShareInvitationName>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
-        /// <remarks> Delete a sent share invitation. </remarks>
+        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='Delete(String,String,RequestContext)']/*" />
         public virtual Response Delete(string sentShareName, string sentShareInvitationName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
@@ -703,73 +242,14 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSentShareInvitationsAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// await foreach (var data in client.GetSentShareInvitationsAsync("<sentShareName>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("invitationKind").ToString());
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetSentShareInvitationsAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// await foreach (var data in client.GetSentShareInvitationsAsync("<sentShareName>", "<skipToken>", "<filter>", "<orderby>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("invitationKind").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("type").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// List sent share invitations
-        /// 
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SentShareInvitationListValue</c>:
-        /// <code>{
-        ///   invitationKind: &quot;User&quot; | &quot;Application&quot;, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='GetSentShareInvitationsAsync(String,String,String,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetSentShareInvitationsAsync(string sentShareName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
 
-            return GetSentShareInvitationsImplementationAsync("SentShareInvitationsClient.GetSentShareInvitations", sentShareName, skipToken, filter, orderby, context);
-        }
-
-        private AsyncPageable<BinaryData> GetSentShareInvitationsImplementationAsync(string diagnosticsScopeName, string sentShareName, string skipToken, string filter, string orderby, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSentShareInvitationsRequest(sentShareName, skipToken, filter, orderby, context)
-                        : CreateGetSentShareInvitationsNextPageRequest(nextLink, sentShareName, skipToken, filter, orderby, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSentShareInvitationsRequest(sentShareName, skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSentShareInvitationsNextPageRequest(nextLink, sentShareName, skipToken, filter, orderby, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentShareInvitationsClient.GetSentShareInvitations", "value", "nextLink", context);
         }
 
         /// <summary> List all Invitations in a share. </summary>
@@ -782,73 +262,14 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetSentShareInvitations with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// foreach (var data in client.GetSentShareInvitations("<sentShareName>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("invitationKind").ToString());
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetSentShareInvitations with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
-        /// 
-        /// foreach (var data in client.GetSentShareInvitations("<sentShareName>", "<skipToken>", "<filter>", "<orderby>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("invitationKind").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("type").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// List sent share invitations
-        /// 
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>SentShareInvitationListValue</c>:
-        /// <code>{
-        ///   invitationKind: &quot;User&quot; | &quot;Application&quot;, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/SentShareInvitationsClient.xml" path="doc/members/member[@name='GetSentShareInvitations(String,String,String,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetSentShareInvitations(string sentShareName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareName, nameof(sentShareName));
 
-            return GetSentShareInvitationsImplementation("SentShareInvitationsClient.GetSentShareInvitations", sentShareName, skipToken, filter, orderby, context);
-        }
-
-        private Pageable<BinaryData> GetSentShareInvitationsImplementation(string diagnosticsScopeName, string sentShareName, string skipToken, string filter, string orderby, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetSentShareInvitationsRequest(sentShareName, skipToken, filter, orderby, context)
-                        : CreateGetSentShareInvitationsNextPageRequest(nextLink, sentShareName, skipToken, filter, orderby, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSentShareInvitationsRequest(sentShareName, skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSentShareInvitationsNextPageRequest(nextLink, sentShareName, skipToken, filter, orderby, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentShareInvitationsClient.GetSentShareInvitations", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetSentShareInvitationsRequest(string sentShareName, string skipToken, string filter, string orderby, RequestContext context)

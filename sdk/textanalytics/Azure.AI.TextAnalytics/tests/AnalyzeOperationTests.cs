@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -87,6 +86,7 @@ namespace Azure.AI.TextAnalytics.Tests
             IReadOnlyCollection<SingleLabelClassifyActionResult> singleLabelClassifyResults = resultCollection.SingleLabelClassifyResults;
             IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyResults = resultCollection.MultiLabelClassifyResults;
             IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
+            IReadOnlyCollection<ExtractiveSummarizeActionResult> extractiveSummarizeActionResults = resultCollection.ExtractiveSummarizeResults;
 
             Assert.IsNotNull(keyPhrasesActionsResults);
             Assert.IsNotNull(entitiesActionsResults);
@@ -97,6 +97,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsNotNull(multiLabelClassifyResults);
             Assert.IsNotNull(recognizeCustomEntitiesActionResults);
             Assert.IsNotNull(analyzeHealthcareEntitiesActionResults);
+            Assert.IsNotNull(extractiveSummarizeActionResults);
 
             var keyPhrasesListId1 = new List<string> { "CEO", "SpaceX", "Elon Musk", "Tesla" };
             var keyPhrasesListId2 = new List<string> { "Tesla stock" };
@@ -208,9 +209,8 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(5, operation.ActionsSucceeded);
             Assert.AreEqual(0, operation.ActionsInProgress);
             Assert.AreEqual(5, operation.ActionsTotal);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn);
+
+            ValidateOperationProperties(operation);
 
             //Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -307,7 +307,7 @@ namespace Azure.AI.TextAnalytics.Tests
         [Ignore("issue: results in an internal server error | bug link: https://dev.azure.com/msazure/Cognitive%20Services/_workitems/edit/12413250")]
         public async Task AnalyzeOperationWithMultipleActionsOfSameType()
         {
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             var batchDocuments = new List<TextDocumentInput>
             {
@@ -394,9 +394,8 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(18, operation.ActionsSucceeded);
             Assert.AreEqual(0, operation.ActionsInProgress);
             Assert.AreEqual(18, operation.ActionsTotal);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
-            Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn);
+
+            ValidateOperationProperties(operation);
 
             //Take the first page
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
@@ -780,6 +779,116 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task AnalyzeOperationAnalyzeHealthcareEntitiesWithFhirVersion()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            List<string> documents = new()
+            {
+                "Prescribed 100mg ibuprofen to Jane Doe, taken twice daily.",
+            };
+
+            TextAnalyticsActions batchActions = new()
+            {
+                AnalyzeHealthcareEntitiesActions = new[]
+                {
+                    new AnalyzeHealthcareEntitiesAction(new AnalyzeHealthcareEntitiesOptions()
+                    {
+                        FhirVersion = WellKnownFhirVersion.V4_0_1,
+                        DocumentType = HealthcareDocumentType.DischargeSummary
+                    }),
+                },
+                DisplayName = "AnalyzeOperationAnalyzeHealthcareEntitiesWithFhirVersion",
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
+            await operation.WaitForCompletionAsync();
+
+            //Take the first page
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults = resultCollection.AnalyzeHealthcareEntitiesResults;
+            Assert.IsNotNull(analyzeHealthcareEntitiesActionResults);
+
+            AnalyzeHealthcareEntitiesResultCollection analyzeHealthcareEntitiesDocumentsResults = analyzeHealthcareEntitiesActionResults.FirstOrDefault().DocumentsResults;
+            Assert.AreEqual(1, analyzeHealthcareEntitiesDocumentsResults.Count);
+            Assert.IsNotNull(analyzeHealthcareEntitiesDocumentsResults[0].FhirBundle);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task AnalyzeOperationExtractiveSummarize()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<string>
+            {
+                "Extractive summarization extracts sentences that collectively represent the most important or relevant information within the original content."
+                + " Abstractive summarization generates a summary with concise, coherent sentences or words which are not simply extract sentences from the original document."
+                + " These features are designed to shorten content that could be considered too long to read.",
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                ExtractiveSummarizeActions = new List<ExtractiveSummarizeAction>() { new ExtractiveSummarizeAction() { MaxSentenceCount = 2 } },
+                DisplayName = "AnalyzeOperationExtractiveSummarize",
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page.
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            IReadOnlyCollection<ExtractiveSummarizeActionResult> extractiveSummarizeActionsResults = resultCollection.ExtractiveSummarizeResults;
+            Assert.IsNotNull(extractiveSummarizeActionsResults);
+
+            ExtractiveSummarizeResultCollection extractiveSummarizeDocumentsResults = extractiveSummarizeActionsResults.FirstOrDefault().DocumentsResults;
+            Assert.AreEqual(1, extractiveSummarizeDocumentsResults.Count);
+
+            Assert.AreEqual(2, extractiveSummarizeDocumentsResults[0].Sentences.Count);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task AnalyzeOperationAbstractiveSummarize()
+        {
+            TextAnalyticsClient client = GetClient();
+            var documents = new List<string>
+            {
+                "Extractive summarization extracts sentences that collectively represent the most important or relevant information within the original content."
+                + " Abstractive summarization generates a summary with concise, coherent sentences or words which are not simply extract sentences from the original document."
+                + " These features are designed to shorten content that could be considered too long to read.",
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                AbstractiveSummarizeActions = new List<AbstractiveSummarizeAction>() { new AbstractiveSummarizeAction() { MaxSentenceCount = 2 } },
+                DisplayName = "AnalyzeOperationAbstractiveSummarize",
+            };
+
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page.
+            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            IReadOnlyCollection<AbstractiveSummarizeActionResult> abstractiveSummarizeActionsResults = resultCollection.AbstractiveSummarizeResults;
+            Assert.IsNotNull(abstractiveSummarizeActionsResults);
+
+            AbstractiveSummarizeResultCollection abstractiveSummarizeDocumentsResults = abstractiveSummarizeActionsResults.FirstOrDefault().DocumentsResults;
+            Assert.AreEqual(1, abstractiveSummarizeDocumentsResults.Count);
+
+            AbstractiveSummarizeResult result = abstractiveSummarizeDocumentsResults[0];
+            Assert.Greater(result.Summaries.Count, 0);
+
+            AbstractiveSummary summary = result.Summaries.FirstOrDefault();
+            Assert.IsNotNull(summary);
+            Assert.That(summary.Text, Is.Not.Null.And.Not.Empty);
+            Assert.Less(summary.Text.Length, documents[0].Length);
+            Assert.IsNotNull(summary.Contexts);
+            Assert.Greater(summary.Contexts.Count, 0);
+        }
+
+        [RecordedTest]
         [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
         public void AnalyzeOperationAnalyzeHealthcareEntitiesActionNotSupported()
         {
@@ -805,7 +914,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TestDiagnostics = false;
 
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new()
             {
@@ -825,7 +934,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TestDiagnostics = false;
 
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new()
             {
@@ -845,7 +954,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TestDiagnostics = false;
 
-            TextAnalyticsClient client = GetClient();
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
 
             TextAnalyticsActions batchActions = new()
             {
@@ -857,6 +966,64 @@ namespace Azure.AI.TextAnalytics.Tests
 
             NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
             Assert.AreEqual("SingleLabelClassifyAction is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public void AnalyzeOperationExtractiveSummarizeActionNotSupported()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+
+            TextAnalyticsActions batchActions = new()
+            {
+                ExtractiveSummarizeActions = new[]
+                {
+                    new ExtractiveSummarizeAction(),
+                },
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(batchDocuments, batchActions));
+            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public void AnalyzeOperationWithDefaultLanguageThrows()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+            List<string> documents = new()
+            {
+                "The park was clean and pretty. The bathrooms and restaurant were not clean.",
+            };
+            AnalyzeActionsOptions options = new()
+            {
+                AutoDetectionDefaultLanguage = "en"
+            };
+            TextAnalyticsActions actions = new()
+            {
+                AnalyzeSentimentActions = new List<AnalyzeSentimentAction>() { new AnalyzeSentimentAction() }
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(
+                async () => await client.StartAnalyzeActionsAsync(documents, actions, "auto", options));
+
+            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
+        }
+
+        private void ValidateOperationProperties(AnalyzeActionsOperation operation)
+        {
+            Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
+            // TODO: Re-enable this check (https://github.com/Azure/azure-sdk-for-net/issues/31855).
+            // Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
+
+            if (operation.ExpiresOn.HasValue)
+            {
+                Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn.Value);
+            }
         }
     }
 }

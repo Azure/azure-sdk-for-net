@@ -20,10 +20,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedRedisCacheId"/> is null. </exception>
         public RedisLinkedServerWithPropertyCreateOrUpdateContent(ResourceIdentifier linkedRedisCacheId, AzureLocation linkedRedisCacheLocation, RedisLinkedServerRole serverRole)
         {
-            if (linkedRedisCacheId == null)
-            {
-                throw new ArgumentNullException(nameof(linkedRedisCacheId));
-            }
+            Argument.AssertNotNull(linkedRedisCacheId, nameof(linkedRedisCacheId));
 
             LinkedRedisCacheId = linkedRedisCacheId;
             LinkedRedisCacheLocation = linkedRedisCacheLocation;
@@ -36,5 +33,9 @@ namespace Azure.ResourceManager.Redis.Models
         public AzureLocation LinkedRedisCacheLocation { get; }
         /// <summary> Role of the linked server. </summary>
         public RedisLinkedServerRole ServerRole { get; }
+        /// <summary> The unchanging DNS name which will always point to current geo-primary cache among the linked redis caches for seamless Geo Failover experience. </summary>
+        public string GeoReplicatedPrimaryHostName { get; }
+        /// <summary> The changing DNS name that resolves to the current geo-primary cache among the linked redis caches before or after the Geo Failover. </summary>
+        public string PrimaryHostName { get; }
     }
 }

@@ -1,0 +1,39 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/map/tile?api-version=2022-08-01\u0026tilesetId=microsoft.base.hybrid\u0026zoom=10\u0026x=88\u0026y=88\u0026language=",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, image/jpeg, image/png, image/pbf, application/vnd.mapbox-vector-tile",
+        "Authorization": "Sanitized",
+        "traceparent": "00-df9a63dedcebefd38fd6bf931434609c-c75c7485fc0deab3-00",
+        "User-Agent": "azsdk-net-Maps.Rendering/1.0.0-alpha.20220912.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+        "x-ms-client-request-id": "423f35ac542434dbb74321e2d1e0dc13",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "max-age=86400",
+        "Content-Length": "14",
+        "Content-Type": "application/vnd.mapbox-vector-tile",
+        "Copyright": "2022 TomTom",
+        "Date": "Mon, 12 Sep 2022 11:57:45 GMT",
+        "ETag": "W/\u002210266cbf25b2088a7c1478475d0e11fe\u0022",
+        "Expires": "Tue, 13 Sep 2022 11:57:45 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 22291055F2344E39869E02884ED24AF8 Ref B: TPE30EDGE0607 Ref C: 2022-09-12T11:57:45Z"
+      },
+      "ResponseBody": "GgwKBUVNUFRZKIAgeAI="
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "1629206198"
+  }
+}

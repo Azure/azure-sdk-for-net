@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public ValidateCustomDomainContent(string hostName)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
+            Argument.AssertNotNull(hostName, nameof(hostName));
 
             HostName = hostName;
         }

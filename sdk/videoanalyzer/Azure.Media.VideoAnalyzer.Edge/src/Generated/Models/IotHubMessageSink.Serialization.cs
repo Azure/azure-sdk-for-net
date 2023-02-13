@@ -16,13 +16,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("hubOutputName");
+            writer.WritePropertyName("hubOutputName"u8);
             writer.WriteStringValue(HubOutputName);
-            writer.WritePropertyName("@type");
+            writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("inputs");
+            writer.WritePropertyName("inputs"u8);
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
@@ -40,22 +40,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             IList<NodeInput> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hubOutputName"))
+                if (property.NameEquals("hubOutputName"u8))
                 {
                     hubOutputName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@type"))
+                if (property.NameEquals("@type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inputs"))
+                if (property.NameEquals("inputs"u8))
                 {
                     List<NodeInput> array = new List<NodeInput>();
                     foreach (var item in property.Value.EnumerateArray())

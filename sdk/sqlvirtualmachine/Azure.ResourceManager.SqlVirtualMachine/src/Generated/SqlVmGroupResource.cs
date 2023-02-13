@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -104,8 +103,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Gets an availability group listener.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}/availabilityGroupListeners/{availabilityGroupListenerName}
-        /// Operation Id: AvailabilityGroupListeners_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}/availabilityGroupListeners/{availabilityGroupListenerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilityGroupListeners_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="availabilityGroupListenerName"> Name of the availability group listener. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
@@ -120,8 +127,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Gets an availability group listener.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}/availabilityGroupListeners/{availabilityGroupListenerName}
-        /// Operation Id: AvailabilityGroupListeners_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}/availabilityGroupListeners/{availabilityGroupListenerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilityGroupListeners_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="availabilityGroupListenerName"> Name of the availability group listener. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
@@ -136,8 +151,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Gets a SQL virtual machine group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}
-        /// Operation Id: SqlVirtualMachineGroups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachineGroups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SqlVmGroupResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -146,7 +169,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = await _sqlVmGroupSqlVmGroupsRestClient.GetAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                var response = await _sqlVmGroupSqlVmGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlVmGroupResource(Client, response.Value), response.GetRawResponse());
@@ -160,8 +183,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Gets a SQL virtual machine group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}
-        /// Operation Id: SqlVirtualMachineGroups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachineGroups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SqlVmGroupResource> Get(CancellationToken cancellationToken = default)
@@ -170,7 +201,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = _sqlVmGroupSqlVmGroupsRestClient.Get(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
+                var response = _sqlVmGroupSqlVmGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlVmGroupResource(Client, response.Value), response.GetRawResponse());
@@ -184,8 +215,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Deletes a SQL virtual machine group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}
-        /// Operation Id: SqlVirtualMachineGroups_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachineGroups_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -195,8 +234,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = await _sqlVmGroupSqlVmGroupsRestClient.DeleteAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlVirtualMachineArmOperation(_sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, _sqlVmGroupSqlVmGroupsRestClient.CreateDeleteRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.Location);
+                var response = await _sqlVmGroupSqlVmGroupsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlVirtualMachineArmOperation(_sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, _sqlVmGroupSqlVmGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -210,8 +249,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Deletes a SQL virtual machine group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}
-        /// Operation Id: SqlVirtualMachineGroups_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachineGroups_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -221,8 +268,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = _sqlVmGroupSqlVmGroupsRestClient.Delete(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
-                var operation = new SqlVirtualMachineArmOperation(_sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, _sqlVmGroupSqlVmGroupsRestClient.CreateDeleteRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.Location);
+                var response = _sqlVmGroupSqlVmGroupsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new SqlVirtualMachineArmOperation(_sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, _sqlVmGroupSqlVmGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -236,8 +283,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Updates SQL virtual machine group tags.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}
-        /// Operation Id: SqlVirtualMachineGroups_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachineGroups_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The SQL virtual machine group. </param>
@@ -251,8 +306,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = await _sqlVmGroupSqlVmGroupsRestClient.UpdateAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlVirtualMachineArmOperation<SqlVmGroupResource>(new SqlVmGroupOperationSource(Client), _sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, _sqlVmGroupSqlVmGroupsRestClient.CreateUpdateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, patch).Request, response, OperationFinalStateVia.Location);
+                var response = await _sqlVmGroupSqlVmGroupsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlVirtualMachineArmOperation<SqlVmGroupResource>(new SqlVmGroupOperationSource(Client), _sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, _sqlVmGroupSqlVmGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -266,8 +321,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Updates SQL virtual machine group tags.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}
-        /// Operation Id: SqlVirtualMachineGroups_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachineGroups_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The SQL virtual machine group. </param>
@@ -281,8 +344,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = _sqlVmGroupSqlVmGroupsRestClient.Update(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, patch, cancellationToken);
-                var operation = new SqlVirtualMachineArmOperation<SqlVmGroupResource>(new SqlVmGroupOperationSource(Client), _sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, _sqlVmGroupSqlVmGroupsRestClient.CreateUpdateRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, patch).Request, response, OperationFinalStateVia.Location);
+                var response = _sqlVmGroupSqlVmGroupsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new SqlVirtualMachineArmOperation<SqlVmGroupResource>(new SqlVmGroupOperationSource(Client), _sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, _sqlVmGroupSqlVmGroupsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -296,92 +359,60 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Gets the list of sql virtual machines in a SQL virtual machine group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}/sqlVirtualMachines
-        /// Operation Id: SqlVirtualMachines_ListBySqlVmGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}/sqlVirtualMachines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachines_ListBySqlVmGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SqlVmResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlVmResource> GetSqlVmsBySqlVmGroupAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlVmResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlVmSqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmGroupResource.GetSqlVmsBySqlVmGroup");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlVmSqlVirtualMachinesRestClient.ListBySqlVmGroupAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SqlVmResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlVmSqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmGroupResource.GetSqlVmsBySqlVmGroup");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlVmSqlVirtualMachinesRestClient.ListBySqlVmGroupNextPageAsync(nextLink, Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlVmSqlVirtualMachinesRestClient.CreateListBySqlVmGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlVmSqlVirtualMachinesRestClient.CreateListBySqlVmGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlVmResource(Client, SqlVmData.DeserializeSqlVmData(e)), _sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, "SqlVmGroupResource.GetSqlVmsBySqlVmGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets the list of sql virtual machines in a SQL virtual machine group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}/sqlVirtualMachines
-        /// Operation Id: SqlVirtualMachines_ListBySqlVmGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}/sqlVirtualMachines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachines_ListBySqlVmGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SqlVmResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlVmResource> GetSqlVmsBySqlVmGroup(CancellationToken cancellationToken = default)
         {
-            Page<SqlVmResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlVmSqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmGroupResource.GetSqlVmsBySqlVmGroup");
-                scope.Start();
-                try
-                {
-                    var response = _sqlVmSqlVirtualMachinesRestClient.ListBySqlVmGroup(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlVmResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlVmSqlVirtualMachinesClientDiagnostics.CreateScope("SqlVmGroupResource.GetSqlVmsBySqlVmGroup");
-                scope.Start();
-                try
-                {
-                    var response = _sqlVmSqlVirtualMachinesRestClient.ListBySqlVmGroupNextPage(nextLink, Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlVmResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlVmSqlVirtualMachinesRestClient.CreateListBySqlVmGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlVmSqlVirtualMachinesRestClient.CreateListBySqlVmGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlVmResource(Client, SqlVmData.DeserializeSqlVmData(e)), _sqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, "SqlVmGroupResource.GetSqlVmsBySqlVmGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}
-        /// Operation Id: SqlVirtualMachineGroups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachineGroups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -401,7 +432,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _sqlVmGroupSqlVmGroupsRestClient.GetAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _sqlVmGroupSqlVmGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new SqlVmGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -426,8 +457,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}
-        /// Operation Id: SqlVirtualMachineGroups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachineGroups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -447,7 +486,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _sqlVmGroupSqlVmGroupsRestClient.Get(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
+                    var originalResponse = _sqlVmGroupSqlVmGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new SqlVmGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -472,8 +511,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}
-        /// Operation Id: SqlVirtualMachineGroups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachineGroups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -492,7 +539,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _sqlVmGroupSqlVmGroupsRestClient.GetAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _sqlVmGroupSqlVmGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new SqlVmGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -513,8 +560,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}
-        /// Operation Id: SqlVirtualMachineGroups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachineGroups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -533,7 +588,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _sqlVmGroupSqlVmGroupsRestClient.Get(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
+                    var originalResponse = _sqlVmGroupSqlVmGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new SqlVmGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -554,8 +609,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}
-        /// Operation Id: SqlVirtualMachineGroups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachineGroups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -573,7 +636,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _sqlVmGroupSqlVmGroupsRestClient.GetAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _sqlVmGroupSqlVmGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new SqlVmGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -598,8 +661,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}
-        /// Operation Id: SqlVirtualMachineGroups_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlVirtualMachineGroups_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -617,7 +688,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _sqlVmGroupSqlVmGroupsRestClient.Get(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
+                    var originalResponse = _sqlVmGroupSqlVmGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new SqlVmGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else

@@ -10,7 +10,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
-    public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
+    public partial class FormRecognizerSamples
     {
         /// <summary>
         /// This sample illustrates how to consume a FieldBoundingBox type data that is available across the Form Recognizer library.

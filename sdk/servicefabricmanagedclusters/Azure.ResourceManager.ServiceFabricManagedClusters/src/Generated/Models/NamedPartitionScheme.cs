@@ -8,21 +8,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Describes the named partition scheme of the service. </summary>
-    public partial class NamedPartitionScheme : Partition
+    public partial class NamedPartitionScheme : ManagedServicePartitionScheme
     {
         /// <summary> Initializes a new instance of NamedPartitionScheme. </summary>
         /// <param name="names"> Array for the names of the partitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="names"/> is null. </exception>
         public NamedPartitionScheme(IEnumerable<string> names)
         {
-            if (names == null)
-            {
-                throw new ArgumentNullException(nameof(names));
-            }
+            Argument.AssertNotNull(names, nameof(names));
 
             Names = names.ToList();
             PartitionScheme = PartitionScheme.Named;

@@ -18,32 +18,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             if (Optional.IsDefined(Action))
             {
-                writer.WritePropertyName("action");
+                writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (Optional.IsDefined(RecommendationType))
+            if (Optional.IsDefined(IotSecurityRecommendationType))
             {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(RecommendationType.Value.ToString());
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(IotSecurityRecommendationType.Value.ToString());
             }
             if (Optional.IsDefined(PublisherInfo))
             {
-                writer.WritePropertyName("publisherInfo");
+                writer.WritePropertyName("publisherInfo"u8);
                 writer.WriteObjectValue(PublisherInfo);
             }
-            if (Optional.IsDefined(Common))
+            if (Optional.IsDefined(IsCommon))
             {
-                writer.WritePropertyName("common");
-                writer.WriteBooleanValue(Common.Value);
+                writer.WritePropertyName("common"u8);
+                writer.WriteBooleanValue(IsCommon.Value);
             }
             if (Optional.IsCollectionDefined(UserSids))
             {
-                writer.WritePropertyName("userSids");
+                writer.WritePropertyName("userSids"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserSids)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             if (Optional.IsCollectionDefined(Usernames))
             {
-                writer.WritePropertyName("usernames");
+                writer.WritePropertyName("usernames"u8);
                 writer.WriteStartArray();
                 foreach (var item in Usernames)
                 {
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             if (Optional.IsDefined(FileType))
             {
-                writer.WritePropertyName("fileType");
+                writer.WritePropertyName("fileType"u8);
                 writer.WriteStringValue(FileType.Value.ToString());
             }
             if (Optional.IsDefined(ConfigurationStatus))
             {
-                writer.WritePropertyName("configurationStatus");
+                writer.WritePropertyName("configurationStatus"u8);
                 writer.WriteStringValue(ConfigurationStatus.Value.ToString());
             }
             writer.WriteEndObject();
@@ -78,21 +78,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             Optional<string> path = default;
             Optional<RecommendationAction> action = default;
-            Optional<RecommendationType> type = default;
-            Optional<PublisherInfo> publisherInfo = default;
+            Optional<IotSecurityRecommendationType> type = default;
+            Optional<SecurityCenterPublisherInfo> publisherInfo = default;
             Optional<bool> common = default;
             Optional<IList<string>> userSids = default;
             Optional<IList<UserRecommendation>> usernames = default;
-            Optional<FileType> fileType = default;
-            Optional<ConfigurationStatus> configurationStatus = default;
+            Optional<PathRecommendationFileType> fileType = default;
+            Optional<SecurityCenterConfigurationStatus> configurationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,27 +102,27 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     action = new RecommendationAction(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new RecommendationType(property.Value.GetString());
+                    type = new IotSecurityRecommendationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("publisherInfo"))
+                if (property.NameEquals("publisherInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    publisherInfo = PublisherInfo.DeserializePublisherInfo(property.Value);
+                    publisherInfo = SecurityCenterPublisherInfo.DeserializeSecurityCenterPublisherInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("common"))
+                if (property.NameEquals("common"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     common = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("userSids"))
+                if (property.NameEquals("userSids"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     userSids = array;
                     continue;
                 }
-                if (property.NameEquals("usernames"))
+                if (property.NameEquals("usernames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -162,24 +162,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     usernames = array;
                     continue;
                 }
-                if (property.NameEquals("fileType"))
+                if (property.NameEquals("fileType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fileType = new FileType(property.Value.GetString());
+                    fileType = new PathRecommendationFileType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("configurationStatus"))
+                if (property.NameEquals("configurationStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    configurationStatus = new ConfigurationStatus(property.Value.GetString());
+                    configurationStatus = new SecurityCenterConfigurationStatus(property.Value.GetString());
                     continue;
                 }
             }

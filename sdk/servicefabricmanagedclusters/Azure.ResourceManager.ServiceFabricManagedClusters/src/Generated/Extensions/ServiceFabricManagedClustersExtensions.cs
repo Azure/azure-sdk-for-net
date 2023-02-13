@@ -28,19 +28,60 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             );
         }
 
-        /// <summary> Gets a collection of LocationManagedClusterVersionResources in the SubscriptionResource. </summary>
+        /// <summary>
+        /// Gets all Service Fabric cluster resources created or in the process of being created in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/managedClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
-        /// <returns> An object representing collection of LocationManagedClusterVersionResources and their operations over a LocationManagedClusterVersionResource. </returns>
-        public static LocationManagedClusterVersionCollection GetLocationManagedClusterVersions(this SubscriptionResource subscriptionResource, AzureLocation location)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ServiceFabricManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ServiceFabricManagedClusterResource> GetServiceFabricManagedClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetLocationManagedClusterVersions(location);
+            return GetExtensionClient(subscriptionResource).GetServiceFabricManagedClustersAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all Service Fabric cluster resources created or in the process of being created in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/managedClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceFabricManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ServiceFabricManagedClusterResource> GetServiceFabricManagedClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetServiceFabricManagedClusters(cancellationToken);
         }
 
         /// <summary>
         /// Gets information about an available Service Fabric managed cluster code version.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterVersions/{clusterVersion}
-        /// Operation Id: ManagedClusterVersion_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterVersions/{clusterVersion}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusterVersion_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -48,16 +89,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<LocationManagedClusterVersionResource>> GetLocationManagedClusterVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceFabricManagedClusterVersion>> GetManagedClusterVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetLocationManagedClusterVersions(location).GetAsync(clusterVersion, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
+
+            return await GetExtensionClient(subscriptionResource).GetManagedClusterVersionAsync(location, clusterVersion, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets information about an available Service Fabric managed cluster code version.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterVersions/{clusterVersion}
-        /// Operation Id: ManagedClusterVersion_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterVersions/{clusterVersion}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusterVersion_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -65,26 +115,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<LocationManagedClusterVersionResource> GetLocationManagedClusterVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
+        public static Response<ServiceFabricManagedClusterVersion> GetManagedClusterVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetLocationManagedClusterVersions(location).Get(clusterVersion, cancellationToken);
-        }
+            Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
-        /// <summary> Gets a collection of LocationEnvironmentManagedClusterVersionResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
-        /// <param name="environment"> The operating system of the cluster. The default means all. </param>
-        /// <returns> An object representing collection of LocationEnvironmentManagedClusterVersionResources and their operations over a LocationEnvironmentManagedClusterVersionResource. </returns>
-        public static LocationEnvironmentManagedClusterVersionCollection GetLocationEnvironmentManagedClusterVersions(this SubscriptionResource subscriptionResource, AzureLocation location, ManagedClusterVersionEnvironment environment)
-        {
-            return GetExtensionClient(subscriptionResource).GetLocationEnvironmentManagedClusterVersions(location, environment);
+            return GetExtensionClient(subscriptionResource).GetManagedClusterVersion(location, clusterVersion, cancellationToken);
         }
 
         /// <summary>
         /// Gets information about an available Service Fabric cluster code version by environment.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions/{clusterVersion}
-        /// Operation Id: ManagedClusterVersion_GetByEnvironment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions/{clusterVersion}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusterVersion_GetByEnvironment</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -93,16 +142,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<LocationEnvironmentManagedClusterVersionResource>> GetLocationEnvironmentManagedClusterVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ManagedClusterVersionEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceFabricManagedClusterVersion>> GetManagedClusterVersionByEnvironmentAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ManagedClusterVersionEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetLocationEnvironmentManagedClusterVersions(location, environment).GetAsync(clusterVersion, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
+
+            return await GetExtensionClient(subscriptionResource).GetManagedClusterVersionByEnvironmentAsync(location, environment, clusterVersion, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets information about an available Service Fabric cluster code version by environment.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions/{clusterVersion}
-        /// Operation Id: ManagedClusterVersion_GetByEnvironment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions/{clusterVersion}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusterVersion_GetByEnvironment</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -111,25 +169,159 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<LocationEnvironmentManagedClusterVersionResource> GetLocationEnvironmentManagedClusterVersion(this SubscriptionResource subscriptionResource, AzureLocation location, ManagedClusterVersionEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
+        public static Response<ServiceFabricManagedClusterVersion> GetManagedClusterVersionByEnvironment(this SubscriptionResource subscriptionResource, AzureLocation location, ManagedClusterVersionEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetLocationEnvironmentManagedClusterVersions(location, environment).Get(clusterVersion, cancellationToken);
+            Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
+
+            return GetExtensionClient(subscriptionResource).GetManagedClusterVersionByEnvironment(location, environment, clusterVersion, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagedVmSizeResources in the SubscriptionResource. </summary>
+        /// <summary>
+        /// Gets all available code versions for Service Fabric cluster resources by location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusterVersion_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
-        /// <returns> An object representing collection of ManagedVmSizeResources and their operations over a ManagedVmSizeResource. </returns>
-        public static ManagedVmSizeCollection GetManagedVmSizes(this SubscriptionResource subscriptionResource, AzureLocation location)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ServiceFabricManagedClusterVersion" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetManagedVmSizes(location);
+            return GetExtensionClient(subscriptionResource).GetManagedClusterVersionsAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all available code versions for Service Fabric cluster resources by location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusterVersion_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceFabricManagedClusterVersion" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersions(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetManagedClusterVersions(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all available code versions for Service Fabric cluster resources by environment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusterVersion_ListByEnvironment</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="environment"> The operating system of the cluster. The default means all. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ServiceFabricManagedClusterVersion" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsByEnvironmentAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ManagedClusterVersionEnvironment environment, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetManagedClusterVersionsByEnvironmentAsync(location, environment, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all available code versions for Service Fabric cluster resources by environment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusterVersion_ListByEnvironment</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="environment"> The operating system of the cluster. The default means all. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceFabricManagedClusterVersion" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsByEnvironment(this SubscriptionResource subscriptionResource, AzureLocation location, ManagedClusterVersionEnvironment environment, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetManagedClusterVersionsByEnvironment(location, environment, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the lists of unsupported vm sizes for Service Fabric Managed Clusters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedUnsupportedVMSizes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>managedUnsupportedVMSizes_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ServiceFabricManagedUnsupportedVmSize" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSizesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetManagedUnsupportedVmSizesAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the lists of unsupported vm sizes for Service Fabric Managed Clusters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedUnsupportedVMSizes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>managedUnsupportedVMSizes_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceFabricManagedUnsupportedVmSize" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSizes(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetManagedUnsupportedVmSizes(location, cancellationToken);
         }
 
         /// <summary>
         /// Get unsupported vm size for Service Fabric Managed Clusters.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedUnsupportedVMSizes/{vmSize}
-        /// Operation Id: managedUnsupportedVMSizes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedUnsupportedVMSizes/{vmSize}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>managedUnsupportedVMSizes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -137,16 +329,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ManagedVmSizeResource>> GetManagedVmSizeAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceFabricManagedUnsupportedVmSize>> GetManagedUnsupportedVmSizeAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetManagedVmSizes(location).GetAsync(vmSize, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
+
+            return await GetExtensionClient(subscriptionResource).GetManagedUnsupportedVmSizeAsync(location, vmSize, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get unsupported vm size for Service Fabric Managed Clusters.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedUnsupportedVMSizes/{vmSize}
-        /// Operation Id: managedUnsupportedVMSizes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedUnsupportedVMSizes/{vmSize}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>managedUnsupportedVMSizes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -154,72 +355,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ManagedVmSizeResource> GetManagedVmSize(this SubscriptionResource subscriptionResource, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
+        public static Response<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSize(this SubscriptionResource subscriptionResource, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetManagedVmSizes(location).Get(vmSize, cancellationToken);
-        }
+            Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
 
-        /// <summary>
-        /// Gets all Service Fabric cluster resources created or in the process of being created in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/managedClusters
-        /// Operation Id: ManagedClusters_ListBySubscription
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedClusterResource> GetManagedClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetManagedClustersAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all Service Fabric cluster resources created or in the process of being created in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/managedClusters
-        /// Operation Id: ManagedClusters_ListBySubscription
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedClusterResource> GetManagedClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetManagedClusters(cancellationToken);
-        }
-
-        /// <summary>
-        /// Get long running operation result.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterOperationResults/{operationId}
-        /// Operation Id: OperationResults_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
-        /// <param name="operationId"> operation identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public static async Task<Response> GetOperationResultAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return await GetExtensionClient(subscriptionResource).GetOperationResultAsync(location, operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get long running operation result.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterOperationResults/{operationId}
-        /// Operation Id: OperationResults_Get
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
-        /// <param name="operationId"> operation identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public static Response GetOperationResult(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return GetExtensionClient(subscriptionResource).GetOperationResult(location, operationId, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetManagedUnsupportedVmSize(location, vmSize, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -231,18 +371,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             );
         }
 
-        /// <summary> Gets a collection of ManagedClusterResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ServiceFabricManagedClusterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ManagedClusterResources and their operations over a ManagedClusterResource. </returns>
-        public static ManagedClusterCollection GetManagedClusters(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ServiceFabricManagedClusterResources and their operations over a ServiceFabricManagedClusterResource. </returns>
+        public static ServiceFabricManagedClusterCollection GetServiceFabricManagedClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetManagedClusters();
+            return GetExtensionClient(resourceGroupResource).GetServiceFabricManagedClusters();
         }
 
         /// <summary>
         /// Get a Service Fabric managed cluster resource created or in the process of being created in the specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}
-        /// Operation Id: ManagedClusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the cluster resource. </param>
@@ -250,15 +398,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ManagedClusterResource>> GetManagedClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceFabricManagedClusterResource>> GetServiceFabricManagedClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetManagedClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetServiceFabricManagedClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a Service Fabric managed cluster resource created or in the process of being created in the specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}
-        /// Operation Id: ManagedClusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the cluster resource. </param>
@@ -266,177 +422,120 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ManagedClusterResource> GetManagedCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        public static Response<ServiceFabricManagedClusterResource> GetServiceFabricManagedCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetManagedClusters().Get(clusterName, cancellationToken);
+            return resourceGroupResource.GetServiceFabricManagedClusters().Get(clusterName, cancellationToken);
         }
 
-        #region ApplicationTypeResource
+        #region ServiceFabricManagedApplicationTypeResource
         /// <summary>
-        /// Gets an object representing an <see cref="ApplicationTypeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApplicationTypeResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceFabricManagedApplicationTypeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedApplicationTypeResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedApplicationTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationTypeResource" /> object. </returns>
-        public static ApplicationTypeResource GetApplicationTypeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricManagedApplicationTypeResource" /> object. </returns>
+        public static ServiceFabricManagedApplicationTypeResource GetServiceFabricManagedApplicationTypeResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ApplicationTypeResource.ValidateResourceId(id);
-                return new ApplicationTypeResource(client, id);
+                ServiceFabricManagedApplicationTypeResource.ValidateResourceId(id);
+                return new ServiceFabricManagedApplicationTypeResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ApplicationTypeVersionResource
+        #region ServiceFabricManagedApplicationTypeVersionResource
         /// <summary>
-        /// Gets an object representing an <see cref="ApplicationTypeVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApplicationTypeVersionResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationTypeVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceFabricManagedApplicationTypeVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedApplicationTypeVersionResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedApplicationTypeVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationTypeVersionResource" /> object. </returns>
-        public static ApplicationTypeVersionResource GetApplicationTypeVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricManagedApplicationTypeVersionResource" /> object. </returns>
+        public static ServiceFabricManagedApplicationTypeVersionResource GetServiceFabricManagedApplicationTypeVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ApplicationTypeVersionResource.ValidateResourceId(id);
-                return new ApplicationTypeVersionResource(client, id);
+                ServiceFabricManagedApplicationTypeVersionResource.ValidateResourceId(id);
+                return new ServiceFabricManagedApplicationTypeVersionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ApplicationResource
+        #region ServiceFabricManagedApplicationResource
         /// <summary>
-        /// Gets an object representing an <see cref="ApplicationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApplicationResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceFabricManagedApplicationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedApplicationResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedApplicationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationResource" /> object. </returns>
-        public static ApplicationResource GetApplicationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricManagedApplicationResource" /> object. </returns>
+        public static ServiceFabricManagedApplicationResource GetServiceFabricManagedApplicationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ApplicationResource.ValidateResourceId(id);
-                return new ApplicationResource(client, id);
+                ServiceFabricManagedApplicationResource.ValidateResourceId(id);
+                return new ServiceFabricManagedApplicationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServiceResource
+        #region ServiceFabricManagedServiceResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceResource.CreateResourceIdentifier" /> to create a <see cref="ServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceFabricManagedServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedServiceResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceResource" /> object. </returns>
-        public static ServiceResource GetServiceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricManagedServiceResource" /> object. </returns>
+        public static ServiceFabricManagedServiceResource GetServiceFabricManagedServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServiceResource.ValidateResourceId(id);
-                return new ServiceResource(client, id);
+                ServiceFabricManagedServiceResource.ValidateResourceId(id);
+                return new ServiceFabricManagedServiceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedClusterResource
+        #region ServiceFabricManagedClusterResource
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ManagedClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceFabricManagedClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedClusterResource" /> object. </returns>
-        public static ManagedClusterResource GetManagedClusterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricManagedClusterResource" /> object. </returns>
+        public static ServiceFabricManagedClusterResource GetServiceFabricManagedClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagedClusterResource.ValidateResourceId(id);
-                return new ManagedClusterResource(client, id);
+                ServiceFabricManagedClusterResource.ValidateResourceId(id);
+                return new ServiceFabricManagedClusterResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LocationManagedClusterVersionResource
+        #region ServiceFabricManagedNodeTypeResource
         /// <summary>
-        /// Gets an object representing a <see cref="LocationManagedClusterVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LocationManagedClusterVersionResource.CreateResourceIdentifier" /> to create a <see cref="LocationManagedClusterVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceFabricManagedNodeTypeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedNodeTypeResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedNodeTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LocationManagedClusterVersionResource" /> object. </returns>
-        public static LocationManagedClusterVersionResource GetLocationManagedClusterVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricManagedNodeTypeResource" /> object. </returns>
+        public static ServiceFabricManagedNodeTypeResource GetServiceFabricManagedNodeTypeResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LocationManagedClusterVersionResource.ValidateResourceId(id);
-                return new LocationManagedClusterVersionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region LocationEnvironmentManagedClusterVersionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="LocationEnvironmentManagedClusterVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LocationEnvironmentManagedClusterVersionResource.CreateResourceIdentifier" /> to create a <see cref="LocationEnvironmentManagedClusterVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LocationEnvironmentManagedClusterVersionResource" /> object. </returns>
-        public static LocationEnvironmentManagedClusterVersionResource GetLocationEnvironmentManagedClusterVersionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                LocationEnvironmentManagedClusterVersionResource.ValidateResourceId(id);
-                return new LocationEnvironmentManagedClusterVersionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ManagedVmSizeResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedVmSizeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedVmSizeResource.CreateResourceIdentifier" /> to create a <see cref="ManagedVmSizeResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedVmSizeResource" /> object. </returns>
-        public static ManagedVmSizeResource GetManagedVmSizeResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ManagedVmSizeResource.ValidateResourceId(id);
-                return new ManagedVmSizeResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region NodeTypeResource
-        /// <summary>
-        /// Gets an object representing a <see cref="NodeTypeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NodeTypeResource.CreateResourceIdentifier" /> to create a <see cref="NodeTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NodeTypeResource" /> object. </returns>
-        public static NodeTypeResource GetNodeTypeResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                NodeTypeResource.ValidateResourceId(id);
-                return new NodeTypeResource(client, id);
+                ServiceFabricManagedNodeTypeResource.ValidateResourceId(id);
+                return new ServiceFabricManagedNodeTypeResource(client, id);
             }
             );
         }

@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-05-01",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-10-01-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "272",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-5b2c5320c683224be2d2e415f31d630d-ebe3382409f9e53e-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "c5cd94af7f5719f13731b6471f1fc16f",
+        "traceparent": "00-3007e0218d2e09a97b8632c1d39470af-c33443ef8fa5dfb8-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ab7ddca0184d27024941786eb202bfd1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -30,11 +30,103 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "c86c70d1-66fd-4a8e-b057-10ce6612b580",
+        "apim-request-id": "6e95dc45-0ef3-431f-8b6f-209cdda31c19",
         "Content-Length": "668",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Thu, 21 Jul 2022 23:28:09 GMT",
+        "Date": "Fri, 14 Oct 2022 22:22:45 GMT",
+        "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "32"
+      },
+      "ResponseBody": {
+        "kind": "PiiEntityRecognitionResults",
+        "results": {
+          "documents": [
+            {
+              "redactedText": "A ********* with SSN *********** whose phone number is ************ is building tools with our APIs. They work at *********",
+              "id": "0",
+              "entities": [
+                {
+                  "text": "developer",
+                  "category": "PersonType",
+                  "offset": 2,
+                  "length": 9,
+                  "confidenceScore": 0.97
+                },
+                {
+                  "text": "859-98-0987",
+                  "category": "USSocialSecurityNumber",
+                  "offset": 21,
+                  "length": 11,
+                  "confidenceScore": 0.65
+                },
+                {
+                  "text": "800-102-1100",
+                  "category": "PhoneNumber",
+                  "offset": 55,
+                  "length": 12,
+                  "confidenceScore": 0.8
+                },
+                {
+                  "text": "Microsoft",
+                  "category": "Organization",
+                  "offset": 114,
+                  "length": 9,
+                  "confidenceScore": 0.96
+                }
+              ],
+              "warnings": []
+            }
+          ],
+          "errors": [],
+          "modelVersion": "2021-01-15"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-10-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "357",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-902d9d9645d3e5186fff4b213f8f20d8-b1b6e1d111145e6e-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a59c0cd9740017c9021723d1c12c1231",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs. They work at Microsoft",
+              "language": "en"
+            }
+          ]
+        },
+        "parameters": {
+          "piiCategories": [
+            "PersonType",
+            "USSocialSecurityNumber",
+            "PhoneNumber",
+            "Organization"
+          ],
+          "stringIndexType": "Utf16CodeUnit"
+        },
+        "kind": "PiiEntityRecognition"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "9391a466-0c6d-40e1-9e9c-9a3e1a941c41",
+        "Content-Length": "668",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
+        "Date": "Fri, 14 Oct 2022 22:22:45 GMT",
+        "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
         "x-envoy-upstream-service-time": "31"
@@ -83,100 +175,10 @@
           "modelVersion": "2021-01-15"
         }
       }
-    },
-    {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-05-01",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Content-Length": "357",
-        "Content-Type": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-3c31113924ddec8cf173a86424ffe946-10b21173cfafc899-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "3ed48bc14cd3b6f7f2aedae091d5bdfc",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "analysisInput": {
-          "documents": [
-            {
-              "id": "0",
-              "text": "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs. They work at Microsoft",
-              "language": "en"
-            }
-          ]
-        },
-        "parameters": {
-          "piiCategories": [
-            "PersonType",
-            "USSocialSecurityNumber",
-            "PhoneNumber",
-            "Organization"
-          ],
-          "stringIndexType": "Utf16CodeUnit"
-        },
-        "kind": "PiiEntityRecognition"
-      },
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "a8d521ef-f60f-4765-804d-533822eaefbf",
-        "Content-Length": "668",
-        "Content-Type": "application/json; charset=utf-8",
-        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Thu, 21 Jul 2022 23:28:09 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "39"
-      },
-      "ResponseBody": {
-        "kind": "PiiEntityRecognitionResults",
-        "results": {
-          "documents": [
-            {
-              "redactedText": "A ********* with SSN *********** whose phone number is ************ is building tools with our APIs. They work at *********",
-              "id": "0",
-              "entities": [
-                {
-                  "text": "developer",
-                  "category": "PersonType",
-                  "offset": 2,
-                  "length": 9,
-                  "confidenceScore": 0.97
-                },
-                {
-                  "text": "859-98-0987",
-                  "category": "USSocialSecurityNumber",
-                  "offset": 21,
-                  "length": 11,
-                  "confidenceScore": 0.65
-                },
-                {
-                  "text": "800-102-1100",
-                  "category": "PhoneNumber",
-                  "offset": 55,
-                  "length": 12,
-                  "confidenceScore": 0.8
-                },
-                {
-                  "text": "Microsoft",
-                  "category": "Organization",
-                  "offset": 114,
-                  "length": 9,
-                  "confidenceScore": 0.96
-                }
-              ],
-              "warnings": []
-            }
-          ],
-          "errors": [],
-          "modelVersion": "2021-01-15"
-        }
-      }
     }
   ],
   "Variables": {
-    "RandomSeed": "737252282",
+    "RandomSeed": "1360331670",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }

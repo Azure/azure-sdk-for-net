@@ -9,8 +9,8 @@ azure-arm: true
 csharp: true
 library-name: CosmosDB
 namespace: Azure.ResourceManager.CosmosDB
-require: https://github.com/Azure/azure-rest-api-specs/blob/9918d83b021f4abe956ca3be5df358482f50433a/specification/cosmos-db/resource-manager/readme.md
-tag: package-2021-10
+require: https://github.com/Azure/azure-rest-api-specs/blob/e4f7afa7b2b1fbba16c61f6935bfafb14df9042e/specification/cosmos-db/resource-manager/readme.md
+tag: package-2022-08
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -108,13 +108,26 @@ rename-rules:
   Etag: ETag|etag
   Mongodb: MongoDB
   VNet: Vnet
+  API: Api
+  Db: DB
 
 override-operation-name:
   RestorableMongodbDatabases_List: GetRestorableMongoDBDatabases
   RestorableMongodbCollections_List: GetRestorableMongoDBCollections
-  RestorableMongodbResources_List: GetRestorableMongoDBResources
+  RestorableMongodbResources_List: GetAllRestorableMongoDBResourceData
+  RestorableSqlResources_List: GetAllRestorableSqlResourceData
 
 rename-mapping:
+  MongoRoleDefinitionGetResults: MongoDBRoleDefinition
+  MongoUserDefinitionGetResults: MongoDBUserDefinition
+  MongoRoleDefinitionType: MongoDBRoleDefinitionType
+  Privilege: MongoDBPrivilege
+  Role: MongoDBRole
+  Role.db: DBName
+  MongoRoleDefinitionGetResults.properties.type: RoleDefinitionType
+  PrivilegeResourceInfo: PrivilegeResourceInfoResource
+  MongoRoleDefinitionListResult: MongoDBRoleDefinitionListResult
+  MongoUserDefinitionListResult: MongoDBUserDefinitionListResult
   SqlRoleDefinitionResource: CosmosDBSqlRoleDefinitionResourceInfo
   CassandraKeyspacePropertiesOptions: CassandraKeyspacePropertiesConfig
   CassandraTablePropertiesOptions: CassandraTablePropertiesConfig
@@ -244,6 +257,27 @@ rename-mapping:
   MongoIndexOptions: MongoDBIndexConfig
   BackupStorageRedundancy: CosmosDBBackupStorageRedundancy
   PrimaryAggregationType: CosmosDBMetricPrimaryAggregationType
+  RestorableSqlResourcesGetResult: RestorableSqlResourceData
+  RestorableMongodbResourcesGetResult: RestorableMongoDBResourceData
+  ServiceResourceProperties: CosmosDBServiceProperties
+  ServiceResourceCreateUpdateParameters: CosmosDBServiceCreateUpdateParameters
+  ServiceResource: CosmosDBService
+  ServiceResourceListResult: CosmosDBServiceListResult
+  DataTransferServiceResourceProperties: DataTransferServiceProperties
+  SqlDedicatedGatewayServiceResourceProperties: SqlDedicatedGatewayServiceProperties
+  GraphAPIComputeServiceResourceProperties: GraphApiComputeServiceProperties
+  MaterializedViewsBuilderServiceResourceProperties: MaterializedViewsBuilderServiceProperties
+  RegionalServiceResource: CosmosDBRegionalService
+  SqlDedicatedGatewayRegionalServiceResource: SqlDedicatedGatewayRegionalService
+  GraphAPIComputeRegionalServiceResource: GraphApiComputeRegionalService
+  DataTransferRegionalServiceResource: DataTransferRegionalService
+  MaterializedViewsBuilderRegionalServiceResource: MaterializedViewsBuilderRegionalService
+  ServiceStatus: CosmosDBServiceStatus
+  ServiceSize: CosmosDBServiceSize
+  ServiceType: CosmosDBServiceType
+  AccountKeyMetadata.generationTime: GeneratedOn
+  PrivilegeResource: MongoDBPrivilegeResourceInfo
+  PrivilegeResource.db: DBName
 
 prepend-rp-prefix:
 - UniqueKey

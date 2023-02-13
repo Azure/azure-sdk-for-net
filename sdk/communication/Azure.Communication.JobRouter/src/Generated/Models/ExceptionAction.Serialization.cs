@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +15,7 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             writer.WriteEndObject();
         }
@@ -32,7 +31,7 @@ namespace Azure.Communication.JobRouter
                     case "reclassify": return ReclassifyExceptionAction.DeserializeReclassifyExceptionAction(element);
                 }
             }
-            throw new NotSupportedException("Deserialization of abstract type 'global::Azure.Communication.JobRouter.ExceptionAction' not supported.");
+            return UnknownExceptionAction.DeserializeUnknownExceptionAction(element);
         }
     }
 }

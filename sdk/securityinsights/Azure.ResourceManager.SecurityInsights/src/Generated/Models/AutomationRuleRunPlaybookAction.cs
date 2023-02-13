@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Describes an automation rule action to run a playbook. </summary>
-    public partial class AutomationRuleRunPlaybookAction : AutomationRuleAction
+    public partial class AutomationRuleRunPlaybookAction : SecurityInsightsAutomationRuleAction
     {
         /// <summary> Initializes a new instance of AutomationRuleRunPlaybookAction. </summary>
         /// <param name="order"></param>
@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="order"></param>
         /// <param name="actionType"> The type of the automation rule action. </param>
         /// <param name="actionConfiguration"></param>
-        internal AutomationRuleRunPlaybookAction(int order, ActionType actionType, PlaybookActionProperties actionConfiguration) : base(order, actionType)
+        internal AutomationRuleRunPlaybookAction(int order, ActionType actionType, AutomationRuleRunPlaybookActionProperties actionConfiguration) : base(order, actionType)
         {
             ActionConfiguration = actionConfiguration;
             ActionType = actionType;
         }
 
         /// <summary> Gets or sets the action configuration. </summary>
-        public PlaybookActionProperties ActionConfiguration { get; set; }
+        public AutomationRuleRunPlaybookActionProperties ActionConfiguration { get; set; }
     }
 }

@@ -757,6 +757,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 ServiceBusReceivedMessage msg,
                 string sessionId,
                 string replyToSessionId,
+                string partitionKey,
+                string transactionPartitionKey,
                 ServiceBusMessageActions messageActions,
                 CancellationToken cancellationToken,
                 ILogger logger)
@@ -766,6 +768,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.AreEqual(_drainModeSessionId, msg.SessionId);
                 Assert.AreEqual(msg.SessionId, sessionId);
                 Assert.AreEqual(msg.ReplyToSessionId, replyToSessionId);
+                Assert.AreEqual(msg.PartitionKey, partitionKey);
+                Assert.AreEqual(msg.TransactionPartitionKey, transactionPartitionKey);
                 _drainValidationPreDelay.Set();
                 await DrainModeHelper.WaitForCancellationAsync(cancellationToken);
                 Assert.True(cancellationToken.IsCancellationRequested);

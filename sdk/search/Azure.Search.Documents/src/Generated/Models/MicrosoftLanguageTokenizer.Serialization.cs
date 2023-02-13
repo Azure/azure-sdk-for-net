@@ -17,22 +17,22 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxTokenLength))
             {
-                writer.WritePropertyName("maxTokenLength");
+                writer.WritePropertyName("maxTokenLength"u8);
                 writer.WriteNumberValue(MaxTokenLength.Value);
             }
             if (Optional.IsDefined(IsSearchTokenizer))
             {
-                writer.WritePropertyName("isSearchTokenizer");
+                writer.WritePropertyName("isSearchTokenizer"u8);
                 writer.WriteBooleanValue(IsSearchTokenizer.Value);
             }
             if (Optional.IsDefined(Language))
             {
-                writer.WritePropertyName("language");
+                writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language.Value.ToSerialString());
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WriteEndObject();
         }
@@ -46,7 +46,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxTokenLength"))
+                if (property.NameEquals("maxTokenLength"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     maxTokenLength = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("isSearchTokenizer"))
+                if (property.NameEquals("isSearchTokenizer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     isSearchTokenizer = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("language"))
+                if (property.NameEquals("language"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,12 +76,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     language = property.Value.GetString().ToMicrosoftTokenizerLanguage();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;

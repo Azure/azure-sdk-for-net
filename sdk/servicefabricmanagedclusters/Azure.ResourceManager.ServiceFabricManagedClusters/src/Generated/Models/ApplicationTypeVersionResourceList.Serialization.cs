@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     {
         internal static ApplicationTypeVersionResourceList DeserializeApplicationTypeVersionResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<ApplicationTypeVersionResourceData>> value = default;
+            Optional<IReadOnlyList<ServiceFabricManagedApplicationTypeVersionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ApplicationTypeVersionResourceData> array = new List<ApplicationTypeVersionResourceData>();
+                    List<ServiceFabricManagedApplicationTypeVersionData> array = new List<ServiceFabricManagedApplicationTypeVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationTypeVersionResourceData.DeserializeApplicationTypeVersionResourceData(item));
+                        array.Add(ServiceFabricManagedApplicationTypeVersionData.DeserializeServiceFabricManagedApplicationTypeVersionData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of AscLocationList. </summary>
         internal AscLocationList()
         {
-            Value = new ChangeTrackingList<AscLocationData>();
+            Value = new ChangeTrackingList<SecurityCenterLocationData>();
         }
 
         /// <summary> Initializes a new instance of AscLocationList. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal AscLocationList(IReadOnlyList<AscLocationData> value, string nextLink)
+        internal AscLocationList(IReadOnlyList<SecurityCenterLocationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<AscLocationData> Value { get; }
+        public IReadOnlyList<SecurityCenterLocationData> Value { get; }
         /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }

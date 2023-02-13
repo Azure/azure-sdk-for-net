@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.Consumption.Models
     {
         internal static BudgetsListResult DeserializeBudgetsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<BudgetData>> value = default;
+            Optional<IReadOnlyList<ConsumptionBudgetData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<BudgetData> array = new List<BudgetData>();
+                    List<ConsumptionBudgetData> array = new List<ConsumptionBudgetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BudgetData.DeserializeBudgetData(item));
+                        array.Add(ConsumptionBudgetData.DeserializeConsumptionBudgetData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

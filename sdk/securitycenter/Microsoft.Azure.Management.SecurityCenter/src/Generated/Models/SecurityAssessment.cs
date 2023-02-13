@@ -46,11 +46,11 @@ namespace Microsoft.Azure.Management.Security.Models
         {
             ResourceDetails = resourceDetails;
             DisplayName = displayName;
-            Status = status;
             AdditionalData = additionalData;
             Links = links;
             Metadata = metadata;
             PartnersData = partnersData;
+            Status = status;
             CustomInit();
         }
 
@@ -69,11 +69,6 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.displayName")]
         public string DisplayName { get; private set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.status")]
-        public AssessmentStatus Status { get; set; }
 
         /// <summary>
         /// Gets or sets additional data regarding the assessment
@@ -97,6 +92,11 @@ namespace Microsoft.Azure.Management.Security.Models
         public SecurityAssessmentPartnerData PartnersData { get; set; }
 
         /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.status")]
+        public AssessmentStatus Status { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -112,10 +112,6 @@ namespace Microsoft.Azure.Management.Security.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Status");
             }
-            if (Status != null)
-            {
-                Status.Validate();
-            }
             if (Metadata != null)
             {
                 Metadata.Validate();
@@ -123,6 +119,10 @@ namespace Microsoft.Azure.Management.Security.Models
             if (PartnersData != null)
             {
                 PartnersData.Validate();
+            }
+            if (Status != null)
+            {
+                Status.Validate();
             }
         }
     }

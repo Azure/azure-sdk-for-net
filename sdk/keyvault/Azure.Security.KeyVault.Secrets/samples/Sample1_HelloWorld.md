@@ -97,11 +97,4 @@ await operation.WaitForCompletionAsync();
 await client.PurgeDeletedSecretAsync(secretName);
 ```
 
-## Source
-
-To see the full example source, see:
-
-* [Synchronous Sample1_HelloWorld.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/tests/samples/Sample1_HelloWorld.cs)
-* [Asynchronous Sample1_HelloWorld.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/tests/samples/Sample1_HelloWorldAsync.cs)
-
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

@@ -16,7 +16,8 @@ namespace Azure.ResourceManager.Tests
             var expected = "{\"id\":\"" + id + "\"}";
             var resource1 = new WritableSubResource(id);
             var jsonString = JsonHelper.SerializeToString(resource1);
-            var json = JsonDocument.Parse(jsonString).RootElement;
+            using var jsonDocument = JsonDocument.Parse(jsonString);
+            var json = jsonDocument.RootElement;
             var resource2 = WritableSubResource.DeserializeWritableSubResource(json);
             Assert.AreEqual(expected, jsonString);
             Assert.AreEqual(jsonString, JsonHelper.SerializeToString(resource2));

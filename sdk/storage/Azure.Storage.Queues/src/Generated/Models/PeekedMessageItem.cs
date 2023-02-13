@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
@@ -21,14 +22,8 @@ namespace Azure.Storage.Queues.Models
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> or <paramref name="messageText"/> is null. </exception>
         internal PeekedMessageItem(string messageId, DateTimeOffset insertionTime, DateTimeOffset expirationTime, long dequeueCount, string messageText)
         {
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
-            if (messageText == null)
-            {
-                throw new ArgumentNullException(nameof(messageText));
-            }
+            Argument.AssertNotNull(messageId, nameof(messageId));
+            Argument.AssertNotNull(messageText, nameof(messageText));
 
             MessageId = messageId;
             InsertionTime = insertionTime;

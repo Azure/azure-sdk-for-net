@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal SkuDefinition(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             Locations = new ChangeTrackingList<AzureLocation>();

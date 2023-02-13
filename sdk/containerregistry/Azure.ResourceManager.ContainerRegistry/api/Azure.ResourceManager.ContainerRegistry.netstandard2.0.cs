@@ -1207,6 +1207,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         public ContainerRegistryImportSource(string sourceImage) { }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryImportSourceCredentials Credentials { get { throw null; } set { } }
+        public string RegistryAddress { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("RegistryUri is deprecated, use RegistryAddress instead")]
         public System.Uri RegistryUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
         public string SourceImage { get { throw null; } }
@@ -1538,9 +1541,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
-    public partial class ContainerRegistryRunContent
+    public abstract partial class ContainerRegistryRunContent
     {
-        public ContainerRegistryRunContent() { }
+        protected ContainerRegistryRunContent() { }
         public string AgentPoolName { get { throw null; } set { } }
         public bool? IsArchiveEnabled { get { throw null; } set { } }
         public string LogTemplate { get { throw null; } set { } }
@@ -1777,16 +1780,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskStatus left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ContainerRegistryTaskStepProperties
+    public abstract partial class ContainerRegistryTaskStepProperties
     {
-        public ContainerRegistryTaskStepProperties() { }
+        protected ContainerRegistryTaskStepProperties() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependency> BaseImageDependencies { get { throw null; } }
         public string ContextAccessToken { get { throw null; } set { } }
         public string ContextPath { get { throw null; } set { } }
     }
-    public partial class ContainerRegistryTaskStepUpdateContent
+    public abstract partial class ContainerRegistryTaskStepUpdateContent
     {
-        public ContainerRegistryTaskStepUpdateContent() { }
+        protected ContainerRegistryTaskStepUpdateContent() { }
         public string ContextAccessToken { get { throw null; } set { } }
         public string ContextPath { get { throw null; } set { } }
     }

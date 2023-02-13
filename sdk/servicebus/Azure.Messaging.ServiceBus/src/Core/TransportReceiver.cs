@@ -33,6 +33,11 @@ namespace Azure.Messaging.ServiceBus.Core
         public abstract DateTimeOffset SessionLockedUntil { get; protected set; }
 
         /// <summary>
+        /// The prefetch count associated with the receiver.
+        /// </summary>
+        public abstract int PrefetchCount { get; set; }
+
+        /// <summary>
         /// Receives a set of <see cref="ServiceBusReceivedMessage" /> from the entity using <see cref="ServiceBusReceiveMode"/> mode.
         /// </summary>
         /// <param name="maximumMessageCount">The maximum number of messages that will be received.</param>
@@ -150,7 +155,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <remarks>
         /// In order to receive a message from the dead-letter queue, you will need a new
         /// <see cref="ServiceBusReceiver"/> with the corresponding path.
-        /// You can use EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
+        /// You can use <see cref="ServiceBusReceiverOptions.SubQueue"/> with <see cref="SubQueue.DeadLetter"/> to help with this.
         /// This operation can only be performed on messages that were received by this receiver
         /// when <see cref="ServiceBusReceiveMode"/> is set to <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// </remarks>

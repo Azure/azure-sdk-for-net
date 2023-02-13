@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.TrafficManager
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2018-08-01";
+            _apiVersion = apiVersion ?? "2022-04-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string profileName, HeatMapType heatMapType, IEnumerable<double> topLeft, IEnumerable<double> botRight)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string profileName, TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft, IEnumerable<double> botRight)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary> Gets latest heatmap for Traffic Manager profile. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager endpoint. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
         /// <param name="topLeft"> The top left latitude,longitude pair of the rectangular viewport to query for. </param>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HeatMapModelData>> GetAsync(string subscriptionId, string resourceGroupName, string profileName, HeatMapType heatMapType, IEnumerable<double> topLeft = null, IEnumerable<double> botRight = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TrafficManagerHeatMapData>> GetAsync(string subscriptionId, string resourceGroupName, string profileName, TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft = null, IEnumerable<double> botRight = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -90,21 +90,21 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 case 200:
                     {
-                        HeatMapModelData value = default;
+                        TrafficManagerHeatMapData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = HeatMapModelData.DeserializeHeatMapModelData(document.RootElement);
+                        value = TrafficManagerHeatMapData.DeserializeTrafficManagerHeatMapData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((HeatMapModelData)null, message.Response);
+                    return Response.FromValue((TrafficManagerHeatMapData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Gets latest heatmap for Traffic Manager profile. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Traffic Manager endpoint. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
         /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
         /// <param name="topLeft"> The top left latitude,longitude pair of the rectangular viewport to query for. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HeatMapModelData> Get(string subscriptionId, string resourceGroupName, string profileName, HeatMapType heatMapType, IEnumerable<double> topLeft = null, IEnumerable<double> botRight = null, CancellationToken cancellationToken = default)
+        public Response<TrafficManagerHeatMapData> Get(string subscriptionId, string resourceGroupName, string profileName, TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft = null, IEnumerable<double> botRight = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -124,13 +124,13 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 case 200:
                     {
-                        HeatMapModelData value = default;
+                        TrafficManagerHeatMapData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = HeatMapModelData.DeserializeHeatMapModelData(document.RootElement);
+                        value = TrafficManagerHeatMapData.DeserializeTrafficManagerHeatMapData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((HeatMapModelData)null, message.Response);
+                    return Response.FromValue((TrafficManagerHeatMapData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

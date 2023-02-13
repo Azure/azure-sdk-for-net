@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -21,10 +22,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <exception cref="ArgumentNullException"> <paramref name="appResourceGroup"/> is null. </exception>
         protected InfrastructureConfiguration(string appResourceGroup)
         {
-            if (appResourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(appResourceGroup));
-            }
+            Argument.AssertNotNull(appResourceGroup, nameof(appResourceGroup));
 
             AppResourceGroup = appResourceGroup;
         }

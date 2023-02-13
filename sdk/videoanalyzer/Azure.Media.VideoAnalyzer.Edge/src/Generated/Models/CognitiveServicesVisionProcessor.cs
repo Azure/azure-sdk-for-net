@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -16,27 +17,23 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of CognitiveServicesVisionProcessor. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
-        /// <param name="endpoint"> Endpoint to which this processor should connect. </param>
-        /// <param name="operation"> Describes the Spatial Analysis operation to be used in the Cognitive Services Vision processor. </param>
+        /// <param name="endpoint">
+        /// Endpoint to which this processor should connect.
+        /// Please note <see cref="EndpointBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="TlsEndpoint"/> and <see cref="UnsecuredEndpoint"/>.
+        /// </param>
+        /// <param name="operation">
+        /// Describes the Spatial Analysis operation to be used in the Cognitive Services Vision processor.
+        /// Please note <see cref="SpatialAnalysisOperationBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SpatialAnalysisCustomOperation"/>, <see cref="SpatialAnalysisPersonCountOperation"/>, <see cref="SpatialAnalysisPersonDistanceOperation"/>, <see cref="SpatialAnalysisPersonLineCrossingOperation"/>, <see cref="SpatialAnalysisPersonZoneCrossingOperation"/> and <see cref="SpatialAnalysisTypedOperationBase"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, <paramref name="endpoint"/> or <paramref name="operation"/> is null. </exception>
         public CognitiveServicesVisionProcessor(string name, IEnumerable<NodeInput> inputs, EndpointBase endpoint, SpatialAnalysisOperationBase operation) : base(name, inputs)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (inputs == null)
-            {
-                throw new ArgumentNullException(nameof(inputs));
-            }
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (operation == null)
-            {
-                throw new ArgumentNullException(nameof(operation));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(operation, nameof(operation));
 
             Endpoint = endpoint;
             Operation = operation;
@@ -47,10 +44,18 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
-        /// <param name="endpoint"> Endpoint to which this processor should connect. </param>
+        /// <param name="endpoint">
+        /// Endpoint to which this processor should connect.
+        /// Please note <see cref="EndpointBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="TlsEndpoint"/> and <see cref="UnsecuredEndpoint"/>.
+        /// </param>
         /// <param name="image"> Describes the parameters of the image that is sent as input to the endpoint. </param>
         /// <param name="samplingOptions"> Describes the sampling options to be applied when forwarding samples to the extension. </param>
-        /// <param name="operation"> Describes the Spatial Analysis operation to be used in the Cognitive Services Vision processor. </param>
+        /// <param name="operation">
+        /// Describes the Spatial Analysis operation to be used in the Cognitive Services Vision processor.
+        /// Please note <see cref="SpatialAnalysisOperationBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SpatialAnalysisCustomOperation"/>, <see cref="SpatialAnalysisPersonCountOperation"/>, <see cref="SpatialAnalysisPersonDistanceOperation"/>, <see cref="SpatialAnalysisPersonLineCrossingOperation"/>, <see cref="SpatialAnalysisPersonZoneCrossingOperation"/> and <see cref="SpatialAnalysisTypedOperationBase"/>.
+        /// </param>
         internal CognitiveServicesVisionProcessor(string type, string name, IList<NodeInput> inputs, EndpointBase endpoint, ImageProperties image, SamplingOptions samplingOptions, SpatialAnalysisOperationBase operation) : base(type, name, inputs)
         {
             Endpoint = endpoint;
@@ -60,13 +65,21 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = type ?? "#Microsoft.VideoAnalyzer.CognitiveServicesVisionProcessor";
         }
 
-        /// <summary> Endpoint to which this processor should connect. </summary>
+        /// <summary>
+        /// Endpoint to which this processor should connect.
+        /// Please note <see cref="EndpointBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="TlsEndpoint"/> and <see cref="UnsecuredEndpoint"/>.
+        /// </summary>
         public EndpointBase Endpoint { get; set; }
         /// <summary> Describes the parameters of the image that is sent as input to the endpoint. </summary>
         public ImageProperties Image { get; set; }
         /// <summary> Describes the sampling options to be applied when forwarding samples to the extension. </summary>
         public SamplingOptions SamplingOptions { get; set; }
-        /// <summary> Describes the Spatial Analysis operation to be used in the Cognitive Services Vision processor. </summary>
+        /// <summary>
+        /// Describes the Spatial Analysis operation to be used in the Cognitive Services Vision processor.
+        /// Please note <see cref="SpatialAnalysisOperationBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SpatialAnalysisCustomOperation"/>, <see cref="SpatialAnalysisPersonCountOperation"/>, <see cref="SpatialAnalysisPersonDistanceOperation"/>, <see cref="SpatialAnalysisPersonLineCrossingOperation"/>, <see cref="SpatialAnalysisPersonZoneCrossingOperation"/> and <see cref="SpatialAnalysisTypedOperationBase"/>.
+        /// </summary>
         public SpatialAnalysisOperationBase Operation { get; set; }
     }
 }

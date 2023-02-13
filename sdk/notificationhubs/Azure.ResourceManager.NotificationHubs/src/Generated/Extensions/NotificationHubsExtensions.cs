@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.NotificationHubs
 
         /// <summary>
         /// Checks the availability of the given service namespace across all Azure subscriptions. This is useful because the domain name is created based on the service namespace name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/checkNamespaceAvailability
-        /// Operation Id: Namespaces_CheckAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/checkNamespaceAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_CheckAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The namespace name. </param>
@@ -46,8 +54,16 @@ namespace Azure.ResourceManager.NotificationHubs
 
         /// <summary>
         /// Checks the availability of the given service namespace across all Azure subscriptions. This is useful because the domain name is created based on the service namespace name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/checkNamespaceAvailability
-        /// Operation Id: Namespaces_CheckAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/checkNamespaceAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_CheckAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The namespace name. </param>
@@ -62,8 +78,16 @@ namespace Azure.ResourceManager.NotificationHubs
 
         /// <summary>
         /// Lists all the available namespaces within the subscription irrespective of the resourceGroups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/namespaces
-        /// Operation Id: Namespaces_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/namespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -75,8 +99,16 @@ namespace Azure.ResourceManager.NotificationHubs
 
         /// <summary>
         /// Lists all the available namespaces within the subscription irrespective of the resourceGroups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/namespaces
-        /// Operation Id: Namespaces_ListAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/namespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_ListAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -105,8 +137,16 @@ namespace Azure.ResourceManager.NotificationHubs
 
         /// <summary>
         /// Returns the description for the specified namespace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}
-        /// Operation Id: Namespaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="namespaceName"> The namespace name. </param>
@@ -121,8 +161,16 @@ namespace Azure.ResourceManager.NotificationHubs
 
         /// <summary>
         /// Returns the description for the specified namespace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}
-        /// Operation Id: Namespaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="namespaceName"> The namespace name. </param>

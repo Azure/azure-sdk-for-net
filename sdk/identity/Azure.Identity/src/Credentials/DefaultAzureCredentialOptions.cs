@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.Identity
@@ -9,14 +12,92 @@ namespace Azure.Identity
     /// <summary>
     /// Options to configure the <see cref="DefaultAzureCredential"/> authentication flow and requests made to Azure Identity services.
     /// </summary>
-    public class DefaultAzureCredentialOptions : TokenCredentialOptions
+    public class DefaultAzureCredentialOptions : TokenCredentialOptions, ISupportsDisableInstanceDiscovery
     {
+        private struct UpdateTracker<T>
+        {
+            private bool _updated;
+            private T _value;
+
+            public UpdateTracker(T initialValue)
+            {
+                _value = initialValue;
+                _updated = false;
+            }
+
+            public T Value
+            {
+                get => _value;
+                set
+                {
+                    _value = value;
+                    _updated = true;
+                }
+            }
+
+            public bool Updated => _updated;
+        }
+
+        private UpdateTracker<string> _tenantId = new UpdateTracker<string>(GetNonEmptyStringOrNull(EnvironmentVariables.TenantId));
+        private UpdateTracker<string> _interactiveBrowserTenantId = new UpdateTracker<string>(GetNonEmptyStringOrNull(EnvironmentVariables.TenantId));
+        private UpdateTracker<string> _sharedTokenCacheTenantId = new UpdateTracker<string>(GetNonEmptyStringOrNull(EnvironmentVariables.TenantId));
+        private UpdateTracker<string> _visualStudioTenantId = new UpdateTracker<string>(GetNonEmptyStringOrNull(EnvironmentVariables.TenantId));
+        private UpdateTracker<string> _visualStudioCodeTenantId = new UpdateTracker<string>(GetNonEmptyStringOrNull(EnvironmentVariables.TenantId));
+
+        /// <summary>
+        /// The ID of the tenant to which the credential will authenticate by default. If not specified, the credential will authenticate to any requested tenant, and will default to the tenant to which the chosen authentication method was originally authenticated.
+        /// </summary>
+        public string TenantId
+        {
+            get => _tenantId.Value;
+            set
+            {
+                if (_interactiveBrowserTenantId.Updated && value != _interactiveBrowserTenantId.Value)
+                {
+                    throw new InvalidOperationException("Applications should not set both TenantId and InteractiveBrowserTenantId. TenantId is preferred, and is functionally equivalent. InteractiveBrowserTenantId exists only to provide backwards compatibility.");
+                }
+
+                if (_sharedTokenCacheTenantId.Updated && value != _sharedTokenCacheTenantId.Value)
+                {
+                    throw new InvalidOperationException("Applications should not set both TenantId and SharedTokenCacheTenantId. TenantId is preferred, and is functionally equivalent. SharedTokenCacheTenantId exists only to provide backwards compatibility.");
+                }
+
+                if (_visualStudioTenantId.Updated && value != _visualStudioTenantId.Value)
+                {
+                    throw new InvalidOperationException("Applications should not set both TenantId and VisualStudioTenantId. TenantId is preferred, and is functionally equivalent. VisualStudioTenantId exists only to provide backwards compatibility.");
+                }
+
+                if (_visualStudioCodeTenantId.Updated && value != _visualStudioCodeTenantId.Value)
+                {
+                    throw new InvalidOperationException("Applications should not set both TenantId and VisualStudioCodeTenantId. TenantId is preferred, and is functionally equivalent. VisualStudioCodeTenantId exists only to provide backwards compatibility.");
+                }
+                _tenantId.Value = value;
+                _interactiveBrowserTenantId.Value = value;
+                _sharedTokenCacheTenantId.Value = value;
+                _visualStudioCodeTenantId.Value = value;
+                _visualStudioTenantId.Value = value;
+            }
+        }
+
         /// <summary>
         /// The tenant id of the user to authenticate, in the case the <see cref="DefaultAzureCredential"/> authenticates through, the
         /// <see cref="InteractiveBrowserCredential"/>. The default is null and will authenticate users to their default tenant.
         /// The value can also be set by setting the environment variable AZURE_TENANT_ID.
         /// </summary>
-        public string InteractiveBrowserTenantId { get; set; } = GetNonEmptyStringOrNull(EnvironmentVariables.TenantId);
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string InteractiveBrowserTenantId
+        {
+            get => _interactiveBrowserTenantId.Value;
+            set
+            {
+                if (_tenantId.Updated && value != _tenantId.Value)
+                {
+                    throw new InvalidOperationException("Applications should not set both TenantId and InteractiveBrowserTenantId. TenantId is preferred, and is functionally equivalent. InteractiveBrowserTenantId exists only to provide backwards compatibility.");
+                }
+
+                _interactiveBrowserTenantId.Value = value;
+            }
+        }
 
         /// <summary>
         /// Specifies the tenant id of the preferred authentication account, to be retrieved from the shared token cache for single sign on authentication with
@@ -26,21 +107,68 @@ namespace Azure.Identity
         /// If multiple accounts are found in the shared token cache and no value is specified, or the specified value matches no accounts in
         /// the cache the SharedTokenCacheCredential will not be used for authentication.
         /// </remarks>
-        public string SharedTokenCacheTenantId { get; set; } = GetNonEmptyStringOrNull(EnvironmentVariables.TenantId);
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string SharedTokenCacheTenantId
+        {
+            get => _sharedTokenCacheTenantId.Value;
+            set
+            {
+                if (_tenantId.Updated && value != _tenantId.Value)
+                {
+                    throw new InvalidOperationException("Applications should not set both TenantId and SharedTokenCacheTenantId. TenantId is preferred, and is functionally equivalent. SharedTokenCacheTenantId exists only to provide backwards compatibility.");
+                }
+
+                _sharedTokenCacheTenantId.Value = value;
+            }
+        }
 
         /// <summary>
         /// The tenant id of the user to authenticate, in the case the <see cref="DefaultAzureCredential"/> authenticates through, the
         /// <see cref="VisualStudioCredential"/>. The default is null and will authenticate users to their default tenant.
         /// The value can also be set by setting the environment variable AZURE_TENANT_ID.
         /// </summary>
-        public string VisualStudioTenantId { get; set; } = GetNonEmptyStringOrNull(EnvironmentVariables.TenantId);
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string VisualStudioTenantId
+        {
+            get => _visualStudioTenantId.Value;
+            set
+            {
+                if (_tenantId.Updated && value != _tenantId.Value)
+                {
+                    throw new InvalidOperationException("Applications should not set both TenantId and VisualStudioTenantId. TenantId is preferred, and is functionally equivalent. VisualStudioTenantId exists only to provide backwards compatibility.");
+                }
+
+                _visualStudioTenantId.Value = value;
+            }
+        }
 
         /// <summary>
-        /// The tenant id of the user to authenticate, in the case the <see cref="DefaultAzureCredential"/> authenticates through, the
+        /// The tenant ID of the user to authenticate, in the case the <see cref="DefaultAzureCredential"/> authenticates through, the
         /// <see cref="VisualStudioCodeCredential"/>. The default is null and will authenticate users to their default tenant.
         /// The value can also be set by setting the environment variable AZURE_TENANT_ID.
         /// </summary>
-        public string VisualStudioCodeTenantId { get; set; } = GetNonEmptyStringOrNull(EnvironmentVariables.TenantId);
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string VisualStudioCodeTenantId
+        {
+            get => _visualStudioCodeTenantId.Value;
+            set
+            {
+                if (_tenantId.Updated && value != _tenantId.Value)
+                {
+                    throw new InvalidOperationException("Applications should not set both TenantId and VisualStudioCodeTenantId. TenantId is preferred, and is functionally equivalent. VisualStudioCodeTenantId exists only to provide backwards compatibility.");
+                }
+
+                _visualStudioCodeTenantId.Value = value;
+            }
+        }
+
+        /// <summary>
+        /// Specifies tenants in addition to the specified <see cref="TenantId"/> for which the credential may acquire tokens.
+        /// Add the wildcard value "*" to allow the credential to acquire tokens for any tenant the logged in account can access.
+        /// If no value is specified for <see cref="TenantId"/>, this option will have no effect on that authentication method, and the credential will acquire tokens for any requested tenant when using that method.
+        /// This value can also be set by setting the environment variable AZURE_ADDITIONALLY_ALLOWED_TENANTS.
+        /// </summary>
+        public IList<string> AdditionallyAllowedTenants { get; private set; } = EnvironmentVariables.AdditionallyAllowedTenants;
 
         /// <summary>
         /// Specifies the preferred authentication account to be retrieved from the shared token cache for single sign on authentication with
@@ -85,6 +213,11 @@ namespace Azure.Identity
         public bool ExcludeManagedIdentityCredential { get; set; }
 
         /// <summary>
+        /// Specifies whether the <see cref="AzureDeveloperCliCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
+        /// </summary>
+        public bool ExcludeAzureDeveloperCliCredential { get; set; }
+
+        /// <summary>
         /// Specifies whether the <see cref="SharedTokenCacheCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
         /// Setting to true disables single sign on authentication with development tools which write to the shared token cache.
         /// The default is <c>true</c>.
@@ -110,17 +243,55 @@ namespace Azure.Identity
 
         /// <summary>
         /// Specifies whether the <see cref="VisualStudioCodeCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
+        /// The default is <c>true</c>.
         /// </summary>
-        public bool ExcludeVisualStudioCodeCredential { get; set; }
-
-        private static string GetNonEmptyStringOrNull(string str)
-        {
-            return !string.IsNullOrEmpty(str) ? str : null;
-        }
+        public bool ExcludeVisualStudioCodeCredential { get; set; } = true;
 
         /// <summary>
         /// Specifies whether the <see cref="AzurePowerShellCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
         /// </summary>
         public bool ExcludeAzurePowerShellCredential { get; set; }
+
+        /// <inheriteddoc/>
+        public bool DisableInstanceDiscovery { get; set; }
+
+        internal DefaultAzureCredentialOptions ShallowClone()
+        {
+            var options = new DefaultAzureCredentialOptions
+            {
+                _tenantId = _tenantId,
+                _interactiveBrowserTenantId = _interactiveBrowserTenantId,
+                _sharedTokenCacheTenantId = _sharedTokenCacheTenantId,
+                _visualStudioTenantId = _visualStudioTenantId,
+                _visualStudioCodeTenantId = _visualStudioCodeTenantId,
+                SharedTokenCacheUsername = SharedTokenCacheUsername,
+                InteractiveBrowserCredentialClientId = InteractiveBrowserCredentialClientId,
+                ManagedIdentityClientId = ManagedIdentityClientId,
+                ManagedIdentityResourceId = ManagedIdentityResourceId,
+                DeveloperCredentialTimeout = DeveloperCredentialTimeout,
+                ExcludeEnvironmentCredential = ExcludeEnvironmentCredential,
+                ExcludeManagedIdentityCredential = ExcludeManagedIdentityCredential,
+                ExcludeAzureDeveloperCliCredential = ExcludeAzureDeveloperCliCredential,
+                ExcludeSharedTokenCacheCredential = ExcludeSharedTokenCacheCredential,
+                ExcludeInteractiveBrowserCredential = ExcludeInteractiveBrowserCredential,
+                ExcludeAzureCliCredential = ExcludeAzureCliCredential,
+                ExcludeVisualStudioCredential = ExcludeVisualStudioCredential,
+                ExcludeVisualStudioCodeCredential = ExcludeVisualStudioCodeCredential,
+                ExcludeAzurePowerShellCredential = ExcludeAzurePowerShellCredential,
+                AuthorityHost = AuthorityHost,
+                DisableInstanceDiscovery = DisableInstanceDiscovery,
+            };
+
+            foreach (var addlTenant in AdditionallyAllowedTenants)
+            {
+                options.AdditionallyAllowedTenants.Add(addlTenant);
+            }
+
+            return options;
+        }
+        private static string GetNonEmptyStringOrNull(string str)
+        {
+            return !string.IsNullOrEmpty(str) ? str : null;
+        }
     }
 }

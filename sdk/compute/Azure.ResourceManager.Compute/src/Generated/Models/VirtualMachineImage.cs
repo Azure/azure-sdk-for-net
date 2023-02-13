@@ -21,10 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public VirtualMachineImage(string name, AzureLocation location) : base(name, location)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             DataDiskImages = new ChangeTrackingList<DataDiskImage>();
             Features = new ChangeTrackingList<VirtualMachineImageFeature>();
@@ -44,7 +41,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="disallowed"> Specifies disallowed configuration for the VirtualMachine created from the image. </param>
         /// <param name="features"></param>
         /// <param name="architecture"> Specifies the Architecture Type. </param>
-        internal VirtualMachineImage(ResourceIdentifier id, string name, AzureLocation location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PurchasePlan plan, OSDiskImage osDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGeneration? hyperVGeneration, DisallowedConfiguration disallowed, IList<VirtualMachineImageFeature> features, ArchitectureType? architecture) : base(id, name, location, tags, extendedLocation)
+        /// <param name="imageDeprecationStatus"> Describes image deprecation status properties on the image. </param>
+        internal VirtualMachineImage(ResourceIdentifier id, string name, AzureLocation location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PurchasePlan plan, OSDiskImage osDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGeneration? hyperVGeneration, DisallowedConfiguration disallowed, IList<VirtualMachineImageFeature> features, ArchitectureType? architecture, ImageDeprecationStatus imageDeprecationStatus) : base(id, name, location, tags, extendedLocation)
         {
             Plan = plan;
             OSDiskImage = osDiskImage;
@@ -54,6 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
             Disallowed = disallowed;
             Features = features;
             Architecture = architecture;
+            ImageDeprecationStatus = imageDeprecationStatus;
         }
 
         /// <summary> Used for establishing the purchase context of any 3rd Party artifact through MarketPlace. </summary>
@@ -104,5 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IList<VirtualMachineImageFeature> Features { get; }
         /// <summary> Specifies the Architecture Type. </summary>
         public ArchitectureType? Architecture { get; set; }
+        /// <summary> Describes image deprecation status properties on the image. </summary>
+        public ImageDeprecationStatus ImageDeprecationStatus { get; set; }
     }
 }

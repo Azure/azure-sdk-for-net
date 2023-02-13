@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="destination"/> is null. </exception>
         public ConnectivityContent(ConnectivitySource source, ConnectivityDestination destination)
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-            if (destination == null)
-            {
-                throw new ArgumentNullException(nameof(destination));
-            }
+            Argument.AssertNotNull(source, nameof(source));
+            Argument.AssertNotNull(destination, nameof(destination));
 
             Source = source;
             Destination = destination;

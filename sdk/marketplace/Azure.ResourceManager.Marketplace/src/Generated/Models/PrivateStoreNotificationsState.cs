@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         internal PrivateStoreNotificationsState()
         {
             StopSellNotifications = new ChangeTrackingList<StopSellNotifications>();
-            NewNotifications = new ChangeTrackingList<NewNotifications>();
+            NewNotifications = new ChangeTrackingList<NewPlanNotification>();
             ApprovalRequests = new ChangeTrackingList<RequestApprovalsDetails>();
         }
 
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="stopSellNotifications"></param>
         /// <param name="newNotifications"></param>
         /// <param name="approvalRequests"></param>
-        internal PrivateStoreNotificationsState(IReadOnlyList<StopSellNotifications> stopSellNotifications, IReadOnlyList<NewNotifications> newNotifications, IReadOnlyList<RequestApprovalsDetails> approvalRequests)
+        internal PrivateStoreNotificationsState(IReadOnlyList<StopSellNotifications> stopSellNotifications, IReadOnlyList<NewPlanNotification> newNotifications, IReadOnlyList<RequestApprovalsDetails> approvalRequests)
         {
             StopSellNotifications = stopSellNotifications;
             NewNotifications = newNotifications;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Gets the stop sell notifications. </summary>
         public IReadOnlyList<StopSellNotifications> StopSellNotifications { get; }
         /// <summary> Gets the new notifications. </summary>
-        public IReadOnlyList<NewNotifications> NewNotifications { get; }
+        public IReadOnlyList<NewPlanNotification> NewNotifications { get; }
         /// <summary> Gets the approval requests. </summary>
         public IReadOnlyList<RequestApprovalsDetails> ApprovalRequests { get; }
     }

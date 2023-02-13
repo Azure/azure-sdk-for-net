@@ -8,6 +8,8 @@ trigger:
   paths:
     include:
     - sdk/communication/
+    exclude:
+    - sdk/communication/Azure.ResourceManager.Communication/
 
 pr:
   branches:
@@ -19,16 +21,20 @@ pr:
   paths:
     include:
     - sdk/communication/
+    exclude:
+    - sdk/communication/Azure.ResourceManager.Communication/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: communication
-    BuildSnippets: true
+    BuildSnippets: false
     ArtifactName: packages
     Artifacts:
     - name: Azure.Communication.JobRouter
       safeName: AzureCommunicationJobRouter
+    - name: Azure.Communication.CallAutomation
+      safeName: AzureCommunicationCallAutomation
     - name: Azure.Communication.CallingServer
       safeName: AzureCommunicationCallingServer
     - name: Azure.Communication.Chat

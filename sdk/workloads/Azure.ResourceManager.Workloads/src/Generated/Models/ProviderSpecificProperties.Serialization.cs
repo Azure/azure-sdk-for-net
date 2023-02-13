@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("providerType");
+            writer.WritePropertyName("providerType"u8);
             writer.WriteStringValue(ProviderType);
             writer.WriteEndObject();
         }
@@ -34,16 +34,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     case "SapNetWeaver": return SapNetWeaverProviderInstanceProperties.DeserializeSapNetWeaverProviderInstanceProperties(element);
                 }
             }
-            string providerType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("providerType"))
-                {
-                    providerType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownProviderSpecificProperties(providerType);
+            return UnknownProviderSpecificProperties.DeserializeUnknownProviderSpecificProperties(element);
         }
     }
 }

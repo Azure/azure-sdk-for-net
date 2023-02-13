@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             IReadOnlyList<MetricEnrichedSeriesData> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<MetricEnrichedSeriesData> array = new List<MetricEnrichedSeriesData>();
                     foreach (var item in property.Value.EnumerateArray())

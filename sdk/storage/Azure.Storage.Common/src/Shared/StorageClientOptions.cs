@@ -20,8 +20,6 @@ namespace Azure.Storage
         /// </summary>
         private const string StorageScope = "https://storage.azure.com/.default";
 
-        private static readonly HttpPipelinePolicy[] s_perCallPolicies = { StorageServerTimeoutPolicy.Shared };
-
         /// <summary>
         /// Set common ClientOptions defaults for Azure Storage.
         /// </summary>
@@ -103,30 +101,27 @@ namespace Azure.Storage
         /// <param name="options">The Storage ClientOptions.</param>
         /// <param name="authentication">Optional authentication policy.</param>
         /// <param name="geoRedundantSecondaryStorageUri">The secondary URI to be used for retries on failed read requests</param>
-        /// <param name="geoRedundantReadMode">How to treat a secondary URI on reads.</param>
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
-        public static HttpPipeline Build(
-            this ClientOptions options,
-            HttpPipelinePolicy authentication = null,
-            Uri geoRedundantSecondaryStorageUri = null,
-            GeoRedundantReadMode geoRedundantReadMode = default)
+        public static HttpPipeline Build(this ClientOptions options, HttpPipelinePolicy authentication = null, Uri geoRedundantSecondaryStorageUri = null)
         {
-            List<HttpPipelinePolicy> perRetryClientPolicies = new();
             StorageResponseClassifier classifier = new();
+            var pipelineOptions = new HttpPipelineOptions(options)
+            {
+                PerCallPolicies = { StorageServerTimeoutPolicy.Shared },
+                ResponseClassifier = classifier,
+                RequestFailedDetailsParser = new StorageRequestFailedDetailsParser()
+            };
+
             if (geoRedundantSecondaryStorageUri != null)
             {
-                perRetryClientPolicies.Add(new GeoRedundantReadPolicy(geoRedundantSecondaryStorageUri, geoRedundantReadMode));
+                pipelineOptions.PerRetryPolicies.Add(new GeoRedundantReadPolicy(geoRedundantSecondaryStorageUri));
                 classifier.SecondaryStorageUri = geoRedundantSecondaryStorageUri;
             }
 
-            perRetryClientPolicies.Add(new StorageRequestValidationPipelinePolicy(options));
-            perRetryClientPolicies.Add(authentication); // authentication needs to be the last of the perRetry client policies passed in to Build
+            pipelineOptions.PerRetryPolicies.Add(new StorageRequestValidationPipelinePolicy());
+            pipelineOptions.PerRetryPolicies.Add(authentication); // authentication needs to be the last of the perRetry client policies passed in to Build
 
-            return HttpPipelineBuilder.Build(
-               options,
-               s_perCallPolicies,
-               perRetryClientPolicies.ToArray(),
-               classifier);
+            return HttpPipelineBuilder.Build(pipelineOptions);
         }
 
         /// <summary>
@@ -135,17 +130,8 @@ namespace Azure.Storage
         /// <param name="options">The Storage ClientOptions.</param>
         /// <param name="credentials">Optional authentication credentials.</param>
         /// <param name="geoRedundantSecondaryStorageUri">The secondary URI to be used for retries on failed read requests</param>
-        /// <param name="geoRedundantReadMode">How to treat a secondary URI on reads.</param>
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
-        public static HttpPipeline Build(
-            this ClientOptions options,
-            object credentials,
-            Uri geoRedundantSecondaryStorageUri = null,
-            GeoRedundantReadMode geoRedundantReadMode = default) =>
-            Build(
-                options,
-                GetAuthenticationPolicy(credentials),
-                geoRedundantSecondaryStorageUri,
-                geoRedundantReadMode);
+        public static HttpPipeline Build(this ClientOptions options, object credentials, Uri geoRedundantSecondaryStorageUri = null) =>
+            Build(options, GetAuthenticationPolicy(credentials), geoRedundantSecondaryStorageUri);
     }
 }

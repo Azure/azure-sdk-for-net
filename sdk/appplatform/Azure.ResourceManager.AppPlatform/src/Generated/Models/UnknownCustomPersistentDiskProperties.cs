@@ -10,14 +10,14 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> The UnknownCustomPersistentDiskProperties. </summary>
-    internal partial class UnknownCustomPersistentDiskProperties : CustomPersistentDiskProperties
+    internal partial class UnknownCustomPersistentDiskProperties : AppCustomPersistentDiskProperties
     {
         /// <summary> Initializes a new instance of UnknownCustomPersistentDiskProperties. </summary>
         /// <param name="underlyingResourceType"> The type of the underlying resource to mount as a persistent disk. </param>
         /// <param name="mountPath"> The mount path of the persistent disk. </param>
-        /// <param name="readOnly"> Indicates whether the persistent disk is a readOnly one. </param>
+        /// <param name="isReadOnly"> Indicates whether the persistent disk is a readOnly one. </param>
         /// <param name="mountOptions"> These are the mount options for a persistent disk. </param>
-        internal UnknownCustomPersistentDiskProperties(UnderlyingResourceType underlyingResourceType, string mountPath, bool? readOnly, IList<string> mountOptions) : base(underlyingResourceType, mountPath, readOnly, mountOptions)
+        internal UnknownCustomPersistentDiskProperties(UnderlyingResourceType underlyingResourceType, string mountPath, bool? isReadOnly, IList<string> mountOptions) : base(underlyingResourceType, mountPath, isReadOnly, mountOptions)
         {
             UnderlyingResourceType = underlyingResourceType;
         }

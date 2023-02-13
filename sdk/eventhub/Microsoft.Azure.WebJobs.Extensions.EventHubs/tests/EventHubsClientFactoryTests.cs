@@ -24,6 +24,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
     public class EventHubsClientFactoryTests
     {
         private const string ConnectionString = "Endpoint=sb://test89123-ns-x.servicebus.windows.net/;SharedAccessKeyName=ReceiveRule;SharedAccessKey=secretkey";
+        private const string AnotherConnectionString = "Endpoint=sb://test12345-ns-x.servicebus.windows.net/;SharedAccessKeyName=ReceiveRule;SharedAccessKey=secretkey";
         private const string ConnectionStringWithEventHub = "Endpoint=sb://test89123-ns-x.servicebus.windows.net/;SharedAccessKeyName=ReceiveRule;SharedAccessKey=secretkey;EntityPath=path2";
 
         // Validate that if connection string has EntityPath, that takes precedence over the parameter.
@@ -102,6 +103,71 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         }
 
         [Test]
+        public void ConsumersWithSameNameAreProperlyCached()
+        {
+            EventHubOptions options = new EventHubOptions();
+
+            var componentFactoryMock = new Mock<AzureComponentFactory>();
+            componentFactoryMock.Setup(c => c.CreateTokenCredential(
+                    It.Is<IConfiguration>(c => c["fullyQualifiedNamespace"] != null)))
+                .Returns(new DefaultAzureCredential());
+
+            var configuration = ConfigurationUtilities.CreateConfiguration(
+                new KeyValuePair<string, string>("connection1", ConnectionString),
+                new KeyValuePair<string, string>("connection2", AnotherConnectionString),
+                new KeyValuePair<string, string>("connection3:fullyQualifiedNamespace", "test89123-ns-x.servicebus.windows.net"),
+                new KeyValuePair<string, string>("connection4:fullyQualifiedNamespace", "test12345-ns-x.servicebus.windows.net"));
+
+            var factory = ConfigurationUtilities.CreateFactory(configuration, options, componentFactoryMock.Object);
+            var consumer1 = factory.GetEventHubConsumerClient("k1", "connection1", null);
+            var consumer2 = factory.GetEventHubConsumerClient("k1", "connection2", "csg");
+            var consumer3 = factory.GetEventHubConsumerClient("k1", "connection3", "csg");
+            var consumer4 = factory.GetEventHubConsumerClient("k1", "connection4", "csg");
+
+            // Create different consumers for different eventhub namespaces.
+            Assert.AreNotSame(consumer1, consumer2);
+            Assert.AreNotSame(consumer3, consumer4);
+            // Create different consumers for different consumer groups.
+            Assert.AreNotSame(consumer1, consumer3);
+            // Use the same consumer client for the same namespace/eventhub/consumergroup
+            Assert.AreSame(consumer2, consumer4);
+        }
+
+        [Test]
+        public void ProducersWithSameNameAreProperlyCached()
+        {
+            EventHubOptions options = new EventHubOptions();
+
+            var componentFactoryMock = new Mock<AzureComponentFactory>();
+            componentFactoryMock.Setup(c => c.CreateTokenCredential(
+                    It.Is<IConfiguration>(c => c["fullyQualifiedNamespace"] != null)))
+                .Returns(new DefaultAzureCredential());
+
+            var configuration = ConfigurationUtilities.CreateConfiguration(
+                new KeyValuePair<string, string>("connection1", ConnectionString),
+                new KeyValuePair<string, string>("connection2", AnotherConnectionString),
+                new KeyValuePair<string, string>("connection3:fullyQualifiedNamespace", "test89123-ns-x.servicebus.windows.net"),
+                new KeyValuePair<string, string>("connection4:fullyQualifiedNamespace", "test12345-ns-x.servicebus.windows.net"));
+
+            var factory = ConfigurationUtilities.CreateFactory(configuration, options, componentFactoryMock.Object);
+            var producer1 = factory.GetEventHubProducerClient("k1", "connection1");
+            var producer2 = factory.GetEventHubProducerClient("k1", "connection2");
+            var producer3 = factory.GetEventHubProducerClient("k1", "connection3");
+            var producer4 = factory.GetEventHubProducerClient("k1", "connection4");
+
+            Assert.AreEqual("k1", producer1.EventHubName);
+            Assert.AreEqual("k1", producer2.EventHubName);
+            Assert.AreNotSame(producer1, producer2);
+
+            Assert.AreEqual("k1", producer3.EventHubName);
+            Assert.AreEqual("k1", producer4.EventHubName);
+            Assert.AreNotSame(producer3, producer4);
+
+            Assert.AreSame(producer1, producer3);
+            Assert.AreSame(producer2, producer4);
+        }
+
+        [Test]
         public void UsesDefaultConnectionToStorageAccount()
         {
             EventHubOptions options = new EventHubOptions();
@@ -122,9 +188,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual("devstoreaccount1", client.AccountName);
         }
 
-        [TestCase("k1", ConnectionString)]
-        [TestCase("path2", ConnectionStringWithEventHub)]
-        public void RespectsConnectionOptionsForProducer(string expectedPathName, string connectionString)
+        [TestCase("k1", "k1", ConnectionString)]
+        [TestCase("path2", "k1", ConnectionStringWithEventHub)]
+        public void RespectsConnectionOptionsForProducer(string expectedPathName, string eventHubName, string connectionString)
         {
             var testEndpoint = new Uri("http://mycustomendpoint.com");
             EventHubOptions options = new EventHubOptions
@@ -136,10 +202,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 }
             };
 
-            var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>("connection", connectionString));
+            var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>("connection", connectionString), new KeyValuePair<string, string>("eventHubName", eventHubName));
             var factory = ConfigurationUtilities.CreateFactory(configuration, options);
 
-            var producer = factory.GetEventHubProducerClient(expectedPathName, "connection");
+            var producer = factory.GetEventHubProducerClient(eventHubName, "connection");
             EventHubConnection connection = (EventHubConnection)typeof(EventHubProducerClient).GetProperty("Connection", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(producer);
             EventHubConnectionOptions connectionOptions = (EventHubConnectionOptions)typeof(EventHubConnection).GetProperty("Options", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(connection);
@@ -152,9 +218,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(expectedPathName, producer.EventHubName);
         }
 
-        [TestCase("k1", ConnectionString)]
-        [TestCase("path2", ConnectionStringWithEventHub)]
-        public void RespectsConnectionOptionsForConsumer(string expectedPathName, string connectionString)
+        [TestCase("k1", "k1", ConnectionString)]
+        [TestCase("path2", "k1", ConnectionStringWithEventHub)]
+        public void RespectsConnectionOptionsForConsumer(string expectedPathName, string eventHubName, string connectionString)
         {
             var testEndpoint = new Uri("http://mycustomendpoint.com");
             EventHubOptions options = new EventHubOptions
@@ -166,10 +232,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 }
             };
 
-            var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>("connection", connectionString));
+            var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>("connection", connectionString), new KeyValuePair<string, string>("eventHubName", eventHubName));
             var factory = ConfigurationUtilities.CreateFactory(configuration, options);
 
-            var consumer = factory.GetEventHubConsumerClient(expectedPathName, "connection", "consumer");
+            var consumer = factory.GetEventHubConsumerClient(eventHubName, "connection", "consumer");
             var consumerClient = (EventHubConsumerClient)typeof(EventHubConsumerClientImpl)
                 .GetField("_client", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(consumer);
@@ -194,9 +260,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(expectedPathName, consumer.EventHubName);
         }
 
-        [TestCase("k1", ConnectionString)]
-        [TestCase("path2", ConnectionStringWithEventHub)]
-        public void RespectsConnectionOptionsForProcessor(string expectedPathName, string connectionString)
+        [TestCase("k1", "k1", ConnectionString)]
+        [TestCase("path2", "k1", ConnectionStringWithEventHub)]
+        public void RespectsConnectionOptionsForProcessor(string expectedPathName, string eventHubName, string connectionString)
         {
             var testEndpoint = new Uri("http://mycustomendpoint.com");
             EventHubOptions options = new EventHubOptions
@@ -211,10 +277,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 MaxEventBatchSize = 20
             };
 
-            var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>("connection", connectionString));
+            var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>("connection", connectionString), new KeyValuePair<string, string>("eventHubName", eventHubName));
             var factory = ConfigurationUtilities.CreateFactory(configuration, options);
 
-            var processor = factory.GetEventProcessorHost(expectedPathName, "connection", "consumer", false);
+            var processor = factory.GetEventProcessorHost(eventHubName, "connection", "consumer", false);
             EventProcessorOptions processorOptions = (EventProcessorOptions)typeof(EventProcessor<EventProcessorHostPartition>)
                 .GetProperty("Options", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(processor);

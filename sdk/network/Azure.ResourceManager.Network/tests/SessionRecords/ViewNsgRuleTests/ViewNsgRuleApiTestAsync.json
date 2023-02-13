@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourcegroups/azsmnet7802?api-version=2015-11-01",
+      "RequestUri": "/subscriptions/2c224e7e-3ef5-431d-a57b-e71f4662e3a6/resourcegroups/azsmnet7802?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "accept-language": "en-US",

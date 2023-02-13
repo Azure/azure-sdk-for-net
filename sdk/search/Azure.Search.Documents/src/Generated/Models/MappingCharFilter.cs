@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -20,14 +21,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="mappings"/> is null. </exception>
         public MappingCharFilter(string name, IEnumerable<string> mappings) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (mappings == null)
-            {
-                throw new ArgumentNullException(nameof(mappings));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(mappings, nameof(mappings));
 
             Mappings = mappings.ToList();
             ODataType = "#Microsoft.Azure.Search.MappingCharFilter";

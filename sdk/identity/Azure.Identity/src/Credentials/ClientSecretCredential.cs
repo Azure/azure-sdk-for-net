@@ -19,6 +19,8 @@ namespace Azure.Identity
     {
         private readonly CredentialPipeline _pipeline;
 
+        internal readonly string[] AdditionallyAllowedTenantIds;
+
         internal MsalConfidentialClient Client { get; }
 
         /// <summary>
@@ -95,6 +97,8 @@ namespace Azure.Identity
                          clientSecret,
                          null,
                          options);
+
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
         }
 
         /// <summary>
@@ -109,7 +113,7 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
                 AuthenticationResult result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, true, cancellationToken).ConfigureAwait(false);
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
@@ -132,7 +136,7 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
                 AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, false, cancellationToken).EnsureCompleted();
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));

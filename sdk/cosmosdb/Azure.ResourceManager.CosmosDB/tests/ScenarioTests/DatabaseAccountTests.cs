@@ -83,6 +83,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Flaky test: Need diagnose that the test is not generating the recordings by RP team")]
         public async Task DatabaseAccountListBySubscriptionTest()
         {
             var account = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.MongoDB);

@@ -10,7 +10,7 @@ namespace Azure.AI.Language.QuestionAnswering
     /// <summary>
     /// Client options for <see cref="QuestionAnsweringClient"/>.
     /// </summary>
-    [CodeGenType("QuestionAnsweringProjectsClientOptions")]
+    [CodeGenType("QuestionAnsweringAuthoringClientOptions")]
     public partial class QuestionAnsweringClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2021_10_01;

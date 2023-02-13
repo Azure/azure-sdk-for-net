@@ -132,7 +132,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                     AuthenticationEventResponseHandler eventsResponseHandler = (AuthenticationEventResponseHandler)mockedRequest.Properties[AuthenticationEventResponseHandler.EventResponseProperty];
                     eventsResponseHandler.Request = new TokenIssuanceStartRequest(t.RequestMessage)
                     {
-                        Response = testTypes == TestTypes.ValidCloudEvent ? CreateTokenIssuanceStartResponse() : CreateIssuanceStartLegacyResponse(),
+                        Response = CreateTokenIssuanceStartResponse(),
                         RequestStatus = RequestStatusType.Successful
                     };
 
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                     eventsResponseHandler.Request = new TokenIssuanceStartRequest(t.RequestMessage)
                     {
 
-                        Response = CreateIssuanceStartLegacyResponse(),
+                        Response = CreateTokenIssuanceStartResponse(),
                         RequestStatus = RequestStatusType.Successful
                     };
 
@@ -285,21 +285,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 .GetCustomAttributes(false)
                 .OfType<TAttribute>()
                 .SingleOrDefault();
-        }
-
-        /// <summary>Creates the issuance start Legacy response.</summary>
-        /// <returns>A newly created TokenIssuanceStartResponse for version preview_10_01_2021</returns>
-        public static TokenIssuanceStartResponse CreateIssuanceStartLegacyResponse()
-        {
-            JObject jBody = JObject.Parse(ReadResource(MainAssembly, String.Join(".", DefaultNamespace, "Templates", "ActionableTemplate.json")));
-            (jBody["type"] as JValue).Value = "onTokenIssuanceStartCustomExtension";
-            (jBody["apiSchemaVersion"] as JValue).Value = "10-01-2021-preview";
-
-
-            return new TokenIssuanceStartResponse()
-            {
-                Body = jBody.ToString()
-            };
         }
 
         /// <summary>Creates the issuance start Legacy response.</summary>

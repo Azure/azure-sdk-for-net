@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.StorageCache.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("scope");
+            writer.WritePropertyName("scope"u8);
             writer.WriteStringValue(Scope.ToString());
             if (Optional.IsDefined(Filter))
             {
-                writer.WritePropertyName("filter");
+                writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
-            writer.WritePropertyName("access");
+            writer.WritePropertyName("access"u8);
             writer.WriteStringValue(Access.ToString());
-            if (Optional.IsDefined(Suid))
+            if (Optional.IsDefined(AllowSuid))
             {
-                writer.WritePropertyName("suid");
-                writer.WriteBooleanValue(Suid.Value);
+                writer.WritePropertyName("suid"u8);
+                writer.WriteBooleanValue(AllowSuid.Value);
             }
-            if (Optional.IsDefined(SubmountAccess))
+            if (Optional.IsDefined(AllowSubmountAccess))
             {
-                writer.WritePropertyName("submountAccess");
-                writer.WriteBooleanValue(SubmountAccess.Value);
+                writer.WritePropertyName("submountAccess"u8);
+                writer.WriteBooleanValue(AllowSubmountAccess.Value);
             }
-            if (Optional.IsDefined(RootSquash))
+            if (Optional.IsDefined(EnableRootSquash))
             {
-                writer.WritePropertyName("rootSquash");
-                writer.WriteBooleanValue(RootSquash.Value);
+                writer.WritePropertyName("rootSquash"u8);
+                writer.WriteBooleanValue(EnableRootSquash.Value);
             }
             if (Optional.IsDefined(AnonymousUID))
             {
-                writer.WritePropertyName("anonymousUID");
+                writer.WritePropertyName("anonymousUID"u8);
                 writer.WriteStringValue(AnonymousUID);
             }
             if (Optional.IsDefined(AnonymousGID))
             {
-                writer.WritePropertyName("anonymousGID");
+                writer.WritePropertyName("anonymousGID"u8);
                 writer.WriteStringValue(AnonymousGID);
             }
             writer.WriteEndObject();
@@ -64,22 +64,22 @@ namespace Azure.ResourceManager.StorageCache.Models
             Optional<string> anonymousGID = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scope"))
+                if (property.NameEquals("scope"u8))
                 {
                     scope = new NfsAccessRuleScope(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("filter"))
+                if (property.NameEquals("filter"u8))
                 {
                     filter = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("access"))
+                if (property.NameEquals("access"u8))
                 {
                     access = new NfsAccessRuleAccess(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("suid"))
+                if (property.NameEquals("suid"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     suid = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("submountAccess"))
+                if (property.NameEquals("submountAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     submountAccess = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("rootSquash"))
+                if (property.NameEquals("rootSquash"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.StorageCache.Models
                     rootSquash = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("anonymousUID"))
+                if (property.NameEquals("anonymousUID"u8))
                 {
                     anonymousUID = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("anonymousGID"))
+                if (property.NameEquals("anonymousGID"u8))
                 {
                     anonymousGID = property.Value.GetString();
                     continue;

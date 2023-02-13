@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -19,8 +17,8 @@ namespace Azure.ResourceManager.Dynatrace
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _monitorResourceMonitorsClientDiagnostics;
-        private MonitorsRestOperations _monitorResourceMonitorsRestClient;
+        private ClientDiagnostics _dynatraceMonitorMonitorsClientDiagnostics;
+        private MonitorsRestOperations _dynatraceMonitorMonitorsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -34,8 +32,8 @@ namespace Azure.ResourceManager.Dynatrace
         {
         }
 
-        private ClientDiagnostics MonitorResourceMonitorsClientDiagnostics => _monitorResourceMonitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Dynatrace", MonitorResource.ResourceType.Namespace, Diagnostics);
-        private MonitorsRestOperations MonitorResourceMonitorsRestClient => _monitorResourceMonitorsRestClient ??= new MonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MonitorResource.ResourceType));
+        private ClientDiagnostics DynatraceMonitorMonitorsClientDiagnostics => _dynatraceMonitorMonitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Dynatrace", DynatraceMonitorResource.ResourceType.Namespace, Diagnostics);
+        private MonitorsRestOperations DynatraceMonitorMonitorsRestClient => _dynatraceMonitorMonitorsRestClient ??= new MonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DynatraceMonitorResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -45,86 +43,46 @@ namespace Azure.ResourceManager.Dynatrace
 
         /// <summary>
         /// List all MonitorResource by subscriptionId
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Dynatrace.Observability/monitors
-        /// Operation Id: Monitors_ListBySubscriptionId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Dynatrace.Observability/monitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_ListBySubscriptionId</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitorResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MonitorResource> GetMonitorResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DynatraceMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DynatraceMonitorResource> GetDynatraceMonitorsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MonitorResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = MonitorResourceMonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMonitorResources");
-                scope.Start();
-                try
-                {
-                    var response = await MonitorResourceMonitorsRestClient.ListBySubscriptionIdAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MonitorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = MonitorResourceMonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMonitorResources");
-                scope.Start();
-                try
-                {
-                    var response = await MonitorResourceMonitorsRestClient.ListBySubscriptionIdNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DynatraceMonitorMonitorsRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DynatraceMonitorMonitorsRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DynatraceMonitorResource(Client, DynatraceMonitorData.DeserializeDynatraceMonitorData(e)), DynatraceMonitorMonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDynatraceMonitors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List all MonitorResource by subscriptionId
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Dynatrace.Observability/monitors
-        /// Operation Id: Monitors_ListBySubscriptionId
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Dynatrace.Observability/monitors</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_ListBySubscriptionId</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MonitorResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MonitorResource> GetMonitorResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DynatraceMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DynatraceMonitorResource> GetDynatraceMonitors(CancellationToken cancellationToken = default)
         {
-            Page<MonitorResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = MonitorResourceMonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMonitorResources");
-                scope.Start();
-                try
-                {
-                    var response = MonitorResourceMonitorsRestClient.ListBySubscriptionId(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MonitorResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = MonitorResourceMonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMonitorResources");
-                scope.Start();
-                try
-                {
-                    var response = MonitorResourceMonitorsRestClient.ListBySubscriptionIdNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DynatraceMonitorMonitorsRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DynatraceMonitorMonitorsRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DynatraceMonitorResource(Client, DynatraceMonitorData.DeserializeDynatraceMonitorData(e)), DynatraceMonitorMonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDynatraceMonitors", "value", "nextLink", cancellationToken);
         }
     }
 }

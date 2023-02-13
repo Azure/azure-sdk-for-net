@@ -41,13 +41,14 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// collection in the Azure Cosmos DB service.</param>
         /// <param name="conflictResolutionPolicy">The conflict resolution
         /// policy for the graph.</param>
+        /// <param name="analyticalStorageTtl">Analytical TTL.</param>
         /// <param name="_rid">A system generated property. A unique
         /// identifier.</param>
         /// <param name="_ts">A system generated property that denotes the last
         /// updated timestamp of the resource.</param>
         /// <param name="_etag">A system generated property representing the
         /// resource etag required for optimistic concurrency control.</param>
-        public GremlinGraphGetPropertiesResource(string id, IndexingPolicy indexingPolicy = default(IndexingPolicy), ContainerPartitionKey partitionKey = default(ContainerPartitionKey), int? defaultTtl = default(int?), UniqueKeyPolicy uniqueKeyPolicy = default(UniqueKeyPolicy), ConflictResolutionPolicy conflictResolutionPolicy = default(ConflictResolutionPolicy), string _rid = default(string), double? _ts = default(double?), string _etag = default(string))
+        public GremlinGraphGetPropertiesResource(string id, IndexingPolicy indexingPolicy = default(IndexingPolicy), ContainerPartitionKey partitionKey = default(ContainerPartitionKey), int? defaultTtl = default(int?), UniqueKeyPolicy uniqueKeyPolicy = default(UniqueKeyPolicy), ConflictResolutionPolicy conflictResolutionPolicy = default(ConflictResolutionPolicy), long? analyticalStorageTtl = default(long?), string _rid = default(string), double? _ts = default(double?), string _etag = default(string))
         {
             Id = id;
             IndexingPolicy = indexingPolicy;
@@ -55,6 +56,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             DefaultTtl = defaultTtl;
             UniqueKeyPolicy = uniqueKeyPolicy;
             ConflictResolutionPolicy = conflictResolutionPolicy;
+            AnalyticalStorageTtl = analyticalStorageTtl;
             this._rid = _rid;
             this._ts = _ts;
             this._etag = _etag;
@@ -105,6 +107,12 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "conflictResolutionPolicy")]
         public ConflictResolutionPolicy ConflictResolutionPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets analytical TTL.
+        /// </summary>
+        [JsonProperty(PropertyName = "analyticalStorageTtl")]
+        public long? AnalyticalStorageTtl { get; set; }
 
         /// <summary>
         /// Gets a system generated property. A unique identifier.

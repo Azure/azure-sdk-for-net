@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("number");
+            writer.WritePropertyName("number"u8);
             writer.WriteNumberValue(Number);
-            writer.WritePropertyName("protocol");
+            writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
             if (Optional.IsDefined(AllowedSourceAddressPrefix))
             {
-                writer.WritePropertyName("allowedSourceAddressPrefix");
+                writer.WritePropertyName("allowedSourceAddressPrefix"u8);
                 writer.WriteStringValue(AllowedSourceAddressPrefix);
             }
             if (Optional.IsCollectionDefined(AllowedSourceAddressPrefixes))
             {
-                writer.WritePropertyName("allowedSourceAddressPrefixes");
+                writer.WritePropertyName("allowedSourceAddressPrefixes"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedSourceAddressPrefixes)
                 {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("maxRequestAccessDuration");
+            writer.WritePropertyName("maxRequestAccessDuration"u8);
             writer.WriteStringValue(MaxRequestAccessDuration, "P");
             writer.WriteEndObject();
         }
@@ -44,28 +44,28 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         internal static JitNetworkAccessPortRule DeserializeJitNetworkAccessPortRule(JsonElement element)
         {
             int number = default;
-            Protocol protocol = default;
+            JitNetworkAccessPortProtocol protocol = default;
             Optional<string> allowedSourceAddressPrefix = default;
             Optional<IList<string>> allowedSourceAddressPrefixes = default;
             TimeSpan maxRequestAccessDuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("number"))
+                if (property.NameEquals("number"u8))
                 {
                     number = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("protocol"))
+                if (property.NameEquals("protocol"u8))
                 {
-                    protocol = new Protocol(property.Value.GetString());
+                    protocol = new JitNetworkAccessPortProtocol(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("allowedSourceAddressPrefix"))
+                if (property.NameEquals("allowedSourceAddressPrefix"u8))
                 {
                     allowedSourceAddressPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("allowedSourceAddressPrefixes"))
+                if (property.NameEquals("allowedSourceAddressPrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     allowedSourceAddressPrefixes = array;
                     continue;
                 }
-                if (property.NameEquals("maxRequestAccessDuration"))
+                if (property.NameEquals("maxRequestAccessDuration"u8))
                 {
                     maxRequestAccessDuration = property.Value.GetTimeSpan("P");
                     continue;

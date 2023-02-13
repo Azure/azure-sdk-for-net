@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Cpu))
             {
-                writer.WritePropertyName("cpu");
+                writer.WritePropertyName("cpu"u8);
                 writer.WriteNumberValue(Cpu.Value);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<int> cpu = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cpu"))
+                if (property.NameEquals("cpu"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of ConfigurationServiceGitProperty. </summary>
         public ConfigurationServiceGitProperty()
         {
-            Repositories = new ChangeTrackingList<ConfigurationServiceGitRepository>();
+            ConfigurationServiceGitRepositories = new ChangeTrackingList<AppPlatformConfigurationServiceGitRepository>();
         }
 
         /// <summary> Initializes a new instance of ConfigurationServiceGitProperty. </summary>
-        /// <param name="repositories"> Repositories of Application Configuration Service git property. </param>
-        internal ConfigurationServiceGitProperty(IList<ConfigurationServiceGitRepository> repositories)
+        /// <param name="configurationServiceGitRepositories"> Repositories of Application Configuration Service git property. </param>
+        internal ConfigurationServiceGitProperty(IList<AppPlatformConfigurationServiceGitRepository> configurationServiceGitRepositories)
         {
-            Repositories = repositories;
+            ConfigurationServiceGitRepositories = configurationServiceGitRepositories;
         }
 
         /// <summary> Repositories of Application Configuration Service git property. </summary>
-        public IList<ConfigurationServiceGitRepository> Repositories { get; }
+        public IList<AppPlatformConfigurationServiceGitRepository> ConfigurationServiceGitRepositories { get; }
     }
 }

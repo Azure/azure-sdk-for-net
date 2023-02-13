@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateGetEntityTagRequest(string openId, string subscriptionId, string resourceGroupName, string serviceName)
+        internal HttpMessage CreateGetEntityTagRequest(string subscriptionId, string resourceGroupName, string serviceName, string openId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -157,21 +157,21 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the entity state (Etag) version of the openIdConnectProvider specified by its identifier. </summary>
-        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<bool>> GetEntityTagAsync(string openId, string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="openId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="openId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<bool>> GetEntityTagAsync(string subscriptionId, string resourceGroupName, string serviceName, string openId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
 
-            using var message = CreateGetEntityTagRequest(openId, subscriptionId, resourceGroupName, serviceName);
+            using var message = CreateGetEntityTagRequest(subscriptionId, resourceGroupName, serviceName, openId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -191,21 +191,21 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the entity state (Etag) version of the openIdConnectProvider specified by its identifier. </summary>
-        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<bool> GetEntityTag(string openId, string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="openId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="openId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<bool> GetEntityTag(string subscriptionId, string resourceGroupName, string serviceName, string openId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
 
-            using var message = CreateGetEntityTagRequest(openId, subscriptionId, resourceGroupName, serviceName);
+            using var message = CreateGetEntityTagRequest(subscriptionId, resourceGroupName, serviceName, openId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateGetRequest(string openId, string subscriptionId, string resourceGroupName, string serviceName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serviceName, string openId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -247,21 +247,21 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets specific OpenID Connect Provider without secrets. </summary>
-        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiManagementOpenIdConnectProviderData>> GetAsync(string openId, string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="openId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="openId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ApiManagementOpenIdConnectProviderData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string openId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
 
-            using var message = CreateGetRequest(openId, subscriptionId, resourceGroupName, serviceName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, serviceName, openId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -280,21 +280,21 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets specific OpenID Connect Provider without secrets. </summary>
-        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiManagementOpenIdConnectProviderData> Get(string openId, string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="openId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="openId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ApiManagementOpenIdConnectProviderData> Get(string subscriptionId, string resourceGroupName, string serviceName, string openId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
 
-            using var message = CreateGetRequest(openId, subscriptionId, resourceGroupName, serviceName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, serviceName, openId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string openId, string subscriptionId, string resourceGroupName, string serviceName, ApiManagementOpenIdConnectProviderData data, ETag? ifMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string openId, ApiManagementOpenIdConnectProviderData data, ETag? ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -343,24 +343,24 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Creates or updates the OpenID Connect Provider. </summary>
-        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="data"> Create parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiManagementOpenIdConnectProviderData>> CreateOrUpdateAsync(string openId, string subscriptionId, string resourceGroupName, string serviceName, ApiManagementOpenIdConnectProviderData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="openId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="openId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ApiManagementOpenIdConnectProviderData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string openId, ApiManagementOpenIdConnectProviderData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(openId, subscriptionId, resourceGroupName, serviceName, data, ifMatch);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, openId, data, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -378,24 +378,24 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Creates or updates the OpenID Connect Provider. </summary>
-        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="data"> Create parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiManagementOpenIdConnectProviderData> CreateOrUpdate(string openId, string subscriptionId, string resourceGroupName, string serviceName, ApiManagementOpenIdConnectProviderData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="openId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="openId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ApiManagementOpenIdConnectProviderData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string openId, ApiManagementOpenIdConnectProviderData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(openId, subscriptionId, resourceGroupName, serviceName, data, ifMatch);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, openId, data, ifMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string openId, string subscriptionId, string resourceGroupName, string serviceName, ETag ifMatch, ApiManagementOpenIdConnectProviderPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string openId, ETag ifMatch, ApiManagementOpenIdConnectProviderPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -440,24 +440,24 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Updates the specific OpenID Connect Provider. </summary>
-        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="patch"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiManagementOpenIdConnectProviderData>> UpdateAsync(string openId, string subscriptionId, string resourceGroupName, string serviceName, ETag ifMatch, ApiManagementOpenIdConnectProviderPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="openId"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="openId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ApiManagementOpenIdConnectProviderData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string openId, ETag ifMatch, ApiManagementOpenIdConnectProviderPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(openId, subscriptionId, resourceGroupName, serviceName, ifMatch, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, openId, ifMatch, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -474,24 +474,24 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Updates the specific OpenID Connect Provider. </summary>
-        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="patch"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiManagementOpenIdConnectProviderData> Update(string openId, string subscriptionId, string resourceGroupName, string serviceName, ETag ifMatch, ApiManagementOpenIdConnectProviderPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="openId"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="openId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ApiManagementOpenIdConnectProviderData> Update(string subscriptionId, string resourceGroupName, string serviceName, string openId, ETag ifMatch, ApiManagementOpenIdConnectProviderPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(openId, subscriptionId, resourceGroupName, serviceName, ifMatch, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, openId, ifMatch, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string openId, string subscriptionId, string resourceGroupName, string serviceName, ETag ifMatch)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string serviceName, string openId, ETag ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -531,22 +531,22 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Deletes specific OpenID Connect Provider of the API Management service instance. </summary>
-        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string openId, string subscriptionId, string resourceGroupName, string serviceName, ETag ifMatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="openId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="openId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string serviceName, string openId, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
 
-            using var message = CreateDeleteRequest(openId, subscriptionId, resourceGroupName, serviceName, ifMatch);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serviceName, openId, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -559,22 +559,22 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Deletes specific OpenID Connect Provider of the API Management service instance. </summary>
-        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string openId, string subscriptionId, string resourceGroupName, string serviceName, ETag ifMatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="openId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="openId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string serviceName, string openId, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
 
-            using var message = CreateDeleteRequest(openId, subscriptionId, resourceGroupName, serviceName, ifMatch);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serviceName, openId, ifMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateListSecretsRequest(string openId, string subscriptionId, string resourceGroupName, string serviceName)
+        internal HttpMessage CreateListSecretsRequest(string subscriptionId, string resourceGroupName, string serviceName, string openId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -610,21 +610,21 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the client secret details of the OpenID Connect Provider. </summary>
-        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ClientSecretContract>> ListSecretsAsync(string openId, string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="openId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="openId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ClientSecretContract>> ListSecretsAsync(string subscriptionId, string resourceGroupName, string serviceName, string openId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
 
-            using var message = CreateListSecretsRequest(openId, subscriptionId, resourceGroupName, serviceName);
+            using var message = CreateListSecretsRequest(subscriptionId, resourceGroupName, serviceName, openId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -641,21 +641,21 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the client secret details of the OpenID Connect Provider. </summary>
-        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ClientSecretContract> ListSecrets(string openId, string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="openId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="openId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ClientSecretContract> ListSecrets(string subscriptionId, string resourceGroupName, string serviceName, string openId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
 
-            using var message = CreateListSecretsRequest(openId, subscriptionId, resourceGroupName, serviceName);
+            using var message = CreateListSecretsRequest(subscriptionId, resourceGroupName, serviceName, openId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

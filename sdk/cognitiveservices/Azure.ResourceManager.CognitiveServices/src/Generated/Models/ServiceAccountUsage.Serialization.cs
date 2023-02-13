@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<ServiceAccountQuotaUsageStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     unit = new ServiceAccountUsageUnitType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     name = ServiceAccountUsageMetricName.DeserializeServiceAccountUsageMetricName(property.Value);
                     continue;
                 }
-                if (property.NameEquals("quotaPeriod"))
+                if (property.NameEquals("quotaPeriod"u8))
                 {
                     quotaPeriod = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     limit = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("currentValue"))
+                if (property.NameEquals("currentValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     currentValue = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("nextResetTime"))
+                if (property.NameEquals("nextResetTime"u8))
                 {
                     nextResetTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

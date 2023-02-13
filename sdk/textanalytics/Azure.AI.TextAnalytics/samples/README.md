@@ -10,20 +10,21 @@ name: Azure Text Analytics samples for .NET
 description: Samples for the Azure.AI.TextAnalytics client library
 ---
 
-# Azure Text Analytics client SDK Samples
-Azure Cognitive Services Text Analytics is one of the three services that are part of the Azure Cognitive Service for Language. This client library includes the following main features:
+# Azure Cognitive Services Text Analytics client library for .NET
+Text Analytics is part of the Azure Cognitive Service for Language, a cloud-based service that provides Natural Language Processing (NLP) features for understanding and analyzing text. This client library offers the following features:
 
-* Extract Information: Use Natural Language Understanding (NLU) to extract information from unstructured text. For example:
-  * Key Phrase Extraction
-  * Entity Recognition (Named, Linked, and Personally Identifiable Information (PII) entities)
-  * Healthcare Entities Recognition
-  * Extractive Text Summarization
-  * Custom Named Entity Recognition
-* Classify Text: Use NLU to detect the language, analyze sentiment, or classify the text you have
-  * Language Detection
-  * Sentiment Analysis
-  * Custom Text Classification
-
+  * Language detection
+  * Sentiment analysis
+  * Key phrase extraction
+  * Named entity recognition (NER)
+  * Personally identifiable information (PII) entity recognition
+  * Entity linking
+  * Text analytics for health
+  * Custom named entity recognition (Custom NER)
+  * Custom text classification
+  * Dynamic text classification
+  * Extractive text summarization
+  * Abstractive text summarization
 
 ## Common scenarios samples
 - [Detect Language](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample1_DetectLanguage.md)
@@ -36,6 +37,9 @@ Azure Cognitive Services Text Analytics is one of the three services that are pa
 - [Custom Named Entity Recognition](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample8_RecognizeCustomEntities.md)
 - [Custom Single Label Classification](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample9_SingleLabelClassify.md)
 - [Custom Multi Label Classification](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample10_MultiLabelClassify.md)
+- [Dynamic Classification](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample11_DynamicClassify.md)
+- [Extractive Summarization](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample12_ExtractiveSummarize.md)
+- [Abstractive Summarization](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample13_AbstractiveSummarize.md)
 
 ## Advanced samples
 - [Analyze Sentiment with Opinion Mining](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.md)

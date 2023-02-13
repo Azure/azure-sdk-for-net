@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ResidencyType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResidencyType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataResidency DeserializeDataResidency(JsonElement element)
         {
-            Optional<DataResidencyType> type = default;
+            Optional<DataBoxEdgeDataResidencyType> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new DataResidencyType(property.Value.GetString());
+                    type = new DataBoxEdgeDataResidencyType(property.Value.GetString());
                     continue;
                 }
             }

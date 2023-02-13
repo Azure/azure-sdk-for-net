@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Consumption
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string expand, string skiptoken, int? top)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string expand, string skipToken, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Consumption
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            if (skiptoken != null)
+            if (skipToken != null)
             {
-                uri.AppendQuery("$skiptoken", skiptoken, true);
+                uri.AppendQuery("$skiptoken", skipToken, true);
             }
             if (top != null)
             {
@@ -69,16 +69,16 @@ namespace Azure.ResourceManager.Consumption
         /// <summary> Gets the price sheet for a subscription. Price sheet is available via this API only for May 1, 2014 or later. </summary>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="expand"> May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when returning price sheet. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the top N results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PriceSheetResult>> GetAsync(string subscriptionId, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PriceSheetResult>> GetAsync(string subscriptionId, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateGetRequest(subscriptionId, expand, skiptoken, top);
+            using var message = CreateGetRequest(subscriptionId, expand, skipToken, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -97,16 +97,16 @@ namespace Azure.ResourceManager.Consumption
         /// <summary> Gets the price sheet for a subscription. Price sheet is available via this API only for May 1, 2014 or later. </summary>
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="expand"> May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when returning price sheet. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the top N results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PriceSheetResult> Get(string subscriptionId, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<PriceSheetResult> Get(string subscriptionId, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateGetRequest(subscriptionId, expand, skiptoken, top);
+            using var message = CreateGetRequest(subscriptionId, expand, skipToken, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Consumption
             }
         }
 
-        internal HttpMessage CreateGetByBillingPeriodRequest(string subscriptionId, string billingPeriodName, string expand, string skiptoken, int? top)
+        internal HttpMessage CreateGetByBillingPeriodRequest(string subscriptionId, string billingPeriodName, string expand, string skipToken, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -138,9 +138,9 @@ namespace Azure.ResourceManager.Consumption
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            if (skiptoken != null)
+            if (skipToken != null)
             {
-                uri.AppendQuery("$skiptoken", skiptoken, true);
+                uri.AppendQuery("$skiptoken", skipToken, true);
             }
             if (top != null)
             {
@@ -157,17 +157,17 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="billingPeriodName"> Billing Period Name. </param>
         /// <param name="expand"> May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when returning price sheet. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the top N results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="billingPeriodName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PriceSheetResult>> GetByBillingPeriodAsync(string subscriptionId, string billingPeriodName, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PriceSheetResult>> GetByBillingPeriodAsync(string subscriptionId, string billingPeriodName, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
 
-            using var message = CreateGetByBillingPeriodRequest(subscriptionId, billingPeriodName, expand, skiptoken, top);
+            using var message = CreateGetByBillingPeriodRequest(subscriptionId, billingPeriodName, expand, skipToken, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -187,17 +187,17 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="billingPeriodName"> Billing Period Name. </param>
         /// <param name="expand"> May be used to expand the properties/meterDetails within a price sheet. By default, these fields are not included when returning price sheet. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the top N results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="billingPeriodName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PriceSheetResult> GetByBillingPeriod(string subscriptionId, string billingPeriodName, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<PriceSheetResult> GetByBillingPeriod(string subscriptionId, string billingPeriodName, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
 
-            using var message = CreateGetByBillingPeriodRequest(subscriptionId, billingPeriodName, expand, skiptoken, top);
+            using var message = CreateGetByBillingPeriodRequest(subscriptionId, billingPeriodName, expand, skipToken, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

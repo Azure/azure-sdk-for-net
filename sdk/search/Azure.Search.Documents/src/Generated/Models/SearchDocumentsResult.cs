@@ -21,10 +21,7 @@ namespace Azure.Search.Documents.Models
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
         internal SearchDocumentsResult(IEnumerable<SearchResult> results)
         {
-            if (results == null)
-            {
-                throw new ArgumentNullException(nameof(results));
-            }
+            Argument.AssertNotNull(results, nameof(results));
 
             Facets = new ChangeTrackingDictionary<string, IList<FacetResult>>();
             Answers = new ChangeTrackingList<AnswerResult>();

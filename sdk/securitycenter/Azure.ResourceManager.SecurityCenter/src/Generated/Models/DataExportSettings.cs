@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Represents a data export setting. </summary>
-    public partial class DataExportSettings : SettingData
+    public partial class DataExportSettings : SecuritySettingData
     {
         /// <summary> Initializes a new instance of DataExportSettings. </summary>
         public DataExportSettings()
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> the kind of the settings string. </param>
-        /// <param name="enabled"> Is the data export setting enabled. </param>
-        internal DataExportSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SettingKind kind, bool? enabled) : base(id, name, resourceType, systemData, kind)
+        /// <param name="isEnabled"> Is the data export setting enabled. </param>
+        internal DataExportSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SettingKind kind, bool? isEnabled) : base(id, name, resourceType, systemData, kind)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Kind = kind;
         }
 
         /// <summary> Is the data export setting enabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
     }
 }

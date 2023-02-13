@@ -25,30 +25,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="mapper"/>, <paramref name="reducer"/>, <paramref name="input"/>, <paramref name="output"/> or <paramref name="filePaths"/> is null. </exception>
         public HDInsightStreamingActivity(string name, BinaryData mapper, BinaryData reducer, BinaryData input, BinaryData output, IEnumerable<BinaryData> filePaths) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (mapper == null)
-            {
-                throw new ArgumentNullException(nameof(mapper));
-            }
-            if (reducer == null)
-            {
-                throw new ArgumentNullException(nameof(reducer));
-            }
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
-            if (output == null)
-            {
-                throw new ArgumentNullException(nameof(output));
-            }
-            if (filePaths == null)
-            {
-                throw new ArgumentNullException(nameof(filePaths));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(mapper, nameof(mapper));
+            Argument.AssertNotNull(reducer, nameof(reducer));
+            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(output, nameof(output));
+            Argument.AssertNotNull(filePaths, nameof(filePaths));
 
             StorageLinkedServices = new ChangeTrackingList<FactoryLinkedServiceReference>();
             Arguments = new ChangeTrackingList<BinaryData>();
@@ -102,7 +84,36 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Storage linked service references. </summary>
         public IList<FactoryLinkedServiceReference> StorageLinkedServices { get; }
-        /// <summary> User specified arguments to HDInsightActivity. </summary>
+        /// <summary>
+        /// User specified arguments to HDInsightActivity.
+        /// <para>
+        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IList<BinaryData> Arguments { get; }
         /// <summary> Debug info option. </summary>
         public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
@@ -230,7 +241,36 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData Output { get; set; }
-        /// <summary> Paths to streaming job files. Can be directories. </summary>
+        /// <summary>
+        /// Paths to streaming job files. Can be directories.
+        /// <para>
+        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IList<BinaryData> FilePaths { get; }
         /// <summary> Linked service reference where the files are located. </summary>
         public FactoryLinkedServiceReference FileLinkedService { get; set; }
@@ -265,9 +305,67 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData Combiner { get; set; }
-        /// <summary> Command line environment values. </summary>
+        /// <summary>
+        /// Command line environment values.
+        /// <para>
+        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IList<BinaryData> CommandEnvironment { get; }
-        /// <summary> Allows user to specify defines for streaming job request. </summary>
+        /// <summary>
+        /// Allows user to specify defines for streaming job request.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IDictionary<string, BinaryData> Defines { get; }
     }
 }

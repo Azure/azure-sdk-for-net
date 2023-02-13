@@ -1,9 +1,9 @@
 {
   "Entries": [],
   "Variables": {
-    "AZURE_AUTHORITY_HOST": null,
-    "AZURE_MONITOR_INGESTION_DATA_COLLECTION_ENDPOINT": "https://nibhati-dce-final-vhac.westus2-1.ingest.monitor.azure.com",
-    "AZURE_MONITOR_INGESTION_LOGS_DCR_RULE_ID": "dcr-981bcfe0506f41f5b5168f3368499cfa",
-    "AZURE_MONITOR_INGESTION_LOGS_DCR_STREAM_NAME": "Custom-MyTableRawData"
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "INGESTION_DATA_COLLECTION_ENDPOINT": "https://7a5cd140-9194-5cf5-ad32-3959dea1ef4c-s5j9.westus-1.ingest.monitor.azure.com",
+    "INGESTION_DATA_COLLECTION_RULE_IMMUTABLE_ID": "dcr-4dea665457244efebfb8f90a186e7fe1",
+    "INGESTION_STREAM_NAME": "Custom-MyTableRawData"
   }
 }

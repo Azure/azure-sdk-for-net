@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication
 {
@@ -17,10 +18,7 @@ namespace Azure.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PhoneNumberIdentifierModel(string value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value;
         }

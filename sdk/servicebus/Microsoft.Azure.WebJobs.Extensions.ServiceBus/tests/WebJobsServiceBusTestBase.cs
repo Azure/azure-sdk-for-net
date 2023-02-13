@@ -194,7 +194,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Subject = "subject",
                 To = "to",
                 ReplyTo = "replyTo",
-                ApplicationProperties = {{ "key", "value"}}
+                ApplicationProperties = {{ "key", "value"}},
+                PartitionKey = "partitionKey"
             };
             if (!string.IsNullOrEmpty(sessionId))
             {

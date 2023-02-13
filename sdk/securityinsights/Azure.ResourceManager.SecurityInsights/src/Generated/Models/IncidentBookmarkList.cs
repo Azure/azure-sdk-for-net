@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -17,24 +18,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of IncidentBookmarkList. </summary>
         /// <param name="value"> Array of incident bookmarks. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal IncidentBookmarkList(IEnumerable<HuntingBookmark> value)
+        internal IncidentBookmarkList(IEnumerable<SecurityInsightsHuntingBookmark> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of IncidentBookmarkList. </summary>
         /// <param name="value"> Array of incident bookmarks. </param>
-        internal IncidentBookmarkList(IReadOnlyList<HuntingBookmark> value)
+        internal IncidentBookmarkList(IReadOnlyList<SecurityInsightsHuntingBookmark> value)
         {
             Value = value;
         }
 
         /// <summary> Array of incident bookmarks. </summary>
-        public IReadOnlyList<HuntingBookmark> Value { get; }
+        public IReadOnlyList<SecurityInsightsHuntingBookmark> Value { get; }
     }
 }

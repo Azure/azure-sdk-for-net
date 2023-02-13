@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<NetworkStatusContract> networkStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("networkStatus"))
+                if (property.NameEquals("networkStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

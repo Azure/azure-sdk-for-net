@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LocationName))
             {
-                writer.WritePropertyName("locationName");
+                writer.WritePropertyName("locationName"u8);
                 writer.WriteStringValue(LocationName.Value);
             }
             if (Optional.IsDefined(FailoverPriority))
             {
-                writer.WritePropertyName("failoverPriority");
+                writer.WritePropertyName("failoverPriority"u8);
                 writer.WriteNumberValue(FailoverPriority.Value);
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
-                writer.WritePropertyName("isZoneRedundant");
+                writer.WritePropertyName("isZoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             writer.WriteEndObject();
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<bool> isZoneRedundant = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("locationName"))
+                if (property.NameEquals("locationName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     locationName = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("documentEndpoint"))
+                if (property.NameEquals("documentEndpoint"u8))
                 {
                     documentEndpoint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     provisioningState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("failoverPriority"))
+                if (property.NameEquals("failoverPriority"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     failoverPriority = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("isZoneRedundant"))
+                if (property.NameEquals("isZoneRedundant"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

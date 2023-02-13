@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static ShareList DeserializeShareList(JsonElement element)
         {
-            Optional<IReadOnlyList<ShareData>> value = default;
+            Optional<IReadOnlyList<DataBoxEdgeShareData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ShareData> array = new List<ShareData>();
+                    List<DataBoxEdgeShareData> array = new List<DataBoxEdgeShareData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ShareData.DeserializeShareData(item));
+                        array.Add(DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A class representing a collection of <see cref="AdaptiveApplicationControlGroupResource" /> and their operations.
-    /// Each <see cref="AdaptiveApplicationControlGroupResource" /> in the collection will belong to the same instance of <see cref="AscLocationResource" />.
-    /// To get an <see cref="AdaptiveApplicationControlGroupCollection" /> instance call the GetAdaptiveApplicationControlGroups method from an instance of <see cref="AscLocationResource" />.
+    /// Each <see cref="AdaptiveApplicationControlGroupResource" /> in the collection will belong to the same instance of <see cref="SecurityCenterLocationResource" />.
+    /// To get an <see cref="AdaptiveApplicationControlGroupCollection" /> instance call the GetAdaptiveApplicationControlGroups method from an instance of <see cref="SecurityCenterLocationResource" />.
     /// </summary>
     public partial class AdaptiveApplicationControlGroupCollection : ArmCollection
     {
@@ -46,14 +46,22 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AscLocationResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AscLocationResource.ResourceType), nameof(id));
+            if (id.ResourceType != SecurityCenterLocationResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SecurityCenterLocationResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Update an application control machine group
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}
-        /// Operation Id: AdaptiveApplicationControls_Put
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdaptiveApplicationControls_Put</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="groupName"> Name of an application control machine group. </param>
@@ -70,7 +78,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = await _adaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.PutAsync(Id.SubscriptionId, Id.Name, groupName, data, cancellationToken).ConfigureAwait(false);
+                var response = await _adaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.PutAsync(Id.SubscriptionId, new AzureLocation(Id.Name), groupName, data, cancellationToken).ConfigureAwait(false);
                 var operation = new SecurityCenterArmOperation<AdaptiveApplicationControlGroupResource>(Response.FromValue(new AdaptiveApplicationControlGroupResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -85,8 +93,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Update an application control machine group
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}
-        /// Operation Id: AdaptiveApplicationControls_Put
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdaptiveApplicationControls_Put</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="groupName"> Name of an application control machine group. </param>
@@ -103,7 +119,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = _adaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.Put(Id.SubscriptionId, Id.Name, groupName, data, cancellationToken);
+                var response = _adaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.Put(Id.SubscriptionId, new AzureLocation(Id.Name), groupName, data, cancellationToken);
                 var operation = new SecurityCenterArmOperation<AdaptiveApplicationControlGroupResource>(Response.FromValue(new AdaptiveApplicationControlGroupResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -118,8 +134,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets an application control VM/server group.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}
-        /// Operation Id: AdaptiveApplicationControls_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdaptiveApplicationControls_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="groupName"> Name of an application control machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,7 +157,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = await _adaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.GetAsync(Id.SubscriptionId, Id.Name, groupName, cancellationToken).ConfigureAwait(false);
+                var response = await _adaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Name), groupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AdaptiveApplicationControlGroupResource(Client, response.Value), response.GetRawResponse());
@@ -147,8 +171,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets an application control VM/server group.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}
-        /// Operation Id: AdaptiveApplicationControls_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdaptiveApplicationControls_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="groupName"> Name of an application control machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -162,7 +194,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = _adaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.Get(Id.SubscriptionId, Id.Name, groupName, cancellationToken);
+                var response = _adaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Name), groupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AdaptiveApplicationControlGroupResource(Client, response.Value), response.GetRawResponse());
@@ -176,8 +208,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}
-        /// Operation Id: AdaptiveApplicationControls_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdaptiveApplicationControls_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="groupName"> Name of an application control machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -191,7 +231,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = await _adaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.GetAsync(Id.SubscriptionId, Id.Name, groupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _adaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Name), groupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,8 +243,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}
-        /// Operation Id: AdaptiveApplicationControls_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdaptiveApplicationControls_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="groupName"> Name of an application control machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -218,7 +266,7 @@ namespace Azure.ResourceManager.SecurityCenter
             scope.Start();
             try
             {
-                var response = _adaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.Get(Id.SubscriptionId, Id.Name, groupName, cancellationToken: cancellationToken);
+                var response = _adaptiveApplicationControlGroupAdaptiveApplicationControlsRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Name), groupName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

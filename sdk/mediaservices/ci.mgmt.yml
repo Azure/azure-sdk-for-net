@@ -1,13 +1,23 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
 trigger: none
-
-pr: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/mediaservices/ci.mgmt.yml
+    - sdk/mediaservices/Azure.ResourceManager.Media/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: mediaservices
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.Media
       safeName: AzureResourceManagerMedia

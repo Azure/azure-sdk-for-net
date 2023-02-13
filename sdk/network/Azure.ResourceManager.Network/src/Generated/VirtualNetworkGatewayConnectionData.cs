@@ -23,10 +23,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGateway1"/> is null. </exception>
         public VirtualNetworkGatewayConnectionData(VirtualNetworkGatewayData virtualNetworkGateway1, VirtualNetworkGatewayConnectionType connectionType)
         {
-            if (virtualNetworkGateway1 == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkGateway1));
-            }
+            Argument.AssertNotNull(virtualNetworkGateway1, nameof(virtualNetworkGateway1));
 
             VirtualNetworkGateway1 = virtualNetworkGateway1;
             IngressNatRules = new ChangeTrackingList<WritableSubResource>();

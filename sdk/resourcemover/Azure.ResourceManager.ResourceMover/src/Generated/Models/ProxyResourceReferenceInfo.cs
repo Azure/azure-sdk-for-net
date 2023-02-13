@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceArmResourceId"/> is null. </exception>
         public ProxyResourceReferenceInfo(ResourceIdentifier sourceArmResourceId) : base(sourceArmResourceId)
         {
-            if (sourceArmResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(sourceArmResourceId));
-            }
+            Argument.AssertNotNull(sourceArmResourceId, nameof(sourceArmResourceId));
         }
 
         /// <summary> Initializes a new instance of ProxyResourceReferenceInfo. </summary>
@@ -30,10 +27,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceArmResourceId"/> is null. </exception>
         internal ProxyResourceReferenceInfo(ResourceIdentifier sourceArmResourceId, string name) : base(sourceArmResourceId)
         {
-            if (sourceArmResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(sourceArmResourceId));
-            }
+            Argument.AssertNotNull(sourceArmResourceId, nameof(sourceArmResourceId));
 
             Name = name;
         }

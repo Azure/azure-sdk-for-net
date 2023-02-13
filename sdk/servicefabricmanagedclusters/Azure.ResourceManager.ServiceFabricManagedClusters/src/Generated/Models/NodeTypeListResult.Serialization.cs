@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     {
         internal static NodeTypeListResult DeserializeNodeTypeListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<NodeTypeData>> value = default;
+            Optional<IReadOnlyList<ServiceFabricManagedNodeTypeData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NodeTypeData> array = new List<NodeTypeData>();
+                    List<ServiceFabricManagedNodeTypeData> array = new List<ServiceFabricManagedNodeTypeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NodeTypeData.DeserializeNodeTypeData(item));
+                        array.Add(ServiceFabricManagedNodeTypeData.DeserializeServiceFabricManagedNodeTypeData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

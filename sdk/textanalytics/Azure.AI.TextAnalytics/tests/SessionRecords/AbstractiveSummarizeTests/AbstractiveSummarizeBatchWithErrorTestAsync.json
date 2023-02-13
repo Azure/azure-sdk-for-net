@@ -1,0 +1,212 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://javatextanalyticslivetestresources.cognitiveservices.azure.com/language/analyze-text/jobs?api-version=2022-10-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "3652",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-e942426921ba6c7f9a9c93504ffdaa13-286819d41d581c34-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221106.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4474e55abdccbe8a28c566df974cc4fb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "Windows 365 was in the works before COVID-19 sent companies around the world on a scramble to secure solutions to support employees suddenly forced to work from home, but \u201Cwhat really put the firecracker behind it was the pandemic, it accelerated everything,\u201D McKelvey said. She explained that customers were asking, \u201C\u2019How do we create an experience for people that makes them still feel connected to the company without the physical presence of being there?\u201D In this new world of Windows 365, remote workers flip the lid on their laptop, bootup the family workstation or clip a keyboard onto a tablet, launch a native app or modern web browser and login to their Windows 365 account. From there, their Cloud PC appears with their background, apps, settings and content just as they left it when they last were last there \u2013 in the office, at home or a coffee shop. \u201CAnd then, when you\u2019re done, you\u2019re done. You won\u2019t have any issues around security because you\u2019re not saving anything on your device,\u201D McKelvey said, noting that all the data is stored in the cloud. The ability to login to a Cloud PC from anywhere on any device is part of Microsoft\u2019s larger strategy around tailoring products such as Microsoft Teams and Microsoft 365 for the post-pandemic hybrid workforce of the future, she added. It enables employees accustomed to working from home to continue working from home; it enables companies to hire interns from halfway around the world; it allows startups to scale without requiring IT expertise. \u201CI think this will be interesting for those organizations who, for whatever reason, have shied away from virtualization. This is giving them an opportunity to try it in a way that their regular, everyday endpoint admin could manage,\u201D McKelvey said. The simplicity of Windows 365 won over Dean Wells, the corporate chief information officer for the Government of Nunavut. His team previously attempted to deploy a traditional virtual desktop infrastructure and found it inefficient and unsustainable given the limitations of low-bandwidth satellite internet and the constant need for IT staff to manage the network and infrastructure. We didn\u2019t run it for very long,\u201D he said. \u201CIt didn\u2019t turn out the way we had hoped. So, we actually had terminated the project and rolled back out to just regular PCs.\u201D He re-evaluated this decision after the Government of Nunavut was hit by a ransomware attack in November 2019 that took down everything from the phone system to the government\u2019s servers. Microsoft helped rebuild the system, moving the government to Teams, SharePoint, OneDrive and Microsoft 365. Manchester\u2019s team recruited the Government of Nunavut to pilot Windows 365. Wells was intrigued, especially by the ability to manage the elastic workforce securely and seamlessly. \u201CThe impact that I believe we are finding, and the impact that we\u2019re going to find going forward, is being able to access specialists from outside the territory and organizations outside the territory to come in and help us with our projects, being able to get people on staff with us to help us deliver the day-to-day expertise that we need to run the government,\u201D he said. \u201CBeing able to improve healthcare, being able to improve education, economic development is going to improve the quality of life in the communities.\u201D",
+              "language": "en"
+            },
+            {
+              "id": "1",
+              "text": "",
+              "language": "en"
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "parameters": {
+              "stringIndexType": "Utf16CodeUnit"
+            },
+            "kind": "AbstractiveSummarization"
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "b750fb21-a586-48c8-a824-c3c4e704c4a7",
+        "Content-Length": "0",
+        "Date": "Mon, 07 Nov 2022 05:37:37 GMT",
+        "operation-location": "https://javatextanalyticslivetestresources.cognitiveservices.azure.com/language/analyze-text/jobs/6a087d5d-02a1-45d7-b2ad-b01683d0db8d?api-version=2022-10-01-preview",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "214",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://javatextanalyticslivetestresources.cognitiveservices.azure.com/language/analyze-text/jobs/6a087d5d-02a1-45d7-b2ad-b01683d0db8d?api-version=2022-10-01-preview\u0026showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221106.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b19b60dc28de8c83f245b7f9f02b3a76",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "b243204a-53ca-4eb8-82a4-429bdb20b73f",
+        "Content-Length": "279",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 07 Nov 2022 05:37:37 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "63",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "jobId": "6a087d5d-02a1-45d7-b2ad-b01683d0db8d",
+        "lastUpdateDateTime": "2022-11-07T05:37:37Z",
+        "createdDateTime": "2022-11-07T05:37:37Z",
+        "expirationDateTime": "2022-11-08T05:37:37Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://javatextanalyticslivetestresources.cognitiveservices.azure.com/language/analyze-text/jobs/6a087d5d-02a1-45d7-b2ad-b01683d0db8d?api-version=2022-10-01-preview\u0026showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221106.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3a2943b2fe7d57f47096fbb16d1de902",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "8dca1d72-d1e4-4a24-9347-365582f43327",
+        "Content-Length": "279",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 07 Nov 2022 05:37:38 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "12",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "jobId": "6a087d5d-02a1-45d7-b2ad-b01683d0db8d",
+        "lastUpdateDateTime": "2022-11-07T05:37:38Z",
+        "createdDateTime": "2022-11-07T05:37:37Z",
+        "expirationDateTime": "2022-11-08T05:37:37Z",
+        "status": "running",
+        "errors": [],
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://javatextanalyticslivetestresources.cognitiveservices.azure.com/language/analyze-text/jobs/6a087d5d-02a1-45d7-b2ad-b01683d0db8d?api-version=2022-10-01-preview\u0026showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221106.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3acf94875d7532c961e751870590cefc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "dd676444-69b3-499f-906c-d5b672b172ac",
+        "Content-Length": "924",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 07 Nov 2022 05:37:39 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "41",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "jobId": "6a087d5d-02a1-45d7-b2ad-b01683d0db8d",
+        "lastUpdateDateTime": "2022-11-07T05:37:38Z",
+        "createdDateTime": "2022-11-07T05:37:37Z",
+        "expirationDateTime": "2022-11-08T05:37:37Z",
+        "status": "succeeded",
+        "errors": [],
+        "tasks": {
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 1,
+          "items": [
+            {
+              "kind": "AbstractiveSummarizationLROResults",
+              "lastUpdateDateTime": "2022-11-07T05:37:38.4855947Z",
+              "status": "succeeded",
+              "results": {
+                "documents": [
+                  {
+                    "summaries": [
+                      {
+                        "text": "Microsoft has launched Windows 365 Cloud PCs for remote workers. The new service lets workers access their old PCs from anywhere on any device. The Cloud PCs are powered by Microsoft\u0027s cloud computing platform.",
+                        "contexts": [
+                          {
+                            "offset": 0,
+                            "length": 3315
+                          }
+                        ]
+                      }
+                    ],
+                    "id": "0",
+                    "warnings": []
+                  }
+                ],
+                "errors": [
+                  {
+                    "id": "1",
+                    "error": {
+                      "code": "InvalidArgument",
+                      "message": "Invalid Document in request.",
+                      "innererror": {
+                        "code": "InvalidDocument",
+                        "message": "Document text is empty."
+                      }
+                    }
+                  }
+                ],
+                "modelVersion": "latest"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1910292608",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticslivetestresources.cognitiveservices.azure.com/"
+  }
+}

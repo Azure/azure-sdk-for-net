@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="softwareName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="softwareName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SoftwareData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string softwareName, CancellationToken cancellationToken = default)
+        public async Task<Response<SoftwareInventoryData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string softwareName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -246,13 +246,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        SoftwareData value = default;
+                        SoftwareInventoryData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SoftwareData.DeserializeSoftwareData(document.RootElement);
+                        value = SoftwareInventoryData.DeserializeSoftwareInventoryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SoftwareData)null, message.Response);
+                    return Response.FromValue((SoftwareInventoryData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="softwareName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceNamespace"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="softwareName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SoftwareData> Get(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string softwareName, CancellationToken cancellationToken = default)
+        public Response<SoftwareInventoryData> Get(string subscriptionId, string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, string softwareName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -283,13 +283,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        SoftwareData value = default;
+                        SoftwareInventoryData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SoftwareData.DeserializeSoftwareData(document.RootElement);
+                        value = SoftwareInventoryData.DeserializeSoftwareInventoryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SoftwareData)null, message.Response);
+                    return Response.FromValue((SoftwareInventoryData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

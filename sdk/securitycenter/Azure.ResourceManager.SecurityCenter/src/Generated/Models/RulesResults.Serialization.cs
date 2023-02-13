@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static RulesResults DeserializeRulesResults(JsonElement element)
         {
-            Optional<IReadOnlyList<RuleResultData>> value = default;
+            Optional<IReadOnlyList<SqlVulnerabilityAssessmentBaselineRuleData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RuleResultData> array = new List<RuleResultData>();
+                    List<SqlVulnerabilityAssessmentBaselineRuleData> array = new List<SqlVulnerabilityAssessmentBaselineRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RuleResultData.DeserializeRuleResultData(item));
+                        array.Add(SqlVulnerabilityAssessmentBaselineRuleData.DeserializeSqlVulnerabilityAssessmentBaselineRuleData(item));
                     }
                     value = array;
                     continue;

@@ -1,0 +1,1752 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-31e7ff6eaed42accf099614ebabe94e6-f6a5e6c9dad1f60e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "02d2ecd015cb743057fbb0a69bc60edb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "747",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 00:56:09 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2fc723f3-9a8d-4b0a-a3d6-82df190d3aaa",
+        "x-ms-ratelimit-remaining-subscription-reads": "11568",
+        "x-ms-request-id": "2fc723f3-9a8d-4b0a-a3d6-82df190d3aaa",
+        "x-ms-routing-request-id": "WESTUS:20220803T005609Z:2fc723f3-9a8d-4b0a-a3d6-82df190d3aaa"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-566",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/csmrg4176?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "21",
+        "Content-Type": "application/json",
+        "traceparent": "00-9ed2b88748fbb0b2a4a553f9b9904ca8-a6d0daa6786e2e73-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "9d86df3f5418a66abf2bfd2b6b1a4c0c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "215",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 00:56:09 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d06737f3-3c8c-48bf-93c1-973ed93a6a69",
+        "x-ms-ratelimit-remaining-subscription-writes": "1086",
+        "x-ms-request-id": "d06737f3-3c8c-48bf-93c1-973ed93a6a69",
+        "x-ms-routing-request-id": "WESTUS:20220803T005609Z:d06737f3-3c8c-48bf-93c1-973ed93a6a69"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176",
+        "name": "csmrg4176",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/virtualNetworks/azsmnet7507?api-version=2021-02-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "220",
+        "Content-Type": "application/json",
+        "traceparent": "00-4283cb4f18e452d891375fc39d33a05b-5006e576ae9b2ed9-00",
+        "User-Agent": "azsdk-net-ResourceManager.Network/1.1.0-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "f12811ef6bbfdda7b9caca370c26e3f9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westus",
+        "properties": {
+          "addressSpace": {
+            "addressPrefixes": [
+              "10.0.0.0/16"
+            ]
+          },
+          "dhcpOptions": {
+            "dnsServers": [
+              "10.1.1.1",
+              "10.1.2.4"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "azsmnet9011",
+              "properties": {
+                "addressPrefix": "10.0.0.0/24"
+              }
+            }
+          ]
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncNotification": "Enabled",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/operations/c2cb4dae-bcad-469b-8a6a-26528bfa0fa0?api-version=2021-02-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1332",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 00:56:10 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "3",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "8e863c27-8dec-4904-a0ed-47c4976dbd73",
+        "x-ms-client-request-id": "f12811ef6bbfdda7b9caca370c26e3f9",
+        "x-ms-correlation-request-id": "62610d6f-90d3-40d0-ba94-81d0c19f5097",
+        "x-ms-ratelimit-remaining-subscription-writes": "1085",
+        "x-ms-request-id": "c2cb4dae-bcad-469b-8a6a-26528bfa0fa0",
+        "x-ms-routing-request-id": "WESTUS:20220803T005610Z:62610d6f-90d3-40d0-ba94-81d0c19f5097"
+      },
+      "ResponseBody": {
+        "name": "azsmnet7507",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/virtualNetworks/azsmnet7507",
+        "etag": "W/\u00228bd4e3e4-9ffd-45e5-898c-798a5cb1bcd5\u0022",
+        "type": "Microsoft.Network/virtualNetworks",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Updating",
+          "resourceGuid": "4e728280-ee80-45f4-a7d0-79bc71a8fe10",
+          "addressSpace": {
+            "addressPrefixes": [
+              "10.0.0.0/16"
+            ]
+          },
+          "dhcpOptions": {
+            "dnsServers": [
+              "10.1.1.1",
+              "10.1.2.4"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "azsmnet9011",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/virtualNetworks/azsmnet7507/subnets/azsmnet9011",
+              "etag": "W/\u00228bd4e3e4-9ffd-45e5-898c-798a5cb1bcd5\u0022",
+              "properties": {
+                "provisioningState": "Updating",
+                "addressPrefix": "10.0.0.0/24",
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Disabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets"
+            }
+          ],
+          "virtualNetworkPeerings": [],
+          "enableDdosProtection": false
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/operations/c2cb4dae-bcad-469b-8a6a-26528bfa0fa0?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4283cb4f18e452d891375fc39d33a05b-ef30cc420cf5d00f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "c91f75224ee21a20f53b9aa0db881ed6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "30",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 00:56:10 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "9024efe3-fd20-4e3e-b43b-5707399f630e",
+        "x-ms-client-request-id": "c91f75224ee21a20f53b9aa0db881ed6",
+        "x-ms-correlation-request-id": "f4b5fc08-a824-49b3-b5be-93352b4741c7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11567",
+        "x-ms-request-id": "2fe399ec-7952-4f02-804a-7206e6611de5",
+        "x-ms-routing-request-id": "WESTUS:20220803T005610Z:f4b5fc08-a824-49b3-b5be-93352b4741c7"
+      },
+      "ResponseBody": {
+        "status": "InProgress"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/operations/c2cb4dae-bcad-469b-8a6a-26528bfa0fa0?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4283cb4f18e452d891375fc39d33a05b-580a673c65b58d5a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "d77172480c075799a9cce4d5385ff1d8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "29",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 00:56:20 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "8628fab8-abfc-4095-892b-243673926b66",
+        "x-ms-client-request-id": "d77172480c075799a9cce4d5385ff1d8",
+        "x-ms-correlation-request-id": "d84bb7dc-a7da-4791-9707-9adf63302270",
+        "x-ms-ratelimit-remaining-subscription-reads": "11566",
+        "x-ms-request-id": "3fd95c01-168c-47fd-8bbc-bcfe92b7225d",
+        "x-ms-routing-request-id": "WESTUS:20220803T005620Z:d84bb7dc-a7da-4791-9707-9adf63302270"
+      },
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/virtualNetworks/azsmnet7507?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-4283cb4f18e452d891375fc39d33a05b-9f1c27e010a69b84-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "97142f6619075a1654ea777cfdc78083",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1334",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 00:56:20 GMT",
+        "ETag": "W/\u0022b0ff5833-51ff-4596-aa0e-3963fdaaaa13\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "abba1b48-c409-4e3c-84ae-b9aa82c03508",
+        "x-ms-client-request-id": "97142f6619075a1654ea777cfdc78083",
+        "x-ms-correlation-request-id": "bff1c82a-8e84-4eb8-98ae-d4d71fcc3259",
+        "x-ms-ratelimit-remaining-subscription-reads": "11565",
+        "x-ms-request-id": "c0e76c75-1cb1-410f-9dcf-c723a9b6b632",
+        "x-ms-routing-request-id": "WESTUS:20220803T005620Z:bff1c82a-8e84-4eb8-98ae-d4d71fcc3259"
+      },
+      "ResponseBody": {
+        "name": "azsmnet7507",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/virtualNetworks/azsmnet7507",
+        "etag": "W/\u0022b0ff5833-51ff-4596-aa0e-3963fdaaaa13\u0022",
+        "type": "Microsoft.Network/virtualNetworks",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "4e728280-ee80-45f4-a7d0-79bc71a8fe10",
+          "addressSpace": {
+            "addressPrefixes": [
+              "10.0.0.0/16"
+            ]
+          },
+          "dhcpOptions": {
+            "dnsServers": [
+              "10.1.1.1",
+              "10.1.2.4"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "azsmnet9011",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/virtualNetworks/azsmnet7507/subnets/azsmnet9011",
+              "etag": "W/\u0022b0ff5833-51ff-4596-aa0e-3963fdaaaa13\u0022",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "addressPrefix": "10.0.0.0/24",
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Disabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets"
+            }
+          ],
+          "virtualNetworkPeerings": [],
+          "enableDdosProtection": false
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/virtualNetworks/azsmnet7507?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-94002f36caf0d25649e4e1be6fbd0222-827973ed2e44b065-00",
+        "User-Agent": "azsdk-net-ResourceManager.Network/1.1.0-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "79005ccb8c6f1693dcc82016694be296",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1334",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 00:56:20 GMT",
+        "ETag": "W/\u0022b0ff5833-51ff-4596-aa0e-3963fdaaaa13\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "86b84ad6-3801-4b57-a17d-0d47e9fdba4b",
+        "x-ms-client-request-id": "79005ccb8c6f1693dcc82016694be296",
+        "x-ms-correlation-request-id": "e761711c-a7df-4c9a-8420-87a9b5dfaa88",
+        "x-ms-ratelimit-remaining-subscription-reads": "11564",
+        "x-ms-request-id": "669e2946-dd3d-4f08-ae16-ecb28a5b7cff",
+        "x-ms-routing-request-id": "WESTUS:20220803T005620Z:e761711c-a7df-4c9a-8420-87a9b5dfaa88"
+      },
+      "ResponseBody": {
+        "name": "azsmnet7507",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/virtualNetworks/azsmnet7507",
+        "etag": "W/\u0022b0ff5833-51ff-4596-aa0e-3963fdaaaa13\u0022",
+        "type": "Microsoft.Network/virtualNetworks",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "4e728280-ee80-45f4-a7d0-79bc71a8fe10",
+          "addressSpace": {
+            "addressPrefixes": [
+              "10.0.0.0/16"
+            ]
+          },
+          "dhcpOptions": {
+            "dnsServers": [
+              "10.1.1.1",
+              "10.1.2.4"
+            ]
+          },
+          "subnets": [
+            {
+              "name": "azsmnet9011",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/virtualNetworks/azsmnet7507/subnets/azsmnet9011",
+              "etag": "W/\u0022b0ff5833-51ff-4596-aa0e-3963fdaaaa13\u0022",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "addressPrefix": "10.0.0.0/24",
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Disabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+              },
+              "type": "Microsoft.Network/virtualNetworks/subnets"
+            }
+          ],
+          "virtualNetworkPeerings": [],
+          "enableDdosProtection": false
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088?api-version=2021-04-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "2142",
+        "Content-Type": "application/json",
+        "traceparent": "00-9b2147ee021ae5a61e07954c728416d1-6aafa07edfb50d8d-00",
+        "User-Agent": "azsdk-net-ResourceManager.Network/1.1.0-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "83175b2e951c591ce14c610adb5f7869",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "westus",
+        "properties": {
+          "frontendIPConfigurations": [
+            {
+              "name": "azsmnet590",
+              "properties": {
+                "privateIPAddress": "10.0.0.38",
+                "privateIPAllocationMethod": "Static",
+                "subnet": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/virtualNetworks/azsmnet7507/subnets/azsmnet9011",
+                  "name": "azsmnet9011",
+                  "type": "Microsoft.Network/virtualNetworks/subnets",
+                  "properties": {
+                    "addressPrefix": "10.0.0.0/24",
+                    "delegations": [],
+                    "privateEndpointNetworkPolicies": "Disabled",
+                    "privateLinkServiceNetworkPolicies": "Enabled"
+                  }
+                }
+              }
+            }
+          ],
+          "backendAddressPools": [
+            {
+              "name": "azsmnet7101",
+              "properties": {}
+            }
+          ],
+          "loadBalancingRules": [
+            {
+              "name": "azsmnet1978",
+              "properties": {
+                "frontendIPConfiguration": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/frontendIPConfigurations/azsmnet590"
+                },
+                "backendAddressPool": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/backendAddressPools/azsmnet7101"
+                },
+                "probe": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/probes/azsmnet7754"
+                },
+                "protocol": "Tcp",
+                "frontendPort": 80,
+                "backendPort": 80,
+                "enableFloatingIP": false
+              }
+            }
+          ],
+          "probes": [
+            {
+              "name": "azsmnet7754",
+              "properties": {
+                "protocol": "Http",
+                "port": 80,
+                "intervalInSeconds": 10,
+                "numberOfProbes": 2,
+                "requestPath": "healthcheck.aspx"
+              }
+            }
+          ],
+          "inboundNatRules": [
+            {
+              "name": "azsmnet4941",
+              "properties": {
+                "frontendIPConfiguration": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/frontendIPConfigurations/azsmnet590"
+                },
+                "protocol": "Tcp",
+                "frontendPort": 3389,
+                "backendPort": 3389,
+                "enableFloatingIP": false
+              }
+            },
+            {
+              "name": "azsmnet4669",
+              "properties": {
+                "frontendIPConfiguration": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/frontendIPConfigurations/azsmnet590"
+                },
+                "protocol": "Tcp",
+                "frontendPort": 3390,
+                "backendPort": 3389,
+                "enableFloatingIP": false
+              }
+            }
+          ]
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncNotification": "Enabled",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/operations/20885b58-2b0c-4378-be10-87ba5814c0cf?api-version=2021-04-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "7507",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 00:56:20 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "07cb04dc-7516-4d56-988b-02cf1720c4c6",
+        "x-ms-client-request-id": "83175b2e951c591ce14c610adb5f7869",
+        "x-ms-correlation-request-id": "41f17dd4-959d-4373-be4c-9ed48fa3cf4b",
+        "x-ms-ratelimit-remaining-subscription-writes": "1084",
+        "x-ms-request-id": "20885b58-2b0c-4378-be10-87ba5814c0cf",
+        "x-ms-routing-request-id": "WESTUS:20220803T005620Z:41f17dd4-959d-4373-be4c-9ed48fa3cf4b"
+      },
+      "ResponseBody": {
+        "name": "azsmnet3088",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088",
+        "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+        "type": "Microsoft.Network/loadBalancers",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "7a9fdc69-7e0e-4972-8f2c-b6d5a2f9732c",
+          "frontendIPConfigurations": [
+            {
+              "name": "azsmnet590",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/frontendIPConfigurations/azsmnet590",
+              "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+              "type": "Microsoft.Network/loadBalancers/frontendIPConfigurations",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "privateIPAddress": "10.0.0.38",
+                "privateIPAllocationMethod": "Static",
+                "subnet": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/virtualNetworks/azsmnet7507/subnets/azsmnet9011"
+                },
+                "loadBalancingRules": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/loadBalancingRules/azsmnet1978"
+                  }
+                ],
+                "inboundNatRules": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/inboundNatRules/azsmnet4941"
+                  },
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/inboundNatRules/azsmnet4669"
+                  }
+                ],
+                "privateIPAddressVersion": "IPv4"
+              }
+            }
+          ],
+          "backendAddressPools": [
+            {
+              "name": "azsmnet7101",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/backendAddressPools/azsmnet7101",
+              "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "loadBalancingRules": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/loadBalancingRules/azsmnet1978"
+                  }
+                ]
+              },
+              "type": "Microsoft.Network/loadBalancers/backendAddressPools"
+            }
+          ],
+          "loadBalancingRules": [
+            {
+              "name": "azsmnet1978",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/loadBalancingRules/azsmnet1978",
+              "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+              "type": "Microsoft.Network/loadBalancers/loadBalancingRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "frontendIPConfiguration": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/frontendIPConfigurations/azsmnet590"
+                },
+                "frontendPort": 80,
+                "backendPort": 80,
+                "enableFloatingIP": false,
+                "idleTimeoutInMinutes": 4,
+                "protocol": "Tcp",
+                "enableDestinationServiceEndpoint": false,
+                "enableTcpReset": false,
+                "allowBackendPortConflict": false,
+                "loadDistribution": "Default",
+                "backendAddressPool": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/backendAddressPools/azsmnet7101"
+                },
+                "backendAddressPools": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/backendAddressPools/azsmnet7101"
+                  }
+                ],
+                "probe": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/probes/azsmnet7754"
+                }
+              }
+            }
+          ],
+          "probes": [
+            {
+              "name": "azsmnet7754",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/probes/azsmnet7754",
+              "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "protocol": "Http",
+                "port": 80,
+                "requestPath": "healthcheck.aspx",
+                "intervalInSeconds": 10,
+                "numberOfProbes": 2,
+                "loadBalancingRules": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/loadBalancingRules/azsmnet1978"
+                  }
+                ]
+              },
+              "type": "Microsoft.Network/loadBalancers/probes"
+            }
+          ],
+          "inboundNatRules": [
+            {
+              "name": "azsmnet4941",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/inboundNatRules/azsmnet4941",
+              "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+              "type": "Microsoft.Network/loadBalancers/inboundNatRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "frontendIPConfiguration": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/frontendIPConfigurations/azsmnet590"
+                },
+                "frontendPort": 3389,
+                "backendPort": 3389,
+                "enableFloatingIP": false,
+                "idleTimeoutInMinutes": 4,
+                "protocol": "Tcp",
+                "enableDestinationServiceEndpoint": false,
+                "enableTcpReset": false,
+                "allowBackendPortConflict": false
+              }
+            },
+            {
+              "name": "azsmnet4669",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/inboundNatRules/azsmnet4669",
+              "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+              "type": "Microsoft.Network/loadBalancers/inboundNatRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "frontendIPConfiguration": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/frontendIPConfigurations/azsmnet590"
+                },
+                "frontendPort": 3390,
+                "backendPort": 3389,
+                "enableFloatingIP": false,
+                "idleTimeoutInMinutes": 4,
+                "protocol": "Tcp",
+                "enableDestinationServiceEndpoint": false,
+                "enableTcpReset": false,
+                "allowBackendPortConflict": false
+              }
+            }
+          ],
+          "inboundNatPools": []
+        },
+        "sku": {
+          "name": "Basic",
+          "tier": "Regional"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/operations/20885b58-2b0c-4378-be10-87ba5814c0cf?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9b2147ee021ae5a61e07954c728416d1-a70a26c678207778-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "1dd18d4309588176bf6e3eca08410737",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "29",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 00:56:20 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "e70b32a9-c9a6-42d3-bda8-537476fff2b1",
+        "x-ms-client-request-id": "1dd18d4309588176bf6e3eca08410737",
+        "x-ms-correlation-request-id": "f8ded1f9-94fc-4db2-a00c-150039de575f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11563",
+        "x-ms-request-id": "e02990ea-11e2-422f-b03b-4ba588c24cd1",
+        "x-ms-routing-request-id": "WESTUS:20220803T005620Z:f8ded1f9-94fc-4db2-a00c-150039de575f"
+      },
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9b2147ee021ae5a61e07954c728416d1-21227f45dadaa2d3-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "0f5f58d0cc7534905c267914b4e91e53",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "7507",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 00:56:20 GMT",
+        "ETag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "b5cf5fe4-79fb-48da-b2c1-e030953787d7",
+        "x-ms-client-request-id": "0f5f58d0cc7534905c267914b4e91e53",
+        "x-ms-correlation-request-id": "ed28671b-05bd-4647-b37c-890b9440c597",
+        "x-ms-ratelimit-remaining-subscription-reads": "11562",
+        "x-ms-request-id": "bb2eba57-ea84-4f3d-a97d-25cc3b88bd94",
+        "x-ms-routing-request-id": "WESTUS:20220803T005621Z:ed28671b-05bd-4647-b37c-890b9440c597"
+      },
+      "ResponseBody": {
+        "name": "azsmnet3088",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088",
+        "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+        "type": "Microsoft.Network/loadBalancers",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "7a9fdc69-7e0e-4972-8f2c-b6d5a2f9732c",
+          "frontendIPConfigurations": [
+            {
+              "name": "azsmnet590",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/frontendIPConfigurations/azsmnet590",
+              "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+              "type": "Microsoft.Network/loadBalancers/frontendIPConfigurations",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "privateIPAddress": "10.0.0.38",
+                "privateIPAllocationMethod": "Static",
+                "subnet": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/virtualNetworks/azsmnet7507/subnets/azsmnet9011"
+                },
+                "loadBalancingRules": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/loadBalancingRules/azsmnet1978"
+                  }
+                ],
+                "inboundNatRules": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/inboundNatRules/azsmnet4941"
+                  },
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/inboundNatRules/azsmnet4669"
+                  }
+                ],
+                "privateIPAddressVersion": "IPv4"
+              }
+            }
+          ],
+          "backendAddressPools": [
+            {
+              "name": "azsmnet7101",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/backendAddressPools/azsmnet7101",
+              "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "loadBalancingRules": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/loadBalancingRules/azsmnet1978"
+                  }
+                ]
+              },
+              "type": "Microsoft.Network/loadBalancers/backendAddressPools"
+            }
+          ],
+          "loadBalancingRules": [
+            {
+              "name": "azsmnet1978",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/loadBalancingRules/azsmnet1978",
+              "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+              "type": "Microsoft.Network/loadBalancers/loadBalancingRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "frontendIPConfiguration": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/frontendIPConfigurations/azsmnet590"
+                },
+                "frontendPort": 80,
+                "backendPort": 80,
+                "enableFloatingIP": false,
+                "idleTimeoutInMinutes": 4,
+                "protocol": "Tcp",
+                "enableDestinationServiceEndpoint": false,
+                "enableTcpReset": false,
+                "allowBackendPortConflict": false,
+                "loadDistribution": "Default",
+                "backendAddressPool": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/backendAddressPools/azsmnet7101"
+                },
+                "backendAddressPools": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/backendAddressPools/azsmnet7101"
+                  }
+                ],
+                "probe": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/probes/azsmnet7754"
+                }
+              }
+            }
+          ],
+          "probes": [
+            {
+              "name": "azsmnet7754",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/probes/azsmnet7754",
+              "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "protocol": "Http",
+                "port": 80,
+                "requestPath": "healthcheck.aspx",
+                "intervalInSeconds": 10,
+                "numberOfProbes": 2,
+                "loadBalancingRules": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/loadBalancingRules/azsmnet1978"
+                  }
+                ]
+              },
+              "type": "Microsoft.Network/loadBalancers/probes"
+            }
+          ],
+          "inboundNatRules": [
+            {
+              "name": "azsmnet4941",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/inboundNatRules/azsmnet4941",
+              "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+              "type": "Microsoft.Network/loadBalancers/inboundNatRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "frontendIPConfiguration": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/frontendIPConfigurations/azsmnet590"
+                },
+                "frontendPort": 3389,
+                "backendPort": 3389,
+                "enableFloatingIP": false,
+                "idleTimeoutInMinutes": 4,
+                "protocol": "Tcp",
+                "enableDestinationServiceEndpoint": false,
+                "enableTcpReset": false,
+                "allowBackendPortConflict": false
+              }
+            },
+            {
+              "name": "azsmnet4669",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/inboundNatRules/azsmnet4669",
+              "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+              "type": "Microsoft.Network/loadBalancers/inboundNatRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "frontendIPConfiguration": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/frontendIPConfigurations/azsmnet590"
+                },
+                "frontendPort": 3390,
+                "backendPort": 3389,
+                "enableFloatingIP": false,
+                "idleTimeoutInMinutes": 4,
+                "protocol": "Tcp",
+                "enableDestinationServiceEndpoint": false,
+                "enableTcpReset": false,
+                "allowBackendPortConflict": false
+              }
+            }
+          ],
+          "inboundNatPools": []
+        },
+        "sku": {
+          "name": "Basic",
+          "tier": "Regional"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f12922b0a773d543ddf8006aab4c888e-74f10eec893966f7-00",
+        "User-Agent": "azsdk-net-ResourceManager.Network/1.1.0-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "4ec651785b8dd011257dfbd0bb35e8c8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "7507",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 00:56:20 GMT",
+        "ETag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "587021af-e621-4268-a595-9b28c44deaf2",
+        "x-ms-client-request-id": "4ec651785b8dd011257dfbd0bb35e8c8",
+        "x-ms-correlation-request-id": "36dd6198-5ee8-4686-8c65-82f0afe86ea6",
+        "x-ms-ratelimit-remaining-subscription-reads": "11561",
+        "x-ms-request-id": "7342f155-f230-4549-a22f-8149f76d46c4",
+        "x-ms-routing-request-id": "WESTUS:20220803T005621Z:36dd6198-5ee8-4686-8c65-82f0afe86ea6"
+      },
+      "ResponseBody": {
+        "name": "azsmnet3088",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088",
+        "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+        "type": "Microsoft.Network/loadBalancers",
+        "location": "westus",
+        "properties": {
+          "provisioningState": "Succeeded",
+          "resourceGuid": "7a9fdc69-7e0e-4972-8f2c-b6d5a2f9732c",
+          "frontendIPConfigurations": [
+            {
+              "name": "azsmnet590",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/frontendIPConfigurations/azsmnet590",
+              "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+              "type": "Microsoft.Network/loadBalancers/frontendIPConfigurations",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "privateIPAddress": "10.0.0.38",
+                "privateIPAllocationMethod": "Static",
+                "subnet": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/virtualNetworks/azsmnet7507/subnets/azsmnet9011"
+                },
+                "loadBalancingRules": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/loadBalancingRules/azsmnet1978"
+                  }
+                ],
+                "inboundNatRules": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/inboundNatRules/azsmnet4941"
+                  },
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/inboundNatRules/azsmnet4669"
+                  }
+                ],
+                "privateIPAddressVersion": "IPv4"
+              }
+            }
+          ],
+          "backendAddressPools": [
+            {
+              "name": "azsmnet7101",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/backendAddressPools/azsmnet7101",
+              "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "loadBalancingRules": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/loadBalancingRules/azsmnet1978"
+                  }
+                ]
+              },
+              "type": "Microsoft.Network/loadBalancers/backendAddressPools"
+            }
+          ],
+          "loadBalancingRules": [
+            {
+              "name": "azsmnet1978",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/loadBalancingRules/azsmnet1978",
+              "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+              "type": "Microsoft.Network/loadBalancers/loadBalancingRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "frontendIPConfiguration": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/frontendIPConfigurations/azsmnet590"
+                },
+                "frontendPort": 80,
+                "backendPort": 80,
+                "enableFloatingIP": false,
+                "idleTimeoutInMinutes": 4,
+                "protocol": "Tcp",
+                "enableDestinationServiceEndpoint": false,
+                "enableTcpReset": false,
+                "allowBackendPortConflict": false,
+                "loadDistribution": "Default",
+                "backendAddressPool": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/backendAddressPools/azsmnet7101"
+                },
+                "backendAddressPools": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/backendAddressPools/azsmnet7101"
+                  }
+                ],
+                "probe": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/probes/azsmnet7754"
+                }
+              }
+            }
+          ],
+          "probes": [
+            {
+              "name": "azsmnet7754",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/probes/azsmnet7754",
+              "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "protocol": "Http",
+                "port": 80,
+                "requestPath": "healthcheck.aspx",
+                "intervalInSeconds": 10,
+                "numberOfProbes": 2,
+                "loadBalancingRules": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/loadBalancingRules/azsmnet1978"
+                  }
+                ]
+              },
+              "type": "Microsoft.Network/loadBalancers/probes"
+            }
+          ],
+          "inboundNatRules": [
+            {
+              "name": "azsmnet4941",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/inboundNatRules/azsmnet4941",
+              "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+              "type": "Microsoft.Network/loadBalancers/inboundNatRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "frontendIPConfiguration": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/frontendIPConfigurations/azsmnet590"
+                },
+                "frontendPort": 3389,
+                "backendPort": 3389,
+                "enableFloatingIP": false,
+                "idleTimeoutInMinutes": 4,
+                "protocol": "Tcp",
+                "enableDestinationServiceEndpoint": false,
+                "enableTcpReset": false,
+                "allowBackendPortConflict": false
+              }
+            },
+            {
+              "name": "azsmnet4669",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/inboundNatRules/azsmnet4669",
+              "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+              "type": "Microsoft.Network/loadBalancers/inboundNatRules",
+              "properties": {
+                "provisioningState": "Succeeded",
+                "frontendIPConfiguration": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/frontendIPConfigurations/azsmnet590"
+                },
+                "frontendPort": 3390,
+                "backendPort": 3389,
+                "enableFloatingIP": false,
+                "idleTimeoutInMinutes": 4,
+                "protocol": "Tcp",
+                "enableDestinationServiceEndpoint": false,
+                "enableTcpReset": false,
+                "allowBackendPortConflict": false
+              }
+            }
+          ],
+          "inboundNatPools": []
+        },
+        "sku": {
+          "name": "Basic",
+          "tier": "Regional"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f6d57a48fbcd7d29840202ac2b52e850-0e5ebb0c17ba3ad2-00",
+        "User-Agent": "azsdk-net-ResourceManager.Network/1.1.0-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "e262a900c32e779afc9cc1318f61ccd6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "8168",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 00:56:20 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "90a71811-3ca2-4ed8-b938-5ad2ea13aa73",
+        "x-ms-client-request-id": "e262a900c32e779afc9cc1318f61ccd6",
+        "x-ms-correlation-request-id": "12963ab3-5a66-49f0-936c-70fa1cf379f3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11560",
+        "x-ms-request-id": "792da15b-b34f-4686-a950-790db9132a01",
+        "x-ms-routing-request-id": "WESTUS:20220803T005621Z:12963ab3-5a66-49f0-936c-70fa1cf379f3"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "azsmnet3088",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088",
+            "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+            "type": "Microsoft.Network/loadBalancers",
+            "location": "westus",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "resourceGuid": "7a9fdc69-7e0e-4972-8f2c-b6d5a2f9732c",
+              "frontendIPConfigurations": [
+                {
+                  "name": "azsmnet590",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/frontendIPConfigurations/azsmnet590",
+                  "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+                  "type": "Microsoft.Network/loadBalancers/frontendIPConfigurations",
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "privateIPAddress": "10.0.0.38",
+                    "privateIPAllocationMethod": "Static",
+                    "subnet": {
+                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/virtualNetworks/azsmnet7507/subnets/azsmnet9011"
+                    },
+                    "loadBalancingRules": [
+                      {
+                        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/loadBalancingRules/azsmnet1978"
+                      }
+                    ],
+                    "inboundNatRules": [
+                      {
+                        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/inboundNatRules/azsmnet4941"
+                      },
+                      {
+                        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/inboundNatRules/azsmnet4669"
+                      }
+                    ],
+                    "privateIPAddressVersion": "IPv4"
+                  }
+                }
+              ],
+              "backendAddressPools": [
+                {
+                  "name": "azsmnet7101",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/backendAddressPools/azsmnet7101",
+                  "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "loadBalancingRules": [
+                      {
+                        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/loadBalancingRules/azsmnet1978"
+                      }
+                    ]
+                  },
+                  "type": "Microsoft.Network/loadBalancers/backendAddressPools"
+                }
+              ],
+              "loadBalancingRules": [
+                {
+                  "name": "azsmnet1978",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/loadBalancingRules/azsmnet1978",
+                  "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+                  "type": "Microsoft.Network/loadBalancers/loadBalancingRules",
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "frontendIPConfiguration": {
+                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/frontendIPConfigurations/azsmnet590"
+                    },
+                    "frontendPort": 80,
+                    "backendPort": 80,
+                    "enableFloatingIP": false,
+                    "idleTimeoutInMinutes": 4,
+                    "protocol": "Tcp",
+                    "enableDestinationServiceEndpoint": false,
+                    "enableTcpReset": false,
+                    "allowBackendPortConflict": false,
+                    "loadDistribution": "Default",
+                    "backendAddressPool": {
+                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/backendAddressPools/azsmnet7101"
+                    },
+                    "backendAddressPools": [
+                      {
+                        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/backendAddressPools/azsmnet7101"
+                      }
+                    ],
+                    "probe": {
+                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/probes/azsmnet7754"
+                    }
+                  }
+                }
+              ],
+              "probes": [
+                {
+                  "name": "azsmnet7754",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/probes/azsmnet7754",
+                  "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "protocol": "Http",
+                    "port": 80,
+                    "requestPath": "healthcheck.aspx",
+                    "intervalInSeconds": 10,
+                    "numberOfProbes": 2,
+                    "loadBalancingRules": [
+                      {
+                        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/loadBalancingRules/azsmnet1978"
+                      }
+                    ]
+                  },
+                  "type": "Microsoft.Network/loadBalancers/probes"
+                }
+              ],
+              "inboundNatRules": [
+                {
+                  "name": "azsmnet4941",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/inboundNatRules/azsmnet4941",
+                  "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+                  "type": "Microsoft.Network/loadBalancers/inboundNatRules",
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "frontendIPConfiguration": {
+                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/frontendIPConfigurations/azsmnet590"
+                    },
+                    "frontendPort": 3389,
+                    "backendPort": 3389,
+                    "enableFloatingIP": false,
+                    "idleTimeoutInMinutes": 4,
+                    "protocol": "Tcp",
+                    "enableDestinationServiceEndpoint": false,
+                    "enableTcpReset": false,
+                    "allowBackendPortConflict": false
+                  }
+                },
+                {
+                  "name": "azsmnet4669",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/inboundNatRules/azsmnet4669",
+                  "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+                  "type": "Microsoft.Network/loadBalancers/inboundNatRules",
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "frontendIPConfiguration": {
+                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/frontendIPConfigurations/azsmnet590"
+                    },
+                    "frontendPort": 3390,
+                    "backendPort": 3389,
+                    "enableFloatingIP": false,
+                    "idleTimeoutInMinutes": 4,
+                    "protocol": "Tcp",
+                    "enableDestinationServiceEndpoint": false,
+                    "enableTcpReset": false,
+                    "allowBackendPortConflict": false
+                  }
+                }
+              ],
+              "inboundNatPools": []
+            },
+            "sku": {
+              "name": "Basic",
+              "tier": "Regional"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/loadBalancers?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f4708b1873dce42741e680c6416d6426-cb1ad58786f13151-00",
+        "User-Agent": "azsdk-net-ResourceManager.Network/1.1.0-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "b651ea4fb97a74a9478eeaf8d1bf7926",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "8168",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 00:56:20 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "51c4cc85-019c-4e25-b503-f5387cfe31a5",
+        "x-ms-client-request-id": "b651ea4fb97a74a9478eeaf8d1bf7926",
+        "x-ms-correlation-request-id": "92891d0b-9824-4401-b062-bc7f7b78eb2b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11559",
+        "x-ms-request-id": "4bd43137-70db-4a56-8784-32627611f7ec",
+        "x-ms-routing-request-id": "WESTUS:20220803T005621Z:92891d0b-9824-4401-b062-bc7f7b78eb2b"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "name": "azsmnet3088",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088",
+            "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+            "type": "Microsoft.Network/loadBalancers",
+            "location": "westus",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "resourceGuid": "7a9fdc69-7e0e-4972-8f2c-b6d5a2f9732c",
+              "frontendIPConfigurations": [
+                {
+                  "name": "azsmnet590",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/frontendIPConfigurations/azsmnet590",
+                  "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+                  "type": "Microsoft.Network/loadBalancers/frontendIPConfigurations",
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "privateIPAddress": "10.0.0.38",
+                    "privateIPAllocationMethod": "Static",
+                    "subnet": {
+                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/virtualNetworks/azsmnet7507/subnets/azsmnet9011"
+                    },
+                    "loadBalancingRules": [
+                      {
+                        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/loadBalancingRules/azsmnet1978"
+                      }
+                    ],
+                    "inboundNatRules": [
+                      {
+                        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/inboundNatRules/azsmnet4941"
+                      },
+                      {
+                        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/inboundNatRules/azsmnet4669"
+                      }
+                    ],
+                    "privateIPAddressVersion": "IPv4"
+                  }
+                }
+              ],
+              "backendAddressPools": [
+                {
+                  "name": "azsmnet7101",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/backendAddressPools/azsmnet7101",
+                  "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "loadBalancingRules": [
+                      {
+                        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/loadBalancingRules/azsmnet1978"
+                      }
+                    ]
+                  },
+                  "type": "Microsoft.Network/loadBalancers/backendAddressPools"
+                }
+              ],
+              "loadBalancingRules": [
+                {
+                  "name": "azsmnet1978",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/loadBalancingRules/azsmnet1978",
+                  "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+                  "type": "Microsoft.Network/loadBalancers/loadBalancingRules",
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "frontendIPConfiguration": {
+                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/frontendIPConfigurations/azsmnet590"
+                    },
+                    "frontendPort": 80,
+                    "backendPort": 80,
+                    "enableFloatingIP": false,
+                    "idleTimeoutInMinutes": 4,
+                    "protocol": "Tcp",
+                    "enableDestinationServiceEndpoint": false,
+                    "enableTcpReset": false,
+                    "allowBackendPortConflict": false,
+                    "loadDistribution": "Default",
+                    "backendAddressPool": {
+                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/backendAddressPools/azsmnet7101"
+                    },
+                    "backendAddressPools": [
+                      {
+                        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/backendAddressPools/azsmnet7101"
+                      }
+                    ],
+                    "probe": {
+                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/probes/azsmnet7754"
+                    }
+                  }
+                }
+              ],
+              "probes": [
+                {
+                  "name": "azsmnet7754",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/probes/azsmnet7754",
+                  "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "protocol": "Http",
+                    "port": 80,
+                    "requestPath": "healthcheck.aspx",
+                    "intervalInSeconds": 10,
+                    "numberOfProbes": 2,
+                    "loadBalancingRules": [
+                      {
+                        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/loadBalancingRules/azsmnet1978"
+                      }
+                    ]
+                  },
+                  "type": "Microsoft.Network/loadBalancers/probes"
+                }
+              ],
+              "inboundNatRules": [
+                {
+                  "name": "azsmnet4941",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/inboundNatRules/azsmnet4941",
+                  "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+                  "type": "Microsoft.Network/loadBalancers/inboundNatRules",
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "frontendIPConfiguration": {
+                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/frontendIPConfigurations/azsmnet590"
+                    },
+                    "frontendPort": 3389,
+                    "backendPort": 3389,
+                    "enableFloatingIP": false,
+                    "idleTimeoutInMinutes": 4,
+                    "protocol": "Tcp",
+                    "enableDestinationServiceEndpoint": false,
+                    "enableTcpReset": false,
+                    "allowBackendPortConflict": false
+                  }
+                },
+                {
+                  "name": "azsmnet4669",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/inboundNatRules/azsmnet4669",
+                  "etag": "W/\u00223c017002-e16b-4b3b-a140-36b1fe50473a\u0022",
+                  "type": "Microsoft.Network/loadBalancers/inboundNatRules",
+                  "properties": {
+                    "provisioningState": "Succeeded",
+                    "frontendIPConfiguration": {
+                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088/frontendIPConfigurations/azsmnet590"
+                    },
+                    "frontendPort": 3390,
+                    "backendPort": 3389,
+                    "enableFloatingIP": false,
+                    "idleTimeoutInMinutes": 4,
+                    "protocol": "Tcp",
+                    "enableDestinationServiceEndpoint": false,
+                    "enableTcpReset": false,
+                    "allowBackendPortConflict": false
+                  }
+                }
+              ],
+              "inboundNatPools": []
+            },
+            "sku": {
+              "name": "Basic",
+              "tier": "Regional"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers/azsmnet3088?api-version=2021-04-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-1e95402dbf3650a90be8956df7f53fc0-12fc5d1bd315ae69-00",
+        "User-Agent": "azsdk-net-ResourceManager.Network/1.1.0-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "0a14b13d3b86b425b64f51f09adf41c3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncNotification": "Enabled",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/operations/67e99378-37fb-4eff-88c9-3e5f27e56e7d?api-version=2021-04-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Wed, 03 Aug 2022 00:56:21 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/operationResults/67e99378-37fb-4eff-88c9-3e5f27e56e7d?api-version=2021-04-01",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "897149f9-a81e-4456-a47c-3c53dbe46b2d",
+        "x-ms-client-request-id": "0a14b13d3b86b425b64f51f09adf41c3",
+        "x-ms-correlation-request-id": "795282f0-b7c2-4c84-94f0-5e8b574a7d0d",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14957",
+        "x-ms-request-id": "67e99378-37fb-4eff-88c9-3e5f27e56e7d",
+        "x-ms-routing-request-id": "WESTUS:20220803T005621Z:795282f0-b7c2-4c84-94f0-5e8b574a7d0d"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/operations/67e99378-37fb-4eff-88c9-3e5f27e56e7d?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-1e95402dbf3650a90be8956df7f53fc0-ec3f085f38cec7e3-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "ddf39a22c14d134fc59c002b67b8d967",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "29",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 00:56:21 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "0fb774b5-3b49-4ffe-ae9a-a362752e7fbe",
+        "x-ms-client-request-id": "ddf39a22c14d134fc59c002b67b8d967",
+        "x-ms-correlation-request-id": "87d076e3-b413-4341-8abc-1b0e0add9614",
+        "x-ms-ratelimit-remaining-subscription-reads": "11558",
+        "x-ms-request-id": "d4ec188b-4d7c-4143-a2e5-ebe81d8af6ff",
+        "x-ms-routing-request-id": "WESTUS:20220803T005621Z:87d076e3-b413-4341-8abc-1b0e0add9614"
+      },
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/loadBalancers?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b6a3252c7e0e47087c7e92d50d128397-4456c04aa5edd94e-00",
+        "User-Agent": "azsdk-net-ResourceManager.Network/1.1.0-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "ac47264da93e0c4164cd0b98a085db14",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "19",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 00:56:21 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "259424bc-dca5-4953-a2c7-7080f89d0678",
+        "x-ms-client-request-id": "ac47264da93e0c4164cd0b98a085db14",
+        "x-ms-correlation-request-id": "9cf08e63-5dd0-4ac1-a4b9-4ce4f6a38346",
+        "x-ms-ratelimit-remaining-subscription-reads": "11557",
+        "x-ms-request-id": "cabd50c2-5be5-455e-a382-20db3c1a3385",
+        "x-ms-routing-request-id": "WESTUS:20220803T005621Z:9cf08e63-5dd0-4ac1-a4b9-4ce4f6a38346"
+      },
+      "ResponseBody": {
+        "value": []
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/csmrg4176/providers/Microsoft.Network/virtualNetworks/azsmnet7507?api-version=2021-02-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e08d90158c8e4968641fd55f39b3177d-0195a26cccea9420-00",
+        "User-Agent": "azsdk-net-ResourceManager.Network/1.1.0-alpha.20220802.1 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "ffcd14aa63ebee76d46d0b473122df46",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncNotification": "Enabled",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/operations/e47eff7d-7acc-4d5d-b99a-3db4e2262220?api-version=2021-02-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Wed, 03 Aug 2022 00:56:21 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/operationResults/e47eff7d-7acc-4d5d-b99a-3db4e2262220?api-version=2021-02-01",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "1ba79e6b-e6a7-464a-9c39-60ffdb87e1ab",
+        "x-ms-client-request-id": "ffcd14aa63ebee76d46d0b473122df46",
+        "x-ms-correlation-request-id": "fca5b804-de29-4cfa-9276-3c889bf72861",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14956",
+        "x-ms-request-id": "e47eff7d-7acc-4d5d-b99a-3db4e2262220",
+        "x-ms-routing-request-id": "WESTUS:20220803T005621Z:fca5b804-de29-4cfa-9276-3c889bf72861"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/operations/e47eff7d-7acc-4d5d-b99a-3db4e2262220?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-e08d90158c8e4968641fd55f39b3177d-452a23a1be385e87-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "5280ebc1d9ebe97cb059d8d19ef9db41",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "30",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 00:56:21 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "adf98daa-62d1-4985-bcef-2271fc8b8d89",
+        "x-ms-client-request-id": "5280ebc1d9ebe97cb059d8d19ef9db41",
+        "x-ms-correlation-request-id": "02be87c6-e947-48ec-9125-e83377d36403",
+        "x-ms-ratelimit-remaining-subscription-reads": "11556",
+        "x-ms-request-id": "927ed421-12d9-429a-871b-9e50058acf6b",
+        "x-ms-routing-request-id": "WESTUS:20220803T005621Z:02be87c6-e947-48ec-9125-e83377d36403"
+      },
+      "ResponseBody": {
+        "status": "InProgress"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Network/locations/westus/operations/e47eff7d-7acc-4d5d-b99a-3db4e2262220?api-version=2021-02-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-e08d90158c8e4968641fd55f39b3177d-e286024929e2b6f3-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.1 (.NET 6.0.7; Microsoft Windows 10.0.17763)",
+        "x-ms-client-request-id": "6d83c4ee2832b1ba1654a604e9f7371c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "29",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 03 Aug 2022 00:56:31 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-arm-service-request-id": "484e4fda-5d67-4de1-975d-2ec93c95efe7",
+        "x-ms-client-request-id": "6d83c4ee2832b1ba1654a604e9f7371c",
+        "x-ms-correlation-request-id": "c4c8a0ca-b0d3-42ab-bf09-f3dfc49c1b66",
+        "x-ms-ratelimit-remaining-subscription-reads": "11555",
+        "x-ms-request-id": "d13288d0-c15b-49c5-9e87-a69bc3589e4e",
+        "x-ms-routing-request-id": "WESTUS:20220803T005631Z:c4c8a0ca-b0d3-42ab-bf09-f3dfc49c1b66"
+      },
+      "ResponseBody": {
+        "status": "Succeeded"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "LOCATION": "westus",
+    "RandomSeed": "338610875",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,12 +17,12 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomLicenseAcquisitionUriTemplate))
             {
-                writer.WritePropertyName("customLicenseAcquisitionUrlTemplate");
-                writer.WriteStringValue(CustomLicenseAcquisitionUriTemplate.AbsoluteUri);
+                writer.WritePropertyName("customLicenseAcquisitionUrlTemplate"u8);
+                writer.WriteStringValue(CustomLicenseAcquisitionUriTemplate);
             }
             if (Optional.IsDefined(PlayReadyCustomAttributes))
             {
-                writer.WritePropertyName("playReadyCustomAttributes");
+                writer.WritePropertyName("playReadyCustomAttributes"u8);
                 writer.WriteStringValue(PlayReadyCustomAttributes);
             }
             writer.WriteEndObject();
@@ -31,21 +30,16 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static StreamingPolicyPlayReadyConfiguration DeserializeStreamingPolicyPlayReadyConfiguration(JsonElement element)
         {
-            Optional<Uri> customLicenseAcquisitionUriTemplate = default;
+            Optional<string> customLicenseAcquisitionUriTemplate = default;
             Optional<string> playReadyCustomAttributes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("customLicenseAcquisitionUrlTemplate"))
+                if (property.NameEquals("customLicenseAcquisitionUrlTemplate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        customLicenseAcquisitionUriTemplate = null;
-                        continue;
-                    }
-                    customLicenseAcquisitionUriTemplate = new Uri(property.Value.GetString());
+                    customLicenseAcquisitionUriTemplate = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("playReadyCustomAttributes"))
+                if (property.NameEquals("playReadyCustomAttributes"u8))
                 {
                     playReadyCustomAttributes = property.Value.GetString();
                     continue;

@@ -25,34 +25,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clusterSize"/>, <paramref name="timeToLiveExpression"/>, <paramref name="version"/>, <paramref name="linkedServiceName"/>, <paramref name="hostSubscriptionId"/>, <paramref name="tenant"/> or <paramref name="clusterResourceGroup"/> is null. </exception>
         public HDInsightOnDemandLinkedService(BinaryData clusterSize, BinaryData timeToLiveExpression, BinaryData version, FactoryLinkedServiceReference linkedServiceName, BinaryData hostSubscriptionId, BinaryData tenant, BinaryData clusterResourceGroup)
         {
-            if (clusterSize == null)
-            {
-                throw new ArgumentNullException(nameof(clusterSize));
-            }
-            if (timeToLiveExpression == null)
-            {
-                throw new ArgumentNullException(nameof(timeToLiveExpression));
-            }
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (hostSubscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(hostSubscriptionId));
-            }
-            if (tenant == null)
-            {
-                throw new ArgumentNullException(nameof(tenant));
-            }
-            if (clusterResourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(clusterResourceGroup));
-            }
+            Argument.AssertNotNull(clusterSize, nameof(clusterSize));
+            Argument.AssertNotNull(timeToLiveExpression, nameof(timeToLiveExpression));
+            Argument.AssertNotNull(version, nameof(version));
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(hostSubscriptionId, nameof(hostSubscriptionId));
+            Argument.AssertNotNull(tenant, nameof(tenant));
+            Argument.AssertNotNull(clusterResourceGroup, nameof(clusterResourceGroup));
 
             ClusterSize = clusterSize;
             TimeToLiveExpression = timeToLiveExpression;

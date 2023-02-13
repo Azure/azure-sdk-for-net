@@ -21,18 +21,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="rootPath"/> or <paramref name="entryFilePath"/> is null. </exception>
         public HDInsightSparkActivity(string name, BinaryData rootPath, BinaryData entryFilePath) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (rootPath == null)
-            {
-                throw new ArgumentNullException(nameof(rootPath));
-            }
-            if (entryFilePath == null)
-            {
-                throw new ArgumentNullException(nameof(entryFilePath));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(rootPath, nameof(rootPath));
+            Argument.AssertNotNull(entryFilePath, nameof(entryFilePath));
 
             RootPath = rootPath;
             EntryFilePath = entryFilePath;
@@ -133,7 +124,36 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData EntryFilePath { get; set; }
-        /// <summary> The user-specified arguments to HDInsightSparkActivity. </summary>
+        /// <summary>
+        /// The user-specified arguments to HDInsightSparkActivity.
+        /// <para>
+        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IList<BinaryData> Arguments { get; }
         /// <summary> Debug info option. </summary>
         public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
@@ -172,7 +192,36 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData ProxyUser { get; set; }
-        /// <summary> Spark configuration property. </summary>
+        /// <summary>
+        /// Spark configuration property.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IDictionary<string, BinaryData> SparkConfig { get; }
     }
 }

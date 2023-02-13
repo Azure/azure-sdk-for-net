@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary>
         /// List the quantity of available pre-provisioned Event Hubs Clusters, indexed by Azure region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/availableClusterRegions
-        /// Operation Id: Clusters_ListAvailableClusterRegion
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventHub/availableClusterRegions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_ListAvailableClusterRegion</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -43,8 +51,16 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary>
         /// List the quantity of available pre-provisioned Event Hubs Clusters, indexed by Azure region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/availableClusterRegions
-        /// Operation Id: Clusters_ListAvailableClusterRegion
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventHub/availableClusterRegions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_ListAvailableClusterRegion</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -56,8 +72,16 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary>
         /// Lists the available Event Hubs Clusters within an ARM resource group
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/clusters
-        /// Operation Id: Clusters_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventHub/clusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -69,8 +93,16 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary>
         /// Lists the available Event Hubs Clusters within an ARM resource group
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/clusters
-        /// Operation Id: Clusters_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventHub/clusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -82,8 +114,16 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary>
         /// Lists all the available Namespaces within a subscription, irrespective of the resource groups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/namespaces
-        /// Operation Id: Namespaces_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventHub/namespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -95,8 +135,16 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary>
         /// Lists all the available Namespaces within a subscription, irrespective of the resource groups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/namespaces
-        /// Operation Id: Namespaces_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventHub/namespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -108,8 +156,16 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary>
         /// Check the give Namespace name availability.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/checkNameAvailability
-        /// Operation Id: Namespaces_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventHub/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Parameters to check availability of the given Namespace name. </param>
@@ -124,8 +180,16 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary>
         /// Check the give Namespace name availability.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EventHub/checkNameAvailability
-        /// Operation Id: Namespaces_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.EventHub/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Parameters to check availability of the given Namespace name. </param>
@@ -157,8 +221,16 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary>
         /// Gets the resource description of the specified Event Hubs Cluster.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}
-        /// Operation Id: Clusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
@@ -173,8 +245,16 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary>
         /// Gets the resource description of the specified Event Hubs Cluster.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}
-        /// Operation Id: Clusters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
@@ -197,8 +277,16 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary>
         /// Gets the description of the specified namespace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}
-        /// Operation Id: Namespaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
@@ -213,8 +301,16 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary>
         /// Gets the description of the specified namespace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}
-        /// Operation Id: Namespaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
@@ -303,25 +399,6 @@ namespace Azure.ResourceManager.EventHubs
         }
         #endregion
 
-        #region EventHubAuthorizationRuleResource
-        /// <summary>
-        /// Gets an object representing an <see cref="EventHubAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubAuthorizationRuleResource.CreateResourceIdentifier" /> to create an <see cref="EventHubAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventHubAuthorizationRuleResource" /> object. </returns>
-        public static EventHubAuthorizationRuleResource GetEventHubAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                EventHubAuthorizationRuleResource.ValidateResourceId(id);
-                return new EventHubAuthorizationRuleResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region EventHubsDisasterRecoveryAuthorizationRuleResource
         /// <summary>
         /// Gets an object representing an <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
@@ -336,6 +413,25 @@ namespace Azure.ResourceManager.EventHubs
             {
                 EventHubsDisasterRecoveryAuthorizationRuleResource.ValidateResourceId(id);
                 return new EventHubsDisasterRecoveryAuthorizationRuleResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region EventHubAuthorizationRuleResource
+        /// <summary>
+        /// Gets an object representing an <see cref="EventHubAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventHubAuthorizationRuleResource.CreateResourceIdentifier" /> to create an <see cref="EventHubAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventHubAuthorizationRuleResource" /> object. </returns>
+        public static EventHubAuthorizationRuleResource GetEventHubAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                EventHubAuthorizationRuleResource.ValidateResourceId(id);
+                return new EventHubAuthorizationRuleResource(client, id);
             }
             );
         }
@@ -360,25 +456,6 @@ namespace Azure.ResourceManager.EventHubs
         }
         #endregion
 
-        #region EventHubResource
-        /// <summary>
-        /// Gets an object representing an <see cref="EventHubResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubResource.CreateResourceIdentifier" /> to create an <see cref="EventHubResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventHubResource" /> object. </returns>
-        public static EventHubResource GetEventHubResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                EventHubResource.ValidateResourceId(id);
-                return new EventHubResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region EventHubsDisasterRecoveryResource
         /// <summary>
         /// Gets an object representing an <see cref="EventHubsDisasterRecoveryResource" /> along with the instance operations that can be performed on it but with no data.
@@ -393,6 +470,25 @@ namespace Azure.ResourceManager.EventHubs
             {
                 EventHubsDisasterRecoveryResource.ValidateResourceId(id);
                 return new EventHubsDisasterRecoveryResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region EventHubResource
+        /// <summary>
+        /// Gets an object representing an <see cref="EventHubResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventHubResource.CreateResourceIdentifier" /> to create an <see cref="EventHubResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventHubResource" /> object. </returns>
+        public static EventHubResource GetEventHubResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                EventHubResource.ValidateResourceId(id);
+                return new EventHubResource(client, id);
             }
             );
         }
@@ -431,6 +527,25 @@ namespace Azure.ResourceManager.EventHubs
             {
                 EventHubsSchemaGroupResource.ValidateResourceId(id);
                 return new EventHubsSchemaGroupResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region EventHubsApplicationGroupResource
+        /// <summary>
+        /// Gets an object representing an <see cref="EventHubsApplicationGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventHubsApplicationGroupResource.CreateResourceIdentifier" /> to create an <see cref="EventHubsApplicationGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventHubsApplicationGroupResource" /> object. </returns>
+        public static EventHubsApplicationGroupResource GetEventHubsApplicationGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                EventHubsApplicationGroupResource.ValidateResourceId(id);
+                return new EventHubsApplicationGroupResource(client, id);
             }
             );
         }

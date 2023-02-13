@@ -21,18 +21,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="automationAccountId"/>, <paramref name="runbookName"/> or <paramref name="webhookResourceId"/> is null. </exception>
         public MonitorAutomationRunbookReceiver(ResourceIdentifier automationAccountId, string runbookName, ResourceIdentifier webhookResourceId, bool isGlobalRunbook)
         {
-            if (automationAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountId));
-            }
-            if (runbookName == null)
-            {
-                throw new ArgumentNullException(nameof(runbookName));
-            }
-            if (webhookResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(webhookResourceId));
-            }
+            Argument.AssertNotNull(automationAccountId, nameof(automationAccountId));
+            Argument.AssertNotNull(runbookName, nameof(runbookName));
+            Argument.AssertNotNull(webhookResourceId, nameof(webhookResourceId));
 
             AutomationAccountId = automationAccountId;
             RunbookName = runbookName;

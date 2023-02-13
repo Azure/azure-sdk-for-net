@@ -51,11 +51,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="authentication">Required to specify MSI, if using
         /// system assigned managed identity as authentication method. Type:
         /// string (or Expression with resultType string).</param>
-        public AzureSynapseArtifactsLinkedService(object endpoint, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object authentication = default(object))
+        /// <param name="workspaceResourceId">The resource ID of the Synapse
+        /// workspace. The format should be:
+        /// /subscriptions/{subscriptionID}/resourceGroups/{resourceGroup}/providers/Microsoft.Synapse/workspaces/{workspaceName}.
+        /// Type: string (or Expression with resultType string).</param>
+        public AzureSynapseArtifactsLinkedService(object endpoint, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object authentication = default(object), object workspaceResourceId = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             Endpoint = endpoint;
             Authentication = authentication;
+            WorkspaceResourceId = workspaceResourceId;
             CustomInit();
         }
 
@@ -80,6 +85,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.authentication")]
         public object Authentication { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource ID of the Synapse workspace. The format
+        /// should be:
+        /// /subscriptions/{subscriptionID}/resourceGroups/{resourceGroup}/providers/Microsoft.Synapse/workspaces/{workspaceName}.
+        /// Type: string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.workspaceResourceId")]
+        public object WorkspaceResourceId { get; set; }
 
         /// <summary>
         /// Validate the object.

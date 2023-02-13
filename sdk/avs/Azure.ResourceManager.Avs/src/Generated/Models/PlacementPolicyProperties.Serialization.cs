@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Avs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(PolicyType.ToString());
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             writer.WriteEndObject();
@@ -40,44 +40,7 @@ namespace Azure.ResourceManager.Avs.Models
                     case "VmVm": return VmPlacementPolicyProperties.DeserializeVmPlacementPolicyProperties(element);
                 }
             }
-            PlacementPolicyType type = default;
-            Optional<PlacementPolicyState> state = default;
-            Optional<string> displayName = default;
-            Optional<PlacementPolicyProvisioningState> provisioningState = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = new PlacementPolicyType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("state"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    state = new PlacementPolicyState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("displayName"))
-                {
-                    displayName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    provisioningState = new PlacementPolicyProvisioningState(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownPlacementPolicyProperties(type, Optional.ToNullable(state), displayName.Value, Optional.ToNullable(provisioningState));
+            return UnknownPlacementPolicyProperties.DeserializeUnknownPlacementPolicyProperties(element);
         }
     }
 }

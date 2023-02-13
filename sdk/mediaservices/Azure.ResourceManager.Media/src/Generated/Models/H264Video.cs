@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Describes all the properties for encoding a video with the H.264 codec. </summary>
-    public partial class H264Video : InputVideoEncodingProperties
+    public partial class H264Video : MediaVideoBase
     {
         /// <summary> Initializes a new instance of H264Video. </summary>
         public H264Video()

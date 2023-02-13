@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string ascLocation, string securitySolutionName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string securitySolutionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -132,13 +132,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="securitySolutionName"> Name of security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="securitySolutionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="securitySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SecuritySolutionData>> GetAsync(string subscriptionId, string resourceGroupName, string ascLocation, string securitySolutionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="securitySolutionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="securitySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SecuritySolution>> GetAsync(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string securitySolutionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(securitySolutionName, nameof(securitySolutionName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, ascLocation, securitySolutionName);
@@ -147,13 +146,11 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        SecuritySolutionData value = default;
+                        SecuritySolution value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SecuritySolutionData.DeserializeSecuritySolutionData(document.RootElement);
+                        value = SecuritySolution.DeserializeSecuritySolution(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((SecuritySolutionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -165,13 +162,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="securitySolutionName"> Name of security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="securitySolutionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ascLocation"/> or <paramref name="securitySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SecuritySolutionData> Get(string subscriptionId, string resourceGroupName, string ascLocation, string securitySolutionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="securitySolutionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="securitySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SecuritySolution> Get(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string securitySolutionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(securitySolutionName, nameof(securitySolutionName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, ascLocation, securitySolutionName);
@@ -180,13 +176,11 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        SecuritySolutionData value = default;
+                        SecuritySolution value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SecuritySolutionData.DeserializeSecuritySolutionData(document.RootElement);
+                        value = SecuritySolution.DeserializeSecuritySolution(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((SecuritySolutionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

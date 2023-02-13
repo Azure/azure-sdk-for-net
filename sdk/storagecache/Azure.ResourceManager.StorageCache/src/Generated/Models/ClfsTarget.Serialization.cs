@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Target))
             {
-                writer.WritePropertyName("target");
+                writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
             writer.WriteEndObject();
@@ -25,12 +25,17 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static ClfsTarget DeserializeClfsTarget(JsonElement element)
         {
-            Optional<string> target = default;
+            Optional<ResourceIdentifier> target = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
-                    target = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    target = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

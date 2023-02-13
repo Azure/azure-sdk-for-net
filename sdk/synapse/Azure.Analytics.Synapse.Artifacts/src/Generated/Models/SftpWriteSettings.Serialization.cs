@@ -21,24 +21,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OperationTimeout))
             {
-                writer.WritePropertyName("operationTimeout");
+                writer.WritePropertyName("operationTimeout"u8);
                 writer.WriteObjectValue(OperationTimeout);
             }
             if (Optional.IsDefined(UseTempFileRename))
             {
-                writer.WritePropertyName("useTempFileRename");
+                writer.WritePropertyName("useTempFileRename"u8);
                 writer.WriteObjectValue(UseTempFileRename);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
-                writer.WritePropertyName("maxConcurrentConnections");
+                writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
             }
             if (Optional.IsDefined(CopyBehavior))
             {
-                writer.WritePropertyName("copyBehavior");
+                writer.WritePropertyName("copyBehavior"u8);
                 writer.WriteObjectValue(CopyBehavior);
             }
             foreach (var item in AdditionalProperties)
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operationTimeout"))
+                if (property.NameEquals("operationTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     operationTimeout = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("useTempFileRename"))
+                if (property.NameEquals("useTempFileRename"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,12 +80,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     useTempFileRename = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentConnections"))
+                if (property.NameEquals("maxConcurrentConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,7 +95,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     maxConcurrentConnections = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("copyBehavior"))
+                if (property.NameEquals("copyBehavior"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,9 +17,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.Exporter.Benchmarks", "tests\Azure.Monitor.OpenTelemetry.Exporter.Benchmarks\Azure.Monitor.OpenTelemetry.Exporter.Benchmarks.csproj", "{D57D79BA-6D39-4E9E-970C-A5F73A4425BB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.Exporter.Tracing.Customization", "tests\Azure.Monitor.OpenTelemetry.Exporter.Tracing.Customization\Azure.Monitor.OpenTelemetry.Exporter.Tracing.Customization.csproj", "{57A53135-3C1B-4106-B873-434B2F606B17}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests", "tests\E2E.Tests\Azure.Monitor.OpenTelemetry.Exporter.E2E.Tests.csproj", "{5083A0B8-24CE-4AC4-AC23-C9BD87EE2FC8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0B1EBB34-30DC-40EE-BC3E-8871B2C22CE2}"
+	ProjectSection(SolutionItems) = preProject
+		CHANGELOG.md = CHANGELOG.md
+		Directory.Build.props = Directory.Build.props
+		..\..\..\eng\Packages.Data.props = ..\..\..\eng\Packages.Data.props
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,10 +61,6 @@ Global
 		{D57D79BA-6D39-4E9E-970C-A5F73A4425BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D57D79BA-6D39-4E9E-970C-A5F73A4425BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D57D79BA-6D39-4E9E-970C-A5F73A4425BB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{57A53135-3C1B-4106-B873-434B2F606B17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{57A53135-3C1B-4106-B873-434B2F606B17}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{57A53135-3C1B-4106-B873-434B2F606B17}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{57A53135-3C1B-4106-B873-434B2F606B17}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5083A0B8-24CE-4AC4-AC23-C9BD87EE2FC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5083A0B8-24CE-4AC4-AC23-C9BD87EE2FC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5083A0B8-24CE-4AC4-AC23-C9BD87EE2FC8}.Release|Any CPU.ActiveCfg = Release|Any CPU

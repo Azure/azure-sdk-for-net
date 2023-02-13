@@ -1,0 +1,161 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-8afce5a5b9bd8a449f8835b3e5a6fcad-ff8bcdab09089f44-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "10b5a57d46df43862f6532c27474313c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "397",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Sep 2022 00:17:26 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "70208e55-3e57-418a-8aa7-2a1a1a74bdc8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "70208e55-3e57-418a-8aa7-2a1a1a74bdc8",
+        "x-ms-routing-request-id": "WESTUS:20220922T001727Z:70208e55-3e57-418a-8aa7-2a1a1a74bdc8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57",
+        "authorizationSource": "Bypassed",
+        "managedByTenants": [],
+        "subscriptionId": "faa080af-c1d8-40ad-9cce-e1a450ca5b57",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "Azure SDK Developer Playground",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-securitydevopssdk/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/secdevops-ado1830?api-version=2022-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-79dc81cb8b110a4da3c577ab3c7d8c77-e26273c013ec1343-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityDevOps/1.0.0-alpha.20220920.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "96e23528bdd1ca4cd52f72f1144cf02d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "596",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Sep 2022 00:17:26 GMT",
+        "ETag": "\u002248011476-0000-0300-0000-632ba1590000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "96e23528bdd1ca4cd52f72f1144cf02d",
+        "x-ms-correlation-request-id": "09464c1b-8349-43d1-b966-f480b70aa4ce",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "3f6cea4d-10ec-48a4-855a-bc10097116ce",
+        "x-ms-routing-request-id": "WESTUS:20220922T001727Z:09464c1b-8349-43d1-b966-f480b70aa4ce"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-securitydevopssdk/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/secdevops-ado1830",
+        "name": "secdevops-ado1830",
+        "type": "microsoft.securitydevops/azuredevopsconnectors",
+        "location": "centralus",
+        "tags": {},
+        "systemData": {
+          "createdBy": "9c89e482-5940-4fdf-9ec8-ce386d050b5f",
+          "createdByType": "Application",
+          "createdAt": "2022-09-21T23:42:10.858653Z",
+          "lastModifiedBy": "9c89e482-5940-4fdf-9ec8-ce386d050b5f",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2022-09-21T23:42:10.858653Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-securitydevopssdk/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/secdevops-ado1830/repos?api-version=2022-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b6af11ff2b223840a097114d647d6cd8-acf3cf3110ab7b4f-00",
+        "User-Agent": "azsdk-net-ResourceManager.SecurityDevOps/1.0.0-alpha.20220920.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "87c68d6737c3ee87dabc95ec39fd23e4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "773",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Sep 2022 00:17:27 GMT",
+        "Expires": "-1",
+        "mise-correlation-id": "e8008191-b485-4b9a-82ea-6813e5ca6ec0",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=cid-v1:b8e19897-bfe4-49ad-ad76-b9526fa18eea",
+        "Set-Cookie": [
+          "ARRAffinity=6aa5a37bda77d1727bc12d4bccc86f7cf3f7af97b92ab1af3932d389f0b1789a;Path=/;HttpOnly;Secure;Domain=dfduserrp-centralus.dfd.security.azure.com",
+          "ARRAffinitySameSite=6aa5a37bda77d1727bc12d4bccc86f7cf3f7af97b92ab1af3932d389f0b1789a;Path=/;HttpOnly;SameSite=None;Secure;Domain=dfduserrp-centralus.dfd.security.azure.com"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "87c68d6737c3ee87dabc95ec39fd23e4",
+        "x-ms-correlation-request-id": "f936606b-84a3-4979-b9f3-cfff04df7660",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "07ed3884-7b00-4b64-ae0d-5b9c55dbcdb4",
+        "x-ms-routing-request-id": "WESTUS:20220922T001727Z:f936606b-84a3-4979-b9f3-cfff04df7660",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-securitydevopssdk/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/secdevops-ado1830/orgs/MyOrg/projects/MyProject/repos/ARepo",
+            "name": "ARepo",
+            "type": "Microsoft.SecurityDevOps/azureDevOpsConnectors/orgs/projects/repos",
+            "properties": {
+              "repoId": "a914c280-86a3-4ae0-b12a-8654eb0456f0"
+            }
+          },
+          {
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-securitydevopssdk/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/secdevops-ado1830/orgs/MyOrg/projects/MyProject/repos/AnotherRepo",
+            "name": "AnotherRepo",
+            "type": "Microsoft.SecurityDevOps/azureDevOpsConnectors/orgs/projects/repos",
+            "properties": {
+              "repoId": "5c121ba0-fea2-410d-ae79-28907a365aea"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "1924671831",
+    "RESOURCE_GROUP": "rg-securitydevopssdk",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "SUBSCRIPTION_ID": "faa080af-c1d8-40ad-9cce-e1a450ca5b57"
+  }
+}

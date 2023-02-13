@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SecureScoresList. </summary>
         internal SecureScoresList()
         {
-            Value = new ChangeTrackingList<SecureScoreItemData>();
+            Value = new ChangeTrackingList<SecureScoreData>();
         }
 
         /// <summary> Initializes a new instance of SecureScoresList. </summary>
         /// <param name="value"> Collection of secure scores in this page. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal SecureScoresList(IReadOnlyList<SecureScoreItemData> value, string nextLink)
+        internal SecureScoresList(IReadOnlyList<SecureScoreData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of secure scores in this page. </summary>
-        public IReadOnlyList<SecureScoreItemData> Value { get; }
+        public IReadOnlyList<SecureScoreData> Value { get; }
         /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }
     }

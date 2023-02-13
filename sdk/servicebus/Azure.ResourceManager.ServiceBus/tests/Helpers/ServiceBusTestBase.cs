@@ -10,6 +10,7 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.ResourceManager.ServiceBus.Models;
 using Azure.Core;
+using System.Security.Cryptography;
 
 namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
 {
@@ -20,12 +21,22 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
         protected SubscriptionResource DefaultSubscription;
         protected ArmClient Client { get; private set; }
 
+        protected const string VaultName = "KeyVault-rg01";
+        protected const string Key1 = "key4";
+        protected const string Key2 = "key5";
+        protected const string Key3 = "key6";
+
         protected ServiceBusTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
             // Lazy sanitize fields in the request and response bodies
             JsonPathSanitizers.Add("$..aliasPrimaryConnectionString");
             JsonPathSanitizers.Add("$..aliasSecondaryConnectionString");
             JsonPathSanitizers.Add("$..keyName");
+            JsonPathSanitizers.Add("$..primaryKey");
+            JsonPathSanitizers.Add("$..secondaryKey");
+            JsonPathSanitizers.Add("$..primaryConnectionString");
+            JsonPathSanitizers.Add("$..secondaryConnectionString");
+            JsonPathSanitizers.Add("$..key");
         }
 
         [SetUp]
@@ -47,6 +58,23 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
                         { "test", "env" }
                     }
                 });
+            return operation.Value;
+        }
+
+        public static string GenerateRandomKey()
+        {
+            byte[] key256 = new byte[32];
+            using (var rngCryptoServiceProvider = RandomNumberGenerator.Create())
+            {
+                rngCryptoServiceProvider.GetBytes(key256);
+            }
+
+            return Convert.ToBase64String(key256);
+        }
+
+        public async Task<ResourceGroupResource> GetResourceGroupAsync(string resourceGroupName)
+        {
+            Response<ResourceGroupResource> operation = await DefaultSubscription.GetResourceGroups().GetAsync(resourceGroupName);
             return operation.Value;
         }
 

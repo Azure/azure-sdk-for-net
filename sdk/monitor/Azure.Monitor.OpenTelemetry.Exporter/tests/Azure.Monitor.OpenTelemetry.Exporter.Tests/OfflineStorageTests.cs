@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -189,8 +191,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         private static TelemetryItem CreateTelemetryItem(Activity activity)
         {
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-            var telemetryName = activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency";
-            return new TelemetryItem(telemetryName, activity, ref monitorTags, null, null, null);
+            return new TelemetryItem(activity, ref monitorTags, null, null);
         }
 
         private class MockFileProvider : PersistentBlobProvider

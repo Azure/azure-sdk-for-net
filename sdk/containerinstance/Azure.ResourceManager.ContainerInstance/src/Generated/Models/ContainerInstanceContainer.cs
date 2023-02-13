@@ -21,18 +21,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="image"/> or <paramref name="resources"/> is null. </exception>
         public ContainerInstanceContainer(string name, string image, ContainerResourceRequirements resources)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (image == null)
-            {
-                throw new ArgumentNullException(nameof(image));
-            }
-            if (resources == null)
-            {
-                throw new ArgumentNullException(nameof(resources));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(image, nameof(image));
+            Argument.AssertNotNull(resources, nameof(resources));
 
             Name = name;
             Image = image;

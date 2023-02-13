@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -15,15 +16,15 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            writer.WritePropertyName("fieldName");
+            writer.WritePropertyName("fieldName"u8);
             writer.WriteStringValue(FieldName);
-            writer.WritePropertyName("boost");
+            writer.WritePropertyName("boost"u8);
             writer.WriteNumberValue(Boost);
             if (Optional.IsDefined(Interpolation))
             {
-                writer.WritePropertyName("interpolation");
+                writer.WritePropertyName("interpolation"u8);
                 writer.WriteStringValue(Interpolation.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -41,39 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     case "tag": return TagScoringFunction.DeserializeTagScoringFunction(element);
                 }
             }
-            string type = default;
-            string fieldName = default;
-            double boost = default;
-            Optional<ScoringFunctionInterpolation> interpolation = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("fieldName"))
-                {
-                    fieldName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("boost"))
-                {
-                    boost = property.Value.GetDouble();
-                    continue;
-                }
-                if (property.NameEquals("interpolation"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    interpolation = property.Value.GetString().ToScoringFunctionInterpolation();
-                    continue;
-                }
-            }
-            return new ScoringFunction(type, fieldName, boost, Optional.ToNullable(interpolation));
+            return UnknownScoringFunction.DeserializeUnknownScoringFunction(element);
         }
     }
 }

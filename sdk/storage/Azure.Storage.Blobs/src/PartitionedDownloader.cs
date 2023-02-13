@@ -54,7 +54,7 @@ namespace Azure.Storage.Blobs
         public PartitionedDownloader(
             BlobBaseClient client,
             StorageTransferOptions transferOptions = default,
-            DownloadTransferValidationOptions validationOptions = default,
+            DownloadTransferValidationOptions transferValidation = default,
             IProgress<long> progress = default)
         {
             _client = client;
@@ -78,7 +78,7 @@ namespace Azure.Storage.Blobs
             }
             else
             {
-                _rangeSize = (validationOptions?.ChecksumAlgorithm ?? StorageChecksumAlgorithm.None) != StorageChecksumAlgorithm.None
+                _rangeSize = (transferValidation?.ChecksumAlgorithm ?? StorageChecksumAlgorithm.None) != StorageChecksumAlgorithm.None
                     ? Constants.MaxHashRequestDownloadRange
                     : Constants.DefaultBufferSize;
             }
@@ -91,18 +91,18 @@ namespace Azure.Storage.Blobs
             }
             else
             {
-                _initialRangeSize = (validationOptions?.ChecksumAlgorithm ?? StorageChecksumAlgorithm.None) != StorageChecksumAlgorithm.None
+                _initialRangeSize = (transferValidation?.ChecksumAlgorithm ?? StorageChecksumAlgorithm.None) != StorageChecksumAlgorithm.None
                     ? Constants.MaxHashRequestDownloadRange
                     : Constants.Blob.Block.DefaultInitalDownloadRangeSize;
             }
 
             // the caller to this stream cannot defer validation, as they cannot access a returned hash
-            if (!(validationOptions?.AutoValidateChecksum ?? true))
+            if (!(transferValidation?.AutoValidateChecksum ?? true))
             {
                 throw Errors.CannotDeferTransactionalHashVerification();
             }
 
-            _validationOptions = validationOptions;
+            _validationOptions = transferValidation;
             _progress = progress;
 
             /* Unlike partitioned upload, download cannot tell ahead of time if it will split and/or parallelize

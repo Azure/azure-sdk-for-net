@@ -23,22 +23,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> syncToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     etag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("syncToken"))
+                if (property.NameEquals("syncToken"u8))
                 {
                     syncToken = property.Value.GetString();
                     continue;

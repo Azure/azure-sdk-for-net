@@ -20,10 +20,7 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="ArgumentNullException"> <paramref name="workspaces"/> is null. </exception>
         internal MetadataPermissions(IEnumerable<MetadataPermissionsWorkspacesItem> workspaces)
         {
-            if (workspaces == null)
-            {
-                throw new ArgumentNullException(nameof(workspaces));
-            }
+            Argument.AssertNotNull(workspaces, nameof(workspaces));
 
             Workspaces = workspaces.ToList();
             Resources = new ChangeTrackingList<MetadataPermissionsResourcesItem>();

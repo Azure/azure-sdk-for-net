@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("providerType");
+            writer.WritePropertyName("providerType"u8);
             writer.WriteStringValue(ProviderType);
             writer.WriteEndObject();
         }
 
         internal static UnknownProviderSpecificProperties DeserializeUnknownProviderSpecificProperties(JsonElement element)
         {
-            string providerType = default;
+            string providerType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("providerType"))
+                if (property.NameEquals("providerType"u8))
                 {
                     providerType = property.Value.GetString();
                     continue;

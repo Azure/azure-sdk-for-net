@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,11 +15,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("clientId");
+            writer.WritePropertyName("clientId"u8);
             writer.WriteStringValue(ClientId);
             if (Optional.IsDefined(Secret))
             {
-                writer.WritePropertyName("secret");
+                writer.WritePropertyName("secret"u8);
                 writer.WriteStringValue(Secret);
             }
             writer.WriteEndObject();
@@ -28,16 +27,16 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterServicePrincipalProfile DeserializeManagedClusterServicePrincipalProfile(JsonElement element)
         {
-            Guid clientId = default;
+            string clientId = default;
             Optional<string> secret = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientId"))
+                if (property.NameEquals("clientId"u8))
                 {
-                    clientId = property.Value.GetGuid();
+                    clientId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secret"))
+                if (property.NameEquals("secret"u8))
                 {
                     secret = property.Value.GetString();
                     continue;

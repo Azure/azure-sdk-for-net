@@ -20,7 +20,9 @@ namespace Azure.AI.TextAnalytics
             IReadOnlyCollection<RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesActionResults,
             IReadOnlyCollection<SingleLabelClassifyActionResult> singleLabelClassifyActionResults,
             IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyActionResults,
-            IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults
+            IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults,
+            IReadOnlyCollection<ExtractiveSummarizeActionResult> extractiveSummarizeActionResults,
+            IReadOnlyCollection<AbstractiveSummarizeActionResult> abstractiveSummarizeActionResults
             )
         {
             ExtractKeyPhrasesResults = extractKeyPhrasesActionResults;
@@ -32,6 +34,8 @@ namespace Azure.AI.TextAnalytics
             SingleLabelClassifyResults = singleLabelClassifyActionResults;
             MultiLabelClassifyResults = multiLabelClassifyActionResults;
             AnalyzeHealthcareEntitiesResults = analyzeHealthcareEntitiesActionResults;
+            ExtractiveSummarizeResults = extractiveSummarizeActionResults;
+            AbstractiveSummarizeResults = abstractiveSummarizeActionResults;
         }
 
         internal AnalyzeActionsResult(
@@ -51,6 +55,8 @@ namespace Azure.AI.TextAnalytics
             MultiLabelClassifyResults = Array.Empty<MultiLabelClassifyActionResult>();
             RecognizeCustomEntitiesResults = Array.Empty<RecognizeCustomEntitiesActionResult>();
             AnalyzeHealthcareEntitiesResults = Array.Empty<AnalyzeHealthcareEntitiesActionResult>();
+            ExtractiveSummarizeResults = Array.Empty<ExtractiveSummarizeActionResult>();
+            AbstractiveSummarizeResults = Array.Empty<AbstractiveSummarizeActionResult>();
         }
 
         /// <summary>
@@ -97,5 +103,15 @@ namespace Azure.AI.TextAnalytics
         /// Determines the collection of <see cref="AnalyzeHealthcareEntitiesResult"/>.
         /// </summary>
         public IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> AnalyzeHealthcareEntitiesResults { get; }
+
+        /// <summary>
+        /// Determines the collection of <see cref="ExtractiveSummarizeActionResult"/>.
+        /// </summary>
+        public IReadOnlyCollection<ExtractiveSummarizeActionResult> ExtractiveSummarizeResults { get; }
+
+        /// <summary>
+        /// Determines the collection of <see cref="AbstractiveSummarizeActionResult"/>.
+        /// </summary>
+        public IReadOnlyCollection<AbstractiveSummarizeActionResult> AbstractiveSummarizeResults { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
         public GremlinGraphResourceInfo(string graphName)
         {
-            if (graphName == null)
-            {
-                throw new ArgumentNullException(nameof(graphName));
-            }
+            Argument.AssertNotNull(graphName, nameof(graphName));
 
             GraphName = graphName;
         }
@@ -33,7 +31,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="defaultTtl"> Default time to live. </param>
         /// <param name="uniqueKeyPolicy"> The unique key policy configuration for specifying uniqueness constraints on documents in the collection in the Azure Cosmos DB service. </param>
         /// <param name="conflictResolutionPolicy"> The conflict resolution policy for the graph. </param>
-        internal GremlinGraphResourceInfo(string graphName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy)
+        /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
+        internal GremlinGraphResourceInfo(string graphName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, long? analyticalStorageTtl)
         {
             GraphName = graphName;
             IndexingPolicy = indexingPolicy;
@@ -41,6 +40,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             DefaultTtl = defaultTtl;
             UniqueKeyPolicy = uniqueKeyPolicy;
             ConflictResolutionPolicy = conflictResolutionPolicy;
+            AnalyticalStorageTtl = analyticalStorageTtl;
         }
 
         /// <summary> Name of the Cosmos DB Gremlin graph. </summary>
@@ -66,5 +66,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The conflict resolution policy for the graph. </summary>
         public ConflictResolutionPolicy ConflictResolutionPolicy { get; set; }
+        /// <summary> Analytical TTL. </summary>
+        public long? AnalyticalStorageTtl { get; set; }
     }
 }

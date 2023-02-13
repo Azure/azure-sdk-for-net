@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -16,20 +15,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static ScanResults DeserializeScanResults(JsonElement element)
         {
-            Optional<IReadOnlyList<ScanResultData>> value = default;
+            Optional<IReadOnlyList<SqlVulnerabilityAssessmentScanResult>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ScanResultData> array = new List<ScanResultData>();
+                    List<SqlVulnerabilityAssessmentScanResult> array = new List<SqlVulnerabilityAssessmentScanResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScanResultData.DeserializeScanResultData(item));
+                        array.Add(SqlVulnerabilityAssessmentScanResult.DeserializeSqlVulnerabilityAssessmentScanResult(item));
                     }
                     value = array;
                     continue;

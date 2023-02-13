@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2016-Datacenter/versions?api-version=2022-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS9wdWJsaXNoZXJzL01pY3Jvc29mdFdpbmRvd3NTZXJ2ZXIvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyL3NrdXMvMjAxNi1EYXRhY2VudGVyL3ZlcnNpb25zP2FwaS12ZXJzaW9uPTIwMjItMDMtMDE=",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/eastus2/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2016-Datacenter/versions?api-version=2022-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9wdWJsaXNoZXJzL01pY3Jvc29mdFdpbmRvd3NTZXJ2ZXIvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyL3NrdXMvMjAxNi1EYXRhY2VudGVyL3ZlcnNpb25zP2FwaS12ZXJzaW9uPTIwMjItMTEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4af09d59-977e-4d7a-9d76-5d28f5f992eb"
+          "da6ae276-5930-4084-8cb0-7ce5991b30be"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.21.47003",
+          "FxVersion/4.700.22.51102",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/53.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22621",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/59.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -27,16 +27,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/ListVMImagesVersionsFromLocation3Min;15990,Microsoft.Compute/ListVMImagesVersionsFromLocation30Min;43990"
+          "Microsoft.Compute/ListVMImagesVersionsFromLocation3Min;15990,Microsoft.Compute/ListVMImagesVersionsFromLocation30Min;43989"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "9fc414ea-410e-4600-9f7c-71bc36416f3f_132891484908468594"
+          "19a6b8e7-2f9b-4b25-aea4-718323f85895_133112991879161918"
         ],
         "x-ms-request-id": [
-          "b979aa5e-d721-4ce5-90b1-98cce87d9388"
+          "f2872243-efc9-4fef-9e76-4555d252155c"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -46,19 +46,19 @@
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "778b30d2-5db3-4925-b31c-e16014619511"
+          "a8c037ae-abac-4913-8d3e-0fa635eed23a"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2:20220406T040615Z:778b30d2-5db3-4925-b31c-e16014619511"
+          "CANADACENTRAL:20221116T022238Z:a8c037ae-abac-4913-8d3e-0fa635eed23a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 06 Apr 2022 04:06:14 GMT"
+          "Wed, 16 Nov 2022 02:22:37 GMT"
         ],
         "Content-Length": [
-          "7787"
+          "7427"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -67,26 +67,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"14393.4350.2104091630\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.4350.2104091630\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"14393.4402.2105052108\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.4402.2105052108\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"14393.4467.2106061537\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.4467.2106061537\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"14393.4470.2107061538\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.4470.2107061538\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"14393.4530.2107090502\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.4530.2107090502\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"14393.4583.2108010852\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.4583.2108010852\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"14393.4651.2109130103\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.4651.2109130103\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"14393.4704.2110062116\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.4704.2110062116\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"14393.4905.2111130103\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.4905.2111130103\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"14393.4906.2112080838\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.4906.2112080838\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"14393.4907.220106\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.4907.220106\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"14393.4908.220116\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.4908.220116\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"14393.4946.220202\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.4946.220202\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"14393.5006.220305\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.5006.220305\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"2016.127.20180613\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/2016.127.20180613\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"2016.127.20180815\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/2016.127.20180815\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"2016.127.20180912\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/2016.127.20180912\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"2016.127.20181010\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/2016.127.20181010\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"2016.127.20181122\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/2016.127.20181122\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"2016.127.20181218\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/2016.127.20181218\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"2016.127.20190115\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/2016.127.20190115\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"2016.127.20190214\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/2016.127.20190214\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"2016.127.20190315\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/2016.127.20190315\"\r\n  },\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"2016.127.20190416\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/2016.127.20190416\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"14393.4906.2112080838\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.4906.2112080838\"\r\n  },\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"14393.4907.220106\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.4907.220106\"\r\n  },\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"14393.4908.220116\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.4908.220116\"\r\n  },\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"14393.4946.220202\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.4946.220202\"\r\n  },\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"14393.5006.220305\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.5006.220305\"\r\n  },\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"14393.5066.220403\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.5066.220403\"\r\n  },\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"14393.5125.220505\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.5125.220505\"\r\n  },\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"14393.5192.220612\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.5192.220612\"\r\n  },\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"14393.5246.220705\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.5246.220705\"\r\n  },\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"14393.5291.220808\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.5291.220808\"\r\n  },\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"14393.5356.220908\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.5356.220908\"\r\n  },\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"14393.5427.221005\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.5427.221005\"\r\n  },\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"14393.5429.221014\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.5429.221014\"\r\n  },\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"14393.5501.221105\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.5501.221105\"\r\n  },\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"2016.127.20180613\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/2016.127.20180613\"\r\n  },\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"2016.127.20180815\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/2016.127.20180815\"\r\n  },\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"2016.127.20180912\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/2016.127.20180912\"\r\n  },\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"2016.127.20181010\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/2016.127.20181010\"\r\n  },\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"2016.127.20181122\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/2016.127.20181122\"\r\n  },\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"2016.127.20181218\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/2016.127.20181218\"\r\n  },\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"2016.127.20190115\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/2016.127.20190115\"\r\n  },\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"2016.127.20190214\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/2016.127.20190214\"\r\n  },\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"2016.127.20190315\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/2016.127.20190315\"\r\n  },\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"2016.127.20190416\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/2016.127.20190416\"\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2016-Datacenter/versions/14393.4350.2104091630?api-version=2022-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS9wdWJsaXNoZXJzL01pY3Jvc29mdFdpbmRvd3NTZXJ2ZXIvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyL3NrdXMvMjAxNi1EYXRhY2VudGVyL3ZlcnNpb25zLzE0MzkzLjQzNTAuMjEwNDA5MTYzMD9hcGktdmVyc2lvbj0yMDIyLTAzLTAx",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/eastus2/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2016-Datacenter/versions/14393.4906.2112080838?api-version=2022-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9wdWJsaXNoZXJzL01pY3Jvc29mdFdpbmRvd3NTZXJ2ZXIvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyL3NrdXMvMjAxNi1EYXRhY2VudGVyL3ZlcnNpb25zLzE0MzkzLjQ5MDYuMjExMjA4MDgzOD9hcGktdmVyc2lvbj0yMDIyLTExLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c02d69e2-0675-4569-ad21-518901bc744e"
+          "38ba8162-ba8d-441d-91c6-31fbf41cf195"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.21.47003",
+          "FxVersion/4.700.22.51102",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/53.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22621",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/59.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -97,16 +97,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/GetVMImageFromLocation3Min;12998,Microsoft.Compute/GetVMImageFromLocation30Min;73998"
+          "Microsoft.Compute/GetVMImageFromLocation3Min;12998,Microsoft.Compute/GetVMImageFromLocation30Min;73996"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "9fc414ea-410e-4600-9f7c-71bc36416f3f_132891484908468594"
+          "19a6b8e7-2f9b-4b25-aea4-718323f85895_133112991879161918"
         ],
         "x-ms-request-id": [
-          "f52f5a92-275c-4a4c-b837-4fdbe9cc073d"
+          "a0b10b94-7818-47ac-99f1-1939a349dcaa"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -116,19 +116,19 @@
           "11998"
         ],
         "x-ms-correlation-request-id": [
-          "abfc622c-93e5-4747-b9e7-64a971726e74"
+          "b6df527e-8f64-4936-a0ce-04201af4d297"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2:20220406T040615Z:abfc622c-93e5-4747-b9e7-64a971726e74"
+          "CANADACENTRAL:20221116T022238Z:b6df527e-8f64-4936-a0ce-04201af4d297"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 06 Apr 2022 04:06:14 GMT"
+          "Wed, 16 Nov 2022 02:22:37 GMT"
         ],
         "Content-Length": [
-          "923"
+          "1081"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -137,26 +137,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"hyperVGeneration\": \"V1\",\r\n    \"architecture\": \"x64\",\r\n    \"replicaType\": \"Unmanaged\",\r\n    \"disallowed\": {\r\n      \"vmDiskType\": \"None\"\r\n    },\r\n    \"automaticOSUpgradeProperties\": {\r\n      \"automaticOSUpgradeSupported\": true\r\n    },\r\n    \"imageDeprecationStatus\": {\r\n      \"imageState\": \"Active\"\r\n    },\r\n    \"features\": [\r\n      {\r\n        \"name\": \"IsAcceleratedNetworkSupported\",\r\n        \"value\": \"True\"\r\n      }\r\n    ],\r\n    \"osDiskImage\": {\r\n      \"operatingSystem\": \"Windows\",\r\n      \"sizeInGb\": 128,\r\n      \"sizeInBytes\": 136367309312\r\n    },\r\n    \"dataDiskImages\": []\r\n  },\r\n  \"location\": \"southeastasia\",\r\n  \"name\": \"14393.4350.2104091630\",\r\n  \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.4350.2104091630\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"hyperVGeneration\": \"V1\",\r\n    \"architecture\": \"x64\",\r\n    \"replicaType\": \"Unmanaged\",\r\n    \"disallowed\": {\r\n      \"vmDiskType\": \"None\"\r\n    },\r\n    \"automaticOSUpgradeProperties\": {\r\n      \"automaticOSUpgradeSupported\": true\r\n    },\r\n    \"imageDeprecationStatus\": {\r\n      \"imageState\": \"Active\"\r\n    },\r\n    \"features\": [\r\n      {\r\n        \"name\": \"IsAcceleratedNetworkSupported\",\r\n        \"value\": \"True\"\r\n      },\r\n      {\r\n        \"name\": \"DiskControllerTypes\",\r\n        \"value\": \"SCSI\"\r\n      },\r\n      {\r\n        \"name\": \"IsHibernateSupported\",\r\n        \"value\": \"False\"\r\n      }\r\n    ],\r\n    \"osDiskImage\": {\r\n      \"operatingSystem\": \"Windows\",\r\n      \"sizeInGb\": 128,\r\n      \"sizeInBytes\": 136367309312\r\n    },\r\n    \"dataDiskImages\": []\r\n  },\r\n  \"location\": \"eastus2\",\r\n  \"name\": \"14393.4906.2112080838\",\r\n  \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/14393.4906.2112080838\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2016-Datacenter/versions/2016.127.20190416?api-version=2022-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS9wdWJsaXNoZXJzL01pY3Jvc29mdFdpbmRvd3NTZXJ2ZXIvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyL3NrdXMvMjAxNi1EYXRhY2VudGVyL3ZlcnNpb25zLzIwMTYuMTI3LjIwMTkwNDE2P2FwaS12ZXJzaW9uPTIwMjItMDMtMDE=",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/eastus2/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2016-Datacenter/versions/2016.127.20190416?api-version=2022-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9wdWJsaXNoZXJzL01pY3Jvc29mdFdpbmRvd3NTZXJ2ZXIvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyL3NrdXMvMjAxNi1EYXRhY2VudGVyL3ZlcnNpb25zLzIwMTYuMTI3LjIwMTkwNDE2P2FwaS12ZXJzaW9uPTIwMjItMTEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d0ccec6e-c139-475d-bc69-c3db65cf38c4"
+          "fbd49727-6e0f-4718-8c1b-61d91a92e7d6"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.21.47003",
+          "FxVersion/4.700.22.51102",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/53.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22621",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/59.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -167,16 +167,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/GetVMImageFromLocation3Min;12997,Microsoft.Compute/GetVMImageFromLocation30Min;73997"
+          "Microsoft.Compute/GetVMImageFromLocation3Min;12997,Microsoft.Compute/GetVMImageFromLocation30Min;73995"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "9fc414ea-410e-4600-9f7c-71bc36416f3f_132891484908468594"
+          "19a6b8e7-2f9b-4b25-aea4-718323f85895_133112991879161918"
         ],
         "x-ms-request-id": [
-          "8aae2e2a-d0bd-45cc-a270-472f11a8f156"
+          "a88ecd8b-b0e6-4fd1-a8f1-c00b97e195f7"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -186,19 +186,19 @@
           "11997"
         ],
         "x-ms-correlation-request-id": [
-          "a9a85b15-7ca7-4839-b44b-e00c4e4e3660"
+          "3f7822dc-59e5-4a85-9f9f-b57089c45afc"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2:20220406T040615Z:a9a85b15-7ca7-4839-b44b-e00c4e4e3660"
+          "CANADACENTRAL:20221116T022238Z:3f7822dc-59e5-4a85-9f9f-b57089c45afc"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 06 Apr 2022 04:06:15 GMT"
+          "Wed, 16 Nov 2022 02:22:37 GMT"
         ],
         "Content-Length": [
-          "915"
+          "1073"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -207,26 +207,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"hyperVGeneration\": \"V1\",\r\n    \"architecture\": \"x64\",\r\n    \"replicaType\": \"Unmanaged\",\r\n    \"disallowed\": {\r\n      \"vmDiskType\": \"None\"\r\n    },\r\n    \"automaticOSUpgradeProperties\": {\r\n      \"automaticOSUpgradeSupported\": true\r\n    },\r\n    \"imageDeprecationStatus\": {\r\n      \"imageState\": \"Active\"\r\n    },\r\n    \"features\": [\r\n      {\r\n        \"name\": \"IsAcceleratedNetworkSupported\",\r\n        \"value\": \"True\"\r\n      }\r\n    ],\r\n    \"osDiskImage\": {\r\n      \"operatingSystem\": \"Windows\",\r\n      \"sizeInGb\": 128,\r\n      \"sizeInBytes\": 136367309312\r\n    },\r\n    \"dataDiskImages\": []\r\n  },\r\n  \"location\": \"southeastasia\",\r\n  \"name\": \"2016.127.20190416\",\r\n  \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/2016.127.20190416\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"hyperVGeneration\": \"V1\",\r\n    \"architecture\": \"x64\",\r\n    \"replicaType\": \"Unmanaged\",\r\n    \"disallowed\": {\r\n      \"vmDiskType\": \"None\"\r\n    },\r\n    \"automaticOSUpgradeProperties\": {\r\n      \"automaticOSUpgradeSupported\": true\r\n    },\r\n    \"imageDeprecationStatus\": {\r\n      \"imageState\": \"Active\"\r\n    },\r\n    \"features\": [\r\n      {\r\n        \"name\": \"IsAcceleratedNetworkSupported\",\r\n        \"value\": \"True\"\r\n      },\r\n      {\r\n        \"name\": \"DiskControllerTypes\",\r\n        \"value\": \"SCSI\"\r\n      },\r\n      {\r\n        \"name\": \"IsHibernateSupported\",\r\n        \"value\": \"False\"\r\n      }\r\n    ],\r\n    \"osDiskImage\": {\r\n      \"operatingSystem\": \"Windows\",\r\n      \"sizeInGb\": 128,\r\n      \"sizeInBytes\": 136367309312\r\n    },\r\n    \"dataDiskImages\": []\r\n  },\r\n  \"location\": \"eastus2\",\r\n  \"name\": \"2016.127.20190416\",\r\n  \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2016-Datacenter/Versions/2016.127.20190416\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/Canonical/artifacttypes/vmimage/offers/UbuntuServer/skus?api-version=2022-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS9wdWJsaXNoZXJzL0Nhbm9uaWNhbC9hcnRpZmFjdHR5cGVzL3ZtaW1hZ2Uvb2ZmZXJzL1VidW50dVNlcnZlci9za3VzP2FwaS12ZXJzaW9uPTIwMjItMDMtMDE=",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/eastus2/publishers/Canonical/artifacttypes/vmimage/offers/UbuntuServer/skus?api-version=2022-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9wdWJsaXNoZXJzL0Nhbm9uaWNhbC9hcnRpZmFjdHR5cGVzL3ZtaW1hZ2Uvb2ZmZXJzL1VidW50dVNlcnZlci9za3VzP2FwaS12ZXJzaW9uPTIwMjItMTEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5bd8d211-5db0-4379-b63b-69c0c8e3f299"
+          "8a25b607-5592-4a40-8c27-bc28ffdfa083"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.21.47003",
+          "FxVersion/4.700.22.51102",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/53.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22621",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/59.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -243,10 +243,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "5763bc19-56ac-4719-9ffa-8ce24fe8fe13_132701069043698568"
+          "50986c6f-d344-4025-9c75-119568372a34_133112991863224089"
         ],
         "x-ms-request-id": [
-          "c5736e21-7a2d-4be1-8bb5-b91fc6a9bd1e"
+          "712cb5b6-adb2-4430-9d30-e605ad66273d"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -256,19 +256,19 @@
           "11996"
         ],
         "x-ms-correlation-request-id": [
-          "5471f544-1cab-4799-be3c-6ff6a2a244c1"
+          "defae842-b0bf-41df-bb10-5ed06e3bd7ed"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2:20220406T040615Z:5471f544-1cab-4799-be3c-6ff6a2a244c1"
+          "CANADACENTRAL:20221116T022239Z:defae842-b0bf-41df-bb10-5ed06e3bd7ed"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 06 Apr 2022 04:06:15 GMT"
+          "Wed, 16 Nov 2022 02:22:38 GMT"
         ],
         "Content-Length": [
-          "10738"
+          "11208"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -277,26 +277,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"12.04.3-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/12.04.3-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"12.04.5-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/12.04.5-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"14.04.0-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/14.04.0-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"14.04.1-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/14.04.1-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"14.04.2-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/14.04.2-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"14.04.3-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/14.04.3-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"14.04.4-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/14.04.4-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"14.04.5-DAILY-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/14.04.5-DAILY-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"14.04.5-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/14.04.5-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"16.04-DAILY-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/16.04-DAILY-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": true\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"16.04-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/16.04-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"16.04.0-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/16.04.0-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"16_04-daily-lts-gen2\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/16_04-daily-lts-gen2\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"16_04-lts-gen2\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/16_04-lts-gen2\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"16_04_0-lts-gen2\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/16_04_0-lts-gen2\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"18.04-DAILY-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/18.04-DAILY-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": true\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"18.04-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/18.04-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"18.10\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/18.10\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"18.10-DAILY\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/18.10-DAILY\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"18_04-daily-lts-gen2\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/18_04-daily-lts-gen2\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"18_04-lts-gen2\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/18_04-lts-gen2\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"19.04\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/19.04\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"19.04-DAILY\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/19.04-DAILY\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"19.10-DAILY\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/19.10-DAILY\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"19_04-daily-gen2\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/19_04-daily-gen2\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"19_04-gen2\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/19_04-gen2\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"19_10-daily-gen2\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/19_10-daily-gen2\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"12.04.3-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/12.04.3-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"12.04.5-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/12.04.5-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"14.04.0-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/14.04.0-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"14.04.1-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/14.04.1-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"14.04.2-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/14.04.2-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"14.04.3-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/14.04.3-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"14.04.4-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/14.04.4-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"14.04.5-DAILY-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/14.04.5-DAILY-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"14.04.5-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/14.04.5-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"16.04-DAILY-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/16.04-DAILY-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": true\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"16.04-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/16.04-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"16.04.0-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/16.04.0-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"16_04-daily-lts-gen2\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/16_04-daily-lts-gen2\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"16_04-lts-gen2\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/16_04-lts-gen2\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"16_04_0-lts-gen2\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/16_04_0-lts-gen2\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"18.04-DAILY-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/18.04-DAILY-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": true\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"18.04-LTS\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/18.04-LTS\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"18.10\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/18.10\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"18.10-DAILY\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/18.10-DAILY\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"18_04-daily-lts-arm64\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/18_04-daily-lts-arm64\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"18_04-daily-lts-gen2\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/18_04-daily-lts-gen2\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"18_04-lts-arm64\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/18_04-lts-arm64\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"18_04-lts-gen2\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/18_04-lts-gen2\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"19.04\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/19.04\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"19.04-DAILY\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/19.04-DAILY\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"19.10-DAILY\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/19.10-DAILY\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"19_04-daily-gen2\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/19_04-daily-gen2\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"19_04-gen2\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/19_04-gen2\"\r\n  },\r\n  {\r\n    \"properties\": {\r\n      \"automaticOSUpgradeProperties\": {\r\n        \"automaticOSUpgradeSupported\": false\r\n      }\r\n    },\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"19_10-daily-gen2\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/19_10-daily-gen2\"\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/Canonical/artifacttypes/vmimage/offers/UbuntuServer/skus/12.04.3-LTS/versions?api-version=2022-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS9wdWJsaXNoZXJzL0Nhbm9uaWNhbC9hcnRpZmFjdHR5cGVzL3ZtaW1hZ2Uvb2ZmZXJzL1VidW50dVNlcnZlci9za3VzLzEyLjA0LjMtTFRTL3ZlcnNpb25zP2FwaS12ZXJzaW9uPTIwMjItMDMtMDE=",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/eastus2/publishers/Canonical/artifacttypes/vmimage/offers/UbuntuServer/skus/12.04.3-LTS/versions?api-version=2022-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9wdWJsaXNoZXJzL0Nhbm9uaWNhbC9hcnRpZmFjdHR5cGVzL3ZtaW1hZ2Uvb2ZmZXJzL1VidW50dVNlcnZlci9za3VzLzEyLjA0LjMtTFRTL3ZlcnNpb25zP2FwaS12ZXJzaW9uPTIwMjItMTEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "18c6199d-5466-4e2c-97ce-969040ba95c2"
+          "0ce410b5-6532-4d81-a7dc-4f10860dc1d1"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.21.47003",
+          "FxVersion/4.700.22.51102",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/53.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22621",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/59.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -313,10 +313,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "5763bc19-56ac-4719-9ffa-8ce24fe8fe13_132701069043698568"
+          "50986c6f-d344-4025-9c75-119568372a34_133112991863224089"
         ],
         "x-ms-request-id": [
-          "a8c6b9e0-c4b9-4680-87af-1b642d88388c"
+          "fb057469-ab04-4d35-8838-e57e9aa936aa"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -326,19 +326,19 @@
           "11995"
         ],
         "x-ms-correlation-request-id": [
-          "33901dd9-f036-4d27-80bf-6d1d3fd0ebe8"
+          "2fbe04e7-d909-438f-8233-0a5ab572707f"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2:20220406T040616Z:33901dd9-f036-4d27-80bf-6d1d3fd0ebe8"
+          "CANADACENTRAL:20221116T022240Z:2fbe04e7-d909-438f-8233-0a5ab572707f"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 06 Apr 2022 04:06:15 GMT"
+          "Wed, 16 Nov 2022 02:22:39 GMT"
         ],
         "Content-Length": [
-          "302"
+          "290"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -347,26 +347,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"location\": \"southeastasia\",\r\n    \"name\": \"12.04.201401270\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/12.04.3-LTS/Versions/12.04.201401270\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"12.04.201401270\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/12.04.3-LTS/Versions/12.04.201401270\"\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/Canonical/artifacttypes/vmimage/offers/UbuntuServer/skus/12.04.3-LTS/versions/12.04.201401270?api-version=2022-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS9wdWJsaXNoZXJzL0Nhbm9uaWNhbC9hcnRpZmFjdHR5cGVzL3ZtaW1hZ2Uvb2ZmZXJzL1VidW50dVNlcnZlci9za3VzLzEyLjA0LjMtTFRTL3ZlcnNpb25zLzEyLjA0LjIwMTQwMTI3MD9hcGktdmVyc2lvbj0yMDIyLTAzLTAx",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/eastus2/publishers/Canonical/artifacttypes/vmimage/offers/UbuntuServer/skus/12.04.3-LTS/versions/12.04.201401270?api-version=2022-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9wdWJsaXNoZXJzL0Nhbm9uaWNhbC9hcnRpZmFjdHR5cGVzL3ZtaW1hZ2Uvb2ZmZXJzL1VidW50dVNlcnZlci9za3VzLzEyLjA0LjMtTFRTL3ZlcnNpb25zLzEyLjA0LjIwMTQwMTI3MD9hcGktdmVyc2lvbj0yMDIyLTExLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "fba56b0b-d0a5-46bd-99c2-1401c1241a87"
+          "479afcfc-9831-486a-87a1-24a9d23ba4c5"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.21.47003",
+          "FxVersion/4.700.22.51102",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/53.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22621",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/59.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -383,10 +383,10 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "5763bc19-56ac-4719-9ffa-8ce24fe8fe13_132701069043698568"
+          "50986c6f-d344-4025-9c75-119568372a34_133112991863224089"
         ],
         "x-ms-request-id": [
-          "cb9293d3-e6b0-448a-a0ad-5e555b1c4983"
+          "9263fd85-f87a-47cb-9c9b-d36f7a6ea8fb"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
@@ -396,19 +396,19 @@
           "11994"
         ],
         "x-ms-correlation-request-id": [
-          "d7b62e25-b034-42ae-b332-d5b34c9e5093"
+          "67dcf7a3-82f5-4b6c-b912-7fdbbe8ccb95"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2:20220406T040616Z:d7b62e25-b034-42ae-b332-d5b34c9e5093"
+          "CANADACENTRAL:20221116T022240Z:67dcf7a3-82f5-4b6c-b912-7fdbbe8ccb95"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Wed, 06 Apr 2022 04:06:16 GMT"
+          "Wed, 16 Nov 2022 02:22:39 GMT"
         ],
         "Content-Length": [
-          "682"
+          "670"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -417,7 +417,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"architecture\": \"x64\",\r\n    \"replicaType\": \"Unmanaged\",\r\n    \"automaticOSUpgradeProperties\": {\r\n      \"automaticOSUpgradeSupported\": false\r\n    },\r\n    \"imageDeprecationStatus\": {\r\n      \"imageState\": \"Active\"\r\n    },\r\n    \"osDiskImage\": {\r\n      \"operatingSystem\": \"Linux\",\r\n      \"sizeInGb\": 30,\r\n      \"sizeInBytes\": 31457280512\r\n    },\r\n    \"dataDiskImages\": []\r\n  },\r\n  \"location\": \"southeastasia\",\r\n  \"name\": \"12.04.201401270\",\r\n  \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/southeastasia/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/12.04.3-LTS/Versions/12.04.201401270\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"architecture\": \"x64\",\r\n    \"replicaType\": \"Unmanaged\",\r\n    \"automaticOSUpgradeProperties\": {\r\n      \"automaticOSUpgradeSupported\": false\r\n    },\r\n    \"imageDeprecationStatus\": {\r\n      \"imageState\": \"Active\"\r\n    },\r\n    \"osDiskImage\": {\r\n      \"operatingSystem\": \"Linux\",\r\n      \"sizeInGb\": 30,\r\n      \"sizeInBytes\": 31457280512\r\n    },\r\n    \"dataDiskImages\": []\r\n  },\r\n  \"location\": \"eastus2\",\r\n  \"name\": \"12.04.201401270\",\r\n  \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/Canonical/ArtifactTypes/VMImage/Offers/UbuntuServer/Skus/12.04.3-LTS/Versions/12.04.201401270\"\r\n}",
       "StatusCode": 200
     }
   ],

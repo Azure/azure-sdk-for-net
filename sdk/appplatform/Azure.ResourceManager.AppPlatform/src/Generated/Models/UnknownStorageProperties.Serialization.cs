@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("storageType");
+            writer.WritePropertyName("storageType"u8);
             writer.WriteStringValue(StorageType.ToString());
             writer.WriteEndObject();
         }
 
         internal static UnknownStorageProperties DeserializeUnknownStorageProperties(JsonElement element)
         {
-            StorageType storageType = default;
+            StorageType storageType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageType"))
+                if (property.NameEquals("storageType"u8))
                 {
                     storageType = new StorageType(property.Value.GetString());
                     continue;

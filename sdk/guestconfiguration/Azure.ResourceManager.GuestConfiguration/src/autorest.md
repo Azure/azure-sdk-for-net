@@ -9,7 +9,6 @@ csharp: true
 library-name: GuestConfiguration
 namespace: Azure.ResourceManager.GuestConfiguration
 require: https://github.com/Azure/azure-rest-api-specs/blob/58a1320584b1d26bf7dab969a2593cd22b39caec/specification/guestconfiguration/resource-manager/readme.md
-tag: package-2022-01-25
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -96,6 +95,11 @@ rename-mapping:
   GuestConfigurationAssignmentReport.id: -|arm-id
   GuestConfigurationAssignmentReportProperties.reportId: -|uuid
   AssignmentType: GuestConfigurationAssignmentType
+  AssignmentReport: GuestConfigurationAssignmentReportInfo
+  ConfigurationInfo: GuestConfigurationInfo
+  ConfigurationParameter: GuestConfigurationParameter
+  GuestConfigurationNavigation.configurationParameter: ConfigurationParameters
+  GuestConfigurationNavigation.configurationProtectedParameter: ConfigurationProtectedParameters
 
 directive:
   - from: guestconfiguration.json

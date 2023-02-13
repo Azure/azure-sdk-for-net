@@ -1,0 +1,213 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/analyze-conversations/jobs?api-version=2022-10-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "497",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-dfc95b1e152b37df681067ac70917bdb-1c496fa8dccfc3d9-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221031.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a743ec811c3a3fb4cea0f88e59a57b7a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "displayName": "Sentiment analysis from a call center conversation",
+        "analysisInput": {
+          "conversations": [
+            {
+              "id": "1",
+              "language": "en",
+              "modality": "transcript",
+              "conversationItems": [
+                {
+                  "participantId": "1",
+                  "id": "1",
+                  "text": "I like the service. I do not like the food",
+                  "lexical": "i like the service i do not like the food",
+                  "itn": "",
+                  "maskedItn": ""
+                }
+              ]
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "taskName": "Conversation Sentiment Analysis",
+            "kind": "ConversationalSentimentTask",
+            "parameters": {
+              "modelVersion": "latest",
+              "predictionSource": "text"
+            }
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "9322195c-3822-4a5d-a8b3-694963200689",
+        "Content-Length": "0",
+        "Date": "Tue, 01 Nov 2022 00:04:07 GMT",
+        "operation-location": "https://languagesdkresource.cognitiveservices.azure.com/language/analyze-conversations/jobs/2cd8b609-3bb2-4f6a-a038-d665b27153ea?api-version=2022-10-01-preview",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "389",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/analyze-conversations/jobs/2cd8b609-3bb2-4f6a-a038-d665b27153ea?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-dfc95b1e152b37df681067ac70917bdb-4b2ebe4d12296124-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221031.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9dce15561d17f6338e3b0ce49340b577",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "ee013924-73d2-4199-920c-dddd81c4392f",
+        "Content-Length": "350",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 01 Nov 2022 00:04:07 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "88",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "jobId": "2cd8b609-3bb2-4f6a-a038-d665b27153ea",
+        "lastUpdatedDateTime": "2022-11-01T00:04:07Z",
+        "createdDateTime": "2022-11-01T00:04:07Z",
+        "expirationDateTime": "2022-11-02T00:04:07Z",
+        "status": "notStarted",
+        "errors": [],
+        "displayName": "Sentiment analysis from a call center conversation",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/analyze-conversations/jobs/2cd8b609-3bb2-4f6a-a038-d665b27153ea?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-dfc95b1e152b37df681067ac70917bdb-f79d526ba128b51f-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221031.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "dc55df1e06fe6072f9a6458922970f2e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "a4a714f1-191e-415d-822e-f4dcd993f6b4",
+        "Content-Length": "347",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 01 Nov 2022 00:04:09 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "87",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "jobId": "2cd8b609-3bb2-4f6a-a038-d665b27153ea",
+        "lastUpdatedDateTime": "2022-11-01T00:04:07Z",
+        "createdDateTime": "2022-11-01T00:04:07Z",
+        "expirationDateTime": "2022-11-02T00:04:07Z",
+        "status": "running",
+        "errors": [],
+        "displayName": "Sentiment analysis from a call center conversation",
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/analyze-conversations/jobs/2cd8b609-3bb2-4f6a-a038-d665b27153ea?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-dfc95b1e152b37df681067ac70917bdb-9abc25db9f69c028-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20221031.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9c94c382939064d8b94c19fe10d0ac8d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "6334c0c0-e641-4668-ab67-4f64877f723a",
+        "Content-Length": "750",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 01 Nov 2022 00:04:10 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "172",
+        "x-ms-region": "UK South"
+      },
+      "ResponseBody": {
+        "jobId": "2cd8b609-3bb2-4f6a-a038-d665b27153ea",
+        "lastUpdatedDateTime": "2022-11-01T00:04:09Z",
+        "createdDateTime": "2022-11-01T00:04:07Z",
+        "expirationDateTime": "2022-11-02T00:04:07Z",
+        "status": "succeeded",
+        "errors": [],
+        "displayName": "Sentiment analysis from a call center conversation",
+        "tasks": {
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 1,
+          "items": [
+            {
+              "kind": "conversationSentimentResults",
+              "taskName": "Conversation Sentiment Analysis",
+              "lastUpdateDateTime": "2022-11-01T00:04:09.5305492Z",
+              "status": "succeeded",
+              "results": {
+                "conversations": [
+                  {
+                    "id": "1",
+                    "conversationItems": [
+                      {
+                        "id": "1",
+                        "participantId": "1",
+                        "sentiment": "mixed",
+                        "confidenceScores": {
+                          "positive": 0.51,
+                          "neutral": 0.08,
+                          "negative": 0.41
+                        }
+                      }
+                    ],
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "modelVersion": "2022-10-01-preview"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
+    "CONVERSATIONS_KEY": "Sanitized",
+    "RandomSeed": "1581454117"
+  }
+}

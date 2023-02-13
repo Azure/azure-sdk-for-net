@@ -182,12 +182,12 @@ namespace Azure.Messaging.EventHubs
 
             if (string.Equals(condition, ArgumentError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new ArgumentException(description, innerException);
+                return new ArgumentException(IncludeTroubleshootingGuideLink(description), innerException);
             }
 
             if (string.Equals(condition, ArgumentOutOfRangeError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new ArgumentOutOfRangeException(description, innerException);
+                return new ArgumentOutOfRangeException(IncludeTroubleshootingGuideLink(description), innerException);
             }
 
             // The consumer was superseded by one with a higher owner level.
@@ -215,7 +215,7 @@ namespace Azure.Messaging.EventHubs
 
             if (string.Equals(condition, AmqpErrorCode.UnauthorizedAccess.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new UnauthorizedAccessException(description, innerException);
+                return new UnauthorizedAccessException(IncludeTroubleshootingGuideLink(description), innerException);
             }
 
             // Requests are being rejected due to exceeding the service quota.
@@ -240,12 +240,12 @@ namespace Azure.Messaging.EventHubs
 
             if (string.Equals(condition, AmqpErrorCode.NotAllowed.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new InvalidOperationException(description, innerException);
+                return new InvalidOperationException(IncludeTroubleshootingGuideLink(description), innerException);
             }
 
             if (string.Equals(condition, AmqpErrorCode.NotImplemented.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new NotSupportedException(description, innerException);
+                return new NotSupportedException(IncludeTroubleshootingGuideLink(description), innerException);
             }
 
             // The Event Hubs resource was not valid or communication with the service was interrupted.
@@ -296,5 +296,20 @@ namespace Azure.Messaging.EventHubs
 
             return AmqpErrorCode.InternalError;
         }
+
+        /// <summary>
+        ///   Enriches an error message to include the troubleshooting guide link.
+        /// </summary>
+        ///
+        /// <param name="message">The message to enrich.</param>
+        ///
+        /// <returns>The <paramref name="message" /> with troubleshooting guide link included.</returns>
+        ///
+        /// <remarks>
+        ///  The troubleshooting guide is automatically included in the message for any <see cref="EventHubsException" />
+        ///  instances; this method is needed only for other exception types.
+        /// </remarks>
+        ///
+        private static string IncludeTroubleshootingGuideLink(string message) => $"{ message }{ Environment.NewLine }{ Resources.TroubleshootingGuideLink }";
     }
 }

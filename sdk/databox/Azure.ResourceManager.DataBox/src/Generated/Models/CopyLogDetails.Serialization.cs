@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -24,16 +23,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     case "DataBoxHeavy": return DataBoxHeavyAccountCopyLogDetails.DeserializeDataBoxHeavyAccountCopyLogDetails(element);
                 }
             }
-            DataBoxOrderType copyLogDetailsType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("copyLogDetailsType"))
-                {
-                    copyLogDetailsType = property.Value.GetString().ToDataBoxOrderType();
-                    continue;
-                }
-            }
-            return new UnknownCopyLogDetails(copyLogDetailsType);
+            return UnknownCopyLogDetails.DeserializeUnknownCopyLogDetails(element);
         }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.DataShare;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -18,12 +19,9 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> Initializes a new instance of ConsumerInvitationList. </summary>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ConsumerInvitationList(IEnumerable<ConsumerInvitationData> value)
+        internal ConsumerInvitationList(IEnumerable<DataShareConsumerInvitationData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
@@ -31,7 +29,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> Initializes a new instance of ConsumerInvitationList. </summary>
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
-        internal ConsumerInvitationList(string nextLink, IReadOnlyList<ConsumerInvitationData> value)
+        internal ConsumerInvitationList(string nextLink, IReadOnlyList<DataShareConsumerInvitationData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -40,6 +38,6 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> The Url of next result page. </summary>
         public string NextLink { get; }
         /// <summary> Collection of items of type DataTransferObjects. </summary>
-        public IReadOnlyList<ConsumerInvitationData> Value { get; }
+        public IReadOnlyList<DataShareConsumerInvitationData> Value { get; }
     }
 }

@@ -13,11 +13,13 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
+    [ClientTestFixture(true, "2021-04-01", "2018-11-01")]
     public class SubnetTests : NetworkServiceClientTestBase
     {
         private SubscriptionResource _subscription;
 
-        public SubnetTests(bool isAsync) : base(isAsync)
+        public SubnetTests(bool isAsync, string apiVersion)
+        : base(isAsync, SubnetResource.ResourceType, apiVersion)
         {
         }
 

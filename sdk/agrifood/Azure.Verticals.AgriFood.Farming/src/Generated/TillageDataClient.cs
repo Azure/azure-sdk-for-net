@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    // Data plane generated client. The TillageData service client.
+    // Data plane generated client.
     /// <summary> The TillageData service client. </summary>
     public partial class TillageDataClient
     {
@@ -71,77 +69,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetTillageDataAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new TillageDataClient(endpoint, credential);
-        /// 
-        /// Response response = await client.GetTillageDataAsync("<farmerId>", "<tillageDataId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
-        /// Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>TillageData</c>:
-        /// <code>{
-        ///   tillageDepth: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   tillagePressure: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/TillageDataClient.xml" path="doc/members/member[@name='GetTillageDataAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> GetTillageDataAsync(string farmerId, string tillageDataId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -169,77 +97,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetTillageData with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new TillageDataClient(endpoint, credential);
-        /// 
-        /// Response response = client.GetTillageData("<farmerId>", "<tillageDataId>");
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
-        /// Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the response payload.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>TillageData</c>:
-        /// <code>{
-        ///   tillageDepth: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   tillagePressure: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/TillageDataClient.xml" path="doc/members/member[@name='GetTillageData(String,String,RequestContext)']/*" />
         public virtual Response GetTillageData(string farmerId, string tillageDataId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -268,150 +126,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new TillageDataClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<tillageDataId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new TillageDataClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     tillageDepth = new {
-        ///         unit = "<unit>",
-        ///         value = 123.45d,
-        ///     },
-        ///     tillagePressure = new {
-        ///         unit = "<unit>",
-        ///         value = 123.45d,
-        ///     },
-        ///     area = new {
-        ///         unit = "<unit>",
-        ///         value = 123.45d,
-        ///     },
-        ///     source = "<source>",
-        ///     operationModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
-        ///     operationStartDateTime = "2022-05-10T18:57:31.2311892Z",
-        ///     operationEndDateTime = "2022-05-10T18:57:31.2311892Z",
-        ///     associatedBoundaryId = "<associatedBoundaryId>",
-        ///     operationBoundaryId = "<operationBoundaryId>",
-        ///     status = "<status>",
-        ///     name = "<name>",
-        ///     description = "<description>",
-        ///     properties = new {
-        ///         key = new {},
-        ///     },
-        /// };
-        /// 
-        /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<tillageDataId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
-        /// Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>TillageData</c>:
-        /// <code>{
-        ///   tillageDepth: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   tillagePressure: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>TillageData</c>:
-        /// <code>{
-        ///   tillageDepth: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   tillagePressure: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/TillageDataClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(String,String,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string farmerId, string tillageDataId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -440,150 +155,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call CreateOrUpdate with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new TillageDataClient(endpoint, credential);
-        /// 
-        /// var data = new {};
-        /// 
-        /// Response response = client.CreateOrUpdate("<farmerId>", "<tillageDataId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// ]]></code>
-        /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new TillageDataClient(endpoint, credential);
-        /// 
-        /// var data = new {
-        ///     tillageDepth = new {
-        ///         unit = "<unit>",
-        ///         value = 123.45d,
-        ///     },
-        ///     tillagePressure = new {
-        ///         unit = "<unit>",
-        ///         value = 123.45d,
-        ///     },
-        ///     area = new {
-        ///         unit = "<unit>",
-        ///         value = 123.45d,
-        ///     },
-        ///     source = "<source>",
-        ///     operationModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
-        ///     operationStartDateTime = "2022-05-10T18:57:31.2311892Z",
-        ///     operationEndDateTime = "2022-05-10T18:57:31.2311892Z",
-        ///     associatedBoundaryId = "<associatedBoundaryId>",
-        ///     operationBoundaryId = "<operationBoundaryId>",
-        ///     status = "<status>",
-        ///     name = "<name>",
-        ///     description = "<description>",
-        ///     properties = new {
-        ///         key = new {},
-        ///     },
-        /// };
-        /// 
-        /// Response response = client.CreateOrUpdate("<farmerId>", "<tillageDataId>", RequestContent.Create(data));
-        /// 
-        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-        /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
-        /// Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
-        /// Console.WriteLine(result.GetProperty("source").ToString());
-        /// Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
-        /// Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
-        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
-        /// Console.WriteLine(result.GetProperty("id").ToString());
-        /// Console.WriteLine(result.GetProperty("eTag").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("name").ToString());
-        /// Console.WriteLine(result.GetProperty("description").ToString());
-        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
-        /// 
-        /// Request Body:
-        /// 
-        /// Schema for <c>TillageData</c>:
-        /// <code>{
-        ///   tillageDepth: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   tillagePressure: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>TillageData</c>:
-        /// <code>{
-        ///   tillageDepth: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   tillagePressure: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/TillageDataClient.xml" path="doc/members/member[@name='CreateOrUpdate(String,String,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string farmerId, string tillageDataId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -611,17 +183,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call DeleteAsync with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new TillageDataClient(endpoint, credential);
-        /// 
-        /// Response response = await client.DeleteAsync("<farmerId>", "<tillageDataId>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/TillageDataClient.xml" path="doc/members/member[@name='DeleteAsync(String,String,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string farmerId, string tillageDataId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -649,17 +211,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="tillageDataId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call Delete with required parameters.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new TillageDataClient(endpoint, credential);
-        /// 
-        /// Response response = client.Delete("<farmerId>", "<tillageDataId>");
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/TillageDataClient.xml" path="doc/members/member[@name='Delete(String,String,RequestContext)']/*" />
         public virtual Response Delete(string farmerId, string tillageDataId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -717,112 +269,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetAllTillageDataByFarmerIdAsync with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new TillageDataClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetAllTillageDataByFarmerIdAsync("<farmerId>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetAllTillageDataByFarmerIdAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new TillageDataClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetAllTillageDataByFarmerIdAsync("<farmerId>", 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
-        ///     Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-        ///     Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
-        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>TillageDataListResponseValue</c>:
-        /// <code>{
-        ///   tillageDepth: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   tillagePressure: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/TillageDataClient.xml" path="doc/members/member[@name='GetAllTillageDataByFarmerIdAsync(String,Double,Double,Double,Double,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAllTillageDataByFarmerIdAsync(string farmerId, double? minTillageDepth = null, double? maxTillageDepth = null, double? minTillagePressure = null, double? maxTillagePressure = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
 
-            return GetAllTillageDataByFarmerIdImplementationAsync("TillageDataClient.GetAllTillageDataByFarmerId", farmerId, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private AsyncPageable<BinaryData> GetAllTillageDataByFarmerIdImplementationAsync(string diagnosticsScopeName, string farmerId, double? minTillageDepth, double? maxTillageDepth, double? minTillagePressure, double? maxTillagePressure, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllTillageDataByFarmerIdRequest(farmerId, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetAllTillageDataByFarmerIdNextPageRequest(nextLink, farmerId, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllTillageDataByFarmerIdRequest(farmerId, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllTillageDataByFarmerIdNextPageRequest(nextLink, farmerId, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "TillageDataClient.GetAllTillageDataByFarmerId", "value", "nextLink", context);
         }
 
         /// <summary> Returns a paginated list of tillage data resources under a particular farm. </summary>
@@ -863,112 +317,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetAllTillageDataByFarmerId with required parameters and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new TillageDataClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetAllTillageDataByFarmerId("<farmerId>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetAllTillageDataByFarmerId with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new TillageDataClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetAllTillageDataByFarmerId("<farmerId>", 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
-        ///     Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-        ///     Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
-        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>TillageDataListResponseValue</c>:
-        /// <code>{
-        ///   tillageDepth: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   tillagePressure: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/TillageDataClient.xml" path="doc/members/member[@name='GetAllTillageDataByFarmerId(String,Double,Double,Double,Double,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAllTillageDataByFarmerId(string farmerId, double? minTillageDepth = null, double? maxTillageDepth = null, double? minTillagePressure = null, double? maxTillagePressure = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
 
-            return GetAllTillageDataByFarmerIdImplementation("TillageDataClient.GetAllTillageDataByFarmerId", farmerId, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private Pageable<BinaryData> GetAllTillageDataByFarmerIdImplementation(string diagnosticsScopeName, string farmerId, double? minTillageDepth, double? maxTillageDepth, double? minTillagePressure, double? maxTillagePressure, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllTillageDataByFarmerIdRequest(farmerId, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetAllTillageDataByFarmerIdNextPageRequest(nextLink, farmerId, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllTillageDataByFarmerIdRequest(farmerId, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllTillageDataByFarmerIdNextPageRequest(nextLink, farmerId, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "TillageDataClient.GetAllTillageDataByFarmerId", "value", "nextLink", context);
         }
 
         /// <summary> Returns a paginated list of tillage data resources across all farmers. </summary>
@@ -1006,110 +362,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetAllTillageDataAsync and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new TillageDataClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetAllTillageDataAsync())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetAllTillageDataAsync with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new TillageDataClient(endpoint, credential);
-        /// 
-        /// await foreach (var data in client.GetAllTillageDataAsync(1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
-        ///     Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-        ///     Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
-        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>TillageDataListResponseValue</c>:
-        /// <code>{
-        ///   tillageDepth: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   tillagePressure: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/TillageDataClient.xml" path="doc/members/member[@name='GetAllTillageDataAsync(Double,Double,Double,Double,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAllTillageDataAsync(double? minTillageDepth = null, double? maxTillageDepth = null, double? minTillagePressure = null, double? maxTillagePressure = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            return GetAllTillageDataImplementationAsync("TillageDataClient.GetAllTillageData", minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private AsyncPageable<BinaryData> GetAllTillageDataImplementationAsync(string diagnosticsScopeName, double? minTillageDepth, double? maxTillageDepth, double? minTillagePressure, double? maxTillagePressure, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllTillageDataRequest(minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetAllTillageDataNextPageRequest(nextLink, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllTillageDataRequest(minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllTillageDataNextPageRequest(nextLink, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "TillageDataClient.GetAllTillageData", "value", "nextLink", context);
         }
 
         /// <summary> Returns a paginated list of tillage data resources across all farmers. </summary>
@@ -1147,110 +405,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <example>
-        /// This sample shows how to call GetAllTillageData and parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new TillageDataClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetAllTillageData())
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.ToString());
-        /// }
-        /// ]]></code>
-        /// This sample shows how to call GetAllTillageData with all parameters, and how to parse the result.
-        /// <code><![CDATA[
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new TillageDataClient(endpoint, credential);
-        /// 
-        /// foreach (var data in client.GetAllTillageData(1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
-        /// {
-        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        ///     Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("tillageDepth").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("tillagePressure").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
-        ///     Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
-        ///     Console.WriteLine(result.GetProperty("source").ToString());
-        ///     Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
-        ///     Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
-        ///     Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
-        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
-        ///     Console.WriteLine(result.GetProperty("id").ToString());
-        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
-        ///     Console.WriteLine(result.GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("name").ToString());
-        ///     Console.WriteLine(result.GetProperty("description").ToString());
-        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        /// }
-        /// ]]></code>
-        /// </example>
-        /// <remarks>
-        /// Below is the JSON schema for one item in the pageable response.
-        /// 
-        /// Response Body:
-        /// 
-        /// Schema for <c>TillageDataListResponseValue</c>:
-        /// <code>{
-        ///   tillageDepth: {
-        ///     unit: string, # Optional. Data unit.
-        ///     value: number, # Optional. Data value.
-        ///   }, # Optional. Schema for storing measurement reading and unit.
-        ///   tillagePressure: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   area: Measure, # Optional. Schema for storing measurement reading and unit.
-        ///   source: string, # Optional. Source of the operation data.
-        ///   operationModifiedDateTime: string (ISO 8601 Format), # Optional. Modified date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        /// Note: this will be specified by the source provider itself.
-        ///   operationStartDateTime: string (ISO 8601 Format), # Optional. Start date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   operationEndDateTime: string (ISO 8601 Format), # Optional. End date-time of the operation data, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   attachmentsLink: string, # Optional. Link for attachments.
-        ///   associatedBoundaryId: string, # Optional. Optional boundary ID of the field for which operation was applied.
-        ///   operationBoundaryId: string, # Optional. Optional boundary ID of the actual area for which operation was applied inside the specified field.
-        ///   farmerId: string, # Optional. Farmer ID which belongs to the operation data.
-        ///   id: string, # Optional. Unique resource ID.
-        ///   eTag: string, # Optional. The ETag value to implement optimistic concurrency.
-        ///   status: string, # Optional. Status of the resource.
-        ///   createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
-        ///   name: string, # Optional. Name to identify resource.
-        ///   description: string, # Optional. Textual description of the resource.
-        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
-        /// Each pair must not have a key greater than 50 characters
-        /// and must not have a value greater than 150 characters.
-        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <include file="Docs/TillageDataClient.xml" path="doc/members/member[@name='GetAllTillageData(Double,Double,Double,Double,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Double,Double,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAllTillageData(double? minTillageDepth = null, double? maxTillageDepth = null, double? minTillagePressure = null, double? maxTillagePressure = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, IEnumerable<string> operationBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
         {
-            return GetAllTillageDataImplementation("TillageDataClient.GetAllTillageData", minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-        }
-
-        private Pageable<BinaryData> GetAllTillageDataImplementation(string diagnosticsScopeName, double? minTillageDepth, double? maxTillageDepth, double? minTillagePressure, double? maxTillagePressure, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetAllTillageDataRequest(minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context)
-                        : CreateGetAllTillageDataNextPageRequest(nextLink, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllTillageDataRequest(minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllTillageDataNextPageRequest(nextLink, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, operationBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "TillageDataClient.GetAllTillageData", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetAllTillageDataByFarmerIdRequest(string farmerId, double? minTillageDepth, double? maxTillageDepth, double? minTillagePressure, double? maxTillagePressure, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, IEnumerable<string> operationBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)

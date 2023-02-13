@@ -88,121 +88,177 @@ namespace Azure.ResourceManager.LabServices
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ScheduleResources in the Lab. </summary>
-        /// <returns> An object representing collection of ScheduleResources and their operations over a ScheduleResource. </returns>
-        public virtual ScheduleCollection GetSchedules()
+        /// <summary> Gets a collection of LabServicesScheduleResources in the Lab. </summary>
+        /// <returns> An object representing collection of LabServicesScheduleResources and their operations over a LabServicesScheduleResource. </returns>
+        public virtual LabServicesScheduleCollection GetLabServicesSchedules()
         {
-            return GetCachedClient(Client => new ScheduleCollection(Client, Id));
+            return GetCachedClient(Client => new LabServicesScheduleCollection(Client, Id));
         }
 
         /// <summary>
         /// Returns the properties of a lab Schedule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/schedules/{scheduleName}
-        /// Operation Id: Schedules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/schedules/{scheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Schedules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="scheduleName"> The name of the schedule that uniquely identifies it within containing lab. Used in resource URIs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ScheduleResource>> GetScheduleAsync(string scheduleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LabServicesScheduleResource>> GetLabServicesScheduleAsync(string scheduleName, CancellationToken cancellationToken = default)
         {
-            return await GetSchedules().GetAsync(scheduleName, cancellationToken).ConfigureAwait(false);
+            return await GetLabServicesSchedules().GetAsync(scheduleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Returns the properties of a lab Schedule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/schedules/{scheduleName}
-        /// Operation Id: Schedules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/schedules/{scheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Schedules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="scheduleName"> The name of the schedule that uniquely identifies it within containing lab. Used in resource URIs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ScheduleResource> GetSchedule(string scheduleName, CancellationToken cancellationToken = default)
+        public virtual Response<LabServicesScheduleResource> GetLabServicesSchedule(string scheduleName, CancellationToken cancellationToken = default)
         {
-            return GetSchedules().Get(scheduleName, cancellationToken);
+            return GetLabServicesSchedules().Get(scheduleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of UserResources in the Lab. </summary>
-        /// <returns> An object representing collection of UserResources and their operations over a UserResource. </returns>
-        public virtual UserCollection GetUsers()
+        /// <summary> Gets a collection of LabUserResources in the Lab. </summary>
+        /// <returns> An object representing collection of LabUserResources and their operations over a LabUserResource. </returns>
+        public virtual LabUserCollection GetLabUsers()
         {
-            return GetCachedClient(Client => new UserCollection(Client, Id));
+            return GetCachedClient(Client => new LabUserCollection(Client, Id));
         }
 
         /// <summary>
         /// Returns the properties of a lab user.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/users/{userName}
-        /// Operation Id: Users_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/users/{userName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Users_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="userName"> The name of the user that uniquely identifies it within containing lab. Used in resource URIs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<UserResource>> GetUserAsync(string userName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LabUserResource>> GetLabUserAsync(string userName, CancellationToken cancellationToken = default)
         {
-            return await GetUsers().GetAsync(userName, cancellationToken).ConfigureAwait(false);
+            return await GetLabUsers().GetAsync(userName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Returns the properties of a lab user.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/users/{userName}
-        /// Operation Id: Users_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/users/{userName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Users_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="userName"> The name of the user that uniquely identifies it within containing lab. Used in resource URIs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<UserResource> GetUser(string userName, CancellationToken cancellationToken = default)
+        public virtual Response<LabUserResource> GetLabUser(string userName, CancellationToken cancellationToken = default)
         {
-            return GetUsers().Get(userName, cancellationToken);
+            return GetLabUsers().Get(userName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualMachineResources in the Lab. </summary>
-        /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
-        public virtual VirtualMachineCollection GetVirtualMachines()
+        /// <summary> Gets a collection of LabVirtualMachineResources in the Lab. </summary>
+        /// <returns> An object representing collection of LabVirtualMachineResources and their operations over a LabVirtualMachineResource. </returns>
+        public virtual LabVirtualMachineCollection GetLabVirtualMachines()
         {
-            return GetCachedClient(Client => new VirtualMachineCollection(Client, Id));
+            return GetCachedClient(Client => new LabVirtualMachineCollection(Client, Id));
         }
 
         /// <summary>
         /// Returns the properties for a lab virtual machine.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/virtualMachines/{virtualMachineName}
-        /// Operation Id: VirtualMachines_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/virtualMachines/{virtualMachineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachines_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="virtualMachineName"> The ID of the virtual machine that uniquely identifies it within the containing lab. Used in resource URIs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualMachineResource>> GetVirtualMachineAsync(string virtualMachineName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LabVirtualMachineResource>> GetLabVirtualMachineAsync(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return await GetVirtualMachines().GetAsync(virtualMachineName, cancellationToken).ConfigureAwait(false);
+            return await GetLabVirtualMachines().GetAsync(virtualMachineName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Returns the properties for a lab virtual machine.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/virtualMachines/{virtualMachineName}
-        /// Operation Id: VirtualMachines_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/virtualMachines/{virtualMachineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachines_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="virtualMachineName"> The ID of the virtual machine that uniquely identifies it within the containing lab. Used in resource URIs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VirtualMachineResource> GetVirtualMachine(string virtualMachineName, CancellationToken cancellationToken = default)
+        public virtual Response<LabVirtualMachineResource> GetLabVirtualMachine(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return GetVirtualMachines().Get(virtualMachineName, cancellationToken);
+            return GetLabVirtualMachines().Get(virtualMachineName, cancellationToken);
         }
 
         /// <summary>
         /// Returns the properties of a lab resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}
-        /// Operation Id: Labs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<LabResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -225,8 +281,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Returns the properties of a lab resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}
-        /// Operation Id: Labs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<LabResource> Get(CancellationToken cancellationToken = default)
@@ -249,8 +313,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Operation to delete a lab resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}
-        /// Operation Id: Labs_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -275,8 +347,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Operation to delete a lab resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}
-        /// Operation Id: Labs_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -301,8 +381,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Operation to update a lab resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}
-        /// Operation Id: Labs_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The request body. </param>
@@ -331,8 +419,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Operation to update a lab resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}
-        /// Operation Id: Labs_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The request body. </param>
@@ -361,8 +457,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Publish or re-publish a lab. This will create or update all lab resources, such as virtual machines.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/publish
-        /// Operation Id: Labs_Publish
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/publish</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_Publish</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -387,8 +491,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Publish or re-publish a lab. This will create or update all lab resources, such as virtual machines.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/publish
-        /// Operation Id: Labs_Publish
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/publish</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_Publish</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -413,8 +525,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Action used to manually kick off an AAD group sync job.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/syncGroup
-        /// Operation Id: Labs_SyncGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/syncGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_SyncGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -439,8 +559,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Action used to manually kick off an AAD group sync job.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/syncGroup
-        /// Operation Id: Labs_SyncGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/syncGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_SyncGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

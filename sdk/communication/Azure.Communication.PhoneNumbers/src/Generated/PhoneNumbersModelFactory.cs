@@ -14,6 +14,71 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Model factory for read-only models. </summary>
     public static partial class PhoneNumbersModelFactory
     {
+        /// <summary> Initializes a new instance of PhoneNumberAreaCode. </summary>
+        /// <param name="areaCode"> An area code. </param>
+        /// <returns> A new <see cref="PhoneNumbers.PhoneNumberAreaCode"/> instance for mocking. </returns>
+        public static PhoneNumberAreaCode PhoneNumberAreaCode(string areaCode = null)
+        {
+            return new PhoneNumberAreaCode(areaCode);
+        }
+
+        /// <summary> Initializes a new instance of PhoneNumberCountry. </summary>
+        /// <param name="localizedName"> Represents the name of the country. </param>
+        /// <param name="countryCode"> Represents the abbreviated name of the country. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="localizedName"/> or <paramref name="countryCode"/> is null. </exception>
+        /// <returns> A new <see cref="PhoneNumbers.PhoneNumberCountry"/> instance for mocking. </returns>
+        public static PhoneNumberCountry PhoneNumberCountry(string localizedName = null, string countryCode = null)
+        {
+            if (localizedName == null)
+            {
+                throw new ArgumentNullException(nameof(localizedName));
+            }
+            if (countryCode == null)
+            {
+                throw new ArgumentNullException(nameof(countryCode));
+            }
+
+            return new PhoneNumberCountry(localizedName, countryCode);
+        }
+
+        /// <summary> Initializes a new instance of PhoneNumberLocality. </summary>
+        /// <param name="localizedName"> Represents the localized name of the locality. </param>
+        /// <param name="administrativeDivision"> Represents an administrative division. e.g. state or province. </param>
+        /// <returns> A new <see cref="PhoneNumbers.PhoneNumberLocality"/> instance for mocking. </returns>
+        public static PhoneNumberLocality PhoneNumberLocality(string localizedName = null, PhoneNumberAdministrativeDivision administrativeDivision = null)
+        {
+            return new PhoneNumberLocality(localizedName, administrativeDivision);
+        }
+
+        /// <summary> Initializes a new instance of PhoneNumberAdministrativeDivision. </summary>
+        /// <param name="localizedName"> Represents the localized name of the administrative division of the locality. e.g. state or province localized name. </param>
+        /// <param name="abbreviatedName"> Represents the abbreviated name of the administrative division of the locality. e.g. state or province abbreviation such as WA (Washington). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="localizedName"/> or <paramref name="abbreviatedName"/> is null. </exception>
+        /// <returns> A new <see cref="PhoneNumbers.PhoneNumberAdministrativeDivision"/> instance for mocking. </returns>
+        public static PhoneNumberAdministrativeDivision PhoneNumberAdministrativeDivision(string localizedName = null, string abbreviatedName = null)
+        {
+            if (localizedName == null)
+            {
+                throw new ArgumentNullException(nameof(localizedName));
+            }
+            if (abbreviatedName == null)
+            {
+                throw new ArgumentNullException(nameof(abbreviatedName));
+            }
+
+            return new PhoneNumberAdministrativeDivision(localizedName, abbreviatedName);
+        }
+
+        /// <summary> Initializes a new instance of PhoneNumberOffering. </summary>
+        /// <param name="phoneNumberType"> Represents the number type of the offering. </param>
+        /// <param name="assignmentType"> Represents the assignment type of the offering. </param>
+        /// <param name="availableCapabilities"> Capabilities of a phone number. </param>
+        /// <param name="cost"> The incurred cost for a single phone number. </param>
+        /// <returns> A new <see cref="PhoneNumbers.PhoneNumberOffering"/> instance for mocking. </returns>
+        public static PhoneNumberOffering PhoneNumberOffering(PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, PhoneNumberCapabilities availableCapabilities = null, PhoneNumberCost cost = null)
+        {
+            return new PhoneNumberOffering(phoneNumberType, assignmentType, availableCapabilities, cost);
+        }
 
         /// <summary> Initializes a new instance of PhoneNumberCost. </summary>
         /// <param name="amount"> The cost amount. </param>

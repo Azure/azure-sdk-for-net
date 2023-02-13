@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PolicyInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListQueryResultsForManagementGroupRequest(string managementGroupName, PolicyStateType policyStatesResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForManagementGroupRequest(string managementGroupName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -49,40 +49,40 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/managementGroups/", false);
             uri.AppendPath(managementGroupName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyStates/", false);
-            uri.AppendPath(policyStatesResource.ToString(), true);
+            uri.AppendPath(policyStateType.ToString(), true);
             uri.AppendPath("/queryResults", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (queryOptions?.Top != null)
+            if (policyQuerySettings?.Top != null)
             {
-                uri.AppendQuery("$top", queryOptions.Top.Value, true);
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
             }
-            if (queryOptions?.OrderBy != null)
+            if (policyQuerySettings?.OrderBy != null)
             {
-                uri.AppendQuery("$orderby", queryOptions.OrderBy, true);
+                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
             }
-            if (queryOptions?.Select != null)
+            if (policyQuerySettings?.Select != null)
             {
-                uri.AppendQuery("$select", queryOptions.Select, true);
+                uri.AppendQuery("$select", policyQuerySettings.Select, true);
             }
-            if (queryOptions?.From != null)
+            if (policyQuerySettings?.From != null)
             {
-                uri.AppendQuery("$from", queryOptions.From.Value, "O", true);
+                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
             }
-            if (queryOptions?.To != null)
+            if (policyQuerySettings?.To != null)
             {
-                uri.AppendQuery("$to", queryOptions.To.Value, "O", true);
+                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
             }
-            if (queryOptions?.Filter != null)
+            if (policyQuerySettings?.Filter != null)
             {
-                uri.AppendQuery("$filter", queryOptions.Filter, true);
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
             }
-            if (queryOptions?.Apply != null)
+            if (policyQuerySettings?.Apply != null)
             {
-                uri.AppendQuery("$apply", queryOptions.Apply, true);
+                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
             }
-            if (queryOptions?.SkipToken != null)
+            if (policyQuerySettings?.SkipToken != null)
             {
-                uri.AppendQuery("$skiptoken", queryOptions.SkipToken, true);
+                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Queries policy states for the resources under the management group. </summary>
         /// <param name="managementGroupName"> Management group name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForManagementGroupAsync(string managementGroupName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForManagementGroupAsync(string managementGroupName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupName, nameof(managementGroupName));
 
-            using var message = CreateListQueryResultsForManagementGroupRequest(managementGroupName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForManagementGroupRequest(managementGroupName, policyStateType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Queries policy states for the resources under the management group. </summary>
         /// <param name="managementGroupName"> Management group name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyStatesQueryResults> ListQueryResultsForManagementGroup(string managementGroupName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyStatesQueryResults> ListQueryResultsForManagementGroup(string managementGroupName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupName, nameof(managementGroupName));
 
-            using var message = CreateListQueryResultsForManagementGroupRequest(managementGroupName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForManagementGroupRequest(managementGroupName, policyStateType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateSummarizeForManagementGroupRequest(string managementGroupName, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions)
+        internal HttpMessage CreateSummarizeForManagementGroupRequest(string managementGroupName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -156,24 +156,24 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/managementGroups/", false);
             uri.AppendPath(managementGroupName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyStates/", false);
-            uri.AppendPath(policyStatesSummaryResource.ToString(), true);
+            uri.AppendPath(policyStateSummaryType.ToString(), true);
             uri.AppendPath("/summarize", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (queryOptions?.Top != null)
+            if (policyQuerySettings?.Top != null)
             {
-                uri.AppendQuery("$top", queryOptions.Top.Value, true);
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
             }
-            if (queryOptions?.From != null)
+            if (policyQuerySettings?.From != null)
             {
-                uri.AppendQuery("$from", queryOptions.From.Value, "O", true);
+                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
             }
-            if (queryOptions?.To != null)
+            if (policyQuerySettings?.To != null)
             {
-                uri.AppendQuery("$to", queryOptions.To.Value, "O", true);
+                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
             }
-            if (queryOptions?.Filter != null)
+            if (policyQuerySettings?.Filter != null)
             {
-                uri.AppendQuery("$filter", queryOptions.Filter, true);
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -183,16 +183,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Summarizes policy states for the resources under the management group. </summary>
         /// <param name="managementGroupName"> Management group name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SummarizeResults>> SummarizeForManagementGroupAsync(string managementGroupName, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SummarizeResults>> SummarizeForManagementGroupAsync(string managementGroupName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupName, nameof(managementGroupName));
 
-            using var message = CreateSummarizeForManagementGroupRequest(managementGroupName, policyStatesSummaryResource, queryOptions);
+            using var message = CreateSummarizeForManagementGroupRequest(managementGroupName, policyStateSummaryType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -210,16 +210,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Summarizes policy states for the resources under the management group. </summary>
         /// <param name="managementGroupName"> Management group name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SummarizeResults> SummarizeForManagementGroup(string managementGroupName, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<SummarizeResults> SummarizeForManagementGroup(string managementGroupName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupName, nameof(managementGroupName));
 
-            using var message = CreateSummarizeForManagementGroupRequest(managementGroupName, policyStatesSummaryResource, queryOptions);
+            using var message = CreateSummarizeForManagementGroupRequest(managementGroupName, policyStateSummaryType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForSubscriptionRequest(string subscriptionId, PolicyStateType policyStatesResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForSubscriptionRequest(string subscriptionId, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -245,40 +245,40 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyStates/", false);
-            uri.AppendPath(policyStatesResource.ToString(), true);
+            uri.AppendPath(policyStateType.ToString(), true);
             uri.AppendPath("/queryResults", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (queryOptions?.Top != null)
+            if (policyQuerySettings?.Top != null)
             {
-                uri.AppendQuery("$top", queryOptions.Top.Value, true);
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
             }
-            if (queryOptions?.OrderBy != null)
+            if (policyQuerySettings?.OrderBy != null)
             {
-                uri.AppendQuery("$orderby", queryOptions.OrderBy, true);
+                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
             }
-            if (queryOptions?.Select != null)
+            if (policyQuerySettings?.Select != null)
             {
-                uri.AppendQuery("$select", queryOptions.Select, true);
+                uri.AppendQuery("$select", policyQuerySettings.Select, true);
             }
-            if (queryOptions?.From != null)
+            if (policyQuerySettings?.From != null)
             {
-                uri.AppendQuery("$from", queryOptions.From.Value, "O", true);
+                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
             }
-            if (queryOptions?.To != null)
+            if (policyQuerySettings?.To != null)
             {
-                uri.AppendQuery("$to", queryOptions.To.Value, "O", true);
+                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
             }
-            if (queryOptions?.Filter != null)
+            if (policyQuerySettings?.Filter != null)
             {
-                uri.AppendQuery("$filter", queryOptions.Filter, true);
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
             }
-            if (queryOptions?.Apply != null)
+            if (policyQuerySettings?.Apply != null)
             {
-                uri.AppendQuery("$apply", queryOptions.Apply, true);
+                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
             }
-            if (queryOptions?.SkipToken != null)
+            if (policyQuerySettings?.SkipToken != null)
             {
-                uri.AppendQuery("$skiptoken", queryOptions.SkipToken, true);
+                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -288,16 +288,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Queries policy states for the resources under the subscription. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForSubscriptionAsync(string subscriptionId, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForSubscriptionAsync(string subscriptionId, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListQueryResultsForSubscriptionRequest(subscriptionId, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForSubscriptionRequest(subscriptionId, policyStateType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -315,16 +315,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Queries policy states for the resources under the subscription. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyStatesQueryResults> ListQueryResultsForSubscription(string subscriptionId, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyStatesQueryResults> ListQueryResultsForSubscription(string subscriptionId, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListQueryResultsForSubscriptionRequest(subscriptionId, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForSubscriptionRequest(subscriptionId, policyStateType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateSummarizeForSubscriptionRequest(string subscriptionId, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions)
+        internal HttpMessage CreateSummarizeForSubscriptionRequest(string subscriptionId, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -350,24 +350,24 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyStates/", false);
-            uri.AppendPath(policyStatesSummaryResource.ToString(), true);
+            uri.AppendPath(policyStateSummaryType.ToString(), true);
             uri.AppendPath("/summarize", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (queryOptions?.Top != null)
+            if (policyQuerySettings?.Top != null)
             {
-                uri.AppendQuery("$top", queryOptions.Top.Value, true);
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
             }
-            if (queryOptions?.From != null)
+            if (policyQuerySettings?.From != null)
             {
-                uri.AppendQuery("$from", queryOptions.From.Value, "O", true);
+                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
             }
-            if (queryOptions?.To != null)
+            if (policyQuerySettings?.To != null)
             {
-                uri.AppendQuery("$to", queryOptions.To.Value, "O", true);
+                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
             }
-            if (queryOptions?.Filter != null)
+            if (policyQuerySettings?.Filter != null)
             {
-                uri.AppendQuery("$filter", queryOptions.Filter, true);
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -377,16 +377,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Summarizes policy states for the resources under the subscription. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SummarizeResults>> SummarizeForSubscriptionAsync(string subscriptionId, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SummarizeResults>> SummarizeForSubscriptionAsync(string subscriptionId, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateSummarizeForSubscriptionRequest(subscriptionId, policyStatesSummaryResource, queryOptions);
+            using var message = CreateSummarizeForSubscriptionRequest(subscriptionId, policyStateSummaryType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -404,16 +404,16 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Summarizes policy states for the resources under the subscription. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SummarizeResults> SummarizeForSubscription(string subscriptionId, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<SummarizeResults> SummarizeForSubscription(string subscriptionId, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateSummarizeForSubscriptionRequest(subscriptionId, policyStatesSummaryResource, queryOptions);
+            using var message = CreateSummarizeForSubscriptionRequest(subscriptionId, policyStateSummaryType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForResourceGroupRequest(string subscriptionId, string resourceGroupName, PolicyStateType policyStatesResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForResourceGroupRequest(string subscriptionId, string resourceGroupName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -441,40 +441,40 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyStates/", false);
-            uri.AppendPath(policyStatesResource.ToString(), true);
+            uri.AppendPath(policyStateType.ToString(), true);
             uri.AppendPath("/queryResults", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (queryOptions?.Top != null)
+            if (policyQuerySettings?.Top != null)
             {
-                uri.AppendQuery("$top", queryOptions.Top.Value, true);
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
             }
-            if (queryOptions?.OrderBy != null)
+            if (policyQuerySettings?.OrderBy != null)
             {
-                uri.AppendQuery("$orderby", queryOptions.OrderBy, true);
+                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
             }
-            if (queryOptions?.Select != null)
+            if (policyQuerySettings?.Select != null)
             {
-                uri.AppendQuery("$select", queryOptions.Select, true);
+                uri.AppendQuery("$select", policyQuerySettings.Select, true);
             }
-            if (queryOptions?.From != null)
+            if (policyQuerySettings?.From != null)
             {
-                uri.AppendQuery("$from", queryOptions.From.Value, "O", true);
+                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
             }
-            if (queryOptions?.To != null)
+            if (policyQuerySettings?.To != null)
             {
-                uri.AppendQuery("$to", queryOptions.To.Value, "O", true);
+                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
             }
-            if (queryOptions?.Filter != null)
+            if (policyQuerySettings?.Filter != null)
             {
-                uri.AppendQuery("$filter", queryOptions.Filter, true);
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
             }
-            if (queryOptions?.Apply != null)
+            if (policyQuerySettings?.Apply != null)
             {
-                uri.AppendQuery("$apply", queryOptions.Apply, true);
+                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
             }
-            if (queryOptions?.SkipToken != null)
+            if (policyQuerySettings?.SkipToken != null)
             {
-                uri.AppendQuery("$skiptoken", queryOptions.SkipToken, true);
+                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -485,17 +485,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the resources under the resource group. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForResourceGroupAsync(string subscriptionId, string resourceGroupName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForResourceGroupAsync(string subscriptionId, string resourceGroupName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListQueryResultsForResourceGroupRequest(subscriptionId, resourceGroupName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForResourceGroupRequest(subscriptionId, resourceGroupName, policyStateType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -514,17 +514,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the resources under the resource group. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyStatesQueryResults> ListQueryResultsForResourceGroup(string subscriptionId, string resourceGroupName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyStatesQueryResults> ListQueryResultsForResourceGroup(string subscriptionId, string resourceGroupName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListQueryResultsForResourceGroupRequest(subscriptionId, resourceGroupName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForResourceGroupRequest(subscriptionId, resourceGroupName, policyStateType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateSummarizeForResourceGroupRequest(string subscriptionId, string resourceGroupName, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions)
+        internal HttpMessage CreateSummarizeForResourceGroupRequest(string subscriptionId, string resourceGroupName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -552,24 +552,24 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyStates/", false);
-            uri.AppendPath(policyStatesSummaryResource.ToString(), true);
+            uri.AppendPath(policyStateSummaryType.ToString(), true);
             uri.AppendPath("/summarize", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (queryOptions?.Top != null)
+            if (policyQuerySettings?.Top != null)
             {
-                uri.AppendQuery("$top", queryOptions.Top.Value, true);
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
             }
-            if (queryOptions?.From != null)
+            if (policyQuerySettings?.From != null)
             {
-                uri.AppendQuery("$from", queryOptions.From.Value, "O", true);
+                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
             }
-            if (queryOptions?.To != null)
+            if (policyQuerySettings?.To != null)
             {
-                uri.AppendQuery("$to", queryOptions.To.Value, "O", true);
+                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
             }
-            if (queryOptions?.Filter != null)
+            if (policyQuerySettings?.Filter != null)
             {
-                uri.AppendQuery("$filter", queryOptions.Filter, true);
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -580,17 +580,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Summarizes policy states for the resources under the resource group. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SummarizeResults>> SummarizeForResourceGroupAsync(string subscriptionId, string resourceGroupName, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SummarizeResults>> SummarizeForResourceGroupAsync(string subscriptionId, string resourceGroupName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateSummarizeForResourceGroupRequest(subscriptionId, resourceGroupName, policyStatesSummaryResource, queryOptions);
+            using var message = CreateSummarizeForResourceGroupRequest(subscriptionId, resourceGroupName, policyStateSummaryType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -609,17 +609,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Summarizes policy states for the resources under the resource group. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SummarizeResults> SummarizeForResourceGroup(string subscriptionId, string resourceGroupName, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<SummarizeResults> SummarizeForResourceGroup(string subscriptionId, string resourceGroupName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateSummarizeForResourceGroupRequest(subscriptionId, resourceGroupName, policyStatesSummaryResource, queryOptions);
+            using var message = CreateSummarizeForResourceGroupRequest(subscriptionId, resourceGroupName, policyStateSummaryType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForResourceRequest(string resourceId, PolicyStateType policyStatesResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForResourceRequest(string resourceId, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -645,44 +645,44 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/", false);
             uri.AppendPath(resourceId, false);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyStates/", false);
-            uri.AppendPath(policyStatesResource.ToString(), true);
+            uri.AppendPath(policyStateType.ToString(), true);
             uri.AppendPath("/queryResults", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (queryOptions?.Top != null)
+            if (policyQuerySettings?.Top != null)
             {
-                uri.AppendQuery("$top", queryOptions.Top.Value, true);
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
             }
-            if (queryOptions?.OrderBy != null)
+            if (policyQuerySettings?.OrderBy != null)
             {
-                uri.AppendQuery("$orderby", queryOptions.OrderBy, true);
+                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
             }
-            if (queryOptions?.Select != null)
+            if (policyQuerySettings?.Select != null)
             {
-                uri.AppendQuery("$select", queryOptions.Select, true);
+                uri.AppendQuery("$select", policyQuerySettings.Select, true);
             }
-            if (queryOptions?.From != null)
+            if (policyQuerySettings?.From != null)
             {
-                uri.AppendQuery("$from", queryOptions.From.Value, "O", true);
+                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
             }
-            if (queryOptions?.To != null)
+            if (policyQuerySettings?.To != null)
             {
-                uri.AppendQuery("$to", queryOptions.To.Value, "O", true);
+                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
             }
-            if (queryOptions?.Filter != null)
+            if (policyQuerySettings?.Filter != null)
             {
-                uri.AppendQuery("$filter", queryOptions.Filter, true);
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
             }
-            if (queryOptions?.Apply != null)
+            if (policyQuerySettings?.Apply != null)
             {
-                uri.AppendQuery("$apply", queryOptions.Apply, true);
+                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
             }
-            if (queryOptions?.Expand != null)
+            if (policyQuerySettings?.Expand != null)
             {
-                uri.AppendQuery("$expand", queryOptions.Expand, true);
+                uri.AppendQuery("$expand", policyQuerySettings.Expand, true);
             }
-            if (queryOptions?.SkipToken != null)
+            if (policyQuerySettings?.SkipToken != null)
             {
-                uri.AppendQuery("$skiptoken", queryOptions.SkipToken, true);
+                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -692,15 +692,15 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Queries policy states for the resource. </summary>
         /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForResourceAsync(string resourceId, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForResourceAsync(string resourceId, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
-            using var message = CreateListQueryResultsForResourceRequest(resourceId, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForResourceRequest(resourceId, policyStateType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -718,15 +718,15 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Queries policy states for the resource. </summary>
         /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public Response<PolicyStatesQueryResults> ListQueryResultsForResource(string resourceId, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyStatesQueryResults> ListQueryResultsForResource(string resourceId, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
-            using var message = CreateListQueryResultsForResourceRequest(resourceId, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForResourceRequest(resourceId, policyStateType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateSummarizeForResourceRequest(string resourceId, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions)
+        internal HttpMessage CreateSummarizeForResourceRequest(string resourceId, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -752,24 +752,24 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/", false);
             uri.AppendPath(resourceId, false);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyStates/", false);
-            uri.AppendPath(policyStatesSummaryResource.ToString(), true);
+            uri.AppendPath(policyStateSummaryType.ToString(), true);
             uri.AppendPath("/summarize", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (queryOptions?.Top != null)
+            if (policyQuerySettings?.Top != null)
             {
-                uri.AppendQuery("$top", queryOptions.Top.Value, true);
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
             }
-            if (queryOptions?.From != null)
+            if (policyQuerySettings?.From != null)
             {
-                uri.AppendQuery("$from", queryOptions.From.Value, "O", true);
+                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
             }
-            if (queryOptions?.To != null)
+            if (policyQuerySettings?.To != null)
             {
-                uri.AppendQuery("$to", queryOptions.To.Value, "O", true);
+                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
             }
-            if (queryOptions?.Filter != null)
+            if (policyQuerySettings?.Filter != null)
             {
-                uri.AppendQuery("$filter", queryOptions.Filter, true);
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -779,15 +779,15 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Summarizes policy states for the resource. </summary>
         /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public async Task<Response<SummarizeResults>> SummarizeForResourceAsync(string resourceId, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SummarizeResults>> SummarizeForResourceAsync(string resourceId, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
-            using var message = CreateSummarizeForResourceRequest(resourceId, policyStatesSummaryResource, queryOptions);
+            using var message = CreateSummarizeForResourceRequest(resourceId, policyStateSummaryType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -805,15 +805,15 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Summarizes policy states for the resource. </summary>
         /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public Response<SummarizeResults> SummarizeForResource(string resourceId, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<SummarizeResults> SummarizeForResource(string resourceId, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
-            using var message = CreateSummarizeForResourceRequest(resourceId, policyStatesSummaryResource, queryOptions);
+            using var message = CreateSummarizeForResourceRequest(resourceId, policyStateSummaryType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -953,7 +953,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForPolicySetDefinitionRequest(string subscriptionId, string policySetDefinitionName, PolicyStateType policyStatesResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForPolicySetDefinitionRequest(string subscriptionId, string policySetDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -967,40 +967,40 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/policySetDefinitions/", false);
             uri.AppendPath(policySetDefinitionName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyStates/", false);
-            uri.AppendPath(policyStatesResource.ToString(), true);
+            uri.AppendPath(policyStateType.ToString(), true);
             uri.AppendPath("/queryResults", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (queryOptions?.Top != null)
+            if (policyQuerySettings?.Top != null)
             {
-                uri.AppendQuery("$top", queryOptions.Top.Value, true);
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
             }
-            if (queryOptions?.OrderBy != null)
+            if (policyQuerySettings?.OrderBy != null)
             {
-                uri.AppendQuery("$orderby", queryOptions.OrderBy, true);
+                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
             }
-            if (queryOptions?.Select != null)
+            if (policyQuerySettings?.Select != null)
             {
-                uri.AppendQuery("$select", queryOptions.Select, true);
+                uri.AppendQuery("$select", policyQuerySettings.Select, true);
             }
-            if (queryOptions?.From != null)
+            if (policyQuerySettings?.From != null)
             {
-                uri.AppendQuery("$from", queryOptions.From.Value, "O", true);
+                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
             }
-            if (queryOptions?.To != null)
+            if (policyQuerySettings?.To != null)
             {
-                uri.AppendQuery("$to", queryOptions.To.Value, "O", true);
+                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
             }
-            if (queryOptions?.Filter != null)
+            if (policyQuerySettings?.Filter != null)
             {
-                uri.AppendQuery("$filter", queryOptions.Filter, true);
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
             }
-            if (queryOptions?.Apply != null)
+            if (policyQuerySettings?.Apply != null)
             {
-                uri.AppendQuery("$apply", queryOptions.Apply, true);
+                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
             }
-            if (queryOptions?.SkipToken != null)
+            if (policyQuerySettings?.SkipToken != null)
             {
-                uri.AppendQuery("$skiptoken", queryOptions.SkipToken, true);
+                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1011,17 +1011,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the subscription level policy set definition. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForPolicySetDefinitionAsync(string subscriptionId, string policySetDefinitionName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForPolicySetDefinitionAsync(string subscriptionId, string policySetDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
-            using var message = CreateListQueryResultsForPolicySetDefinitionRequest(subscriptionId, policySetDefinitionName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForPolicySetDefinitionRequest(subscriptionId, policySetDefinitionName, policyStateType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1040,17 +1040,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the subscription level policy set definition. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyStatesQueryResults> ListQueryResultsForPolicySetDefinition(string subscriptionId, string policySetDefinitionName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyStatesQueryResults> ListQueryResultsForPolicySetDefinition(string subscriptionId, string policySetDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
-            using var message = CreateListQueryResultsForPolicySetDefinitionRequest(subscriptionId, policySetDefinitionName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForPolicySetDefinitionRequest(subscriptionId, policySetDefinitionName, policyStateType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1066,7 +1066,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateSummarizeForPolicySetDefinitionRequest(string subscriptionId, string policySetDefinitionName, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions)
+        internal HttpMessage CreateSummarizeForPolicySetDefinitionRequest(string subscriptionId, string policySetDefinitionName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1080,24 +1080,24 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/policySetDefinitions/", false);
             uri.AppendPath(policySetDefinitionName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyStates/", false);
-            uri.AppendPath(policyStatesSummaryResource.ToString(), true);
+            uri.AppendPath(policyStateSummaryType.ToString(), true);
             uri.AppendPath("/summarize", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (queryOptions?.Top != null)
+            if (policyQuerySettings?.Top != null)
             {
-                uri.AppendQuery("$top", queryOptions.Top.Value, true);
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
             }
-            if (queryOptions?.From != null)
+            if (policyQuerySettings?.From != null)
             {
-                uri.AppendQuery("$from", queryOptions.From.Value, "O", true);
+                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
             }
-            if (queryOptions?.To != null)
+            if (policyQuerySettings?.To != null)
             {
-                uri.AppendQuery("$to", queryOptions.To.Value, "O", true);
+                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
             }
-            if (queryOptions?.Filter != null)
+            if (policyQuerySettings?.Filter != null)
             {
-                uri.AppendQuery("$filter", queryOptions.Filter, true);
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1108,17 +1108,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Summarizes policy states for the subscription level policy set definition. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SummarizeResults>> SummarizeForPolicySetDefinitionAsync(string subscriptionId, string policySetDefinitionName, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SummarizeResults>> SummarizeForPolicySetDefinitionAsync(string subscriptionId, string policySetDefinitionName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
-            using var message = CreateSummarizeForPolicySetDefinitionRequest(subscriptionId, policySetDefinitionName, policyStatesSummaryResource, queryOptions);
+            using var message = CreateSummarizeForPolicySetDefinitionRequest(subscriptionId, policySetDefinitionName, policyStateSummaryType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1137,17 +1137,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Summarizes policy states for the subscription level policy set definition. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SummarizeResults> SummarizeForPolicySetDefinition(string subscriptionId, string policySetDefinitionName, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<SummarizeResults> SummarizeForPolicySetDefinition(string subscriptionId, string policySetDefinitionName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
-            using var message = CreateSummarizeForPolicySetDefinitionRequest(subscriptionId, policySetDefinitionName, policyStatesSummaryResource, queryOptions);
+            using var message = CreateSummarizeForPolicySetDefinitionRequest(subscriptionId, policySetDefinitionName, policyStateSummaryType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1163,7 +1163,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForPolicyDefinitionRequest(string subscriptionId, string policyDefinitionName, PolicyStateType policyStatesResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForPolicyDefinitionRequest(string subscriptionId, string policyDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1177,40 +1177,40 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/policyDefinitions/", false);
             uri.AppendPath(policyDefinitionName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyStates/", false);
-            uri.AppendPath(policyStatesResource.ToString(), true);
+            uri.AppendPath(policyStateType.ToString(), true);
             uri.AppendPath("/queryResults", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (queryOptions?.Top != null)
+            if (policyQuerySettings?.Top != null)
             {
-                uri.AppendQuery("$top", queryOptions.Top.Value, true);
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
             }
-            if (queryOptions?.OrderBy != null)
+            if (policyQuerySettings?.OrderBy != null)
             {
-                uri.AppendQuery("$orderby", queryOptions.OrderBy, true);
+                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
             }
-            if (queryOptions?.Select != null)
+            if (policyQuerySettings?.Select != null)
             {
-                uri.AppendQuery("$select", queryOptions.Select, true);
+                uri.AppendQuery("$select", policyQuerySettings.Select, true);
             }
-            if (queryOptions?.From != null)
+            if (policyQuerySettings?.From != null)
             {
-                uri.AppendQuery("$from", queryOptions.From.Value, "O", true);
+                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
             }
-            if (queryOptions?.To != null)
+            if (policyQuerySettings?.To != null)
             {
-                uri.AppendQuery("$to", queryOptions.To.Value, "O", true);
+                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
             }
-            if (queryOptions?.Filter != null)
+            if (policyQuerySettings?.Filter != null)
             {
-                uri.AppendQuery("$filter", queryOptions.Filter, true);
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
             }
-            if (queryOptions?.Apply != null)
+            if (policyQuerySettings?.Apply != null)
             {
-                uri.AppendQuery("$apply", queryOptions.Apply, true);
+                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
             }
-            if (queryOptions?.SkipToken != null)
+            if (policyQuerySettings?.SkipToken != null)
             {
-                uri.AppendQuery("$skiptoken", queryOptions.SkipToken, true);
+                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1221,17 +1221,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the subscription level policy definition. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForPolicyDefinitionAsync(string subscriptionId, string policyDefinitionName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForPolicyDefinitionAsync(string subscriptionId, string policyDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
-            using var message = CreateListQueryResultsForPolicyDefinitionRequest(subscriptionId, policyDefinitionName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForPolicyDefinitionRequest(subscriptionId, policyDefinitionName, policyStateType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1250,17 +1250,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the subscription level policy definition. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyStatesQueryResults> ListQueryResultsForPolicyDefinition(string subscriptionId, string policyDefinitionName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyStatesQueryResults> ListQueryResultsForPolicyDefinition(string subscriptionId, string policyDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
-            using var message = CreateListQueryResultsForPolicyDefinitionRequest(subscriptionId, policyDefinitionName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForPolicyDefinitionRequest(subscriptionId, policyDefinitionName, policyStateType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1276,7 +1276,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateSummarizeForPolicyDefinitionRequest(string subscriptionId, string policyDefinitionName, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions)
+        internal HttpMessage CreateSummarizeForPolicyDefinitionRequest(string subscriptionId, string policyDefinitionName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1290,24 +1290,24 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/policyDefinitions/", false);
             uri.AppendPath(policyDefinitionName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyStates/", false);
-            uri.AppendPath(policyStatesSummaryResource.ToString(), true);
+            uri.AppendPath(policyStateSummaryType.ToString(), true);
             uri.AppendPath("/summarize", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (queryOptions?.Top != null)
+            if (policyQuerySettings?.Top != null)
             {
-                uri.AppendQuery("$top", queryOptions.Top.Value, true);
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
             }
-            if (queryOptions?.From != null)
+            if (policyQuerySettings?.From != null)
             {
-                uri.AppendQuery("$from", queryOptions.From.Value, "O", true);
+                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
             }
-            if (queryOptions?.To != null)
+            if (policyQuerySettings?.To != null)
             {
-                uri.AppendQuery("$to", queryOptions.To.Value, "O", true);
+                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
             }
-            if (queryOptions?.Filter != null)
+            if (policyQuerySettings?.Filter != null)
             {
-                uri.AppendQuery("$filter", queryOptions.Filter, true);
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1318,17 +1318,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Summarizes policy states for the subscription level policy definition. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SummarizeResults>> SummarizeForPolicyDefinitionAsync(string subscriptionId, string policyDefinitionName, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SummarizeResults>> SummarizeForPolicyDefinitionAsync(string subscriptionId, string policyDefinitionName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
-            using var message = CreateSummarizeForPolicyDefinitionRequest(subscriptionId, policyDefinitionName, policyStatesSummaryResource, queryOptions);
+            using var message = CreateSummarizeForPolicyDefinitionRequest(subscriptionId, policyDefinitionName, policyStateSummaryType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1347,17 +1347,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Summarizes policy states for the subscription level policy definition. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SummarizeResults> SummarizeForPolicyDefinition(string subscriptionId, string policyDefinitionName, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<SummarizeResults> SummarizeForPolicyDefinition(string subscriptionId, string policyDefinitionName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
-            using var message = CreateSummarizeForPolicyDefinitionRequest(subscriptionId, policyDefinitionName, policyStatesSummaryResource, queryOptions);
+            using var message = CreateSummarizeForPolicyDefinitionRequest(subscriptionId, policyDefinitionName, policyStateSummaryType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1373,7 +1373,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(string subscriptionId, string policyAssignmentName, PolicyStateType policyStatesResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(string subscriptionId, string policyAssignmentName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1387,40 +1387,40 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/policyAssignments/", false);
             uri.AppendPath(policyAssignmentName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyStates/", false);
-            uri.AppendPath(policyStatesResource.ToString(), true);
+            uri.AppendPath(policyStateType.ToString(), true);
             uri.AppendPath("/queryResults", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (queryOptions?.Top != null)
+            if (policyQuerySettings?.Top != null)
             {
-                uri.AppendQuery("$top", queryOptions.Top.Value, true);
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
             }
-            if (queryOptions?.OrderBy != null)
+            if (policyQuerySettings?.OrderBy != null)
             {
-                uri.AppendQuery("$orderby", queryOptions.OrderBy, true);
+                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
             }
-            if (queryOptions?.Select != null)
+            if (policyQuerySettings?.Select != null)
             {
-                uri.AppendQuery("$select", queryOptions.Select, true);
+                uri.AppendQuery("$select", policyQuerySettings.Select, true);
             }
-            if (queryOptions?.From != null)
+            if (policyQuerySettings?.From != null)
             {
-                uri.AppendQuery("$from", queryOptions.From.Value, "O", true);
+                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
             }
-            if (queryOptions?.To != null)
+            if (policyQuerySettings?.To != null)
             {
-                uri.AppendQuery("$to", queryOptions.To.Value, "O", true);
+                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
             }
-            if (queryOptions?.Filter != null)
+            if (policyQuerySettings?.Filter != null)
             {
-                uri.AppendQuery("$filter", queryOptions.Filter, true);
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
             }
-            if (queryOptions?.Apply != null)
+            if (policyQuerySettings?.Apply != null)
             {
-                uri.AppendQuery("$apply", queryOptions.Apply, true);
+                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
             }
-            if (queryOptions?.SkipToken != null)
+            if (policyQuerySettings?.SkipToken != null)
             {
-                uri.AppendQuery("$skiptoken", queryOptions.SkipToken, true);
+                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1431,17 +1431,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the subscription level policy assignment. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForSubscriptionLevelPolicyAssignmentAsync(string subscriptionId, string policyAssignmentName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForSubscriptionLevelPolicyAssignmentAsync(string subscriptionId, string policyAssignmentName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
-            using var message = CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(subscriptionId, policyAssignmentName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(subscriptionId, policyAssignmentName, policyStateType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1460,17 +1460,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the subscription level policy assignment. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyStatesQueryResults> ListQueryResultsForSubscriptionLevelPolicyAssignment(string subscriptionId, string policyAssignmentName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyStatesQueryResults> ListQueryResultsForSubscriptionLevelPolicyAssignment(string subscriptionId, string policyAssignmentName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
-            using var message = CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(subscriptionId, policyAssignmentName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(subscriptionId, policyAssignmentName, policyStateType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1486,7 +1486,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateSummarizeForSubscriptionLevelPolicyAssignmentRequest(string subscriptionId, string policyAssignmentName, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions)
+        internal HttpMessage CreateSummarizeForSubscriptionLevelPolicyAssignmentRequest(string subscriptionId, string policyAssignmentName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1500,24 +1500,24 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/policyAssignments/", false);
             uri.AppendPath(policyAssignmentName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyStates/", false);
-            uri.AppendPath(policyStatesSummaryResource.ToString(), true);
+            uri.AppendPath(policyStateSummaryType.ToString(), true);
             uri.AppendPath("/summarize", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (queryOptions?.Top != null)
+            if (policyQuerySettings?.Top != null)
             {
-                uri.AppendQuery("$top", queryOptions.Top.Value, true);
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
             }
-            if (queryOptions?.From != null)
+            if (policyQuerySettings?.From != null)
             {
-                uri.AppendQuery("$from", queryOptions.From.Value, "O", true);
+                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
             }
-            if (queryOptions?.To != null)
+            if (policyQuerySettings?.To != null)
             {
-                uri.AppendQuery("$to", queryOptions.To.Value, "O", true);
+                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
             }
-            if (queryOptions?.Filter != null)
+            if (policyQuerySettings?.Filter != null)
             {
-                uri.AppendQuery("$filter", queryOptions.Filter, true);
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1528,17 +1528,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Summarizes policy states for the subscription level policy assignment. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SummarizeResults>> SummarizeForSubscriptionLevelPolicyAssignmentAsync(string subscriptionId, string policyAssignmentName, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SummarizeResults>> SummarizeForSubscriptionLevelPolicyAssignmentAsync(string subscriptionId, string policyAssignmentName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
-            using var message = CreateSummarizeForSubscriptionLevelPolicyAssignmentRequest(subscriptionId, policyAssignmentName, policyStatesSummaryResource, queryOptions);
+            using var message = CreateSummarizeForSubscriptionLevelPolicyAssignmentRequest(subscriptionId, policyAssignmentName, policyStateSummaryType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1557,17 +1557,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Summarizes policy states for the subscription level policy assignment. </summary>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SummarizeResults> SummarizeForSubscriptionLevelPolicyAssignment(string subscriptionId, string policyAssignmentName, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<SummarizeResults> SummarizeForSubscriptionLevelPolicyAssignment(string subscriptionId, string policyAssignmentName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
-            using var message = CreateSummarizeForSubscriptionLevelPolicyAssignmentRequest(subscriptionId, policyAssignmentName, policyStatesSummaryResource, queryOptions);
+            using var message = CreateSummarizeForSubscriptionLevelPolicyAssignmentRequest(subscriptionId, policyAssignmentName, policyStateSummaryType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1583,7 +1583,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForResourceGroupLevelPolicyAssignmentRequest(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyStateType policyStatesResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForResourceGroupLevelPolicyAssignmentRequest(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1599,40 +1599,40 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/policyAssignments/", false);
             uri.AppendPath(policyAssignmentName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyStates/", false);
-            uri.AppendPath(policyStatesResource.ToString(), true);
+            uri.AppendPath(policyStateType.ToString(), true);
             uri.AppendPath("/queryResults", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (queryOptions?.Top != null)
+            if (policyQuerySettings?.Top != null)
             {
-                uri.AppendQuery("$top", queryOptions.Top.Value, true);
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
             }
-            if (queryOptions?.OrderBy != null)
+            if (policyQuerySettings?.OrderBy != null)
             {
-                uri.AppendQuery("$orderby", queryOptions.OrderBy, true);
+                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
             }
-            if (queryOptions?.Select != null)
+            if (policyQuerySettings?.Select != null)
             {
-                uri.AppendQuery("$select", queryOptions.Select, true);
+                uri.AppendQuery("$select", policyQuerySettings.Select, true);
             }
-            if (queryOptions?.From != null)
+            if (policyQuerySettings?.From != null)
             {
-                uri.AppendQuery("$from", queryOptions.From.Value, "O", true);
+                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
             }
-            if (queryOptions?.To != null)
+            if (policyQuerySettings?.To != null)
             {
-                uri.AppendQuery("$to", queryOptions.To.Value, "O", true);
+                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
             }
-            if (queryOptions?.Filter != null)
+            if (policyQuerySettings?.Filter != null)
             {
-                uri.AppendQuery("$filter", queryOptions.Filter, true);
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
             }
-            if (queryOptions?.Apply != null)
+            if (policyQuerySettings?.Apply != null)
             {
-                uri.AppendQuery("$apply", queryOptions.Apply, true);
+                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
             }
-            if (queryOptions?.SkipToken != null)
+            if (policyQuerySettings?.SkipToken != null)
             {
-                uri.AppendQuery("$skiptoken", queryOptions.SkipToken, true);
+                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1644,18 +1644,18 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForResourceGroupLevelPolicyAssignmentAsync(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForResourceGroupLevelPolicyAssignmentAsync(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
-            using var message = CreateListQueryResultsForResourceGroupLevelPolicyAssignmentRequest(subscriptionId, resourceGroupName, policyAssignmentName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForResourceGroupLevelPolicyAssignmentRequest(subscriptionId, resourceGroupName, policyAssignmentName, policyStateType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1675,18 +1675,18 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyStatesQueryResults> ListQueryResultsForResourceGroupLevelPolicyAssignment(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyStatesQueryResults> ListQueryResultsForResourceGroupLevelPolicyAssignment(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
-            using var message = CreateListQueryResultsForResourceGroupLevelPolicyAssignmentRequest(subscriptionId, resourceGroupName, policyAssignmentName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForResourceGroupLevelPolicyAssignmentRequest(subscriptionId, resourceGroupName, policyAssignmentName, policyStateType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1702,7 +1702,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateSummarizeForResourceGroupLevelPolicyAssignmentRequest(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions)
+        internal HttpMessage CreateSummarizeForResourceGroupLevelPolicyAssignmentRequest(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1718,24 +1718,24 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/policyAssignments/", false);
             uri.AppendPath(policyAssignmentName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyStates/", false);
-            uri.AppendPath(policyStatesSummaryResource.ToString(), true);
+            uri.AppendPath(policyStateSummaryType.ToString(), true);
             uri.AppendPath("/summarize", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (queryOptions?.Top != null)
+            if (policyQuerySettings?.Top != null)
             {
-                uri.AppendQuery("$top", queryOptions.Top.Value, true);
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
             }
-            if (queryOptions?.From != null)
+            if (policyQuerySettings?.From != null)
             {
-                uri.AppendQuery("$from", queryOptions.From.Value, "O", true);
+                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
             }
-            if (queryOptions?.To != null)
+            if (policyQuerySettings?.To != null)
             {
-                uri.AppendQuery("$to", queryOptions.To.Value, "O", true);
+                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
             }
-            if (queryOptions?.Filter != null)
+            if (policyQuerySettings?.Filter != null)
             {
-                uri.AppendQuery("$filter", queryOptions.Filter, true);
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1747,18 +1747,18 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SummarizeResults>> SummarizeForResourceGroupLevelPolicyAssignmentAsync(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SummarizeResults>> SummarizeForResourceGroupLevelPolicyAssignmentAsync(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
-            using var message = CreateSummarizeForResourceGroupLevelPolicyAssignmentRequest(subscriptionId, resourceGroupName, policyAssignmentName, policyStatesSummaryResource, queryOptions);
+            using var message = CreateSummarizeForResourceGroupLevelPolicyAssignmentRequest(subscriptionId, resourceGroupName, policyAssignmentName, policyStateSummaryType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1778,18 +1778,18 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SummarizeResults> SummarizeForResourceGroupLevelPolicyAssignment(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<SummarizeResults> SummarizeForResourceGroupLevelPolicyAssignment(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
-            using var message = CreateSummarizeForResourceGroupLevelPolicyAssignmentRequest(subscriptionId, resourceGroupName, policyAssignmentName, policyStatesSummaryResource, queryOptions);
+            using var message = CreateSummarizeForResourceGroupLevelPolicyAssignmentRequest(subscriptionId, resourceGroupName, policyAssignmentName, policyStateSummaryType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1805,7 +1805,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForManagementGroupNextPageRequest(string nextLink, string managementGroupName, PolicyStateType policyStatesResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForManagementGroupNextPageRequest(string nextLink, string managementGroupName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1822,17 +1822,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the resources under the management group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="managementGroupName"> Management group name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="managementGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForManagementGroupNextPageAsync(string nextLink, string managementGroupName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForManagementGroupNextPageAsync(string nextLink, string managementGroupName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(managementGroupName, nameof(managementGroupName));
 
-            using var message = CreateListQueryResultsForManagementGroupNextPageRequest(nextLink, managementGroupName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForManagementGroupNextPageRequest(nextLink, managementGroupName, policyStateType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1851,17 +1851,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the resources under the management group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="managementGroupName"> Management group name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="managementGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyStatesQueryResults> ListQueryResultsForManagementGroupNextPage(string nextLink, string managementGroupName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyStatesQueryResults> ListQueryResultsForManagementGroupNextPage(string nextLink, string managementGroupName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(managementGroupName, nameof(managementGroupName));
 
-            using var message = CreateListQueryResultsForManagementGroupNextPageRequest(nextLink, managementGroupName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForManagementGroupNextPageRequest(nextLink, managementGroupName, policyStateType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1877,7 +1877,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForSubscriptionNextPageRequest(string nextLink, string subscriptionId, PolicyStateType policyStatesResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForSubscriptionNextPageRequest(string nextLink, string subscriptionId, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1894,17 +1894,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the resources under the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForSubscriptionNextPageAsync(string nextLink, string subscriptionId, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForSubscriptionNextPageAsync(string nextLink, string subscriptionId, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, subscriptionId, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, subscriptionId, policyStateType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1923,17 +1923,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the resources under the subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyStatesQueryResults> ListQueryResultsForSubscriptionNextPage(string nextLink, string subscriptionId, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyStatesQueryResults> ListQueryResultsForSubscriptionNextPage(string nextLink, string subscriptionId, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, subscriptionId, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, subscriptionId, policyStateType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1949,7 +1949,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, PolicyStateType policyStatesResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1967,18 +1967,18 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListQueryResultsForResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, policyStateType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1998,18 +1998,18 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyStatesQueryResults> ListQueryResultsForResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyStatesQueryResults> ListQueryResultsForResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListQueryResultsForResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, policyStateType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2025,7 +2025,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForResourceNextPageRequest(string nextLink, string resourceId, PolicyStateType policyStatesResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForResourceNextPageRequest(string nextLink, string resourceId, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2042,16 +2042,16 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceId"/> is null. </exception>
-        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForResourceNextPageAsync(string nextLink, string resourceId, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForResourceNextPageAsync(string nextLink, string resourceId, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
-            using var message = CreateListQueryResultsForResourceNextPageRequest(nextLink, resourceId, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForResourceNextPageRequest(nextLink, resourceId, policyStateType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2070,16 +2070,16 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Queries policy states for the resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceId"/> is null. </exception>
-        public Response<PolicyStatesQueryResults> ListQueryResultsForResourceNextPage(string nextLink, string resourceId, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyStatesQueryResults> ListQueryResultsForResourceNextPage(string nextLink, string resourceId, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
-            using var message = CreateListQueryResultsForResourceNextPageRequest(nextLink, resourceId, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForResourceNextPageRequest(nextLink, resourceId, policyStateType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2095,7 +2095,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForPolicySetDefinitionNextPageRequest(string nextLink, string subscriptionId, string policySetDefinitionName, PolicyStateType policyStatesResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForPolicySetDefinitionNextPageRequest(string nextLink, string subscriptionId, string policySetDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2113,18 +2113,18 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForPolicySetDefinitionNextPageAsync(string nextLink, string subscriptionId, string policySetDefinitionName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForPolicySetDefinitionNextPageAsync(string nextLink, string subscriptionId, string policySetDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
-            using var message = CreateListQueryResultsForPolicySetDefinitionNextPageRequest(nextLink, subscriptionId, policySetDefinitionName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForPolicySetDefinitionNextPageRequest(nextLink, subscriptionId, policySetDefinitionName, policyStateType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2144,18 +2144,18 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyStatesQueryResults> ListQueryResultsForPolicySetDefinitionNextPage(string nextLink, string subscriptionId, string policySetDefinitionName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyStatesQueryResults> ListQueryResultsForPolicySetDefinitionNextPage(string nextLink, string subscriptionId, string policySetDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
 
-            using var message = CreateListQueryResultsForPolicySetDefinitionNextPageRequest(nextLink, subscriptionId, policySetDefinitionName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForPolicySetDefinitionNextPageRequest(nextLink, subscriptionId, policySetDefinitionName, policyStateType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2171,7 +2171,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForPolicyDefinitionNextPageRequest(string nextLink, string subscriptionId, string policyDefinitionName, PolicyStateType policyStatesResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForPolicyDefinitionNextPageRequest(string nextLink, string subscriptionId, string policyDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2189,18 +2189,18 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForPolicyDefinitionNextPageAsync(string nextLink, string subscriptionId, string policyDefinitionName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForPolicyDefinitionNextPageAsync(string nextLink, string subscriptionId, string policyDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
-            using var message = CreateListQueryResultsForPolicyDefinitionNextPageRequest(nextLink, subscriptionId, policyDefinitionName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForPolicyDefinitionNextPageRequest(nextLink, subscriptionId, policyDefinitionName, policyStateType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2220,18 +2220,18 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyStatesQueryResults> ListQueryResultsForPolicyDefinitionNextPage(string nextLink, string subscriptionId, string policyDefinitionName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyStatesQueryResults> ListQueryResultsForPolicyDefinitionNextPage(string nextLink, string subscriptionId, string policyDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
-            using var message = CreateListQueryResultsForPolicyDefinitionNextPageRequest(nextLink, subscriptionId, policyDefinitionName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForPolicyDefinitionNextPageRequest(nextLink, subscriptionId, policyDefinitionName, policyStateType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2247,7 +2247,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(string nextLink, string subscriptionId, string policyAssignmentName, PolicyStateType policyStatesResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(string nextLink, string subscriptionId, string policyAssignmentName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2265,18 +2265,18 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageAsync(string nextLink, string subscriptionId, string policyAssignmentName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageAsync(string nextLink, string subscriptionId, string policyAssignmentName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
-            using var message = CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(nextLink, subscriptionId, policyAssignmentName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(nextLink, subscriptionId, policyAssignmentName, policyStateType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2296,18 +2296,18 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyStatesQueryResults> ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPage(string nextLink, string subscriptionId, string policyAssignmentName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyStatesQueryResults> ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPage(string nextLink, string subscriptionId, string policyAssignmentName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
-            using var message = CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(nextLink, subscriptionId, policyAssignmentName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(nextLink, subscriptionId, policyAssignmentName, policyStateType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -2323,7 +2323,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyStateType policyStatesResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2342,19 +2342,19 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyStatesQueryResults>> ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
-            using var message = CreateListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageRequest(nextLink, subscriptionId, resourceGroupName, policyAssignmentName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageRequest(nextLink, subscriptionId, resourceGroupName, policyAssignmentName, policyStateType, policyQuerySettings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -2375,19 +2375,19 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
+        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
+        /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyStatesQueryResults> ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyStatesQueryResults> ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
-            using var message = CreateListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageRequest(nextLink, subscriptionId, resourceGroupName, policyAssignmentName, policyStatesResource, queryOptions);
+            using var message = CreateListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageRequest(nextLink, subscriptionId, resourceGroupName, policyAssignmentName, policyStateType, policyQuerySettings);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="command"/> is null. </exception>
         public CustomActivity(string name, BinaryData command) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (command == null)
-            {
-                throw new ArgumentNullException(nameof(command));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(command, nameof(command));
 
             Command = command;
             ExtendedProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -128,7 +122,36 @@ namespace Azure.ResourceManager.DataFactory.Models
         public BinaryData FolderPath { get; set; }
         /// <summary> Reference objects. </summary>
         public CustomActivityReferenceObject ReferenceObjects { get; set; }
-        /// <summary> User defined property bag. There is no restriction on the keys or values that can be used. The user specified custom activity has the full responsibility to consume and interpret the content defined. </summary>
+        /// <summary>
+        /// User defined property bag. There is no restriction on the keys or values that can be used. The user specified custom activity has the full responsibility to consume and interpret the content defined.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IDictionary<string, BinaryData> ExtendedProperties { get; }
         /// <summary>
         /// The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double).

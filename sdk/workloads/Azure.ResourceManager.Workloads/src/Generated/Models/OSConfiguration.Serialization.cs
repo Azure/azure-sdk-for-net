@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("osType");
+            writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OSType.ToString());
             writer.WriteEndObject();
         }
@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     case "Windows": return WindowsConfiguration.DeserializeWindowsConfiguration(element);
                 }
             }
-            OSType osType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("osType"))
-                {
-                    osType = new OSType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownOSConfiguration(osType);
+            return UnknownOSConfiguration.DeserializeUnknownOSConfiguration(element);
         }
     }
 }

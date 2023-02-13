@@ -35,7 +35,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://kasobolcanadanetoauth.blob.core.windows.net/ccc0c3b3-39f3-484e-82af-1eeedc495adf/test-blob-12ad17f9-cc2a-01c8-23aa-9fc27864b9b3?sv=2021-10-04\u0026se=2021-08-12T19%3A42%3A24Z\u0026sr=b\u0026sp=i\u0026sig=Sanitized\u0026comp=immutabilityPolicies",
+      "RequestUri": "https://kasobolcanadanetoauth.blob.core.windows.net/ccc0c3b3-39f3-484e-82af-1eeedc495adf/test-blob-12ad17f9-cc2a-01c8-23aa-9fc27864b9b3?sv=2021-12-02\u0026se=2021-08-12T19%3A42%3A24Z\u0026sr=b\u0026sp=i\u0026sig=Sanitized\u0026comp=immutabilityPolicies",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",
@@ -62,7 +62,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://kasobolcanadanetoauth.blob.core.windows.net/ccc0c3b3-39f3-484e-82af-1eeedc495adf/test-blob-12ad17f9-cc2a-01c8-23aa-9fc27864b9b3?sv=2021-10-04\u0026se=2021-08-12T19%3A42%3A24Z\u0026sr=b\u0026sp=i\u0026sig=Sanitized\u0026comp=legalhold",
+      "RequestUri": "https://kasobolcanadanetoauth.blob.core.windows.net/ccc0c3b3-39f3-484e-82af-1eeedc495adf/test-blob-12ad17f9-cc2a-01c8-23aa-9fc27864b9b3?sv=2021-12-02\u0026se=2021-08-12T19%3A42%3A24Z\u0026sr=b\u0026sp=i\u0026sig=Sanitized\u0026comp=legalhold",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/xml",

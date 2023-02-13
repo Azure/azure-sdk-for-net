@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<Uri> dataPlaneUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("policy"))
+                if (property.NameEquals("policy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     policy = FactoryDataPlaneUserAccessPolicy.DeserializeFactoryDataPlaneUserAccessPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("accessToken"))
+                if (property.NameEquals("accessToken"u8))
                 {
                     accessToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataPlaneUrl"))
+                if (property.NameEquals("dataPlaneUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

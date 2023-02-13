@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static AttestationListResult DeserializeAttestationListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<AttestationData>> value = default;
+            Optional<IReadOnlyList<PolicyAttestationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AttestationData> array = new List<AttestationData>();
+                    List<PolicyAttestationData> array = new List<PolicyAttestationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AttestationData.DeserializeAttestationData(item));
+                        array.Add(PolicyAttestationData.DeserializePolicyAttestationData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

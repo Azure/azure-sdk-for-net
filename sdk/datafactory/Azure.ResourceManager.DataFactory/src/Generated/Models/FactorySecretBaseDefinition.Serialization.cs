@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(SecretBaseType);
             writer.WriteEndObject();
         }
@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "AzureKeyVaultSecret": return AzureKeyVaultSecretReference.DeserializeAzureKeyVaultSecretReference(element);
                 }
             }
-            string type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownFactorySecretBaseDefinition(type);
+            return UnknownSecretBase.DeserializeUnknownSecretBase(element);
         }
     }
 }

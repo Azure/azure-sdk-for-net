@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,22 +18,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CloudRoleArn))
             {
-                writer.WritePropertyName("cloudRoleArn");
+                writer.WritePropertyName("cloudRoleArn"u8);
                 writer.WriteStringValue(CloudRoleArn);
             }
             if (Optional.IsDefined(ScanningMode))
             {
-                writer.WritePropertyName("scanningMode");
+                writer.WritePropertyName("scanningMode"u8);
                 writer.WriteStringValue(ScanningMode.Value.ToString());
             }
-            if (Optional.IsDefined(ExclusionTags))
+            if (Optional.IsCollectionDefined(ExclusionTags))
             {
-                writer.WritePropertyName("exclusionTags");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ExclusionTags);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ExclusionTags.ToString()).RootElement);
-#endif
+                writer.WritePropertyName("exclusionTags"u8);
+                writer.WriteStartObject();
+                foreach (var item in ExclusionTags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
         }
@@ -41,37 +43,42 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         internal static DefenderForServersAwsOfferingVmScannersConfiguration DeserializeDefenderForServersAwsOfferingVmScannersConfiguration(JsonElement element)
         {
             Optional<string> cloudRoleArn = default;
-            Optional<ScanningMode> scanningMode = default;
-            Optional<BinaryData> exclusionTags = default;
+            Optional<DefenderForServersScanningMode> scanningMode = default;
+            Optional<IDictionary<string, string>> exclusionTags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cloudRoleArn"))
+                if (property.NameEquals("cloudRoleArn"u8))
                 {
                     cloudRoleArn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scanningMode"))
+                if (property.NameEquals("scanningMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    scanningMode = new ScanningMode(property.Value.GetString());
+                    scanningMode = new DefenderForServersScanningMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("exclusionTags"))
+                if (property.NameEquals("exclusionTags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    exclusionTags = BinaryData.FromString(property.Value.GetRawText());
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    exclusionTags = dictionary;
                     continue;
                 }
             }
-            return new DefenderForServersAwsOfferingVmScannersConfiguration(cloudRoleArn.Value, Optional.ToNullable(scanningMode), exclusionTags.Value);
+            return new DefenderForServersAwsOfferingVmScannersConfiguration(cloudRoleArn.Value, Optional.ToNullable(scanningMode), Optional.ToDictionary(exclusionTags));
         }
     }
 }

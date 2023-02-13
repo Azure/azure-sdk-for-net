@@ -31,10 +31,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     }
     public enum EventDefinition
     {
-        [Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthenticationEventMetadataAttribute(typeof(Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.TokenIssuanceStartRequest), "onTokenIssuanceStartCustomExtension", "TokenIssuanceStart.preview_10_01_2021", "ResponseTemplate.json")]
-        TokenIssuanceStartV20211001Preview = 0,
         [Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthenticationEventMetadataAttribute(typeof(Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.TokenIssuanceStartRequest), "microsoft.graph.authenticationEvent.TokenIssuanceStart", "TokenIssuanceStart", "CloudEventActionableTemplate.json")]
-        TokenIssuanceStart = 1,
+        TokenIssuanceStart = 0,
     }
     public enum EventType
     {
@@ -45,6 +43,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         Failed = 0,
         TokenInvalid = 1,
         Successful = 2,
+        ValidationError = 3,
     }
 }
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
@@ -60,6 +59,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
     public abstract partial class ActionableResponse<T> : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventResponse where T : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventAction
     {
         protected ActionableResponse() { }
+        [System.ComponentModel.DataAnnotations.RequiredAttribute]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("actions")]
         public System.Collections.Generic.List<T> Actions { get { throw null; } set { } }
     }
@@ -76,8 +76,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         protected AuthenticationEventData() { }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("authenticationEventListenerId")]
         public System.Guid AuthenticationEventListenerId { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("AuthenticationEventsId")]
-        public System.Guid AuthenticationEventsId { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("customAuthenticationExtensionId")]
+        public System.Guid CustomAuthenticationExtensionId { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("tenantId")]
         public System.Guid TenantId { get { throw null; } set { } }
     }
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         [System.ComponentModel.DataAnnotations.RequiredAttribute]
         [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("requestStatus")]
-        public Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.RequestStatusType RequestStatus { get { throw null; } set { } }
+        public Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.RequestStatusType RequestStatus { get { throw null; } }
         [System.ComponentModel.DataAnnotations.RequiredAttribute]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("statusMessage")]
         public string StatusMessage { get { throw null; } set { } }
@@ -97,20 +97,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("type")]
         public string Type { get { throw null; } set { } }
         public abstract System.Threading.Tasks.Task<Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventResponse> Completed();
-        public abstract System.Threading.Tasks.Task<Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventResponse> Failed(System.Exception exception);
+        public System.Threading.Tasks.Task<Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventResponse> Failed(System.Exception exception) { throw null; }
         public override string ToString() { throw null; }
     }
     public abstract partial class AuthenticationEventRequest<TResponse, TData> : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventRequestBase where TResponse : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventResponse where TData : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventData
     {
         internal AuthenticationEventRequest() { }
         [System.ComponentModel.DataAnnotations.RequiredAttribute]
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("payload")]
-        public TData Payload { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("data")]
+        public TData Data { get { throw null; } set { } }
         [System.ComponentModel.DataAnnotations.RequiredAttribute]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("response")]
         public TResponse Response { get { throw null; } set { } }
         public override System.Threading.Tasks.Task<Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventResponse> Completed() { throw null; }
-        public override System.Threading.Tasks.Task<Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventResponse> Failed(System.Exception exception) { throw null; }
     }
     public abstract partial class AuthenticationEventResponse : System.Net.Http.HttpResponseMessage
     {
@@ -128,7 +127,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         internal CloudEventRequest() { }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("oDataType")]
         public string ODataType { get { throw null; } set { } }
-        [System.ComponentModel.DataAnnotations.RequiredAttribute]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("source")]
         public string Source { get { throw null; } set { } }
     }
@@ -152,6 +150,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
     {
         public ProvideClaimsForToken() { }
         public ProvideClaimsForToken(params Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions.TokenClaim[] claim) { }
+        [System.ComponentModel.DataAnnotations.RequiredAttribute]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("claims")]
         public System.Collections.Generic.List<Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions.TokenClaim> Claims { get { throw null; } }
         public void AddClaim(string Id, params string[] Values) { }
@@ -159,7 +158,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
     public partial class TokenClaim
     {
         public TokenClaim(string id, params string[] values) { }
-        [System.ComponentModel.DataAnnotations.RequiredAttribute]
+        [System.ComponentModel.DataAnnotations.RequiredAttribute(AllowEmptyStrings=false)]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("id")]
         public string Id { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("values")]
@@ -216,8 +215,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         public AuthenticationEventContextUser() { }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("companyName")]
         public string CompanyName { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("country")]
-        public string Country { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("createdDateTime")]
+        public string CreatedDateTime { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("displayName")]
         public string DisplayName { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("givenName")]

@@ -17,52 +17,57 @@ namespace Azure.ResourceManager.ApiManagement
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AlwaysLog))
             {
-                writer.WritePropertyName("alwaysLog");
+                writer.WritePropertyName("alwaysLog"u8);
                 writer.WriteStringValue(AlwaysLog.Value.ToString());
             }
             if (Optional.IsDefined(LoggerId))
             {
-                writer.WritePropertyName("loggerId");
+                writer.WritePropertyName("loggerId"u8);
                 writer.WriteStringValue(LoggerId);
             }
             if (Optional.IsDefined(Sampling))
             {
-                writer.WritePropertyName("sampling");
+                writer.WritePropertyName("sampling"u8);
                 writer.WriteObjectValue(Sampling);
             }
             if (Optional.IsDefined(Frontend))
             {
-                writer.WritePropertyName("frontend");
+                writer.WritePropertyName("frontend"u8);
                 writer.WriteObjectValue(Frontend);
             }
             if (Optional.IsDefined(Backend))
             {
-                writer.WritePropertyName("backend");
+                writer.WritePropertyName("backend"u8);
                 writer.WriteObjectValue(Backend);
             }
             if (Optional.IsDefined(IsLogClientIPEnabled))
             {
-                writer.WritePropertyName("logClientIp");
+                writer.WritePropertyName("logClientIp"u8);
                 writer.WriteBooleanValue(IsLogClientIPEnabled.Value);
             }
             if (Optional.IsDefined(HttpCorrelationProtocol))
             {
-                writer.WritePropertyName("httpCorrelationProtocol");
+                writer.WritePropertyName("httpCorrelationProtocol"u8);
                 writer.WriteStringValue(HttpCorrelationProtocol.Value.ToString());
             }
             if (Optional.IsDefined(Verbosity))
             {
-                writer.WritePropertyName("verbosity");
+                writer.WritePropertyName("verbosity"u8);
                 writer.WriteStringValue(Verbosity.Value.ToString());
             }
             if (Optional.IsDefined(OperationNameFormat))
             {
-                writer.WritePropertyName("operationNameFormat");
+                writer.WritePropertyName("operationNameFormat"u8);
                 writer.WriteStringValue(OperationNameFormat.Value.ToString());
+            }
+            if (Optional.IsDefined(Metrics))
+            {
+                writer.WritePropertyName("metrics"u8);
+                writer.WriteBooleanValue(Metrics.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -83,34 +88,35 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<HttpCorrelationProtocol> httpCorrelationProtocol = default;
             Optional<TraceVerbosityLevel> verbosity = default;
             Optional<OperationNameFormat> operationNameFormat = default;
+            Optional<bool> metrics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,7 +125,7 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("alwaysLog"))
+                        if (property0.NameEquals("alwaysLog"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -129,12 +135,12 @@ namespace Azure.ResourceManager.ApiManagement
                             alwaysLog = new AlwaysLog(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("loggerId"))
+                        if (property0.NameEquals("loggerId"u8))
                         {
                             loggerId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sampling"))
+                        if (property0.NameEquals("sampling"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -144,7 +150,7 @@ namespace Azure.ResourceManager.ApiManagement
                             sampling = SamplingSettings.DeserializeSamplingSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("frontend"))
+                        if (property0.NameEquals("frontend"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -154,7 +160,7 @@ namespace Azure.ResourceManager.ApiManagement
                             frontend = PipelineDiagnosticSettings.DeserializePipelineDiagnosticSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("backend"))
+                        if (property0.NameEquals("backend"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -164,7 +170,7 @@ namespace Azure.ResourceManager.ApiManagement
                             backend = PipelineDiagnosticSettings.DeserializePipelineDiagnosticSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("logClientIp"))
+                        if (property0.NameEquals("logClientIp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -174,7 +180,7 @@ namespace Azure.ResourceManager.ApiManagement
                             logClientIP = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("httpCorrelationProtocol"))
+                        if (property0.NameEquals("httpCorrelationProtocol"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -184,7 +190,7 @@ namespace Azure.ResourceManager.ApiManagement
                             httpCorrelationProtocol = new HttpCorrelationProtocol(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("verbosity"))
+                        if (property0.NameEquals("verbosity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -194,7 +200,7 @@ namespace Azure.ResourceManager.ApiManagement
                             verbosity = new TraceVerbosityLevel(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("operationNameFormat"))
+                        if (property0.NameEquals("operationNameFormat"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -204,11 +210,21 @@ namespace Azure.ResourceManager.ApiManagement
                             operationNameFormat = new OperationNameFormat(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("metrics"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            metrics = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new DiagnosticContractData(id, name, type, systemData.Value, Optional.ToNullable(alwaysLog), loggerId.Value, sampling.Value, frontend.Value, backend.Value, Optional.ToNullable(logClientIP), Optional.ToNullable(httpCorrelationProtocol), Optional.ToNullable(verbosity), Optional.ToNullable(operationNameFormat));
+            return new DiagnosticContractData(id, name, type, systemData.Value, Optional.ToNullable(alwaysLog), loggerId.Value, sampling.Value, frontend.Value, backend.Value, Optional.ToNullable(logClientIP), Optional.ToNullable(httpCorrelationProtocol), Optional.ToNullable(verbosity), Optional.ToNullable(operationNameFormat), Optional.ToNullable(metrics));
         }
     }
 }

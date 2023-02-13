@@ -34,7 +34,7 @@ namespace Azure.Storage
             Stream contentStream,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
-            UploadTransferValidationOptions validationOptions,
+            UploadTransferValidationOptions transferValidation,
             string operationName,
             bool async,
             CancellationToken cancellationToken);
@@ -42,7 +42,7 @@ namespace Azure.Storage
             long offset,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
-            UploadTransferValidationOptions validationOptions,
+            UploadTransferValidationOptions transferValidation,
             bool async,
             CancellationToken cancellationToken);
         public delegate Task<Response<TCompleteUploadReturn>> CommitPartitionedUploadInternal(
@@ -104,7 +104,7 @@ namespace Azure.Storage
         public PartitionedUploader(
             Behaviors behaviors,
             StorageTransferOptions transferOptions,
-            UploadTransferValidationOptions validationOptions,
+            UploadTransferValidationOptions transferValidation,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
         {
@@ -152,7 +152,7 @@ namespace Azure.Storage
                     transferOptions.MaximumTransferSize.Value);
             }
 
-            _validationOptions = validationOptions;
+            _validationOptions = transferValidation;
             //partitioned uploads don't support pre-calculated hashes
             if (!(_validationOptions?.PrecalculatedChecksum.IsEmpty ?? true))
             {

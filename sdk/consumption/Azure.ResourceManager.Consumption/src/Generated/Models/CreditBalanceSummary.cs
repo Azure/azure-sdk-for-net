@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="estimatedBalance"> Estimated balance. </param>
         /// <param name="currentBalance"> Current balance. </param>
         /// <param name="estimatedBalanceInBillingCurrency"> Estimated balance in billing currency. </param>
-        internal CreditBalanceSummary(Amount estimatedBalance, Amount currentBalance, AmountWithExchangeRate estimatedBalanceInBillingCurrency)
+        internal CreditBalanceSummary(ConsumptionAmount estimatedBalance, ConsumptionAmount currentBalance, ConsumptionAmountWithExchangeRate estimatedBalanceInBillingCurrency)
         {
             EstimatedBalance = estimatedBalance;
             CurrentBalance = currentBalance;
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Estimated balance. </summary>
-        public Amount EstimatedBalance { get; }
+        public ConsumptionAmount EstimatedBalance { get; }
         /// <summary> Current balance. </summary>
-        public Amount CurrentBalance { get; }
+        public ConsumptionAmount CurrentBalance { get; }
         /// <summary> Estimated balance in billing currency. </summary>
-        public AmountWithExchangeRate EstimatedBalanceInBillingCurrency { get; }
+        public ConsumptionAmountWithExchangeRate EstimatedBalanceInBillingCurrency { get; }
     }
 }

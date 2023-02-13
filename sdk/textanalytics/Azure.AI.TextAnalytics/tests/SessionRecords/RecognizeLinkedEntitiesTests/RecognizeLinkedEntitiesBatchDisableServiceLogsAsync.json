@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-05-01\u0026showStats=false",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-10-01-preview\u0026showStats=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "303",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-881af7b96a7180d63d5993b199626d12-7190c6ba35b02bbb-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220826.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "93fc6a62b9bc7f6328f17ca13d9893a8",
+        "traceparent": "00-5944e633c11ad8c0f9b3325723674979-bcc3c20b6a7f7257-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221014.1 (.NET 6.0.10; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4ae8bd94642b87e9cf97149389dacd86",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -36,14 +36,15 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "a4c9e9de-cdf0-4dd0-9f76-e86189f2ace7",
+        "apim-request-id": "4be86841-edd7-4a72-8cf5-a179e718b9e7",
         "Content-Length": "1476",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2,CognitiveServices.TextAnalytics.TextRecords=2",
-        "Date": "Sat, 27 Aug 2022 01:58:56 GMT",
+        "Date": "Fri, 14 Oct 2022 22:22:42 GMT",
+        "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "29"
+        "x-envoy-upstream-service-time": "12"
       },
       "ResponseBody": {
         "kind": "EntityLinkingResults",
@@ -149,7 +150,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1468976161",
+    "RandomSeed": "861855008",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }

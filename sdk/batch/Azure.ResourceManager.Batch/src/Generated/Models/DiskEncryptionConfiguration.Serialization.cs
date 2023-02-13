@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Targets))
             {
-                writer.WritePropertyName("targets");
+                writer.WritePropertyName("targets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Targets)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<IList<BatchDiskEncryptionTarget>> targets = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targets"))
+                if (property.NameEquals("targets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

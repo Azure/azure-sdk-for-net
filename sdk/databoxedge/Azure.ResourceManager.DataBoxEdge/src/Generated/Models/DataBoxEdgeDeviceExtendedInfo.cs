@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of DataBoxEdgeDeviceExtendedInfo. </summary>
         public DataBoxEdgeDeviceExtendedInfo()
         {
-            DeviceSecrets = new ChangeTrackingDictionary<string, Secret>();
+            DeviceSecrets = new ChangeTrackingDictionary<string, DataBoxEdgeDeviceSecret>();
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeDeviceExtendedInfo. </summary>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="cloudWitnessStorageAccountName"> The Cloud Witness Storage account name. </param>
         /// <param name="cloudWitnessContainerName"> The Container for cloud witness in the storage account. </param>
         /// <param name="cloudWitnessStorageEndpoint"> The Azure service endpoint of the cloud witness storage account. </param>
-        internal DataBoxEdgeDeviceExtendedInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string encryptionKeyThumbprint, string encryptionKey, string resourceKey, string clientSecretStoreId, Uri clientSecretStoreUri, string channelIntegrityKeyName, string channelIntegrityKeyVersion, KeyVaultSyncStatus? keyVaultSyncStatus, IReadOnlyDictionary<string, Secret> deviceSecrets, ClusterWitnessType? clusterWitnessType, string fileShareWitnessLocation, string fileShareWitnessUsername, string cloudWitnessStorageAccountName, string cloudWitnessContainerName, string cloudWitnessStorageEndpoint) : base(id, name, resourceType, systemData)
+        internal DataBoxEdgeDeviceExtendedInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string encryptionKeyThumbprint, string encryptionKey, string resourceKey, ResourceIdentifier clientSecretStoreId, Uri clientSecretStoreUri, string channelIntegrityKeyName, string channelIntegrityKeyVersion, EdgeKeyVaultSyncStatus? keyVaultSyncStatus, IReadOnlyDictionary<string, DataBoxEdgeDeviceSecret> deviceSecrets, EdgeClusterWitnessType? clusterWitnessType, string fileShareWitnessLocation, string fileShareWitnessUsername, string cloudWitnessStorageAccountName, string cloudWitnessContainerName, string cloudWitnessStorageEndpoint) : base(id, name, resourceType, systemData)
         {
             EncryptionKeyThumbprint = encryptionKeyThumbprint;
             EncryptionKey = encryptionKey;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> The Resource ID of the Resource. </summary>
         public string ResourceKey { get; }
         /// <summary> The Key Vault ARM Id for client secrets. </summary>
-        public string ClientSecretStoreId { get; set; }
+        public ResourceIdentifier ClientSecretStoreId { get; set; }
         /// <summary> The url to access the Client Key Vault. </summary>
         public Uri ClientSecretStoreUri { get; set; }
         /// <summary> The name of Channel Integrity Key stored in the Client Key Vault. </summary>
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> The version of Channel Integrity Key stored in the Client Key Vault. </summary>
         public string ChannelIntegrityKeyVersion { get; set; }
         /// <summary> Key vault sync status. </summary>
-        public KeyVaultSyncStatus? KeyVaultSyncStatus { get; set; }
+        public EdgeKeyVaultSyncStatus? KeyVaultSyncStatus { get; set; }
         /// <summary> Device secrets, will be returned only with ODataFilter $expand=deviceSecrets. </summary>
-        public IReadOnlyDictionary<string, Secret> DeviceSecrets { get; }
+        public IReadOnlyDictionary<string, DataBoxEdgeDeviceSecret> DeviceSecrets { get; }
         /// <summary> Cluster Witness Type. </summary>
-        public ClusterWitnessType? ClusterWitnessType { get; }
+        public EdgeClusterWitnessType? ClusterWitnessType { get; }
         /// <summary> The witness location of file share. </summary>
         public string FileShareWitnessLocation { get; }
         /// <summary> The username of file share. </summary>

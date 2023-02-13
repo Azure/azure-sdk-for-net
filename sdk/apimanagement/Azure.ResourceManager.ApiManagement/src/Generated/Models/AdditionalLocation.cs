@@ -21,10 +21,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public AdditionalLocation(AzureLocation location, ApiManagementServiceSkuProperties sku)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Location = location;
             Sku = sku;

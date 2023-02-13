@@ -17,16 +17,21 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("entities");
+            if (Optional.IsDefined(DetectedLanguage))
+            {
+                writer.WritePropertyName("detectedLanguage"u8);
+                writer.WriteObjectValue(DetectedLanguage.Value);
+            }
+            writer.WritePropertyName("entities"u8);
             writer.WriteStartArray();
             foreach (var item in Entities)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("id");
+            writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            writer.WritePropertyName("warnings");
+            writer.WritePropertyName("warnings"u8);
             writer.WriteStartArray();
             foreach (var item in Warnings)
             {
@@ -35,7 +40,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
-                writer.WritePropertyName("statistics");
+                writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics.Value);
             }
             writer.WriteEndObject();
@@ -43,28 +48,39 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static CustomEntitiesResultDocumentsItem DeserializeCustomEntitiesResultDocumentsItem(JsonElement element)
         {
-            IList<Entity> entities = default;
+            Optional<DetectedLanguageInternal> detectedLanguage = default;
+            IList<EntityWithResolution> entities = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("entities"))
+                if (property.NameEquals("detectedLanguage"u8))
                 {
-                    List<Entity> array = new List<Entity>();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    detectedLanguage = DetectedLanguageInternal.DeserializeDetectedLanguageInternal(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("entities"u8))
+                {
+                    List<EntityWithResolution> array = new List<EntityWithResolution>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Entity.DeserializeEntity(item));
+                        array.Add(EntityWithResolution.DeserializeEntityWithResolution(item));
                     }
                     entities = array;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("warnings"))
+                if (property.NameEquals("warnings"u8))
                 {
                     List<DocumentWarning> array = new List<DocumentWarning>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -74,7 +90,7 @@ namespace Azure.AI.TextAnalytics.Models
                     warnings = array;
                     continue;
                 }
-                if (property.NameEquals("statistics"))
+                if (property.NameEquals("statistics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +101,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CustomEntitiesResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), entities);
+            return new CustomEntitiesResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), entities, Optional.ToNullable(detectedLanguage));
         }
     }
 }

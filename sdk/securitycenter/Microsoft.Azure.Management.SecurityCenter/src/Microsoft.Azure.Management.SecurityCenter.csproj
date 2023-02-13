@@ -6,10 +6,15 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.SecurityCenter</PackageId>
     <Description>Provides developers with libraries for the updated Azure Security Center platform under Azure Resource manager to view and manage security posture in and outside Azure.</Description>
-    <Version>3.0.0</Version>
+    <Version>4.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.SecurityCenter</AssemblyName>
     <PackageTags>management;security center;security;IoT security;</PackageTags>
-    <PackageReleaseNotes>Updated SDK client. Bumpes settings API Version</PackageReleaseNotes>
+    <PackageReleaseNotes>
+      1. Updated SDK client.
+      2. SecurityAssessmentMetadata name was changed to SecurityAssessmentMetadataResponse
+      3. SecurityAssessment name was changed to SecurityAssessmentResponse
+      4. Parameters order was changed for UpdateResourceGroupLevelStateToResolve, UpdateResourceGroupLevelStateToDismiss, UpdateResourceGroupLevelStateToActivate, GetResourceGroupLevel
+      5. Parameters order for was changed SecurityContact</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

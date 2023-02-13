@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -16,16 +17,10 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="primingJobName"> The priming job name. </param>
         /// <param name="primingManifestUri"> The URL for the priming manifest file to download. This file must be readable from the HPC Cache. When the file is in Azure blob storage the URL should include a Shared Access Signature (SAS) granting read permissions on the blob. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="primingJobName"/> or <paramref name="primingManifestUri"/> is null. </exception>
-        public PrimingJob(string primingJobName, string primingManifestUri)
+        public PrimingJob(string primingJobName, Uri primingManifestUri)
         {
-            if (primingJobName == null)
-            {
-                throw new ArgumentNullException(nameof(primingJobName));
-            }
-            if (primingManifestUri == null)
-            {
-                throw new ArgumentNullException(nameof(primingManifestUri));
-            }
+            Argument.AssertNotNull(primingJobName, nameof(primingJobName));
+            Argument.AssertNotNull(primingManifestUri, nameof(primingManifestUri));
 
             PrimingJobName = primingJobName;
             PrimingManifestUri = primingManifestUri;
@@ -39,7 +34,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="primingJobStatus"> The status code of the priming job. </param>
         /// <param name="primingJobDetails"> The job details or error information if any. </param>
         /// <param name="primingJobPercentComplete"> The current progress of the priming job, as a percentage. </param>
-        internal PrimingJob(string primingJobName, string primingManifestUri, string primingJobId, PrimingJobState? primingJobState, string primingJobStatus, string primingJobDetails, double? primingJobPercentComplete)
+        internal PrimingJob(string primingJobName, Uri primingManifestUri, string primingJobId, PrimingJobState? primingJobState, string primingJobStatus, string primingJobDetails, double? primingJobPercentComplete)
         {
             PrimingJobName = primingJobName;
             PrimingManifestUri = primingManifestUri;
@@ -53,7 +48,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> The priming job name. </summary>
         public string PrimingJobName { get; set; }
         /// <summary> The URL for the priming manifest file to download. This file must be readable from the HPC Cache. When the file is in Azure blob storage the URL should include a Shared Access Signature (SAS) granting read permissions on the blob. </summary>
-        public string PrimingManifestUri { get; set; }
+        public Uri PrimingManifestUri { get; set; }
         /// <summary> The unique identifier of the priming job. </summary>
         public string PrimingJobId { get; }
         /// <summary> The state of the priming operation. </summary>

@@ -20,18 +20,15 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of GalleryImageVersionStorageProfile. </summary>
-        /// <param name="source"> The gallery artifact version source. </param>
+        /// <param name="gallerySource"> The source of the gallery artifact version. </param>
         /// <param name="osDiskImage"> This is the OS disk image. </param>
         /// <param name="dataDiskImages"> A list of data disk images. </param>
-        internal GalleryImageVersionStorageProfile(GalleryArtifactVersionSource source, GalleryOSDiskImage osDiskImage, IList<GalleryDataDiskImage> dataDiskImages)
+        internal GalleryImageVersionStorageProfile(GalleryArtifactVersionFullSource gallerySource, GalleryOSDiskImage osDiskImage, IList<GalleryDataDiskImage> dataDiskImages)
         {
-            Source = source;
+            GallerySource = gallerySource;
             OSDiskImage = osDiskImage;
             DataDiskImages = dataDiskImages;
         }
-
-        /// <summary> The gallery artifact version source. </summary>
-        public GalleryArtifactVersionSource Source { get; set; }
         /// <summary> This is the OS disk image. </summary>
         public GalleryOSDiskImage OSDiskImage { get; set; }
         /// <summary> A list of data disk images. </summary>

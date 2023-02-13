@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -16,17 +17,17 @@ namespace Azure.ResourceManager.DataShare.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("accountName");
+            writer.WritePropertyName("accountName"u8);
             writer.WriteStringValue(AccountName);
-            writer.WritePropertyName("folderPath");
+            writer.WritePropertyName("folderPath"u8);
             writer.WriteStringValue(FolderPath);
-            writer.WritePropertyName("resourceGroup");
+            writer.WritePropertyName("resourceGroup"u8);
             writer.WriteStringValue(ResourceGroup);
-            writer.WritePropertyName("subscriptionId");
+            writer.WritePropertyName("subscriptionId"u8);
             writer.WriteStringValue(SubscriptionId);
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -40,43 +41,43 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             string accountName = default;
-            Optional<string> dataSetId = default;
+            Optional<Guid> dataSetId = default;
             string folderPath = default;
             string resourceGroup = default;
             string subscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new DataSetKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,27 +86,32 @@ namespace Azure.ResourceManager.DataShare.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("accountName"))
+                        if (property0.NameEquals("accountName"u8))
                         {
                             accountName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("dataSetId"))
+                        if (property0.NameEquals("dataSetId"u8))
                         {
-                            dataSetId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            dataSetId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("folderPath"))
+                        if (property0.NameEquals("folderPath"u8))
                         {
                             folderPath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("resourceGroup"))
+                        if (property0.NameEquals("resourceGroup"u8))
                         {
                             resourceGroup = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("subscriptionId"))
+                        if (property0.NameEquals("subscriptionId"u8))
                         {
                             subscriptionId = property0.Value.GetString();
                             continue;
@@ -114,7 +120,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new AdlsGen1FolderDataSet(id, name, type, systemData.Value, kind, accountName, dataSetId.Value, folderPath, resourceGroup, subscriptionId);
+            return new AdlsGen1FolderDataSet(id, name, type, systemData.Value, kind, accountName, Optional.ToNullable(dataSetId), folderPath, resourceGroup, subscriptionId);
         }
     }
 }

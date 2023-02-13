@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<IReadOnlyList<QueryStatisticsProperties>> queries = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("numberOfQueries"))
+                if (property.NameEquals("numberOfQueries"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.Sql.Models
                     numberOfQueries = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("aggregationFunction"))
+                if (property.NameEquals("aggregationFunction"u8))
                 {
                     aggregationFunction = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("observationMetric"))
+                if (property.NameEquals("observationMetric"u8))
                 {
                     observationMetric = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("intervalType"))
+                if (property.NameEquals("intervalType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,17 +54,17 @@ namespace Azure.ResourceManager.Sql.Models
                     intervalType = new QueryTimeGrainType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     startTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     endTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("queries"))
+                if (property.NameEquals("queries"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

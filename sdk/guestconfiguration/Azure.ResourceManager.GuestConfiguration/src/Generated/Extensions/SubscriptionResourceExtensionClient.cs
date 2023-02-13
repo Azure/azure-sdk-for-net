@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -40,60 +39,6 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary>
-        /// List all guest configuration assignments for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments
-        /// Operation Id: GuestConfigurationAssignments_SubscriptionList
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GuestConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GuestConfigurationAssignmentData> GetGuestConfigurationAssignmentsAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<GuestConfigurationAssignmentData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = GuestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGuestConfigurationAssignments");
-                scope.Start();
-                try
-                {
-                    var response = await GuestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.SubscriptionListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// List all guest configuration assignments for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments
-        /// Operation Id: GuestConfigurationAssignments_SubscriptionList
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GuestConfigurationAssignmentData> GetGuestConfigurationAssignments(CancellationToken cancellationToken = default)
-        {
-            Page<GuestConfigurationAssignmentData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = GuestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGuestConfigurationAssignments");
-                scope.Start();
-                try
-                {
-                    var response = GuestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.SubscriptionList(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
     }
 }

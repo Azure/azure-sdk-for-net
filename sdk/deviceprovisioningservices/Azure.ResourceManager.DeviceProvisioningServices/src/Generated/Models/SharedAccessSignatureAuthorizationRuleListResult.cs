@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <summary> Initializes a new instance of SharedAccessSignatureAuthorizationRuleListResult. </summary>
         internal SharedAccessSignatureAuthorizationRuleListResult()
         {
-            Value = new ChangeTrackingList<SharedAccessSignatureAuthorizationRuleAccessRightsDescription>();
+            Value = new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>();
         }
 
         /// <summary> Initializes a new instance of SharedAccessSignatureAuthorizationRuleListResult. </summary>
         /// <param name="value"> The list of shared access policies. </param>
         /// <param name="nextLink"> The next link. </param>
-        internal SharedAccessSignatureAuthorizationRuleListResult(IReadOnlyList<SharedAccessSignatureAuthorizationRuleAccessRightsDescription> value, string nextLink)
+        internal SharedAccessSignatureAuthorizationRuleListResult(IReadOnlyList<DeviceProvisioningServicesSharedAccessKey> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of shared access policies. </summary>
-        public IReadOnlyList<SharedAccessSignatureAuthorizationRuleAccessRightsDescription> Value { get; }
+        public IReadOnlyList<DeviceProvisioningServicesSharedAccessKey> Value { get; }
         /// <summary> The next link. </summary>
         public string NextLink { get; }
     }

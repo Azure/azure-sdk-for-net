@@ -1,0 +1,819 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetFieldAsync(String,String,RequestContext)">
+<example>
+This sample shows how to call GetFieldAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FieldsClient(endpoint, credential);
+
+Response response = await client.GetFieldAsync("<farmerId>", "<fieldId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("farmId").ToString());
+Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
+Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("eTag").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Field</c>:
+<code>{
+  farmId: string, # Optional. ID of the associated Farm.
+  farmerId: string, # Optional. Farmer ID.
+  primaryBoundaryId: string, # Optional. Primary boundary id.
+  boundaryIds: [string], # Optional. Boundary Ids.
+  id: string, # Optional. Unique resource ID.
+  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+  status: string, # Optional. Status of the resource.
+  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetField(String,String,RequestContext)">
+<example>
+This sample shows how to call GetField with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FieldsClient(endpoint, credential);
+
+Response response = client.GetField("<farmerId>", "<fieldId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("farmId").ToString());
+Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
+Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("eTag").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>Field</c>:
+<code>{
+  farmId: string, # Optional. ID of the associated Farm.
+  farmerId: string, # Optional. Farmer ID.
+  primaryBoundaryId: string, # Optional. Primary boundary id.
+  boundaryIds: [string], # Optional. Boundary Ids.
+  id: string, # Optional. Unique resource ID.
+  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+  status: string, # Optional. Status of the resource.
+  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateOrUpdateAsync(String,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FieldsClient(endpoint, credential);
+
+var data = new {};
+
+Response response = await client.CreateOrUpdateAsync("<farmerId>", "<fieldId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FieldsClient(endpoint, credential);
+
+var data = new {
+    farmId = "<farmId>",
+    status = "<status>",
+    name = "<name>",
+    description = "<description>",
+    properties = new {
+        key = new {},
+    },
+};
+
+Response response = await client.CreateOrUpdateAsync("<farmerId>", "<fieldId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("farmId").ToString());
+Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
+Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("eTag").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>Field</c>:
+<code>{
+  farmId: string, # Optional. ID of the associated Farm.
+  farmerId: string, # Optional. Farmer ID.
+  primaryBoundaryId: string, # Optional. Primary boundary id.
+  boundaryIds: [string], # Optional. Boundary Ids.
+  id: string, # Optional. Unique resource ID.
+  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+  status: string, # Optional. Status of the resource.
+  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Field</c>:
+<code>{
+  farmId: string, # Optional. ID of the associated Farm.
+  farmerId: string, # Optional. Farmer ID.
+  primaryBoundaryId: string, # Optional. Primary boundary id.
+  boundaryIds: [string], # Optional. Boundary Ids.
+  id: string, # Optional. Unique resource ID.
+  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+  status: string, # Optional. Status of the resource.
+  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateOrUpdate(String,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrUpdate with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FieldsClient(endpoint, credential);
+
+var data = new {};
+
+Response response = client.CreateOrUpdate("<farmerId>", "<fieldId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FieldsClient(endpoint, credential);
+
+var data = new {
+    farmId = "<farmId>",
+    status = "<status>",
+    name = "<name>",
+    description = "<description>",
+    properties = new {
+        key = new {},
+    },
+};
+
+Response response = client.CreateOrUpdate("<farmerId>", "<fieldId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("farmId").ToString());
+Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
+Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("eTag").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>Field</c>:
+<code>{
+  farmId: string, # Optional. ID of the associated Farm.
+  farmerId: string, # Optional. Farmer ID.
+  primaryBoundaryId: string, # Optional. Primary boundary id.
+  boundaryIds: [string], # Optional. Boundary Ids.
+  id: string, # Optional. Unique resource ID.
+  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+  status: string, # Optional. Status of the resource.
+  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+}
+</code>
+
+Response Body:
+
+Schema for <c>Field</c>:
+<code>{
+  farmId: string, # Optional. ID of the associated Farm.
+  farmerId: string, # Optional. Farmer ID.
+  primaryBoundaryId: string, # Optional. Primary boundary id.
+  boundaryIds: [string], # Optional. Boundary Ids.
+  id: string, # Optional. Unique resource ID.
+  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+  status: string, # Optional. Status of the resource.
+  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DeleteAsync(String,String,RequestContext)">
+<example>
+This sample shows how to call DeleteAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FieldsClient(endpoint, credential);
+
+Response response = await client.DeleteAsync("<farmerId>", "<fieldId>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="Delete(String,String,RequestContext)">
+<example>
+This sample shows how to call Delete with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FieldsClient(endpoint, credential);
+
+Response response = client.Delete("<farmerId>", "<fieldId>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="GetCascadeDeleteJobDetailsAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FieldsClient(endpoint, credential);
+
+Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>CascadeDeleteJob</c>:
+<code>{
+  farmerId: string, # Required. Farmer ID.
+  resourceId: string, # Required. The id of the resource.
+  resourceType: string, # Required. The type of the resource.
+  id: string, # Optional. Unique job id.
+  status: string, # Optional. Status of the job.
+Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+  durationInSeconds: number, # Optional. Duration of the job in seconds.
+  message: string, # Optional. Status message to capture more details of the job.
+  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetCascadeDeleteJobDetails(String,RequestContext)">
+<example>
+This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FieldsClient(endpoint, credential);
+
+Response response = client.GetCascadeDeleteJobDetails("<jobId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>CascadeDeleteJob</c>:
+<code>{
+  farmerId: string, # Required. Farmer ID.
+  resourceId: string, # Required. The id of the resource.
+  resourceType: string, # Required. The type of the resource.
+  id: string, # Optional. Unique job id.
+  status: string, # Optional. Status of the job.
+Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+  durationInSeconds: number, # Optional. Duration of the job in seconds.
+  message: string, # Optional. Status message to capture more details of the job.
+  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetFieldsByFarmerIdAsync(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+<example>
+This sample shows how to call GetFieldsByFarmerIdAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FieldsClient(endpoint, credential);
+
+await foreach (var data in client.GetFieldsByFarmerIdAsync("<farmerId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetFieldsByFarmerIdAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FieldsClient(endpoint, credential);
+
+await foreach (var data in client.GetFieldsByFarmerIdAsync("<farmerId>", new String[]{"<farmIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("farmId").ToString());
+    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
+    Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("eTag").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>FieldListResponseValue</c>:
+<code>{
+  farmId: string, # Optional. ID of the associated Farm.
+  farmerId: string, # Optional. Farmer ID.
+  primaryBoundaryId: string, # Optional. Primary boundary id.
+  boundaryIds: [string], # Optional. Boundary Ids.
+  id: string, # Optional. Unique resource ID.
+  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+  status: string, # Optional. Status of the resource.
+  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetFieldsByFarmerId(String,IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+<example>
+This sample shows how to call GetFieldsByFarmerId with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FieldsClient(endpoint, credential);
+
+foreach (var data in client.GetFieldsByFarmerId("<farmerId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetFieldsByFarmerId with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FieldsClient(endpoint, credential);
+
+foreach (var data in client.GetFieldsByFarmerId("<farmerId>", new String[]{"<farmIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("farmId").ToString());
+    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
+    Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("eTag").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>FieldListResponseValue</c>:
+<code>{
+  farmId: string, # Optional. ID of the associated Farm.
+  farmerId: string, # Optional. Farmer ID.
+  primaryBoundaryId: string, # Optional. Primary boundary id.
+  boundaryIds: [string], # Optional. Boundary Ids.
+  id: string, # Optional. Unique resource ID.
+  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+  status: string, # Optional. Status of the resource.
+  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetFieldsAsync(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+<example>
+This sample shows how to call GetFieldsAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FieldsClient(endpoint, credential);
+
+await foreach (var data in client.GetFieldsAsync())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetFieldsAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FieldsClient(endpoint, credential);
+
+await foreach (var data in client.GetFieldsAsync(new String[]{"<farmIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("farmId").ToString());
+    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
+    Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("eTag").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>FieldListResponseValue</c>:
+<code>{
+  farmId: string, # Optional. ID of the associated Farm.
+  farmerId: string, # Optional. Farmer ID.
+  primaryBoundaryId: string, # Optional. Primary boundary id.
+  boundaryIds: [string], # Optional. Boundary Ids.
+  id: string, # Optional. Unique resource ID.
+  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+  status: string, # Optional. Status of the resource.
+  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetFields(IEnumerable,IEnumerable,IEnumerable,IEnumerable,IEnumerable,DateTimeOffset,DateTimeOffset,DateTimeOffset,DateTimeOffset,Int32,String,RequestContext)">
+<example>
+This sample shows how to call GetFields and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FieldsClient(endpoint, credential);
+
+foreach (var data in client.GetFields())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetFields with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FieldsClient(endpoint, credential);
+
+foreach (var data in client.GetFields(new String[]{"<farmIds>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("farmId").ToString());
+    Console.WriteLine(result.GetProperty("farmerId").ToString());
+    Console.WriteLine(result.GetProperty("primaryBoundaryId").ToString());
+    Console.WriteLine(result.GetProperty("boundaryIds")[0].ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("eTag").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>FieldListResponseValue</c>:
+<code>{
+  farmId: string, # Optional. ID of the associated Farm.
+  farmerId: string, # Optional. Farmer ID.
+  primaryBoundaryId: string, # Optional. Primary boundary id.
+  boundaryIds: [string], # Optional. Boundary Ids.
+  id: string, # Optional. Unique resource ID.
+  eTag: string, # Optional. The ETag value to implement optimistic concurrency.
+  status: string, # Optional. Status of the resource.
+  createdDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  modifiedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateCascadeDeleteJobAsync(WaitUntil,String,String,String,RequestContext)">
+<example>
+This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FieldsClient(endpoint, credential);
+
+var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<farmerId>", "<fieldId>");
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>CascadeDeleteJob</c>:
+<code>{
+  farmerId: string, # Required. Farmer ID.
+  resourceId: string, # Required. The id of the resource.
+  resourceType: string, # Required. The type of the resource.
+  id: string, # Optional. Unique job id.
+  status: string, # Optional. Status of the job.
+Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+  durationInSeconds: number, # Optional. Duration of the job in seconds.
+  message: string, # Optional. Status message to capture more details of the job.
+  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateCascadeDeleteJob(WaitUntil,String,String,String,RequestContext)">
+<example>
+This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new FieldsClient(endpoint, credential);
+
+var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<farmerId>", "<fieldId>");
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("farmerId").ToString());
+Console.WriteLine(result.GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>CascadeDeleteJob</c>:
+<code>{
+  farmerId: string, # Required. Farmer ID.
+  resourceId: string, # Required. The id of the resource.
+  resourceType: string, # Required. The type of the resource.
+  id: string, # Optional. Unique job id.
+  status: string, # Optional. Status of the job.
+Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.
+  durationInSeconds: number, # Optional. Duration of the job in seconds.
+  message: string, # Optional. Status message to capture more details of the job.
+  createdDateTime: string (ISO 8601 Format), # Optional. Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  lastActionDateTime: string (ISO 8601 Format), # Optional. Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  startTime: string (ISO 8601 Format), # Optional. Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  endTime: string (ISO 8601 Format), # Optional. Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.
+  name: string, # Optional. Name to identify resource.
+  description: string, # Optional. Textual description of the resource.
+  properties: Dictionary&lt;string, AnyObject&gt;, # Optional. A collection of key value pairs that belongs to the resource.
+Each pair must not have a key greater than 50 characters
+and must not have a value greater than 150 characters.
+Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>
