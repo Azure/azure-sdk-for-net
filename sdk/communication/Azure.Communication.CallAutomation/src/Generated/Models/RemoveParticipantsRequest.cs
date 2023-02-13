@@ -14,12 +14,12 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The remove participant by identifier request. </summary>
-    internal partial class RemoveParticipantsRequestInternal
+    public partial class RemoveParticipantsRequest
     {
-        /// <summary> Initializes a new instance of RemoveParticipantsRequestInternal. </summary>
+        /// <summary> Initializes a new instance of RemoveParticipantsRequest. </summary>
         /// <param name="participantsToRemove"> The participants to be removed from the call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="participantsToRemove"/> is null. </exception>
-        public RemoveParticipantsRequestInternal(IEnumerable<CommunicationIdentifierModel> participantsToRemove)
+        public RemoveParticipantsRequest(IEnumerable<CommunicationIdentifierModel> participantsToRemove)
         {
             Argument.AssertNotNull(participantsToRemove, nameof(participantsToRemove));
 
