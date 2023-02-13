@@ -353,6 +353,41 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(5, (int)json.OptionalValue);
         }
 
+        [Test]
+        public void CanDispose()
+        {
+            dynamic json = GetDynamicJson("""
+                {
+                  "Foo" : "Hello"
+                }
+                """);
+
+            json.Dispose();
+
+            Assert.Throws<ObjectDisposedException>(() => { var foo = json.Foo; });
+        }
+
+        [Test]
+        public void CanDisposeViaUsing()
+        {
+            string json = """
+                {
+                  "Foo" : "Hello"
+                }
+                """;
+
+            dynamic outer = default;
+            using (dynamic jsonData = GetDynamicJson(json))
+            {
+                Assert.IsTrue(jsonData.Foo == "Hello");
+                outer = jsonData;
+
+                Assert.IsTrue(outer.Foo == "Hello");
+            }
+
+            Assert.Throws<ObjectDisposedException>(() => { var foo = outer.Foo; });
+        }
+
         #region Helpers
         internal static dynamic GetDynamicJson(string json)
         {

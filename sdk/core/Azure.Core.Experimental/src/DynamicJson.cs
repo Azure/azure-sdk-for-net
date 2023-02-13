@@ -107,11 +107,6 @@ namespace Azure.Core.Dynamic
         /// <inheritdoc/>
         public void Dispose()
         {
-            // TODO: There is a challenge here that DynamicJson wraps an element
-            // that may or may not represent the root of the document.
-
-            // We can perhaps make the recommendation that a user should only call
-            // dispose on a DynamicJson returned from GetDynamic()?
             _element.DisposeRoot();
         }
 

@@ -1015,5 +1015,20 @@ namespace Azure.Core.Experimental.Tests
 
             Assert.AreEqual("Hello", doc.RootElement.GetProperty("Foo").GetString());
         }
+
+        [Test]
+        public void CanDispose()
+        {
+            string json = """
+                {
+                  "Foo" : "Hello"
+                }
+                """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            mdoc.Dispose();
+
+            Assert.Throws<ObjectDisposedException>(() => { var foo = mdoc.RootElement.GetProperty("Foo"); });
+        }
     }
 }

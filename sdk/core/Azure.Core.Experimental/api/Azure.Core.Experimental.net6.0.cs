@@ -118,9 +118,10 @@ namespace Azure.Core.Dynamic
         internal abstract void WriteTo(System.IO.Stream stream);
         public static void WriteTo(System.IO.Stream stream, Azure.Core.Dynamic.DynamicData data) { }
     }
-    public partial class DynamicJson : Azure.Core.Dynamic.DynamicData, System.Dynamic.IDynamicMetaObjectProvider
+    public sealed partial class DynamicJson : Azure.Core.Dynamic.DynamicData, System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
     {
         internal DynamicJson() { }
+        public void Dispose() { }
         public static implicit operator bool (Azure.Core.Dynamic.DynamicJson value) { throw null; }
         public static implicit operator double (Azure.Core.Dynamic.DynamicJson value) { throw null; }
         public static implicit operator int (Azure.Core.Dynamic.DynamicJson value) { throw null; }
@@ -153,19 +154,20 @@ namespace Azure.Core.Dynamic
 }
 namespace Azure.Core.Json
 {
-    public partial class MutableJsonDocument
+    public sealed partial class MutableJsonDocument : System.IDisposable
     {
         internal MutableJsonDocument() { }
         public Azure.Core.Json.MutableJsonElement RootElement { get { throw null; } }
+        public void Dispose() { }
         public static Azure.Core.Json.MutableJsonDocument Parse(System.BinaryData utf8Json) { throw null; }
         public static Azure.Core.Json.MutableJsonDocument Parse(string json) { throw null; }
         public void WriteTo(System.IO.Stream stream, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public partial struct MutableJsonElement
+    public readonly partial struct MutableJsonElement
     {
-        private object _dummy;
-        private int _dummyPrimitive;
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
         public System.Text.Json.JsonValueKind ValueKind { get { throw null; } }
         public Azure.Core.Json.MutableJsonElement.ArrayEnumerator EnumerateArray() { throw null; }
         public bool GetBoolean() { throw null; }
