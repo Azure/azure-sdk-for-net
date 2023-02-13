@@ -19,6 +19,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public EventHubOptions()
         {
             MaxEventBatchSize = 10;
+            MinEventBatchSize = 0;
             ConnectionOptions = new EventHubConnectionOptions()
             {
                 TransportType = EventHubsTransportType.AmqpTcp
@@ -128,7 +129,34 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 {
                     throw new ArgumentException("Batch size must be larger than 0.");
                 }
+                if (value < MinEventBatchSize)
+                {
+                    throw new ArgumentException("Maximum batch size must be larger than minimum batch size.");
+                }
                 _maxEventBatchSize = value;
+            }
+        }
+
+        private int _minEventBatchSize;
+
+        /// <summary>
+        /// Gets or sets the minimum number of events delivered in a batch. TODO.
+        /// </summary>
+        public int MinEventBatchSize
+        {
+            get => _minEventBatchSize;
+
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("Batch size must be larger than or equal to 0.");
+                }
+                if (value > MaxEventBatchSize)
+                {
+                    throw new ArgumentException("Maximum batch size must be larger than minimum batch size.");
+                }
+                _minEventBatchSize = value;
             }
         }
 
