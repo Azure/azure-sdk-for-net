@@ -14,7 +14,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.Messaging.EventHubs" />
     <PackageReference Include="Azure.Storage.Blobs" />
-    <PackageReference Include="Microsoft.Azure.WebJobs" VersionOverride="3.0.36-11991" />
+    <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
   </ItemGroup>
 
