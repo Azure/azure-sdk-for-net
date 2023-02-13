@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(ImageDeprecationStatus))
             {
-                writer.WritePropertyName("imageDeprecationStatus");
+                writer.WritePropertyName("imageDeprecationStatus"u8);
                 writer.WriteObjectValue(ImageDeprecationStatus);
             }
             writer.WriteEndObject();
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Compute.Models
                             architecture = new ArchitectureType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("imageDeprecationStatus"))
+                        if (property0.NameEquals("imageDeprecationStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

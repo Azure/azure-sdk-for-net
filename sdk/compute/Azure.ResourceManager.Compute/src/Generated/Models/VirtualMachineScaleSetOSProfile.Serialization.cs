@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(RequireGuestProvisionSignal))
             {
-                writer.WritePropertyName("requireGuestProvisionSignal");
+                writer.WritePropertyName("requireGuestProvisionSignal"u8);
                 writer.WriteBooleanValue(RequireGuestProvisionSignal.Value);
             }
             writer.WriteEndObject();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
                     allowExtensionOperations = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("requireGuestProvisionSignal"))
+                if (property.NameEquals("requireGuestProvisionSignal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

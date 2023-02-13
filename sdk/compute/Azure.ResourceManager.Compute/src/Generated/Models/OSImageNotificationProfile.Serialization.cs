@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(NotBeforeTimeout))
             {
-                writer.WritePropertyName("notBeforeTimeout");
+                writer.WritePropertyName("notBeforeTimeout"u8);
                 writer.WriteStringValue(NotBeforeTimeout);
             }
             if (Optional.IsDefined(Enable))
             {
-                writer.WritePropertyName("enable");
+                writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(Enable.Value);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<bool> enable = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("notBeforeTimeout"))
+                if (property.NameEquals("notBeforeTimeout"u8))
                 {
                     notBeforeTimeout = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enable"))
+                if (property.NameEquals("enable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

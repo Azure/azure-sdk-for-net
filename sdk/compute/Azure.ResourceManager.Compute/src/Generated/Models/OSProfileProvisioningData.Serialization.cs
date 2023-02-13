@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AdminPassword))
             {
-                writer.WritePropertyName("adminPassword");
+                writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
             if (Optional.IsDefined(CustomData))
             {
-                writer.WritePropertyName("customData");
+                writer.WritePropertyName("customData"u8);
                 writer.WriteStringValue(CustomData);
             }
             writer.WriteEndObject();

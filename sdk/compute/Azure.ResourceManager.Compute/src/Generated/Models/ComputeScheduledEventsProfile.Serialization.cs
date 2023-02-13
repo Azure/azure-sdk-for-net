@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(OSImageNotificationProfile))
             {
-                writer.WritePropertyName("osImageNotificationProfile");
+                writer.WritePropertyName("osImageNotificationProfile"u8);
                 writer.WriteObjectValue(OSImageNotificationProfile);
             }
             writer.WriteEndObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
                     terminateNotificationProfile = TerminateNotificationProfile.DeserializeTerminateNotificationProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("osImageNotificationProfile"))
+                if (property.NameEquals("osImageNotificationProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

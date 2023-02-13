@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Zones))
             {
-                writer.WritePropertyName("zones");
+                writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
                 foreach (var item in Zones)
                 {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute
             Optional<string> uniqueId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("zones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute
                     zones = array;
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(ExactVersion))
             {
-                writer.WritePropertyName("exactVersion");
+                writer.WritePropertyName("exactVersion"u8);
                 writer.WriteStringValue(ExactVersion);
             }
             if (Optional.IsDefined(OSProfile))
             {
-                writer.WritePropertyName("osProfile");
+                writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
             writer.WriteEndObject();

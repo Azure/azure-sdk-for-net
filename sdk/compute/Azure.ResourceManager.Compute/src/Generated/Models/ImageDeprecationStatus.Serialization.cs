@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ImageState))
             {
-                writer.WritePropertyName("imageState");
+                writer.WritePropertyName("imageState"u8);
                 writer.WriteStringValue(ImageState.Value.ToString());
             }
             if (Optional.IsDefined(ScheduledDeprecationOn))
             {
-                writer.WritePropertyName("scheduledDeprecationTime");
+                writer.WritePropertyName("scheduledDeprecationTime"u8);
                 writer.WriteStringValue(ScheduledDeprecationOn.Value, "O");
             }
             if (Optional.IsDefined(AlternativeOption))
             {
-                writer.WritePropertyName("alternativeOption");
+                writer.WritePropertyName("alternativeOption"u8);
                 writer.WriteObjectValue(AlternativeOption);
             }
             writer.WriteEndObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<ImageAlternativeOption> alternativeOption = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("imageState"))
+                if (property.NameEquals("imageState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
                     imageState = new ImageState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scheduledDeprecationTime"))
+                if (property.NameEquals("scheduledDeprecationTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
                     scheduledDeprecationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("alternativeOption"))
+                if (property.NameEquals("alternativeOption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

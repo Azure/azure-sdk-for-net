@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(RollbackFailedInstancesOnPolicyBreach))
             {
-                writer.WritePropertyName("rollbackFailedInstancesOnPolicyBreach");
+                writer.WritePropertyName("rollbackFailedInstancesOnPolicyBreach"u8);
                 writer.WriteBooleanValue(RollbackFailedInstancesOnPolicyBreach.Value);
             }
             if (Optional.IsDefined(IsMaxSurgeEnabled))
             {
-                writer.WritePropertyName("maxSurge");
+                writer.WritePropertyName("maxSurge"u8);
                 writer.WriteBooleanValue(IsMaxSurgeEnabled.Value);
             }
             writer.WriteEndObject();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Models
                     prioritizeUnhealthyInstances = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("rollbackFailedInstancesOnPolicyBreach"))
+                if (property.NameEquals("rollbackFailedInstancesOnPolicyBreach"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Compute.Models
                     rollbackFailedInstancesOnPolicyBreach = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("maxSurge"))
+                if (property.NameEquals("maxSurge"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

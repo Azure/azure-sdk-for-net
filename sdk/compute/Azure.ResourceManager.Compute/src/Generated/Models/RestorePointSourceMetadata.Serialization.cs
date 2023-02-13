@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("userData"))
+                if (property.NameEquals("userData"u8))
                 {
                     userData = property.Value.GetString();
                     continue;

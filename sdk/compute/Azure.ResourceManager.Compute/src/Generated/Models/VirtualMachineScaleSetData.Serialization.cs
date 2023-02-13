@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute
             }
             if (Optional.IsDefined(IsMaximumCapacityConstrained))
             {
-                writer.WritePropertyName("constrainedMaximumCapacity");
+                writer.WritePropertyName("constrainedMaximumCapacity"u8);
                 writer.WriteBooleanValue(IsMaximumCapacityConstrained.Value);
             }
             writer.WriteEndObject();
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Compute
                             timeCreated = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("constrainedMaximumCapacity"))
+                        if (property0.NameEquals("constrainedMaximumCapacity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

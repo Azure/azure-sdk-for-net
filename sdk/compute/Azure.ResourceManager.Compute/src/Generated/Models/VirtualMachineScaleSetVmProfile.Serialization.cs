@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(ServiceArtifactReference))
             {
-                writer.WritePropertyName("serviceArtifactReference");
+                writer.WritePropertyName("serviceArtifactReference"u8);
                 JsonSerializer.Serialize(writer, ServiceArtifactReference);
             }
             writer.WriteEndObject();
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Compute.Models
                     hardwareProfile = VirtualMachineScaleSetHardwareProfile.DeserializeVirtualMachineScaleSetHardwareProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("serviceArtifactReference"))
+                if (property.NameEquals("serviceArtifactReference"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
