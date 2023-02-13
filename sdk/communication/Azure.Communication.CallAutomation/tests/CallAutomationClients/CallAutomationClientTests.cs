@@ -289,8 +289,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             Assert.AreEqual("mediaSubscriptionId", result.CallConnectionProperties.MediaSubscriptionId);
         }
 
-<<<<<<< HEAD
-=======
         [TestCaseSource(nameof(TestData_CreateGroupCall_NoCallerId))]
         public void CreateCallWithOptions_NoCallerIdValidation(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
         {
@@ -355,7 +353,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             Assert.True(ex?.Message.Contains("Value cannot be an empty collection."));
         }
 
->>>>>>> 571d4180fc... integrate call invite to create call
         [TestCaseSource(nameof(TestData_CreateCall))]
         public void CreateCallAsync_404NotFound(CallInvite target, Uri callbackUri)
         {
@@ -497,7 +494,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             };
         }
 
-<<<<<<< HEAD
         private static IEnumerable<object?[]> TestData_CreateGroupCall()
         {
             return new[]
@@ -511,8 +507,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             };
         }
 
-=======
->>>>>>> 571d4180fc... integrate call invite to create call
         private static IEnumerable<object?[]> TestData_CreateGroupCall_NoCallerId()
         {
             return new[]

@@ -32,16 +32,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             var uniqueId = await ServiceBusWithNewCall(user, target);
 
             // create call and assert response
-<<<<<<< HEAD
             var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
-=======
-<<<<<<< HEAD
-            var createCallOptions = new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
-=======
-            var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
-            createCallOptions.RepeatabilityHeaders = null;
->>>>>>> 1b10570db6... integrate call invite to create call
->>>>>>> 571d4180fc... integrate call invite to create call
             CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
             string callConnectionId = response.CallConnectionProperties.CallConnectionId;
             Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
@@ -150,10 +141,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 
                     // create call and assert response
                     var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
-<<<<<<< HEAD
-=======
-                    createCallOptions.RepeatabilityHeaders = null;
->>>>>>> 571d4180fc... integrate call invite to create call
+
                     CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                     callConnectionId = response.CallConnectionProperties.CallConnectionId;
                     Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
@@ -164,10 +152,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 
                     // answer the call
                     var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
-<<<<<<< HEAD
-=======
-                    answerCallOptions.RepeatabilityHeaders = null;
->>>>>>> 571d4180fc... integrate call invite to create call
+
                     var answerResponse = await client.AnswerCallAsync(answerCallOptions);
                     Assert.AreEqual(answerResponse.GetRawResponse().Status, StatusCodes.Status200OK);
 
@@ -189,10 +174,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                             RecordingContent = RecordingContent.Audio,
                             RecordingFormat = RecordingFormat.Wav,
                             RecordingStateCallbackEndpoint = new Uri(TestEnvironment.DispatcherCallback),
-<<<<<<< HEAD
-=======
-                            RepeatabilityHeaders = null
->>>>>>> 571d4180fc... integrate call invite to create call
                         });
                     Assert.AreEqual(StatusCodes.Status200OK, startRecordingResponse.GetRawResponse().Status);
                     Assert.NotNull(startRecordingResponse.Value.RecordingId);
@@ -209,10 +190,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 
                     // try hangup
                     var hangUpOptions = new HangUpOptions(true);
-<<<<<<< HEAD
-=======
-                    hangUpOptions.RepeatabilityHeaders = null;
->>>>>>> 571d4180fc... integrate call invite to create call
                     await response.CallConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
                     var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(disconnectedEvent);
@@ -262,10 +239,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 
                     // create call and assert response
                     var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
-<<<<<<< HEAD
-=======
-                    createCallOptions.RepeatabilityHeaders = null;
->>>>>>> 571d4180fc... integrate call invite to create call
                     CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
                     callConnectionId = response.CallConnectionProperties.CallConnectionId;
                     Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
@@ -276,10 +249,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 
                     // answer the call
                     var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
-<<<<<<< HEAD
-=======
-                    answerCallOptions.RepeatabilityHeaders = null;
->>>>>>> 571d4180fc... integrate call invite to create call
                     var answerResponse = await client.AnswerCallAsync(answerCallOptions);
                     Assert.AreEqual(answerResponse.GetRawResponse().Status, StatusCodes.Status200OK);
 
@@ -301,10 +270,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                             RecordingContent = RecordingContent.Audio,
                             RecordingFormat = RecordingFormat.Wav,
                             RecordingStateCallbackEndpoint = new Uri(TestEnvironment.DispatcherCallback),
-<<<<<<< HEAD
-=======
-                            RepeatabilityHeaders = null
->>>>>>> 571d4180fc... integrate call invite to create call
                         };
                     startRecordingOptions.AudioChannelParticipantOrdering.Add(user);
                     startRecordingOptions.AudioChannelParticipantOrdering.Add(target);
@@ -324,10 +289,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 
                     // try hangup
                     var hangUpOptions = new HangUpOptions(true);
-<<<<<<< HEAD
-=======
-                    hangUpOptions.RepeatabilityHeaders = null;
->>>>>>> 571d4180fc... integrate call invite to create call
                     await response.CallConnection.HangUpAsync(hangUpOptions).ConfigureAwait(false);
                     var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
                     Assert.IsNotNull(disconnectedEvent);
