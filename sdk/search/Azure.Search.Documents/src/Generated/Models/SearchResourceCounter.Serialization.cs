@@ -18,12 +18,12 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<long?> quota = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("usage"))
+                if (property.NameEquals("usage"u8))
                 {
                     usage = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("quota"))
+                if (property.NameEquals("quota"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

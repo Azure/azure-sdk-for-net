@@ -25,37 +25,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vmwareSiteId"))
+                if (property.NameEquals("vmwareSiteId"u8))
                 {
                     vmwareSiteId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("physicalSiteId"))
+                if (property.NameEquals("physicalSiteId"u8))
                 {
                     physicalSiteId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("migrationSolutionId"))
+                if (property.NameEquals("migrationSolutionId"u8))
                 {
                     migrationSolutionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceEndpoint"))
+                if (property.NameEquals("serviceEndpoint"u8))
                 {
                     serviceEndpoint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceResourceId"))
+                if (property.NameEquals("serviceResourceId"u8))
                 {
                     serviceResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceContainerId"))
+                if (property.NameEquals("serviceContainerId"u8))
                 {
                     serviceContainerId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("processServers"))
+                if (property.NameEquals("processServers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     processServers = array;
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

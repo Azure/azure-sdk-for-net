@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.AppService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("frequencyInterval");
+            writer.WritePropertyName("frequencyInterval"u8);
             writer.WriteNumberValue(FrequencyInterval);
-            writer.WritePropertyName("frequencyUnit");
+            writer.WritePropertyName("frequencyUnit"u8);
             writer.WriteStringValue(FrequencyUnit.ToSerialString());
-            writer.WritePropertyName("keepAtLeastOneBackup");
+            writer.WritePropertyName("keepAtLeastOneBackup"u8);
             writer.WriteBooleanValue(ShouldKeepAtLeastOneBackup);
-            writer.WritePropertyName("retentionPeriodInDays");
+            writer.WritePropertyName("retentionPeriodInDays"u8);
             writer.WriteNumberValue(RetentionPeriodInDays);
             if (Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startTime");
+                writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
             writer.WriteEndObject();
@@ -42,27 +42,27 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<DateTimeOffset> lastExecutionTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("frequencyInterval"))
+                if (property.NameEquals("frequencyInterval"u8))
                 {
                     frequencyInterval = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("frequencyUnit"))
+                if (property.NameEquals("frequencyUnit"u8))
                 {
                     frequencyUnit = property.Value.GetString().ToBackupFrequencyUnit();
                     continue;
                 }
-                if (property.NameEquals("keepAtLeastOneBackup"))
+                if (property.NameEquals("keepAtLeastOneBackup"u8))
                 {
                     keepAtLeastOneBackup = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("retentionPeriodInDays"))
+                if (property.NameEquals("retentionPeriodInDays"u8))
                 {
                     retentionPeriodInDays = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastExecutionTime"))
+                if (property.NameEquals("lastExecutionTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

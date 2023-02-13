@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("memoryInGB");
+            writer.WritePropertyName("memoryInGB"u8);
             writer.WriteNumberValue(MemoryInGB);
-            writer.WritePropertyName("cpu");
+            writer.WritePropertyName("cpu"u8);
             writer.WriteNumberValue(Cpu);
             if (Optional.IsDefined(Gpu))
             {
-                writer.WritePropertyName("gpu");
+                writer.WritePropertyName("gpu"u8);
                 writer.WriteObjectValue(Gpu);
             }
             writer.WriteEndObject();
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<ContainerGpuResourceInfo> gpu = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("memoryInGB"))
+                if (property.NameEquals("memoryInGB"u8))
                 {
                     memoryInGB = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("cpu"))
+                if (property.NameEquals("cpu"u8))
                 {
                     cpu = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("gpu"))
+                if (property.NameEquals("gpu"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

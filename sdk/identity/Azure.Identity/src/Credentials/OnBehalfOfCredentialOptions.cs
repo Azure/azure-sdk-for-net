@@ -8,7 +8,7 @@ namespace Azure.Identity
     /// <summary>
     ///
     /// </summary>
-    public class OnBehalfOfCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
+    public class OnBehalfOfCredentialOptions : TokenCredentialOptions, ITokenCacheOptions, ISupportsDisableInstanceDiscovery
     {
         /// <summary>
         /// The <see cref="TokenCachePersistenceOptions"/>.
@@ -24,5 +24,8 @@ namespace Azure.Identity
         /// For multi-tenant applications, specifies additional tenants for which the credential may acquire tokens. Add the wildcard value "*" to allow the credential to acquire tokens for any tenant in which the application is installed.
         /// </summary>
         public IList<string> AdditionallyAllowedTenants => AdditionallyAllowedTenantsCore;
+
+        /// <inheritdoc/>
+        public bool DisableInstanceDiscovery { get; set; }
     }
 }

@@ -15,20 +15,20 @@ namespace Azure.AI.AnomalyDetector
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("series");
+            writer.WritePropertyName("series"u8);
             writer.WriteStartArray();
             foreach (var item in Series)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("granularity");
+            writer.WritePropertyName("granularity"u8);
             writer.WriteStringValue(Granularity.ToSerialString());
             if (Optional.IsDefined(CustomInterval))
             {
                 if (CustomInterval != null)
                 {
-                    writer.WritePropertyName("customInterval");
+                    writer.WritePropertyName("customInterval"u8);
                     writer.WriteNumberValue(CustomInterval.Value);
                 }
                 else
@@ -40,7 +40,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (Period != null)
                 {
-                    writer.WritePropertyName("period");
+                    writer.WritePropertyName("period"u8);
                     writer.WriteNumberValue(Period.Value);
                 }
                 else
@@ -52,7 +52,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (StableTrendWindow != null)
                 {
-                    writer.WritePropertyName("stableTrendWindow");
+                    writer.WritePropertyName("stableTrendWindow"u8);
                     writer.WriteNumberValue(StableTrendWindow.Value);
                 }
                 else
@@ -64,7 +64,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (Threshold != null)
                 {
-                    writer.WritePropertyName("threshold");
+                    writer.WritePropertyName("threshold"u8);
                     writer.WriteNumberValue(Threshold.Value);
                 }
                 else

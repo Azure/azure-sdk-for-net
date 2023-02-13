@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AddressSpace))
             {
-                writer.WritePropertyName("addressSpace");
+                writer.WritePropertyName("addressSpace"u8);
                 writer.WriteStringValue(AddressSpace);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> addressSpace = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("addressSpace"))
+                if (property.NameEquals("addressSpace"u8))
                 {
                     addressSpace = property.Value.GetString();
                     continue;

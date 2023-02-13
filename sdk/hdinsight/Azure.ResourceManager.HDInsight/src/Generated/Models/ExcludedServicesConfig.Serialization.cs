@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ExcludedServicesConfigId))
             {
-                writer.WritePropertyName("excludedServicesConfigId");
+                writer.WritePropertyName("excludedServicesConfigId"u8);
                 writer.WriteStringValue(ExcludedServicesConfigId);
             }
             if (Optional.IsDefined(ExcludedServicesList))
             {
-                writer.WritePropertyName("excludedServicesList");
+                writer.WritePropertyName("excludedServicesList"u8);
                 writer.WriteStringValue(ExcludedServicesList);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<string> excludedServicesList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("excludedServicesConfigId"))
+                if (property.NameEquals("excludedServicesConfigId"u8))
                 {
                     excludedServicesConfigId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("excludedServicesList"))
+                if (property.NameEquals("excludedServicesList"u8))
                 {
                     excludedServicesList = property.Value.GetString();
                     continue;

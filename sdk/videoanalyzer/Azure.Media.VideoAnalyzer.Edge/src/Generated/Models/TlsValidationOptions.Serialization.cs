@@ -17,12 +17,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IgnoreHostname))
             {
-                writer.WritePropertyName("ignoreHostname");
+                writer.WritePropertyName("ignoreHostname"u8);
                 writer.WriteStringValue(IgnoreHostname);
             }
             if (Optional.IsDefined(IgnoreSignature))
             {
-                writer.WritePropertyName("ignoreSignature");
+                writer.WritePropertyName("ignoreSignature"u8);
                 writer.WriteStringValue(IgnoreSignature);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<string> ignoreSignature = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ignoreHostname"))
+                if (property.NameEquals("ignoreHostname"u8))
                 {
                     ignoreHostname = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ignoreSignature"))
+                if (property.NameEquals("ignoreSignature"u8))
                 {
                     ignoreSignature = property.Value.GetString();
                     continue;

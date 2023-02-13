@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(InterimSchemaName))
             {
-                writer.WritePropertyName("interimSchemaName");
+                writer.WritePropertyName("interimSchemaName"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(InterimSchemaName);
 #else
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Keys))
             {
-                writer.WritePropertyName("keys");
+                writer.WritePropertyName("keys"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Keys);
 #else
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> keys = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("interimSchemaName"))
+                if (property.NameEquals("interimSchemaName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     interimSchemaName = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("keys"))
+                if (property.NameEquals("keys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

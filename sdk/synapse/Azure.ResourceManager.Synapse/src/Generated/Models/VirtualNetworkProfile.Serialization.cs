@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ComputeSubnetId))
             {
-                writer.WritePropertyName("computeSubnetId");
+                writer.WritePropertyName("computeSubnetId"u8);
                 writer.WriteStringValue(ComputeSubnetId);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<string> computeSubnetId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("computeSubnetId"))
+                if (property.NameEquals("computeSubnetId"u8))
                 {
                     computeSubnetId = property.Value.GetString();
                     continue;

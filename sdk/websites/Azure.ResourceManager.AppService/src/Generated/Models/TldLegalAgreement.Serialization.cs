@@ -21,22 +21,22 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<Uri> url = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("agreementKey"))
+                if (property.NameEquals("agreementKey"u8))
                 {
                     agreementKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("title"))
+                if (property.NameEquals("title"u8))
                 {
                     title = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("content"))
+                if (property.NameEquals("content"u8))
                 {
                     content = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

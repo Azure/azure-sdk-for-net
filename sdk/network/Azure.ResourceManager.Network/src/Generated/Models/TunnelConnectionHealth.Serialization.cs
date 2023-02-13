@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> lastConnectionEstablishedUtcTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tunnel"))
+                if (property.NameEquals("tunnel"u8))
                 {
                     tunnel = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("connectionStatus"))
+                if (property.NameEquals("connectionStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                     connectionStatus = new VirtualNetworkGatewayConnectionStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ingressBytesTransferred"))
+                if (property.NameEquals("ingressBytesTransferred"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                     ingressBytesTransferred = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("egressBytesTransferred"))
+                if (property.NameEquals("egressBytesTransferred"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
                     egressBytesTransferred = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("lastConnectionEstablishedUtcTime"))
+                if (property.NameEquals("lastConnectionEstablishedUtcTime"u8))
                 {
                     lastConnectionEstablishedUtcTime = property.Value.GetString();
                     continue;

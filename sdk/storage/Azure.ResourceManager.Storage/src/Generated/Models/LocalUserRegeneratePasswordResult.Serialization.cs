@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<string> sshPassword = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sshPassword"))
+                if (property.NameEquals("sshPassword"u8))
                 {
                     sshPassword = property.Value.GetString();
                     continue;

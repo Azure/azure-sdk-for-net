@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxPercentUnhealthyServices))
             {
-                writer.WritePropertyName("maxPercentUnhealthyServices");
+                writer.WritePropertyName("maxPercentUnhealthyServices"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyServices.Value);
             }
             if (Optional.IsDefined(MaxPercentUnhealthyPartitionsPerService))
             {
-                writer.WritePropertyName("maxPercentUnhealthyPartitionsPerService");
+                writer.WritePropertyName("maxPercentUnhealthyPartitionsPerService"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyPartitionsPerService.Value);
             }
             if (Optional.IsDefined(MaxPercentUnhealthyReplicasPerPartition))
             {
-                writer.WritePropertyName("maxPercentUnhealthyReplicasPerPartition");
+                writer.WritePropertyName("maxPercentUnhealthyReplicasPerPartition"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyReplicasPerPartition.Value);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Optional<int> maxPercentUnhealthyReplicasPerPartition = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxPercentUnhealthyServices"))
+                if (property.NameEquals("maxPercentUnhealthyServices"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     maxPercentUnhealthyServices = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxPercentUnhealthyPartitionsPerService"))
+                if (property.NameEquals("maxPercentUnhealthyPartitionsPerService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     maxPercentUnhealthyPartitionsPerService = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxPercentUnhealthyReplicasPerPartition"))
+                if (property.NameEquals("maxPercentUnhealthyReplicasPerPartition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

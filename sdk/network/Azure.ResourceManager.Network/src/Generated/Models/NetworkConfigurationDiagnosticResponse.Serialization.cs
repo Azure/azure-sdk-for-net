@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IReadOnlyList<NetworkConfigurationDiagnosticResult>> results = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("results"))
+                if (property.NameEquals("results"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

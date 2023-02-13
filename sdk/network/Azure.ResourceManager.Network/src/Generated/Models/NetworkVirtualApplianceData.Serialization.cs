@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.Network
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(NvaSku))
             {
-                writer.WritePropertyName("nvaSku");
+                writer.WritePropertyName("nvaSku"u8);
                 writer.WriteObjectValue(NvaSku);
             }
             if (Optional.IsCollectionDefined(BootStrapConfigurationBlobs))
             {
-                writer.WritePropertyName("bootStrapConfigurationBlobs");
+                writer.WritePropertyName("bootStrapConfigurationBlobs"u8);
                 writer.WriteStartArray();
                 foreach (var item in BootStrapConfigurationBlobs)
                 {
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsDefined(VirtualHub))
             {
-                writer.WritePropertyName("virtualHub");
+                writer.WritePropertyName("virtualHub"u8);
                 JsonSerializer.Serialize(writer, VirtualHub);
             }
             if (Optional.IsCollectionDefined(CloudInitConfigurationBlobs))
             {
-                writer.WritePropertyName("cloudInitConfigurationBlobs");
+                writer.WritePropertyName("cloudInitConfigurationBlobs"u8);
                 writer.WriteStartArray();
                 foreach (var item in CloudInitConfigurationBlobs)
                 {
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsDefined(CloudInitConfiguration))
             {
-                writer.WritePropertyName("cloudInitConfiguration");
+                writer.WritePropertyName("cloudInitConfiguration"u8);
                 writer.WriteStringValue(CloudInitConfiguration);
             }
             if (Optional.IsDefined(VirtualApplianceAsn))
             {
-                writer.WritePropertyName("virtualApplianceAsn");
+                writer.WritePropertyName("virtualApplianceAsn"u8);
                 writer.WriteNumberValue(VirtualApplianceAsn.Value);
             }
             writer.WriteEndObject();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Network
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.Network
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Network
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Network
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Network
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("nvaSku"))
+                        if (property0.NameEquals("nvaSku"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -203,12 +203,12 @@ namespace Azure.ResourceManager.Network
                             nvaSku = VirtualApplianceSkuProperties.DeserializeVirtualApplianceSkuProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("addressPrefix"))
+                        if (property0.NameEquals("addressPrefix"u8))
                         {
                             addressPrefix = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("bootStrapConfigurationBlobs"))
+                        if (property0.NameEquals("bootStrapConfigurationBlobs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
                             bootStrapConfigurationBlobs = array;
                             continue;
                         }
-                        if (property0.NameEquals("virtualHub"))
+                        if (property0.NameEquals("virtualHub"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Network
                             virtualHub = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("cloudInitConfigurationBlobs"))
+                        if (property0.NameEquals("cloudInitConfigurationBlobs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -248,12 +248,12 @@ namespace Azure.ResourceManager.Network
                             cloudInitConfigurationBlobs = array;
                             continue;
                         }
-                        if (property0.NameEquals("cloudInitConfiguration"))
+                        if (property0.NameEquals("cloudInitConfiguration"u8))
                         {
                             cloudInitConfiguration = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("virtualApplianceAsn"))
+                        if (property0.NameEquals("virtualApplianceAsn"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Network
                             virtualApplianceAsn = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("virtualApplianceNics"))
+                        if (property0.NameEquals("virtualApplianceNics"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Network
                             virtualApplianceNics = array;
                             continue;
                         }
-                        if (property0.NameEquals("virtualApplianceSites"))
+                        if (property0.NameEquals("virtualApplianceSites"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
                             virtualApplianceSites = array;
                             continue;
                         }
-                        if (property0.NameEquals("inboundSecurityRules"))
+                        if (property0.NameEquals("inboundSecurityRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Network
                             inboundSecurityRules = array;
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.EventHubs.Models
             Optional<AzureLocation> location = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("perimeterGuid"))
+                if (property.NameEquals("perimeterGuid"u8))
                 {
                     perimeterGuid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

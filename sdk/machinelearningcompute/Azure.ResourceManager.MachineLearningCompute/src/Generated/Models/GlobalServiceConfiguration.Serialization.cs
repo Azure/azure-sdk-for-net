@@ -20,22 +20,22 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("etag");
+                writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(Ssl))
             {
-                writer.WritePropertyName("ssl");
+                writer.WritePropertyName("ssl"u8);
                 writer.WriteObjectValue(Ssl);
             }
             if (Optional.IsDefined(ServiceAuth))
             {
-                writer.WritePropertyName("serviceAuth");
+                writer.WritePropertyName("serviceAuth"u8);
                 writer.WriteObjectValue(ServiceAuth);
             }
             if (Optional.IsDefined(AutoScale))
             {
-                writer.WritePropertyName("autoScale");
+                writer.WritePropertyName("autoScale"u8);
                 writer.WriteObjectValue(AutoScale);
             }
             foreach (var item in AdditionalProperties)
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ssl"))
+                if (property.NameEquals("ssl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     ssl = SslConfiguration.DeserializeSslConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("serviceAuth"))
+                if (property.NameEquals("serviceAuth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     serviceAuth = ServiceAuthConfiguration.DeserializeServiceAuthConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("autoScale"))
+                if (property.NameEquals("autoScale"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

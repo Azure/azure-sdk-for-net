@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -32,46 +32,46 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(TaskType))
             {
-                writer.WritePropertyName("taskType");
+                writer.WritePropertyName("taskType"u8);
                 writer.WriteStringValue(TaskType);
             }
             if (Optional.IsDefined(WeeklyRecurrence))
             {
-                writer.WritePropertyName("weeklyRecurrence");
+                writer.WritePropertyName("weeklyRecurrence"u8);
                 writer.WriteObjectValue(WeeklyRecurrence);
             }
             if (Optional.IsDefined(DailyRecurrence))
             {
-                writer.WritePropertyName("dailyRecurrence");
+                writer.WritePropertyName("dailyRecurrence"u8);
                 writer.WriteObjectValue(DailyRecurrence);
             }
             if (Optional.IsDefined(HourlyRecurrence))
             {
-                writer.WritePropertyName("hourlyRecurrence");
+                writer.WritePropertyName("hourlyRecurrence"u8);
                 writer.WriteObjectValue(HourlyRecurrence);
             }
             if (Optional.IsDefined(TimeZoneId))
             {
-                writer.WritePropertyName("timeZoneId");
+                writer.WritePropertyName("timeZoneId"u8);
                 writer.WriteStringValue(TimeZoneId);
             }
             if (Optional.IsDefined(NotificationSettings))
             {
-                writer.WritePropertyName("notificationSettings");
+                writer.WritePropertyName("notificationSettings"u8);
                 writer.WriteObjectValue(NotificationSettings);
             }
             if (Optional.IsDefined(TargetResourceId))
             {
-                writer.WritePropertyName("targetResourceId");
+                writer.WritePropertyName("targetResourceId"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
             writer.WriteEndObject();
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<ResourceIdentifier> targetResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -142,12 +142,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             status = new DevTestLabEnableStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("taskType"))
+                        if (property0.NameEquals("taskType"u8))
                         {
                             taskType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("weeklyRecurrence"))
+                        if (property0.NameEquals("weeklyRecurrence"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             weeklyRecurrence = DevTestLabWeekDetails.DeserializeDevTestLabWeekDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("dailyRecurrence"))
+                        if (property0.NameEquals("dailyRecurrence"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             dailyRecurrence = DayDetails.DeserializeDayDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("hourlyRecurrence"))
+                        if (property0.NameEquals("hourlyRecurrence"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -177,12 +177,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             hourlyRecurrence = HourDetails.DeserializeHourDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("timeZoneId"))
+                        if (property0.NameEquals("timeZoneId"u8))
                         {
                             timeZoneId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("notificationSettings"))
+                        if (property0.NameEquals("notificationSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             notificationSettings = DevTestLabNotificationSettings.DeserializeDevTestLabNotificationSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("targetResourceId"))
+                        if (property0.NameEquals("targetResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

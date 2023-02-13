@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("username");
+            writer.WritePropertyName("username"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Username);
 #else
             JsonSerializer.Serialize(writer, JsonDocument.Parse(Username.ToString()).RootElement);
 #endif
-            writer.WritePropertyName("password");
+            writer.WritePropertyName("password"u8);
             writer.WriteObjectValue(Password);
-            writer.WritePropertyName("url");
+            writer.WritePropertyName("url"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Uri);
 #else
             JsonSerializer.Serialize(writer, JsonDocument.Parse(Uri.ToString()).RootElement);
 #endif
-            writer.WritePropertyName("authenticationType");
+            writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             writer.WriteEndObject();
         }
@@ -43,22 +43,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             WebAuthenticationType authenticationType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("username"))
+                if (property.NameEquals("username"u8))
                 {
                     username = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     url = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("authenticationType"))
+                if (property.NameEquals("authenticationType"u8))
                 {
                     authenticationType = new WebAuthenticationType(property.Value.GetString());
                     continue;

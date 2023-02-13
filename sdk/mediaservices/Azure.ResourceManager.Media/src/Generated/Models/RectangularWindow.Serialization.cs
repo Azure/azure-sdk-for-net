@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Left))
             {
-                writer.WritePropertyName("left");
+                writer.WritePropertyName("left"u8);
                 writer.WriteStringValue(Left);
             }
             if (Optional.IsDefined(Top))
             {
-                writer.WritePropertyName("top");
+                writer.WritePropertyName("top"u8);
                 writer.WriteStringValue(Top);
             }
             if (Optional.IsDefined(Width))
             {
-                writer.WritePropertyName("width");
+                writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
             if (Optional.IsDefined(Height))
             {
-                writer.WritePropertyName("height");
+                writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
             writer.WriteEndObject();
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> height = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("left"))
+                if (property.NameEquals("left"u8))
                 {
                     left = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("top"))
+                if (property.NameEquals("top"u8))
                 {
                     top = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("width"))
+                if (property.NameEquals("width"u8))
                 {
                     width = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("height"))
+                if (property.NameEquals("height"u8))
                 {
                     height = property.Value.GetString();
                     continue;

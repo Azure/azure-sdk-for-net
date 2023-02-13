@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<IReadOnlyList<TransportAvailabilityDetails>> transportAvailabilityDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("transportAvailabilityDetails"))
+                if (property.NameEquals("transportAvailabilityDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

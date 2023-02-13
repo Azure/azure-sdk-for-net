@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("startTime");
+            writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartOn, "O");
-            writer.WritePropertyName("schedule");
+            writer.WritePropertyName("schedule"u8);
             writer.WriteStringValue(Schedule);
             if (Optional.IsDefined(Topic))
             {
-                writer.WritePropertyName("topic");
+                writer.WritePropertyName("topic"u8);
                 writer.WriteStringValue(Topic);
             }
             writer.WriteEndObject();
@@ -35,17 +35,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<string> topic = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("schedule"))
+                if (property.NameEquals("schedule"u8))
                 {
                     schedule = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("topic"))
+                if (property.NameEquals("topic"u8))
                 {
                     topic = property.Value.GetString();
                     continue;

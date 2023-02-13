@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Consumption.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("startDate");
+            writer.WritePropertyName("startDate"u8);
             writer.WriteStringValue(StartOn, "O");
             if (Optional.IsDefined(EndOn))
             {
-                writer.WritePropertyName("endDate");
+                writer.WritePropertyName("endDate"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
             writer.WriteEndObject();
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<DateTimeOffset> endDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("startDate"))
+                if (property.NameEquals("startDate"u8))
                 {
                     startDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endDate"))
+                if (property.NameEquals("endDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,7 +17,7 @@ namespace Azure.Quantum.Jobs.Models
             Optional<string> sasUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sasUri"))
+                if (property.NameEquals("sasUri"u8))
                 {
                     sasUri = property.Value.GetString();
                     continue;

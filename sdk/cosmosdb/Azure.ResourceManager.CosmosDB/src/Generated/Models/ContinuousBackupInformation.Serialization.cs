@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<DateTimeOffset> latestRestorableTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("latestRestorableTimestamp"))
+                if (property.NameEquals("latestRestorableTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

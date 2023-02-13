@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("score"))
+                if (property.NameEquals("score"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,17 +33,17 @@ namespace Azure.Search.Documents.Models
                     score = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("text"))
+                if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("highlights"))
+                if (property.NameEquals("highlights"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

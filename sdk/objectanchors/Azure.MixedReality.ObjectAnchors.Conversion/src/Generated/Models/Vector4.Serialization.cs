@@ -15,13 +15,13 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("x");
+            writer.WritePropertyName("x"u8);
             writer.WriteNumberValue(X);
-            writer.WritePropertyName("y");
+            writer.WritePropertyName("y"u8);
             writer.WriteNumberValue(Y);
-            writer.WritePropertyName("z");
+            writer.WritePropertyName("z"u8);
             writer.WriteNumberValue(Z);
-            writer.WritePropertyName("w");
+            writer.WritePropertyName("w"u8);
             writer.WriteNumberValue(W);
             writer.WriteEndObject();
         }
@@ -34,22 +34,22 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
             float w = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("x"))
+                if (property.NameEquals("x"u8))
                 {
                     x = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("y"))
+                if (property.NameEquals("y"u8))
                 {
                     y = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("z"))
+                if (property.NameEquals("z"u8))
                 {
                     z = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("w"))
+                if (property.NameEquals("w"u8))
                 {
                     w = property.Value.GetSingle();
                     continue;

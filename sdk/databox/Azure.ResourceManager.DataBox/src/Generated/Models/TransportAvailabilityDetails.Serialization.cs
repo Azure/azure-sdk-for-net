@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<TransportShipmentType> shipmentType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("shipmentType"))
+                if (property.NameEquals("shipmentType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxRowsPerFile))
             {
-                writer.WritePropertyName("maxRowsPerFile");
+                writer.WritePropertyName("maxRowsPerFile"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(MaxRowsPerFile);
 #else
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(FileNamePrefix))
             {
-                writer.WritePropertyName("fileNamePrefix");
+                writer.WritePropertyName("fileNamePrefix"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(FileNamePrefix);
 #else
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(FileNamePrefix.ToString()).RootElement);
 #endif
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FormatWriteSettingsType);
             foreach (var item in AdditionalProperties)
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxRowsPerFile"))
+                if (property.NameEquals("maxRowsPerFile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     maxRowsPerFile = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("fileNamePrefix"))
+                if (property.NameEquals("fileNamePrefix"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     fileNamePrefix = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

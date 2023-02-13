@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             Optional<long> vmCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cpuCount"))
+                if (property.NameEquals("cpuCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     cpuCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("memoryMB"))
+                if (property.NameEquals("memoryMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     memoryMB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("vmCount"))
+                if (property.NameEquals("vmCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

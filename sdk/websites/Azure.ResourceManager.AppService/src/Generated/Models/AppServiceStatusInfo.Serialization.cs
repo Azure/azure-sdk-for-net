@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Message))
             {
-                writer.WritePropertyName("message");
+                writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
             if (Optional.IsDefined(StatusId))
             {
-                writer.WritePropertyName("statusId");
+                writer.WritePropertyName("statusId"u8);
                 writer.WriteStringValue(StatusId.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<DetectorInsightStatus> statusId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statusId"))
+                if (property.NameEquals("statusId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

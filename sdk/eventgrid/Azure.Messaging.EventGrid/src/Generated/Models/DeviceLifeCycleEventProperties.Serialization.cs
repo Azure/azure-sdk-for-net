@@ -19,17 +19,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<DeviceTwinInfo> twin = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceId"))
+                if (property.NameEquals("deviceId"u8))
                 {
                     deviceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hubName"))
+                if (property.NameEquals("hubName"u8))
                 {
                     hubName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("twin"))
+                if (property.NameEquals("twin"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

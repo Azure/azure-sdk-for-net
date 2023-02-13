@@ -18,15 +18,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("uri");
+            writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri);
-            writer.WritePropertyName("roles");
+            writer.WritePropertyName("roles"u8);
             writer.WriteObjectValue(Roles);
             if (Optional.IsDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStringValue(Parameters);
             }
             writer.WriteEndObject();
@@ -40,22 +40,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("uri"))
+                if (property.NameEquals("uri"u8))
                 {
                     uri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("roles"))
+                if (property.NameEquals("roles"u8))
                 {
                     roles = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     parameters = property.Value.GetString();
                     continue;

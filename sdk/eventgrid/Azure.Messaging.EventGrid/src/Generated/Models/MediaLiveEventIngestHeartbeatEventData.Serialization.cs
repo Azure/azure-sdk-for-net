@@ -35,27 +35,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<bool> healthy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("trackType"))
+                if (property.NameEquals("trackType"u8))
                 {
                     trackType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trackName"))
+                if (property.NameEquals("trackName"u8))
                 {
                     trackName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("transcriptionLanguage"))
+                if (property.NameEquals("transcriptionLanguage"u8))
                 {
                     transcriptionLanguage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("transcriptionState"))
+                if (property.NameEquals("transcriptionState"u8))
                 {
                     transcriptionState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bitrate"))
+                if (property.NameEquals("bitrate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     bitrate = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("incomingBitrate"))
+                if (property.NameEquals("incomingBitrate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,12 +75,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     incomingBitrate = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("ingestDriftValue"))
+                if (property.NameEquals("ingestDriftValue"u8))
                 {
                     ingestDriftValue = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastFragmentArrivalTime"))
+                if (property.NameEquals("lastFragmentArrivalTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,17 +90,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     lastFragmentArrivalTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastTimestamp"))
+                if (property.NameEquals("lastTimestamp"u8))
                 {
                     lastTimestamp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timescale"))
+                if (property.NameEquals("timescale"u8))
                 {
                     timescale = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("overlapCount"))
+                if (property.NameEquals("overlapCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +110,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     overlapCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("discontinuityCount"))
+                if (property.NameEquals("discontinuityCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +120,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     discontinuityCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("nonincreasingCount"))
+                if (property.NameEquals("nonincreasingCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,7 +130,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     nonincreasingCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("unexpectedBitrate"))
+                if (property.NameEquals("unexpectedBitrate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -140,12 +140,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     unexpectedBitrate = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("healthy"))
+                if (property.NameEquals("healthy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -19,39 +19,39 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CorrelationId))
             {
-                writer.WritePropertyName("correlationId");
+                writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId.Value);
             }
             if (Optional.IsDefined(CanOverwrite))
             {
-                writer.WritePropertyName("overwrite");
+                writer.WritePropertyName("overwrite"u8);
                 writer.WriteBooleanValue(CanOverwrite.Value);
             }
             if (Optional.IsDefined(CloneCustomHostNames))
             {
-                writer.WritePropertyName("cloneCustomHostNames");
+                writer.WritePropertyName("cloneCustomHostNames"u8);
                 writer.WriteBooleanValue(CloneCustomHostNames.Value);
             }
             if (Optional.IsDefined(CloneSourceControl))
             {
-                writer.WritePropertyName("cloneSourceControl");
+                writer.WritePropertyName("cloneSourceControl"u8);
                 writer.WriteBooleanValue(CloneSourceControl.Value);
             }
-            writer.WritePropertyName("sourceWebAppId");
+            writer.WritePropertyName("sourceWebAppId"u8);
             writer.WriteStringValue(SourceWebAppId);
             if (Optional.IsDefined(SourceWebAppLocation))
             {
-                writer.WritePropertyName("sourceWebAppLocation");
+                writer.WritePropertyName("sourceWebAppLocation"u8);
                 writer.WriteStringValue(SourceWebAppLocation.Value);
             }
             if (Optional.IsDefined(HostingEnvironment))
             {
-                writer.WritePropertyName("hostingEnvironment");
+                writer.WritePropertyName("hostingEnvironment"u8);
                 writer.WriteStringValue(HostingEnvironment);
             }
             if (Optional.IsCollectionDefined(AppSettingsOverrides))
             {
-                writer.WritePropertyName("appSettingsOverrides");
+                writer.WritePropertyName("appSettingsOverrides"u8);
                 writer.WriteStartObject();
                 foreach (var item in AppSettingsOverrides)
                 {
@@ -62,17 +62,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(ConfigureLoadBalancing))
             {
-                writer.WritePropertyName("configureLoadBalancing");
+                writer.WritePropertyName("configureLoadBalancing"u8);
                 writer.WriteBooleanValue(ConfigureLoadBalancing.Value);
             }
             if (Optional.IsDefined(TrafficManagerProfileId))
             {
-                writer.WritePropertyName("trafficManagerProfileId");
+                writer.WritePropertyName("trafficManagerProfileId"u8);
                 writer.WriteStringValue(TrafficManagerProfileId);
             }
             if (Optional.IsDefined(TrafficManagerProfileName))
             {
-                writer.WritePropertyName("trafficManagerProfileName");
+                writer.WritePropertyName("trafficManagerProfileName"u8);
                 writer.WriteStringValue(TrafficManagerProfileName);
             }
             writer.WriteEndObject();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> trafficManagerProfileName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("correlationId"))
+                if (property.NameEquals("correlationId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
                     correlationId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("overwrite"))
+                if (property.NameEquals("overwrite"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService.Models
                     overwrite = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("cloneCustomHostNames"))
+                if (property.NameEquals("cloneCustomHostNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService.Models
                     cloneCustomHostNames = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("cloneSourceControl"))
+                if (property.NameEquals("cloneSourceControl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.AppService.Models
                     cloneSourceControl = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("sourceWebAppId"))
+                if (property.NameEquals("sourceWebAppId"u8))
                 {
                     sourceWebAppId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceWebAppLocation"))
+                if (property.NameEquals("sourceWebAppLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -148,12 +148,12 @@ namespace Azure.ResourceManager.AppService.Models
                     sourceWebAppLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hostingEnvironment"))
+                if (property.NameEquals("hostingEnvironment"u8))
                 {
                     hostingEnvironment = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appSettingsOverrides"))
+                if (property.NameEquals("appSettingsOverrides"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService.Models
                     appSettingsOverrides = dictionary;
                     continue;
                 }
-                if (property.NameEquals("configureLoadBalancing"))
+                if (property.NameEquals("configureLoadBalancing"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService.Models
                     configureLoadBalancing = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("trafficManagerProfileId"))
+                if (property.NameEquals("trafficManagerProfileId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService.Models
                     trafficManagerProfileId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("trafficManagerProfileName"))
+                if (property.NameEquals("trafficManagerProfileName"u8))
                 {
                     trafficManagerProfileName = property.Value.GetString();
                     continue;

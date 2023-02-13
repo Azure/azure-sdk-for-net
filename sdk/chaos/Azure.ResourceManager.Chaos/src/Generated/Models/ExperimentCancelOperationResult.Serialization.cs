@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Chaos.Models
             Optional<string> statusUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statusUrl"))
+                if (property.NameEquals("statusUrl"u8))
                 {
                     statusUrl = property.Value.GetString();
                     continue;

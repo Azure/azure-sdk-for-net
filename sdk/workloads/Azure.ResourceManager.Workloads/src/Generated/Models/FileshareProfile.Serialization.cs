@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("shareType");
+            writer.WritePropertyName("shareType"u8);
             writer.WriteStringValue(ShareType.ToString());
-            writer.WritePropertyName("storageType");
+            writer.WritePropertyName("storageType"u8);
             writer.WriteStringValue(StorageType.ToString());
             if (Optional.IsDefined(ShareSizeInGB))
             {
-                writer.WritePropertyName("shareSizeInGB");
+                writer.WritePropertyName("shareSizeInGB"u8);
                 writer.WriteNumberValue(ShareSizeInGB.Value);
             }
             writer.WriteEndObject();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<string> shareName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("shareType"))
+                if (property.NameEquals("shareType"u8))
                 {
                     shareType = new FileShareType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageType"))
+                if (property.NameEquals("storageType"u8))
                 {
                     storageType = new FileShareStorageType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("shareSizeInGB"))
+                if (property.NameEquals("shareSizeInGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     shareSizeInGB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("storageResourceId"))
+                if (property.NameEquals("storageResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     storageResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("shareName"))
+                if (property.NameEquals("shareName"u8))
                 {
                     shareName = property.Value.GetString();
                     continue;

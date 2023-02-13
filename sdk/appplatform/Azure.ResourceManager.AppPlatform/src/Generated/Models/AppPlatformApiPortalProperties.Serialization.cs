@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsPublic))
             {
-                writer.WritePropertyName("public");
+                writer.WritePropertyName("public"u8);
                 writer.WriteBooleanValue(IsPublic.Value);
             }
             if (Optional.IsDefined(IsHttpsOnly))
             {
-                writer.WritePropertyName("httpsOnly");
+                writer.WritePropertyName("httpsOnly"u8);
                 writer.WriteBooleanValue(IsHttpsOnly.Value);
             }
             if (Optional.IsCollectionDefined(GatewayIds))
             {
-                writer.WritePropertyName("gatewayIds");
+                writer.WritePropertyName("gatewayIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in GatewayIds)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             if (Optional.IsCollectionDefined(SourceUris))
             {
-                writer.WritePropertyName("sourceUrls");
+                writer.WritePropertyName("sourceUrls"u8);
                 writer.WriteStartArray();
                 foreach (var item in SourceUris)
                 {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             if (Optional.IsDefined(SsoProperties))
             {
-                writer.WritePropertyName("ssoProperties");
+                writer.WritePropertyName("ssoProperties"u8);
                 writer.WriteObjectValue(SsoProperties);
             }
             writer.WriteEndObject();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<IReadOnlyList<AppPlatformApiPortalInstance>> instances = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     provisioningState = new AppPlatformApiPortalProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("public"))
+                if (property.NameEquals("public"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     @public = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("httpsOnly"))
+                if (property.NameEquals("httpsOnly"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     httpsOnly = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("gatewayIds"))
+                if (property.NameEquals("gatewayIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     gatewayIds = array;
                     continue;
                 }
-                if (property.NameEquals("sourceUrls"))
+                if (property.NameEquals("sourceUrls"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     sourceUris = array;
                     continue;
                 }
-                if (property.NameEquals("ssoProperties"))
+                if (property.NameEquals("ssoProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     ssoProperties = AppPlatformSsoProperties.DeserializeAppPlatformSsoProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("resourceRequests"))
+                if (property.NameEquals("resourceRequests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     resourceRequests = AppPlatformApiPortalResourceRequirements.DeserializeAppPlatformApiPortalResourceRequirements(property.Value);
                     continue;
                 }
-                if (property.NameEquals("instances"))
+                if (property.NameEquals("instances"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

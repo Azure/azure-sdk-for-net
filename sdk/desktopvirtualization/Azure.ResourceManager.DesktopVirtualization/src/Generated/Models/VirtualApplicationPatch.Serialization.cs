@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -26,53 +26,53 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(FilePath))
             {
-                writer.WritePropertyName("filePath");
+                writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
             if (Optional.IsDefined(CommandLineSetting))
             {
-                writer.WritePropertyName("commandLineSetting");
+                writer.WritePropertyName("commandLineSetting"u8);
                 writer.WriteStringValue(CommandLineSetting.Value.ToString());
             }
             if (Optional.IsDefined(CommandLineArguments))
             {
-                writer.WritePropertyName("commandLineArguments");
+                writer.WritePropertyName("commandLineArguments"u8);
                 writer.WriteStringValue(CommandLineArguments);
             }
             if (Optional.IsDefined(ShowInPortal))
             {
-                writer.WritePropertyName("showInPortal");
+                writer.WritePropertyName("showInPortal"u8);
                 writer.WriteBooleanValue(ShowInPortal.Value);
             }
             if (Optional.IsDefined(IconPath))
             {
-                writer.WritePropertyName("iconPath");
+                writer.WritePropertyName("iconPath"u8);
                 writer.WriteStringValue(IconPath);
             }
             if (Optional.IsDefined(IconIndex))
             {
-                writer.WritePropertyName("iconIndex");
+                writer.WritePropertyName("iconIndex"u8);
                 writer.WriteNumberValue(IconIndex.Value);
             }
             if (Optional.IsDefined(MsixPackageFamilyName))
             {
                 if (MsixPackageFamilyName != null)
                 {
-                    writer.WritePropertyName("msixPackageFamilyName");
+                    writer.WritePropertyName("msixPackageFamilyName"u8);
                     writer.WriteStringValue(MsixPackageFamilyName);
                 }
                 else
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 if (MsixPackageApplicationId != null)
                 {
-                    writer.WritePropertyName("msixPackageApplicationId");
+                    writer.WritePropertyName("msixPackageApplicationId"u8);
                     writer.WriteStringValue(MsixPackageApplicationId);
                 }
                 else
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             if (Optional.IsDefined(ApplicationType))
             {
-                writer.WritePropertyName("applicationType");
+                writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType.Value.ToString());
             }
             writer.WriteEndObject();

@@ -18,25 +18,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxInstances))
             {
-                writer.WritePropertyName("maxInstances");
+                writer.WritePropertyName("maxInstances"u8);
                 writer.WriteNumberValue(MaxInstances.Value);
             }
             if (Optional.IsDefined(MinInstances))
             {
-                writer.WritePropertyName("minInstances");
+                writer.WritePropertyName("minInstances"u8);
                 writer.WriteNumberValue(MinInstances.Value);
             }
             if (Optional.IsDefined(PollingInterval))
             {
-                writer.WritePropertyName("pollingInterval");
+                writer.WritePropertyName("pollingInterval"u8);
                 writer.WriteStringValue(PollingInterval.Value, "P");
             }
             if (Optional.IsDefined(TargetUtilizationPercentage))
             {
-                writer.WritePropertyName("targetUtilizationPercentage");
+                writer.WritePropertyName("targetUtilizationPercentage"u8);
                 writer.WriteNumberValue(TargetUtilizationPercentage.Value);
             }
-            writer.WritePropertyName("scaleType");
+            writer.WritePropertyName("scaleType"u8);
             writer.WriteStringValue(ScaleType.ToString());
             writer.WriteEndObject();
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ScaleType scaleType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxInstances"))
+                if (property.NameEquals("maxInstances"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     maxInstances = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minInstances"))
+                if (property.NameEquals("minInstances"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     minInstances = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("pollingInterval"))
+                if (property.NameEquals("pollingInterval"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     pollingInterval = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("targetUtilizationPercentage"))
+                if (property.NameEquals("targetUtilizationPercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     targetUtilizationPercentage = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("scaleType"))
+                if (property.NameEquals("scaleType"u8))
                 {
                     scaleType = new ScaleType(property.Value.GetString());
                     continue;

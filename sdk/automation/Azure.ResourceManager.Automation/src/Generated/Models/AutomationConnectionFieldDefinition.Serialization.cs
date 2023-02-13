@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEncrypted))
             {
-                writer.WritePropertyName("isEncrypted");
+                writer.WritePropertyName("isEncrypted"u8);
                 writer.WriteBooleanValue(IsEncrypted.Value);
             }
             if (Optional.IsDefined(IsOptional))
             {
-                writer.WritePropertyName("isOptional");
+                writer.WritePropertyName("isOptional"u8);
                 writer.WriteBooleanValue(IsOptional.Value);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FieldDefinitionType);
             writer.WriteEndObject();
         }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Automation.Models
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isEncrypted"))
+                if (property.NameEquals("isEncrypted"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Automation.Models
                     isEncrypted = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isOptional"))
+                if (property.NameEquals("isOptional"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Automation.Models
                     isOptional = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DomainNameLabel))
             {
-                writer.WritePropertyName("domainNameLabel");
+                writer.WritePropertyName("domainNameLabel"u8);
                 writer.WriteStringValue(DomainNameLabel);
             }
             if (Optional.IsDefined(Fqdn))
             {
-                writer.WritePropertyName("fqdn");
+                writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
             if (Optional.IsDefined(ReverseFqdn))
             {
-                writer.WritePropertyName("reverseFqdn");
+                writer.WritePropertyName("reverseFqdn"u8);
                 writer.WriteStringValue(ReverseFqdn);
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> reverseFqdn = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("domainNameLabel"))
+                if (property.NameEquals("domainNameLabel"u8))
                 {
                     domainNameLabel = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fqdn"))
+                if (property.NameEquals("fqdn"u8))
                 {
                     fqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reverseFqdn"))
+                if (property.NameEquals("reverseFqdn"u8))
                 {
                     reverseFqdn = property.Value.GetString();
                     continue;

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RoutingChoice))
             {
-                writer.WritePropertyName("routingChoice");
+                writer.WritePropertyName("routingChoice"u8);
                 writer.WriteStringValue(RoutingChoice.Value.ToString());
             }
             if (Optional.IsDefined(IsMicrosoftEndpointsPublished))
             {
-                writer.WritePropertyName("publishMicrosoftEndpoints");
+                writer.WritePropertyName("publishMicrosoftEndpoints"u8);
                 writer.WriteBooleanValue(IsMicrosoftEndpointsPublished.Value);
             }
             if (Optional.IsDefined(IsInternetEndpointsPublished))
             {
-                writer.WritePropertyName("publishInternetEndpoints");
+                writer.WritePropertyName("publishInternetEndpoints"u8);
                 writer.WriteBooleanValue(IsInternetEndpointsPublished.Value);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<bool> publishInternetEndpoints = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("routingChoice"))
+                if (property.NameEquals("routingChoice"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
                     routingChoice = new StorageRoutingChoice(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("publishMicrosoftEndpoints"))
+                if (property.NameEquals("publishMicrosoftEndpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Storage.Models
                     publishMicrosoftEndpoints = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("publishInternetEndpoints"))
+                if (property.NameEquals("publishInternetEndpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

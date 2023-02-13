@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<Uri> ssoUriValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ssoUriValue"))
+                if (property.NameEquals("ssoUriValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

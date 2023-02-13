@@ -6,7 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using Xunit;
-using payloads = Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart;
+using Payload = Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 {
@@ -24,11 +24,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 {
                     HttpResponseMessage httpResponseMessage = await TestHelper.EventResponseBaseTest(eventsResponseHandler =>
                     {
-                        eventsResponseHandler.SetValueAsync(payloads.TokenIssuanceStart.ActionResponse, CancellationToken.None);
+                        eventsResponseHandler.SetValueAsync(Payload.TokenIssuanceStart.ActionResponse, CancellationToken.None);
                     });
 
                     Assert.Equal(System.Net.HttpStatusCode.OK, httpResponseMessage.StatusCode);
-                    Assert.True(TestHelper.DoesPayloadMatch(payloads.TokenIssuanceStart.ExpectedPayload, httpResponseMessage.Content.ReadAsStringAsync().Result));
+                    Assert.True(TestHelper.DoesPayloadMatch(Payload.TokenIssuanceStart.ExpectedPayload, httpResponseMessage.Content.ReadAsStringAsync().Result));
                 });
         }
 
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         public void QueryParameterTest()
         {
             TokenIssuanceStartRequest tokenIssuanceStartRequest = new TokenIssuanceStartRequest(new HttpRequestMessage(HttpMethod.Get, "http://test?param1=test1&param2=test2"));
-            Assert.True(TestHelper.DoesPayloadMatch(payloads.TokenIssuanceStart.TokenIssuanceStartQueryParameter, tokenIssuanceStartRequest.ToString()));
+            Assert.True(TestHelper.DoesPayloadMatch(Payload.TokenIssuanceStart.TokenIssuanceStartQueryParameter, tokenIssuanceStartRequest.ToString()));
         }
 
         /// <summary>Tests the OnTokenIssuanceStart request and response object model for CSharp for version: 10_01_2021</summary>
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             });
 
             Assert.Equal(System.Net.HttpStatusCode.OK, httpResponseMessage.StatusCode);
-            Assert.True(TestHelper.DoesPayloadMatch(payloads.TokenIssuanceStart.ExpectedPayload, httpResponseMessage.Content.ReadAsStringAsync().Result));
+            Assert.True(TestHelper.DoesPayloadMatch(Payload.TokenIssuanceStart.ExpectedPayload, httpResponseMessage.Content.ReadAsStringAsync().Result));
         }
 
 
@@ -96,10 +96,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             switch (actionTestTypes)
             {
-                case ActionTestTypes.NullClaims: return (new ProvideClaimsForToken(null), HttpStatusCode.InternalServerError, "{\"errors\":[\"TokenIssuanceStartResponse: ProvideClaimsForToken: The Claims field is required.\"]}");
+                case ActionTestTypes.NullClaims: return (new ProvideClaimsForToken(null), HttpStatusCode.BadRequest, "{\"errors\":[\"TokenIssuanceStartResponse: ProvideClaimsForToken: The Claims field is required.\"]}");
                 case ActionTestTypes.EmptyClaims: return (new ProvideClaimsForToken(), HttpStatusCode.OK, "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.provideClaimsForToken\",\"claims\":{}}]}}");
-                case ActionTestTypes.NullClaimId: return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim(null, string.Empty) }), HttpStatusCode.InternalServerError, "{\"errors\":[\"TokenIssuanceStartResponse: ProvideClaimsForToken: TokenClaim: The Id field is required.\"]}");
-                case ActionTestTypes.EmptyClaimsId: return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim(String.Empty, string.Empty) }), HttpStatusCode.InternalServerError, "{\"errors\":[\"TokenIssuanceStartResponse: ProvideClaimsForToken: TokenClaim: The Id field is required.\"]}");
+                case ActionTestTypes.NullClaimId: return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim(null, string.Empty) }), HttpStatusCode.BadRequest, "{\"errors\":[\"TokenIssuanceStartResponse: ProvideClaimsForToken: TokenClaim: The Id field is required.\"]}");
+                case ActionTestTypes.EmptyClaimsId: return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim(String.Empty, string.Empty) }), HttpStatusCode.BadRequest, "{\"errors\":[\"TokenIssuanceStartResponse: ProvideClaimsForToken: TokenClaim: The Id field is required.\"]}");
                 case ActionTestTypes.EmptyValueString: return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim("key", string.Empty) }), HttpStatusCode.OK, "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.provideClaimsForToken\",\"claims\":{\"key\":\"\"}}]}}");
                 case ActionTestTypes.NullValue: return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim("key", null) }), HttpStatusCode.OK, "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.provideClaimsForToken\",\"claims\":{\"key\":null}}]}}");
                 case ActionTestTypes.EmptyValueArray: return (new ProvideClaimsForToken(new TokenClaim[] { new TokenClaim("key", new string[] { }) }), HttpStatusCode.OK, "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.provideClaimsForToken\",\"claims\":{\"key\":[]}}]}}");

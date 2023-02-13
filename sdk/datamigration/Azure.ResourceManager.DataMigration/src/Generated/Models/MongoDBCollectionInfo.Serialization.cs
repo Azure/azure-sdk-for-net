@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.DataMigration.Models
             string qualifiedName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("databaseName"))
+                if (property.NameEquals("databaseName"u8))
                 {
                     databaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isCapped"))
+                if (property.NameEquals("isCapped"u8))
                 {
                     isCapped = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isSystemCollection"))
+                if (property.NameEquals("isSystemCollection"u8))
                 {
                     isSystemCollection = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isView"))
+                if (property.NameEquals("isView"u8))
                 {
                     isView = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("shardKey"))
+                if (property.NameEquals("shardKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,37 +58,37 @@ namespace Azure.ResourceManager.DataMigration.Models
                     shardKey = MongoDBShardKeyInfo.DeserializeMongoDBShardKeyInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("supportsSharding"))
+                if (property.NameEquals("supportsSharding"u8))
                 {
                     supportsSharding = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("viewOf"))
+                if (property.NameEquals("viewOf"u8))
                 {
                     viewOf = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("averageDocumentSize"))
+                if (property.NameEquals("averageDocumentSize"u8))
                 {
                     averageDocumentSize = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("dataSize"))
+                if (property.NameEquals("dataSize"u8))
                 {
                     dataSize = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("documentCount"))
+                if (property.NameEquals("documentCount"u8))
                 {
                     documentCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("qualifiedName"))
+                if (property.NameEquals("qualifiedName"u8))
                 {
                     qualifiedName = property.Value.GetString();
                     continue;
