@@ -34,15 +34,26 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of CallConnectionProperties. </summary>
         /// <param name="callConnectionId">The call connection id.</param>
         /// <param name="serverCallId">The server call id.</param>
-        /// <param name="callSource">The source of the call.</param>
         /// <param name="targets">The targets of the call.</param>
         /// <param name="callConnectionState">The state of the call connection.</param>
         /// <param name="callbackEndpoint">The callback URI.</param>
+        /// <param name="sourceIdentity">Source identity.</param>
+        /// <param name="sourceCallerIdNumber">Caller ID phone number to appear on the invitee.</param>
+        /// <param name="sourceDisplayName">Display name to appear on the invitee.</param>
         /// <param name="mediaSubscriptionId">The subscriptionId for Media Streaming.</param>
         /// <returns> A new <see cref="CallAutomation.CallConnectionProperties"/> instance for mocking. </returns>
-        public static CallConnectionProperties CallConnectionProperties(string callConnectionId = default, string serverCallId = default, CallSource callSource = default, IEnumerable<CommunicationIdentifier> targets = default, CallConnectionState callConnectionState = default, Uri callbackEndpoint = default, string mediaSubscriptionId = default)
+        public static CallConnectionProperties CallConnectionProperties(
+            string callConnectionId = default,
+            string serverCallId = default,
+            IEnumerable<CommunicationIdentifier> targets = default,
+            CallConnectionState callConnectionState = default,
+            Uri callbackEndpoint = default,
+            CommunicationIdentifier sourceIdentity = default,
+            PhoneNumberIdentifier sourceCallerIdNumber = default,
+            string sourceDisplayName = default,
+            string mediaSubscriptionId = default)
         {
-            return new CallConnectionProperties(callConnectionId, serverCallId, callSource, targets, callConnectionState, callbackEndpoint, mediaSubscriptionId);
+            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackEndpoint, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, mediaSubscriptionId);
         }
 
         /// <summary> Initializes a new instance of CallParticipant. </summary>
