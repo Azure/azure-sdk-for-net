@@ -388,6 +388,23 @@ namespace Azure.Core.Experimental.Tests
             Assert.Throws<ObjectDisposedException>(() => { var foo = outer.Foo; });
         }
 
+        [Test]
+        public void DisposingAChildDisposesTheParent()
+        {
+            dynamic json = GetDynamicJson("""
+                {
+                  "Foo" : {
+                    "A": "Hello"
+                  }
+                }
+                """);
+
+            dynamic child = json.Foo.A;
+            child.Dispose();
+
+            Assert.Throws<ObjectDisposedException>(() => { var foo = json.Foo; });
+        }
+
         #region Helpers
         internal static dynamic GetDynamicJson(string json)
         {
