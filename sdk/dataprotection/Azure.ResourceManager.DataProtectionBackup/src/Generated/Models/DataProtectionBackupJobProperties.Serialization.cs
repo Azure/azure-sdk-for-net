@@ -18,68 +18,68 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("activityID");
+            writer.WritePropertyName("activityID"u8);
             writer.WriteStringValue(ActivityId);
-            writer.WritePropertyName("backupInstanceFriendlyName");
+            writer.WritePropertyName("backupInstanceFriendlyName"u8);
             writer.WriteStringValue(BackupInstanceFriendlyName);
-            writer.WritePropertyName("dataSourceId");
+            writer.WritePropertyName("dataSourceId"u8);
             writer.WriteStringValue(DataSourceId);
-            writer.WritePropertyName("dataSourceLocation");
+            writer.WritePropertyName("dataSourceLocation"u8);
             writer.WriteStringValue(DataSourceLocation);
-            writer.WritePropertyName("dataSourceName");
+            writer.WritePropertyName("dataSourceName"u8);
             writer.WriteStringValue(DataSourceName);
             if (Optional.IsDefined(DataSourceSetName))
             {
-                writer.WritePropertyName("dataSourceSetName");
+                writer.WritePropertyName("dataSourceSetName"u8);
                 writer.WriteStringValue(DataSourceSetName);
             }
-            writer.WritePropertyName("dataSourceType");
+            writer.WritePropertyName("dataSourceType"u8);
             writer.WriteStringValue(DataSourceType);
             if (Optional.IsDefined(Duration))
             {
-                writer.WritePropertyName("duration");
+                writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "c");
             }
-            writer.WritePropertyName("isUserTriggered");
+            writer.WritePropertyName("isUserTriggered"u8);
             writer.WriteBooleanValue(IsUserTriggered);
-            writer.WritePropertyName("operation");
+            writer.WritePropertyName("operation"u8);
             writer.WriteStringValue(Operation);
-            writer.WritePropertyName("operationCategory");
+            writer.WritePropertyName("operationCategory"u8);
             writer.WriteStringValue(OperationCategory);
-            writer.WritePropertyName("progressEnabled");
+            writer.WritePropertyName("progressEnabled"u8);
             writer.WriteBooleanValue(IsProgressEnabled);
-            writer.WritePropertyName("sourceResourceGroup");
+            writer.WritePropertyName("sourceResourceGroup"u8);
             writer.WriteStringValue(SourceResourceGroup);
-            writer.WritePropertyName("sourceSubscriptionID");
+            writer.WritePropertyName("sourceSubscriptionID"u8);
             writer.WriteStringValue(SourceSubscriptionId);
-            writer.WritePropertyName("startTime");
+            writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartOn, "O");
-            writer.WritePropertyName("status");
+            writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status);
-            writer.WritePropertyName("subscriptionId");
+            writer.WritePropertyName("subscriptionId"u8);
             writer.WriteStringValue(SubscriptionId);
-            writer.WritePropertyName("supportedActions");
+            writer.WritePropertyName("supportedActions"u8);
             writer.WriteStartArray();
             foreach (var item in SupportedActions)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("vaultName");
+            writer.WritePropertyName("vaultName"u8);
             writer.WriteStringValue(VaultName);
             if (Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("etag");
+                writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(SourceDataStoreName))
             {
-                writer.WritePropertyName("sourceDataStoreName");
+                writer.WritePropertyName("sourceDataStoreName"u8);
                 writer.WriteStringValue(SourceDataStoreName);
             }
             if (Optional.IsDefined(DestinationDataStoreName))
             {
-                writer.WritePropertyName("destinationDataStoreName");
+                writer.WritePropertyName("destinationDataStoreName"u8);
                 writer.WriteStringValue(DestinationDataStoreName);
             }
             writer.WriteEndObject();
@@ -119,17 +119,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<string> destinationDataStoreName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("activityID"))
+                if (property.NameEquals("activityID"u8))
                 {
                     activityId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("backupInstanceFriendlyName"))
+                if (property.NameEquals("backupInstanceFriendlyName"u8))
                 {
                     backupInstanceFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("backupInstanceId"))
+                if (property.NameEquals("backupInstanceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,32 +139,32 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     backupInstanceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dataSourceId"))
+                if (property.NameEquals("dataSourceId"u8))
                 {
                     dataSourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dataSourceLocation"))
+                if (property.NameEquals("dataSourceLocation"u8))
                 {
                     dataSourceLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dataSourceName"))
+                if (property.NameEquals("dataSourceName"u8))
                 {
                     dataSourceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataSourceSetName"))
+                if (property.NameEquals("dataSourceSetName"u8))
                 {
                     dataSourceSetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataSourceType"))
+                if (property.NameEquals("dataSourceType"u8))
                 {
                     dataSourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("duration"))
+                if (property.NameEquals("duration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     duration = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("errorDetails"))
+                if (property.NameEquals("errorDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     errorDetails = array;
                     continue;
                 }
-                if (property.NameEquals("extendedInfo"))
+                if (property.NameEquals("extendedInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -209,22 +209,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     extendedInfo = BackupJobExtendedInfo.DeserializeBackupJobExtendedInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("isUserTriggered"))
+                if (property.NameEquals("isUserTriggered"u8))
                 {
                     isUserTriggered = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("operation"))
+                if (property.NameEquals("operation"u8))
                 {
                     operation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operationCategory"))
+                if (property.NameEquals("operationCategory"u8))
                 {
                     operationCategory = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyId"))
+                if (property.NameEquals("policyId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -234,17 +234,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     policyId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policyName"))
+                if (property.NameEquals("policyName"u8))
                 {
                     policyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("progressEnabled"))
+                if (property.NameEquals("progressEnabled"u8))
                 {
                     progressEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("progressUrl"))
+                if (property.NameEquals("progressUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -254,37 +254,37 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     progressUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("restoreType"))
+                if (property.NameEquals("restoreType"u8))
                 {
                     restoreType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceResourceGroup"))
+                if (property.NameEquals("sourceResourceGroup"u8))
                 {
                     sourceResourceGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceSubscriptionID"))
+                if (property.NameEquals("sourceSubscriptionID"u8))
                 {
                     sourceSubscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportedActions"))
+                if (property.NameEquals("supportedActions"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -294,12 +294,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     supportedActions = array;
                     continue;
                 }
-                if (property.NameEquals("vaultName"))
+                if (property.NameEquals("vaultName"u8))
                 {
                     vaultName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -309,12 +309,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceDataStoreName"))
+                if (property.NameEquals("sourceDataStoreName"u8))
                 {
                     sourceDataStoreName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("destinationDataStoreName"))
+                if (property.NameEquals("destinationDataStoreName"u8))
                 {
                     destinationDataStoreName = property.Value.GetString();
                     continue;

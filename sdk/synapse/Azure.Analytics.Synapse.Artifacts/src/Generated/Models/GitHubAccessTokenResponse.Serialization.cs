@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> gitHubAccessToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("gitHubAccessToken"))
+                if (property.NameEquals("gitHubAccessToken"u8))
                 {
                     gitHubAccessToken = property.Value.GetString();
                     continue;

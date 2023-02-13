@@ -1025,6 +1025,8 @@ namespace Azure.ResourceManager.Kusto.Models
         public KustoDatabaseTableLevelSharingProperties() { }
         public System.Collections.Generic.IList<string> ExternalTablesToExclude { get { throw null; } }
         public System.Collections.Generic.IList<string> ExternalTablesToInclude { get { throw null; } }
+        public System.Collections.Generic.IList<string> FunctionsToExclude { get { throw null; } }
+        public System.Collections.Generic.IList<string> FunctionsToInclude { get { throw null; } }
         public System.Collections.Generic.IList<string> MaterializedViewsToExclude { get { throw null; } }
         public System.Collections.Generic.IList<string> MaterializedViewsToInclude { get { throw null; } }
         public System.Collections.Generic.IList<string> TablesToExclude { get { throw null; } }
@@ -1525,6 +1527,8 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL16s { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL16sV2 { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL16sV3 { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL32asV3 { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL32sV3 { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL4s { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL8asV3 { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoSkuName StandardL8s { get { throw null; } }

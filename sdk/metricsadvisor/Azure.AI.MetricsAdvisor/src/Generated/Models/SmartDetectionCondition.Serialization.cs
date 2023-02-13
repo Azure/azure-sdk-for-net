@@ -15,11 +15,11 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sensitivity");
+            writer.WritePropertyName("sensitivity"u8);
             writer.WriteNumberValue(Sensitivity);
-            writer.WritePropertyName("anomalyDetectorDirection");
+            writer.WritePropertyName("anomalyDetectorDirection"u8);
             writer.WriteStringValue(AnomalyDetectorDirection.ToString());
-            writer.WritePropertyName("suppressCondition");
+            writer.WritePropertyName("suppressCondition"u8);
             writer.WriteObjectValue(SuppressCondition);
             writer.WriteEndObject();
         }
@@ -31,17 +31,17 @@ namespace Azure.AI.MetricsAdvisor.Models
             SuppressCondition suppressCondition = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sensitivity"))
+                if (property.NameEquals("sensitivity"u8))
                 {
                     sensitivity = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("anomalyDetectorDirection"))
+                if (property.NameEquals("anomalyDetectorDirection"u8))
                 {
                     anomalyDetectorDirection = new AnomalyDetectorDirection(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("suppressCondition"))
+                if (property.NameEquals("suppressCondition"u8))
                 {
                     suppressCondition = Models.SuppressCondition.DeserializeSuppressCondition(property.Value);
                     continue;

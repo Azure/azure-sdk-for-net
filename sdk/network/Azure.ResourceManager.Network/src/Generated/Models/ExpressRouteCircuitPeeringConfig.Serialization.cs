@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AdvertisedPublicPrefixes))
             {
-                writer.WritePropertyName("advertisedPublicPrefixes");
+                writer.WritePropertyName("advertisedPublicPrefixes"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdvertisedPublicPrefixes)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(AdvertisedCommunities))
             {
-                writer.WritePropertyName("advertisedCommunities");
+                writer.WritePropertyName("advertisedCommunities"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdvertisedCommunities)
                 {
@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(LegacyMode))
             {
-                writer.WritePropertyName("legacyMode");
+                writer.WritePropertyName("legacyMode"u8);
                 writer.WriteNumberValue(LegacyMode.Value);
             }
             if (Optional.IsDefined(CustomerASN))
             {
-                writer.WritePropertyName("customerASN");
+                writer.WritePropertyName("customerASN"u8);
                 writer.WriteNumberValue(CustomerASN.Value);
             }
             if (Optional.IsDefined(RoutingRegistryName))
             {
-                writer.WritePropertyName("routingRegistryName");
+                writer.WritePropertyName("routingRegistryName"u8);
                 writer.WriteStringValue(RoutingRegistryName);
             }
             writer.WriteEndObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> routingRegistryName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("advertisedPublicPrefixes"))
+                if (property.NameEquals("advertisedPublicPrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
                     advertisedPublicPrefixes = array;
                     continue;
                 }
-                if (property.NameEquals("advertisedCommunities"))
+                if (property.NameEquals("advertisedCommunities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     advertisedCommunities = array;
                     continue;
                 }
-                if (property.NameEquals("advertisedPublicPrefixesState"))
+                if (property.NameEquals("advertisedPublicPrefixesState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                     advertisedPublicPrefixesState = new ExpressRouteCircuitPeeringAdvertisedPublicPrefixState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("legacyMode"))
+                if (property.NameEquals("legacyMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                     legacyMode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("customerASN"))
+                if (property.NameEquals("customerASN"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                     customerASN = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("routingRegistryName"))
+                if (property.NameEquals("routingRegistryName"u8))
                 {
                     routingRegistryName = property.Value.GetString();
                     continue;

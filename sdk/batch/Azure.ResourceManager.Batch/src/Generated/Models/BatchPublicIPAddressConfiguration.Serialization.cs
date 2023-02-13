@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Provision))
             {
-                writer.WritePropertyName("provision");
+                writer.WritePropertyName("provision"u8);
                 writer.WriteStringValue(Provision.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(IPAddressIds))
             {
-                writer.WritePropertyName("ipAddressIds");
+                writer.WritePropertyName("ipAddressIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPAddressIds)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<IList<ResourceIdentifier>> ipAddressIds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provision"))
+                if (property.NameEquals("provision"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Batch.Models
                     provision = property.Value.GetString().ToBatchIPAddressProvisioningType();
                     continue;
                 }
-                if (property.NameEquals("ipAddressIds"))
+                if (property.NameEquals("ipAddressIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

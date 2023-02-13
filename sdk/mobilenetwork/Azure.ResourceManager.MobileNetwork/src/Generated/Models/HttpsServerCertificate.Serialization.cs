@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("certificateUrl");
+            writer.WritePropertyName("certificateUrl"u8);
             writer.WriteStringValue(CertificateUri.AbsoluteUri);
             writer.WriteEndObject();
         }
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Optional<CertificateProvisioning> provisioning = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("certificateUrl"))
+                if (property.NameEquals("certificateUrl"u8))
                 {
                     certificateUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioning"))
+                if (property.NameEquals("provisioning"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

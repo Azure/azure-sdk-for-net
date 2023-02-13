@@ -18,25 +18,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryPointType))
             {
-                writer.WritePropertyName("recoveryPointType");
+                writer.WritePropertyName("recoveryPointType"u8);
                 writer.WriteStringValue(RecoveryPointType);
             }
             if (Optional.IsDefined(RecoveryPointOn))
             {
-                writer.WritePropertyName("recoveryPointTime");
+                writer.WritePropertyName("recoveryPointTime"u8);
                 writer.WriteStringValue(RecoveryPointOn.Value, "O");
             }
             if (Optional.IsDefined(FileShareSnapshotUri))
             {
-                writer.WritePropertyName("fileShareSnapshotUri");
+                writer.WritePropertyName("fileShareSnapshotUri"u8);
                 writer.WriteStringValue(FileShareSnapshotUri.AbsoluteUri);
             }
             if (Optional.IsDefined(RecoveryPointSizeInGB))
             {
-                writer.WritePropertyName("recoveryPointSizeInGB");
+                writer.WritePropertyName("recoveryPointSizeInGB"u8);
                 writer.WriteNumberValue(RecoveryPointSizeInGB.Value);
             }
-            writer.WritePropertyName("objectType");
+            if (Optional.IsDefined(RecoveryPointProperties))
+            {
+                writer.WritePropertyName("recoveryPointProperties"u8);
+                writer.WriteObjectValue(RecoveryPointProperties);
+            }
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }
@@ -47,15 +52,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<DateTimeOffset> recoveryPointTime = default;
             Optional<Uri> fileShareSnapshotUri = default;
             Optional<int> recoveryPointSizeInGB = default;
+            Optional<RecoveryPointProperties> recoveryPointProperties = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryPointType"))
+                if (property.NameEquals("recoveryPointType"u8))
                 {
                     recoveryPointType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointTime"))
+                if (property.NameEquals("recoveryPointTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("fileShareSnapshotUri"))
+                if (property.NameEquals("fileShareSnapshotUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     fileShareSnapshotUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryPointSizeInGB"))
+                if (property.NameEquals("recoveryPointSizeInGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,13 +91,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointSizeInGB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("recoveryPointProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    recoveryPointProperties = RecoveryPointProperties.DeserializeRecoveryPointProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;
                 }
             }
-            return new AzureFileShareRecoveryPoint(objectType, recoveryPointType.Value, Optional.ToNullable(recoveryPointTime), fileShareSnapshotUri.Value, Optional.ToNullable(recoveryPointSizeInGB));
+            return new AzureFileShareRecoveryPoint(objectType, recoveryPointType.Value, Optional.ToNullable(recoveryPointTime), fileShareSnapshotUri.Value, Optional.ToNullable(recoveryPointSizeInGB), recoveryPointProperties.Value);
         }
     }
 }

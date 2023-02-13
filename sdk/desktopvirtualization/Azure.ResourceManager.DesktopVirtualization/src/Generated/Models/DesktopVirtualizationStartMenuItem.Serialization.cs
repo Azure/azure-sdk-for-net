@@ -16,31 +16,31 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AppAlias))
             {
-                writer.WritePropertyName("appAlias");
+                writer.WritePropertyName("appAlias"u8);
                 writer.WriteStringValue(AppAlias);
             }
             if (Optional.IsDefined(FilePath))
             {
-                writer.WritePropertyName("filePath");
+                writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
             if (Optional.IsDefined(CommandLineArguments))
             {
-                writer.WritePropertyName("commandLineArguments");
+                writer.WritePropertyName("commandLineArguments"u8);
                 writer.WriteStringValue(CommandLineArguments);
             }
             if (Optional.IsDefined(IconPath))
             {
-                writer.WritePropertyName("iconPath");
+                writer.WritePropertyName("iconPath"u8);
                 writer.WriteStringValue(IconPath);
             }
             if (Optional.IsDefined(IconIndex))
             {
-                writer.WritePropertyName("iconIndex");
+                writer.WritePropertyName("iconIndex"u8);
                 writer.WriteNumberValue(IconIndex.Value);
             }
             writer.WriteEndObject();
@@ -60,22 +60,22 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Optional<int> iconIndex = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,27 +94,27 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("appAlias"))
+                        if (property0.NameEquals("appAlias"u8))
                         {
                             appAlias = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("filePath"))
+                        if (property0.NameEquals("filePath"u8))
                         {
                             filePath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("commandLineArguments"))
+                        if (property0.NameEquals("commandLineArguments"u8))
                         {
                             commandLineArguments = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("iconPath"))
+                        if (property0.NameEquals("iconPath"u8))
                         {
                             iconPath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("iconIndex"))
+                        if (property0.NameEquals("iconIndex"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(ClusterApplication))
             {
-                writer.WritePropertyName("clusterApplication");
+                writer.WritePropertyName("clusterApplication"u8);
                 writer.WriteStringValue(ClusterApplication);
             }
             if (Optional.IsDefined(ClientApplication))
             {
-                writer.WritePropertyName("clientApplication");
+                writer.WritePropertyName("clientApplication"u8);
                 writer.WriteStringValue(ClientApplication);
             }
             writer.WriteEndObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Optional<string> clientApplication = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("clusterApplication"))
+                if (property.NameEquals("clusterApplication"u8))
                 {
                     clusterApplication = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientApplication"))
+                if (property.NameEquals("clientApplication"u8))
                 {
                     clientApplication = property.Value.GetString();
                     continue;

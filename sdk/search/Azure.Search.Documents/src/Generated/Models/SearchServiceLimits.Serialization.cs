@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<int?> maxComplexObjectsInCollectionsPerDocument = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxFieldsPerIndex"))
+                if (property.NameEquals("maxFieldsPerIndex"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     maxFieldsPerIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxFieldNestingDepthPerIndex"))
+                if (property.NameEquals("maxFieldNestingDepthPerIndex"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     maxFieldNestingDepthPerIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxComplexCollectionFieldsPerIndex"))
+                if (property.NameEquals("maxComplexCollectionFieldsPerIndex"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     maxComplexCollectionFieldsPerIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxComplexObjectsInCollectionsPerDocument"))
+                if (property.NameEquals("maxComplexObjectsInCollectionsPerDocument"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

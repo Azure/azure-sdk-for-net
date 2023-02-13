@@ -17,24 +17,24 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Channels))
             {
-                writer.WritePropertyName("channels");
+                writer.WritePropertyName("channels"u8);
                 writer.WriteNumberValue(Channels.Value);
             }
             if (Optional.IsDefined(SamplingRate))
             {
-                writer.WritePropertyName("samplingRate");
+                writer.WritePropertyName("samplingRate"u8);
                 writer.WriteNumberValue(SamplingRate.Value);
             }
             if (Optional.IsDefined(Bitrate))
             {
-                writer.WritePropertyName("bitrate");
+                writer.WritePropertyName("bitrate"u8);
                 writer.WriteNumberValue(Bitrate.Value);
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(Label))
             {
-                writer.WritePropertyName("label");
+                writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
             writer.WriteEndObject();
@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.Media.Models
                 switch (discriminator.GetString())
                 {
                     case "#Microsoft.Media.AacAudio": return AacAudio.DeserializeAacAudio(element);
+                    case "#Microsoft.Media.DDAudio": return DDAudio.DeserializeDDAudio(element);
                 }
             }
             Optional<int> channels = default;
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> label = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("channels"))
+                if (property.NameEquals("channels"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.Media.Models
                     channels = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("samplingRate"))
+                if (property.NameEquals("samplingRate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.Media.Models
                     samplingRate = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("bitrate"))
+                if (property.NameEquals("bitrate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,12 +87,12 @@ namespace Azure.ResourceManager.Media.Models
                     bitrate = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;

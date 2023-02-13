@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Default))
             {
-                writer.WritePropertyName("default");
+                writer.WritePropertyName("default"u8);
                 writer.WriteStringValue(Default.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ResourceTypeOverrides))
             {
-                writer.WritePropertyName("resourceTypeOverrides");
+                writer.WritePropertyName("resourceTypeOverrides"u8);
                 writer.WriteStartObject();
                 foreach (var item in ResourceTypeOverrides)
                 {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Optional<IDictionary<string, FhirResourceVersionPolicy>> resourceTypeOverrides = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("default"))
+                if (property.NameEquals("default"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     @default = new FhirResourceVersionPolicy(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceTypeOverrides"))
+                if (property.NameEquals("resourceTypeOverrides"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

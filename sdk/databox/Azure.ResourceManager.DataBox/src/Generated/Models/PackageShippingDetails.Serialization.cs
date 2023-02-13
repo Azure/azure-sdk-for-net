@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> trackingId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("trackingUrl"))
+                if (property.NameEquals("trackingUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.DataBox.Models
                     trackingUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("carrierName"))
+                if (property.NameEquals("carrierName"u8))
                 {
                     carrierName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trackingId"))
+                if (property.NameEquals("trackingId"u8))
                 {
                     trackingId = property.Value.GetString();
                     continue;

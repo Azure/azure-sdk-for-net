@@ -19,56 +19,56 @@ namespace Azure.ResourceManager.DesktopVirtualization
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(LastHeartBeatOn))
             {
-                writer.WritePropertyName("lastHeartBeat");
+                writer.WritePropertyName("lastHeartBeat"u8);
                 writer.WriteStringValue(LastHeartBeatOn.Value, "O");
             }
             if (Optional.IsDefined(Sessions))
             {
-                writer.WritePropertyName("sessions");
+                writer.WritePropertyName("sessions"u8);
                 writer.WriteNumberValue(Sessions.Value);
             }
             if (Optional.IsDefined(AgentVersion))
             {
-                writer.WritePropertyName("agentVersion");
+                writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
             if (Optional.IsDefined(AllowNewSession))
             {
-                writer.WritePropertyName("allowNewSession");
+                writer.WritePropertyName("allowNewSession"u8);
                 writer.WriteBooleanValue(AllowNewSession.Value);
             }
             if (Optional.IsDefined(AssignedUser))
             {
-                writer.WritePropertyName("assignedUser");
+                writer.WritePropertyName("assignedUser"u8);
                 writer.WriteStringValue(AssignedUser);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(OSVersion))
             {
-                writer.WritePropertyName("osVersion");
+                writer.WritePropertyName("osVersion"u8);
                 writer.WriteStringValue(OSVersion);
             }
             if (Optional.IsDefined(SxsStackVersion))
             {
-                writer.WritePropertyName("sxSStackVersion");
+                writer.WritePropertyName("sxSStackVersion"u8);
                 writer.WriteStringValue(SxsStackVersion);
             }
             if (Optional.IsDefined(UpdateState))
             {
-                writer.WritePropertyName("updateState");
+                writer.WritePropertyName("updateState"u8);
                 writer.WriteStringValue(UpdateState.Value.ToString());
             }
             if (Optional.IsDefined(UpdateErrorMessage))
             {
-                writer.WritePropertyName("updateErrorMessage");
+                writer.WritePropertyName("updateErrorMessage"u8);
                 writer.WriteStringValue(UpdateErrorMessage);
             }
             writer.WriteEndObject();
@@ -99,22 +99,22 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<IReadOnlyList<SessionHostHealthCheckReport>> sessionHostHealthCheckResults = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("objectId"))
+                        if (property0.NameEquals("objectId"u8))
                         {
                             objectId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastHeartBeat"))
+                        if (property0.NameEquals("lastHeartBeat"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             lastHeartBeat = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("sessions"))
+                        if (property0.NameEquals("sessions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -158,12 +158,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             sessions = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("agentVersion"))
+                        if (property0.NameEquals("agentVersion"u8))
                         {
                             agentVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("allowNewSession"))
+                        if (property0.NameEquals("allowNewSession"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             allowNewSession = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("virtualMachineId"))
+                        if (property0.NameEquals("virtualMachineId"u8))
                         {
                             virtualMachineId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("resourceId"))
+                        if (property0.NameEquals("resourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -188,12 +188,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             resourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("assignedUser"))
+                        if (property0.NameEquals("assignedUser"u8))
                         {
                             assignedUser = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             status = new SessionHostStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("statusTimestamp"))
+                        if (property0.NameEquals("statusTimestamp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -213,17 +213,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             statusTimestamp = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("osVersion"))
+                        if (property0.NameEquals("osVersion"u8))
                         {
                             osVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sxSStackVersion"))
+                        if (property0.NameEquals("sxSStackVersion"u8))
                         {
                             sxsStackVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("updateState"))
+                        if (property0.NameEquals("updateState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             updateState = new SessionHostUpdateState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("lastUpdateTime"))
+                        if (property0.NameEquals("lastUpdateTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -243,12 +243,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             lastUpdateTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("updateErrorMessage"))
+                        if (property0.NameEquals("updateErrorMessage"u8))
                         {
                             updateErrorMessage = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sessionHostHealthCheckResults"))
+                        if (property0.NameEquals("sessionHostHealthCheckResults"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

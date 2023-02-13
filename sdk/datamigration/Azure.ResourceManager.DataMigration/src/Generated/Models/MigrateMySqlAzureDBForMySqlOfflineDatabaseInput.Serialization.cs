@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(TargetDatabaseName))
             {
-                writer.WritePropertyName("targetDatabaseName");
+                writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
             if (Optional.IsCollectionDefined(TableMap))
             {
-                writer.WritePropertyName("tableMap");
+                writer.WritePropertyName("tableMap"u8);
                 writer.WriteStartObject();
                 foreach (var item in TableMap)
                 {
@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IDictionary<string, string>> tableMap = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetDatabaseName"))
+                if (property.NameEquals("targetDatabaseName"u8))
                 {
                     targetDatabaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tableMap"))
+                if (property.NameEquals("tableMap"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

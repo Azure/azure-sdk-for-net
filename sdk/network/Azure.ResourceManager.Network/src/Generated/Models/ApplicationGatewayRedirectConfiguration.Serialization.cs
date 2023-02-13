@@ -21,44 +21,44 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(RedirectType))
             {
-                writer.WritePropertyName("redirectType");
+                writer.WritePropertyName("redirectType"u8);
                 writer.WriteStringValue(RedirectType.Value.ToString());
             }
             if (Optional.IsDefined(TargetListener))
             {
-                writer.WritePropertyName("targetListener");
+                writer.WritePropertyName("targetListener"u8);
                 JsonSerializer.Serialize(writer, TargetListener);
             }
             if (Optional.IsDefined(TargetUri))
             {
-                writer.WritePropertyName("targetUrl");
+                writer.WritePropertyName("targetUrl"u8);
                 writer.WriteStringValue(TargetUri.AbsoluteUri);
             }
             if (Optional.IsDefined(IncludePath))
             {
-                writer.WritePropertyName("includePath");
+                writer.WritePropertyName("includePath"u8);
                 writer.WriteBooleanValue(IncludePath.Value);
             }
             if (Optional.IsDefined(IncludeQueryString))
             {
-                writer.WritePropertyName("includeQueryString");
+                writer.WritePropertyName("includeQueryString"u8);
                 writer.WriteBooleanValue(IncludeQueryString.Value);
             }
             if (Optional.IsCollectionDefined(RequestRoutingRules))
             {
-                writer.WritePropertyName("requestRoutingRules");
+                writer.WritePropertyName("requestRoutingRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in RequestRoutingRules)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(UrlPathMaps))
             {
-                writer.WritePropertyName("urlPathMaps");
+                writer.WritePropertyName("urlPathMaps"u8);
                 writer.WriteStartArray();
                 foreach (var item in UrlPathMaps)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(PathRules))
             {
-                writer.WritePropertyName("pathRules");
+                writer.WritePropertyName("pathRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in PathRules)
                 {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<WritableSubResource>> pathRules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.Network.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network.Models
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("redirectType"))
+                        if (property0.NameEquals("redirectType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network.Models
                             redirectType = new ApplicationGatewayRedirectType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("targetListener"))
+                        if (property0.NameEquals("targetListener"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                             targetListener = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("targetUrl"))
+                        if (property0.NameEquals("targetUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network.Models
                             targetUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("includePath"))
+                        if (property0.NameEquals("includePath"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network.Models
                             includePath = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("includeQueryString"))
+                        if (property0.NameEquals("includeQueryString"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Network.Models
                             includeQueryString = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("requestRoutingRules"))
+                        if (property0.NameEquals("requestRoutingRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Network.Models
                             requestRoutingRules = array;
                             continue;
                         }
-                        if (property0.NameEquals("urlPathMaps"))
+                        if (property0.NameEquals("urlPathMaps"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Network.Models
                             urlPathMaps = array;
                             continue;
                         }
-                        if (property0.NameEquals("pathRules"))
+                        if (property0.NameEquals("pathRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<ProvisionedClustersCommonPropertiesStatusProvisioningStatus> provisioningStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("featuresStatus"))
+                if (property.NameEquals("featuresStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     featuresStatus = ProvisionedClustersCommonPropertiesStatusFeaturesStatus.DeserializeProvisionedClustersCommonPropertiesStatusFeaturesStatus(property.Value);
                     continue;
                 }
-                if (property.NameEquals("addonStatus"))
+                if (property.NameEquals("addonStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     addonStatus = dictionary;
                     continue;
                 }
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningStatus"))
+                if (property.NameEquals("provisioningStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

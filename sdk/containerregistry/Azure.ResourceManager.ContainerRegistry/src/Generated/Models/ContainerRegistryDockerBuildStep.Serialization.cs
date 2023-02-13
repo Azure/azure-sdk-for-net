@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ImageNames))
             {
-                writer.WritePropertyName("imageNames");
+                writer.WritePropertyName("imageNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in ImageNames)
                 {
@@ -28,24 +28,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             if (Optional.IsDefined(IsPushEnabled))
             {
-                writer.WritePropertyName("isPushEnabled");
+                writer.WritePropertyName("isPushEnabled"u8);
                 writer.WriteBooleanValue(IsPushEnabled.Value);
             }
             if (Optional.IsDefined(NoCache))
             {
-                writer.WritePropertyName("noCache");
+                writer.WritePropertyName("noCache"u8);
                 writer.WriteBooleanValue(NoCache.Value);
             }
-            writer.WritePropertyName("dockerFilePath");
+            writer.WritePropertyName("dockerFilePath"u8);
             writer.WriteStringValue(DockerFilePath);
             if (Optional.IsDefined(Target))
             {
-                writer.WritePropertyName("target");
+                writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
             if (Optional.IsCollectionDefined(Arguments))
             {
-                writer.WritePropertyName("arguments");
+                writer.WritePropertyName("arguments"u8);
                 writer.WriteStartArray();
                 foreach (var item in Arguments)
                 {
@@ -53,16 +53,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ContainerRegistryTaskStepType.ToString());
             if (Optional.IsDefined(ContextPath))
             {
-                writer.WritePropertyName("contextPath");
+                writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
             if (Optional.IsDefined(ContextAccessToken))
             {
-                writer.WritePropertyName("contextAccessToken");
+                writer.WritePropertyName("contextAccessToken"u8);
                 writer.WriteStringValue(ContextAccessToken);
             }
             writer.WriteEndObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<string> contextAccessToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("imageNames"))
+                if (property.NameEquals("imageNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     imageNames = array;
                     continue;
                 }
-                if (property.NameEquals("isPushEnabled"))
+                if (property.NameEquals("isPushEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     isPushEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("noCache"))
+                if (property.NameEquals("noCache"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -117,17 +117,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     noCache = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("dockerFilePath"))
+                if (property.NameEquals("dockerFilePath"u8))
                 {
                     dockerFilePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     target = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("arguments"))
+                if (property.NameEquals("arguments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -142,12 +142,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     arguments = array;
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ContainerRegistryTaskStepType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("baseImageDependencies"))
+                if (property.NameEquals("baseImageDependencies"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -162,12 +162,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     baseImageDependencies = array;
                     continue;
                 }
-                if (property.NameEquals("contextPath"))
+                if (property.NameEquals("contextPath"u8))
                 {
                     contextPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("contextAccessToken"))
+                if (property.NameEquals("contextAccessToken"u8))
                 {
                     contextAccessToken = property.Value.GetString();
                     continue;

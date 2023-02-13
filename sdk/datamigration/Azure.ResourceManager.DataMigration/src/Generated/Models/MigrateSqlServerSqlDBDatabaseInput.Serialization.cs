@@ -19,22 +19,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(TargetDatabaseName))
             {
-                writer.WritePropertyName("targetDatabaseName");
+                writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
             if (Optional.IsDefined(MakeSourceDBReadOnly))
             {
-                writer.WritePropertyName("makeSourceDbReadOnly");
+                writer.WritePropertyName("makeSourceDbReadOnly"u8);
                 writer.WriteBooleanValue(MakeSourceDBReadOnly.Value);
             }
             if (Optional.IsCollectionDefined(TableMap))
             {
-                writer.WritePropertyName("tableMap");
+                writer.WritePropertyName("tableMap"u8);
                 writer.WriteStartObject();
                 foreach (var item in TableMap)
                 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             if (Optional.IsDefined(SchemaSetting))
             {
-                writer.WritePropertyName("schemaSetting");
+                writer.WritePropertyName("schemaSetting"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SchemaSetting);
 #else
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WriteEndObject();
@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetDatabaseName"))
+                if (property.NameEquals("targetDatabaseName"u8))
                 {
                     targetDatabaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("makeSourceDbReadOnly"))
+                if (property.NameEquals("makeSourceDbReadOnly"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     makeSourceDBReadOnly = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("tableMap"))
+                if (property.NameEquals("tableMap"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     tableMap = dictionary;
                     continue;
                 }
-                if (property.NameEquals("schemaSetting"))
+                if (property.NameEquals("schemaSetting"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     schemaSetting = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;

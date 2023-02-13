@@ -17,7 +17,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Optional<TimeSeriesModelSettings> modelSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("modelSettings"))
+                if (property.NameEquals("modelSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

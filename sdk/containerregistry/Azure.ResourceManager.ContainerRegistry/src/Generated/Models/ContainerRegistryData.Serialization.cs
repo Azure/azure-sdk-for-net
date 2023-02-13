@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.ContainerRegistry
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sku");
+            writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -37,53 +37,53 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IsAdminUserEnabled))
             {
-                writer.WritePropertyName("adminUserEnabled");
+                writer.WritePropertyName("adminUserEnabled"u8);
                 writer.WriteBooleanValue(IsAdminUserEnabled.Value);
             }
             if (Optional.IsDefined(NetworkRuleSet))
             {
-                writer.WritePropertyName("networkRuleSet");
+                writer.WritePropertyName("networkRuleSet"u8);
                 writer.WriteObjectValue(NetworkRuleSet);
             }
             if (Optional.IsDefined(Policies))
             {
-                writer.WritePropertyName("policies");
+                writer.WritePropertyName("policies"u8);
                 writer.WriteObjectValue(Policies);
             }
             if (Optional.IsDefined(Encryption))
             {
-                writer.WritePropertyName("encryption");
+                writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
             if (Optional.IsDefined(IsDataEndpointEnabled))
             {
-                writer.WritePropertyName("dataEndpointEnabled");
+                writer.WritePropertyName("dataEndpointEnabled"u8);
                 writer.WriteBooleanValue(IsDataEndpointEnabled.Value);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             if (Optional.IsDefined(NetworkRuleBypassOptions))
             {
-                writer.WritePropertyName("networkRuleBypassOptions");
+                writer.WritePropertyName("networkRuleBypassOptions"u8);
                 writer.WriteStringValue(NetworkRuleBypassOptions.Value.ToString());
             }
             if (Optional.IsDefined(ZoneRedundancy))
             {
-                writer.WritePropertyName("zoneRedundancy");
+                writer.WritePropertyName("zoneRedundancy"u8);
                 writer.WriteStringValue(ZoneRedundancy.Value.ToString());
             }
             if (Optional.IsDefined(IsAnonymousPullEnabled))
             {
-                writer.WritePropertyName("anonymousPullEnabled");
+                writer.WritePropertyName("anonymousPullEnabled"u8);
                 writer.WriteBooleanValue(IsAnonymousPullEnabled.Value);
             }
             writer.WriteEndObject();
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.ContainerRegistry
             Optional<bool> anonymousPullEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     sku = ContainerRegistrySku.DeserializeContainerRegistrySku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -147,27 +147,27 @@ namespace Azure.ResourceManager.ContainerRegistry
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -186,12 +186,12 @@ namespace Azure.ResourceManager.ContainerRegistry
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("loginServer"))
+                        if (property0.NameEquals("loginServer"u8))
                         {
                             loginServer = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("creationDate"))
+                        if (property0.NameEquals("creationDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             creationDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             provisioningState = new ContainerRegistryProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             status = ContainerRegistryResourceStatus.DeserializeContainerRegistryResourceStatus(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("adminUserEnabled"))
+                        if (property0.NameEquals("adminUserEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             adminUserEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("networkRuleSet"))
+                        if (property0.NameEquals("networkRuleSet"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             networkRuleSet = ContainerRegistryNetworkRuleSet.DeserializeContainerRegistryNetworkRuleSet(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("policies"))
+                        if (property0.NameEquals("policies"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             policies = ContainerRegistryPolicies.DeserializeContainerRegistryPolicies(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("encryption"))
+                        if (property0.NameEquals("encryption"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             encryption = ContainerRegistryEncryption.DeserializeContainerRegistryEncryption(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("dataEndpointEnabled"))
+                        if (property0.NameEquals("dataEndpointEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             dataEndpointEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("dataEndpointHostNames"))
+                        if (property0.NameEquals("dataEndpointHostNames"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             dataEndpointHostNames = array;
                             continue;
                         }
-                        if (property0.NameEquals("privateEndpointConnections"))
+                        if (property0.NameEquals("privateEndpointConnections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             privateEndpointConnections = array;
                             continue;
                         }
-                        if (property0.NameEquals("publicNetworkAccess"))
+                        if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             publicNetworkAccess = new ContainerRegistryPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("networkRuleBypassOptions"))
+                        if (property0.NameEquals("networkRuleBypassOptions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             networkRuleBypassOptions = new ContainerRegistryNetworkRuleBypassOption(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("zoneRedundancy"))
+                        if (property0.NameEquals("zoneRedundancy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             zoneRedundancy = new ContainerRegistryZoneRedundancy(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("anonymousPullEnabled"))
+                        if (property0.NameEquals("anonymousPullEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

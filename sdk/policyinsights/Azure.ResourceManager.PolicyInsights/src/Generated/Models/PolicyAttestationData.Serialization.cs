@@ -19,38 +19,38 @@ namespace Azure.ResourceManager.PolicyInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("policyAssignmentId");
+            writer.WritePropertyName("policyAssignmentId"u8);
             writer.WriteStringValue(PolicyAssignmentId);
             if (Optional.IsDefined(PolicyDefinitionReferenceId))
             {
-                writer.WritePropertyName("policyDefinitionReferenceId");
+                writer.WritePropertyName("policyDefinitionReferenceId"u8);
                 writer.WriteStringValue(PolicyDefinitionReferenceId);
             }
             if (Optional.IsDefined(ComplianceState))
             {
-                writer.WritePropertyName("complianceState");
+                writer.WritePropertyName("complianceState"u8);
                 writer.WriteStringValue(ComplianceState.Value.ToString());
             }
             if (Optional.IsDefined(ExpireOn))
             {
-                writer.WritePropertyName("expiresOn");
+                writer.WritePropertyName("expiresOn"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(Owner))
             {
-                writer.WritePropertyName("owner");
+                writer.WritePropertyName("owner"u8);
                 writer.WriteStringValue(Owner);
             }
             if (Optional.IsDefined(Comments))
             {
-                writer.WritePropertyName("comments");
+                writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
             if (Optional.IsCollectionDefined(Evidence))
             {
-                writer.WritePropertyName("evidence");
+                writer.WritePropertyName("evidence"u8);
                 writer.WriteStartArray();
                 foreach (var item in Evidence)
                 {
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.PolicyInsights
             }
             if (Optional.IsDefined(AssessmentOn))
             {
-                writer.WritePropertyName("assessmentDate");
+                writer.WritePropertyName("assessmentDate"u8);
                 writer.WriteStringValue(AssessmentOn.Value, "O");
             }
             if (Optional.IsDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Metadata);
 #else
@@ -95,22 +95,22 @@ namespace Azure.ResourceManager.PolicyInsights
             Optional<BinaryData> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.PolicyInsights
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.PolicyInsights
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("policyAssignmentId"))
+                        if (property0.NameEquals("policyAssignmentId"u8))
                         {
                             policyAssignmentId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("policyDefinitionReferenceId"))
+                        if (property0.NameEquals("policyDefinitionReferenceId"u8))
                         {
                             policyDefinitionReferenceId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("complianceState"))
+                        if (property0.NameEquals("complianceState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.PolicyInsights
                             complianceState = new PolicyComplianceState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("expiresOn"))
+                        if (property0.NameEquals("expiresOn"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -159,17 +159,17 @@ namespace Azure.ResourceManager.PolicyInsights
                             expiresOn = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("owner"))
+                        if (property0.NameEquals("owner"u8))
                         {
                             owner = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("comments"))
+                        if (property0.NameEquals("comments"u8))
                         {
                             comments = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("evidence"))
+                        if (property0.NameEquals("evidence"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -184,12 +184,12 @@ namespace Azure.ResourceManager.PolicyInsights
                             evidence = array;
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastComplianceStateChangeAt"))
+                        if (property0.NameEquals("lastComplianceStateChangeAt"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.PolicyInsights
                             lastComplianceStateChangeAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("assessmentDate"))
+                        if (property0.NameEquals("assessmentDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.PolicyInsights
                             assessmentDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("metadata"))
+                        if (property0.NameEquals("metadata"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

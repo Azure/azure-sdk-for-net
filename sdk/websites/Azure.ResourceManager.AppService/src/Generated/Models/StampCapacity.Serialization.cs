@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> isLinux = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("availableCapacity"))
+                if (property.NameEquals("availableCapacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
                     availableCapacity = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalCapacity"))
+                if (property.NameEquals("totalCapacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.AppService.Models
                     totalCapacity = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     unit = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("computeMode"))
+                if (property.NameEquals("computeMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
                     computeMode = property.Value.GetString().ToComputeModeOption();
                     continue;
                 }
-                if (property.NameEquals("workerSize"))
+                if (property.NameEquals("workerSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Models
                     workerSize = property.Value.GetString().ToWorkerSizeOption();
                     continue;
                 }
-                if (property.NameEquals("workerSizeId"))
+                if (property.NameEquals("workerSizeId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
                     workerSizeId = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("excludeFromCapacityAllocation"))
+                if (property.NameEquals("excludeFromCapacityAllocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Models
                     excludeFromCapacityAllocation = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isApplicableForAllComputeModes"))
+                if (property.NameEquals("isApplicableForAllComputeModes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.AppService.Models
                     isApplicableForAllComputeModes = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("siteMode"))
+                if (property.NameEquals("siteMode"u8))
                 {
                     siteMode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isLinux"))
+                if (property.NameEquals("isLinux"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

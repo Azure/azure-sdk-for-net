@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ContainerType))
             {
-                writer.WritePropertyName("containerType");
+                writer.WritePropertyName("containerType"u8);
                 writer.WriteStringValue(ContainerType.Value.ToString());
             }
             if (Optional.IsDefined(Tail))
             {
                 if (Tail != null)
                 {
-                    writer.WritePropertyName("tail");
+                    writer.WritePropertyName("tail"u8);
                     writer.WriteNumberValue(Tail.Value);
                 }
                 else

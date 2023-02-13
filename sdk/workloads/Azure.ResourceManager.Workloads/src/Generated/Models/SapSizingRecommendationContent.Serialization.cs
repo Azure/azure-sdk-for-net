@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("appLocation");
+            writer.WritePropertyName("appLocation"u8);
             writer.WriteStringValue(AppLocation);
-            writer.WritePropertyName("environment");
+            writer.WritePropertyName("environment"u8);
             writer.WriteStringValue(Environment.ToString());
-            writer.WritePropertyName("sapProduct");
+            writer.WritePropertyName("sapProduct"u8);
             writer.WriteStringValue(SapProduct.ToString());
-            writer.WritePropertyName("deploymentType");
+            writer.WritePropertyName("deploymentType"u8);
             writer.WriteStringValue(DeploymentType.ToString());
-            writer.WritePropertyName("saps");
+            writer.WritePropertyName("saps"u8);
             writer.WriteNumberValue(Saps);
-            writer.WritePropertyName("dbMemory");
+            writer.WritePropertyName("dbMemory"u8);
             writer.WriteNumberValue(DBMemory);
-            writer.WritePropertyName("databaseType");
+            writer.WritePropertyName("databaseType"u8);
             writer.WriteStringValue(DatabaseType.ToString());
             if (Optional.IsDefined(DBScaleMethod))
             {
-                writer.WritePropertyName("dbScaleMethod");
+                writer.WritePropertyName("dbScaleMethod"u8);
                 writer.WriteStringValue(DBScaleMethod.Value.ToString());
             }
             if (Optional.IsDefined(HighAvailabilityType))
             {
-                writer.WritePropertyName("highAvailabilityType");
+                writer.WritePropertyName("highAvailabilityType"u8);
                 writer.WriteStringValue(HighAvailabilityType.Value.ToString());
             }
             writer.WriteEndObject();

@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("resourceGroupId");
+            writer.WritePropertyName("resourceGroupId"u8);
             writer.WriteStringValue(ResourceGroupId);
-            writer.WritePropertyName("stagingStorageAccountId");
+            writer.WritePropertyName("stagingStorageAccountId"u8);
             writer.WriteStringValue(StagingStorageAccountId);
-            writer.WritePropertyName("dataAccountType");
+            writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
             if (Optional.IsDefined(SharePassword))
             {
-                writer.WritePropertyName("sharePassword");
+                writer.WritePropertyName("sharePassword"u8);
                 writer.WriteStringValue(SharePassword);
             }
             writer.WriteEndObject();
@@ -37,22 +37,22 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> sharePassword = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceGroupId"))
+                if (property.NameEquals("resourceGroupId"u8))
                 {
                     resourceGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("stagingStorageAccountId"))
+                if (property.NameEquals("stagingStorageAccountId"u8))
                 {
                     stagingStorageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dataAccountType"))
+                if (property.NameEquals("dataAccountType"u8))
                 {
                     dataAccountType = property.Value.GetString().ToDataAccountType();
                     continue;
                 }
-                if (property.NameEquals("sharePassword"))
+                if (property.NameEquals("sharePassword"u8))
                 {
                     sharePassword = property.Value.GetString();
                     continue;

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sasUri");
+            writer.WritePropertyName("sasUri"u8);
             writer.WriteStringValue(SasUri.AbsoluteUri);
             writer.WriteEndObject();
         }

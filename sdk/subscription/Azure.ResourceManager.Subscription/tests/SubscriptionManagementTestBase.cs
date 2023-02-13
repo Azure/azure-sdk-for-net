@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
@@ -17,11 +18,13 @@ namespace Azure.ResourceManager.Subscription.Tests
         protected SubscriptionManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            IgnoreApiVersionInTagOperations();
         }
 
         protected SubscriptionManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            IgnoreApiVersionInTagOperations();
         }
 
         [SetUp]
@@ -36,6 +39,24 @@ namespace Azure.ResourceManager.Subscription.Tests
             ResourceGroupData input = new ResourceGroupData(location);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
+        }
+
+        private void IgnoreApiVersionInTagOperations()
+        {
+            // Ignore the api-version of tagNames operations including list
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/subscriptions/[^/]+/tagNames[/]?[^/]*api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
+            // Ignore the api-version of tagValues operations
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/subscriptions/[^/]+/tagNames/[^/]+/tagValues/[^/]+api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
         }
     }
 }

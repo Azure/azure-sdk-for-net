@@ -99,24 +99,21 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(bindingDataSysProps["iothub-enqueuedtime"], DateTime.MinValue);
         }
 
-        private static TestEventData GetSystemProperties(byte[] body, string partitionKey = "TestKey")
-        {
-            long testSequence = 4294967296;
-            return new TestEventData(body, partitionKey: partitionKey, offset: 140, enqueuedTime: DateTimeOffset.MinValue, sequenceNumber: testSequence, systemProperties: new Dictionary<string, object>()
+        private static EventData GetSystemProperties(byte[] body, string partitionKey = "TestKey") =>
+            EventHubsModelFactory.EventData(new BinaryData(body), partitionKey: partitionKey, offset: 140, enqueuedTime: DateTimeOffset.MinValue, sequenceNumber: 4294967296, systemProperties: new Dictionary<string, object>()
             {
                 {"iothub-connection-device-id", "testDeviceId"},
                 {"iothub-enqueuedtime", DateTime.MinValue}
             });
-        }
 
         [Test]
         public void GetBindingData_MultipleDispatch_ReturnsExpectedValue()
         {
             var events = new EventData[3]
             {
-                GetSystemProperties(Encoding.UTF8.GetBytes("Event 1"), $"pk0"),
-                GetSystemProperties(Encoding.UTF8.GetBytes("Event 2"), $"pk1"),
-                GetSystemProperties(Encoding.UTF8.GetBytes("Event 3"),$"pk2"),
+                GetSystemProperties(Encoding.UTF8.GetBytes("Event 1"), "pk0"),
+                GetSystemProperties(Encoding.UTF8.GetBytes("Event 2"), "pk1"),
+                GetSystemProperties(Encoding.UTF8.GetBytes("Event 3"), "pk2"),
             };
 
             var input = new EventHubTriggerInput

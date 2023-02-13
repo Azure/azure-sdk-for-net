@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DomainName))
             {
-                writer.WritePropertyName("domainName");
+                writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<string> domainName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("domainName"))
+                if (property.NameEquals("domainName"u8))
                 {
                     domainName = property.Value.GetString();
                     continue;

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Hostname))
             {
-                writer.WritePropertyName("hostname");
+                writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
             if (Optional.IsDefined(Authkey))
             {
-                writer.WritePropertyName("authkey");
+                writer.WritePropertyName("authkey"u8);
                 writer.WriteStringValue(Authkey);
             }
             writer.WriteEndObject();

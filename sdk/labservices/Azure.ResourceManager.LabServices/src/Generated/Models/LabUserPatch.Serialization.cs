@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.LabServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AdditionalUsageQuota))
             {
-                writer.WritePropertyName("additionalUsageQuota");
+                writer.WritePropertyName("additionalUsageQuota"u8);
                 writer.WriteStringValue(AdditionalUsageQuota.Value, "P");
             }
             writer.WriteEndObject();

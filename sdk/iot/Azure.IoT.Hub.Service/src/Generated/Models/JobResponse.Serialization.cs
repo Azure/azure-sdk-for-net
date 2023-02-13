@@ -30,17 +30,17 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<DeviceJobStatistics> deviceJobStatistics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobId"))
+                if (property.NameEquals("jobId"u8))
                 {
                     jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("queryCondition"))
+                if (property.NameEquals("queryCondition"u8))
                 {
                     queryCondition = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdTime"))
+                if (property.NameEquals("createdTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.IoT.Hub.Service.Models
                     createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.IoT.Hub.Service.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +70,7 @@ namespace Azure.IoT.Hub.Service.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("maxExecutionTimeInSeconds"))
+                if (property.NameEquals("maxExecutionTimeInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +80,7 @@ namespace Azure.IoT.Hub.Service.Models
                     maxExecutionTimeInSeconds = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +90,7 @@ namespace Azure.IoT.Hub.Service.Models
                     type = new JobResponseType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cloudToDeviceMethod"))
+                if (property.NameEquals("cloudToDeviceMethod"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +100,7 @@ namespace Azure.IoT.Hub.Service.Models
                     cloudToDeviceMethod = CloudToDeviceMethodRequest.DeserializeCloudToDeviceMethodRequest(property.Value);
                     continue;
                 }
-                if (property.NameEquals("updateTwin"))
+                if (property.NameEquals("updateTwin"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +110,7 @@ namespace Azure.IoT.Hub.Service.Models
                     updateTwin = TwinData.DeserializeTwinData(property.Value);
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,17 +120,17 @@ namespace Azure.IoT.Hub.Service.Models
                     status = new JobResponseStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("failureReason"))
+                if (property.NameEquals("failureReason"u8))
                 {
                     failureReason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statusMessage"))
+                if (property.NameEquals("statusMessage"u8))
                 {
                     statusMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deviceJobStatistics"))
+                if (property.NameEquals("deviceJobStatistics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

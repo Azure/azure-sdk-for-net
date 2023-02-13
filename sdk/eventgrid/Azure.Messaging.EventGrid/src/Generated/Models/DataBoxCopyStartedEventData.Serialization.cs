@@ -22,12 +22,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<DateTimeOffset> stageTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serialNumber"))
+                if (property.NameEquals("serialNumber"u8))
                 {
                     serialNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stageName"))
+                if (property.NameEquals("stageName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     stageName = new DataBoxStageName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("stageTime"))
+                if (property.NameEquals("stageTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

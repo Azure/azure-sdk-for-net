@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListPrivateLinkResources()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2022-08-01/examples/ListPrivateLinkResources.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/ListPrivateLinkResources.json
             // this example is just showing the usage of "PrivateLinkResources_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VaultResource created on azure
-            // for more information of creating VaultResource, please refer to the document of VaultResource
+            // this example assumes you already have this RecoveryServicesVaultResource created on azure
+            // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
             string subscriptionId = "6c48fa17-39c7-45f1-90ac-47a587128ace";
             string resourceGroupName = "petesting";
             string vaultName = "pemsi-ecy-rsv2";
-            ResourceIdentifier vaultResourceId = VaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
-            VaultResource vault = client.GetVaultResource(vaultResourceId);
+            ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
+            RecoveryServicesVaultResource recoveryServicesVault = client.GetRecoveryServicesVaultResource(recoveryServicesVaultResourceId);
 
             // get the collection of this RecoveryServicesPrivateLinkResource
-            RecoveryServicesPrivateLinkResourceCollection collection = vault.GetRecoveryServicesPrivateLinkResources();
+            RecoveryServicesPrivateLinkResourceCollection collection = recoveryServicesVault.GetRecoveryServicesPrivateLinkResources();
 
             // invoke the operation and iterate over the result
             await foreach (RecoveryServicesPrivateLinkResource item in collection.GetAllAsync())
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetPrivateLinkResource()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2022-08-01/examples/GetPrivateLinkResources.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/GetPrivateLinkResources.json
             // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -66,16 +66,16 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VaultResource created on azure
-            // for more information of creating VaultResource, please refer to the document of VaultResource
+            // this example assumes you already have this RecoveryServicesVaultResource created on azure
+            // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
             string subscriptionId = "6c48fa17-39c7-45f1-90ac-47a587128ace";
             string resourceGroupName = "petesting";
             string vaultName = "pemsi-ecy-rsv2";
-            ResourceIdentifier vaultResourceId = VaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
-            VaultResource vault = client.GetVaultResource(vaultResourceId);
+            ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
+            RecoveryServicesVaultResource recoveryServicesVault = client.GetRecoveryServicesVaultResource(recoveryServicesVaultResourceId);
 
             // get the collection of this RecoveryServicesPrivateLinkResource
-            RecoveryServicesPrivateLinkResourceCollection collection = vault.GetRecoveryServicesPrivateLinkResources();
+            RecoveryServicesPrivateLinkResourceCollection collection = recoveryServicesVault.GetRecoveryServicesPrivateLinkResources();
 
             // invoke the operation
             string privateLinkResourceName = "backupResource";
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetPrivateLinkResource()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2022-08-01/examples/GetPrivateLinkResources.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/GetPrivateLinkResources.json
             // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,16 +101,16 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VaultResource created on azure
-            // for more information of creating VaultResource, please refer to the document of VaultResource
+            // this example assumes you already have this RecoveryServicesVaultResource created on azure
+            // for more information of creating RecoveryServicesVaultResource, please refer to the document of RecoveryServicesVaultResource
             string subscriptionId = "6c48fa17-39c7-45f1-90ac-47a587128ace";
             string resourceGroupName = "petesting";
             string vaultName = "pemsi-ecy-rsv2";
-            ResourceIdentifier vaultResourceId = VaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
-            VaultResource vault = client.GetVaultResource(vaultResourceId);
+            ResourceIdentifier recoveryServicesVaultResourceId = RecoveryServicesVaultResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName);
+            RecoveryServicesVaultResource recoveryServicesVault = client.GetRecoveryServicesVaultResource(recoveryServicesVaultResourceId);
 
             // get the collection of this RecoveryServicesPrivateLinkResource
-            RecoveryServicesPrivateLinkResourceCollection collection = vault.GetRecoveryServicesPrivateLinkResources();
+            RecoveryServicesPrivateLinkResourceCollection collection = recoveryServicesVault.GetRecoveryServicesPrivateLinkResources();
 
             // invoke the operation
             string privateLinkResourceName = "backupResource";

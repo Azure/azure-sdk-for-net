@@ -21,7 +21,7 @@ namespace Azure.AI.MetricsAdvisor
             {
                 if (StartsOn != null)
                 {
-                    writer.WritePropertyName("startTime");
+                    writer.WritePropertyName("startTime"u8);
                     writer.WriteStringValue(StartsOn.Value, "O");
                 }
                 else
@@ -33,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor
             {
                 if (EndsOn != null)
                 {
-                    writer.WritePropertyName("endTime");
+                    writer.WritePropertyName("endTime"u8);
                     writer.WriteStringValue(EndsOn.Value, "O");
                 }
                 else
@@ -41,13 +41,13 @@ namespace Azure.AI.MetricsAdvisor
                     writer.WriteNull("endTime");
                 }
             }
-            writer.WritePropertyName("value");
+            writer.WritePropertyName("value"u8);
             writer.WriteObjectValue(ValueInternal);
-            writer.WritePropertyName("feedbackType");
+            writer.WritePropertyName("feedbackType"u8);
             writer.WriteStringValue(FeedbackKind.ToString());
-            writer.WritePropertyName("metricId");
+            writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId);
-            writer.WritePropertyName("dimensionFilter");
+            writer.WritePropertyName("dimensionFilter"u8);
             writer.WriteObjectValue(DimensionFilter);
             writer.WriteEndObject();
         }
@@ -65,7 +65,7 @@ namespace Azure.AI.MetricsAdvisor
             FeedbackFilter dimensionFilter = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +75,7 @@ namespace Azure.AI.MetricsAdvisor
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,22 +85,22 @@ namespace Azure.AI.MetricsAdvisor
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = CommentFeedbackValue.DeserializeCommentFeedbackValue(property.Value);
                     continue;
                 }
-                if (property.NameEquals("feedbackType"))
+                if (property.NameEquals("feedbackType"u8))
                 {
                     feedbackType = new MetricFeedbackKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("feedbackId"))
+                if (property.NameEquals("feedbackId"u8))
                 {
                     feedbackId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdTime"))
+                if (property.NameEquals("createdTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,17 +110,17 @@ namespace Azure.AI.MetricsAdvisor
                     createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("userPrincipal"))
+                if (property.NameEquals("userPrincipal"u8))
                 {
                     userPrincipal = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricId"))
+                if (property.NameEquals("metricId"u8))
                 {
                     metricId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dimensionFilter"))
+                if (property.NameEquals("dimensionFilter"u8))
                 {
                     dimensionFilter = FeedbackFilter.DeserializeFeedbackFilter(property.Value);
                     continue;

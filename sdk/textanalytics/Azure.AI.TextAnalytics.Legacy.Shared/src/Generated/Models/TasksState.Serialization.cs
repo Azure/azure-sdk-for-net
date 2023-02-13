@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             TasksStateTasks tasks = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tasks"))
+                if (property.NameEquals("tasks"u8))
                 {
                     tasks = TasksStateTasks.DeserializeTasksStateTasks(property.Value);
                     continue;

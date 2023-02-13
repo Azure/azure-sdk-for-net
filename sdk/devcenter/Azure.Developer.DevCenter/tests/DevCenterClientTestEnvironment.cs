@@ -20,7 +20,7 @@ namespace Azure.Developer.DevCenter.Tests
         private string _scope => GetRecordedVariable("DEFAULT_DEVCENTER_SCOPE");
         private string _testUserSecret => GetRecordedVariable("DEFAULT_TEST_USER_SECRET", options => options.IsSecret());
         private string _testUserName => GetRecordedVariable("DEFAULT_TEST_USER_NAME");
-        public string DevCenterName => GetRecordedVariable("DEFAULT_DEVCENTER_NAME");
+        public Uri Endpoint => new(GetRecordedVariable("DEFAULT_DEVCENTER_ENDPOINT"));
         public string ProjectName => GetRecordedVariable("DEFAULT_PROJECT_NAME");
         public string PoolName => GetRecordedVariable("DEFAULT_POOL_NAME");
         public string CatalogName => GetRecordedVariable("DEFAULT_CATALOG_NAME");

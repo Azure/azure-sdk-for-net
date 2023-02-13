@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DiskSizeGiB))
             {
-                writer.WritePropertyName("diskSizeGiB");
+                writer.WritePropertyName("diskSizeGiB"u8);
                 writer.WriteNumberValue(DiskSizeGiB.Value);
             }
             if (Optional.IsDefined(DiskName))
             {
-                writer.WritePropertyName("diskName");
+                writer.WritePropertyName("diskName"u8);
                 writer.WriteStringValue(DiskName);
             }
             if (Optional.IsDefined(DiskType))
             {
-                writer.WritePropertyName("diskType");
+                writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<DevTestLabStorageType> diskType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskSizeGiB"))
+                if (property.NameEquals("diskSizeGiB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     diskSizeGiB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("diskName"))
+                if (property.NameEquals("diskName"u8))
                 {
                     diskName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskType"))
+                if (property.NameEquals("diskType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

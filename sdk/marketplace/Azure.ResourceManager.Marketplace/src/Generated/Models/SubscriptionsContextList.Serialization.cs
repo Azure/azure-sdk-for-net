@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<IReadOnlyList<string>> subscriptionsIds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subscriptionsIds"))
+                if (property.NameEquals("subscriptionsIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

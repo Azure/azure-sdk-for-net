@@ -18,19 +18,19 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Input))
             {
-                writer.WritePropertyName("input");
+                writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
             if (Optional.IsDefined(CreatedOn))
             {
-                writer.WritePropertyName("createdOn");
+                writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn);
             }
-            writer.WritePropertyName("taskType");
+            writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
             if (Optional.IsCollectionDefined(ClientData))
             {
-                writer.WritePropertyName("clientData");
+                writer.WritePropertyName("clientData"u8);
                 writer.WriteStartObject();
                 foreach (var item in ClientData)
                 {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IDictionary<string, string>> clientData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("input"))
+                if (property.NameEquals("input"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     input = MigrateSqlServerSqlMISyncTaskInput.DeserializeMigrateSqlServerSqlMISyncTaskInput(property.Value);
                     continue;
                 }
-                if (property.NameEquals("output"))
+                if (property.NameEquals("output"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                     output = array;
                     continue;
                 }
-                if (property.NameEquals("createdOn"))
+                if (property.NameEquals("createdOn"u8))
                 {
                     createdOn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("taskType"))
+                if (property.NameEquals("taskType"u8))
                 {
                     taskType = new TaskType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     state = new TaskState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("commands"))
+                if (property.NameEquals("commands"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     commands = array;
                     continue;
                 }
-                if (property.NameEquals("clientData"))
+                if (property.NameEquals("clientData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

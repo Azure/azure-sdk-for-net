@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<CosmosDBServiceStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("graphApiComputeEndpoint"))
+                if (property.NameEquals("graphApiComputeEndpoint"u8))
                 {
                     graphApiComputeEndpoint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

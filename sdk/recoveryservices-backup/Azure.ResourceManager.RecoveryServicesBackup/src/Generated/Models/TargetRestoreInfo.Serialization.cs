@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OverwriteOption))
             {
-                writer.WritePropertyName("overwriteOption");
+                writer.WritePropertyName("overwriteOption"u8);
                 writer.WriteStringValue(OverwriteOption.Value.ToString());
             }
             if (Optional.IsDefined(ContainerId))
             {
-                writer.WritePropertyName("containerId");
+                writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
             }
             if (Optional.IsDefined(DatabaseName))
             {
-                writer.WritePropertyName("databaseName");
+                writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
             if (Optional.IsDefined(TargetDirectoryForFileRestore))
             {
-                writer.WritePropertyName("targetDirectoryForFileRestore");
+                writer.WritePropertyName("targetDirectoryForFileRestore"u8);
                 writer.WriteStringValue(TargetDirectoryForFileRestore);
             }
             writer.WriteEndObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> targetDirectoryForFileRestore = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("overwriteOption"))
+                if (property.NameEquals("overwriteOption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     overwriteOption = new OverwriteOption(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("containerId"))
+                if (property.NameEquals("containerId"u8))
                 {
                     containerId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databaseName"))
+                if (property.NameEquals("databaseName"u8))
                 {
                     databaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetDirectoryForFileRestore"))
+                if (property.NameEquals("targetDirectoryForFileRestore"u8))
                 {
                     targetDirectoryForFileRestore = property.Value.GetString();
                     continue;

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DisksPerNode))
             {
-                writer.WritePropertyName("disksPerNode");
+                writer.WritePropertyName("disksPerNode"u8);
                 writer.WriteNumberValue(DisksPerNode.Value);
             }
             writer.WriteEndObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<int> diskSizeGB = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("disksPerNode"))
+                if (property.NameEquals("disksPerNode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                     disksPerNode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("storageAccountType"))
+                if (property.NameEquals("storageAccountType"u8))
                 {
                     storageAccountType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskSizeGB"))
+                if (property.NameEquals("diskSizeGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CentralServerVmId))
             {
-                writer.WritePropertyName("centralServerVmId");
+                writer.WritePropertyName("centralServerVmId"u8);
                 writer.WriteStringValue(CentralServerVmId);
             }
-            writer.WritePropertyName("configurationType");
+            writer.WritePropertyName("configurationType"u8);
             writer.WriteStringValue(ConfigurationType.ToString());
             writer.WriteEndObject();
         }
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.Workloads.Models
             SapConfigurationType configurationType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("centralServerVmId"))
+                if (property.NameEquals("centralServerVmId"u8))
                 {
                     centralServerVmId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appLocation"))
+                if (property.NameEquals("appLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     appLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("configurationType"))
+                if (property.NameEquals("configurationType"u8))
                 {
                     configurationType = new SapConfigurationType(property.Value.GetString());
                     continue;
