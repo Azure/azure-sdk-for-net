@@ -22,11 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Samples\" />
     <Folder Include="SessionRecords\" />
-    <Folder Include="SessionRecords\AddAnAssetToASentShareSample\" />
-    <Folder Include="SessionRecords\CreateAReceivedShareSample\" />
-    <Folder Include="SessionRecords\CreateSentShare\" />
-    <Folder Include="SessionRecords\SendInvitationSample\" />
-    <Folder Include="SessionRecords\ViewReceivedInvitationsSample\" />
   </ItemGroup>
 </Project>

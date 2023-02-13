@@ -1,0 +1,48 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://ads-perf-westeurope-pv.purview.azure.com/share/receivedShares/56f029a1-7692-46aa-8412-8bab6e685965?api-version=2022-06-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-cc70b95bb6981b454a6f578565cb5ec6-316d536f838bbf81-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20230208.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7c682184902a9674c8caecfc7db42259",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "445",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 10 Feb 2023 22:58:29 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "9d71267c-e033-431a-985c-5243d8b75583"
+      },
+      "ResponseBody": {
+        "properties": {
+          "createdAt": "2023-02-10T22:48:47.0138898Z",
+          "sharedAt": "2023-02-10T22:48:47.0138898Z",
+          "displayName": "testDisplayName1",
+          "provisioningState": "Succeeded",
+          "shareStatus": "Detached",
+          "sentShareDescription": "updatedDescription",
+          "senderName": "SyMS",
+          "senderTenantName": "Microsoft",
+          "assetLocation": "southafricanorth",
+          "assetStoreKind": "AdlsGen2Account"
+        },
+        "shareKind": "InPlace",
+        "id": "56f029a1-7692-46aa-8412-8bab6e685965",
+        "type": "ReceivedShare"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "PURVIEW_SHARE_URL": "https://ads-perf-westeurope-pv.purview.azure.com/share",
+    "RandomSeed": "885872528"
+  }
+}
