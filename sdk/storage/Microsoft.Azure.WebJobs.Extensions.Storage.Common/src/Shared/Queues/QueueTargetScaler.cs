@@ -16,6 +16,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
     internal sealed class QueueTargetScaler : ITargetScaler
     {
         private readonly string _functionId;
+        private readonly string _queueName;
         private readonly QueueMetricsProvider _queueMetricsProvider;
         private readonly TargetScalerDescriptor _targetScalerDescriptor;
         private QueuesOptions _options;
@@ -30,17 +31,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         /// Constructs a new instance.
         /// </summary>
         public TargetScalerDescriptor TargetScalerDescriptor => _targetScalerDescriptor;
-        /// <summary>
-        /// Constructs a new instance.
-        /// </summary>
-        /// <param name="functionId"></param>
-        /// <param name="queueClient"></param>
-        /// <param name="options"></param>
-        /// <param name="loggerFactory"></param>
+
         internal QueueTargetScaler(string functionId, QueueClient queueClient, QueuesOptions options, ILoggerFactory loggerFactory)
         {
             _functionId = functionId;
-            _queueMetricsProvider = new QueueMetricsProvider(queueClient,loggerFactory);
+            _queueName = queueClient.Name;
+            _queueMetricsProvider = new QueueMetricsProvider(queueClient, loggerFactory);
             _targetScalerDescriptor = new TargetScalerDescriptor(functionId);
             _options = options;
             _logger = loggerFactory.CreateLogger<QueueTargetScaler>();
@@ -68,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
             int targetWorkerCount = (int)Math.Ceiling(queueLength / (decimal)concurrency);
 
-            _logger.LogInformation($"'Target worker count for function '{_functionId}' is '{targetWorkerCount}' (QueueLength ='{queueLength}', Concurrency='{concurrency}').");
+            _logger.LogInformation($"'Target worker count for function '{_functionId}' is '{targetWorkerCount}' (QueueName='{_queueName}', QueueLength ='{queueLength}', Concurrency='{concurrency}').");
             return new TargetScalerResult
             {
                 TargetWorkerCount = targetWorkerCount
