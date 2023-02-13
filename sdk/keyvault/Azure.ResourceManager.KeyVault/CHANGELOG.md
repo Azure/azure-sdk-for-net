@@ -1,14 +1,14 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.1.0 (2023-02-13)
 
 ### Bugs Fixed
 
+- Obsolete tags operations on `KeyVaultPrivateEndpointConnectionResource` which do not work.
+
 ### Other Changes
+
+- Renamed property name `DeletionOn` to `DeletedOn`.
 
 ## 1.0.0 (2022-07-11)
 

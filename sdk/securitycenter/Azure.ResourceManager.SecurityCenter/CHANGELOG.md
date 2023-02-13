@@ -1,14 +1,17 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.1.0 (2023-02-13)
 
 ### Bugs Fixed
 
+- Fixed `AddRules` methods in `SqlVulnerabilityAssessmentBaselineRuleCollection`.
+- Fixed parameter mapping in `AdaptiveNetworkHardeningResource`, `ServerVulnerabilityAssessmentResource` and `SoftwareInventoryResource`.
+
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
+- Improved polymorphic models.
 
 ## 1.0.0 (2022-11-04)
 
