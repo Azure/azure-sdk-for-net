@@ -29,7 +29,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         protected string CreateOrAnswerCallOrGetCallConnectionPayload = string.Format(DummyPayload, NoneMediaSubscriptionId);
         protected string CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload = string.Format(DummyPayload, MediaSubscriptionId);
 
-        protected const string DummyPayload = "{{\"callConnectionId\": \"someCallConnectionId\",\"serverCallId\": \"someServerCallId\",\"targets\": [{{\"rawId\":\"targetId\",\"kind\":\"communicationUser\",\"communicationUser\":{{\"id\":\"targetId\"}}}}],\"source\": {{\"identifier\":{{\"rawId\":\"sourceId\",\"kind\":\"communicationUser\",\"communicationUser\":{{\"id\":\"sourceId\"}}}}}},\"callConnectionState\": \"connecting\",\"subject\": \"dummySubject\",\"callbackUri\": \"https://bot.contoso.com/callback\",\"mediaSubscriptionId\": {0}}}";
+        protected const string DummyPayload = "{{\"callConnectionId\": \"someCallConnectionId\",\"serverCallId\": \"someServerCallId\",\"targets\": [{{\"rawId\":\"targetId\",\"kind\":\"communicationUser\",\"communicationUser\":{{\"id\":\"targetId\"}}}}],\"sourceIdentity\":{{\"rawId\":\"sourceId\",\"kind\":\"communicationUser\",\"communicationUser\":{{\"id\":\"sourceId\"}}}},\"callConnectionState\": \"connecting\",\"subject\": \"dummySubject\",\"callbackUri\": \"https://bot.contoso.com/callback\",\"mediaSubscriptionId\": {0}}}";
 
         protected const string TransferCallOrRemoveParticipantsPayload = "{\"operationContext\": \"someOperationContext\"}";
 

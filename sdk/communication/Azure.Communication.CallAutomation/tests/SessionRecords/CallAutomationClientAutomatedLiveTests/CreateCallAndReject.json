@@ -46,7 +46,7 @@
         "Content-Type": "application/json",
         "traceparent": "00-dda311860733472de284324d159dbcc9-1df8dd2af530f898-00",
         "User-Agent": "azsdk-net-Communication.Identity/1.3.0-alpha.20230130.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "e6a0322e96a5457554520e463f36bb12",
+        "x-ms-client-request-id": "e6a0322e96a5457554520e463f3s6bb12",
         "x-ms-content-sha256": "Sanitized",
         "x-ms-date": "Tue, 31 Jan 2023 00:06:07 GMT",
         "x-ms-return-client-request-id": "true"
@@ -121,7 +121,7 @@
             }
           }
         ],
-        "source": {
+        "callSourceIdentifier": {
           "identifier": {
             "rawId": "Sanitized",
             "communicationUser": {
@@ -143,14 +143,12 @@
       },
       "ResponseBody": {
         "callConnectionId": "421f0b00-e4c3-4a77-b1e6-c5932a9db58b",
-        "source": {
-          "displayName": "",
-          "identifier": {
-            "rawId": "Sanitized",
-            "kind": "communicationUser",
-            "communicationUser": {
-              "id": "Sanitized"
-            }
+        "sourceDisplayName": "",
+        "sourceIdentity": {
+          "rawId": "Sanitized",
+          "kind": "communicationUser",
+          "communicationUser": {
+            "id": "Sanitized"
           }
         },
         "targets": [
