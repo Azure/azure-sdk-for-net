@@ -244,7 +244,7 @@ namespace Azure.Monitor.Ingestion.Tests
             // Make the request
             UploadLogsOptions options = new UploadLogsOptions();
             bool isTriggered = false;
-            options.UploadFailed += Options_UploadFailed;
+            options.UploadLogsFailed += Options_UploadFailed;
             await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options).ConfigureAwait(false);
             Assert.IsFalse(isTriggered);
             Task Options_UploadFailed(UploadFailedEventArgs e)

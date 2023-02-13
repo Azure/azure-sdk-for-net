@@ -30,7 +30,7 @@ namespace Azure.Monitor.Ingestion
         public UploadLogsOptions() { }
         public int MaxConcurrency { get { throw null; } set { } }
         public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
-        public event Azure.Core.SyncAsyncEventHandler<Azure.Monitor.Ingestion.UploadFailedEventArgs> UploadFailed { add { } remove { } }
+        public event Azure.Core.SyncAsyncEventHandler<Azure.Monitor.Ingestion.UploadFailedEventArgs> UploadLogsFailed { add { } remove { } }
     }
 }
 namespace Microsoft.Extensions.Azure
