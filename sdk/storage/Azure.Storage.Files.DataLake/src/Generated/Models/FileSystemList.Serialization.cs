@@ -18,7 +18,7 @@ namespace Azure.Storage.Files.DataLake.Models
             Optional<IReadOnlyList<FileSystem>> filesystems = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("filesystems"))
+                if (property.NameEquals("filesystems"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

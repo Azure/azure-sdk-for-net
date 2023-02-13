@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OpenIdProviderId))
             {
-                writer.WritePropertyName("openidProviderId");
+                writer.WritePropertyName("openidProviderId"u8);
                 writer.WriteStringValue(OpenIdProviderId);
             }
             if (Optional.IsCollectionDefined(BearerTokenSendingMethods))
             {
-                writer.WritePropertyName("bearerTokenSendingMethods");
+                writer.WritePropertyName("bearerTokenSendingMethods"u8);
                 writer.WriteStartArray();
                 foreach (var item in BearerTokenSendingMethods)
                 {
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<IList<BearerTokenSendingMethod>> bearerTokenSendingMethods = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("openidProviderId"))
+                if (property.NameEquals("openidProviderId"u8))
                 {
                     openidProviderId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bearerTokenSendingMethods"))
+                if (property.NameEquals("bearerTokenSendingMethods"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

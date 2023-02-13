@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<IReadOnlyList<WafRankingsResponseDataItem>> data = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dateTimeBegin"))
+                if (property.NameEquals("dateTimeBegin"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     dateTimeBegin = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("dateTimeEnd"))
+                if (property.NameEquals("dateTimeEnd"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     dateTimeEnd = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("groups"))
+                if (property.NameEquals("groups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     groups = array;
                     continue;
                 }
-                if (property.NameEquals("data"))
+                if (property.NameEquals("data"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

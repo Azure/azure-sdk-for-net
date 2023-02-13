@@ -19,21 +19,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(ConnectVia))
             {
-                writer.WritePropertyName("connectVia");
+                writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(Annotations))
             {
-                writer.WritePropertyName("annotations");
+                writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
@@ -52,44 +52,44 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("endpoint");
+            writer.WritePropertyName("endpoint"u8);
             writer.WriteObjectValue(Endpoint);
-            writer.WritePropertyName("marketplaceID");
+            writer.WritePropertyName("marketplaceID"u8);
             writer.WriteObjectValue(MarketplaceID);
-            writer.WritePropertyName("sellerID");
+            writer.WritePropertyName("sellerID"u8);
             writer.WriteObjectValue(SellerID);
             if (Optional.IsDefined(MwsAuthToken))
             {
-                writer.WritePropertyName("mwsAuthToken");
+                writer.WritePropertyName("mwsAuthToken"u8);
                 writer.WriteObjectValue(MwsAuthToken);
             }
-            writer.WritePropertyName("accessKeyId");
+            writer.WritePropertyName("accessKeyId"u8);
             writer.WriteObjectValue(AccessKeyId);
             if (Optional.IsDefined(SecretKey))
             {
-                writer.WritePropertyName("secretKey");
+                writer.WritePropertyName("secretKey"u8);
                 writer.WriteObjectValue(SecretKey);
             }
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
-                writer.WritePropertyName("useEncryptedEndpoints");
+                writer.WritePropertyName("useEncryptedEndpoints"u8);
                 writer.WriteObjectValue(UseEncryptedEndpoints);
             }
             if (Optional.IsDefined(UseHostVerification))
             {
-                writer.WritePropertyName("useHostVerification");
+                writer.WritePropertyName("useHostVerification"u8);
                 writer.WriteObjectValue(UseHostVerification);
             }
             if (Optional.IsDefined(UsePeerVerification))
             {
-                writer.WritePropertyName("usePeerVerification");
+                writer.WritePropertyName("usePeerVerification"u8);
                 writer.WriteObjectValue(UsePeerVerification);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
-                writer.WritePropertyName("encryptedCredential");
+                writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteObjectValue(EncryptedCredential);
             }
             writer.WriteEndObject();
@@ -122,12 +122,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("connectVia"))
+                if (property.NameEquals("connectVia"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -137,12 +137,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -157,7 +157,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     parameters = dictionary;
                     continue;
                 }
-                if (property.NameEquals("annotations"))
+                if (property.NameEquals("annotations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -172,7 +172,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     annotations = array;
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -181,22 +181,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("endpoint"))
+                        if (property0.NameEquals("endpoint"u8))
                         {
                             endpoint = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("marketplaceID"))
+                        if (property0.NameEquals("marketplaceID"u8))
                         {
                             marketplaceID = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("sellerID"))
+                        if (property0.NameEquals("sellerID"u8))
                         {
                             sellerID = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("mwsAuthToken"))
+                        if (property0.NameEquals("mwsAuthToken"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -206,12 +206,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             mwsAuthToken = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("accessKeyId"))
+                        if (property0.NameEquals("accessKeyId"u8))
                         {
                             accessKeyId = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("secretKey"))
+                        if (property0.NameEquals("secretKey"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -221,7 +221,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             secretKey = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("useEncryptedEndpoints"))
+                        if (property0.NameEquals("useEncryptedEndpoints"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -231,7 +231,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             useEncryptedEndpoints = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("useHostVerification"))
+                        if (property0.NameEquals("useHostVerification"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -241,7 +241,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             useHostVerification = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("usePeerVerification"))
+                        if (property0.NameEquals("usePeerVerification"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -251,7 +251,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             usePeerVerification = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("encryptedCredential"))
+                        if (property0.NameEquals("encryptedCredential"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

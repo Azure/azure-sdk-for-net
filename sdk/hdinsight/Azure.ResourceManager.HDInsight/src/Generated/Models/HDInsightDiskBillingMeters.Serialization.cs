@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<HDInsightTier> tier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskRpMeter"))
+                if (property.NameEquals("diskRpMeter"u8))
                 {
                     diskRpMeter = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     sku = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

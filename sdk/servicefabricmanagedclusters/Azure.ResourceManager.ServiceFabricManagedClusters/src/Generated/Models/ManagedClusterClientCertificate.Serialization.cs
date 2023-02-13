@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("isAdmin");
+            writer.WritePropertyName("isAdmin"u8);
             writer.WriteBooleanValue(IsAdmin);
             if (Optional.IsDefined(Thumbprint))
             {
-                writer.WritePropertyName("thumbprint");
+                writer.WritePropertyName("thumbprint"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Thumbprint);
 #else
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             if (Optional.IsDefined(CommonName))
             {
-                writer.WritePropertyName("commonName");
+                writer.WritePropertyName("commonName"u8);
                 writer.WriteStringValue(CommonName);
             }
             if (Optional.IsDefined(IssuerThumbprint))
             {
-                writer.WritePropertyName("issuerThumbprint");
+                writer.WritePropertyName("issuerThumbprint"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(IssuerThumbprint);
 #else
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Optional<BinaryData> issuerThumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isAdmin"))
+                if (property.NameEquals("isAdmin"u8))
                 {
                     isAdmin = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("thumbprint"))
+                if (property.NameEquals("thumbprint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     thumbprint = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("commonName"))
+                if (property.NameEquals("commonName"u8))
                 {
                     commonName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("issuerThumbprint"))
+                if (property.NameEquals("issuerThumbprint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

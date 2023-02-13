@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Cpu != null)
                 {
-                    writer.WritePropertyName("cpu");
+                    writer.WritePropertyName("cpu"u8);
                     writer.WriteStringValue(Cpu);
                 }
                 else
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Gpu != null)
                 {
-                    writer.WritePropertyName("gpu");
+                    writer.WritePropertyName("gpu"u8);
                     writer.WriteStringValue(Gpu);
                 }
                 else
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Memory != null)
                 {
-                    writer.WritePropertyName("memory");
+                    writer.WritePropertyName("memory"u8);
                     writer.WriteStringValue(Memory);
                 }
                 else
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> memory = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("cpu"))
+                if (property.NameEquals("cpu"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     cpu = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("gpu"))
+                if (property.NameEquals("gpu"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     gpu = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("memory"))
+                if (property.NameEquals("memory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

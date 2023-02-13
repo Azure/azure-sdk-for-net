@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<string> quotaPeriod = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     name = OperationalInsightsMetricName.DeserializeOperationalInsightsMetricName(property.Value);
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     unit = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("currentValue"))
+                if (property.NameEquals("currentValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     currentValue = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     limit = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("nextResetTime"))
+                if (property.NameEquals("nextResetTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     nextResetTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("quotaPeriod"))
+                if (property.NameEquals("quotaPeriod"u8))
                 {
                     quotaPeriod = property.Value.GetString();
                     continue;

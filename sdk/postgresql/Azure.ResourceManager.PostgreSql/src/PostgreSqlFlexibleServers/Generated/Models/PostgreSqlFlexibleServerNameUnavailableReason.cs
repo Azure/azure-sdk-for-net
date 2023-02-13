@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The name availability reason. </summary>
+    /// <summary> The reason why the given name is not available. </summary>
     public readonly partial struct PostgreSqlFlexibleServerNameUnavailableReason : IEquatable<PostgreSqlFlexibleServerNameUnavailableReason>
     {
         private readonly string _value;

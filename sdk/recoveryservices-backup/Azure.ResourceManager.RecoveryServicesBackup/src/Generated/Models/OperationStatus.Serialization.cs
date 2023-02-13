@@ -24,17 +24,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<OperationStatusExtendedInfo> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     status = new OperationStatusValue(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     error = OperationStatusError.DeserializeOperationStatusError(property.Value);
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

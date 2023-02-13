@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> unlockDeleteExpiryTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("unlockDeleteExpiryTime"))
+                if (property.NameEquals("unlockDeleteExpiryTime"u8))
                 {
                     unlockDeleteExpiryTime = property.Value.GetString();
                     continue;

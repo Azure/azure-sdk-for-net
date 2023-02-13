@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SecretUri))
             {
-                writer.WritePropertyName("secretUrl");
+                writer.WritePropertyName("secretUrl"u8);
                 writer.WriteStringValue(SecretUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SecretVaultId))
             {
-                writer.WritePropertyName("secretVaultId");
+                writer.WritePropertyName("secretVaultId"u8);
                 writer.WriteStringValue(SecretVaultId);
             }
             if (Optional.IsDefined(SecretData))
             {
-                writer.WritePropertyName("secretData");
+                writer.WritePropertyName("secretData"u8);
                 writer.WriteStringValue(SecretData);
             }
             writer.WriteEndObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> secretData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("secretUrl"))
+                if (property.NameEquals("secretUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     secretUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("secretVaultId"))
+                if (property.NameEquals("secretVaultId"u8))
                 {
                     secretVaultId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secretData"))
+                if (property.NameEquals("secretData"u8))
                 {
                     secretData = property.Value.GetString();
                     continue;

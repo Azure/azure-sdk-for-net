@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("healthy"))
+                if (property.NameEquals("healthy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     healthy = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("relationshipStatus"))
+                if (property.NameEquals("relationshipStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     relationshipStatus = new NetAppRelationshipStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("mirrorState"))
+                if (property.NameEquals("mirrorState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.NetApp.Models
                     mirrorState = new NetAppMirrorState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("totalProgress"))
+                if (property.NameEquals("totalProgress"u8))
                 {
                     totalProgress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;

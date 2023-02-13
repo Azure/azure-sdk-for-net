@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("timetoRestore");
+            writer.WritePropertyName("timetoRestore"u8);
             writer.WriteStringValue(TimeToRestore, "O");
-            writer.WritePropertyName("blobRanges");
+            writer.WritePropertyName("blobRanges"u8);
             writer.WriteStartArray();
             foreach (var item in BlobRanges)
             {
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.Storage.Models
             IList<BlobRestoreRange> blobRanges = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timetoRestore"))
+                if (property.NameEquals("timetoRestore"u8))
                 {
                     timetoRestore = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("blobRanges"))
+                if (property.NameEquals("blobRanges"u8))
                 {
                     List<BlobRestoreRange> array = new List<BlobRestoreRange>();
                     foreach (var item in property.Value.EnumerateArray())

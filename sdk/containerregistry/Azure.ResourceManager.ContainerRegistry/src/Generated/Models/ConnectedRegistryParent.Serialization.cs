@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("syncProperties");
+            writer.WritePropertyName("syncProperties"u8);
             writer.WriteObjectValue(SyncProperties);
             writer.WriteEndObject();
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ConnectedRegistrySyncProperties syncProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("syncProperties"))
+                if (property.NameEquals("syncProperties"u8))
                 {
                     syncProperties = ConnectedRegistrySyncProperties.DeserializeConnectedRegistrySyncProperties(property.Value);
                     continue;

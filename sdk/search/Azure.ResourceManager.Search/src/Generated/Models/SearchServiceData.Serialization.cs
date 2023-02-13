@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.Search
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -39,33 +39,33 @@ namespace Azure.ResourceManager.Search
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ReplicaCount))
             {
-                writer.WritePropertyName("replicaCount");
+                writer.WritePropertyName("replicaCount"u8);
                 writer.WriteNumberValue(ReplicaCount.Value);
             }
             if (Optional.IsDefined(PartitionCount))
             {
-                writer.WritePropertyName("partitionCount");
+                writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
             }
             if (Optional.IsDefined(HostingMode))
             {
-                writer.WritePropertyName("hostingMode");
+                writer.WritePropertyName("hostingMode"u8);
                 writer.WriteStringValue(HostingMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
             if (Optional.IsDefined(NetworkRuleSet))
             {
-                writer.WritePropertyName("networkRuleSet");
+                writer.WritePropertyName("networkRuleSet"u8);
                 writer.WriteObjectValue(NetworkRuleSet);
             }
             writer.WriteEndObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Search
             Optional<IReadOnlyList<SharedSearchServicePrivateLinkResourceData>> sharedPrivateLinkResources = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Search
                     sku = SearchSku.DeserializeSearchSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Search
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,27 +129,27 @@ namespace Azure.ResourceManager.Search
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Search
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Search
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("replicaCount"))
+                        if (property0.NameEquals("replicaCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Search
                             replicaCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("partitionCount"))
+                        if (property0.NameEquals("partitionCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Search
                             partitionCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("hostingMode"))
+                        if (property0.NameEquals("hostingMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Search
                             hostingMode = property0.Value.GetString().ToSearchServiceHostingMode();
                             continue;
                         }
-                        if (property0.NameEquals("publicNetworkAccess"))
+                        if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Search
                             publicNetworkAccess = property0.Value.GetString().ToSearchServicePublicNetworkAccess();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -218,12 +218,12 @@ namespace Azure.ResourceManager.Search
                             status = property0.Value.GetString().ToSearchServiceStatus();
                             continue;
                         }
-                        if (property0.NameEquals("statusDetails"))
+                        if (property0.NameEquals("statusDetails"u8))
                         {
                             statusDetails = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Search
                             provisioningState = property0.Value.GetString().ToSearchServiceProvisioningState();
                             continue;
                         }
-                        if (property0.NameEquals("networkRuleSet"))
+                        if (property0.NameEquals("networkRuleSet"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Search
                             networkRuleSet = NetworkRuleSet.DeserializeNetworkRuleSet(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("privateEndpointConnections"))
+                        if (property0.NameEquals("privateEndpointConnections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Search
                             privateEndpointConnections = array;
                             continue;
                         }
-                        if (property0.NameEquals("sharedPrivateLinkResources"))
+                        if (property0.NameEquals("sharedPrivateLinkResources"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

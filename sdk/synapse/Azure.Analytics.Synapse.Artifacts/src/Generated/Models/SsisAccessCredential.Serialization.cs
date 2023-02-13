@@ -18,11 +18,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("domain");
+            writer.WritePropertyName("domain"u8);
             writer.WriteObjectValue(Domain);
-            writer.WritePropertyName("userName");
+            writer.WritePropertyName("userName"u8);
             writer.WriteObjectValue(UserName);
-            writer.WritePropertyName("password");
+            writer.WritePropertyName("password"u8);
             writer.WriteObjectValue(Password);
             writer.WriteEndObject();
         }
@@ -34,17 +34,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             SecretBase password = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("domain"))
+                if (property.NameEquals("domain"u8))
                 {
                     domain = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("userName"))
+                if (property.NameEquals("userName"u8))
                 {
                     userName = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = SecretBase.DeserializeSecretBase(property.Value);
                     continue;

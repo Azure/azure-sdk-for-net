@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("namespace");
+            writer.WritePropertyName("namespace"u8);
             writer.WriteStringValue(Namespace);
             if (Optional.IsDefined(BindingSelector))
             {
-                writer.WritePropertyName("bindingSelector");
+                writer.WritePropertyName("bindingSelector"u8);
                 writer.WriteStringValue(BindingSelector);
             }
-            writer.WritePropertyName("identity");
+            writer.WritePropertyName("identity"u8);
             writer.WriteObjectValue(Identity);
             writer.WriteEndObject();
         }
@@ -39,27 +39,27 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<ManagedClusterPodIdentityProvisioningInfo> provisioningInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("namespace"))
+                if (property.NameEquals("namespace"u8))
                 {
                     @namespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bindingSelector"))
+                if (property.NameEquals("bindingSelector"u8))
                 {
                     bindingSelector = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     identity = ContainerServiceUserAssignedIdentity.DeserializeContainerServiceUserAssignedIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     provisioningState = new ManagedClusterPodIdentityProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningInfo"))
+                if (property.NameEquals("provisioningInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

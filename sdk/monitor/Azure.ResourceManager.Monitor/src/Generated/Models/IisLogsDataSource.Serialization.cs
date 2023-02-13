@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("streams");
+            writer.WritePropertyName("streams"u8);
             writer.WriteStartArray();
             foreach (var item in Streams)
             {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(LogDirectories))
             {
-                writer.WritePropertyName("logDirectories");
+                writer.WritePropertyName("logDirectories"u8);
                 writer.WriteStartArray();
                 foreach (var item in LogDirectories)
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WriteEndObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("streams"))
+                if (property.NameEquals("streams"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     streams = array;
                     continue;
                 }
-                if (property.NameEquals("logDirectories"))
+                if (property.NameEquals("logDirectories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     logDirectories = array;
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;

@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.MySql.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BackupRetentionDays))
             {
-                writer.WritePropertyName("backupRetentionDays");
+                writer.WritePropertyName("backupRetentionDays"u8);
                 writer.WriteNumberValue(BackupRetentionDays.Value);
             }
             if (Optional.IsDefined(GeoRedundantBackup))
             {
-                writer.WritePropertyName("geoRedundantBackup");
+                writer.WritePropertyName("geoRedundantBackup"u8);
                 writer.WriteStringValue(GeoRedundantBackup.Value.ToString());
             }
             if (Optional.IsDefined(StorageInMB))
             {
-                writer.WritePropertyName("storageMB");
+                writer.WritePropertyName("storageMB"u8);
                 writer.WriteNumberValue(StorageInMB.Value);
             }
             if (Optional.IsDefined(StorageAutogrow))
             {
-                writer.WritePropertyName("storageAutogrow");
+                writer.WritePropertyName("storageAutogrow"u8);
                 writer.WriteStringValue(StorageAutogrow.Value.ToString());
             }
             writer.WriteEndObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MySql.Models
             Optional<MySqlStorageAutogrow> storageAutogrow = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("backupRetentionDays"))
+                if (property.NameEquals("backupRetentionDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MySql.Models
                     backupRetentionDays = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("geoRedundantBackup"))
+                if (property.NameEquals("geoRedundantBackup"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MySql.Models
                     geoRedundantBackup = new MySqlGeoRedundantBackup(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageMB"))
+                if (property.NameEquals("storageMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MySql.Models
                     storageMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("storageAutogrow"))
+                if (property.NameEquals("storageAutogrow"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

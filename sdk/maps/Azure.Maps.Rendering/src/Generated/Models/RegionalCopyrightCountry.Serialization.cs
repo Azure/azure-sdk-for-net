@@ -18,12 +18,12 @@ namespace Azure.Maps.Rendering
             Optional<string> label = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ISO3"))
+                if (property.NameEquals("ISO3"u8))
                 {
                     isO3 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,29 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2023-02-10)
+
+### Features Added
+
+- Added `SetApiVersionsFromProfile` method in `ArmClientOptions` to support setting resource API versions from an Azure Stack Profile.
+
+### Bugs Fixed
+
+- Fixed the exception in `GenericResource` operations caused by case-sensitive comparison of resource types between user input and service results.
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded resources API version to `2022-09-01`.
+  - The `GetAll` methods of `ResourceProviderCollection`, `GetTenantResourceProviders` methods of `ArmClient` removed the `top` parameter as it's never supported by service. We added back overloaded methods with the `top` parameter, but made it with `expand` parameter both as required. It is compatible with most previous method usages but still breaks a few cases such as (take `GetAll` as an example):
+    - GetAll(10)
+    - GetAll(top: 10)
+    - GetAll(top: null)
+    - GetAll(10, cancellationToken: token)
+    - GetAll(top: 10, cancellationToken: token)
+    - GetAll(top: null, cancellationToken: token)
+  - The `Update` methods of `TagResource` became LRO and added a `waitUntil` parameter in the beginning. The old methods without the `waitUntil` parameter is kept with obsolete warnings to keep backward-compatibility.
 
 ## 1.3.2 (2022-11-11)
 

@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.Marketplace.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IsAcknowledgeActionFlagEnabled))
             {
-                writer.WritePropertyName("acknowledge");
+                writer.WritePropertyName("acknowledge"u8);
                 writer.WriteBooleanValue(IsAcknowledgeActionFlagEnabled.Value);
             }
             if (Optional.IsDefined(IsDismissActionFlagEnabled))
             {
-                writer.WritePropertyName("dismiss");
+                writer.WritePropertyName("dismiss"u8);
                 writer.WriteBooleanValue(IsDismissActionFlagEnabled.Value);
             }
             if (Optional.IsDefined(IsRemoveOfferActionFlagEnabled))
             {
-                writer.WritePropertyName("removeOffer");
+                writer.WritePropertyName("removeOffer"u8);
                 writer.WriteBooleanValue(IsRemoveOfferActionFlagEnabled.Value);
             }
             if (Optional.IsCollectionDefined(AddPlans))
             {
-                writer.WritePropertyName("addPlans");
+                writer.WritePropertyName("addPlans"u8);
                 writer.WriteStartArray();
                 foreach (var item in AddPlans)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
             if (Optional.IsCollectionDefined(RemovePlans))
             {
-                writer.WritePropertyName("removePlans");
+                writer.WritePropertyName("removePlans"u8);
                 writer.WriteStartArray();
                 foreach (var item in RemovePlans)
                 {

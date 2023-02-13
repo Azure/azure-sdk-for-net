@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Text))
             {
-                writer.WritePropertyName("text");
+                writer.WritePropertyName("text"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Text);
 #else

@@ -17,22 +17,22 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId);
             }
             if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("clientId");
+                writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
             if (Optional.IsDefined(ClientSecret))
             {
-                writer.WritePropertyName("clientSecret");
+                writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
-            writer.WritePropertyName("workspaceId");
+            writer.WritePropertyName("workspaceId"u8);
             writer.WriteStringValue(WorkspaceId);
-            writer.WritePropertyName("query");
+            writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
             writer.WriteEndObject();
         }
@@ -46,27 +46,27 @@ namespace Azure.AI.MetricsAdvisor.Models
             string query = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     tenantId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientId"))
+                if (property.NameEquals("clientId"u8))
                 {
                     clientId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientSecret"))
+                if (property.NameEquals("clientSecret"u8))
                 {
                     clientSecret = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workspaceId"))
+                if (property.NameEquals("workspaceId"u8))
                 {
                     workspaceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("query"))
+                if (property.NameEquals("query"u8))
                 {
                     query = property.Value.GetString();
                     continue;

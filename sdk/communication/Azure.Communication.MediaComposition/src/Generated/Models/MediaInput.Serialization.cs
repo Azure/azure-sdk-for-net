@@ -16,11 +16,11 @@ namespace Azure.Communication.MediaComposition.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(PlaceholderImageUri))
             {
-                writer.WritePropertyName("placeholderImageUri");
+                writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
             }
             writer.WriteEndObject();

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultAction))
             {
-                writer.WritePropertyName("defaultAction");
+                writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
             if (Optional.IsCollectionDefined(IPAllowList))
             {
-                writer.WritePropertyName("ipAllowList");
+                writer.WritePropertyName("ipAllowList"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPAllowList)
                 {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<IList<IPAddress>> ipAllowList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("defaultAction"))
+                if (property.NameEquals("defaultAction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Media.Models
                     defaultAction = new IPAccessControlDefaultAction(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ipAllowList"))
+                if (property.NameEquals("ipAllowList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

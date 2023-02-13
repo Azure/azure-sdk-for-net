@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TagInfo))
             {
-                writer.WritePropertyName("tagInfo");
+                writer.WritePropertyName("tagInfo"u8);
                 writer.WriteObjectValue(TagInfo);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<DataProtectionBackupRetentionTag> tagInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tagInfo"))
+                if (property.NameEquals("tagInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

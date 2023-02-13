@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
             writer.WriteEndObject();
@@ -31,22 +31,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Optional<MachineExtensionInstanceViewStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("typeHandlerVersion"))
+                if (property.NameEquals("typeHandlerVersion"u8))
                 {
                     typeHandlerVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

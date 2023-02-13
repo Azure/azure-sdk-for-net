@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FeatureType))
             {
-                writer.WritePropertyName("featureType");
+                writer.WritePropertyName("featureType"u8);
                 writer.WriteStringValue(FeatureType.Value.ToString());
             }
             if (Optional.IsDefined(FeatureName))
             {
-                writer.WritePropertyName("featureName");
+                writer.WritePropertyName("featureName"u8);
                 writer.WriteStringValue(FeatureName);
             }
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }

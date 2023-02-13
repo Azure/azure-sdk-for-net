@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("partnerName");
+            writer.WritePropertyName("partnerName"u8);
             writer.WriteStringValue(PartnerName);
             if (Optional.IsDefined(ProductName))
             {
-                writer.WritePropertyName("productName");
+                writer.WritePropertyName("productName"u8);
                 writer.WriteStringValue(ProductName);
             }
-            writer.WritePropertyName("secret");
+            writer.WritePropertyName("secret"u8);
             writer.WriteStringValue(Secret);
             writer.WriteEndObject();
         }
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string secret = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("partnerName"))
+                if (property.NameEquals("partnerName"u8))
                 {
                     partnerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("productName"))
+                if (property.NameEquals("productName"u8))
                 {
                     productName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secret"))
+                if (property.NameEquals("secret"u8))
                 {
                     secret = property.Value.GetString();
                     continue;

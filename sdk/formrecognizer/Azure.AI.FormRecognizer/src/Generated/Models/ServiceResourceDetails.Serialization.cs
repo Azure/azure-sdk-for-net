@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             CustomDocumentModelsDetails customDocumentModels = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("customDocumentModels"))
+                if (property.NameEquals("customDocumentModels"u8))
                 {
                     customDocumentModels = CustomDocumentModelsDetails.DeserializeCustomDocumentModelsDetails(property.Value);
                     continue;

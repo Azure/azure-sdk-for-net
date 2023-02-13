@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.SecurityCenter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PricingTier))
             {
-                writer.WritePropertyName("pricingTier");
+                writer.WritePropertyName("pricingTier"u8);
                 writer.WriteStringValue(PricingTier.Value.ToString());
             }
             if (Optional.IsDefined(SubPlan))
             {
-                writer.WritePropertyName("subPlan");
+                writer.WritePropertyName("subPlan"u8);
                 writer.WriteStringValue(SubPlan);
             }
             writer.WriteEndObject();
@@ -48,22 +48,22 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<IReadOnlyList<string>> replacedBy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("pricingTier"))
+                        if (property0.NameEquals("pricingTier"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.SecurityCenter
                             pricingTier = new SecurityCenterPricingTier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("subPlan"))
+                        if (property0.NameEquals("subPlan"u8))
                         {
                             subPlan = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("freeTrialRemainingTime"))
+                        if (property0.NameEquals("freeTrialRemainingTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             freeTrialRemainingTime = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("deprecated"))
+                        if (property0.NameEquals("deprecated"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             deprecated = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("replacedBy"))
+                        if (property0.NameEquals("replacedBy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

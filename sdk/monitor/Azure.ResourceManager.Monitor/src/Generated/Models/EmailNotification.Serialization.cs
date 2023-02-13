@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SendToSubscriptionAdministrator))
             {
-                writer.WritePropertyName("sendToSubscriptionAdministrator");
+                writer.WritePropertyName("sendToSubscriptionAdministrator"u8);
                 writer.WriteBooleanValue(SendToSubscriptionAdministrator.Value);
             }
             if (Optional.IsDefined(SendToSubscriptionCoAdministrators))
             {
-                writer.WritePropertyName("sendToSubscriptionCoAdministrators");
+                writer.WritePropertyName("sendToSubscriptionCoAdministrators"u8);
                 writer.WriteBooleanValue(SendToSubscriptionCoAdministrators.Value);
             }
             if (Optional.IsCollectionDefined(CustomEmails))
             {
-                writer.WritePropertyName("customEmails");
+                writer.WritePropertyName("customEmails"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomEmails)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<IList<string>> customEmails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sendToSubscriptionAdministrator"))
+                if (property.NameEquals("sendToSubscriptionAdministrator"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     sendToSubscriptionAdministrator = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("sendToSubscriptionCoAdministrators"))
+                if (property.NameEquals("sendToSubscriptionCoAdministrators"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     sendToSubscriptionCoAdministrators = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("customEmails"))
+                if (property.NameEquals("customEmails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

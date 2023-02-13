@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ContainerHostResourceId))
             {
-                writer.WritePropertyName("containerHostResourceId");
+                writer.WritePropertyName("containerHostResourceId"u8);
                 writer.WriteStringValue(ContainerHostResourceId);
             }
             writer.WriteEndObject();
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DevSpaces.Models
             Optional<string> mappedControllerResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("containerHostResourceId"))
+                if (property.NameEquals("containerHostResourceId"u8))
                 {
                     containerHostResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mappedControllerResourceId"))
+                if (property.NameEquals("mappedControllerResourceId"u8))
                 {
                     mappedControllerResourceId = property.Value.GetString();
                     continue;

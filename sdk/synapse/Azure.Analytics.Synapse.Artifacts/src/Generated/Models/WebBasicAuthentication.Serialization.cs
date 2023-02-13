@@ -18,13 +18,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("username");
+            writer.WritePropertyName("username"u8);
             writer.WriteObjectValue(Username);
-            writer.WritePropertyName("password");
+            writer.WritePropertyName("password"u8);
             writer.WriteObjectValue(Password);
-            writer.WritePropertyName("url");
+            writer.WritePropertyName("url"u8);
             writer.WriteObjectValue(Url);
-            writer.WritePropertyName("authenticationType");
+            writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             writer.WriteEndObject();
         }
@@ -37,22 +37,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             WebAuthenticationType authenticationType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("username"))
+                if (property.NameEquals("username"u8))
                 {
                     username = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = SecretBase.DeserializeSecretBase(property.Value);
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     url = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("authenticationType"))
+                if (property.NameEquals("authenticationType"u8))
                 {
                     authenticationType = new WebAuthenticationType(property.Value.GetString());
                     continue;

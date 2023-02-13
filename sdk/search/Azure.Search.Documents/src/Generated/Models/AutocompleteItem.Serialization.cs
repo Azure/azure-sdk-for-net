@@ -18,12 +18,12 @@ namespace Azure.Search.Documents.Models
             string queryPlusText = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("text"))
+                if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("queryPlusText"))
+                if (property.NameEquals("queryPlusText"u8))
                 {
                     queryPlusText = property.Value.GetString();
                     continue;

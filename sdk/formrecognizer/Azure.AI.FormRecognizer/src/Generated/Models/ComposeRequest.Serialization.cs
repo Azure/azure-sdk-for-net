@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("modelIds");
+            writer.WritePropertyName("modelIds"u8);
             writer.WriteStartArray();
             foreach (var item in ModelIds)
             {
@@ -24,7 +24,7 @@ namespace Azure.AI.FormRecognizer.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(ModelName))
             {
-                writer.WritePropertyName("modelName");
+                writer.WritePropertyName("modelName"u8);
                 writer.WriteStringValue(ModelName);
             }
             writer.WriteEndObject();

@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Protocol))
             {
-                writer.WritePropertyName("protocol");
+                writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
             if (Optional.IsCollectionDefined(SourceAddresses))
             {
-                writer.WritePropertyName("sourceAddresses");
+                writer.WritePropertyName("sourceAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in SourceAddresses)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(DestinationAddresses))
             {
-                writer.WritePropertyName("destinationAddresses");
+                writer.WritePropertyName("destinationAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in DestinationAddresses)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(DestinationPorts))
             {
-                writer.WritePropertyName("destinationPorts");
+                writer.WritePropertyName("destinationPorts"u8);
                 writer.WriteStartArray();
                 foreach (var item in DestinationPorts)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(SourceIPGroups))
             {
-                writer.WritePropertyName("sourceIpGroups");
+                writer.WritePropertyName("sourceIpGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in SourceIPGroups)
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(DestinationIPGroups))
             {
-                writer.WritePropertyName("destinationIpGroups");
+                writer.WritePropertyName("destinationIpGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in DestinationIPGroups)
                 {
@@ -96,17 +96,17 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<string>> destinationIPGroups = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protocol"))
+                if (property.NameEquals("protocol"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                     protocol = new FirewallPolicyIntrusionDetectionProtocol(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceAddresses"))
+                if (property.NameEquals("sourceAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
                     sourceAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("destinationAddresses"))
+                if (property.NameEquals("destinationAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network.Models
                     destinationAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("destinationPorts"))
+                if (property.NameEquals("destinationPorts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
                     destinationPorts = array;
                     continue;
                 }
-                if (property.NameEquals("sourceIpGroups"))
+                if (property.NameEquals("sourceIpGroups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Network.Models
                     sourceIPGroups = array;
                     continue;
                 }
-                if (property.NameEquals("destinationIpGroups"))
+                if (property.NameEquals("destinationIpGroups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

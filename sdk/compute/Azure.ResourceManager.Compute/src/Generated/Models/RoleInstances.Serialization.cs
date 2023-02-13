@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("roleInstances");
+            writer.WritePropertyName("roleInstances"u8);
             writer.WriteStartArray();
             foreach (var item in RoleInstancesValue)
             {

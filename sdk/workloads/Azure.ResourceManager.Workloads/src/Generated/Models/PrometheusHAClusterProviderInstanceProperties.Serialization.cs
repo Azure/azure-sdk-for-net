@@ -18,25 +18,25 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrometheusUri))
             {
-                writer.WritePropertyName("prometheusUrl");
+                writer.WritePropertyName("prometheusUrl"u8);
                 writer.WriteStringValue(PrometheusUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Hostname))
             {
-                writer.WritePropertyName("hostname");
+                writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
             if (Optional.IsDefined(Sid))
             {
-                writer.WritePropertyName("sid");
+                writer.WritePropertyName("sid"u8);
                 writer.WriteStringValue(Sid);
             }
             if (Optional.IsDefined(ClusterName))
             {
-                writer.WritePropertyName("clusterName");
+                writer.WritePropertyName("clusterName"u8);
                 writer.WriteStringValue(ClusterName);
             }
-            writer.WritePropertyName("providerType");
+            writer.WritePropertyName("providerType"u8);
             writer.WriteStringValue(ProviderType);
             writer.WriteEndObject();
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Workloads.Models
             string providerType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("prometheusUrl"))
+                if (property.NameEquals("prometheusUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,22 +60,22 @@ namespace Azure.ResourceManager.Workloads.Models
                     prometheusUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hostname"))
+                if (property.NameEquals("hostname"u8))
                 {
                     hostname = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sid"))
+                if (property.NameEquals("sid"u8))
                 {
                     sid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clusterName"))
+                if (property.NameEquals("clusterName"u8))
                 {
                     clusterName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerType"))
+                if (property.NameEquals("providerType"u8))
                 {
                     providerType = property.Value.GetString();
                     continue;

@@ -34,17 +34,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("runId"))
+                if (property.NameEquals("runId"u8))
                 {
                     runId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runGroupId"))
+                if (property.NameEquals("runGroupId"u8))
                 {
                     runGroupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isLatest"))
+                if (property.NameEquals("isLatest"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,12 +54,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     isLatest = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("pipelineName"))
+                if (property.NameEquals("pipelineName"u8))
                 {
                     pipelineName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +74,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     parameters = dictionary;
                     continue;
                 }
-                if (property.NameEquals("invokedBy"))
+                if (property.NameEquals("invokedBy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +84,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     invokedBy = PipelineRunInvokedBy.DeserializePipelineRunInvokedBy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("lastUpdated"))
+                if (property.NameEquals("lastUpdated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     lastUpdated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("runStart"))
+                if (property.NameEquals("runStart"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     runStart = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("runEnd"))
+                if (property.NameEquals("runEnd"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +114,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     runEnd = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("durationInMs"))
+                if (property.NameEquals("durationInMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,12 +124,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     durationInMs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<int> availableHosts = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Avs.Models
                     status = new AvsSubscriptionTrialStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("availableHosts"))
+                if (property.NameEquals("availableHosts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

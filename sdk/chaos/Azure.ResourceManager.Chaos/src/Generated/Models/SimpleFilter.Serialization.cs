@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteObjectValue(Parameters);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FilterType.ToString());
             writer.WriteEndObject();
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Chaos.Models
             FilterType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     parameters = SimpleFilterParameters.DeserializeSimpleFilterParameters(property.Value);
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new FilterType(property.Value.GetString());
                     continue;

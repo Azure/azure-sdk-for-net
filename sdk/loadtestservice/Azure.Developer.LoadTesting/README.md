@@ -20,7 +20,7 @@ Various documentation is available to help you get started
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Developer.LoadTesting --prerelease
+dotnet add package Azure.Developer.LoadTesting
 ```
 
 ### Prerequisites

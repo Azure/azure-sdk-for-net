@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FragmentsPerTsSegment))
             {
-                writer.WritePropertyName("fragmentsPerTsSegment");
+                writer.WritePropertyName("fragmentsPerTsSegment"u8);
                 writer.WriteNumberValue(FragmentsPerTsSegment.Value);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<int> fragmentsPerTsSegment = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fragmentsPerTsSegment"))
+                if (property.NameEquals("fragmentsPerTsSegment"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

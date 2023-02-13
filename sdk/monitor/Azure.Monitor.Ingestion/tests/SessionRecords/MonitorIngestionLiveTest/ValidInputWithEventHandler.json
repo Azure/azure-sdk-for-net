@@ -1,0 +1,506 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://1e61f879-d8a7-50b8-9913-108bfd30f277-aroh.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-e23934f8e48d4c02a40339d0d04528fd/streams/Custom-MyTableRawData?api-version=2023-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "949",
+        "Content-Type": "application/json",
+        "traceparent": "00-c603ec7ed1607a1d547663b42239d2ac-c36e30bdbd77cae8-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20230209.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ffa2e0bae4f3d0bbf57e0ac0e1ca4317",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer0\u0022,\u0022AdditionalContext\u0022:0}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer1\u0022,\u0022AdditionalContext\u0022:1}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer2\u0022,\u0022AdditionalContext\u0022:2}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer3\u0022,\u0022AdditionalContext\u0022:3}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer4\u0022,\u0022AdditionalContext\u0022:4}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer5\u0022,\u0022AdditionalContext\u0022:5}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer6\u0022,\u0022AdditionalContext\u0022:6}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer7\u0022,\u0022AdditionalContext\u0022:7}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer8\u0022,\u0022AdditionalContext\u0022:8}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer9\u0022,\u0022AdditionalContext\u0022:9}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer10\u0022,\u0022AdditionalContext\u0022:10}]]",
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Thu, 09 Feb 2023 23:11:09 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "ffa2e0ba-e4f3-d0bb-f57e-0ac0e1ca4317",
+        "x-ms-request-id": "25ded5a0-c5c1-4542-8fa5-aa0f667cebac"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://1e61f879-d8a7-50b8-9913-108bfd30f277-aroh.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-e23934f8e48d4c02a40339d0d04528fd/streams/Custom-MyTableRawData?api-version=2023-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "969",
+        "Content-Type": "application/json",
+        "traceparent": "00-c603ec7ed1607a1d547663b42239d2ac-bce79a5c30847289-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20230209.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9a2414686bc52c05786767c7789eb425",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer11\u0022,\u0022AdditionalContext\u0022:11}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer12\u0022,\u0022AdditionalContext\u0022:12}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer13\u0022,\u0022AdditionalContext\u0022:13}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer14\u0022,\u0022AdditionalContext\u0022:14}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer15\u0022,\u0022AdditionalContext\u0022:15}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer16\u0022,\u0022AdditionalContext\u0022:16}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer17\u0022,\u0022AdditionalContext\u0022:17}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer18\u0022,\u0022AdditionalContext\u0022:18}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer19\u0022,\u0022AdditionalContext\u0022:19}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer20\u0022,\u0022AdditionalContext\u0022:20}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer21\u0022,\u0022AdditionalContext\u0022:21}]]",
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Thu, 09 Feb 2023 23:11:09 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "9a241468-6bc5-2c05-7867-67c7789eb425",
+        "x-ms-request-id": "a22f7404-612b-4a7d-8b26-e3547722bbf3"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://1e61f879-d8a7-50b8-9913-108bfd30f277-aroh.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-e23934f8e48d4c02a40339d0d04528fd/streams/Custom-MyTableRawData?api-version=2023-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "969",
+        "Content-Type": "application/json",
+        "traceparent": "00-c603ec7ed1607a1d547663b42239d2ac-4c4c7ade3b2bc99c-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20230209.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "63553f6d28fb1aff334f6a0dcbe4b2d2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer22\u0022,\u0022AdditionalContext\u0022:22}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer23\u0022,\u0022AdditionalContext\u0022:23}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer24\u0022,\u0022AdditionalContext\u0022:24}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer25\u0022,\u0022AdditionalContext\u0022:25}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer26\u0022,\u0022AdditionalContext\u0022:26}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer27\u0022,\u0022AdditionalContext\u0022:27}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer28\u0022,\u0022AdditionalContext\u0022:28}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer29\u0022,\u0022AdditionalContext\u0022:29}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer30\u0022,\u0022AdditionalContext\u0022:30}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer31\u0022,\u0022AdditionalContext\u0022:31}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer32\u0022,\u0022AdditionalContext\u0022:32}]]",
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Thu, 09 Feb 2023 23:11:09 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "63553f6d-28fb-1aff-334f-6a0dcbe4b2d2",
+        "x-ms-request-id": "3739b3b2-1870-43d3-a9b7-3eab20109613"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://1e61f879-d8a7-50b8-9913-108bfd30f277-aroh.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-e23934f8e48d4c02a40339d0d04528fd/streams/Custom-MyTableRawData?api-version=2023-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "969",
+        "Content-Type": "application/json",
+        "traceparent": "00-c603ec7ed1607a1d547663b42239d2ac-c9c3cd83f063a444-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20230209.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0182c4c944a54e70db75878b7cf35857",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer33\u0022,\u0022AdditionalContext\u0022:33}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer34\u0022,\u0022AdditionalContext\u0022:34}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer35\u0022,\u0022AdditionalContext\u0022:35}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer36\u0022,\u0022AdditionalContext\u0022:36}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer37\u0022,\u0022AdditionalContext\u0022:37}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer38\u0022,\u0022AdditionalContext\u0022:38}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer39\u0022,\u0022AdditionalContext\u0022:39}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer40\u0022,\u0022AdditionalContext\u0022:40}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer41\u0022,\u0022AdditionalContext\u0022:41}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer42\u0022,\u0022AdditionalContext\u0022:42}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer43\u0022,\u0022AdditionalContext\u0022:43}]]",
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Thu, 09 Feb 2023 23:11:09 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0182c4c9-44a5-4e70-db75-878b7cf35857",
+        "x-ms-request-id": "7f2325a9-d3f0-431b-bb20-0ae179758e11"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://1e61f879-d8a7-50b8-9913-108bfd30f277-aroh.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-e23934f8e48d4c02a40339d0d04528fd/streams/Custom-MyTableRawData?api-version=2023-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "969",
+        "Content-Type": "application/json",
+        "traceparent": "00-c603ec7ed1607a1d547663b42239d2ac-c41a12b9dad26676-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20230209.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a253e5c9df74401b1509677601f76093",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer44\u0022,\u0022AdditionalContext\u0022:44}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer45\u0022,\u0022AdditionalContext\u0022:45}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer46\u0022,\u0022AdditionalContext\u0022:46}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer47\u0022,\u0022AdditionalContext\u0022:47}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer48\u0022,\u0022AdditionalContext\u0022:48}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer49\u0022,\u0022AdditionalContext\u0022:49}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer50\u0022,\u0022AdditionalContext\u0022:50}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer51\u0022,\u0022AdditionalContext\u0022:51}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer52\u0022,\u0022AdditionalContext\u0022:52}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer53\u0022,\u0022AdditionalContext\u0022:53}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer54\u0022,\u0022AdditionalContext\u0022:54}]]",
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Thu, 09 Feb 2023 23:11:09 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a253e5c9-df74-401b-1509-677601f76093",
+        "x-ms-request-id": "2707c6e6-f407-4b24-862e-f0a342862d37"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://1e61f879-d8a7-50b8-9913-108bfd30f277-aroh.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-e23934f8e48d4c02a40339d0d04528fd/streams/Custom-MyTableRawData?api-version=2023-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "969",
+        "Content-Type": "application/json",
+        "traceparent": "00-c603ec7ed1607a1d547663b42239d2ac-1b62bab7e976f064-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20230209.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b4fe94b5b31b287fce078885a0749e3f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer55\u0022,\u0022AdditionalContext\u0022:55}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer56\u0022,\u0022AdditionalContext\u0022:56}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer57\u0022,\u0022AdditionalContext\u0022:57}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer58\u0022,\u0022AdditionalContext\u0022:58}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer59\u0022,\u0022AdditionalContext\u0022:59}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer60\u0022,\u0022AdditionalContext\u0022:60}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer61\u0022,\u0022AdditionalContext\u0022:61}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer62\u0022,\u0022AdditionalContext\u0022:62}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer63\u0022,\u0022AdditionalContext\u0022:63}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer64\u0022,\u0022AdditionalContext\u0022:64}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer65\u0022,\u0022AdditionalContext\u0022:65}]]",
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Thu, 09 Feb 2023 23:11:09 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b4fe94b5-b31b-287f-ce07-8885a0749e3f",
+        "x-ms-request-id": "3915ca6a-1825-44af-ac91-6a02cef0a14b"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://1e61f879-d8a7-50b8-9913-108bfd30f277-aroh.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-e23934f8e48d4c02a40339d0d04528fd/streams/Custom-MyTableRawData?api-version=2023-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "969",
+        "Content-Type": "application/json",
+        "traceparent": "00-c603ec7ed1607a1d547663b42239d2ac-f1aff27d63a9650e-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20230209.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e64413f61090e95ea841ec9cddfa4de3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer66\u0022,\u0022AdditionalContext\u0022:66}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer67\u0022,\u0022AdditionalContext\u0022:67}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer68\u0022,\u0022AdditionalContext\u0022:68}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer69\u0022,\u0022AdditionalContext\u0022:69}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer70\u0022,\u0022AdditionalContext\u0022:70}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer71\u0022,\u0022AdditionalContext\u0022:71}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer72\u0022,\u0022AdditionalContext\u0022:72}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer73\u0022,\u0022AdditionalContext\u0022:73}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer74\u0022,\u0022AdditionalContext\u0022:74}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer75\u0022,\u0022AdditionalContext\u0022:75}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer76\u0022,\u0022AdditionalContext\u0022:76}]]",
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Thu, 09 Feb 2023 23:11:09 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e64413f6-1090-e95e-a841-ec9cddfa4de3",
+        "x-ms-request-id": "cdf93b2a-9c80-43fe-9a8d-892e55908bed"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://1e61f879-d8a7-50b8-9913-108bfd30f277-aroh.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-e23934f8e48d4c02a40339d0d04528fd/streams/Custom-MyTableRawData?api-version=2023-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "969",
+        "Content-Type": "application/json",
+        "traceparent": "00-c603ec7ed1607a1d547663b42239d2ac-d20c5c659faa6d51-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20230209.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e8d6f315a4f4163b652ad36d5695a0a0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer77\u0022,\u0022AdditionalContext\u0022:77}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer78\u0022,\u0022AdditionalContext\u0022:78}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer79\u0022,\u0022AdditionalContext\u0022:79}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer80\u0022,\u0022AdditionalContext\u0022:80}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer81\u0022,\u0022AdditionalContext\u0022:81}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer82\u0022,\u0022AdditionalContext\u0022:82}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer83\u0022,\u0022AdditionalContext\u0022:83}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer84\u0022,\u0022AdditionalContext\u0022:84}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer85\u0022,\u0022AdditionalContext\u0022:85}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer86\u0022,\u0022AdditionalContext\u0022:86}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer87\u0022,\u0022AdditionalContext\u0022:87}]]",
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Thu, 09 Feb 2023 23:11:09 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e8d6f315-a4f4-163b-652a-d36d5695a0a0",
+        "x-ms-request-id": "c6f9ca29-3603-4517-abc1-00fe47fb9b96"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://1e61f879-d8a7-50b8-9913-108bfd30f277-aroh.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-e23934f8e48d4c02a40339d0d04528fd/streams/Custom-MyTableRawData?api-version=2023-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "969",
+        "Content-Type": "application/json",
+        "traceparent": "00-c603ec7ed1607a1d547663b42239d2ac-cb34a43823368af1-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20230209.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ed7f276b79b3a40336150bd9c6e34bd3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer88\u0022,\u0022AdditionalContext\u0022:88}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer89\u0022,\u0022AdditionalContext\u0022:89}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer90\u0022,\u0022AdditionalContext\u0022:90}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer91\u0022,\u0022AdditionalContext\u0022:91}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer92\u0022,\u0022AdditionalContext\u0022:92}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer93\u0022,\u0022AdditionalContext\u0022:93}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer94\u0022,\u0022AdditionalContext\u0022:94}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer95\u0022,\u0022AdditionalContext\u0022:95}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer96\u0022,\u0022AdditionalContext\u0022:96}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer97\u0022,\u0022AdditionalContext\u0022:97}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer98\u0022,\u0022AdditionalContext\u0022:98}]]",
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Thu, 09 Feb 2023 23:11:09 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "ed7f276b-79b3-a403-3615-0bd9c6e34bd3",
+        "x-ms-request-id": "f7dc365f-d16d-4d62-af33-c89efb898e75"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://1e61f879-d8a7-50b8-9913-108bfd30f277-aroh.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-e23934f8e48d4c02a40339d0d04528fd/streams/Custom-MyTableRawData?api-version=2023-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "989",
+        "Content-Type": "application/json",
+        "traceparent": "00-c603ec7ed1607a1d547663b42239d2ac-8e6b2f50d2ba5761-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20230209.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ac70a4bab59d524ad72d80663cf19213",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer99\u0022,\u0022AdditionalContext\u0022:99}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer100\u0022,\u0022AdditionalContext\u0022:100}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer101\u0022,\u0022AdditionalContext\u0022:101}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer102\u0022,\u0022AdditionalContext\u0022:102}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer103\u0022,\u0022AdditionalContext\u0022:103}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer104\u0022,\u0022AdditionalContext\u0022:104}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer105\u0022,\u0022AdditionalContext\u0022:105}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer106\u0022,\u0022AdditionalContext\u0022:106}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer107\u0022,\u0022AdditionalContext\u0022:107}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer108\u0022,\u0022AdditionalContext\u0022:108}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer109\u0022,\u0022AdditionalContext\u0022:109}]]",
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Thu, 09 Feb 2023 23:11:09 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "ac70a4ba-b59d-524a-d72d-80663cf19213",
+        "x-ms-request-id": "70b622e5-7552-4157-8fa2-652f67e5e9b1"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://1e61f879-d8a7-50b8-9913-108bfd30f277-aroh.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-e23934f8e48d4c02a40339d0d04528fd/streams/Custom-MyTableRawData?api-version=2023-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "991",
+        "Content-Type": "application/json",
+        "traceparent": "00-c603ec7ed1607a1d547663b42239d2ac-d402ec539d0b94a4-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20230209.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b6304ba15f7a9b30f032b2df98624f82",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer110\u0022,\u0022AdditionalContext\u0022:110}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer111\u0022,\u0022AdditionalContext\u0022:111}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer112\u0022,\u0022AdditionalContext\u0022:112}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer113\u0022,\u0022AdditionalContext\u0022:113}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer114\u0022,\u0022AdditionalContext\u0022:114}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer115\u0022,\u0022AdditionalContext\u0022:115}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer116\u0022,\u0022AdditionalContext\u0022:116}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer117\u0022,\u0022AdditionalContext\u0022:117}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer118\u0022,\u0022AdditionalContext\u0022:118}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer119\u0022,\u0022AdditionalContext\u0022:119}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer120\u0022,\u0022AdditionalContext\u0022:120}]]",
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Thu, 09 Feb 2023 23:11:10 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b6304ba1-5f7a-9b30-f032-b2df98624f82",
+        "x-ms-request-id": "a893ae4e-80e8-459b-b044-7a40dffd112d"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://1e61f879-d8a7-50b8-9913-108bfd30f277-aroh.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-e23934f8e48d4c02a40339d0d04528fd/streams/Custom-MyTableRawData?api-version=2023-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "991",
+        "Content-Type": "application/json",
+        "traceparent": "00-c603ec7ed1607a1d547663b42239d2ac-c2ff96217d8698b2-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20230209.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b2b2ffdff324b503dc2d1585f99c6745",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer121\u0022,\u0022AdditionalContext\u0022:121}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer122\u0022,\u0022AdditionalContext\u0022:122}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer123\u0022,\u0022AdditionalContext\u0022:123}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer124\u0022,\u0022AdditionalContext\u0022:124}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer125\u0022,\u0022AdditionalContext\u0022:125}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer126\u0022,\u0022AdditionalContext\u0022:126}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer127\u0022,\u0022AdditionalContext\u0022:127}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer128\u0022,\u0022AdditionalContext\u0022:128}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer129\u0022,\u0022AdditionalContext\u0022:129}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer130\u0022,\u0022AdditionalContext\u0022:130}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer131\u0022,\u0022AdditionalContext\u0022:131}]]",
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Thu, 09 Feb 2023 23:11:10 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b2b2ffdf-f324-b503-dc2d-1585f99c6745",
+        "x-ms-request-id": "61ae9ee9-a9cd-4e30-81ef-67c2adc7f1c4"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://1e61f879-d8a7-50b8-9913-108bfd30f277-aroh.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-e23934f8e48d4c02a40339d0d04528fd/streams/Custom-MyTableRawData?api-version=2023-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "991",
+        "Content-Type": "application/json",
+        "traceparent": "00-c603ec7ed1607a1d547663b42239d2ac-15551b11abd4821e-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20230209.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7b37f88294b25a5974d5bc6b036bb975",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer132\u0022,\u0022AdditionalContext\u0022:132}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer133\u0022,\u0022AdditionalContext\u0022:133}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer134\u0022,\u0022AdditionalContext\u0022:134}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer135\u0022,\u0022AdditionalContext\u0022:135}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer136\u0022,\u0022AdditionalContext\u0022:136}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer137\u0022,\u0022AdditionalContext\u0022:137}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer138\u0022,\u0022AdditionalContext\u0022:138}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer139\u0022,\u0022AdditionalContext\u0022:139}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer140\u0022,\u0022AdditionalContext\u0022:140}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer141\u0022,\u0022AdditionalContext\u0022:141}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer142\u0022,\u0022AdditionalContext\u0022:142}]]",
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Thu, 09 Feb 2023 23:11:10 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "7b37f882-94b2-5a59-74d5-bc6b036bb975",
+        "x-ms-request-id": "4f890e40-9359-4c53-b74e-942723b6cb96"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://1e61f879-d8a7-50b8-9913-108bfd30f277-aroh.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-e23934f8e48d4c02a40339d0d04528fd/streams/Custom-MyTableRawData?api-version=2023-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "991",
+        "Content-Type": "application/json",
+        "traceparent": "00-c603ec7ed1607a1d547663b42239d2ac-5413e2bfc7257e09-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20230209.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3c87fddde03eaeee487bd94d49aaa153",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer143\u0022,\u0022AdditionalContext\u0022:143}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer144\u0022,\u0022AdditionalContext\u0022:144}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer145\u0022,\u0022AdditionalContext\u0022:145}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer146\u0022,\u0022AdditionalContext\u0022:146}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer147\u0022,\u0022AdditionalContext\u0022:147}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer148\u0022,\u0022AdditionalContext\u0022:148}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer149\u0022,\u0022AdditionalContext\u0022:149}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer150\u0022,\u0022AdditionalContext\u0022:150}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer151\u0022,\u0022AdditionalContext\u0022:151}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer152\u0022,\u0022AdditionalContext\u0022:152}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer153\u0022,\u0022AdditionalContext\u0022:153}]]",
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Thu, 09 Feb 2023 23:11:10 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3c87fddd-e03e-aeee-487b-d94d49aaa153",
+        "x-ms-request-id": "1ac43812-82c6-498c-80d2-04480e18e260"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://1e61f879-d8a7-50b8-9913-108bfd30f277-aroh.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-e23934f8e48d4c02a40339d0d04528fd/streams/Custom-MyTableRawData?api-version=2023-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "991",
+        "Content-Type": "application/json",
+        "traceparent": "00-c603ec7ed1607a1d547663b42239d2ac-c10f5e22b8c157db-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20230209.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a05d6dcad42a4ad0a6583d4f3797b271",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer154\u0022,\u0022AdditionalContext\u0022:154}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer155\u0022,\u0022AdditionalContext\u0022:155}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer156\u0022,\u0022AdditionalContext\u0022:156}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer157\u0022,\u0022AdditionalContext\u0022:157}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer158\u0022,\u0022AdditionalContext\u0022:158}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer159\u0022,\u0022AdditionalContext\u0022:159}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer160\u0022,\u0022AdditionalContext\u0022:160}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer161\u0022,\u0022AdditionalContext\u0022:161}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer162\u0022,\u0022AdditionalContext\u0022:162}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer163\u0022,\u0022AdditionalContext\u0022:163}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer164\u0022,\u0022AdditionalContext\u0022:164}]]",
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Thu, 09 Feb 2023 23:11:10 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a05d6dca-d42a-4ad0-a658-3d4f3797b271",
+        "x-ms-request-id": "193fbd26-baca-4e52-899b-5079e5fb15b5"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://1e61f879-d8a7-50b8-9913-108bfd30f277-aroh.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-e23934f8e48d4c02a40339d0d04528fd/streams/Custom-MyTableRawData?api-version=2023-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "991",
+        "Content-Type": "application/json",
+        "traceparent": "00-c603ec7ed1607a1d547663b42239d2ac-52cb96e41bae81db-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20230209.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fba8a0732a15a10609893337bb0c10c9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer165\u0022,\u0022AdditionalContext\u0022:165}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer166\u0022,\u0022AdditionalContext\u0022:166}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer167\u0022,\u0022AdditionalContext\u0022:167}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer168\u0022,\u0022AdditionalContext\u0022:168}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer169\u0022,\u0022AdditionalContext\u0022:169}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer170\u0022,\u0022AdditionalContext\u0022:170}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer171\u0022,\u0022AdditionalContext\u0022:171}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer172\u0022,\u0022AdditionalContext\u0022:172}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer173\u0022,\u0022AdditionalContext\u0022:173}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer174\u0022,\u0022AdditionalContext\u0022:174}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer175\u0022,\u0022AdditionalContext\u0022:175}]]",
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Thu, 09 Feb 2023 23:11:10 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "fba8a073-2a15-a106-0989-3337bb0c10c9",
+        "x-ms-request-id": "86ed2b5d-c02e-4d32-9c73-c24d0c261830"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://1e61f879-d8a7-50b8-9913-108bfd30f277-aroh.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-e23934f8e48d4c02a40339d0d04528fd/streams/Custom-MyTableRawData?api-version=2023-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "991",
+        "Content-Type": "application/json",
+        "traceparent": "00-c603ec7ed1607a1d547663b42239d2ac-bf0173211ec1a736-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20230209.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "96a16833180d094b2d3c96e5a29f77b0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer176\u0022,\u0022AdditionalContext\u0022:176}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer177\u0022,\u0022AdditionalContext\u0022:177}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer178\u0022,\u0022AdditionalContext\u0022:178}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer179\u0022,\u0022AdditionalContext\u0022:179}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer180\u0022,\u0022AdditionalContext\u0022:180}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer181\u0022,\u0022AdditionalContext\u0022:181}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer182\u0022,\u0022AdditionalContext\u0022:182}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer183\u0022,\u0022AdditionalContext\u0022:183}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer184\u0022,\u0022AdditionalContext\u0022:184}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer185\u0022,\u0022AdditionalContext\u0022:185}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer186\u0022,\u0022AdditionalContext\u0022:186}]]",
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Thu, 09 Feb 2023 23:11:10 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "96a16833-180d-094b-2d3c-96e5a29f77b0",
+        "x-ms-request-id": "3196fdd0-4f18-4eb2-9967-c0728d2f6086"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://1e61f879-d8a7-50b8-9913-108bfd30f277-aroh.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-e23934f8e48d4c02a40339d0d04528fd/streams/Custom-MyTableRawData?api-version=2023-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "991",
+        "Content-Type": "application/json",
+        "traceparent": "00-c603ec7ed1607a1d547663b42239d2ac-ff3a3f1b598ce708-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20230209.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a9d968c8a6029f3e66bc96a0a1998f9a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer187\u0022,\u0022AdditionalContext\u0022:187}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer188\u0022,\u0022AdditionalContext\u0022:188}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer189\u0022,\u0022AdditionalContext\u0022:189}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer190\u0022,\u0022AdditionalContext\u0022:190}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer191\u0022,\u0022AdditionalContext\u0022:191}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer192\u0022,\u0022AdditionalContext\u0022:192}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer193\u0022,\u0022AdditionalContext\u0022:193}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer194\u0022,\u0022AdditionalContext\u0022:194}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer195\u0022,\u0022AdditionalContext\u0022:195}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer196\u0022,\u0022AdditionalContext\u0022:196}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer197\u0022,\u0022AdditionalContext\u0022:197}]]",
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Thu, 09 Feb 2023 23:11:10 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a9d968c8-a602-9f3e-66bc-96a0a1998f9a",
+        "x-ms-request-id": "f51e20aa-9bc7-45cb-8072-23e7c25ea918"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://1e61f879-d8a7-50b8-9913-108bfd30f277-aroh.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-e23934f8e48d4c02a40339d0d04528fd/streams/Custom-MyTableRawData?api-version=2023-01-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "181",
+        "Content-Type": "application/json",
+        "traceparent": "00-c603ec7ed1607a1d547663b42239d2ac-cd407f62e27e29e2-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20230209.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ce1b74471cf65b64549eced89421fe6a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer198\u0022,\u0022AdditionalContext\u0022:198}],[{\u0022Time\u0022:\u00222023-02-09T15:11:08.2400662\u0022,\u0022Computer\u0022:\u0022Computer199\u0022,\u0022AdditionalContext\u0022:199}]]",
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Thu, 09 Feb 2023 23:11:10 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "ce1b7447-1cf6-5b64-549e-ced89421fe6a",
+        "x-ms-request-id": "40d60dc0-51d2-415a-9b78-28269d536abd"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "DateTimeOffsetNow": "2023-02-09T15:11:08.2400662-08:00",
+    "INGESTION_DATA_COLLECTION_ENDPOINT": "https://1e61f879-d8a7-50b8-9913-108bfd30f277-aroh.westus-1.ingest.monitor.azure.com",
+    "INGESTION_DATA_COLLECTION_RULE_IMMUTABLE_ID": "dcr-e23934f8e48d4c02a40339d0d04528fd",
+    "INGESTION_STREAM_NAME": "Custom-MyTableRawData",
+    "RandomSeed": "1471670307"
+  }
+}

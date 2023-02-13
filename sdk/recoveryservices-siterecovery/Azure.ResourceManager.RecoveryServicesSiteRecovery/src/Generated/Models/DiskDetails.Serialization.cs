@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> vhdName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxSizeMB"))
+                if (property.NameEquals("maxSizeMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     maxSizeMB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("vhdType"))
+                if (property.NameEquals("vhdType"u8))
                 {
                     vhdType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vhdId"))
+                if (property.NameEquals("vhdId"u8))
                 {
                     vhdId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vhdName"))
+                if (property.NameEquals("vhdName"u8))
                 {
                     vhdName = property.Value.GetString();
                     continue;

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.28.0-beta.1 (Unreleased)
+## 1.29.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,11 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.28.0 (2023-02-06)
+
+### Bugs Fixed
+- Fixed an issue with `AzureSasCredential` which resulted in messages to fail authentication if the SAS signature was updated while a message was in a retry cycle.
 
 ## 1.27.0 (2023-01-10)
 

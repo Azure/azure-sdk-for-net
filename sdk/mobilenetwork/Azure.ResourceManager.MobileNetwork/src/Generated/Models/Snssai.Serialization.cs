@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sst");
+            writer.WritePropertyName("sst"u8);
             writer.WriteNumberValue(Sst);
             if (Optional.IsDefined(Sd))
             {
-                writer.WritePropertyName("sd");
+                writer.WritePropertyName("sd"u8);
                 writer.WriteStringValue(Sd);
             }
             writer.WriteEndObject();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Optional<string> sd = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sst"))
+                if (property.NameEquals("sst"u8))
                 {
                     sst = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sd"))
+                if (property.NameEquals("sd"u8))
                 {
                     sd = property.Value.GetString();
                     continue;

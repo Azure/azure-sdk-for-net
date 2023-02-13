@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Network.Models
             Optional<bool> destinationPortMatched = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protocolMatched"))
+                if (property.NameEquals("protocolMatched"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                     protocolMatched = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("sourceMatched"))
+                if (property.NameEquals("sourceMatched"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                     sourceMatched = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("sourcePortMatched"))
+                if (property.NameEquals("sourcePortMatched"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                     sourcePortMatched = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("destinationMatched"))
+                if (property.NameEquals("destinationMatched"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
                     destinationMatched = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("destinationPortMatched"))
+                if (property.NameEquals("destinationPortMatched"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

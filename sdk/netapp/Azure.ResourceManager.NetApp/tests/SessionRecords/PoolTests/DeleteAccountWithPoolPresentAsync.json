@@ -46,7 +46,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/69a75bda-882e-44d5-8431-63421204132a/resourcegroups/testNetAppDotNetSDKRG-4641?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/69a75bda-882e-44d5-8431-63421204132a/resourcegroups/testNetAppDotNetSDKRG-4641?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",

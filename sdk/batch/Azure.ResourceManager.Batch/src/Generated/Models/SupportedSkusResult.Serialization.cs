@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<BatchSupportedSku> array = new List<BatchSupportedSku>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<long> resourceVersionId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,17 +33,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     resourceType = new HealthcareFhirResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceFhirAccount"))
+                if (property.NameEquals("resourceFhirAccount"u8))
                 {
                     resourceFhirAccount = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceFhirId"))
+                if (property.NameEquals("resourceFhirId"u8))
                 {
                     resourceFhirId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceVersionId"))
+                if (property.NameEquals("resourceVersionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

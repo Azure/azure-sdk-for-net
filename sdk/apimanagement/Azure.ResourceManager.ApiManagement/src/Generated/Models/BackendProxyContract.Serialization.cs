@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("url");
+            writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
             if (Optional.IsDefined(Username))
             {
-                writer.WritePropertyName("username");
+                writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
             writer.WriteEndObject();
@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> password = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("username"))
+                if (property.NameEquals("username"u8))
                 {
                     username = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
                     continue;
