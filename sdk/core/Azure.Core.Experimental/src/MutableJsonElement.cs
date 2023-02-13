@@ -538,6 +538,11 @@ namespace Azure.Core.Json
             return new Utf8JsonReader(stream.GetBuffer().AsSpan().Slice(0, (int)stream.Position));
         }
 
+        internal void DisposeRoot()
+        {
+            _root.Dispose();
+        }
+
         private void EnsureObject()
         {
             if (_element.ValueKind != JsonValueKind.Object)

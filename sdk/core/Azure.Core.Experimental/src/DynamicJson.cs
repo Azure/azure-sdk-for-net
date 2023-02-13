@@ -15,7 +15,7 @@ namespace Azure.Core.Dynamic
     /// Dynamic layer over MutableJsonDocument.
     /// </summary>
     [JsonConverter(typeof(JsonConverter))]
-    public partial class DynamicJson : DynamicData
+    public sealed partial class DynamicJson : DynamicData, IDisposable
     {
         private static readonly MethodInfo GetPropertyMethod = typeof(DynamicJson).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
         private static readonly MethodInfo SetPropertyMethod = typeof(DynamicJson).GetMethod(nameof(SetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
@@ -102,6 +102,17 @@ namespace Azure.Core.Dynamic
         public override string ToString()
         {
             return _element.ToString();
+        }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            // TODO: There is a challenge here that DynamicJson wraps an element
+            // that may or may not represent the root of the document.
+
+            // We can perhaps make the recommendation that a user should only call
+            // dispose on a DynamicJson returned from GetDynamic()?
+            _element.DisposeRoot();
         }
 
         private class JsonConverter : JsonConverter<DynamicJson>
