@@ -1,14 +1,10 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.4.0 (2023-02-13)
 
 ### Other Changes
+
+- Upgraded resources API version to `2022-09-01`.
 
 ## 1.3.1 (2022-11-11)
 
