@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -212,18 +213,9 @@ namespace Azure.Monitor.Ingestion.Tests
             AggregateException exceptions = Assert.ThrowsAsync<AggregateException>(async () => { await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options, cts.Token).ConfigureAwait(false); });
             Assert.IsTrue(isTriggered);
             Assert.IsTrue(cts.IsCancellationRequested);
-            bool hasBeenCancelled = false;
             // check if OperationCanceledException is in the Exception list
             // may not be first one in async case
-            foreach (var exception in exceptions.InnerExceptions)
-            {
-                if (exception is OperationCanceledException)
-                {
-                    hasBeenCancelled = true;
-                    break;
-                }
-            }
-            Assert.IsTrue(hasBeenCancelled);
+            Assert.IsTrue(exceptions.InnerExceptions.Any(exception => exception is OperationCanceledException));
             Task Options_UploadFailed(UploadFailedEventArgs e)
             {
                 cts.Cancel();
