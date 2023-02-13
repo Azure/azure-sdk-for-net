@@ -52,12 +52,12 @@ public class ConsumerTest : TestScenario
     ///
     public async override Task RunTestAsync(CancellationToken cancellationToken)
     {
-        _partitionIds = await _testParameters.GetEventHubPartitionsAsync().ConfigureAwait(false);
+        _partitionIds = await TestScenarioParameters.GetEventHubPartitionsAsync().ConfigureAwait(false);
         var partitionCount = _partitionIds.Length;
 
         var testRunTasks = new List<Task>();
 
-        if (_testParameters.RunAllRoles)
+        if (TestScenarioParameters.RunAllRoles)
         {
             foreach (Role role in Roles)
             {
@@ -66,7 +66,7 @@ public class ConsumerTest : TestScenario
         }
         else
         {
-            testRunTasks.Add(RunRoleAsync(Roles[_testParameters.JobIndex], cancellationToken));
+            testRunTasks.Add(RunRoleAsync(Roles[TestScenarioParameters.JobIndex], cancellationToken));
         }
 
         await Task.WhenAll(testRunTasks).ConfigureAwait(false);
@@ -86,15 +86,15 @@ public class ConsumerTest : TestScenario
         {
             case Role.Consumer:
                 var consumerConfiguration = new ConsumerConfiguration();
-                var consumer = new Consumer(_testParameters, consumerConfiguration, _metrics, _readEvents, _lastReadPartitionSequence);
+                var consumer = new Consumer(TestScenarioParameters, consumerConfiguration, MetricsCollection, _readEvents, _lastReadPartitionSequence);
                 return Task.Run(() => consumer.RunAsync(cancellationToken));
 
             case Role.PartitionPublisher:
                 var partitionPublisherConfiguration = new PartitionPublisherConfiguration();
                 var partitionsCount = _partitionIds.Length;
-                var partitions = EventTracking.GetAssignedPartitions(partitionsCount, _testParameters.JobIndex, _partitionIds, Roles);
+                var partitions = EventTracking.GetAssignedPartitions(partitionsCount, TestScenarioParameters.JobIndex, _partitionIds, Roles);
 
-                var partitionPublisher = new PartitionPublisher(partitionPublisherConfiguration, _testParameters, _metrics, partitions);
+                var partitionPublisher = new PartitionPublisher(partitionPublisherConfiguration, TestScenarioParameters, MetricsCollection, partitions);
                 return Task.Run(() => partitionPublisher.RunAsync(cancellationToken));
 
             default:

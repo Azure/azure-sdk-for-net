@@ -16,10 +16,10 @@ namespace Azure.Messaging.EventHubs.Stress;
 public abstract class TestScenario
 {
     /// <summary>The <see cref="TestParameters"/> used to configure this test scenario.</summary>
-    internal readonly TestParameters _testParameters;
+    internal TestParameters TestScenarioParameters { get; }
 
     /// <summary> The <see cref="Metrics"/> instance used to send metrics to application insights.</summary>
-    internal Metrics _metrics;
+    internal Metrics MetricsCollection { get; }
 
     /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
     public abstract Role[] Roles { get; }
@@ -39,9 +39,9 @@ public abstract class TestScenario
                                 Metrics metrics,
                                 string testRunId)
     {
-        _testParameters = testParameters;
-        _metrics = metrics;
-        _metrics.Client.Context.GlobalProperties["TestRunID"] = testRunId;
+        TestScenarioParameters = testParameters;
+        MetricsCollection = metrics;
+        MetricsCollection.Client.Context.GlobalProperties["TestRunID"] = testRunId;
     }
 
     /// <summary>
@@ -54,7 +54,7 @@ public abstract class TestScenario
     {
         var testRunTasks = new List<Task>();
 
-        if (_testParameters.RunAllRoles)
+        if (TestScenarioParameters.RunAllRoles)
         {
             foreach (Role role in Roles)
             {
@@ -63,7 +63,7 @@ public abstract class TestScenario
         }
         else
         {
-            testRunTasks.Add(RunRoleAsync(Roles[_testParameters.JobIndex], cancellationToken));
+            testRunTasks.Add(RunRoleAsync(Roles[TestScenarioParameters.JobIndex], cancellationToken));
         }
 
         await Task.WhenAll(testRunTasks).ConfigureAwait(false);
@@ -82,12 +82,12 @@ public abstract class TestScenario
         {
             case Role.BufferedPublisher:
                 var bufferedPublisherConfiguration = new BufferedPublisherConfiguration();
-                var bufferedPublisher = new BufferedPublisher(_testParameters, bufferedPublisherConfiguration, _metrics);
+                var bufferedPublisher = new BufferedPublisher(TestScenarioParameters, bufferedPublisherConfiguration, MetricsCollection);
                 return Task.Run(() => bufferedPublisher.RunAsync(cancellationToken));
 
             case Role.Publisher:
                 var publisherConfiguration = new PublisherConfiguration();
-                var publisher = new Publisher(publisherConfiguration, _testParameters, _metrics);
+                var publisher = new Publisher(publisherConfiguration, TestScenarioParameters, MetricsCollection);
                 return Task.Run(() => publisher.RunAsync(cancellationToken));
 
             default:
