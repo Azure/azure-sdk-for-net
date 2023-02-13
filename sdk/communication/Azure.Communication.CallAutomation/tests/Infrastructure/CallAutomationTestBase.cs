@@ -21,14 +21,12 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                                                "\"communicationUser\":{{\"id\":\"targetId\"}}" +
                                             "}}" +
                                         "]," +
-                                        "\"source\": {{" +
-                                             "\"displayName\": \"displayName\"," +
-                                             "\"identifier\":{{" +
+                                        "\"sourceDisplayName\": \"displayName\"," +
+                                        "\"sourceIdentity\":{{" +
                                                   "\"rawId\":\"sourceId\"," +
                                                   "\"kind\":\"communicationUser\"," +
                                                   "\"communicationUser\":{{\"id\":\"sourceId\"}}" +
-                                                            "}}" +
-                                                    "}}," +
+                                                            "}}," +
                                         "\"callConnectionState\": \"connecting\"," +
                                         "\"subject\": \"dummySubject\"," +
                                         "\"callbackUri\": \"https://bot.contoso.com/callback\"," +
