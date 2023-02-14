@@ -195,7 +195,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.AddParticipantsFailed");
 
             // assert
-            if (parsedEvent is AddParticipantsFailed addParticipantsFailed)
+            if (parsedEvent is AddParticipantFailed addParticipantsFailed)
             {
                 Assert.AreEqual(callConnectionId, addParticipantsFailed.CallConnectionId);
                 Assert.AreEqual(serverCallId, addParticipantsFailed.ServerCallId);
@@ -231,7 +231,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.AddParticipantsSucceeded");
 
             // assert
-            if (parsedEvent is AddParticipantsSucceeded addParticipantsSucceeded)
+            if (parsedEvent is AddParticipantSucceeded addParticipantsSucceeded)
             {
                 Assert.AreEqual(callConnectionId, addParticipantsSucceeded.CallConnectionId);
                 Assert.AreEqual(serverCallId, addParticipantsSucceeded.ServerCallId);

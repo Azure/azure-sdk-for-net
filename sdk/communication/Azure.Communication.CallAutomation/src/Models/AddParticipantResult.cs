@@ -17,9 +17,9 @@ namespace Azure.Communication.CallAutomation
             OperationContext = operationContext;
         }
 
-        internal AddParticipantResult(AddParticipantsResponseInternal internalObj)
+        internal AddParticipantResult(AddParticipantResponseInternal internalObj)
         {
-            Participant = internalObj.Participants.Select(t => new CallParticipant(t)).FirstOrDefault();
+            Participant = new CallParticipant(internalObj.Participant);
             OperationContext = internalObj.OperationContext;
         }
 
@@ -31,7 +31,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Wait for <see cref="AddParticipantsEventResult"/> using <see cref="EventProcessor"/>.
         /// </summary>
-        /// <returns>Returns <see cref="AddParticipantsEventResult"/> which contains either <see cref="AddParticipantsSucceeded"/> event or <see cref="AddParticipantsFailed"/> event.</returns>
+        /// <returns>Returns <see cref="AddParticipantsEventResult"/> which contains either <see cref="AddParticipantSucceeded"/> event or <see cref="AddParticipantFailed"/> event.</returns>
         public async Task<AddParticipantsEventResult> WaitForEvent(TimeSpan eventTimeout = default)
         {
             if (_evHandler is null)
@@ -42,18 +42,18 @@ namespace Azure.Communication.CallAutomation
             var returnedEvent = await _evHandler.WaitForSingleEvent(filter
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
-                && (filter.GetType() == typeof(AddParticipantsSucceeded)
-                || filter.GetType() == typeof(AddParticipantsFailed)),
+                && (filter.GetType() == typeof(AddParticipantSucceeded)
+                || filter.GetType() == typeof(AddParticipantFailed)),
                 eventTimeout).ConfigureAwait(false);
 
             AddParticipantsEventResult result = default;
             switch (returnedEvent)
             {
-                case AddParticipantsSucceeded:
-                    result = new AddParticipantsEventResult(true, (AddParticipantsSucceeded)returnedEvent, null);
+                case AddParticipantSucceeded:
+                    result = new AddParticipantsEventResult(true, (AddParticipantSucceeded)returnedEvent, null);
                     break;
-                case AddParticipantsFailed:
-                    result = new AddParticipantsEventResult(false, null, (AddParticipantsFailed)returnedEvent);
+                case AddParticipantFailed:
+                    result = new AddParticipantsEventResult(false, null, (AddParticipantFailed)returnedEvent);
                     break;
                 default:
                     throw new NotSupportedException(returnedEvent.GetType().Name);

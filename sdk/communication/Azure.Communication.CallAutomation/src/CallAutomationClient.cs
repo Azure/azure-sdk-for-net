@@ -84,7 +84,7 @@ namespace Azure.Communication.CallAutomation
             _resourceEndpoint = endpoint.AbsoluteUri;
             _clientDiagnostics = new ClientDiagnostics(options);
             AzureCommunicationServicesRestClient = new AzureCommunicationServicesRestClient(_clientDiagnostics, httpPipeline, endpoint.AbsolutePath, options.ApiVersion);
-            CallConnectionRestClient = new CallConnectionRestClient(_clientDiagnostics, httpPipeline, endpoint.AbsolutePath, options.ApiVersion, options.Source);
+            CallConnectionRestClient = new CallConnectionRestClient(_clientDiagnostics, httpPipeline, endpoint.AbsolutePath, options.ApiVersion);
             CallMediaRestClient = new CallMediaRestClient(_clientDiagnostics, httpPipeline, endpoint.AbsolutePath, options.ApiVersion);
             CallRecordingRestClient = new CallRecordingRestClient(_clientDiagnostics, httpPipeline, endpoint.AbsolutePath, options.ApiVersion);
             EventProcessor = new EventProcessor(options.EventProcessorOptions);
@@ -632,7 +632,7 @@ namespace Azure.Communication.CallAutomation
                     ? null
                     : new PhoneNumberIdentifierModel(options?.CallInvite?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.CallInvite?.SourceDisplayName,
-                CallSourceIdentifier = CommunicationIdentifierSerializer.Serialize(Source),
+                SourceIdentity = CommunicationIdentifierSerializer.Serialize(Source),
             };
             // Add custom cognitive service domain name
             if (options.AzureCognitiveServicesEndpointUrl != null)
@@ -659,7 +659,7 @@ namespace Azure.Communication.CallAutomation
                     ? null
                     : new PhoneNumberIdentifierModel(options?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.SourceDisplayName,
-                CallSourceIdentifier = CommunicationIdentifierSerializer.Serialize(Source),
+                SourceIdentity = CommunicationIdentifierSerializer.Serialize(Source),
             };
             // Add custom cognitive service domain name
             if (options.AzureCognitiveServicesEndpointUrl != null)
@@ -704,7 +704,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return new CallConnection(callConnectionId, CallConnectionRestClient, CallMediaRestClient, _clientDiagnostics, EventProcessor);
+                return new CallConnection(callConnectionId, CallConnectionRestClient, CallMediaRestClient, _clientDiagnostics, EventProcessor, Source);
             }
             catch (Exception ex)
             {

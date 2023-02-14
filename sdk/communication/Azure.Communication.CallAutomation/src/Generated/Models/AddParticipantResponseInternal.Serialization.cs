@@ -5,33 +5,27 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class AddParticipantsResponseInternal
+    internal partial class AddParticipantResponseInternal
     {
-        internal static AddParticipantsResponseInternal DeserializeAddParticipantsResponseInternal(JsonElement element)
+        internal static AddParticipantResponseInternal DeserializeAddParticipantResponseInternal(JsonElement element)
         {
-            Optional<IReadOnlyList<CallParticipantInternal>> participants = default;
+            Optional<CallParticipantInternal> participant = default;
             Optional<string> operationContext = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("participants"))
+                if (property.NameEquals("participant"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CallParticipantInternal> array = new List<CallParticipantInternal>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(CallParticipantInternal.DeserializeCallParticipantInternal(item));
-                    }
-                    participants = array;
+                    participant = CallParticipantInternal.DeserializeCallParticipantInternal(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operationContext"))
@@ -40,7 +34,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new AddParticipantsResponseInternal(Optional.ToList(participants), operationContext.Value);
+            return new AddParticipantResponseInternal(participant.Value, operationContext.Value);
         }
     }
 }

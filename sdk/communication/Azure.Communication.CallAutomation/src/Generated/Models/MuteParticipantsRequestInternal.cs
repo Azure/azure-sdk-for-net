@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary> Initializes a new instance of MuteParticipantsRequestInternal. </summary>
         /// <param name="targetParticipants">
-        /// Participants to be muted from the call.
+        /// Participant to be muted from the call.
         /// Only ACS Users are supported.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipants"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Participants to be muted from the call.
+        /// Participant to be muted from the call.
         /// Only ACS Users are supported.
         /// </summary>
         public IList<CommunicationIdentifierModel> TargetParticipants { get; }

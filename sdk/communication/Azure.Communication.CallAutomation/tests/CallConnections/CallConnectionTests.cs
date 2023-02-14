@@ -372,7 +372,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
-            var response = await callConnection.RemoveParticipantsAsync(new List<CommunicationIdentifier>{{participantToRemove}}).ConfigureAwait(false);
+            var response = await callConnection.RemoveParticipantAsync(new List<CommunicationIdentifier>{{participantToRemove}}).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             Assert.AreEqual(OperationContext, response.Value.OperationContext);
         }
@@ -382,7 +382,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
-            var response = callConnection.RemoveParticipants(new List<CommunicationIdentifier>{{participantToRemove}});
+            var response = callConnection.RemoveParticipant(new List<CommunicationIdentifier>{{participantToRemove}});
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             Assert.AreEqual(OperationContext, response.Value.OperationContext);
         }
@@ -392,7 +392,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
-            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callConnection.RemoveParticipantsAsync(new CommunicationIdentifier[] { }).ConfigureAwait(false));
+            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callConnection.RemoveParticipantAsync(new CommunicationIdentifier[] { }).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.True(ex?.Message.Contains("Value cannot be an empty collection."));
         }
@@ -403,7 +403,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
             var operationContext = new string('a', 1 + CallAutomationConstants.InputValidation.StringMaxLength);
-            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callConnection.RemoveParticipantsAsync(new List<CommunicationIdentifier>{{participantToRemove}}, operationContext).ConfigureAwait(false));
+            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callConnection.RemoveParticipantAsync(new List<CommunicationIdentifier>{{participantToRemove}}, operationContext).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.OperationContextExceedsMaxLength));
         }
@@ -413,7 +413,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.RemoveParticipantsAsync(new List<CommunicationIdentifier>{{participantToRemove}}).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.RemoveParticipantAsync(new List<CommunicationIdentifier>{{participantToRemove}}).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -423,7 +423,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.RemoveParticipants(new List<CommunicationIdentifier>{{participantToRemove}}));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.RemoveParticipant(new List<CommunicationIdentifier>{{participantToRemove}}));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }

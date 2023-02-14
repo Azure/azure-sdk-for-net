@@ -93,35 +93,35 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Initializes a new instance of add participant failed event.
         /// </summary>
-        public static AddParticipantsFailed AddParticipantsFailed(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, IEnumerable<CommunicationIdentifier> participants = default)
+        public static AddParticipantFailed AddParticipantsFailed(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
         {
-            var internalObject = new AddParticipantsFailedInternal(
+            var internalObject = new AddParticipantFailedInternal(
                 callConnectionId,
                 serverCallId,
                 correlationId,
                 operationContext,
                 resultInformation,
-                participants == null ? new List<CommunicationIdentifierModel>() : participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList()
+                participant: CommunicationIdentifierSerializer.Serialize(participant)
                 );
 
-            return new AddParticipantsFailed(internalObject);
+            return new AddParticipantFailed(internalObject);
         }
 
         /// <summary>
         /// Initializes a new instance of add participant success event.
         /// </summary>
-        public static AddParticipantsSucceeded AddParticipantsSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, IEnumerable<CommunicationIdentifier> participants = default)
+        public static AddParticipantSucceeded AddParticipantsSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
         {
-            var internalObject = new AddParticipantsSucceededInternal(
+            var internalObject = new AddParticipantSucceededInternal(
                 callConnectionId,
                 serverCallId,
                 correlationId,
                 operationContext,
                 resultInformation,
-                participants == null ? new List<CommunicationIdentifierModel>() : participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList()
+                participant: CommunicationIdentifierSerializer.Serialize(participant)
                 );
 
-            return new AddParticipantsSucceeded(internalObject);
+            return new AddParticipantSucceeded(internalObject);
         }
 
         /// <summary>
