@@ -3,6 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Identity;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
@@ -417,9 +420,152 @@ namespace Azure.Core.Extensions.Tests
             Assert.NotNull(client.Credential);
         }
 
+        [Test]
+        public void DisposeHandlesDisposableClient()
+        {
+            var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var services = new ServiceCollection();
+            var disposed = false;
+
+            Action disposeCallback= () =>
+            {
+                disposed = true;
+                tcs.TrySetResult(true);
+            };
+
+            services.AddAzureClients(builder =>
+                builder.AddClient<DisposableClient, object>(_ => new DisposableClient(disposeCallback)).WithName(nameof(DisposableClient)));
+
+            var provider = services.BuildServiceProvider();
+            var factory = provider.GetRequiredService<IAzureClientFactory<DisposableClient>>();
+            var client = factory.CreateClient(nameof(DisposableClient));
+
+            provider.Dispose();
+
+            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
+            Assert.IsTrue(disposed);
+        }
+
+        [Test]
+        public void DisposeHandlesAsyncDisposableClient()
+        {
+            var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var services = new ServiceCollection();
+            var disposed = false;
+
+            Action disposeCallback= () =>
+            {
+                disposed = true;
+                tcs.TrySetResult(true);
+            };
+
+            services.AddAzureClients(builder =>
+                builder.AddClient<AsyncDisposableClient, object>(_ => new AsyncDisposableClient(disposeCallback)).WithName(nameof(AsyncDisposableClient)));
+
+            var provider = services.BuildServiceProvider();
+            var factory = provider.GetRequiredService<IAzureClientFactory<AsyncDisposableClient>>();
+            var client = factory.CreateClient(nameof(AsyncDisposableClient));
+
+            provider.Dispose();
+
+            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
+            Assert.IsTrue(disposed);
+        }
+
+        [Test]
+        public void DisposeHandlesNonDisposableClients()
+        {
+            var services = new ServiceCollection();
+
+            services.AddAzureClients(builder =>
+                builder.AddClient<NonDisposableClient, object>(_ => new NonDisposableClient()).WithName(nameof(NonDisposableClient)));
+
+            var provider = services.BuildServiceProvider();
+            var factory = provider.GetRequiredService<IAzureClientFactory<NonDisposableClient>>();
+            var client = factory.CreateClient(nameof(NonDisposableClient));
+
+            Assert.DoesNotThrow(provider.Dispose);
+        }
+
+        [Test]
+        public void DisposibleWorksWithMixedClients()
+        {
+            var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var services = new ServiceCollection();
+            var disposeCount = 0;
+
+            Action disposeCallback= () =>
+            {
+                if (++disposeCount >=2)
+                {
+                    tcs.TrySetResult(true);
+                }
+            };
+
+            services.AddAzureClients(builder =>
+                builder.AddClient<NonDisposableClient, object>(_ => new NonDisposableClient()).WithName(nameof(NonDisposableClient)));
+
+            services.AddAzureClients(builder =>
+                builder.AddClient<AsyncDisposableClient, object>(_ => new AsyncDisposableClient(disposeCallback)).WithName(nameof(AsyncDisposableClient)));
+
+            services.AddAzureClients(builder =>
+                builder.AddClient<DisposableClient, object>(_ => new DisposableClient(disposeCallback)).WithName(nameof(DisposableClient)));
+
+            var provider = services.BuildServiceProvider();
+
+            var factory = provider.GetRequiredService<IAzureClientFactory<NonDisposableClient>>();
+            var client = factory.CreateClient(nameof(NonDisposableClient));
+
+            var disposableFactory = provider.GetRequiredService<IAzureClientFactory<DisposableClient>>();
+            var dispsableClient = disposableFactory.CreateClient(nameof(DisposableClient));
+
+            var asyncDisposableFactory = provider.GetRequiredService<IAzureClientFactory<AsyncDisposableClient>>();
+            var asyncDispsableClient = asyncDisposableFactory.CreateClient(nameof(AsyncDisposableClient));
+
+            Assert.DoesNotThrow(provider.Dispose);
+
+            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
+            Assert.AreEqual(disposeCount, 2);
+        }
+
         private IConfiguration GetConfiguration(params KeyValuePair<string, string>[] items)
         {
             return new ConfigurationBuilder().AddInMemoryCollection(items).Build();
+        }
+
+        private class DisposableClient : IDisposable
+        {
+            private Action _disposeCallback;
+
+            public DisposableClient(Action disposeCallback) => _disposeCallback = disposeCallback;
+
+            public void Dispose()
+            {
+                _disposeCallback();
+            }
+        }
+
+        private class AsyncDisposableClient : IAsyncDisposable
+        {
+            private Action _disposeCallback;
+
+            public AsyncDisposableClient(Action disposeCallback) => _disposeCallback = disposeCallback;
+
+            public ValueTask DisposeAsync()
+            {
+                _disposeCallback();
+                return new ValueTask();
+            }
+        }
+
+        private class NonDisposableClient
+        {
         }
     }
 }

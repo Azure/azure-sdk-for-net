@@ -3,11 +3,12 @@
 
 using System;
 using System.Runtime.ExceptionServices;
+using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Microsoft.Extensions.Azure
 {
-    internal class ClientRegistration<TClient>
+    internal class ClientRegistration<TClient> : IDisposable, IAsyncDisposable
     {
         public string Name { get; set; }
         public object Version { get; set; }
@@ -16,15 +17,19 @@ namespace Microsoft.Extensions.Azure
         private readonly Func<IServiceProvider, object, TokenCredential, TClient> _factory;
 
         private readonly object _cacheLock = new object();
+        private readonly bool _asyncDisposable;
+        private readonly bool _disposable;
 
         private TClient _cachedClient;
-
         private ExceptionDispatchInfo _cachedException;
 
         public ClientRegistration(string name, Func<IServiceProvider, object, TokenCredential, TClient> factory)
         {
             Name = name;
             _factory = factory;
+
+            _asyncDisposable = typeof(IAsyncDisposable).IsAssignableFrom(typeof(TClient));
+            _disposable = typeof(IDisposable).IsAssignableFrom(typeof(TClient));
         }
 
         public TClient GetClient(IServiceProvider serviceProvider, object options, TokenCredential tokenCredential)
@@ -61,6 +66,62 @@ namespace Microsoft.Extensions.Azure
                 }
 
                 return _cachedClient;
+            }
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            if (_cachedClient != null)
+            {
+                if (_asyncDisposable)
+                {
+                    IAsyncDisposable disposableClient;
+
+                    lock (_cacheLock)
+                    {
+                       if (_cachedClient == null)
+                       {
+                           return;
+                       }
+
+                       disposableClient = (IAsyncDisposable)_cachedClient;
+                       _cachedClient = default;
+                    }
+
+                    await disposableClient.DisposeAsync().ConfigureAwait(false);
+                }
+                else if (_disposable)
+                {
+                    Dispose();
+                }
+            }
+        }
+
+        public void Dispose()
+        {
+            if (_cachedClient != null)
+            {
+                if (_disposable)
+                {
+                    IDisposable disposableClient;
+
+                    lock (_cacheLock)
+                    {
+                       if (_cachedClient == null)
+                       {
+                           return;
+                       }
+
+                       disposableClient = (IDisposable)_cachedClient;
+                       _cachedClient = default;
+                    }
+
+                    disposableClient.Dispose();
+                }
+                else if (_asyncDisposable)
+                {
+                    DisposeAsync().GetAwaiter().GetResult();
+                }
             }
         }
     }
