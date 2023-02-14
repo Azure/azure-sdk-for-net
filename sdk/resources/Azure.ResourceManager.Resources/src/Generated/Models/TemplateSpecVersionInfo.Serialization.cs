@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<DateTimeOffset> timeModified = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timeCreated"))
+                if (property.NameEquals("timeCreated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources.Models
                     timeCreated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("timeModified"))
+                if (property.NameEquals("timeModified"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

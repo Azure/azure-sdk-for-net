@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Reservations.Samples
             var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            TenantGetReservationDetailsOptions options = new TenantGetReservationDetailsOptions() { Filter = "(properties%2farchived+eq+false)", Orderby = "properties/displayName asc", Skiptoken = 50, Take = 1 };
+            TenantResourceGetReservationDetailsOptions options = new TenantResourceGetReservationDetailsOptions() { Filter = "(properties%2farchived+eq+false)", Orderby = "properties/displayName asc", Skiptoken = 50, Take = 1 };
             await foreach (ReservationDetailResource item in tenantResource.GetReservationDetailsAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well

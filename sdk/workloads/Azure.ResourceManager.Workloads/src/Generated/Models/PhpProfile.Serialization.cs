@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("version");
+            writer.WritePropertyName("version"u8);
             writer.WriteStringValue(Version.ToString());
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Workloads.Models
             PhpVersion version = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = new PhpVersion(property.Value.GetString());
                     continue;

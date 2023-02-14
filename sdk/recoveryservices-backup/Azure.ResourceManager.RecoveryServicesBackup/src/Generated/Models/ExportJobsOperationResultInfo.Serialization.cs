@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("blobUrl"))
+                if (property.NameEquals("blobUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     blobUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("blobSasKey"))
+                if (property.NameEquals("blobSasKey"u8))
                 {
                     blobSasKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("excelFileBlobUrl"))
+                if (property.NameEquals("excelFileBlobUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     excelFileBlobUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("excelFileBlobSasKey"))
+                if (property.NameEquals("excelFileBlobSasKey"u8))
                 {
                     excelFileBlobSasKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;

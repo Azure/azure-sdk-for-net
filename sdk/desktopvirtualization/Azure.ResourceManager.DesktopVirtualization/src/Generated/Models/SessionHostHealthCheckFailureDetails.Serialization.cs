@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Optional<DateTimeOffset> lastHealthCheckDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorCode"))
+                if (property.NameEquals("errorCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     errorCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("lastHealthCheckDateTime"))
+                if (property.NameEquals("lastHealthCheckDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

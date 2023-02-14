@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<IReadOnlyList<SkuCapability>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("billingPlans"))
+                if (property.NameEquals("billingPlans"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     billingPlans = dictionary;
                     continue;
                 }
-                if (property.NameEquals("terms"))
+                if (property.NameEquals("terms"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     terms = array;
                     continue;
                 }
-                if (property.NameEquals("locations"))
+                if (property.NameEquals("locations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     locations = array;
                     continue;
                 }
-                if (property.NameEquals("skuProperties"))
+                if (property.NameEquals("skuProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     skuProperties = array;
                     continue;
                 }
-                if (property.NameEquals("msrp"))
+                if (property.NameEquals("msrp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     msrp = CatalogMsrp.DeserializeCatalogMsrp(property.Value);
                     continue;
                 }
-                if (property.NameEquals("restrictions"))
+                if (property.NameEquals("restrictions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -128,17 +128,17 @@ namespace Azure.ResourceManager.Reservations.Models
                     restrictions = array;
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     tier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("size"u8))
                 {
                     size = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> maxDataDiskCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("numberOfCores"))
+                if (property.NameEquals("numberOfCores"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                     numberOfCores = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("osDiskSizeInMB"))
+                if (property.NameEquals("osDiskSizeInMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
                     osDiskSizeInMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("resourceDiskSizeInMB"))
+                if (property.NameEquals("resourceDiskSizeInMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
                     resourceDiskSizeInMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("memoryInMB"))
+                if (property.NameEquals("memoryInMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
                     memoryInMB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxDataDiskCount"))
+                if (property.NameEquals("maxDataDiskCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

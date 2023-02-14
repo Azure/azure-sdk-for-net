@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     state = new MigrationState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("startedOn"))
+                if (property.NameEquals("startedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     startedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endedOn"))
+                if (property.NameEquals("endedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,32 +56,32 @@ namespace Azure.ResourceManager.DataMigration.Models
                     endedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("sourceServerVersion"))
+                if (property.NameEquals("sourceServerVersion"u8))
                 {
                     sourceServerVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceServerBrandVersion"))
+                if (property.NameEquals("sourceServerBrandVersion"u8))
                 {
                     sourceServerBrandVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetServerVersion"))
+                if (property.NameEquals("targetServerVersion"u8))
                 {
                     targetServerVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetServerBrandVersion"))
+                if (property.NameEquals("targetServerBrandVersion"u8))
                 {
                     targetServerBrandVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultType"))
+                if (property.NameEquals("resultType"u8))
                 {
                     resultType = property.Value.GetString();
                     continue;

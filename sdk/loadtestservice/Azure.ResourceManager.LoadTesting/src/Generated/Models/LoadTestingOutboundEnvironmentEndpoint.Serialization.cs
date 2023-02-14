@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.LoadTesting.Models
             Optional<IReadOnlyList<LoadTestingEndpointDependency>> endpoints = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     category = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpoints"))
+                if (property.NameEquals("endpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

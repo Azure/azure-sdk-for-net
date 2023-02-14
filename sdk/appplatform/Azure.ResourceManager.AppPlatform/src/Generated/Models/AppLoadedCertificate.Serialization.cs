@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("resourceId");
+            writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
             if (Optional.IsDefined(LoadTrustStore))
             {
-                writer.WritePropertyName("loadTrustStore");
+                writer.WritePropertyName("loadTrustStore"u8);
                 writer.WriteBooleanValue(LoadTrustStore.Value);
             }
             writer.WriteEndObject();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<bool> loadTrustStore = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("loadTrustStore"))
+                if (property.NameEquals("loadTrustStore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

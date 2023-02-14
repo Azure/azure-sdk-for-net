@@ -18,29 +18,29 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AzurefilesConnectionString))
             {
-                writer.WritePropertyName("azurefilesConnectionString");
+                writer.WritePropertyName("azurefilesConnectionString"u8);
                 writer.WriteStringValue(AzurefilesConnectionString);
             }
             if (Optional.IsDefined(AzurefilesShare))
             {
-                writer.WritePropertyName("azurefilesShare");
+                writer.WritePropertyName("azurefilesShare"u8);
                 writer.WriteStringValue(AzurefilesShare);
             }
             if (Optional.IsDefined(SwitchSiteAfterMigration))
             {
-                writer.WritePropertyName("switchSiteAfterMigration");
+                writer.WritePropertyName("switchSiteAfterMigration"u8);
                 writer.WriteBooleanValue(SwitchSiteAfterMigration.Value);
             }
             if (Optional.IsDefined(BlockWriteAccessToSite))
             {
-                writer.WritePropertyName("blockWriteAccessToSite");
+                writer.WritePropertyName("blockWriteAccessToSite"u8);
                 writer.WriteBooleanValue(BlockWriteAccessToSite.Value);
             }
             writer.WriteEndObject();
@@ -60,27 +60,27 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> blockWriteAccessToSite = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,17 +99,17 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("azurefilesConnectionString"))
+                        if (property0.NameEquals("azurefilesConnectionString"u8))
                         {
                             azurefilesConnectionString = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("azurefilesShare"))
+                        if (property0.NameEquals("azurefilesShare"u8))
                         {
                             azurefilesShare = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("switchSiteAfterMigration"))
+                        if (property0.NameEquals("switchSiteAfterMigration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService.Models
                             switchSiteAfterMigration = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("blockWriteAccessToSite"))
+                        if (property0.NameEquals("blockWriteAccessToSite"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -18,31 +18,31 @@ namespace Azure.ResourceManager.ApiManagement
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Subject))
             {
-                writer.WritePropertyName("subject");
+                writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
             if (Optional.IsDefined(Body))
             {
-                writer.WritePropertyName("body");
+                writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
             }
             if (Optional.IsDefined(Title))
             {
-                writer.WritePropertyName("title");
+                writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
@@ -68,22 +68,22 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<IList<EmailTemplateParametersContractProperties>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ApiManagement
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,27 +102,27 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("subject"))
+                        if (property0.NameEquals("subject"u8))
                         {
                             subject = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("body"))
+                        if (property0.NameEquals("body"u8))
                         {
                             body = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("title"))
+                        if (property0.NameEquals("title"u8))
                         {
                             title = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("isDefault"))
+                        if (property0.NameEquals("isDefault"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ApiManagement
                             isDefault = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("parameters"))
+                        if (property0.NameEquals("parameters"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Models
             Optional<IReadOnlyList<FormRecognizerError>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("trainingDocuments"))
+                if (property.NameEquals("trainingDocuments"u8))
                 {
                     List<TrainingDocumentInfo> array = new List<TrainingDocumentInfo>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.Models
                     trainingDocuments = array;
                     continue;
                 }
-                if (property.NameEquals("fields"))
+                if (property.NameEquals("fields"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +48,7 @@ namespace Azure.AI.FormRecognizer.Models
                     fields = array;
                     continue;
                 }
-                if (property.NameEquals("averageModelAccuracy"))
+                if (property.NameEquals("averageModelAccuracy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,12 +58,12 @@ namespace Azure.AI.FormRecognizer.Models
                     averageModelAccuracy = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("modelId"))
+                if (property.NameEquals("modelId"u8))
                 {
                     modelId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

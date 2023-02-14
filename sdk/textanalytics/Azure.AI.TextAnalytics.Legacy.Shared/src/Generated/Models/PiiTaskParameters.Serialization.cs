@@ -17,22 +17,22 @@ namespace Azure.AI.TextAnalytics.Legacy
             writer.WriteStartObject();
             if (Optional.IsDefined(Domain))
             {
-                writer.WritePropertyName("domain");
+                writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain.Value.ToString());
             }
             if (Optional.IsDefined(ModelVersion))
             {
-                writer.WritePropertyName("model-version");
+                writer.WritePropertyName("model-version"u8);
                 writer.WriteStringValue(ModelVersion);
             }
             if (Optional.IsDefined(LoggingOptOut))
             {
-                writer.WritePropertyName("loggingOptOut");
+                writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
             }
             if (Optional.IsCollectionDefined(PiiCategories))
             {
-                writer.WritePropertyName("piiCategories");
+                writer.WritePropertyName("piiCategories"u8);
                 writer.WriteStartArray();
                 foreach (var item in PiiCategories)
                 {
@@ -42,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             if (Optional.IsDefined(StringIndexType))
             {
-                writer.WritePropertyName("stringIndexType");
+                writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
             writer.WriteEndObject();

@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ResizeTimeout))
             {
-                writer.WritePropertyName("resizeTimeout");
+                writer.WritePropertyName("resizeTimeout"u8);
                 writer.WriteStringValue(ResizeTimeout.Value, "P");
             }
             if (Optional.IsDefined(TargetDedicatedNodes))
             {
-                writer.WritePropertyName("targetDedicatedNodes");
+                writer.WritePropertyName("targetDedicatedNodes"u8);
                 writer.WriteNumberValue(TargetDedicatedNodes.Value);
             }
             if (Optional.IsDefined(TargetLowPriorityNodes))
             {
-                writer.WritePropertyName("targetLowPriorityNodes");
+                writer.WritePropertyName("targetLowPriorityNodes"u8);
                 writer.WriteNumberValue(TargetLowPriorityNodes.Value);
             }
             if (Optional.IsDefined(NodeDeallocationOption))
             {
-                writer.WritePropertyName("nodeDeallocationOption");
+                writer.WritePropertyName("nodeDeallocationOption"u8);
                 writer.WriteStringValue(NodeDeallocationOption.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<BatchNodeDeallocationOption> nodeDeallocationOption = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resizeTimeout"))
+                if (property.NameEquals("resizeTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Batch.Models
                     resizeTimeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("targetDedicatedNodes"))
+                if (property.NameEquals("targetDedicatedNodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Batch.Models
                     targetDedicatedNodes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("targetLowPriorityNodes"))
+                if (property.NameEquals("targetLowPriorityNodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Batch.Models
                     targetLowPriorityNodes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("nodeDeallocationOption"))
+                if (property.NameEquals("nodeDeallocationOption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

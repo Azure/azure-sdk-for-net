@@ -17,17 +17,17 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteStartObject();
             if (Optional.IsDefined(ValuesInternal))
             {
-                writer.WritePropertyName("values");
+                writer.WritePropertyName("values"u8);
                 ValuesInternal.WriteTo(writer);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(PropertyValueType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PropertyValueType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.IoT.TimeSeriesInsights
             Optional<TimeSeriesPropertyType> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     values = property.Value.Clone();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

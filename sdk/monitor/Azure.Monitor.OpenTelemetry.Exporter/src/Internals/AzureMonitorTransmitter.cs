@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -26,10 +24,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     internal class AzureMonitorTransmitter : ITransmitter
     {
         private readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
-        internal PersistentBlobProvider _fileBlobProvider;
+        internal PersistentBlobProvider? _fileBlobProvider;
         private readonly ConnectionVars _connectionVars;
 
-        public AzureMonitorTransmitter(AzureMonitorExporterOptions options, TokenCredential credential = null)
+        public AzureMonitorTransmitter(AzureMonitorExporterOptions options, TokenCredential? credential = null)
         {
             if (options == null)
             {
@@ -64,7 +62,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 try
                 {
-                    var storageDirectory = options.StorageDirectory ?? StorageHelper.GetDefaultStorageDirectory();
+                    var storageDirectory = options.StorageDirectory ?? StorageHelper.GetDefaultStorageDirectory() ?? throw new InvalidOperationException("Unable to determine offline storage directory.");
 
                     // TODO: Fallback to default location if location provided via options does not work.
                     _fileBlobProvider = new FileBlobProvider(storageDirectory);
@@ -124,6 +122,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return;
             }
 
+            if (_fileBlobProvider == null)
+            {
+                return;
+            }
+
             long files = maxFilesToTransmit;
             while (files > 0)
             {
@@ -179,6 +182,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private ExportResult HandleFailures(HttpMessage httpMessage)
         {
+            if (_fileBlobProvider == null)
+            {
+                return ExportResult.Failure;
+            }
+
             ExportResult result = ExportResult.Failure;
             int statusCode = 0;
             byte[] content;
@@ -270,7 +278,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         {
                             retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
                             blob.TryDelete();
-                            _fileBlobProvider.SaveTelemetry(content, retryInterval);
+                            _fileBlobProvider?.SaveTelemetry(content, retryInterval);
                         }
                         break;
                     case ResponseStatusCodes.RequestTimeout:

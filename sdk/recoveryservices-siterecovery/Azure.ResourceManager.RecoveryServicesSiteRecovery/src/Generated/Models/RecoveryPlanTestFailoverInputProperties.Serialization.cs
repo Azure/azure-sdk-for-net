@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("failoverDirection");
+            writer.WritePropertyName("failoverDirection"u8);
             writer.WriteStringValue(FailoverDirection.ToString());
-            writer.WritePropertyName("networkType");
+            writer.WritePropertyName("networkType"u8);
             writer.WriteStringValue(NetworkType);
             if (Optional.IsDefined(NetworkId))
             {
-                writer.WritePropertyName("networkId");
+                writer.WritePropertyName("networkId"u8);
                 writer.WriteStringValue(NetworkId);
             }
             if (Optional.IsCollectionDefined(ProviderSpecificDetails))
             {
-                writer.WritePropertyName("providerSpecificDetails");
+                writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in ProviderSpecificDetails)
                 {

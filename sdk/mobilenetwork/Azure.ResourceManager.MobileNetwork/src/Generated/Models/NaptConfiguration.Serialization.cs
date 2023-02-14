@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Enabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled.Value.ToString());
             }
             if (Optional.IsDefined(PortRange))
             {
-                writer.WritePropertyName("portRange");
+                writer.WritePropertyName("portRange"u8);
                 writer.WriteObjectValue(PortRange);
             }
             if (Optional.IsDefined(PortReuseHoldTime))
             {
-                writer.WritePropertyName("portReuseHoldTime");
+                writer.WritePropertyName("portReuseHoldTime"u8);
                 writer.WriteObjectValue(PortReuseHoldTime);
             }
             if (Optional.IsDefined(PinholeLimits))
             {
-                writer.WritePropertyName("pinholeLimits");
+                writer.WritePropertyName("pinholeLimits"u8);
                 writer.WriteNumberValue(PinholeLimits.Value);
             }
             if (Optional.IsDefined(PinholeTimeouts))
             {
-                writer.WritePropertyName("pinholeTimeouts");
+                writer.WritePropertyName("pinholeTimeouts"u8);
                 writer.WriteObjectValue(PinholeTimeouts);
             }
             writer.WriteEndObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Optional<PinholeTimeouts> pinholeTimeouts = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     enabled = new NaptEnabled(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("portRange"))
+                if (property.NameEquals("portRange"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     portRange = PortRange.DeserializePortRange(property.Value);
                     continue;
                 }
-                if (property.NameEquals("portReuseHoldTime"))
+                if (property.NameEquals("portReuseHoldTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     portReuseHoldTime = PortReuseHoldTimes.DeserializePortReuseHoldTimes(property.Value);
                     continue;
                 }
-                if (property.NameEquals("pinholeLimits"))
+                if (property.NameEquals("pinholeLimits"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     pinholeLimits = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("pinholeTimeouts"))
+                if (property.NameEquals("pinholeTimeouts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

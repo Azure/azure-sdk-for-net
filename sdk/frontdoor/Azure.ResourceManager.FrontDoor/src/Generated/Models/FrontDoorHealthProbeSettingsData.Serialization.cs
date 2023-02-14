@@ -17,39 +17,39 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             if (Optional.IsDefined(Protocol))
             {
-                writer.WritePropertyName("protocol");
+                writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
             if (Optional.IsDefined(IntervalInSeconds))
             {
-                writer.WritePropertyName("intervalInSeconds");
+                writer.WritePropertyName("intervalInSeconds"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
             }
             if (Optional.IsDefined(HealthProbeMethod))
             {
-                writer.WritePropertyName("healthProbeMethod");
+                writer.WritePropertyName("healthProbeMethod"u8);
                 writer.WriteStringValue(HealthProbeMethod.Value.ToString());
             }
             if (Optional.IsDefined(EnabledState))
             {
-                writer.WritePropertyName("enabledState");
+                writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
             writer.WriteEndObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<FrontDoorResourceState> resourceState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("path"))
+                        if (property0.NameEquals("path"u8))
                         {
                             path = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("protocol"))
+                        if (property0.NameEquals("protocol"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             protocol = new FrontDoorProtocol(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("intervalInSeconds"))
+                        if (property0.NameEquals("intervalInSeconds"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             intervalInSeconds = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("healthProbeMethod"))
+                        if (property0.NameEquals("healthProbeMethod"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             healthProbeMethod = new FrontDoorHealthProbeMethod(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("enabledState"))
+                        if (property0.NameEquals("enabledState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             enabledState = new HealthProbeEnabled(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("resourceState"))
+                        if (property0.NameEquals("resourceState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

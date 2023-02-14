@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(SkipRegions))
             {
-                writer.WritePropertyName("skipRegions");
+                writer.WritePropertyName("skipRegions"u8);
                 writer.WriteStartArray();
                 foreach (var item in SkipRegions)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsCollectionDefined(Regions))
             {
-                writer.WritePropertyName("regions");
+                writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Regions)
                 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<IList<string>> regions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("skipRegions"))
+                if (property.NameEquals("skipRegions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     skipRegions = array;
                     continue;
                 }
-                if (property.NameEquals("regions"))
+                if (property.NameEquals("regions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

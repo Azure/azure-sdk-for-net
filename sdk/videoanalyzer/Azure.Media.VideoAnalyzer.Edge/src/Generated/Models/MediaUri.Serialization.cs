@@ -17,7 +17,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("uri");
+                writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<string> uri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uri"))
+                if (property.NameEquals("uri"u8))
                 {
                     uri = property.Value.GetString();
                     continue;

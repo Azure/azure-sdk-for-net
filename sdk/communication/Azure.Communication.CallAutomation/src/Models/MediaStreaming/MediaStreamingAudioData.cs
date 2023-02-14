@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -16,7 +14,10 @@ namespace Azure.Communication.CallAutomation
         {
             Data = data;
             Timestamp = timestamp;
-            Participant = new CommunicationUserIdentifier(participantId);
+            if (participantId != null)
+            {
+                Participant = new CommunicationUserIdentifier(participantId);
+            }
             IsSilent = silent;
         }
 

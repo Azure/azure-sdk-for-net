@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Udr))
             {
-                writer.WritePropertyName("udr");
+                writer.WritePropertyName("udr"u8);
                 writer.WriteStartObject();
                 foreach (var item in Udr)
                 {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(Nsg))
             {
-                writer.WritePropertyName("nsg");
+                writer.WritePropertyName("nsg"u8);
                 writer.WriteStartObject();
                 foreach (var item in Nsg)
                 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(ResourceLock))
             {
-                writer.WritePropertyName("resourceLock");
+                writer.WritePropertyName("resourceLock"u8);
                 writer.WriteStartObject();
                 foreach (var item in ResourceLock)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(DnsResolution))
             {
-                writer.WritePropertyName("dnsResolution");
+                writer.WritePropertyName("dnsResolution"u8);
                 writer.WriteStartObject();
                 foreach (var item in DnsResolution)
                 {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(StorageAccount))
             {
-                writer.WritePropertyName("storageAccount");
+                writer.WritePropertyName("storageAccount"u8);
                 writer.WriteStartObject();
                 foreach (var item in StorageAccount)
                 {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(KeyVault))
             {
-                writer.WritePropertyName("keyVault");
+                writer.WritePropertyName("keyVault"u8);
                 writer.WriteStartObject();
                 foreach (var item in KeyVault)
                 {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(ContainerRegistry))
             {
-                writer.WritePropertyName("containerRegistry");
+                writer.WritePropertyName("containerRegistry"u8);
                 writer.WriteStartObject();
                 foreach (var item in ContainerRegistry)
                 {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(ApplicationInsights))
             {
-                writer.WritePropertyName("applicationInsights");
+                writer.WritePropertyName("applicationInsights"u8);
                 writer.WriteStartObject();
                 foreach (var item in ApplicationInsights)
                 {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(Others))
             {
-                writer.WritePropertyName("others");
+                writer.WritePropertyName("others"u8);
                 writer.WriteStartObject();
                 foreach (var item in Others)
                 {

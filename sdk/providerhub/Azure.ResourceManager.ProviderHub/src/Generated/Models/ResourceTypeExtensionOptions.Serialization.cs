@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceCreationBegin))
             {
-                writer.WritePropertyName("resourceCreationBegin");
+                writer.WritePropertyName("resourceCreationBegin"u8);
                 writer.WriteObjectValue(ResourceCreationBegin);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<ResourceTypeExtensionOptionsResourceCreationBegin> resourceCreationBegin = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceCreationBegin"))
+                if (property.NameEquals("resourceCreationBegin"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

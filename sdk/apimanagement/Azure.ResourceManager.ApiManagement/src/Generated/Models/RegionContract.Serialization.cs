@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<bool> isDeleted = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isMasterRegion"))
+                if (property.NameEquals("isMasterRegion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     isMasterRegion = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isDeleted"))
+                if (property.NameEquals("isDeleted"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

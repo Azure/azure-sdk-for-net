@@ -18,7 +18,7 @@ namespace Azure.AI.Translation.Document.Models
             IReadOnlyList<StorageSource> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<StorageSource> array = new List<StorageSource>();
                     foreach (var item in property.Value.EnumerateArray())

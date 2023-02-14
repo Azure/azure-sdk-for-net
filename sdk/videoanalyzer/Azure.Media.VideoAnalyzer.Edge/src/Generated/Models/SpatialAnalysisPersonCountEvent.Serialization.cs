@@ -17,22 +17,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Trigger))
             {
-                writer.WritePropertyName("trigger");
+                writer.WritePropertyName("trigger"u8);
                 writer.WriteStringValue(Trigger.Value.ToString());
             }
             if (Optional.IsDefined(OutputFrequency))
             {
-                writer.WritePropertyName("outputFrequency");
+                writer.WritePropertyName("outputFrequency"u8);
                 writer.WriteStringValue(OutputFrequency);
             }
             if (Optional.IsDefined(Threshold))
             {
-                writer.WritePropertyName("threshold");
+                writer.WritePropertyName("threshold"u8);
                 writer.WriteStringValue(Threshold);
             }
             if (Optional.IsDefined(Focus))
             {
-                writer.WritePropertyName("focus");
+                writer.WritePropertyName("focus"u8);
                 writer.WriteStringValue(Focus.Value.ToString());
             }
             writer.WriteEndObject();
@@ -46,7 +46,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<SpatialAnalysisOperationFocus> focus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("trigger"))
+                if (property.NameEquals("trigger"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,17 +56,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     trigger = new SpatialAnalysisPersonCountEventTrigger(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("outputFrequency"))
+                if (property.NameEquals("outputFrequency"u8))
                 {
                     outputFrequency = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("threshold"))
+                if (property.NameEquals("threshold"u8))
                 {
                     threshold = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("focus"))
+                if (property.NameEquals("focus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

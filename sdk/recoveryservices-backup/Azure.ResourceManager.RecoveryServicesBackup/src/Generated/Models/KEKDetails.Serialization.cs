@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyUri))
             {
-                writer.WritePropertyName("keyUrl");
+                writer.WritePropertyName("keyUrl"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(KeyVaultId))
             {
-                writer.WritePropertyName("keyVaultId");
+                writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
             }
             if (Optional.IsDefined(KeyBackupData))
             {
-                writer.WritePropertyName("keyBackupData");
+                writer.WritePropertyName("keyBackupData"u8);
                 writer.WriteStringValue(KeyBackupData);
             }
             writer.WriteEndObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> keyBackupData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyUrl"))
+                if (property.NameEquals("keyUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     keyUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyVaultId"))
+                if (property.NameEquals("keyVaultId"u8))
                 {
                     keyVaultId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyBackupData"))
+                if (property.NameEquals("keyBackupData"u8))
                 {
                     keyBackupData = property.Value.GetString();
                     continue;

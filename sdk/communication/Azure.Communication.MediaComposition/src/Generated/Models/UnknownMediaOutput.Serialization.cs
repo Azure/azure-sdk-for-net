@@ -15,7 +15,7 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.Communication.MediaComposition
             MediaOutputType kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new MediaOutputType(property.Value.GetString());
                     continue;

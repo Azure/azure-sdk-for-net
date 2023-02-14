@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BackupParameters))
             {
-                writer.WritePropertyName("backupParameters");
+                writer.WritePropertyName("backupParameters"u8);
                 writer.WriteObjectValue(BackupParameters);
             }
-            writer.WritePropertyName("dataStore");
+            writer.WritePropertyName("dataStore"u8);
             writer.WriteObjectValue(DataStore);
-            writer.WritePropertyName("trigger");
+            writer.WritePropertyName("trigger"u8);
             writer.WriteObjectValue(Trigger);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("backupParameters"))
+                if (property.NameEquals("backupParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,22 +50,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     backupParameters = DataProtectionBackupSettingsBase.DeserializeDataProtectionBackupSettingsBase(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataStore"))
+                if (property.NameEquals("dataStore"u8))
                 {
                     dataStore = DataStoreInfoBase.DeserializeDataStoreInfoBase(property.Value);
                     continue;
                 }
-                if (property.NameEquals("trigger"))
+                if (property.NameEquals("trigger"u8))
                 {
                     trigger = DataProtectionBackupTriggerContext.DeserializeDataProtectionBackupTriggerContext(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;

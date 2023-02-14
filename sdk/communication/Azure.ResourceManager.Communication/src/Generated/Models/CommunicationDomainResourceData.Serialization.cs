@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Communication
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,18 +29,18 @@ namespace Azure.ResourceManager.Communication
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DomainManagement))
             {
-                writer.WritePropertyName("domainManagement");
+                writer.WritePropertyName("domainManagement"u8);
                 writer.WriteStringValue(DomainManagement.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ValidSenderUsernames))
             {
-                writer.WritePropertyName("validSenderUsernames");
+                writer.WritePropertyName("validSenderUsernames"u8);
                 writer.WriteStartObject();
                 foreach (var item in ValidSenderUsernames)
                 {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Communication
             }
             if (Optional.IsDefined(UserEngagementTracking))
             {
-                writer.WritePropertyName("userEngagementTracking");
+                writer.WritePropertyName("userEngagementTracking"u8);
                 writer.WriteStringValue(UserEngagementTracking.Value.ToString());
             }
             writer.WriteEndObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Communication
             Optional<UserEngagementTracking> userEngagementTracking = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,27 +92,27 @@ namespace Azure.ResourceManager.Communication
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Communication
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Communication
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -141,22 +141,22 @@ namespace Azure.ResourceManager.Communication
                             provisioningState = new DomainProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("dataLocation"))
+                        if (property0.NameEquals("dataLocation"u8))
                         {
                             dataLocation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("fromSenderDomain"))
+                        if (property0.NameEquals("fromSenderDomain"u8))
                         {
                             fromSenderDomain = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("mailFromSenderDomain"))
+                        if (property0.NameEquals("mailFromSenderDomain"u8))
                         {
                             mailFromSenderDomain = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("domainManagement"))
+                        if (property0.NameEquals("domainManagement"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Communication
                             domainManagement = new DomainManagement(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("verificationStates"))
+                        if (property0.NameEquals("verificationStates"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Communication
                             verificationStates = DomainPropertiesVerificationStates.DeserializeDomainPropertiesVerificationStates(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("verificationRecords"))
+                        if (property0.NameEquals("verificationRecords"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Communication
                             verificationRecords = DomainPropertiesVerificationRecords.DeserializeDomainPropertiesVerificationRecords(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("validSenderUsernames"))
+                        if (property0.NameEquals("validSenderUsernames"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Communication
                             validSenderUsernames = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("userEngagementTracking"))
+                        if (property0.NameEquals("userEngagementTracking"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

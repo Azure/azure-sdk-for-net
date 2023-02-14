@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("jitAccessEnabled");
+            writer.WritePropertyName("jitAccessEnabled"u8);
             writer.WriteBooleanValue(JitAccessEnabled);
             if (Optional.IsDefined(JitApprovalMode))
             {
-                writer.WritePropertyName("jitApprovalMode");
+                writer.WritePropertyName("jitApprovalMode"u8);
                 writer.WriteStringValue(JitApprovalMode.Value.ToString());
             }
             if (Optional.IsCollectionDefined(JitApprovers))
             {
-                writer.WritePropertyName("jitApprovers");
+                writer.WritePropertyName("jitApprovers"u8);
                 writer.WriteStartArray();
                 foreach (var item in JitApprovers)
                 {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
             if (Optional.IsDefined(MaximumJitAccessDuration))
             {
-                writer.WritePropertyName("maximumJitAccessDuration");
+                writer.WritePropertyName("maximumJitAccessDuration"u8);
                 writer.WriteStringValue(MaximumJitAccessDuration.Value, "P");
             }
             writer.WriteEndObject();
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<TimeSpan> maximumJitAccessDuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jitAccessEnabled"))
+                if (property.NameEquals("jitAccessEnabled"u8))
                 {
                     jitAccessEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("jitApprovalMode"))
+                if (property.NameEquals("jitApprovalMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Resources.Models
                     jitApprovalMode = new JitApprovalMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("jitApprovers"))
+                if (property.NameEquals("jitApprovers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Resources.Models
                     jitApprovers = array;
                     continue;
                 }
-                if (property.NameEquals("maximumJitAccessDuration"))
+                if (property.NameEquals("maximumJitAccessDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

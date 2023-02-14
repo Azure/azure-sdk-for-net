@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<AppAction> action = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,32 +15,32 @@ namespace Azure.ResourceManager.Orbital.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("centerFrequencyMHz");
+            writer.WritePropertyName("centerFrequencyMHz"u8);
             writer.WriteNumberValue(CenterFrequencyMHz);
-            writer.WritePropertyName("bandwidthMHz");
+            writer.WritePropertyName("bandwidthMHz"u8);
             writer.WriteNumberValue(BandwidthMHz);
-            writer.WritePropertyName("endPoint");
+            writer.WritePropertyName("endPoint"u8);
             writer.WriteObjectValue(EndPoint);
             if (Optional.IsDefined(ModulationConfiguration))
             {
-                writer.WritePropertyName("modulationConfiguration");
+                writer.WritePropertyName("modulationConfiguration"u8);
                 writer.WriteStringValue(ModulationConfiguration);
             }
             if (Optional.IsDefined(DemodulationConfiguration))
             {
-                writer.WritePropertyName("demodulationConfiguration");
+                writer.WritePropertyName("demodulationConfiguration"u8);
                 writer.WriteStringValue(DemodulationConfiguration);
             }
             if (Optional.IsDefined(EncodingConfiguration))
             {
-                writer.WritePropertyName("encodingConfiguration");
+                writer.WritePropertyName("encodingConfiguration"u8);
                 writer.WriteStringValue(EncodingConfiguration);
             }
             if (Optional.IsDefined(DecodingConfiguration))
             {
-                writer.WritePropertyName("decodingConfiguration");
+                writer.WritePropertyName("decodingConfiguration"u8);
                 writer.WriteStringValue(DecodingConfiguration);
             }
             writer.WriteEndObject();
@@ -58,42 +58,42 @@ namespace Azure.ResourceManager.Orbital.Models
             Optional<string> decodingConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("centerFrequencyMHz"))
+                if (property.NameEquals("centerFrequencyMHz"u8))
                 {
                     centerFrequencyMHz = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("bandwidthMHz"))
+                if (property.NameEquals("bandwidthMHz"u8))
                 {
                     bandwidthMHz = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("endPoint"))
+                if (property.NameEquals("endPoint"u8))
                 {
                     endPoint = OrbitalContactEndpoint.DeserializeOrbitalContactEndpoint(property.Value);
                     continue;
                 }
-                if (property.NameEquals("modulationConfiguration"))
+                if (property.NameEquals("modulationConfiguration"u8))
                 {
                     modulationConfiguration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("demodulationConfiguration"))
+                if (property.NameEquals("demodulationConfiguration"u8))
                 {
                     demodulationConfiguration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encodingConfiguration"))
+                if (property.NameEquals("encodingConfiguration"u8))
                 {
                     encodingConfiguration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("decodingConfiguration"))
+                if (property.NameEquals("decodingConfiguration"u8))
                 {
                     decodingConfiguration = property.Value.GetString();
                     continue;

@@ -18,32 +18,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageModelType))
             {
-                writer.WritePropertyName("storageModelType");
+                writer.WritePropertyName("storageModelType"u8);
                 writer.WriteStringValue(StorageModelType.Value.ToString());
             }
             if (Optional.IsDefined(StorageType))
             {
-                writer.WritePropertyName("storageType");
+                writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType.Value.ToString());
             }
             if (Optional.IsDefined(StorageTypeState))
             {
-                writer.WritePropertyName("storageTypeState");
+                writer.WritePropertyName("storageTypeState"u8);
                 writer.WriteStringValue(StorageTypeState.Value.ToString());
             }
             if (Optional.IsDefined(EnhancedSecurityState))
             {
-                writer.WritePropertyName("enhancedSecurityState");
+                writer.WritePropertyName("enhancedSecurityState"u8);
                 writer.WriteStringValue(EnhancedSecurityState.Value.ToString());
             }
             if (Optional.IsDefined(SoftDeleteFeatureState))
             {
-                writer.WritePropertyName("softDeleteFeatureState");
+                writer.WritePropertyName("softDeleteFeatureState"u8);
                 writer.WriteStringValue(SoftDeleteFeatureState.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
-                writer.WritePropertyName("resourceGuardOperationRequests");
+                writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceGuardOperationRequests)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(IsSoftDeleteFeatureStateEditable))
             {
-                writer.WritePropertyName("isSoftDeleteFeatureStateEditable");
+                writer.WritePropertyName("isSoftDeleteFeatureStateEditable"u8);
                 writer.WriteBooleanValue(IsSoftDeleteFeatureStateEditable.Value);
             }
             writer.WriteEndObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<bool> isSoftDeleteFeatureStateEditable = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageModelType"))
+                if (property.NameEquals("storageModelType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     storageModelType = new StorageType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageType"))
+                if (property.NameEquals("storageType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     storageType = new StorageType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageTypeState"))
+                if (property.NameEquals("storageTypeState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     storageTypeState = new StorageTypeState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("enhancedSecurityState"))
+                if (property.NameEquals("enhancedSecurityState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     enhancedSecurityState = new EnhancedSecurityState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("softDeleteFeatureState"))
+                if (property.NameEquals("softDeleteFeatureState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     softDeleteFeatureState = new SoftDeleteFeatureState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceGuardOperationRequests"))
+                if (property.NameEquals("resourceGuardOperationRequests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     resourceGuardOperationRequests = array;
                     continue;
                 }
-                if (property.NameEquals("isSoftDeleteFeatureStateEditable"))
+                if (property.NameEquals("isSoftDeleteFeatureStateEditable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

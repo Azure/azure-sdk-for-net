@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<ParameterOptionalityStatus> optional = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.Avs.Models
                     type = new ScriptParameterType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("visibility"))
+                if (property.NameEquals("visibility"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Avs.Models
                     visibility = new ParameterVisibilityStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("optional"))
+                if (property.NameEquals("optional"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

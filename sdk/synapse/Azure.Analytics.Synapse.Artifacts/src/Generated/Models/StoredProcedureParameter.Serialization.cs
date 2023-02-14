@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (Value != null)
                 {
-                    writer.WritePropertyName("value");
+                    writer.WritePropertyName("value"u8);
                     writer.WriteObjectValue(Value);
                 }
                 else
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsDefined(Type))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
             writer.WriteEndObject();
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<StoredProcedureParameterType> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     value = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

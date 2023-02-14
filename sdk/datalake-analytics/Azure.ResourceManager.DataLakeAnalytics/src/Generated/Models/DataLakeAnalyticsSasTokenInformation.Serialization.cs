@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             Optional<string> accessToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accessToken"))
+                if (property.NameEquals("accessToken"u8))
                 {
                     accessToken = property.Value.GetString();
                     continue;

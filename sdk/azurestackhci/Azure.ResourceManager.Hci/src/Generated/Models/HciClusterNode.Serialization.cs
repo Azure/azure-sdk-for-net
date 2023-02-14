@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<float> memoryInGiB = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Models
                     id = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("windowsServerSubscription"))
+                if (property.NameEquals("windowsServerSubscription"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,32 +51,32 @@ namespace Azure.ResourceManager.Hci.Models
                     windowsServerSubscription = new WindowsServerSubscription(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("manufacturer"))
+                if (property.NameEquals("manufacturer"u8))
                 {
                     manufacturer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("model"))
+                if (property.NameEquals("model"u8))
                 {
                     model = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osName"))
+                if (property.NameEquals("osName"u8))
                 {
                     osName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osVersion"))
+                if (property.NameEquals("osVersion"u8))
                 {
                     osVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serialNumber"))
+                if (property.NameEquals("serialNumber"u8))
                 {
                     serialNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("coreCount"))
+                if (property.NameEquals("coreCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Hci.Models
                     coreCount = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("memoryInGiB"))
+                if (property.NameEquals("memoryInGiB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

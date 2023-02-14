@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.Logic
             Optional<LogicResourceReference> workflow = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Logic
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Logic
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Logic
                             provisioningState = new LogicWorkflowTriggerProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("createdTime"))
+                        if (property0.NameEquals("createdTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Logic
                             createdTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("changedTime"))
+                        if (property0.NameEquals("changedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Logic
                             changedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Logic
                             state = new LogicWorkflowState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Logic
                             status = new LogicWorkflowStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("lastExecutionTime"))
+                        if (property0.NameEquals("lastExecutionTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Logic
                             lastExecutionTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("nextExecutionTime"))
+                        if (property0.NameEquals("nextExecutionTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Logic
                             nextExecutionTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("recurrence"))
+                        if (property0.NameEquals("recurrence"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Logic
                             recurrence = LogicWorkflowTriggerRecurrence.DeserializeLogicWorkflowTriggerRecurrence(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("workflow"))
+                        if (property0.NameEquals("workflow"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

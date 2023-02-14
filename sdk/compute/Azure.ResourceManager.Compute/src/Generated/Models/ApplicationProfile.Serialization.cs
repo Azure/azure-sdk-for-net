@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(GalleryApplications))
             {
-                writer.WritePropertyName("galleryApplications");
+                writer.WritePropertyName("galleryApplications"u8);
                 writer.WriteStartArray();
                 foreach (var item in GalleryApplications)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IList<VirtualMachineGalleryApplication>> galleryApplications = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("galleryApplications"))
+                if (property.NameEquals("galleryApplications"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

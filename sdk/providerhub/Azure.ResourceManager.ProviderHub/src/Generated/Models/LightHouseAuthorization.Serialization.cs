@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("principalId");
+            writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
-            writer.WritePropertyName("roleDefinitionId");
+            writer.WritePropertyName("roleDefinitionId"u8);
             writer.WriteStringValue(RoleDefinitionId);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string roleDefinitionId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("principalId"))
+                if (property.NameEquals("principalId"u8))
                 {
                     principalId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("roleDefinitionId"))
+                if (property.NameEquals("roleDefinitionId"u8))
                 {
                     roleDefinitionId = property.Value.GetString();
                     continue;

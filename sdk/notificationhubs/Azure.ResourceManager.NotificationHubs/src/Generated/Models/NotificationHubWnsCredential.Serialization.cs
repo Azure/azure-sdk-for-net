@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PackageSid))
             {
-                writer.WritePropertyName("packageSid");
+                writer.WritePropertyName("packageSid"u8);
                 writer.WriteStringValue(PackageSid);
             }
             if (Optional.IsDefined(SecretKey))
             {
-                writer.WritePropertyName("secretKey");
+                writer.WritePropertyName("secretKey"u8);
                 writer.WriteStringValue(SecretKey);
             }
             if (Optional.IsDefined(WindowsLiveEndpoint))
             {
-                writer.WritePropertyName("windowsLiveEndpoint");
+                writer.WritePropertyName("windowsLiveEndpoint"u8);
                 writer.WriteStringValue(WindowsLiveEndpoint.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Optional<Uri> windowsLiveEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("packageSid"))
+                        if (property0.NameEquals("packageSid"u8))
                         {
                             packageSid = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("secretKey"))
+                        if (property0.NameEquals("secretKey"u8))
                         {
                             secretKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("windowsLiveEndpoint"))
+                        if (property0.NameEquals("windowsLiveEndpoint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

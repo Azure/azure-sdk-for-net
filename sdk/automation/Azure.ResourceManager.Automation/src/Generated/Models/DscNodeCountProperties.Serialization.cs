@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<int> count = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

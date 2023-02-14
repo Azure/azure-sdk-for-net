@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace Azure.Identity.Tests
 {
     [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27263")]
-    public class VisualStudioCodeCredentialTests : CredentialTestBase
+    public class VisualStudioCodeCredentialTests : CredentialTestBase<VisualStudioCodeCredentialOptions>
     {
         public VisualStudioCodeCredentialTests(bool isAsync) : base(isAsync)
         { }
@@ -37,6 +37,8 @@ namespace Azure.Identity.Tests
                     CredentialTestHelpers.CreateFileSystemForVisualStudioCode(environment),
                     new TestVscAdapter("VS Code Azure", "AzureCloud", expectedToken)));
         }
+
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config) => throw new NotImplementedException();
 
         [SetUp]
         public void Setup()
@@ -66,36 +68,6 @@ namespace Azure.Identity.Tests
 
             Assert.AreEqual(expectedToken, actualToken.Token, "Token should match");
             Assert.AreEqual(expiresOn, actualToken.ExpiresOn, "expiresOn should match");
-        }
-
-        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
-        {
-            Console.WriteLine(parameters.ToDebugString());
-
-            using var env = new TestEnvVar(new Dictionary<string, string> { { "IDENTITY_TENANT_ID", TenantId } });
-            var environment = new IdentityTestEnvironment();
-            var options = new VisualStudioCodeCredentialOptions
-            {
-                TenantId = parameters.TenantId,
-                Transport = new MockTransport()
-            };
-
-            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
-            {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
-            }
-
-            var msalClientMock = new MockMsalPublicClient(AuthenticationResultFactory.Create());
-
-            var cred = InstrumentClient(
-                new VisualStudioCodeCredential(
-                    options,
-                    null,
-                    msalClientMock,
-                    CredentialTestHelpers.CreateFileSystemForVisualStudioCode(environment),
-                    new TestVscAdapter("VS Code Azure", "AzureCloud", expectedToken)));
-
-            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
         }
 
         [Test]

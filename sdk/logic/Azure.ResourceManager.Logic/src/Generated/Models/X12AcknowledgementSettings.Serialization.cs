@@ -15,47 +15,47 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("needTechnicalAcknowledgement");
+            writer.WritePropertyName("needTechnicalAcknowledgement"u8);
             writer.WriteBooleanValue(NeedTechnicalAcknowledgement);
-            writer.WritePropertyName("batchTechnicalAcknowledgements");
+            writer.WritePropertyName("batchTechnicalAcknowledgements"u8);
             writer.WriteBooleanValue(BatchTechnicalAcknowledgement);
-            writer.WritePropertyName("needFunctionalAcknowledgement");
+            writer.WritePropertyName("needFunctionalAcknowledgement"u8);
             writer.WriteBooleanValue(NeedFunctionalAcknowledgement);
             if (Optional.IsDefined(FunctionalAcknowledgementVersion))
             {
-                writer.WritePropertyName("functionalAcknowledgementVersion");
+                writer.WritePropertyName("functionalAcknowledgementVersion"u8);
                 writer.WriteStringValue(FunctionalAcknowledgementVersion);
             }
-            writer.WritePropertyName("batchFunctionalAcknowledgements");
+            writer.WritePropertyName("batchFunctionalAcknowledgements"u8);
             writer.WriteBooleanValue(BatchFunctionalAcknowledgement);
-            writer.WritePropertyName("needImplementationAcknowledgement");
+            writer.WritePropertyName("needImplementationAcknowledgement"u8);
             writer.WriteBooleanValue(NeedImplementationAcknowledgement);
             if (Optional.IsDefined(ImplementationAcknowledgementVersion))
             {
-                writer.WritePropertyName("implementationAcknowledgementVersion");
+                writer.WritePropertyName("implementationAcknowledgementVersion"u8);
                 writer.WriteStringValue(ImplementationAcknowledgementVersion);
             }
-            writer.WritePropertyName("batchImplementationAcknowledgements");
+            writer.WritePropertyName("batchImplementationAcknowledgements"u8);
             writer.WriteBooleanValue(BatchImplementationAcknowledgement);
-            writer.WritePropertyName("needLoopForValidMessages");
+            writer.WritePropertyName("needLoopForValidMessages"u8);
             writer.WriteBooleanValue(NeedLoopForValidMessages);
-            writer.WritePropertyName("sendSynchronousAcknowledgement");
+            writer.WritePropertyName("sendSynchronousAcknowledgement"u8);
             writer.WriteBooleanValue(SendSynchronousAcknowledgement);
             if (Optional.IsDefined(AcknowledgementControlNumberPrefix))
             {
-                writer.WritePropertyName("acknowledgementControlNumberPrefix");
+                writer.WritePropertyName("acknowledgementControlNumberPrefix"u8);
                 writer.WriteStringValue(AcknowledgementControlNumberPrefix);
             }
             if (Optional.IsDefined(AcknowledgementControlNumberSuffix))
             {
-                writer.WritePropertyName("acknowledgementControlNumberSuffix");
+                writer.WritePropertyName("acknowledgementControlNumberSuffix"u8);
                 writer.WriteStringValue(AcknowledgementControlNumberSuffix);
             }
-            writer.WritePropertyName("acknowledgementControlNumberLowerBound");
+            writer.WritePropertyName("acknowledgementControlNumberLowerBound"u8);
             writer.WriteNumberValue(AcknowledgementControlNumberLowerBound);
-            writer.WritePropertyName("acknowledgementControlNumberUpperBound");
+            writer.WritePropertyName("acknowledgementControlNumberUpperBound"u8);
             writer.WriteNumberValue(AcknowledgementControlNumberUpperBound);
-            writer.WritePropertyName("rolloverAcknowledgementControlNumber");
+            writer.WritePropertyName("rolloverAcknowledgementControlNumber"u8);
             writer.WriteBooleanValue(RolloverAcknowledgementControlNumber);
             writer.WriteEndObject();
         }
@@ -79,77 +79,77 @@ namespace Azure.ResourceManager.Logic.Models
             bool rolloverAcknowledgementControlNumber = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("needTechnicalAcknowledgement"))
+                if (property.NameEquals("needTechnicalAcknowledgement"u8))
                 {
                     needTechnicalAcknowledgement = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("batchTechnicalAcknowledgements"))
+                if (property.NameEquals("batchTechnicalAcknowledgements"u8))
                 {
                     batchTechnicalAcknowledgements = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("needFunctionalAcknowledgement"))
+                if (property.NameEquals("needFunctionalAcknowledgement"u8))
                 {
                     needFunctionalAcknowledgement = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("functionalAcknowledgementVersion"))
+                if (property.NameEquals("functionalAcknowledgementVersion"u8))
                 {
                     functionalAcknowledgementVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("batchFunctionalAcknowledgements"))
+                if (property.NameEquals("batchFunctionalAcknowledgements"u8))
                 {
                     batchFunctionalAcknowledgements = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("needImplementationAcknowledgement"))
+                if (property.NameEquals("needImplementationAcknowledgement"u8))
                 {
                     needImplementationAcknowledgement = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("implementationAcknowledgementVersion"))
+                if (property.NameEquals("implementationAcknowledgementVersion"u8))
                 {
                     implementationAcknowledgementVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("batchImplementationAcknowledgements"))
+                if (property.NameEquals("batchImplementationAcknowledgements"u8))
                 {
                     batchImplementationAcknowledgements = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("needLoopForValidMessages"))
+                if (property.NameEquals("needLoopForValidMessages"u8))
                 {
                     needLoopForValidMessages = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("sendSynchronousAcknowledgement"))
+                if (property.NameEquals("sendSynchronousAcknowledgement"u8))
                 {
                     sendSynchronousAcknowledgement = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("acknowledgementControlNumberPrefix"))
+                if (property.NameEquals("acknowledgementControlNumberPrefix"u8))
                 {
                     acknowledgementControlNumberPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("acknowledgementControlNumberSuffix"))
+                if (property.NameEquals("acknowledgementControlNumberSuffix"u8))
                 {
                     acknowledgementControlNumberSuffix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("acknowledgementControlNumberLowerBound"))
+                if (property.NameEquals("acknowledgementControlNumberLowerBound"u8))
                 {
                     acknowledgementControlNumberLowerBound = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("acknowledgementControlNumberUpperBound"))
+                if (property.NameEquals("acknowledgementControlNumberUpperBound"u8))
                 {
                     acknowledgementControlNumberUpperBound = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rolloverAcknowledgementControlNumber"))
+                if (property.NameEquals("rolloverAcknowledgementControlNumber"u8))
                 {
                     rolloverAcknowledgementControlNumber = property.Value.GetBoolean();
                     continue;

@@ -19,17 +19,17 @@ namespace Azure.Communication.MediaComposition
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Layout))
             {
-                writer.WritePropertyName("layout");
+                writer.WritePropertyName("layout"u8);
                 writer.WriteObjectValue(Layout);
             }
             if (Optional.IsCollectionDefined(Inputs))
             {
-                writer.WritePropertyName("inputs");
+                writer.WritePropertyName("inputs"u8);
                 writer.WriteStartObject();
                 foreach (var item in Inputs)
                 {
@@ -40,7 +40,7 @@ namespace Azure.Communication.MediaComposition
             }
             if (Optional.IsCollectionDefined(Outputs))
             {
-                writer.WritePropertyName("outputs");
+                writer.WritePropertyName("outputs"u8);
                 writer.WriteStartObject();
                 foreach (var item in Outputs)
                 {
@@ -51,7 +51,7 @@ namespace Azure.Communication.MediaComposition
             }
             if (Optional.IsDefined(StreamState))
             {
-                writer.WritePropertyName("streamState");
+                writer.WritePropertyName("streamState"u8);
                 writer.WriteObjectValue(StreamState);
             }
             writer.WriteEndObject();
@@ -66,12 +66,12 @@ namespace Azure.Communication.MediaComposition
             Optional<CompositionStreamState> streamState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("layout"))
+                if (property.NameEquals("layout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,7 +81,7 @@ namespace Azure.Communication.MediaComposition
                     layout = MediaCompositionLayout.DeserializeMediaCompositionLayout(property.Value);
                     continue;
                 }
-                if (property.NameEquals("inputs"))
+                if (property.NameEquals("inputs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +96,7 @@ namespace Azure.Communication.MediaComposition
                     inputs = dictionary;
                     continue;
                 }
-                if (property.NameEquals("outputs"))
+                if (property.NameEquals("outputs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +111,7 @@ namespace Azure.Communication.MediaComposition
                     outputs = dictionary;
                     continue;
                 }
-                if (property.NameEquals("streamState"))
+                if (property.NameEquals("streamState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

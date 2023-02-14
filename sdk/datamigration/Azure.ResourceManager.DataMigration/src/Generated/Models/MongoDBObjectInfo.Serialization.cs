@@ -21,27 +21,27 @@ namespace Azure.ResourceManager.DataMigration.Models
             string qualifiedName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("averageDocumentSize"))
+                if (property.NameEquals("averageDocumentSize"u8))
                 {
                     averageDocumentSize = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("dataSize"))
+                if (property.NameEquals("dataSize"u8))
                 {
                     dataSize = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("documentCount"))
+                if (property.NameEquals("documentCount"u8))
                 {
                     documentCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("qualifiedName"))
+                if (property.NameEquals("qualifiedName"u8))
                 {
                     qualifiedName = property.Value.GetString();
                     continue;

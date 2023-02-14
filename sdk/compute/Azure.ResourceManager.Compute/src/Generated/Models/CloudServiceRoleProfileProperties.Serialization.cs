@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<CloudServiceRoleSku> sku = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

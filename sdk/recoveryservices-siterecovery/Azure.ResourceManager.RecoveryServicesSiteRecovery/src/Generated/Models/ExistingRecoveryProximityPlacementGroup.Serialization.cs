@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryProximityPlacementGroupId))
             {
-                writer.WritePropertyName("recoveryProximityPlacementGroupId");
+                writer.WritePropertyName("recoveryProximityPlacementGroupId"u8);
                 writer.WriteStringValue(RecoveryProximityPlacementGroupId);
             }
-            writer.WritePropertyName("resourceType");
+            writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
             writer.WriteEndObject();
         }
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryProximityPlacementGroupId"))
+                if (property.NameEquals("recoveryProximityPlacementGroupId"u8))
                 {
                     recoveryProximityPlacementGroupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;

@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlansAsync(this TenantResource tenantResource, TenantGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
+        public static AsyncPageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlansAsync(this TenantResource tenantResource, TenantResourceGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new TenantGetBillingBenefitsSavingsPlansOptions();
+            options ??= new TenantResourceGetBillingBenefitsSavingsPlansOptions();
 
             return GetExtensionClient(tenantResource).GetBillingBenefitsSavingsPlansAsync(options, cancellationToken);
         }
@@ -239,9 +239,9 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlans(this TenantResource tenantResource, TenantGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
+        public static Pageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlans(this TenantResource tenantResource, TenantResourceGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new TenantGetBillingBenefitsSavingsPlansOptions();
+            options ??= new TenantResourceGetBillingBenefitsSavingsPlansOptions();
 
             return GetExtensionClient(tenantResource).GetBillingBenefitsSavingsPlans(options, cancellationToken);
         }

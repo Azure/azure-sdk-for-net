@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Quality))
             {
-                writer.WritePropertyName("quality");
+                writer.WritePropertyName("quality"u8);
                 writer.WriteNumberValue(Quality.Value);
             }
             if (Optional.IsDefined(Width))
             {
-                writer.WritePropertyName("width");
+                writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
             if (Optional.IsDefined(Height))
             {
-                writer.WritePropertyName("height");
+                writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
             if (Optional.IsDefined(Label))
             {
-                writer.WritePropertyName("label");
+                writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
             writer.WriteEndObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> label = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("quality"))
+                if (property.NameEquals("quality"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.Media.Models
                     quality = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("width"))
+                if (property.NameEquals("width"u8))
                 {
                     width = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("height"))
+                if (property.NameEquals("height"u8))
                 {
                     height = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;

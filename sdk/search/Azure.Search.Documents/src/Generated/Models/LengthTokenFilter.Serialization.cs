@@ -17,17 +17,17 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MinLength))
             {
-                writer.WritePropertyName("min");
+                writer.WritePropertyName("min"u8);
                 writer.WriteNumberValue(MinLength.Value);
             }
             if (Optional.IsDefined(MaxLength))
             {
-                writer.WritePropertyName("max");
+                writer.WritePropertyName("max"u8);
                 writer.WriteNumberValue(MaxLength.Value);
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WriteEndObject();
         }
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("min"))
+                if (property.NameEquals("min"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     min = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("max"))
+                if (property.NameEquals("max"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,12 +60,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     max = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;

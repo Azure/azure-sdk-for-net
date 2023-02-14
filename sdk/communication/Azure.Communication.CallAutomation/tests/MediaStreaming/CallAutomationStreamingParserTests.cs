@@ -46,6 +46,21 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         }
 
         [Test]
+        public void ParseAudio_NoParticipantIdSilent_Test()
+        {
+            string audioJson = "{"
+                + "\"kind\": \"AudioData\","
+                + "\"audioData\": {"
+                + "\"data\": \"AQIDBAU=\","      // [1, 2, 3, 4, 5]
+                + "\"timestamp\": \"2022-08-23T11:48:05Z\""
+                + "}"
+                + "}";
+
+            MediaStreamingAudioData streamingAudio = (MediaStreamingAudioData)MediaStreamingPackageParser.Parse(audioJson);
+            ValidateAudioDataNoParticipant(streamingAudio);
+        }
+
+        [Test]
         public void ParseBinaryData()
         {
             JObject jsonData = new JObject();
@@ -97,6 +112,14 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             Assert.AreEqual(2022, streamingAudio.Timestamp.Year);
             Assert.IsTrue(streamingAudio.Participant is CommunicationIdentifier);
             Assert.AreEqual("participantId", streamingAudio.Participant.RawId);
+            Assert.IsFalse(streamingAudio.IsSilent);
+        }
+        private static void ValidateAudioDataNoParticipant(MediaStreamingAudioData streamingAudio)
+        {
+            Assert.IsNotNull(streamingAudio);
+            Assert.AreEqual("AQIDBAU=", streamingAudio.Data);
+            Assert.AreEqual(2022, streamingAudio.Timestamp.Year);
+            Assert.IsNull(streamingAudio.Participant);
             Assert.IsFalse(streamingAudio.IsSilent);
         }
     }

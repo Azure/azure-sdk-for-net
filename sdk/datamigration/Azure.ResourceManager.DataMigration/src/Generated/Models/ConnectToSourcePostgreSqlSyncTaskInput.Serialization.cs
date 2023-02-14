@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceConnectionInfo");
+            writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo);
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             PostgreSqlConnectionInfo sourceConnectionInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceConnectionInfo"))
+                if (property.NameEquals("sourceConnectionInfo"u8))
                 {
                     sourceConnectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value);
                     continue;

@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.WebPubSub
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateEndpoint))
             {
-                writer.WritePropertyName("privateEndpoint");
+                writer.WritePropertyName("privateEndpoint"u8);
                 writer.WriteObjectValue(PrivateEndpoint);
             }
             if (Optional.IsDefined(ConnectionState))
             {
-                writer.WritePropertyName("privateLinkServiceConnectionState");
+                writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
             }
             writer.WriteEndObject();
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.WebPubSub
             Optional<WebPubSubPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.WebPubSub
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.WebPubSub
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.WebPubSub
                             provisioningState = new WebPubSubProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("privateEndpoint"))
+                        if (property0.NameEquals("privateEndpoint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.WebPubSub
                             privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("groupIds"))
+                        if (property0.NameEquals("groupIds"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.WebPubSub
                             groupIds = array;
                             continue;
                         }
-                        if (property0.NameEquals("privateLinkServiceConnectionState"))
+                        if (property0.NameEquals("privateLinkServiceConnectionState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

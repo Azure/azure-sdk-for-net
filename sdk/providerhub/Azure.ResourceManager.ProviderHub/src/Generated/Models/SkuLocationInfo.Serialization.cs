@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             if (Optional.IsCollectionDefined(Zones))
             {
-                writer.WritePropertyName("zones");
+                writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
                 foreach (var item in Zones)
                 {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsCollectionDefined(ZoneDetails))
             {
-                writer.WritePropertyName("zoneDetails");
+                writer.WritePropertyName("zoneDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in ZoneDetails)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsCollectionDefined(ExtendedLocations))
             {
-                writer.WritePropertyName("extendedLocations");
+                writer.WritePropertyName("extendedLocations"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExtendedLocations)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             if (Optional.IsDefined(InfoType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(InfoType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<SkuLocationInfoType> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("zones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     zones = array;
                     continue;
                 }
-                if (property.NameEquals("zoneDetails"))
+                if (property.NameEquals("zoneDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     zoneDetails = array;
                     continue;
                 }
-                if (property.NameEquals("extendedLocations"))
+                if (property.NameEquals("extendedLocations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     extendedLocations = array;
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

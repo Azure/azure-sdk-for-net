@@ -21,12 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
             if (Optional.IsDefined(Type))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteObjectValue(Type);
             }
             foreach (var item in AdditionalProperties)
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     name = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

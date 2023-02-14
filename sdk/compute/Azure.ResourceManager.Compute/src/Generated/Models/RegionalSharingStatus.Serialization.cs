@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> details = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("region"))
+                if (property.NameEquals("region"u8))
                 {
                     region = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
                     state = new SharingState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("details"))
+                if (property.NameEquals("details"u8))
                 {
                     details = property.Value.GetString();
                     continue;
