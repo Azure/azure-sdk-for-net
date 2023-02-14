@@ -409,44 +409,78 @@ namespace Azure.Core.Experimental.Tests
         public void CanGetCamelCasePropertyEitherCase()
         {
             string json = @"{ ""foo"" : 1 }";
-            DynamicJsonOptions options = new()
-            {
-                AccessPropertyNamesPascalOrCamelCase = true
-            };
 
-            dynamic dynamicJson = new BinaryData(json).ToDynamic(options);
+            dynamic dynamicJson = new BinaryData(json).ToDynamic();
 
             Assert.AreEqual(1, (int)dynamicJson.foo);
             Assert.AreEqual(1, (int)dynamicJson.Foo);
-
-            // TODO: Handle sets ...
         }
 
         [Test]
-        public void CanGetPascalCasePropertyEitherCase()
+        public void CanGetCamelCasePropertyStrictCasing()
         {
-            string json = @"{ ""Foo"" : 1 }";
+            string json = @"{ ""foo"" : 1 }";
+
             DynamicJsonOptions options = new()
             {
-                AccessPropertyNamesPascalOrCamelCase = true
+                PropertyCasing = new DynamicJsonPropertyCasing()
+                {
+                    ExistingPropertyAccess = ExistingPropertyCasing.CaseSensitive,
+                    NewPropertyAccess = NewPropertyCasing.CaseSensitive
+                }
             };
 
             dynamic dynamicJson = new BinaryData(json).ToDynamic(options);
 
             Assert.AreEqual(1, (int)dynamicJson.foo);
+            Assert.AreEqual(null, dynamicJson.Foo);
+        }
+
+        [Test]
+        public void CannotGetPascalCasePropertyEitherCase()
+        {
+            string json = @"{ ""Foo"" : 1 }";
+
+            dynamic dynamicJson = new BinaryData(json).ToDynamic();
+
             Assert.AreEqual(1, (int)dynamicJson.Foo);
+            Assert.AreEqual(null, dynamicJson.foo);
+        }
+
+        [Test]
+        public void CanSetPascalCaseStrictCasing()
+        {
+            string json = @"{ ""Foo"" : 1 }";
+
+            DynamicJsonOptions options = new()
+            {
+                PropertyCasing = new DynamicJsonPropertyCasing()
+                {
+                    ExistingPropertyAccess = ExistingPropertyCasing.CaseSensitive,
+                    NewPropertyAccess = NewPropertyCasing.CaseSensitive
+                }
+            };
+            dynamic dynamicJson = new BinaryData(json).ToDynamic(options);
+
+            dynamicJson.foo = 2;
+
+            Assert.AreEqual(2, (int)dynamicJson.foo);
+            Assert.AreEqual(null, dynamicJson.Foo);
+
+            dynamicJson.Foo = 3;
+
+            Assert.AreEqual(2, (int)dynamicJson.foo);
+            Assert.AreEqual(3, (int)dynamicJson.Foo);
         }
 
         [Test]
         public void CanSetPascalCasePropertyEitherCase()
         {
             string json = @"{ ""Foo"" : 1 }";
-            DynamicJsonOptions options = new()
-            {
-                AccessPropertyNamesPascalOrCamelCase = true
-            };
 
+            DynamicJsonOptions options = new();
             dynamic dynamicJson = new BinaryData(json).ToDynamic(options);
+
             dynamicJson.foo = 2;
 
             Assert.AreEqual(2, (int)dynamicJson.foo);

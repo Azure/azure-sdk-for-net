@@ -43,34 +43,26 @@ namespace Azure.Core.Dynamic
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            MutableJsonElement element;
-            if (!_options.AccessPropertyNamesPascalOrCamelCase)
+            if (_element.TryGetProperty(name, out MutableJsonElement element))
             {
-                if (_element.TryGetProperty(name, out element))
+                return new DynamicJson(element);
+            }
+
+            if (_options.PropertyCasing.ExistingPropertyAccess == ExistingPropertyCasing.AllowPascalCase &&
+                char.IsUpper(name[0]))
+            {
+                if (_element.TryGetProperty(GetAsCamelCase(name), out element))
                 {
                     return new DynamicJson(element);
                 }
-
-                return null;
-            }
-
-            string otherCaseName = GetAsOtherCasing(name);
-            if (_element.TryGetProperty(otherCaseName, out element))
-            {
-                return new DynamicJson(element);
             }
 
             return null;
         }
 
-        private static string GetAsOtherCasing(string value)
+        private static string GetAsCamelCase(string value)
         {
-            if (char.IsUpper(value[0]))
-            {
-                return $"{char.ToLowerInvariant(value[0])}{value.Substring(1)}";
-            }
-
-            return $"{char.ToUpperInvariant(value[0])}{value.Substring(1)}";
+            return $"{char.ToLowerInvariant(value[0])}{value.Substring(1)}";
         }
 
         private object? GetViaIndexer(object index)
