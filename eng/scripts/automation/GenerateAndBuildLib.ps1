@@ -435,7 +435,7 @@ function New-CADLPackageFolder() {
         }
         
         CreateOrUpdateCadlConfigFile `
-            -cadlConfigurationFile $projectFolder/src/$CADL_LOCATION_FILE `
+            -cadlConfigurationFile $projectFolder/$CADL_LOCATION_FILE `
             -directory $relatedCadlProjectFolder `
             -commit $commit `
             -repo $repo `
@@ -485,7 +485,7 @@ function New-CADLPackageFolder() {
         }
 
         CreateOrUpdateCadlConfigFile `
-            -cadlConfigurationFile $projectFolder/src/$CADL_LOCATION_FILE `
+            -cadlConfigurationFile $projectFolder/$CADL_LOCATION_FILE `
             -directory $relatedCadlProjectFolder `
             -commit $commit `
             -repo $repo `

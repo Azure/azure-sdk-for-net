@@ -11,10 +11,11 @@ This tutorial has following sections:
 - [Azure SDK Code Generation Quickstart Tutorial (Data Plane)](#azure-sdk-code-generation-quickstart-tutorial-data-plane)
   - [Prerequisites](#prerequisites)
   - [Setup your repository](#setup-your-repository)
-  - [Create starter package](#create-starter-package)
+  - [Create SDK Package](#create-sdk-package)
     - [Use Cadl as Input API spec](#use-cadl-as-input-api-spec)
       - [Create Cadl project](#create-cadl-project)
-      - [Create sdk starter package](#create-sdk-starter-package)
+      - [Create SDK project directory](#create-sdk-project-directory)
+      - [Generate SDK](#generate-sdk)
     - [Use swagger as Input API spec](#use-swagger-as-input-api-spec)
   - [Add package ship requirements](#add-package-ship-requirements)
     - [Tests](#tests)
@@ -42,9 +43,9 @@ This tutorial has following sections:
 - Fork and clone the [azure-sdk-for-net](https://github.com/Azure/azure-sdk-for-net) repository. Instructions for doing so can be found in the [.NET CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md).
 - Create a branch to work in.
 
-## Create starter package  
+## Create SDK Package
 
-For this guide, we'll create a getting started project in a branch of your fork of `azure-sdk-for-net` repo. The started project will be under `sdk\<servie name>\<package name>` directory of `azure-sdk-for-net` repo. The package will contain several folders and files (see following). Please refer to [sdk-directory-layout](https://github.com/Azure/azure-sdk/blob/main/docs/policies/repostructure.md#sdk-directory-layout) for detail information.
+For this guide, we'll create a sdk project in a branch of your fork of `azure-sdk-for-net` repo. The project will be under `sdk\<servie name>\<package name>` directory of `azure-sdk-for-net` repo. The package will contain several folders and files (see following). Please refer to [sdk-directory-layout](https://github.com/Azure/azure-sdk/blob/main/docs/policies/repostructure.md#sdk-directory-layout) for detail information.
 
 ```text
 sdk\<service name>\<package name>\README.md
@@ -75,11 +76,11 @@ sdk\<service name>\<package name>\<package name>.sln
 
   **Note**: It is recommended to configure Cadl Specs on [REST API specifications](https://github.com/Azure/azure-rest-api-specs). Please refer to the [Guidelines](https://github.com/Azure/azure-rest-api-specs/blob/main/documentation/cadl-structure-guidelines.md).
 
-  ***Configuration (optional)***
+  ***Configuration***
 
   One can further configure the SDK generated, using the emitter options on @azure-tools/cadl-csharp.
 
-  Modify (or create) cadl-project.yaml, add emitter options under options/@azure-tools/cadl-csharp.
+  Modify (or create) cadl-project.yaml, add emitter options under options/@azure-tools/cadl-csharp. Option `namespace` and `emitter-output-dir` are required.
 
 ```diff
 parameters:
@@ -109,59 +110,56 @@ options:
 
 - `namespace` define the client library namespace. e.g. Azure.IoT.DeviceUpdate.
 - `emitter-output-dir` define the output dire path which will store the generated code.
-- `generate-protocol-methods` indicate if you want to generate **protocol method** for each operation. By default is true.
-- `generate-convenience-methods` indicate if you want to generate **convenience method** for each operation. By default is true.
+- `generate-protocol-methods` indicate if you want to generate **protocol method** for each operation. It is a boolean flag to shift the entire generation for the process (`true` by default)
+- `generate-convenience-methods` indicate if you want to generate **convenience method** for each operation. It is a boolean flag to shift the entire generation for the process (`true` by default)
 - `unreferenced-types-handling` define the strategy how to handle the unreferenced types. It can be `removeOrInternalize`, `internalize` or `keepAll`
 - `model-namespace` indicate if we want to put the models in their own namespace which is a sub namespace of the client library namespace plus ".Models". if it is set `false`, the models will be put in the same namespace of the client. The default value is `true`.
 - `clear-output-folder` indicate if you want to clear up the output folder.
 - `package-name` define the package folder name which will be used as service directory name under `sdk/` in azure-sdk-for-net repo.
 - `save-inputs` indicate if you want to keep the intermediate files for debug purpose, e.g. the model json file (cadl.json) parsed from cadl file.
 
+#### Create SDK project directory
 
-#### Create sdk starter package
-  
-We will use the Azure SDK template [Azure.Template](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template) to create the initial project skeleton.
+We will generate SDK library under `sdk\<servie name>\<package name>` directory of `azure-sdk-for-net` repo. e.g. /home/azure-sdk-for-net/sdk/anomalydetector/Azure.AI.AnomalyDetector).
 
-You can run `eng\scripts\automation\Invoke-CadlDataPlaneGenerateSDKPackage.ps1` to generate the starting SDK client library package directly as following:
+If the sdk project directory does not exist, you can refer to [SDK project directory Set up](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneratio/AzureSDKPackage_Setup.md) to create one.
 
-```powershell
-eng/scripts/automation/Invoke-CadlDataPlaneGenerateSDKPackage.ps1 -service <servicename> -namespace Azure.<group>.<service> -sdkPath <sdkrepoRootPath> -cadlRelativeFolder <relativeCadlProjectFolderPath> [-commit <commitId>] [-repo <specRepo>] [-specRoot <specRepoRootPath>] [-additionalSubDirectories <relativeFolders>]
+#### Generate SDK
+
+We will generate SDK under the SDK project directory.
+
+***configuration***
+
+You can update `cadl-location.yaml` under sdk project directory to set the cadl project.
+
+`cadl-location.yaml` file should live under the project directory for each service and has the following properties
+
+| Property | Description | IsRequired |
+| --- | --- | --- |
+| <a id="directory-anchor"></a> directory | The top level directory where the main.cadl for the service lives.  This should be relative to the spec repo root such as `specification/cognitiveservices/OpenAI.Inference` | true |
+| <a id="additionalDirectories-anchor"></a> additionalDirectories | Sometimes a cadl file will use a relative import that might not be under the main directory.  In this case a single `directory` will not be enough to pull down all necessary files.  To support this you can specify additional directories as a list to sync so that all needed files are synced. | false: default = null |
+| <a id="commit-anchor"></a> commit | The commit sha for the version of the cadl files you want to generate off of.  This allows us to have idempotence on generation until we opt into pointing at a later version. | true |
+| <a id="repo-anchor"></a> repo | The repo this spec lives in.  This should be either `Azure/azure-rest-api-specs` or `Azure/azure-rest-api-specs-pr`.  Note that pr will work locally but not in CI until we add another change to handle token based auth. | true |
+| <a id="cleanup-anchor"></a> cleanup | This will remove the TempCadlFiles directory after generation is complete if true otherwise this directory will be left to support local changes to the files to see how different changes would affect the generation. | false: default = true |
+|<a id="specRootDirectory-anchor"></a> spec-root-dir | When you want to use the local specs repo  that is already present, you can specify the root directory of the repo. e.g. /home/azure-rest-api-specs| false|
+
+Example:
+
+```yml
+directory: specification/cognitiveservices/OpenAI.Inference
+additionalDirectories:
+  - specification/cognitiveservices/OpenAI.Authoring
+commit: 14f11cab735354c3e253045f7fbd2f1b9f90f7ca
+repo: Azure/azure-rest-api-specs
+cleanup: false
 ```
 
-e.g. 
-Use git url
+**Note**: If you want to use a local specs repo that is already present, you can specify `spec-root-dir` to provide the path of the root directory of the specs repo, e.g. /home/azure-rest-api-specs, and don't provide the `commit` and `repo`.
 
-```powershell
-pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-CadlDataPlaneGenerateSDKPackage.ps1 -service anomalydetector -namespace Azure.AI.AnomalyDetector -sdkPath /home/azure-sdk-for-net -cadlRelativeFolder specification/cognitiveservices/AnomalyDetector -commit ac8e06a2ed0fc1c54663c98f12c8a073f8026b90 -repo Azure/azure-rest-api-specs
-```
-or 
-Use local Cadl project
+***Generate Code***
 
-```powershell
-pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-CadlDataPlaneGenerateSDKPackage.ps1 -service anomalydetector -namespace Azure.AI.AnomalyDetector -sdkPath /home/azure-sdk-for-net -cadlRelativeFolder specification/cognitiveservices/AnomalyDetector -specRoot /home/azure-rest-api-specs
-```
-**Note**:
-
-- `-service` takes Azure client service directory name. ie. purview. It equals to the name of the directory in the specification folder of the azure-rest-api-specs repo that contains the REST API definition file. [Required]
-- For `-namespace`, please use one of the pre-approved namespace groups on the [.NET Azure SDK Guidelines Approved Namespaces list](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-namespaces-approved-list). This value will also provide the name for the shipped package, and should be of the form `Azure.<group>.<service>`. [Required]
-- `-sdkPath` takes the address of the root directory of sdk repo. e.g. /home/azure-sdk-for-net [Required]
-- `-cadlRelativeFolder` takes the relative path of the cadl project folder in spec repo. e.g. specification/cognitiveservices/AnomalyDetector [Required]
-- `-additionalSubDirectories` takes the relative paths of the additional directories needed by the cadl project, such as share library folder, separated by semicolon if there is more than one folder. [Optional]
-- `-commit` takes the git commit hash  (e.g. ac8e06a2ed0fc1c54663c98f12c8a073f8026b90)
-- `-repo` takes the `<owner>/<repo>` of the REST API specification repository. (e.g. Azure/azure-rest-api-specs)
-- `-specRoot` takes the file system path of the spec repo. e.g. /home/azure-rest-api-specs
-- You need to provide the cadl project path, either (`-commit`, `-repo`) pair to refer to an URL path of the cadl project or `-specRoot` to refer to local file system path. If you provide both, `-specRoot` will be ignored.
-
-When you run `eng\scripts\automation\Invoke-CadlDataPlaneGenerateSDKPackage.ps1`, it will:
-
-- Create a project folder, install template files from `sdk/template/Azure.Template`, and create `.csproj` and `.sln` files for your new library.
-
-    These files are created following the guidance for the [Azure SDK Repository Structure](https://github.com/Azure/azure-sdk/blob/master/docs/policies/repostructure.md).
-
-- Generate the library source code files to the directory `<sdkPath>/sdk/<service>/<namespace>/src/Generated`
-- Build the library project to create the starter package binary.
-- Export the library's public API to the directory `<sdkPath>/sdk/<service>/<namespace>/api`
-
+Enter `src` folder, e.g. /home/azure-sdk-for-net/sdk/anomalyDetector/Azure.AI.AnomalyDetector/src
+Run `dotnet build /t:GenerateCode` to generate the code.
 
 ### Use swagger as Input API spec
 
