@@ -102,13 +102,15 @@ namespace Azure.ResourceManager.Automanage.Tests
         /// <param name="vmId">The ID of the Virtual Machine to assign a profile to</param>
         /// <param name="profileId">ID of desired configuration profile to use</param>
         /// <returns>ConfigurationProfileAssignmentResource</returns>
-        protected async Task<ConfigurationProfileAssignmentResource> CreateAssignment(ResourceIdentifier vmId, string profileId)
+        protected async Task<AutomanageVmConfigurationProfileAssignmentResource> CreateAssignment(ResourceIdentifier vmId, string profileId)
         {
-            var data = new ConfigurationProfileAssignmentData();
-            data.Properties = new ConfigurationProfileAssignmentProperties() { ConfigurationProfile = profileId };
+            var data = new AutomanageConfigurationProfileAssignmentData()
+            {
+                Properties = new ConfigurationProfileAssignmentProperties() { ConfigurationProfile = profileId }
+            };
 
             // fetch assignments collection
-            var collection = ArmClient.GetConfigurationProfileAssignments(vmId);
+            var collection = ArmClient.GetAutomanageVmConfigurationProfileAssignments(vmId);
             var assignment = await collection.CreateOrUpdateAsync(WaitUntil.Completed, "default", data);
 
             return assignment.Value;
