@@ -46,12 +46,14 @@ namespace Azure.Communication.Email.Tests.Samples
                 emailContent,
                 emailRecipients);
 
-            SendEmailResult sendResult = await client.SendAsync(emailMessage);
+            EmailSendOperation emailSendOperation = await client.StartSendAsync(emailMessage, Guid.NewGuid());
+            Response<OperationStatus> response = await emailSendOperation.WaitForCompletionAsync();
+            var operationId = response.Value.Id;
 
-            Console.WriteLine($"Email id: {sendResult.MessageId}");
+            Console.WriteLine($"Email id: {operationId}");
             #endregion Snippet:Azure_Communication_Email_SendAsync
 
-            Assert.False(string.IsNullOrEmpty(sendResult.MessageId));
+            Assert.False(string.IsNullOrEmpty(operationId));
         }
 
         [Test]
@@ -119,13 +121,15 @@ namespace Azure.Communication.Email.Tests.Samples
                 emailContent,
                 emailRecipients);
 
-            SendEmailResult sendResult = await client.SendAsync(emailMessage);
+            EmailSendOperation emailSendOperation = await client.StartSendAsync(emailMessage, Guid.NewGuid());
+            Response<OperationStatus> response = await emailSendOperation.WaitForCompletionAsync();
+            var operationId = response.Value.Id;
 
-            Console.WriteLine($"Email id: {sendResult.MessageId}");
+            Console.WriteLine($"Email id: {operationId}");
             #endregion Snippet:Azure_Communication_Email_Send_Multiple_RecipientsAsync
 
-            Console.WriteLine(sendResult.MessageId);
-            Assert.False(string.IsNullOrEmpty(sendResult.MessageId));
+            Console.WriteLine(operationId);
+            Assert.False(string.IsNullOrEmpty(operationId));
         }
 
         [Test]
@@ -174,7 +178,11 @@ namespace Azure.Communication.Email.Tests.Samples
 
             emailMessage.Attachments.Add(emailAttachment);
 
-            SendEmailResult sendResult = await client.SendAsync(emailMessage);
+            EmailSendOperation emailSendOperation = await client.StartSendAsync(emailMessage, Guid.NewGuid());
+            Response<OperationStatus> response = await emailSendOperation.WaitForCompletionAsync();
+            var operationId = response.Value.Id;
+
+            Console.WriteLine($"Email id: {operationId}");
             #endregion Snippet:Azure_Communication_Email_Send_With_AttachmentsAsync
         }
 
@@ -207,12 +215,14 @@ namespace Azure.Communication.Email.Tests.Samples
                 emailRecipients);
 
             #region Snippet:Azure_Communication_Email_GetSendStatusAsync
-            SendEmailResult sendResult = await client.SendAsync(emailMessage);
+            EmailSendOperation emailSendOperation = await client.StartSendAsync(emailMessage, Guid.NewGuid());
+            Response<OperationStatus> response = await emailSendOperation.WaitForCompletionAsync();
+            var operationId = response.Value.Id;
 
-            SendStatusResult status = await client.GetSendStatusAsync(sendResult.MessageId);
+            Console.WriteLine($"Email id: {operationId}");
             #endregion Snippet:Azure_Communication_Email_GetSendStatusAsync
 
-            Assert.False(string.IsNullOrEmpty(sendResult.MessageId));
+            Assert.False(string.IsNullOrEmpty(operationId));
         }
     }
 }
