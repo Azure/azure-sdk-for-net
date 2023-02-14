@@ -17,6 +17,8 @@ security-scopes: https://dev.azuresynapse.net/.default
 modelerfour:
   lenient-model-deduplication: true
   seal-single-value-enum-by-default: true
+model-factory-for-hlc:
+- ManagedIntegrationRuntime
 ```
 
 ### Make Endpoint type as Uri
