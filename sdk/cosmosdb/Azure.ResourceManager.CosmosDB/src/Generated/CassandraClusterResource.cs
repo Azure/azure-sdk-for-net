@@ -89,6 +89,59 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of BackupResources in the CassandraCluster. </summary>
+        /// <returns> An object representing collection of BackupResources and their operations over a BackupResource. </returns>
+        public virtual BackupResourceCollection GetBackupResources()
+        {
+            return GetCachedClient(Client => new BackupResourceCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get the properties of an individual backup of this cluster that is available to restore.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/backups/{backupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraClusters_GetBackup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="backupId"> Id of a restorable backup of a Cassandra cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BackupResource>> GetBackupResourceAsync(string backupId, CancellationToken cancellationToken = default)
+        {
+            return await GetBackupResources().GetAsync(backupId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the properties of an individual backup of this cluster that is available to restore.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/backups/{backupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraClusters_GetBackup</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="backupId"> Id of a restorable backup of a Cassandra cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BackupResource> GetBackupResource(string backupId, CancellationToken cancellationToken = default)
+        {
+            return GetBackupResources().Get(backupId, cancellationToken);
+        }
+
         /// <summary> Gets a collection of CassandraDataCenterResources in the CassandraCluster. </summary>
         /// <returns> An object representing collection of CassandraDataCenterResources and their operations over a CassandraDataCenterResource. </returns>
         public virtual CassandraDataCenterCollection GetCassandraDataCenters()

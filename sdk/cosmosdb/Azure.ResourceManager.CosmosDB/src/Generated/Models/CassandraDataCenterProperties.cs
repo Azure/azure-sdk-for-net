@@ -32,8 +32,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="sku"> Virtual Machine SKU used for data centers. Default value is Standard_DS14_v2. </param>
         /// <param name="diskSku"> Disk SKU used for data centers. Default value is P30. </param>
         /// <param name="diskCapacity"> Number of disk used for data centers. Default value is 4. </param>
-        /// <param name="doesSupportAvailabilityZone"> If the azure data center has Availability Zone support, apply it to the Virtual Machine ScaleSet that host the cassandra data center virtual machines. </param>
-        internal CassandraDataCenterProperties(CassandraProvisioningState? provisioningState, AzureLocation? dataCenterLocation, ResourceIdentifier delegatedSubnetId, int? nodeCount, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, string base64EncodedCassandraYamlFragment, Uri managedDiskCustomerKeyUri, Uri backupStorageCustomerKeyUri, string sku, string diskSku, int? diskCapacity, bool? doesSupportAvailabilityZone)
+        /// <param name="doesSupportAvailabilityZone"> If the data center has Availability Zone feature, apply it to the Virtual Machine ScaleSet that host the cassandra data center virtual machines. </param>
+        /// <param name="authenticationMethodLdapProperties"> Ldap authentication method properties. This feature is in preview. </param>
+        internal CassandraDataCenterProperties(CassandraProvisioningState? provisioningState, AzureLocation? dataCenterLocation, ResourceIdentifier delegatedSubnetId, int? nodeCount, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, string base64EncodedCassandraYamlFragment, Uri managedDiskCustomerKeyUri, Uri backupStorageCustomerKeyUri, string sku, string diskSku, int? diskCapacity, bool? doesSupportAvailabilityZone, AuthenticationMethodLdapProperties authenticationMethodLdapProperties)
         {
             ProvisioningState = provisioningState;
             DataCenterLocation = dataCenterLocation;
@@ -47,6 +48,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             DiskSku = diskSku;
             DiskCapacity = diskCapacity;
             DoesSupportAvailabilityZone = doesSupportAvailabilityZone;
+            AuthenticationMethodLdapProperties = authenticationMethodLdapProperties;
         }
 
         /// <summary> The status of the resource at the time the operation was called. </summary>
@@ -71,7 +73,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string DiskSku { get; set; }
         /// <summary> Number of disk used for data centers. Default value is 4. </summary>
         public int? DiskCapacity { get; set; }
-        /// <summary> If the azure data center has Availability Zone support, apply it to the Virtual Machine ScaleSet that host the cassandra data center virtual machines. </summary>
+        /// <summary> If the data center has Availability Zone feature, apply it to the Virtual Machine ScaleSet that host the cassandra data center virtual machines. </summary>
         public bool? DoesSupportAvailabilityZone { get; set; }
+        /// <summary> Ldap authentication method properties. This feature is in preview. </summary>
+        public AuthenticationMethodLdapProperties AuthenticationMethodLdapProperties { get; set; }
     }
 }

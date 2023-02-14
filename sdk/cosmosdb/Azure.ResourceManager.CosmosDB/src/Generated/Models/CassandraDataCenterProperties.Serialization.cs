@@ -72,6 +72,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteBooleanValue(DoesSupportAvailabilityZone.Value);
             }
+            if (Optional.IsDefined(AuthenticationMethodLdapProperties))
+            {
+                writer.WritePropertyName("authenticationMethodLdapProperties"u8);
+                writer.WriteObjectValue(AuthenticationMethodLdapProperties);
+            }
             writer.WriteEndObject();
         }
 
@@ -89,6 +94,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> diskSku = default;
             Optional<int> diskCapacity = default;
             Optional<bool> availabilityZone = default;
+            Optional<AuthenticationMethodLdapProperties> authenticationMethodLdapProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -201,8 +207,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     availabilityZone = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("authenticationMethodLdapProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    authenticationMethodLdapProperties = AuthenticationMethodLdapProperties.DeserializeAuthenticationMethodLdapProperties(property.Value);
+                    continue;
+                }
             }
-            return new CassandraDataCenterProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(dataCenterLocation), delegatedSubnetId.Value, Optional.ToNullable(nodeCount), Optional.ToList(seedNodes), base64EncodedCassandraYamlFragment.Value, managedDiskCustomerKeyUri.Value, backupStorageCustomerKeyUri.Value, sku.Value, diskSku.Value, Optional.ToNullable(diskCapacity), Optional.ToNullable(availabilityZone));
+            return new CassandraDataCenterProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(dataCenterLocation), delegatedSubnetId.Value, Optional.ToNullable(nodeCount), Optional.ToList(seedNodes), base64EncodedCassandraYamlFragment.Value, managedDiskCustomerKeyUri.Value, backupStorageCustomerKeyUri.Value, sku.Value, diskSku.Value, Optional.ToNullable(diskCapacity), Optional.ToNullable(availabilityZone), authenticationMethodLdapProperties.Value);
         }
     }
 }
