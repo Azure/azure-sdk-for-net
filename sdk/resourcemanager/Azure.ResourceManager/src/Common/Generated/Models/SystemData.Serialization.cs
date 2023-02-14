@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Models
             Optional<DateTimeOffset> lastModifiedAt = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("createdBy"))
+                if (property.NameEquals("createdBy"u8))
                 {
                     createdBy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdByType"))
+                if (property.NameEquals("createdByType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Models
                     createdByType = new CreatedByType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("createdAt"))
+                if (property.NameEquals("createdAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.Models
                     createdAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastModifiedBy"))
+                if (property.NameEquals("lastModifiedBy"u8))
                 {
                     lastModifiedBy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastModifiedByType"))
+                if (property.NameEquals("lastModifiedByType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Models
                     lastModifiedByType = new CreatedByType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lastModifiedAt"))
+                if (property.NameEquals("lastModifiedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

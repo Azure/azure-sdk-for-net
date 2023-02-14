@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Content))
             {
-                writer.WritePropertyName("content");
+                writer.WritePropertyName("content"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Content);
 #else
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Optional<BinaryData> content = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("content"))
+                if (property.NameEquals("content"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

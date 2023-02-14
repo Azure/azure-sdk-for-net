@@ -3,11 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Microsoft.Extensions.Azure;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests

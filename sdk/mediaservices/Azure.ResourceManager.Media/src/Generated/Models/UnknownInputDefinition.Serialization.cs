@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Media.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             if (Optional.IsCollectionDefined(IncludedTracks))
             {
-                writer.WritePropertyName("includedTracks");
+                writer.WritePropertyName("includedTracks"u8);
                 writer.WriteStartArray();
                 foreach (var item in IncludedTracks)
                 {
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Media.Models
             Optional<IList<TrackDescriptor>> includedTracks = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("includedTracks"))
+                if (property.NameEquals("includedTracks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

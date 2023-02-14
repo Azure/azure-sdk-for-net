@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("parameters");
+            writer.WritePropertyName("parameters"u8);
             writer.WriteObjectValue(Properties);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Cdn.Models
             MatchVariable name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     parameters = HostNameMatchCondition.DeserializeHostNameMatchCondition(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = new MatchVariable(property.Value.GetString());
                     continue;

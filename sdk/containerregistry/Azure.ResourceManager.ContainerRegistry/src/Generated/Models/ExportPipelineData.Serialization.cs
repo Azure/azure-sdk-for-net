@@ -20,24 +20,24 @@ namespace Azure.ResourceManager.ContainerRegistry
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Target))
             {
-                writer.WritePropertyName("target");
+                writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
             }
             if (Optional.IsCollectionDefined(Options))
             {
-                writer.WritePropertyName("options");
+                writer.WritePropertyName("options"u8);
                 writer.WriteStartArray();
                 foreach (var item in Options)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             Optional<ContainerRegistryProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,22 +82,22 @@ namespace Azure.ResourceManager.ContainerRegistry
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("target"))
+                        if (property0.NameEquals("target"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             target = ExportPipelineTargetProperties.DeserializeExportPipelineTargetProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("options"))
+                        if (property0.NameEquals("options"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             options = array;
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

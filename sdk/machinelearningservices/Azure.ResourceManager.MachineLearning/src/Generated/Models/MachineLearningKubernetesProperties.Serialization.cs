@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (RelayConnectionString != null)
                 {
-                    writer.WritePropertyName("relayConnectionString");
+                    writer.WritePropertyName("relayConnectionString"u8);
                     writer.WriteStringValue(RelayConnectionString);
                 }
                 else
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (ServiceBusConnectionString != null)
                 {
-                    writer.WritePropertyName("serviceBusConnectionString");
+                    writer.WritePropertyName("serviceBusConnectionString"u8);
                     writer.WriteStringValue(ServiceBusConnectionString);
                 }
                 else
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (ExtensionPrincipalId != null)
                 {
-                    writer.WritePropertyName("extensionPrincipalId");
+                    writer.WritePropertyName("extensionPrincipalId"u8);
                     writer.WriteStringValue(ExtensionPrincipalId);
                 }
                 else
@@ -54,27 +54,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(ExtensionInstanceReleaseTrain))
             {
-                writer.WritePropertyName("extensionInstanceReleaseTrain");
+                writer.WritePropertyName("extensionInstanceReleaseTrain"u8);
                 writer.WriteStringValue(ExtensionInstanceReleaseTrain);
             }
             if (Optional.IsDefined(VcName))
             {
-                writer.WritePropertyName("vcName");
+                writer.WritePropertyName("vcName"u8);
                 writer.WriteStringValue(VcName);
             }
             if (Optional.IsDefined(Namespace))
             {
-                writer.WritePropertyName("namespace");
+                writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
             if (Optional.IsDefined(DefaultInstanceType))
             {
-                writer.WritePropertyName("defaultInstanceType");
+                writer.WritePropertyName("defaultInstanceType"u8);
                 writer.WriteStringValue(DefaultInstanceType);
             }
             if (Optional.IsCollectionDefined(InstanceTypes))
             {
-                writer.WritePropertyName("instanceTypes");
+                writer.WritePropertyName("instanceTypes"u8);
                 writer.WriteStartObject();
                 foreach (var item in InstanceTypes)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IDictionary<string, MachineLearningInstanceTypeSchema>> instanceTypes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("relayConnectionString"))
+                if (property.NameEquals("relayConnectionString"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     relayConnectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceBusConnectionString"))
+                if (property.NameEquals("serviceBusConnectionString"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     serviceBusConnectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("extensionPrincipalId"))
+                if (property.NameEquals("extensionPrincipalId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -128,27 +128,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     extensionPrincipalId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("extensionInstanceReleaseTrain"))
+                if (property.NameEquals("extensionInstanceReleaseTrain"u8))
                 {
                     extensionInstanceReleaseTrain = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vcName"))
+                if (property.NameEquals("vcName"u8))
                 {
                     vcName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("namespace"))
+                if (property.NameEquals("namespace"u8))
                 {
                     @namespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultInstanceType"))
+                if (property.NameEquals("defaultInstanceType"u8))
                 {
                     defaultInstanceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceTypes"))
+                if (property.NameEquals("instanceTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

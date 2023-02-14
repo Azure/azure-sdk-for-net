@@ -18,7 +18,7 @@ namespace Azure.Maps.Search.Models
             Optional<double> lon = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lat"))
+                if (property.NameEquals("lat"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.Maps.Search.Models
                     lat = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("lon"))
+                if (property.NameEquals("lon"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

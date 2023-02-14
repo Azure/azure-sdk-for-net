@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("version");
+            writer.WritePropertyName("version"u8);
             writer.WriteNumberValue(Version);
-            writer.WritePropertyName("azureKeyIdentifier");
+            writer.WritePropertyName("azureKeyIdentifier"u8);
             writer.WriteNumberValue(AzureKeyIdentifier);
-            writer.WritePropertyName("vendorKeyFingerprint");
+            writer.WritePropertyName("vendorKeyFingerprint"u8);
             writer.WriteStringValue(VendorKeyFingerprint);
-            writer.WritePropertyName("encryptedTransportKey");
+            writer.WritePropertyName("encryptedTransportKey"u8);
             writer.WriteStringValue(EncryptedTransportKey);
-            writer.WritePropertyName("signedTransportKey");
+            writer.WritePropertyName("signedTransportKey"u8);
             writer.WriteStringValue(SignedTransportKey);
-            writer.WritePropertyName("sims");
+            writer.WritePropertyName("sims"u8);
             writer.WriteStartArray();
             foreach (var item in Sims)
             {

@@ -15,7 +15,7 @@ namespace Azure.Communication.Email.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("to");
+            writer.WritePropertyName("to"u8);
             writer.WriteStartArray();
             foreach (var item in To)
             {
@@ -24,7 +24,7 @@ namespace Azure.Communication.Email.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(CC))
             {
-                writer.WritePropertyName("CC");
+                writer.WritePropertyName("CC"u8);
                 writer.WriteStartArray();
                 foreach (var item in CC)
                 {
@@ -34,7 +34,7 @@ namespace Azure.Communication.Email.Models
             }
             if (Optional.IsCollectionDefined(BCC))
             {
-                writer.WritePropertyName("bCC");
+                writer.WritePropertyName("bCC"u8);
                 writer.WriteStartArray();
                 foreach (var item in BCC)
                 {

@@ -14,11 +14,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 {
     internal static class TelemetryItemValidationHelper
     {
-        public static void AssertLog_As_MessageTelemetry(
+        public static void AssertMessageTelemetry(
             TelemetryItem telemetryItem,
             string expectedSeverityLevel,
             string expectedMessage,
-            IDictionary<string, string> expectedMeessageProperties,
+            IDictionary<string, string> expectedMessageProperties,
             string expectedSpanId,
             string expectedTraceId)
         {
@@ -43,10 +43,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
 
             var messageData = (MessageData)telemetryItem.Data.BaseData;
-            Assert.Equal(expectedSeverityLevel, messageData.SeverityLevel);
+
+            if (expectedSeverityLevel == null)
+            {
+                Assert.Null(messageData.SeverityLevel);
+            }
+            else
+            {
+                Assert.Equal(expectedSeverityLevel, messageData.SeverityLevel);
+            }
+
             Assert.Equal(expectedMessage, messageData.Message);
 
-            foreach (var prop in expectedMeessageProperties)
+            foreach (var prop in expectedMessageProperties)
             {
                 Assert.Equal(prop.Value, messageData.Properties[prop.Key]);
             }

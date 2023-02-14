@@ -19,7 +19,7 @@ namespace Azure.Communication.Chat
             Optional<IReadOnlyList<ChatError>> invalidParticipants = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("chatThread"))
+                if (property.NameEquals("chatThread"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.Communication.Chat
                     chatThread = ChatThreadPropertiesInternal.DeserializeChatThreadPropertiesInternal(property.Value);
                     continue;
                 }
-                if (property.NameEquals("invalidParticipants"))
+                if (property.NameEquals("invalidParticipants"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -20,7 +20,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hits"))
+                if (property.NameEquals("hits"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     hits = array;
                     continue;
                 }
-                if (property.NameEquals("hitCount"))
+                if (property.NameEquals("hitCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     hitCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("continuationToken"))
+                if (property.NameEquals("continuationToken"u8))
                 {
                     continuationToken = property.Value.GetString();
                     continue;

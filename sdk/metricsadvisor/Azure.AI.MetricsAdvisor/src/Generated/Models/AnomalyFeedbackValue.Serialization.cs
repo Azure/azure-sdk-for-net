@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("anomalyValue");
+            writer.WritePropertyName("anomalyValue"u8);
             writer.WriteStringValue(AnomalyValue.ToString());
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             AnomalyValue anomalyValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("anomalyValue"))
+                if (property.NameEquals("anomalyValue"u8))
                 {
                     anomalyValue = new AnomalyValue(property.Value.GetString());
                     continue;

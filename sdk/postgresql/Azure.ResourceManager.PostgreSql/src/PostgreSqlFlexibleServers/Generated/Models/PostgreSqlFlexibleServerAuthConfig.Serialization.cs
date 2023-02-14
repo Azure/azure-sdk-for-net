@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ActiveDirectoryAuth))
             {
-                writer.WritePropertyName("activeDirectoryAuth");
+                writer.WritePropertyName("activeDirectoryAuth"u8);
                 writer.WriteStringValue(ActiveDirectoryAuth.Value.ToString());
             }
             if (Optional.IsDefined(PasswordAuth))
             {
-                writer.WritePropertyName("passwordAuth");
+                writer.WritePropertyName("passwordAuth"u8);
                 writer.WriteStringValue(PasswordAuth.Value.ToString());
             }
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
             writer.WriteEndObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("activeDirectoryAuth"))
+                if (property.NameEquals("activeDirectoryAuth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     activeDirectoryAuth = new PostgreSqlFlexibleServerActiveDirectoryAuthEnum(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("passwordAuth"))
+                if (property.NameEquals("passwordAuth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     passwordAuth = new PostgreSqlFlexibleServerPasswordAuthEnum(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Model))
             {
-                writer.WritePropertyName("model");
+                writer.WritePropertyName("model"u8);
                 writer.WriteObjectValue(Model);
             }
             if (Optional.IsDefined(ScaleSettings))
             {
-                writer.WritePropertyName("scaleSettings");
+                writer.WritePropertyName("scaleSettings"u8);
                 writer.WriteObjectValue(ScaleSettings);
             }
             if (Optional.IsDefined(RaiPolicyName))
             {
-                writer.WritePropertyName("raiPolicyName");
+                writer.WritePropertyName("raiPolicyName"u8);
                 writer.WriteStringValue(RaiPolicyName);
             }
             writer.WriteEndObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<ServiceAccountCallRateLimit> callRateLimit = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     provisioningState = new CognitiveServicesAccountDeploymentProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("model"))
+                if (property.NameEquals("model"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     model = CognitiveServicesAccountDeploymentModel.DeserializeCognitiveServicesAccountDeploymentModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("scaleSettings"))
+                if (property.NameEquals("scaleSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     scaleSettings = CognitiveServicesAccountDeploymentScaleSettings.DeserializeCognitiveServicesAccountDeploymentScaleSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     capabilities = dictionary;
                     continue;
                 }
-                if (property.NameEquals("raiPolicyName"))
+                if (property.NameEquals("raiPolicyName"u8))
                 {
                     raiPolicyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("callRateLimit"))
+                if (property.NameEquals("callRateLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

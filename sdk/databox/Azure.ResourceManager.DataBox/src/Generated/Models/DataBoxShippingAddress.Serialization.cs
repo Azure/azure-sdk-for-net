@@ -15,45 +15,45 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("streetAddress1");
+            writer.WritePropertyName("streetAddress1"u8);
             writer.WriteStringValue(StreetAddress1);
             if (Optional.IsDefined(StreetAddress2))
             {
-                writer.WritePropertyName("streetAddress2");
+                writer.WritePropertyName("streetAddress2"u8);
                 writer.WriteStringValue(StreetAddress2);
             }
             if (Optional.IsDefined(StreetAddress3))
             {
-                writer.WritePropertyName("streetAddress3");
+                writer.WritePropertyName("streetAddress3"u8);
                 writer.WriteStringValue(StreetAddress3);
             }
             if (Optional.IsDefined(City))
             {
-                writer.WritePropertyName("city");
+                writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
             if (Optional.IsDefined(StateOrProvince))
             {
-                writer.WritePropertyName("stateOrProvince");
+                writer.WritePropertyName("stateOrProvince"u8);
                 writer.WriteStringValue(StateOrProvince);
             }
-            writer.WritePropertyName("country");
+            writer.WritePropertyName("country"u8);
             writer.WriteStringValue(Country);
-            writer.WritePropertyName("postalCode");
+            writer.WritePropertyName("postalCode"u8);
             writer.WriteStringValue(PostalCode);
             if (Optional.IsDefined(ZipExtendedCode))
             {
-                writer.WritePropertyName("zipExtendedCode");
+                writer.WritePropertyName("zipExtendedCode"u8);
                 writer.WriteStringValue(ZipExtendedCode);
             }
             if (Optional.IsDefined(CompanyName))
             {
-                writer.WritePropertyName("companyName");
+                writer.WritePropertyName("companyName"u8);
                 writer.WriteStringValue(CompanyName);
             }
             if (Optional.IsDefined(AddressType))
             {
-                writer.WritePropertyName("addressType");
+                writer.WritePropertyName("addressType"u8);
                 writer.WriteStringValue(AddressType.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -73,52 +73,52 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<DataBoxShippingAddressType> addressType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("streetAddress1"))
+                if (property.NameEquals("streetAddress1"u8))
                 {
                     streetAddress1 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("streetAddress2"))
+                if (property.NameEquals("streetAddress2"u8))
                 {
                     streetAddress2 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("streetAddress3"))
+                if (property.NameEquals("streetAddress3"u8))
                 {
                     streetAddress3 = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("city"))
+                if (property.NameEquals("city"u8))
                 {
                     city = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stateOrProvince"))
+                if (property.NameEquals("stateOrProvince"u8))
                 {
                     stateOrProvince = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("country"))
+                if (property.NameEquals("country"u8))
                 {
                     country = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("postalCode"))
+                if (property.NameEquals("postalCode"u8))
                 {
                     postalCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("zipExtendedCode"))
+                if (property.NameEquals("zipExtendedCode"u8))
                 {
                     zipExtendedCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("companyName"))
+                if (property.NameEquals("companyName"u8))
                 {
                     companyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("addressType"))
+                if (property.NameEquals("addressType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

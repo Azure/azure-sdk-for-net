@@ -18,37 +18,37 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(RepoId))
             {
-                writer.WritePropertyName("repoId");
+                writer.WritePropertyName("repoId"u8);
                 writer.WriteStringValue(RepoId);
             }
             if (Optional.IsDefined(RepoUri))
             {
-                writer.WritePropertyName("repoUrl");
+                writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
             if (Optional.IsDefined(OrgName))
             {
-                writer.WritePropertyName("orgName");
+                writer.WritePropertyName("orgName"u8);
                 writer.WriteStringValue(OrgName);
             }
             if (Optional.IsDefined(ProjectName))
             {
-                writer.WritePropertyName("projectName");
+                writer.WritePropertyName("projectName"u8);
                 writer.WriteStringValue(ProjectName);
             }
             if (Optional.IsDefined(Visibility))
             {
-                writer.WritePropertyName("visibility");
+                writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility);
             }
             if (Optional.IsDefined(ActionableRemediation))
             {
-                writer.WritePropertyName("actionableRemediation");
+                writer.WritePropertyName("actionableRemediation"u8);
                 writer.WriteObjectValue(ActionableRemediation);
             }
             writer.WriteEndObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             Optional<ActionableRemediation> actionableRemediation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("repoId"))
+                if (property.NameEquals("repoId"u8))
                 {
                     repoId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("repoUrl"))
+                if (property.NameEquals("repoUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,22 +90,22 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     repoUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("orgName"))
+                if (property.NameEquals("orgName"u8))
                 {
                     orgName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("projectName"))
+                if (property.NameEquals("projectName"u8))
                 {
                     projectName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("visibility"))
+                if (property.NameEquals("visibility"u8))
                 {
                     visibility = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("actionableRemediation"))
+                if (property.NameEquals("actionableRemediation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

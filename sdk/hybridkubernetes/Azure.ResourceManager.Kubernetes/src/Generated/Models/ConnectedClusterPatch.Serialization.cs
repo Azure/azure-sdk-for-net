@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             }
             if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Properties);
 #else

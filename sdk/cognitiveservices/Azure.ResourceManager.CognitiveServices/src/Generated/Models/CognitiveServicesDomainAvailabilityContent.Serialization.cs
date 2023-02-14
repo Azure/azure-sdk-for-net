@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("subdomainName");
+            writer.WritePropertyName("subdomainName"u8);
             writer.WriteStringValue(SubdomainName);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ResourceType);
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WriteEndObject();

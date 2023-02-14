@@ -62,6 +62,11 @@ namespace Azure.Identity
                 _beforeBuildClient(pubAppBuilder);
             }
 
+            if (DisableInstanceDiscovery)
+            {
+                pubAppBuilder.WithInstanceDiscovery(false);
+            }
+
             return new ValueTask<IPublicClientApplication>(pubAppBuilder.Build());
         }
 

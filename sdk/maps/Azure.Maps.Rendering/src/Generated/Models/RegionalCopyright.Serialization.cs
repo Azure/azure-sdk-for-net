@@ -19,7 +19,7 @@ namespace Azure.Maps.Rendering
             Optional<RegionalCopyrightCountry> country = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("copyrights"))
+                if (property.NameEquals("copyrights"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.Maps.Rendering
                     copyrights = array;
                     continue;
                 }
-                if (property.NameEquals("country"))
+                if (property.NameEquals("country"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

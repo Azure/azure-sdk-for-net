@@ -17,22 +17,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BitRateLimit))
             {
-                writer.WritePropertyName("bitRateLimit");
+                writer.WritePropertyName("bitRateLimit"u8);
                 writer.WriteNumberValue(BitRateLimit.Value);
             }
             if (Optional.IsDefined(EncodingInterval))
             {
-                writer.WritePropertyName("encodingInterval");
+                writer.WritePropertyName("encodingInterval"u8);
                 writer.WriteNumberValue(EncodingInterval.Value);
             }
             if (Optional.IsDefined(FrameRateLimit))
             {
-                writer.WritePropertyName("frameRateLimit");
+                writer.WritePropertyName("frameRateLimit"u8);
                 writer.WriteNumberValue(FrameRateLimit.Value);
             }
             if (Optional.IsDefined(GuaranteedFrameRate))
             {
-                writer.WritePropertyName("guaranteedFrameRate");
+                writer.WritePropertyName("guaranteedFrameRate"u8);
                 writer.WriteBooleanValue(GuaranteedFrameRate.Value);
             }
             writer.WriteEndObject();
@@ -46,7 +46,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<bool> guaranteedFrameRate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("bitRateLimit"))
+                if (property.NameEquals("bitRateLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     bitRateLimit = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("encodingInterval"))
+                if (property.NameEquals("encodingInterval"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     encodingInterval = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("frameRateLimit"))
+                if (property.NameEquals("frameRateLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +76,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     frameRateLimit = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("guaranteedFrameRate"))
+                if (property.NameEquals("guaranteedFrameRate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

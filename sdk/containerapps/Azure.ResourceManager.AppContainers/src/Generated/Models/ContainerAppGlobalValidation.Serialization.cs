@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(UnauthenticatedClientAction))
             {
-                writer.WritePropertyName("unauthenticatedClientAction");
+                writer.WritePropertyName("unauthenticatedClientAction"u8);
                 writer.WriteStringValue(UnauthenticatedClientAction.Value.ToSerialString());
             }
             if (Optional.IsDefined(RedirectToProvider))
             {
-                writer.WritePropertyName("redirectToProvider");
+                writer.WritePropertyName("redirectToProvider"u8);
                 writer.WriteStringValue(RedirectToProvider);
             }
             if (Optional.IsCollectionDefined(ExcludedPaths))
             {
-                writer.WritePropertyName("excludedPaths");
+                writer.WritePropertyName("excludedPaths"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExcludedPaths)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<IList<string>> excludedPaths = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("unauthenticatedClientAction"))
+                if (property.NameEquals("unauthenticatedClientAction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                     unauthenticatedClientAction = property.Value.GetString().ToContainerAppUnauthenticatedClientActionV2();
                     continue;
                 }
-                if (property.NameEquals("redirectToProvider"))
+                if (property.NameEquals("redirectToProvider"u8))
                 {
                     redirectToProvider = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("excludedPaths"))
+                if (property.NameEquals("excludedPaths"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

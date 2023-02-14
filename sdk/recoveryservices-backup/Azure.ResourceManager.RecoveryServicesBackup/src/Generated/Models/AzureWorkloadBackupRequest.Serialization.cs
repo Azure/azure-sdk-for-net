@@ -18,20 +18,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BackupType))
             {
-                writer.WritePropertyName("backupType");
+                writer.WritePropertyName("backupType"u8);
                 writer.WriteStringValue(BackupType.Value.ToString());
             }
             if (Optional.IsDefined(EnableCompression))
             {
-                writer.WritePropertyName("enableCompression");
+                writer.WritePropertyName("enableCompression"u8);
                 writer.WriteBooleanValue(EnableCompression.Value);
             }
             if (Optional.IsDefined(RecoveryPointExpiryTimeInUTC))
             {
-                writer.WritePropertyName("recoveryPointExpiryTimeInUTC");
+                writer.WritePropertyName("recoveryPointExpiryTimeInUTC"u8);
                 writer.WriteStringValue(RecoveryPointExpiryTimeInUTC.Value, "O");
             }
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("backupType"))
+                if (property.NameEquals("backupType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     backupType = new BackupType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("enableCompression"))
+                if (property.NameEquals("enableCompression"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     enableCompression = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointExpiryTimeInUTC"))
+                if (property.NameEquals("recoveryPointExpiryTimeInUTC"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointExpiryTimeInUTC = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;

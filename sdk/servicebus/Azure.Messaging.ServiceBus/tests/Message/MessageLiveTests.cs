@@ -49,6 +49,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 msg.ApplicationProperties.Add("DateTime", DateTime.UtcNow);
                 msg.ApplicationProperties.Add("DateTimeOffset", DateTimeOffset.UtcNow);
                 msg.ApplicationProperties.Add("TimeSpan", TimeSpan.FromMinutes(5));
+                msg.ApplicationProperties.Add("null", null);
 
                 await sender.SendMessageAsync(msg);
                 var receivedMsg = await receiver.ReceiveMessageAsync();
@@ -73,10 +74,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 Assert.IsInstanceOf(typeof(DateTimeOffset), receivedMsg.ApplicationProperties["DateTimeOffset"]);
                 Assert.IsInstanceOf(typeof(TimeSpan), receivedMsg.ApplicationProperties["TimeSpan"]);
 
-                var bytes = receivedMsg.ToAmqpBytes();
+                Assert.IsNull(receivedMsg.ApplicationProperties["null"]);
+                var bytes = receivedMsg.GetRawAmqpMessage().ToBytes();
 
-                var copyReceivedMessage = ServiceBusAmqpExtensions.FromAmqpBytes(
-                    bytes,
+                var copyReceivedMessage = ServiceBusReceivedMessage.FromAmqpMessage(
+                    AmqpAnnotatedMessage.FromBytes(bytes),
                     BinaryData.FromBytes(receivedMsg.LockTokenGuid.ToByteArray()));
 
                 Assert.AreEqual(receivedMsg.LockToken, copyReceivedMessage.LockToken);
@@ -526,6 +528,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 // footer
                 amqpMessage.Footer.Add("footerKey1", "footerVal1");
                 amqpMessage.Footer.Add("footerKey2", "footerVal2");
+                amqpMessage.Footer.Add("footerKey3", null);
 
                 // properties
                 amqpMessage.Properties.AbsoluteExpiryTime = DateTimeOffset.Now.AddDays(1);
@@ -547,11 +550,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 amqpMessage.ApplicationProperties.Add("applicationKey2", "applicationVal2");
 
                 // message annotations
-                amqpMessage.MessageAnnotations.Add("messageAnnotationKey1", "messageAnnotationVal1");
+                amqpMessage.MessageAnnotations.Add("messageAnnotationKey1", null);
                 amqpMessage.MessageAnnotations.Add("messageAnnotationKey2", "messageAnnotationVal2");
 
                 // delivery annotations
-                amqpMessage.DeliveryAnnotations.Add("deliveryAnnotationKey1", "deliveryAnnotationVal1");
+                amqpMessage.DeliveryAnnotations.Add("deliveryAnnotationKey1", null);
                 amqpMessage.DeliveryAnnotations.Add("deliveryAnnotationKey2", "deliveryAnnotationVal2");
 
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
@@ -596,16 +599,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 Assert.AreEqual(received.ApplicationProperties["applicationKey2"], "applicationVal2");
 
                 // message annotations
-                Assert.AreEqual(received.MessageAnnotations["messageAnnotationKey1"], "messageAnnotationVal1");
+                Assert.IsNull(received.MessageAnnotations["messageAnnotationKey1"]);
                 Assert.AreEqual(received.MessageAnnotations["messageAnnotationKey2"], "messageAnnotationVal2");
 
                 // delivery annotations
-                Assert.AreEqual(received.DeliveryAnnotations["deliveryAnnotationKey1"], "deliveryAnnotationVal1");
+                Assert.IsNull(received.DeliveryAnnotations["deliveryAnnotationKey1"]);
                 Assert.AreEqual(received.DeliveryAnnotations["deliveryAnnotationKey2"], "deliveryAnnotationVal2");
 
                 // footer
                 Assert.AreEqual("footerVal1", received.Footer["footerKey1"]);
                 Assert.AreEqual("footerVal2", received.Footer["footerKey2"]);
+                Assert.IsNull(received.Footer["footerKey3"]);
             }
         }
 
@@ -679,10 +683,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                     receiver = client.CreateReceiver(scope.QueueName);
 
                 ServiceBusReceivedMessage received = await receiver.ReceiveMessageAsync();
+                received.AmqpMessage.MessageAnnotations[AmqpMessageConstants.MessageStateName] = 1;
 
-                var serializedBytes = received.ToAmqpBytes();
-                var deserialized = ServiceBusAmqpExtensions.FromAmqpBytes(
-                    serializedBytes,
+                var serializedBytes = received.GetRawAmqpMessage().ToBytes();
+                var deserialized = ServiceBusReceivedMessage.FromAmqpMessage(
+                    AmqpAnnotatedMessage.FromBytes(serializedBytes),
                     BinaryData.FromBytes(received.LockTokenGuid.ToByteArray()));
                 Assert.AreEqual(received.ContentType, deserialized.ContentType);
                 Assert.AreEqual(received.CorrelationId, deserialized.CorrelationId);

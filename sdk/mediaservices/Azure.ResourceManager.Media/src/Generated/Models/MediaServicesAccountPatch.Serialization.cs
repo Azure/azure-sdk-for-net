@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Media.Models
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(StorageAccounts))
             {
-                writer.WritePropertyName("storageAccounts");
+                writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 if (StorageAuthentication != null)
                 {
-                    writer.WritePropertyName("storageAuthentication");
+                    writer.WritePropertyName("storageAuthentication"u8);
                     writer.WriteStringValue(StorageAuthentication.Value.ToString());
                 }
                 else
@@ -57,19 +57,19 @@ namespace Azure.ResourceManager.Media.Models
             }
             if (Optional.IsDefined(Encryption))
             {
-                writer.WritePropertyName("encryption");
+                writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
             if (Optional.IsDefined(KeyDelivery))
             {
-                writer.WritePropertyName("keyDelivery");
+                writer.WritePropertyName("keyDelivery"u8);
                 writer.WriteObjectValue(KeyDelivery);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 if (PublicNetworkAccess != null)
                 {
-                    writer.WritePropertyName("publicNetworkAccess");
+                    writer.WritePropertyName("publicNetworkAccess"u8);
                     writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
                 }
                 else

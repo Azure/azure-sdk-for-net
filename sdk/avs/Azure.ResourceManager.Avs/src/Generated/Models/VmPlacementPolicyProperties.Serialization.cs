@@ -16,25 +16,25 @@ namespace Azure.ResourceManager.Avs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("vmMembers");
+            writer.WritePropertyName("vmMembers"u8);
             writer.WriteStartArray();
             foreach (var item in VmMembers)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("affinityType");
+            writer.WritePropertyName("affinityType"u8);
             writer.WriteStringValue(AffinityType.ToString());
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(PolicyType.ToString());
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             writer.WriteEndObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<PlacementPolicyProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vmMembers"))
+                if (property.NameEquals("vmMembers"u8))
                 {
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -60,17 +60,17 @@ namespace Azure.ResourceManager.Avs.Models
                     vmMembers = array;
                     continue;
                 }
-                if (property.NameEquals("affinityType"))
+                if (property.NameEquals("affinityType"u8))
                 {
                     affinityType = new AvsPlacementPolicyAffinityType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new PlacementPolicyType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.Avs.Models
                     state = new PlacementPolicyState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

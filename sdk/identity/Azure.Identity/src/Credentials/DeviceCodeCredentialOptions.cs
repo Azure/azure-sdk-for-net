@@ -11,7 +11,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options to configure the <see cref="DeviceCodeCredential"/>.
     /// </summary>
-    public class DeviceCodeCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
+    public class DeviceCodeCredentialOptions : TokenCredentialOptions, ITokenCacheOptions, ISupportsDisableInstanceDiscovery
     {
         private string _tenantId;
 
@@ -56,5 +56,8 @@ namespace Azure.Identity
         /// The callback which will be executed to display the device code login details to the user. In not specified the device code and login instructions will be printed to the console.
         /// </summary>
         public Func<DeviceCodeInfo, CancellationToken, Task> DeviceCodeCallback { get; set; }
+
+        /// <inheritdoc/>
+        public bool DisableInstanceDiscovery { get; set; }
     }
 }

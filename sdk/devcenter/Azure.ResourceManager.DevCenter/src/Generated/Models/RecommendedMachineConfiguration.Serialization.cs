@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             Optional<ResourceRange> vCpus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("memory"))
+                if (property.NameEquals("memory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     memory = ResourceRange.DeserializeResourceRange(property.Value);
                     continue;
                 }
-                if (property.NameEquals("vCPUs"))
+                if (property.NameEquals("vCPUs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

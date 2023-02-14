@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<IotHubScaleType> scaleType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minimum"))
+                if (property.NameEquals("minimum"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     minimum = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("maximum"))
+                if (property.NameEquals("maximum"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     maximum = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("default"))
+                if (property.NameEquals("default"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     @default = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("scaleType"))
+                if (property.NameEquals("scaleType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

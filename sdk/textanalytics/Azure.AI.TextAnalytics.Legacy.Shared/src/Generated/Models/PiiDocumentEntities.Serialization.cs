@@ -22,17 +22,17 @@ namespace Azure.AI.TextAnalytics.Legacy
             Optional<DocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("redactedText"))
+                if (property.NameEquals("redactedText"u8))
                 {
                     redactedText = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("entities"))
+                if (property.NameEquals("entities"u8))
                 {
                     List<Entity> array = new List<Entity>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -42,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     entities = array;
                     continue;
                 }
-                if (property.NameEquals("warnings"))
+                if (property.NameEquals("warnings"u8))
                 {
                     List<TextAnalyticsWarning> array = new List<TextAnalyticsWarning>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -52,7 +52,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     warnings = array;
                     continue;
                 }
-                if (property.NameEquals("statistics"))
+                if (property.NameEquals("statistics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

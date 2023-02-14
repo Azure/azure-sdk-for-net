@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Blueprint.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Code))
             {
-                writer.WritePropertyName("code");
+                writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
             if (Optional.IsDefined(Message))
             {
-                writer.WritePropertyName("message");
+                writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Blueprint.Models
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;

@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetResourceId");
+            writer.WritePropertyName("targetResourceId"u8);
             writer.WriteStringValue(TargetResourceId);
-            writer.WritePropertyName("targetRegion");
+            writer.WritePropertyName("targetRegion"u8);
             writer.WriteStringValue(TargetRegion);
-            writer.WritePropertyName("dataMoveLevel");
+            writer.WritePropertyName("dataMoveLevel"u8);
             writer.WriteStringValue(DataMoveLevel.ToString());
             if (Optional.IsCollectionDefined(SourceContainerArmIds))
             {
-                writer.WritePropertyName("sourceContainerArmIds");
+                writer.WritePropertyName("sourceContainerArmIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in SourceContainerArmIds)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(IgnoreMoved))
             {
-                writer.WritePropertyName("ignoreMoved");
+                writer.WritePropertyName("ignoreMoved"u8);
                 writer.WriteBooleanValue(IgnoreMoved.Value);
             }
             writer.WriteEndObject();

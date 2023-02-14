@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.RecoveryServices
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of VaultResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VaultResources and their operations over a VaultResource. </returns>
-        public virtual VaultCollection GetVaults()
+        /// <summary> Gets a collection of RecoveryServicesVaultResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of RecoveryServicesVaultResources and their operations over a RecoveryServicesVaultResource. </returns>
+        public virtual RecoveryServicesVaultCollection GetRecoveryServicesVaults()
         {
-            return GetCachedClient(Client => new VaultCollection(Client, Id));
+            return GetCachedClient(Client => new RecoveryServicesVaultCollection(Client, Id));
         }
 
         /// <summary>
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="location"> Location of the resource. </param>
         /// <param name="content"> Contains information about Resource type and Resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityRecoveryServiceAsync(AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecoveryServicesNameAvailabilityResult>> CheckRecoveryServicesNameAvailabilityAsync(AzureLocation location, RecoveryServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = RecoveryServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CheckNameAvailabilityRecoveryService");
+            using var scope = RecoveryServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CheckRecoveryServicesNameAvailability");
             scope.Start();
             try
             {
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="location"> Location of the resource. </param>
         /// <param name="content"> Contains information about Resource type and Resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailabilityRecoveryService(AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<RecoveryServicesNameAvailabilityResult> CheckRecoveryServicesNameAvailability(AzureLocation location, RecoveryServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = RecoveryServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CheckNameAvailabilityRecoveryService");
+            using var scope = RecoveryServicesClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CheckRecoveryServicesNameAvailability");
             scope.Start();
             try
             {

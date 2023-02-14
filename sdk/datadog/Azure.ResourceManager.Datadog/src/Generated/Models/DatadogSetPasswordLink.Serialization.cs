@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Datadog.Models
             Optional<string> setPasswordLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("setPasswordLink"))
+                if (property.NameEquals("setPasswordLink"u8))
                 {
                     setPasswordLink = property.Value.GetString();
                     continue;

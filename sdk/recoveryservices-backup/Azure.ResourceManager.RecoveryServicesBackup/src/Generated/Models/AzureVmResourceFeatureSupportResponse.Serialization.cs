@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<SupportStatus> supportStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("supportStatus"))
+                if (property.NameEquals("supportStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

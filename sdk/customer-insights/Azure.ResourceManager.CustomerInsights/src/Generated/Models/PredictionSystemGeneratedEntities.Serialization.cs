@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<IReadOnlyDictionary<string, string>> generatedKpis = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("generatedInteractionTypes"))
+                if (property.NameEquals("generatedInteractionTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     generatedInteractionTypes = array;
                     continue;
                 }
-                if (property.NameEquals("generatedLinks"))
+                if (property.NameEquals("generatedLinks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     generatedLinks = array;
                     continue;
                 }
-                if (property.NameEquals("generatedKpis"))
+                if (property.NameEquals("generatedKpis"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

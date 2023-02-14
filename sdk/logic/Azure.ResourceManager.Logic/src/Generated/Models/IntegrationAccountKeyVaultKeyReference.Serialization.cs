@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyName");
+            writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName);
             if (Optional.IsDefined(KeyVersion))
             {
-                writer.WritePropertyName("keyVersion");
+                writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
-            writer.WritePropertyName("keyVault");
+            writer.WritePropertyName("keyVault"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(ResourceId);
             }
             writer.WriteEndObject();
@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<ResourceType> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyName"))
+                if (property.NameEquals("keyName"u8))
                 {
                     keyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVersion"))
+                if (property.NameEquals("keyVersion"u8))
                 {
                     keyVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVault"))
+                if (property.NameEquals("keyVault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Logic.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("id"))
+                        if (property0.NameEquals("id"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.Logic.Models
                             id = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("name"))
+                        if (property0.NameEquals("name"u8))
                         {
                             name = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("type"))
+                        if (property0.NameEquals("type"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

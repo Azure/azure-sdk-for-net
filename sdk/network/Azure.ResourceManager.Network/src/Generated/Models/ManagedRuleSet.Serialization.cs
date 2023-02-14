@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("ruleSetType");
+            writer.WritePropertyName("ruleSetType"u8);
             writer.WriteStringValue(RuleSetType);
-            writer.WritePropertyName("ruleSetVersion");
+            writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
             if (Optional.IsCollectionDefined(RuleGroupOverrides))
             {
-                writer.WritePropertyName("ruleGroupOverrides");
+                writer.WritePropertyName("ruleGroupOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in RuleGroupOverrides)
                 {
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<ManagedRuleGroupOverride>> ruleGroupOverrides = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ruleSetType"))
+                if (property.NameEquals("ruleSetType"u8))
                 {
                     ruleSetType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ruleSetVersion"))
+                if (property.NameEquals("ruleSetVersion"u8))
                 {
                     ruleSetVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ruleGroupOverrides"))
+                if (property.NameEquals("ruleGroupOverrides"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

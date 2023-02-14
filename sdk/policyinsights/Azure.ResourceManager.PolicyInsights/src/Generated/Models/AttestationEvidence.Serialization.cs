@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(SourceUri))
             {
-                writer.WritePropertyName("sourceUri");
+                writer.WritePropertyName("sourceUri"u8);
                 writer.WriteStringValue(SourceUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<Uri> sourceUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceUri"))
+                if (property.NameEquals("sourceUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

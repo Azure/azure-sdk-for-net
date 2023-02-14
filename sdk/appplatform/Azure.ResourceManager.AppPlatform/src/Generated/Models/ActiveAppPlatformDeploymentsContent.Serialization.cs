@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ActiveDeploymentNames))
             {
-                writer.WritePropertyName("activeDeploymentNames");
+                writer.WritePropertyName("activeDeploymentNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in ActiveDeploymentNames)
                 {

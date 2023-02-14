@@ -18,32 +18,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OldestRecoveryPoint))
             {
-                writer.WritePropertyName("oldestRecoveryPoint");
+                writer.WritePropertyName("oldestRecoveryPoint"u8);
                 writer.WriteStringValue(OldestRecoveryPoint.Value, "O");
             }
             if (Optional.IsDefined(OldestRecoveryPointInVault))
             {
-                writer.WritePropertyName("oldestRecoveryPointInVault");
+                writer.WritePropertyName("oldestRecoveryPointInVault"u8);
                 writer.WriteStringValue(OldestRecoveryPointInVault.Value, "O");
             }
             if (Optional.IsDefined(OldestRecoveryPointInArchive))
             {
-                writer.WritePropertyName("oldestRecoveryPointInArchive");
+                writer.WritePropertyName("oldestRecoveryPointInArchive"u8);
                 writer.WriteStringValue(OldestRecoveryPointInArchive.Value, "O");
             }
             if (Optional.IsDefined(NewestRecoveryPointInArchive))
             {
-                writer.WritePropertyName("newestRecoveryPointInArchive");
+                writer.WritePropertyName("newestRecoveryPointInArchive"u8);
                 writer.WriteStringValue(NewestRecoveryPointInArchive.Value, "O");
             }
             if (Optional.IsDefined(RecoveryPointCount))
             {
-                writer.WritePropertyName("recoveryPointCount");
+                writer.WritePropertyName("recoveryPointCount"u8);
                 writer.WriteNumberValue(RecoveryPointCount.Value);
             }
             if (Optional.IsDefined(PolicyInconsistent))
             {
-                writer.WritePropertyName("policyInconsistent");
+                writer.WritePropertyName("policyInconsistent"u8);
                 writer.WriteBooleanValue(PolicyInconsistent.Value);
             }
             writer.WriteEndObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<bool> policyInconsistent = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("oldestRecoveryPoint"))
+                if (property.NameEquals("oldestRecoveryPoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     oldestRecoveryPoint = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("oldestRecoveryPointInVault"))
+                if (property.NameEquals("oldestRecoveryPointInVault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     oldestRecoveryPointInVault = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("oldestRecoveryPointInArchive"))
+                if (property.NameEquals("oldestRecoveryPointInArchive"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     oldestRecoveryPointInArchive = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("newestRecoveryPointInArchive"))
+                if (property.NameEquals("newestRecoveryPointInArchive"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     newestRecoveryPointInArchive = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("recoveryPointCount"))
+                if (property.NameEquals("recoveryPointCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("policyInconsistent"))
+                if (property.NameEquals("policyInconsistent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

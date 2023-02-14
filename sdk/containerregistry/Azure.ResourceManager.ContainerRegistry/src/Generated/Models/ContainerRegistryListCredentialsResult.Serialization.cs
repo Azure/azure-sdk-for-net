@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<IReadOnlyList<ContainerRegistryPassword>> passwords = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("username"))
+                if (property.NameEquals("username"u8))
                 {
                     username = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("passwords"))
+                if (property.NameEquals("passwords"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

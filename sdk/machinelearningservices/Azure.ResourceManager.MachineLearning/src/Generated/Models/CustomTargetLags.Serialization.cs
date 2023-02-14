@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("values");
+            writer.WritePropertyName("values"u8);
             writer.WriteStartArray();
             foreach (var item in Values)
             {
                 writer.WriteNumberValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("mode");
+            writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToString());
             writer.WriteEndObject();
         }
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TargetLagsMode mode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     List<int> array = new List<int>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     values = array;
                     continue;
                 }
-                if (property.NameEquals("mode"))
+                if (property.NameEquals("mode"u8))
                 {
                     mode = new TargetLagsMode(property.Value.GetString());
                     continue;

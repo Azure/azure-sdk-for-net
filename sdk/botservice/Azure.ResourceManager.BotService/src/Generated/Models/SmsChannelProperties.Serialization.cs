@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.BotService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("phone");
+            writer.WritePropertyName("phone"u8);
             writer.WriteStringValue(Phone);
-            writer.WritePropertyName("accountSID");
+            writer.WritePropertyName("accountSID"u8);
             writer.WriteStringValue(AccountSID);
             if (Optional.IsDefined(AuthToken))
             {
-                writer.WritePropertyName("authToken");
+                writer.WritePropertyName("authToken"u8);
                 writer.WriteStringValue(AuthToken);
             }
             if (Optional.IsDefined(IsValidated))
             {
-                writer.WritePropertyName("isValidated");
+                writer.WritePropertyName("isValidated"u8);
                 writer.WriteBooleanValue(IsValidated.Value);
             }
-            writer.WritePropertyName("isEnabled");
+            writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             writer.WriteEndObject();
         }
@@ -43,22 +43,22 @@ namespace Azure.ResourceManager.BotService.Models
             bool isEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("phone"))
+                if (property.NameEquals("phone"u8))
                 {
                     phone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accountSID"))
+                if (property.NameEquals("accountSID"u8))
                 {
                     accountSID = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authToken"))
+                if (property.NameEquals("authToken"u8))
                 {
                     authToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isValidated"))
+                if (property.NameEquals("isValidated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.BotService.Models
                     isValidated = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isEnabled"))
+                if (property.NameEquals("isEnabled"u8))
                 {
                     isEnabled = property.Value.GetBoolean();
                     continue;

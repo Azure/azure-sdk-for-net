@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<string> pipelineRunErrorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("importedArtifacts"))
+                if (property.NameEquals("importedArtifacts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     importedArtifacts = array;
                     continue;
                 }
-                if (property.NameEquals("progress"))
+                if (property.NameEquals("progress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     progress = PipelineProgress.DeserializePipelineProgress(property.Value);
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("finishTime"))
+                if (property.NameEquals("finishTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     finishTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     source = ImportPipelineSourceProperties.DeserializeImportPipelineSourceProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     target = ExportPipelineTargetProperties.DeserializeExportPipelineTargetProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("catalogDigest"))
+                if (property.NameEquals("catalogDigest"u8))
                 {
                     catalogDigest = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trigger"))
+                if (property.NameEquals("trigger"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     trigger = PipelineTriggerDescriptor.DeserializePipelineTriggerDescriptor(property.Value);
                     continue;
                 }
-                if (property.NameEquals("pipelineRunErrorMessage"))
+                if (property.NameEquals("pipelineRunErrorMessage"u8))
                 {
                     pipelineRunErrorMessage = property.Value.GetString();
                     continue;

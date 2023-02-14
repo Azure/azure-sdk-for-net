@@ -15,7 +15,7 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("loop");
+            writer.WritePropertyName("loop"u8);
             writer.WriteBooleanValue(Loop);
             writer.WriteEndObject();
         }

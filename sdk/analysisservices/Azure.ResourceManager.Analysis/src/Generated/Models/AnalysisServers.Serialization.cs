@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Analysis.Models
             IReadOnlyList<AnalysisServerData> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<AnalysisServerData> array = new List<AnalysisServerData>();
                     foreach (var item in property.Value.EnumerateArray())

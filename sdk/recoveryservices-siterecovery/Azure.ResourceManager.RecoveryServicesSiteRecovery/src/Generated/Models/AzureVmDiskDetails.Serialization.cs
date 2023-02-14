@@ -26,52 +26,52 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> customTargetDiskName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vhdType"))
+                if (property.NameEquals("vhdType"u8))
                 {
                     vhdType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vhdId"))
+                if (property.NameEquals("vhdId"u8))
                 {
                     vhdId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskId"))
+                if (property.NameEquals("diskId"u8))
                 {
                     diskId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vhdName"))
+                if (property.NameEquals("vhdName"u8))
                 {
                     vhdName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxSizeMB"))
+                if (property.NameEquals("maxSizeMB"u8))
                 {
                     maxSizeMB = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetDiskLocation"))
+                if (property.NameEquals("targetDiskLocation"u8))
                 {
                     targetDiskLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetDiskName"))
+                if (property.NameEquals("targetDiskName"u8))
                 {
                     targetDiskName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lunId"))
+                if (property.NameEquals("lunId"u8))
                 {
                     lunId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskEncryptionSetId"))
+                if (property.NameEquals("diskEncryptionSetId"u8))
                 {
                     diskEncryptionSetId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customTargetDiskName"))
+                if (property.NameEquals("customTargetDiskName"u8))
                 {
                     customTargetDiskName = property.Value.GetString();
                     continue;

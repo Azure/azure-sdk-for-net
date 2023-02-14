@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<IReadOnlyList<CosmosDBAccountConnectionString>> connectionStrings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectionStrings"))
+                if (property.NameEquals("connectionStrings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SubnetId))
             {
-                writer.WritePropertyName("subnetId");
+                writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
             if (Optional.IsDefined(LoadBalancerId))
             {
-                writer.WritePropertyName("loadBalancerId");
+                writer.WritePropertyName("loadBalancerId"u8);
                 writer.WriteStringValue(LoadBalancerId);
             }
             if (Optional.IsDefined(PublicIPId))
             {
-                writer.WritePropertyName("publicIpId");
+                writer.WritePropertyName("publicIpId"u8);
                 writer.WriteStringValue(PublicIPId);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.LabServices.Models
             Optional<ResourceIdentifier> publicIPId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subnetId"))
+                if (property.NameEquals("subnetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("loadBalancerId"))
+                if (property.NameEquals("loadBalancerId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     loadBalancerId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("publicIpId"))
+                if (property.NameEquals("publicIpId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

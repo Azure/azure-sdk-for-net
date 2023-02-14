@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Purview.Models
             Optional<string> awsExternalId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("awsExternalId"))
+                if (property.NameEquals("awsExternalId"u8))
                 {
                     awsExternalId = property.Value.GetString();
                     continue;

@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<int> segmentsFailed = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("segmentsSucceeded"))
+                if (property.NameEquals("segmentsSucceeded"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     segmentsSucceeded = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("segmentsFailed"))
+                if (property.NameEquals("segmentsFailed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

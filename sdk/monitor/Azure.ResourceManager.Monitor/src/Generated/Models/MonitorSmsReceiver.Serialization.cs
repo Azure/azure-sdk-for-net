@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("countryCode");
+            writer.WritePropertyName("countryCode"u8);
             writer.WriteStringValue(CountryCode);
-            writer.WritePropertyName("phoneNumber");
+            writer.WritePropertyName("phoneNumber"u8);
             writer.WriteStringValue(PhoneNumber);
             writer.WriteEndObject();
         }
@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<MonitorReceiverStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("countryCode"))
+                if (property.NameEquals("countryCode"u8))
                 {
                     countryCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phoneNumber"))
+                if (property.NameEquals("phoneNumber"u8))
                 {
                     phoneNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

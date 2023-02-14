@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
-                writer.WritePropertyName("query");
+                writer.WritePropertyName("query"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Query);
 #else
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(PacketSize))
             {
-                writer.WritePropertyName("packetSize");
+                writer.WritePropertyName("packetSize"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(PacketSize);
 #else
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(PartitionOption))
             {
-                writer.WritePropertyName("partitionOption");
+                writer.WritePropertyName("partitionOption"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(PartitionOption);
 #else
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(PartitionSettings))
             {
-                writer.WritePropertyName("partitionSettings");
+                writer.WritePropertyName("partitionSettings"u8);
                 writer.WriteObjectValue(PartitionSettings);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
-                writer.WritePropertyName("queryTimeout");
+                writer.WritePropertyName("queryTimeout"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(QueryTimeout);
 #else
@@ -60,18 +60,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
-                writer.WritePropertyName("additionalColumns");
+                writer.WritePropertyName("additionalColumns"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(AdditionalColumns);
 #else
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(AdditionalColumns.ToString()).RootElement);
 #endif
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
             if (Optional.IsDefined(SourceRetryCount))
             {
-                writer.WritePropertyName("sourceRetryCount");
+                writer.WritePropertyName("sourceRetryCount"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SourceRetryCount);
 #else
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(SourceRetryWait))
             {
-                writer.WritePropertyName("sourceRetryWait");
+                writer.WritePropertyName("sourceRetryWait"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SourceRetryWait);
 #else
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
-                writer.WritePropertyName("maxConcurrentConnections");
+                writer.WritePropertyName("maxConcurrentConnections"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(MaxConcurrentConnections);
 #else
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
-                writer.WritePropertyName("disableMetricsCollection");
+                writer.WritePropertyName("disableMetricsCollection"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DisableMetricsCollection);
 #else
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("query"))
+                if (property.NameEquals("query"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     query = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("packetSize"))
+                if (property.NameEquals("packetSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     packetSize = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("partitionOption"))
+                if (property.NameEquals("partitionOption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     partitionOption = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("partitionSettings"))
+                if (property.NameEquals("partitionSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     partitionSettings = SapHanaPartitionSettings.DeserializeSapHanaPartitionSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("queryTimeout"))
+                if (property.NameEquals("queryTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     queryTimeout = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("additionalColumns"))
+                if (property.NameEquals("additionalColumns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -194,12 +194,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalColumns = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceRetryCount"))
+                if (property.NameEquals("sourceRetryCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     sourceRetryCount = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("sourceRetryWait"))
+                if (property.NameEquals("sourceRetryWait"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     sourceRetryWait = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentConnections"))
+                if (property.NameEquals("maxConcurrentConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("disableMetricsCollection"))
+                if (property.NameEquals("disableMetricsCollection"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

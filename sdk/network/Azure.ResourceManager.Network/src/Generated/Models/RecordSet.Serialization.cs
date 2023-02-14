@@ -23,22 +23,22 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IReadOnlyList<string>> ipAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recordType"))
+                if (property.NameEquals("recordType"u8))
                 {
                     recordType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recordSetName"))
+                if (property.NameEquals("recordSetName"u8))
                 {
                     recordSetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fqdn"))
+                if (property.NameEquals("fqdn"u8))
                 {
                     fqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
                     provisioningState = new NetworkProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ttl"))
+                if (property.NameEquals("ttl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
                     ttl = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("ipAddresses"))
+                if (property.NameEquals("ipAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
