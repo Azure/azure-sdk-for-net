@@ -10,7 +10,7 @@
 
 ### Other Changes
 
-- Upgraded to API version 2022-01-preview.
+- Upgraded API version to 2022-01-preview.
 - Upgraded dependent `Azure.Core` to `1.28.0`.
 - Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
