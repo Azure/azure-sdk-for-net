@@ -16,16 +16,10 @@ namespace Azure.AI.OpenAI
     {
         internal static EmbeddingItem DeserializeEmbeddingItem(JsonElement element)
         {
-            string @object = default;
             IReadOnlyList<float> embedding = default;
             int index = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("object"u8))
-                {
-                    @object = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("embedding"u8))
                 {
                     List<float> array = new List<float>();
@@ -42,7 +36,7 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new EmbeddingItem(@object, embedding, index);
+            return new EmbeddingItem(embedding, index);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
