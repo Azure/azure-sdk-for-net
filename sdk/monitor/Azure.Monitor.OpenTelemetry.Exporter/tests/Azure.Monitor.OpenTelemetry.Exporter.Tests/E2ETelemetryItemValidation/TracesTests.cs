@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable // TODO: remove and fix errors
-
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -51,7 +49,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             // ACT
             string spanId, traceId;
-            using (var activity = activitySource.StartActivity(name: "SayHello", kind: activityKind ))
+            using (var activity = activitySource.StartActivity(name: "SayHello", kind: activityKind) ?? throw new Exception("Failed to create Activity"))
             {
                 traceId = activity.TraceId.ToHexString();
                 spanId = activity.SpanId.ToHexString();
@@ -63,7 +61,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             }
 
             // CLEANUP
-            tracerProvider.Dispose();
+            tracerProvider?.Dispose();
 
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
@@ -96,7 +94,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             // ACT
             string spanId, traceId;
-            using (var activity = activitySource.StartActivity(name: "SayHello", kind: activityKind))
+            using (var activity = activitySource.StartActivity(name: "SayHello", kind: activityKind) ?? throw new Exception("Failed to create Activity"))
             {
                 traceId = activity.TraceId.ToHexString();
                 spanId = activity.SpanId.ToHexString();
@@ -108,7 +106,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             }
 
             // CLEANUP
-            tracerProvider.Dispose();
+            tracerProvider?.Dispose();
 
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
@@ -139,9 +137,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 .Build();
 
             // ACT
-            string spanId = null, traceId = null;
+            string spanId, traceId;
 
-            using (var activity = activitySource.StartActivity(name: "ActivityWithException"))
+            using (var activity = activitySource.StartActivity(name: "ActivityWithException") ?? throw new Exception("Failed to create Activity"))
             {
                 traceId = activity.TraceId.ToHexString();
                 spanId = activity.SpanId.ToHexString();
@@ -158,7 +156,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             }
 
             // CLEANUP
-            tracerProvider.Dispose();
+            tracerProvider?.Dispose();
 
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
@@ -200,7 +198,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             var logCategoryName = $"logCategoryName{uniqueTestId}"; ;
 
-            ConcurrentBag<TelemetryItem> logTelemetryItems = null;
+            ConcurrentBag<TelemetryItem>? logTelemetryItems = null;
 
             var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .AddSource(activitySourceName)
@@ -221,7 +219,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             string spanId, traceId;
             string activityName = $"TestActivity {nameof(VerifyLogWithinActivity)} {logLevel}";
 
-            using (var activity = activitySource.StartActivity(name: activityName))
+            using (var activity = activitySource.StartActivity(name: activityName) ?? throw new Exception("Failed to create Activity"))
             {
                 spanId = activity.SpanId.ToHexString();
                 traceId = activity.TraceId.ToHexString();
@@ -237,7 +235,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             }
 
             // CLEANUP
-            tracerProvider.Dispose();
+            tracerProvider?.Dispose();
             loggerFactory.Dispose();
 
             // ASSERT
@@ -280,14 +278,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 .Build();
 
             // ACT
-            string spanId = null, traceId = null;
+            string spanId, traceId;
 
-            using (var activity = activitySource.StartActivity(name: "ActivityWithException"))
+            using (var activity = activitySource.StartActivity(name: "ActivityWithException") ?? throw new Exception("Failed to create Activity"))
             {
                 traceId = activity.TraceId.ToHexString();
                 spanId = activity.SpanId.ToHexString();
 
-                var eventTags = new Dictionary<string, object>
+                var eventTags = new Dictionary<string, object?>
                 {
                     { "integer", 1 },
                     { "string", "Hello, World!" },
@@ -297,7 +295,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             }
 
             // CLEANUP
-            tracerProvider.Dispose();
+            tracerProvider?.Dispose();
 
             // ASSERT
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
