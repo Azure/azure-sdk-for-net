@@ -19,7 +19,7 @@ namespace Azure.Communication.PhoneNumbers
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("areaCodes"))
+                if (property.NameEquals("areaCodes"u8))
                 {
                     List<PhoneNumberAreaCode> array = new List<PhoneNumberAreaCode>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -29,7 +29,7 @@ namespace Azure.Communication.PhoneNumbers
                     areaCodes = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

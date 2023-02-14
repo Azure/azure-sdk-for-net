@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<string> gateway = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     ipAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("prefixLength"))
+                if (property.NameEquals("prefixLength"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     prefixLength = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("gateway"))
+                if (property.NameEquals("gateway"u8))
                 {
                     gateway = property.Value.GetString();
                     continue;

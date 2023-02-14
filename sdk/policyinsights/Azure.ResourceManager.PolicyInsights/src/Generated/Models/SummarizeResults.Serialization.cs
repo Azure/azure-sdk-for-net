@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<IReadOnlyList<PolicySummary>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.context"))
+                if (property.NameEquals("@odata.context"u8))
                 {
                     odataContext = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@odata.count"))
+                if (property.NameEquals("@odata.count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     odataCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

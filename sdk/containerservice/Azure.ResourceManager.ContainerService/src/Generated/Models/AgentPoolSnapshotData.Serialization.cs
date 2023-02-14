@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerService
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,18 +29,18 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CreationData))
             {
-                writer.WritePropertyName("creationData");
+                writer.WritePropertyName("creationData"u8);
                 writer.WriteObjectValue(CreationData);
             }
             if (Optional.IsDefined(SnapshotType))
             {
-                writer.WritePropertyName("snapshotType");
+                writer.WritePropertyName("snapshotType"u8);
                 writer.WriteStringValue(SnapshotType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ContainerService
             Optional<bool> enableFIPS = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,27 +80,27 @@ namespace Azure.ResourceManager.ContainerService
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ContainerService
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("creationData"))
+                        if (property0.NameEquals("creationData"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerService
                             creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("snapshotType"))
+                        if (property0.NameEquals("snapshotType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -139,17 +139,17 @@ namespace Azure.ResourceManager.ContainerService
                             snapshotType = new SnapshotType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("kubernetesVersion"))
+                        if (property0.NameEquals("kubernetesVersion"u8))
                         {
                             kubernetesVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("nodeImageVersion"))
+                        if (property0.NameEquals("nodeImageVersion"u8))
                         {
                             nodeImageVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("osType"))
+                        if (property0.NameEquals("osType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ContainerService
                             osType = new ContainerServiceOSType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("osSku"))
+                        if (property0.NameEquals("osSku"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -169,12 +169,12 @@ namespace Azure.ResourceManager.ContainerService
                             osSku = new ContainerServiceOSSku(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("vmSize"))
+                        if (property0.NameEquals("vmSize"u8))
                         {
                             vmSize = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("enableFIPS"))
+                        if (property0.NameEquals("enableFIPS"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

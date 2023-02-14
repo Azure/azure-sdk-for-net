@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableAutomaticOSUpgrade))
             {
-                writer.WritePropertyName("enableAutomaticOSUpgrade");
+                writer.WritePropertyName("enableAutomaticOSUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticOSUpgrade.Value);
             }
             if (Optional.IsDefined(DisableAutomaticRollback))
             {
-                writer.WritePropertyName("disableAutomaticRollback");
+                writer.WritePropertyName("disableAutomaticRollback"u8);
                 writer.WriteBooleanValue(DisableAutomaticRollback.Value);
             }
             if (Optional.IsDefined(UseRollingUpgradePolicy))
             {
-                writer.WritePropertyName("useRollingUpgradePolicy");
+                writer.WritePropertyName("useRollingUpgradePolicy"u8);
                 writer.WriteBooleanValue(UseRollingUpgradePolicy.Value);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<bool> useRollingUpgradePolicy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enableAutomaticOSUpgrade"))
+                if (property.NameEquals("enableAutomaticOSUpgrade"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                     enableAutomaticOSUpgrade = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("disableAutomaticRollback"))
+                if (property.NameEquals("disableAutomaticRollback"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
                     disableAutomaticRollback = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("useRollingUpgradePolicy"))
+                if (property.NameEquals("useRollingUpgradePolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

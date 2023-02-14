@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<TlsCertificateProperties> certificate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     status = new TlsStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("certificate"))
+                if (property.NameEquals("certificate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

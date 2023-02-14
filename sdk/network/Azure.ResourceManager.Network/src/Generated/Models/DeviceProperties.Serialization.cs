@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DeviceVendor))
             {
-                writer.WritePropertyName("deviceVendor");
+                writer.WritePropertyName("deviceVendor"u8);
                 writer.WriteStringValue(DeviceVendor);
             }
             if (Optional.IsDefined(DeviceModel))
             {
-                writer.WritePropertyName("deviceModel");
+                writer.WritePropertyName("deviceModel"u8);
                 writer.WriteStringValue(DeviceModel);
             }
             if (Optional.IsDefined(LinkSpeedInMbps))
             {
-                writer.WritePropertyName("linkSpeedInMbps");
+                writer.WritePropertyName("linkSpeedInMbps"u8);
                 writer.WriteNumberValue(LinkSpeedInMbps.Value);
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.Network.Models
             Optional<int> linkSpeedInMbps = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceVendor"))
+                if (property.NameEquals("deviceVendor"u8))
                 {
                     deviceVendor = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deviceModel"))
+                if (property.NameEquals("deviceModel"u8))
                 {
                     deviceModel = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("linkSpeedInMbps"))
+                if (property.NameEquals("linkSpeedInMbps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

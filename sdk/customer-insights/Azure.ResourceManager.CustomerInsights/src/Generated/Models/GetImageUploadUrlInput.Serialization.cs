@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EntityType))
             {
-                writer.WritePropertyName("entityType");
+                writer.WritePropertyName("entityType"u8);
                 writer.WriteStringValue(EntityType);
             }
             if (Optional.IsDefined(EntityTypeName))
             {
-                writer.WritePropertyName("entityTypeName");
+                writer.WritePropertyName("entityTypeName"u8);
                 writer.WriteStringValue(EntityTypeName);
             }
             if (Optional.IsDefined(RelativePath))
             {
-                writer.WritePropertyName("relativePath");
+                writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
             writer.WriteEndObject();

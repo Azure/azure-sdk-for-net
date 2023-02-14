@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("commentValue");
+            writer.WritePropertyName("commentValue"u8);
             writer.WriteStringValue(CommentValue);
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             string commentValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("commentValue"))
+                if (property.NameEquals("commentValue"u8))
                 {
                     commentValue = property.Value.GetString();
                     continue;

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ThirdPartyProviderConsent))
             {
-                writer.WritePropertyName("thirdPartyProviderConsent");
+                writer.WritePropertyName("thirdPartyProviderConsent"u8);
                 writer.WriteObjectValue(ThirdPartyProviderConsent);
             }
             writer.WriteEndObject();

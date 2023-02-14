@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("assessedResourceType");
+            writer.WritePropertyName("assessedResourceType"u8);
             writer.WriteStringValue(AssessedResourceType.ToString());
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AssessedResourceType assessedResourceType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("assessedResourceType"))
+                if (property.NameEquals("assessedResourceType"u8))
                 {
                     assessedResourceType = new AssessedResourceType(property.Value.GetString());
                     continue;

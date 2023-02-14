@@ -16,41 +16,41 @@ namespace Azure.ResourceManager.Synapse
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(SecurityEnabledAccess))
             {
-                writer.WritePropertyName("securityEnabledAccess");
+                writer.WritePropertyName("securityEnabledAccess"u8);
                 writer.WriteStringValue(SecurityEnabledAccess);
             }
             if (Optional.IsDefined(ProxyDnsName))
             {
-                writer.WritePropertyName("proxyDnsName");
+                writer.WritePropertyName("proxyDnsName"u8);
                 writer.WriteStringValue(ProxyDnsName);
             }
             if (Optional.IsDefined(ProxyPort))
             {
-                writer.WritePropertyName("proxyPort");
+                writer.WritePropertyName("proxyPort"u8);
                 writer.WriteStringValue(ProxyPort);
             }
             if (Optional.IsDefined(Visibility))
             {
-                writer.WritePropertyName("visibility");
+                writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility);
             }
             if (Optional.IsDefined(UseServerDefault))
             {
-                writer.WritePropertyName("useServerDefault");
+                writer.WritePropertyName("useServerDefault"u8);
                 writer.WriteStringValue(UseServerDefault);
             }
             if (Optional.IsDefined(RedirectionState))
             {
-                writer.WritePropertyName("redirectionState");
+                writer.WritePropertyName("redirectionState"u8);
                 writer.WriteStringValue(RedirectionState);
             }
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
             writer.WriteEndObject();
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.Synapse
             Optional<string> state = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,22 +89,22 @@ namespace Azure.ResourceManager.Synapse
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Synapse
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,37 +123,37 @@ namespace Azure.ResourceManager.Synapse
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("securityEnabledAccess"))
+                        if (property0.NameEquals("securityEnabledAccess"u8))
                         {
                             securityEnabledAccess = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("proxyDnsName"))
+                        if (property0.NameEquals("proxyDnsName"u8))
                         {
                             proxyDnsName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("proxyPort"))
+                        if (property0.NameEquals("proxyPort"u8))
                         {
                             proxyPort = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("visibility"))
+                        if (property0.NameEquals("visibility"u8))
                         {
                             visibility = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("useServerDefault"))
+                        if (property0.NameEquals("useServerDefault"u8))
                         {
                             useServerDefault = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("redirectionState"))
+                        if (property0.NameEquals("redirectionState"u8))
                         {
                             redirectionState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             state = property0.Value.GetString();
                             continue;

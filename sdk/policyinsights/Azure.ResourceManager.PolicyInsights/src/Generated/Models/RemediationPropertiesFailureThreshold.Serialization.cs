@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Percentage))
             {
-                writer.WritePropertyName("percentage");
+                writer.WritePropertyName("percentage"u8);
                 writer.WriteNumberValue(Percentage.Value);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<float> percentage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("percentage"))
+                if (property.NameEquals("percentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

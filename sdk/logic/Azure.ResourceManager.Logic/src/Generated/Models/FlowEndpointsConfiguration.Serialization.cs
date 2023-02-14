@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Workflow))
             {
-                writer.WritePropertyName("workflow");
+                writer.WritePropertyName("workflow"u8);
                 writer.WriteObjectValue(Workflow);
             }
             if (Optional.IsDefined(Connector))
             {
-                writer.WritePropertyName("connector");
+                writer.WritePropertyName("connector"u8);
                 writer.WriteObjectValue(Connector);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<FlowEndpoints> connector = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("workflow"))
+                if (property.NameEquals("workflow"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Logic.Models
                     workflow = FlowEndpoints.DeserializeFlowEndpoints(property.Value);
                     continue;
                 }
-                if (property.NameEquals("connector"))
+                if (property.NameEquals("connector"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

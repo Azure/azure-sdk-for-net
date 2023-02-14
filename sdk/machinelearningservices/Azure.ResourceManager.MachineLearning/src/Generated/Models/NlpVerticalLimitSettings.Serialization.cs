@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxConcurrentTrials))
             {
-                writer.WritePropertyName("maxConcurrentTrials");
+                writer.WritePropertyName("maxConcurrentTrials"u8);
                 writer.WriteNumberValue(MaxConcurrentTrials.Value);
             }
             if (Optional.IsDefined(MaxTrials))
             {
-                writer.WritePropertyName("maxTrials");
+                writer.WritePropertyName("maxTrials"u8);
                 writer.WriteNumberValue(MaxTrials.Value);
             }
             if (Optional.IsDefined(Timeout))
             {
-                writer.WritePropertyName("timeout");
+                writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
             writer.WriteEndObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<TimeSpan> timeout = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxConcurrentTrials"))
+                if (property.NameEquals("maxConcurrentTrials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     maxConcurrentTrials = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxTrials"))
+                if (property.NameEquals("maxTrials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     maxTrials = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("timeout"))
+                if (property.NameEquals("timeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

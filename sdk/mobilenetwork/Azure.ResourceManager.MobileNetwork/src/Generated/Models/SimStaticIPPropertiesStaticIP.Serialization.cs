@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IPv4Address))
             {
-                writer.WritePropertyName("ipv4Address");
+                writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStringValue(IPv4Address);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Optional<string> ipv4Address = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ipv4Address"))
+                if (property.NameEquals("ipv4Address"u8))
                 {
                     ipv4Address = property.Value.GetString();
                     continue;

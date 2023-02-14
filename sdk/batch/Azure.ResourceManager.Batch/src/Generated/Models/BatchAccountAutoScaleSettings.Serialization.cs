@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Batch.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("formula");
+            writer.WritePropertyName("formula"u8);
             writer.WriteStringValue(Formula);
             if (Optional.IsDefined(EvaluationInterval))
             {
-                writer.WritePropertyName("evaluationInterval");
+                writer.WritePropertyName("evaluationInterval"u8);
                 writer.WriteStringValue(EvaluationInterval.Value, "P");
             }
             writer.WriteEndObject();
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<TimeSpan> evaluationInterval = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("formula"))
+                if (property.NameEquals("formula"u8))
                 {
                     formula = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("evaluationInterval"))
+                if (property.NameEquals("evaluationInterval"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

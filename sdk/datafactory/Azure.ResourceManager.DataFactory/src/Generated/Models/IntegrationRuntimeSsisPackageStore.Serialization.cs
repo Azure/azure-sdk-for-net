@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("packageStoreLinkedService");
+            writer.WritePropertyName("packageStoreLinkedService"u8);
             writer.WriteObjectValue(PackageStoreLinkedService);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             EntityReference packageStoreLinkedService = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("packageStoreLinkedService"))
+                if (property.NameEquals("packageStoreLinkedService"u8))
                 {
                     packageStoreLinkedService = EntityReference.DeserializeEntityReference(property.Value);
                     continue;

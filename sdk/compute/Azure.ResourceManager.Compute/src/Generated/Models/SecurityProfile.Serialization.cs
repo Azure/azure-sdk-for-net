@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(UefiSettings))
             {
-                writer.WritePropertyName("uefiSettings");
+                writer.WritePropertyName("uefiSettings"u8);
                 writer.WriteObjectValue(UefiSettings);
             }
             if (Optional.IsDefined(EncryptionAtHost))
             {
-                writer.WritePropertyName("encryptionAtHost");
+                writer.WritePropertyName("encryptionAtHost"u8);
                 writer.WriteBooleanValue(EncryptionAtHost.Value);
             }
             if (Optional.IsDefined(SecurityType))
             {
-                writer.WritePropertyName("securityType");
+                writer.WritePropertyName("securityType"u8);
                 writer.WriteStringValue(SecurityType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<SecurityType> securityType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uefiSettings"))
+                if (property.NameEquals("uefiSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                     uefiSettings = UefiSettings.DeserializeUefiSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("encryptionAtHost"))
+                if (property.NameEquals("encryptionAtHost"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
                     encryptionAtHost = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("securityType"))
+                if (property.NameEquals("securityType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

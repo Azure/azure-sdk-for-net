@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<IReadOnlyList<ChangeDirectoryResult>> reservations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("reservationOrder"))
+                if (property.NameEquals("reservationOrder"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     reservationOrder = ChangeDirectoryResult.DeserializeChangeDirectoryResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("reservations"))
+                if (property.NameEquals("reservations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

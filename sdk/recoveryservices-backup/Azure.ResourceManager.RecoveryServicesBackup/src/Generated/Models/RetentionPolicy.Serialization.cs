@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("retentionPolicyType");
+            writer.WritePropertyName("retentionPolicyType"u8);
             writer.WriteStringValue(RetentionPolicyType);
             writer.WriteEndObject();
         }

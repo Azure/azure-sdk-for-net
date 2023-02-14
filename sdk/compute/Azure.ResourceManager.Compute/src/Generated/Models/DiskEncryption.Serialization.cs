@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DiskEncryptionSetId))
             {
-                writer.WritePropertyName("diskEncryptionSetId");
+                writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
             if (Optional.IsDefined(EncryptionType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(EncryptionType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<ComputeEncryptionType> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskEncryptionSetId"))
+                if (property.NameEquals("diskEncryptionSetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
                     diskEncryptionSetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

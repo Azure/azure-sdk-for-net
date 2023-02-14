@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,11 +12,10 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using NUnit.Framework;
-using System.Runtime.InteropServices;
 
 namespace Azure.Identity.Tests
 {
-    public class AzurePowerShellCredentialsTests : CredentialTestBase
+    public class AzurePowerShellCredentialsTests : CredentialTestBase<AzurePowerShellCredentialOptions>
     {
         private string tokenXML =
             "<Object Type=\"Microsoft.Azure.Commands.Profile.Models.PSAccessToken\"><Property Name=\"Token\" Type=\"System.String\">Kg==</Property><Property Name=\"ExpiresOn\" Type=\"System.DateTimeOffset\">5/11/2021 8:20:03 PM +00:00</Property><Property Name=\"TenantId\" Type=\"System.String\">72f988bf-86f1-41af-91ab-2d7cd011db47</Property><Property Name=\"UserId\" Type=\"System.String\">chriss@microsoft.com</Property><Property Name=\"Type\" Type=\"System.String\">Bearer</Property></Object>";
@@ -31,7 +31,20 @@ namespace Azure.Identity.Tests
             };
             var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
             var testProcess = new TestProcess { Output = processOutput };
-            return  InstrumentClient(
+            return InstrumentClient(
+                new AzurePowerShellCredential(pwshOptions, CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+        }
+
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
+        {
+            var pwshOptions = new AzurePowerShellCredentialOptions
+            {
+                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants,
+                TenantId = config.TenantId,
+            };
+            var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
+            var testProcess = new TestProcess { Output = processOutput };
+            return InstrumentClient(
                 new AzurePowerShellCredential(pwshOptions, CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
         }
 
@@ -70,25 +83,6 @@ namespace Azure.Identity.Tests
             {
                 Assert.That(commandString, Does.Not.Contain("-TenantId"));
             }
-        }
-
-        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
-        {
-            Console.WriteLine(parameters.ToDebugString());
-
-            var options = new AzurePowerShellCredentialOptions { TenantId = parameters.TenantId };
-
-            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
-            {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
-            }
-
-            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
-            var testProcess = new TestProcess { Output = processOutput };
-            AzurePowerShellCredential credential = InstrumentClient(
-                new AzurePowerShellCredential(options, CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
-
-            await AssertAllowedTenantIdsEnforcedAsync(parameters, credential);
         }
 
         private static IEnumerable<object[]> ErrorScenarios()

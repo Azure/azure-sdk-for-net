@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             IReadOnlyList<ConnectivityStatusContract> connectivityStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dnsServers"))
+                if (property.NameEquals("dnsServers"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     dnsServers = array;
                     continue;
                 }
-                if (property.NameEquals("connectivityStatus"))
+                if (property.NameEquals("connectivityStatus"u8))
                 {
                     List<ConnectivityStatusContract> array = new List<ConnectivityStatusContract>();
                     foreach (var item in property.Value.EnumerateArray())

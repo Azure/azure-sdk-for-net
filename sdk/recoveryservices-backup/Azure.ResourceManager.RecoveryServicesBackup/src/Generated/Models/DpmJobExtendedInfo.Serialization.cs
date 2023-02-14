@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(TasksList))
             {
-                writer.WritePropertyName("tasksList");
+                writer.WritePropertyName("tasksList"u8);
                 writer.WriteStartArray();
                 foreach (var item in TasksList)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsCollectionDefined(PropertyBag))
             {
-                writer.WritePropertyName("propertyBag");
+                writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartObject();
                 foreach (var item in PropertyBag)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(DynamicErrorMessage))
             {
-                writer.WritePropertyName("dynamicErrorMessage");
+                writer.WritePropertyName("dynamicErrorMessage"u8);
                 writer.WriteStringValue(DynamicErrorMessage);
             }
             writer.WriteEndObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> dynamicErrorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tasksList"))
+                if (property.NameEquals("tasksList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     tasksList = array;
                     continue;
                 }
-                if (property.NameEquals("propertyBag"))
+                if (property.NameEquals("propertyBag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     propertyBag = dictionary;
                     continue;
                 }
-                if (property.NameEquals("dynamicErrorMessage"))
+                if (property.NameEquals("dynamicErrorMessage"u8))
                 {
                     dynamicErrorMessage = property.Value.GetString();
                     continue;

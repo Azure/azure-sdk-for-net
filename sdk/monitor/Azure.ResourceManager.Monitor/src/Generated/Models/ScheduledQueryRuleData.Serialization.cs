@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -36,33 +36,33 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Severity))
             {
-                writer.WritePropertyName("severity");
+                writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsCollectionDefined(Scopes))
             {
-                writer.WritePropertyName("scopes");
+                writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Scopes)
                 {
@@ -72,22 +72,22 @@ namespace Azure.ResourceManager.Monitor
             }
             if (Optional.IsDefined(EvaluationFrequency))
             {
-                writer.WritePropertyName("evaluationFrequency");
+                writer.WritePropertyName("evaluationFrequency"u8);
                 writer.WriteStringValue(EvaluationFrequency.Value, "P");
             }
             if (Optional.IsDefined(WindowSize))
             {
-                writer.WritePropertyName("windowSize");
+                writer.WritePropertyName("windowSize"u8);
                 writer.WriteStringValue(WindowSize.Value, "P");
             }
             if (Optional.IsDefined(OverrideQueryTimeRange))
             {
-                writer.WritePropertyName("overrideQueryTimeRange");
+                writer.WritePropertyName("overrideQueryTimeRange"u8);
                 writer.WriteStringValue(OverrideQueryTimeRange.Value, "P");
             }
             if (Optional.IsCollectionDefined(TargetResourceTypes))
             {
-                writer.WritePropertyName("targetResourceTypes");
+                writer.WritePropertyName("targetResourceTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetResourceTypes)
                 {
@@ -97,32 +97,32 @@ namespace Azure.ResourceManager.Monitor
             }
             if (Optional.IsDefined(Criteria))
             {
-                writer.WritePropertyName("criteria");
+                writer.WritePropertyName("criteria"u8);
                 writer.WriteObjectValue(Criteria);
             }
             if (Optional.IsDefined(MuteActionsDuration))
             {
-                writer.WritePropertyName("muteActionsDuration");
+                writer.WritePropertyName("muteActionsDuration"u8);
                 writer.WriteStringValue(MuteActionsDuration.Value, "P");
             }
             if (Optional.IsDefined(Actions))
             {
-                writer.WritePropertyName("actions");
+                writer.WritePropertyName("actions"u8);
                 writer.WriteObjectValue(Actions);
             }
             if (Optional.IsDefined(CheckWorkspaceAlertsStorageConfigured))
             {
-                writer.WritePropertyName("checkWorkspaceAlertsStorageConfigured");
+                writer.WritePropertyName("checkWorkspaceAlertsStorageConfigured"u8);
                 writer.WriteBooleanValue(CheckWorkspaceAlertsStorageConfigured.Value);
             }
             if (Optional.IsDefined(SkipQueryValidation))
             {
-                writer.WritePropertyName("skipQueryValidation");
+                writer.WritePropertyName("skipQueryValidation"u8);
                 writer.WriteBooleanValue(SkipQueryValidation.Value);
             }
             if (Optional.IsDefined(AutoMitigate))
             {
-                writer.WritePropertyName("autoMitigate");
+                writer.WritePropertyName("autoMitigate"u8);
                 writer.WriteBooleanValue(AutoMitigate.Value);
             }
             writer.WriteEndObject();
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<bool> autoMitigate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Monitor
                     kind = new ScheduledQueryRuleKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Monitor
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -194,27 +194,27 @@ namespace Azure.ResourceManager.Monitor
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Monitor
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -233,12 +233,12 @@ namespace Azure.ResourceManager.Monitor
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("createdWithApiVersion"))
+                        if (property0.NameEquals("createdWithApiVersion"u8))
                         {
                             createdWithApiVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("isLegacyLogAnalyticsRule"))
+                        if (property0.NameEquals("isLegacyLogAnalyticsRule"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -248,17 +248,17 @@ namespace Azure.ResourceManager.Monitor
                             isLegacyLogAnalyticsRule = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("severity"))
+                        if (property0.NameEquals("severity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Monitor
                             severity = new AlertSeverity(property0.Value.GetInt64());
                             continue;
                         }
-                        if (property0.NameEquals("enabled"))
+                        if (property0.NameEquals("enabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Monitor
                             enabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("scopes"))
+                        if (property0.NameEquals("scopes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Monitor
                             scopes = array;
                             continue;
                         }
-                        if (property0.NameEquals("evaluationFrequency"))
+                        if (property0.NameEquals("evaluationFrequency"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Monitor
                             evaluationFrequency = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("windowSize"))
+                        if (property0.NameEquals("windowSize"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Monitor
                             windowSize = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("overrideQueryTimeRange"))
+                        if (property0.NameEquals("overrideQueryTimeRange"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Monitor
                             overrideQueryTimeRange = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("targetResourceTypes"))
+                        if (property0.NameEquals("targetResourceTypes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Monitor
                             targetResourceTypes = array;
                             continue;
                         }
-                        if (property0.NameEquals("criteria"))
+                        if (property0.NameEquals("criteria"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Monitor
                             criteria = ScheduledQueryRuleCriteria.DeserializeScheduledQueryRuleCriteria(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("muteActionsDuration"))
+                        if (property0.NameEquals("muteActionsDuration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Monitor
                             muteActionsDuration = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("actions"))
+                        if (property0.NameEquals("actions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Monitor
                             actions = ScheduledQueryRuleActions.DeserializeScheduledQueryRuleActions(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("isWorkspaceAlertsStorageConfigured"))
+                        if (property0.NameEquals("isWorkspaceAlertsStorageConfigured"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Monitor
                             isWorkspaceAlertsStorageConfigured = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("checkWorkspaceAlertsStorageConfigured"))
+                        if (property0.NameEquals("checkWorkspaceAlertsStorageConfigured"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Monitor
                             checkWorkspaceAlertsStorageConfigured = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("skipQueryValidation"))
+                        if (property0.NameEquals("skipQueryValidation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Monitor
                             skipQueryValidation = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("autoMitigate"))
+                        if (property0.NameEquals("autoMitigate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

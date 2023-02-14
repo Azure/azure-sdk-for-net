@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<MigrationRecoveryPointType> recoveryPointType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryPointTime"))
+                if (property.NameEquals("recoveryPointTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     recoveryPointTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("recoveryPointType"))
+                if (property.NameEquals("recoveryPointType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

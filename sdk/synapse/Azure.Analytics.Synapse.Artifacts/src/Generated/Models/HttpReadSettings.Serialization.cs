@@ -21,39 +21,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RequestMethod))
             {
-                writer.WritePropertyName("requestMethod");
+                writer.WritePropertyName("requestMethod"u8);
                 writer.WriteObjectValue(RequestMethod);
             }
             if (Optional.IsDefined(RequestBody))
             {
-                writer.WritePropertyName("requestBody");
+                writer.WritePropertyName("requestBody"u8);
                 writer.WriteObjectValue(RequestBody);
             }
             if (Optional.IsDefined(AdditionalHeaders))
             {
-                writer.WritePropertyName("additionalHeaders");
+                writer.WritePropertyName("additionalHeaders"u8);
                 writer.WriteObjectValue(AdditionalHeaders);
             }
             if (Optional.IsDefined(RequestTimeout))
             {
-                writer.WritePropertyName("requestTimeout");
+                writer.WritePropertyName("requestTimeout"u8);
                 writer.WriteObjectValue(RequestTimeout);
             }
             if (Optional.IsDefined(EnablePartitionDiscovery))
             {
-                writer.WritePropertyName("enablePartitionDiscovery");
+                writer.WritePropertyName("enablePartitionDiscovery"u8);
                 writer.WriteBooleanValue(EnablePartitionDiscovery.Value);
             }
             if (Optional.IsDefined(PartitionRootPath))
             {
-                writer.WritePropertyName("partitionRootPath");
+                writer.WritePropertyName("partitionRootPath"u8);
                 writer.WriteObjectValue(PartitionRootPath);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
-                writer.WritePropertyName("maxConcurrentConnections");
+                writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
@@ -78,7 +78,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("requestMethod"))
+                if (property.NameEquals("requestMethod"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     requestMethod = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("requestBody"))
+                if (property.NameEquals("requestBody"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +98,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     requestBody = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("additionalHeaders"))
+                if (property.NameEquals("additionalHeaders"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +108,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     additionalHeaders = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("requestTimeout"))
+                if (property.NameEquals("requestTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +118,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     requestTimeout = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("enablePartitionDiscovery"))
+                if (property.NameEquals("enablePartitionDiscovery"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -128,7 +128,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     enablePartitionDiscovery = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("partitionRootPath"))
+                if (property.NameEquals("partitionRootPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -138,12 +138,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     partitionRootPath = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentConnections"))
+                if (property.NameEquals("maxConcurrentConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

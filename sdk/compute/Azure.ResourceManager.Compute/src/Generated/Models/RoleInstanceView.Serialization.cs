@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IReadOnlyList<ResourceInstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("platformUpdateDomain"))
+                if (property.NameEquals("platformUpdateDomain"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
                     platformUpdateDomain = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("platformFaultDomain"))
+                if (property.NameEquals("platformFaultDomain"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Compute.Models
                     platformFaultDomain = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("privateId"))
+                if (property.NameEquals("privateId"u8))
                 {
                     privateId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statuses"))
+                if (property.NameEquals("statuses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

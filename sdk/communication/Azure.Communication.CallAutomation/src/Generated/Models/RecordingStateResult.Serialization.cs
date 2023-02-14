@@ -18,12 +18,12 @@ namespace Azure.Communication.CallAutomation
             Optional<RecordingState> recordingState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recordingId"))
+                if (property.NameEquals("recordingId"u8))
                 {
                     recordingId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recordingState"))
+                if (property.NameEquals("recordingState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

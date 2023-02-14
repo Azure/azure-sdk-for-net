@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<IReadOnlyList<SapAvailabilityZonePair>> availabilityZonePairs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("availabilityZonePairs"))
+                if (property.NameEquals("availabilityZonePairs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

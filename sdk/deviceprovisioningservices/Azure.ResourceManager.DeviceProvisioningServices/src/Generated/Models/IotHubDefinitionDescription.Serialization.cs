@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ApplyAllocationPolicy))
             {
-                writer.WritePropertyName("applyAllocationPolicy");
+                writer.WritePropertyName("applyAllocationPolicy"u8);
                 writer.WriteBooleanValue(ApplyAllocationPolicy.Value);
             }
             if (Optional.IsDefined(AllocationWeight))
             {
-                writer.WritePropertyName("allocationWeight");
+                writer.WritePropertyName("allocationWeight"u8);
                 writer.WriteNumberValue(AllocationWeight.Value);
             }
-            writer.WritePropertyName("connectionString");
+            writer.WritePropertyName("connectionString"u8);
             writer.WriteStringValue(ConnectionString);
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             writer.WriteEndObject();
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             AzureLocation location = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("applyAllocationPolicy"))
+                if (property.NameEquals("applyAllocationPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     applyAllocationPolicy = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("allocationWeight"))
+                if (property.NameEquals("allocationWeight"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     allocationWeight = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("connectionString"))
+                if (property.NameEquals("connectionString"u8))
                 {
                     connectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;

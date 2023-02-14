@@ -16,19 +16,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tokenId");
+            writer.WritePropertyName("tokenId"u8);
             writer.WriteStringValue(TokenId);
             if (Optional.IsDefined(Schedule))
             {
-                writer.WritePropertyName("schedule");
+                writer.WritePropertyName("schedule"u8);
                 writer.WriteStringValue(Schedule);
             }
             if (Optional.IsDefined(SyncWindow))
             {
-                writer.WritePropertyName("syncWindow");
+                writer.WritePropertyName("syncWindow"u8);
                 writer.WriteStringValue(SyncWindow.Value, "P");
             }
-            writer.WritePropertyName("messageTtl");
+            writer.WritePropertyName("messageTtl"u8);
             writer.WriteStringValue(MessageTtl, "P");
             writer.WriteEndObject();
         }
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<string> gatewayEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tokenId"))
+                if (property.NameEquals("tokenId"u8))
                 {
                     tokenId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("schedule"))
+                if (property.NameEquals("schedule"u8))
                 {
                     schedule = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("syncWindow"))
+                if (property.NameEquals("syncWindow"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     syncWindow = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("messageTtl"))
+                if (property.NameEquals("messageTtl"u8))
                 {
                     messageTtl = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("lastSyncTime"))
+                if (property.NameEquals("lastSyncTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     lastSyncTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("gatewayEndpoint"))
+                if (property.NameEquals("gatewayEndpoint"u8))
                 {
                     gatewayEndpoint = property.Value.GetString();
                     continue;

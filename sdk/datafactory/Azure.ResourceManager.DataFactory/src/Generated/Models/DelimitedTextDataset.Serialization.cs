@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Structure))
             {
-                writer.WritePropertyName("structure");
+                writer.WritePropertyName("structure"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Structure);
 #else
@@ -35,18 +35,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Schema))
             {
-                writer.WritePropertyName("schema");
+                writer.WritePropertyName("schema"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Schema);
 #else
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Schema.ToString()).RootElement);
 #endif
             }
-            writer.WritePropertyName("linkedServiceName");
+            writer.WritePropertyName("linkedServiceName"u8);
             writer.WriteObjectValue(LinkedServiceName);
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(Annotations))
             {
-                writer.WritePropertyName("annotations");
+                writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(Folder))
             {
-                writer.WritePropertyName("folder");
+                writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DataLocation))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteObjectValue(DataLocation);
             }
             if (Optional.IsDefined(ColumnDelimiter))
             {
-                writer.WritePropertyName("columnDelimiter");
+                writer.WritePropertyName("columnDelimiter"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ColumnDelimiter);
 #else
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(RowDelimiter))
             {
-                writer.WritePropertyName("rowDelimiter");
+                writer.WritePropertyName("rowDelimiter"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(RowDelimiter);
 #else
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(EncodingName))
             {
-                writer.WritePropertyName("encodingName");
+                writer.WritePropertyName("encodingName"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(EncodingName);
 #else
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(CompressionCodec))
             {
-                writer.WritePropertyName("compressionCodec");
+                writer.WritePropertyName("compressionCodec"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(CompressionCodec);
 #else
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(CompressionLevel))
             {
-                writer.WritePropertyName("compressionLevel");
+                writer.WritePropertyName("compressionLevel"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(CompressionLevel);
 #else
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(QuoteChar))
             {
-                writer.WritePropertyName("quoteChar");
+                writer.WritePropertyName("quoteChar"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(QuoteChar);
 #else
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(EscapeChar))
             {
-                writer.WritePropertyName("escapeChar");
+                writer.WritePropertyName("escapeChar"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(EscapeChar);
 #else
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(FirstRowAsHeader))
             {
-                writer.WritePropertyName("firstRowAsHeader");
+                writer.WritePropertyName("firstRowAsHeader"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(FirstRowAsHeader);
 #else
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(NullValue))
             {
-                writer.WritePropertyName("nullValue");
+                writer.WritePropertyName("nullValue"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(NullValue);
 #else
@@ -199,17 +199,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("structure"))
+                if (property.NameEquals("structure"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     structure = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("schema"))
+                if (property.NameEquals("schema"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -229,12 +229,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     schema = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("linkedServiceName"))
+                if (property.NameEquals("linkedServiceName"u8))
                 {
                     linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     parameters = dictionary;
                     continue;
                 }
-                if (property.NameEquals("annotations"))
+                if (property.NameEquals("annotations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     annotations = array;
                     continue;
                 }
-                if (property.NameEquals("folder"))
+                if (property.NameEquals("folder"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     folder = DatasetFolder.DeserializeDatasetFolder(property.Value);
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("location"))
+                        if (property0.NameEquals("location"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             location = DatasetLocation.DeserializeDatasetLocation(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("columnDelimiter"))
+                        if (property0.NameEquals("columnDelimiter"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             columnDelimiter = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("rowDelimiter"))
+                        if (property0.NameEquals("rowDelimiter"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             rowDelimiter = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("encodingName"))
+                        if (property0.NameEquals("encodingName"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             encodingName = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("compressionCodec"))
+                        if (property0.NameEquals("compressionCodec"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             compressionCodec = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("compressionLevel"))
+                        if (property0.NameEquals("compressionLevel"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             compressionLevel = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("quoteChar"))
+                        if (property0.NameEquals("quoteChar"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             quoteChar = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("escapeChar"))
+                        if (property0.NameEquals("escapeChar"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             escapeChar = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("firstRowAsHeader"))
+                        if (property0.NameEquals("firstRowAsHeader"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             firstRowAsHeader = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("nullValue"))
+                        if (property0.NameEquals("nullValue"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkProviderName))
             {
-                writer.WritePropertyName("linkProviderName");
+                writer.WritePropertyName("linkProviderName"u8);
                 writer.WriteStringValue(LinkProviderName);
             }
             if (Optional.IsDefined(LinkSpeedInMbps))
             {
-                writer.WritePropertyName("linkSpeedInMbps");
+                writer.WritePropertyName("linkSpeedInMbps"u8);
                 writer.WriteNumberValue(LinkSpeedInMbps.Value);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Network.Models
             Optional<int> linkSpeedInMbps = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linkProviderName"))
+                if (property.NameEquals("linkProviderName"u8))
                 {
                     linkProviderName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("linkSpeedInMbps"))
+                if (property.NameEquals("linkSpeedInMbps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

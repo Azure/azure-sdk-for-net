@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("thumbprint");
+            writer.WritePropertyName("thumbprint"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Thumbprint);
 #else
@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 #endif
             if (Optional.IsDefined(ThumbprintSecondary))
             {
-                writer.WritePropertyName("thumbprintSecondary");
+                writer.WritePropertyName("thumbprintSecondary"u8);
                 writer.WriteStringValue(ThumbprintSecondary);
             }
             if (Optional.IsDefined(X509StoreName))
             {
-                writer.WritePropertyName("x509StoreName");
+                writer.WritePropertyName("x509StoreName"u8);
                 writer.WriteStringValue(X509StoreName.Value.ToString());
             }
             writer.WriteEndObject();
@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Optional<ClusterCertificateStoreName> x509StoreName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("thumbprint"))
+                if (property.NameEquals("thumbprint"u8))
                 {
                     thumbprint = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("thumbprintSecondary"))
+                if (property.NameEquals("thumbprintSecondary"u8))
                 {
                     thumbprintSecondary = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("x509StoreName"))
+                if (property.NameEquals("x509StoreName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<IReadOnlyList<UpsertManagedServerOperationStep>> stepsList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("totalSteps"))
+                if (property.NameEquals("totalSteps"u8))
                 {
                     totalSteps = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("currentStep"))
+                if (property.NameEquals("currentStep"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sql.Models
                     currentStep = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("stepsList"))
+                if (property.NameEquals("stepsList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -19,12 +19,12 @@ namespace Azure.Containers.ContainerRegistry
             Optional<ArtifactOperatingSystem> os = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("digest"))
+                if (property.NameEquals("digest"u8))
                 {
                     digest = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("architecture"))
+                if (property.NameEquals("architecture"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.Containers.ContainerRegistry
                     architecture = new ArtifactArchitecture(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("os"))
+                if (property.NameEquals("os"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

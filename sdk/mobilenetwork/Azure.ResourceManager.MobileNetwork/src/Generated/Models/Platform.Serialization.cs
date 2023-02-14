@@ -17,32 +17,32 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PlatformType))
             {
-                writer.WritePropertyName("platformType");
+                writer.WritePropertyName("platformType"u8);
                 writer.WriteStringValue(PlatformType.Value.ToString());
             }
             if (Optional.IsDefined(VersionState))
             {
-                writer.WritePropertyName("versionState");
+                writer.WritePropertyName("versionState"u8);
                 writer.WriteStringValue(VersionState.Value.ToString());
             }
             if (Optional.IsDefined(MinimumPlatformSoftwareVersion))
             {
-                writer.WritePropertyName("minimumPlatformSoftwareVersion");
+                writer.WritePropertyName("minimumPlatformSoftwareVersion"u8);
                 writer.WriteStringValue(MinimumPlatformSoftwareVersion);
             }
             if (Optional.IsDefined(MaximumPlatformSoftwareVersion))
             {
-                writer.WritePropertyName("maximumPlatformSoftwareVersion");
+                writer.WritePropertyName("maximumPlatformSoftwareVersion"u8);
                 writer.WriteStringValue(MaximumPlatformSoftwareVersion);
             }
             if (Optional.IsDefined(RecommendedVersion))
             {
-                writer.WritePropertyName("recommendedVersion");
+                writer.WritePropertyName("recommendedVersion"u8);
                 writer.WriteStringValue(RecommendedVersion.Value.ToString());
             }
             if (Optional.IsDefined(ObsoleteVersion))
             {
-                writer.WritePropertyName("obsoleteVersion");
+                writer.WritePropertyName("obsoleteVersion"u8);
                 writer.WriteStringValue(ObsoleteVersion.Value.ToString());
             }
             writer.WriteEndObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Optional<ObsoleteVersion> obsoleteVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("platformType"))
+                if (property.NameEquals("platformType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     platformType = new PlatformType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("versionState"))
+                if (property.NameEquals("versionState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     versionState = new VersionState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("minimumPlatformSoftwareVersion"))
+                if (property.NameEquals("minimumPlatformSoftwareVersion"u8))
                 {
                     minimumPlatformSoftwareVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maximumPlatformSoftwareVersion"))
+                if (property.NameEquals("maximumPlatformSoftwareVersion"u8))
                 {
                     maximumPlatformSoftwareVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recommendedVersion"))
+                if (property.NameEquals("recommendedVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     recommendedVersion = new RecommendedVersion(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("obsoleteVersion"))
+                if (property.NameEquals("obsoleteVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

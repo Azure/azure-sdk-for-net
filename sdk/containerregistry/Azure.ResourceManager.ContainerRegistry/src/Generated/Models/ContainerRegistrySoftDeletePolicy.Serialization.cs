@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RetentionDays))
             {
-                writer.WritePropertyName("retentionDays");
+                writer.WritePropertyName("retentionDays"u8);
                 writer.WriteNumberValue(RetentionDays.Value);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             writer.WriteEndObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<ContainerRegistryPolicyStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("retentionDays"))
+                if (property.NameEquals("retentionDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     retentionDays = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("lastUpdatedTime"))
+                if (property.NameEquals("lastUpdatedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     lastUpdatedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

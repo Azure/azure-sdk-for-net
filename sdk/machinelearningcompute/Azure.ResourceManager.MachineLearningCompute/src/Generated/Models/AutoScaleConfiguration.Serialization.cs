@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(MinReplicas))
             {
-                writer.WritePropertyName("minReplicas");
+                writer.WritePropertyName("minReplicas"u8);
                 writer.WriteNumberValue(MinReplicas.Value);
             }
             if (Optional.IsDefined(MaxReplicas))
             {
-                writer.WritePropertyName("maxReplicas");
+                writer.WritePropertyName("maxReplicas"u8);
                 writer.WriteNumberValue(MaxReplicas.Value);
             }
             if (Optional.IsDefined(TargetUtilization))
             {
-                writer.WritePropertyName("targetUtilization");
+                writer.WritePropertyName("targetUtilization"u8);
                 writer.WriteNumberValue(TargetUtilization.Value);
             }
             if (Optional.IsDefined(RefreshPeriodInSeconds))
             {
-                writer.WritePropertyName("refreshPeriodInSeconds");
+                writer.WritePropertyName("refreshPeriodInSeconds"u8);
                 writer.WriteNumberValue(RefreshPeriodInSeconds.Value);
             }
             writer.WriteEndObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             Optional<int> refreshPeriodInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     status = new Status(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("minReplicas"))
+                if (property.NameEquals("minReplicas"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     minReplicas = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxReplicas"))
+                if (property.NameEquals("maxReplicas"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     maxReplicas = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("targetUtilization"))
+                if (property.NameEquals("targetUtilization"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     targetUtilization = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("refreshPeriodInSeconds"))
+                if (property.NameEquals("refreshPeriodInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

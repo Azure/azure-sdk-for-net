@@ -20,22 +20,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> targetServerBrandVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databases"))
+                if (property.NameEquals("databases"u8))
                 {
                     databases = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetServerVersion"))
+                if (property.NameEquals("targetServerVersion"u8))
                 {
                     targetServerVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetServerBrandVersion"))
+                if (property.NameEquals("targetServerBrandVersion"u8))
                 {
                     targetServerBrandVersion = property.Value.GetString();
                     continue;

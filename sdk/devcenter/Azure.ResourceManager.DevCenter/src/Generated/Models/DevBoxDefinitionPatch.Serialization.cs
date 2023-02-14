@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -28,24 +28,24 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ImageReference))
             {
-                writer.WritePropertyName("imageReference");
+                writer.WritePropertyName("imageReference"u8);
                 writer.WriteObjectValue(ImageReference);
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsDefined(OSStorageType))
             {
-                writer.WritePropertyName("osStorageType");
+                writer.WritePropertyName("osStorageType"u8);
                 writer.WriteStringValue(OSStorageType);
             }
             writer.WriteEndObject();

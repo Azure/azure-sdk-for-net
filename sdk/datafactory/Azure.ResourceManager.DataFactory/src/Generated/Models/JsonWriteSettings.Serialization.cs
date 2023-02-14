@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FilePattern))
             {
-                writer.WritePropertyName("filePattern");
+                writer.WritePropertyName("filePattern"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(FilePattern);
 #else
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(FilePattern.ToString()).RootElement);
 #endif
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FormatWriteSettingsType);
             foreach (var item in AdditionalProperties)
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("filePattern"))
+                if (property.NameEquals("filePattern"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     filePattern = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

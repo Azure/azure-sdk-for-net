@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SoftDeleteSettings))
             {
-                writer.WritePropertyName("softDeleteSettings");
+                writer.WritePropertyName("softDeleteSettings"u8);
                 writer.WriteObjectValue(SoftDeleteSettings);
             }
             if (Optional.IsDefined(ImmutabilitySettings))
             {
-                writer.WritePropertyName("immutabilitySettings");
+                writer.WritePropertyName("immutabilitySettings"u8);
                 writer.WriteObjectValue(ImmutabilitySettings);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<ImmutabilitySettings> immutabilitySettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("softDeleteSettings"))
+                if (property.NameEquals("softDeleteSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     softDeleteSettings = BackupVaultSoftDeleteSettings.DeserializeBackupVaultSoftDeleteSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("immutabilitySettings"))
+                if (property.NameEquals("immutabilitySettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

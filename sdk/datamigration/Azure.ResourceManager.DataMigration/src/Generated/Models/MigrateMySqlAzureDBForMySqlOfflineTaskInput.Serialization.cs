@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceConnectionInfo");
+            writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo);
-            writer.WritePropertyName("targetConnectionInfo");
+            writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo);
-            writer.WritePropertyName("selectedDatabases");
+            writer.WritePropertyName("selectedDatabases"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(MakeSourceServerReadOnly))
             {
-                writer.WritePropertyName("makeSourceServerReadOnly");
+                writer.WritePropertyName("makeSourceServerReadOnly"u8);
                 writer.WriteBooleanValue(MakeSourceServerReadOnly.Value);
             }
             if (Optional.IsDefined(StartedOn))
             {
-                writer.WritePropertyName("startedOn");
+                writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(OptionalAgentSettings))
             {
-                writer.WritePropertyName("optionalAgentSettings");
+                writer.WritePropertyName("optionalAgentSettings"u8);
                 writer.WriteStartObject();
                 foreach (var item in OptionalAgentSettings)
                 {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             if (Optional.IsDefined(EncryptedKeyForSecureFields))
             {
-                writer.WritePropertyName("encryptedKeyForSecureFields");
+                writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
             }
             writer.WriteEndObject();
@@ -68,17 +68,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> encryptedKeyForSecureFields = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceConnectionInfo"))
+                if (property.NameEquals("sourceConnectionInfo"u8))
                 {
                     sourceConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("targetConnectionInfo"))
+                if (property.NameEquals("targetConnectionInfo"u8))
                 {
                     targetConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("selectedDatabases"))
+                if (property.NameEquals("selectedDatabases"u8))
                 {
                     List<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput> array = new List<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     selectedDatabases = array;
                     continue;
                 }
-                if (property.NameEquals("makeSourceServerReadOnly"))
+                if (property.NameEquals("makeSourceServerReadOnly"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     makeSourceServerReadOnly = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("startedOn"))
+                if (property.NameEquals("startedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     startedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("optionalAgentSettings"))
+                if (property.NameEquals("optionalAgentSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     optionalAgentSettings = dictionary;
                     continue;
                 }
-                if (property.NameEquals("encryptedKeyForSecureFields"))
+                if (property.NameEquals("encryptedKeyForSecureFields"u8))
                 {
                     encryptedKeyForSecureFields = property.Value.GetString();
                     continue;

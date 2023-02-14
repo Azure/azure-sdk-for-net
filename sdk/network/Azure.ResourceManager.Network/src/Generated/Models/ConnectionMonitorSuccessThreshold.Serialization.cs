@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ChecksFailedPercent))
             {
-                writer.WritePropertyName("checksFailedPercent");
+                writer.WritePropertyName("checksFailedPercent"u8);
                 writer.WriteNumberValue(ChecksFailedPercent.Value);
             }
             if (Optional.IsDefined(RoundTripTimeMs))
             {
-                writer.WritePropertyName("roundTripTimeMs");
+                writer.WritePropertyName("roundTripTimeMs"u8);
                 writer.WriteNumberValue(RoundTripTimeMs.Value);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<float> roundTripTimeMs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("checksFailedPercent"))
+                if (property.NameEquals("checksFailedPercent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
                     checksFailedPercent = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("roundTripTimeMs"))
+                if (property.NameEquals("roundTripTimeMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,9 +15,9 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("positive");
+            writer.WritePropertyName("positive"u8);
             writer.WriteNumberValue(Positive);
-            writer.WritePropertyName("negative");
+            writer.WritePropertyName("negative"u8);
             writer.WriteNumberValue(Negative);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.AI.TextAnalytics.Models
             double negative = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("positive"))
+                if (property.NameEquals("positive"u8))
                 {
                     positive = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("negative"))
+                if (property.NameEquals("negative"u8))
                 {
                     negative = property.Value.GetDouble();
                     continue;

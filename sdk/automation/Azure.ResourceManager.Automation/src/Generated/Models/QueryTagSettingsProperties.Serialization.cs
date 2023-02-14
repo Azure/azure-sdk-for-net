@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             if (Optional.IsDefined(FilterOperator))
             {
-                writer.WritePropertyName("filterOperator");
+                writer.WritePropertyName("filterOperator"u8);
                 writer.WriteStringValue(FilterOperator.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<QueryTagOperator> filterOperator = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Automation.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("filterOperator"))
+                if (property.NameEquals("filterOperator"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

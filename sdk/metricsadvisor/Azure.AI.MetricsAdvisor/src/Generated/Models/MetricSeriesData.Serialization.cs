@@ -21,12 +21,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             IReadOnlyList<double> valueList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = MetricSeriesDefinition.DeserializeMetricSeriesDefinition(property.Value);
                     continue;
                 }
-                if (property.NameEquals("timestampList"))
+                if (property.NameEquals("timestampList"u8))
                 {
                     List<DateTimeOffset> array = new List<DateTimeOffset>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -36,7 +36,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     timestampList = array;
                     continue;
                 }
-                if (property.NameEquals("valueList"))
+                if (property.NameEquals("valueList"u8))
                 {
                     List<double> array = new List<double>();
                     foreach (var item in property.Value.EnumerateArray())

@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -34,43 +34,43 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualNetwork))
             {
-                writer.WritePropertyName("virtualNetwork");
+                writer.WritePropertyName("virtualNetwork"u8);
                 writer.WriteObjectValue(VirtualNetwork);
             }
             if (Optional.IsDefined(InternalLoadBalancingMode))
             {
-                writer.WritePropertyName("internalLoadBalancingMode");
+                writer.WritePropertyName("internalLoadBalancingMode"u8);
                 writer.WriteStringValue(InternalLoadBalancingMode.Value.ToString());
             }
             if (Optional.IsDefined(MultiSize))
             {
-                writer.WritePropertyName("multiSize");
+                writer.WritePropertyName("multiSize"u8);
                 writer.WriteStringValue(MultiSize);
             }
             if (Optional.IsDefined(IPSslAddressCount))
             {
-                writer.WritePropertyName("ipsslAddressCount");
+                writer.WritePropertyName("ipsslAddressCount"u8);
                 writer.WriteNumberValue(IPSslAddressCount.Value);
             }
             if (Optional.IsDefined(DnsSuffix))
             {
-                writer.WritePropertyName("dnsSuffix");
+                writer.WritePropertyName("dnsSuffix"u8);
                 writer.WriteStringValue(DnsSuffix);
             }
             if (Optional.IsDefined(FrontEndScaleFactor))
             {
-                writer.WritePropertyName("frontEndScaleFactor");
+                writer.WritePropertyName("frontEndScaleFactor"u8);
                 writer.WriteNumberValue(FrontEndScaleFactor.Value);
             }
             if (Optional.IsCollectionDefined(ClusterSettings))
             {
-                writer.WritePropertyName("clusterSettings");
+                writer.WritePropertyName("clusterSettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in ClusterSettings)
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsCollectionDefined(UserWhitelistedIPRanges))
             {
-                writer.WritePropertyName("userWhitelistedIpRanges");
+                writer.WritePropertyName("userWhitelistedIpRanges"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserWhitelistedIPRanges)
                 {
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsDefined(DedicatedHostCount))
             {
-                writer.WritePropertyName("dedicatedHostCount");
+                writer.WritePropertyName("dedicatedHostCount"u8);
                 writer.WriteNumberValue(DedicatedHostCount.Value);
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
-                writer.WritePropertyName("zoneRedundant");
+                writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             writer.WriteEndObject();
@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.AppService
             Optional<bool> zoneRedundant = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -149,27 +149,27 @@ namespace Azure.ResourceManager.AppService
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppService
                             provisioningState = property0.Value.GetString().ToProvisioningState();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.AppService
                             status = property0.Value.GetString().ToHostingEnvironmentStatus();
                             continue;
                         }
-                        if (property0.NameEquals("virtualNetwork"))
+                        if (property0.NameEquals("virtualNetwork"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AppService
                             virtualNetwork = AppServiceVirtualNetworkProfile.DeserializeAppServiceVirtualNetworkProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("internalLoadBalancingMode"))
+                        if (property0.NameEquals("internalLoadBalancingMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -228,12 +228,12 @@ namespace Azure.ResourceManager.AppService
                             internalLoadBalancingMode = new LoadBalancingMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("multiSize"))
+                        if (property0.NameEquals("multiSize"u8))
                         {
                             multiSize = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("multiRoleCount"))
+                        if (property0.NameEquals("multiRoleCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.AppService
                             multiRoleCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("ipsslAddressCount"))
+                        if (property0.NameEquals("ipsslAddressCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -253,12 +253,12 @@ namespace Azure.ResourceManager.AppService
                             ipSslAddressCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("dnsSuffix"))
+                        if (property0.NameEquals("dnsSuffix"u8))
                         {
                             dnsSuffix = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("maximumNumberOfMachines"))
+                        if (property0.NameEquals("maximumNumberOfMachines"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.AppService
                             maximumNumberOfMachines = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("frontEndScaleFactor"))
+                        if (property0.NameEquals("frontEndScaleFactor"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.AppService
                             frontEndScaleFactor = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("suspended"))
+                        if (property0.NameEquals("suspended"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AppService
                             suspended = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("clusterSettings"))
+                        if (property0.NameEquals("clusterSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.AppService
                             clusterSettings = array;
                             continue;
                         }
-                        if (property0.NameEquals("userWhitelistedIpRanges"))
+                        if (property0.NameEquals("userWhitelistedIpRanges"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.AppService
                             userWhitelistedIPRanges = array;
                             continue;
                         }
-                        if (property0.NameEquals("hasLinuxWorkers"))
+                        if (property0.NameEquals("hasLinuxWorkers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.AppService
                             hasLinuxWorkers = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("dedicatedHostCount"))
+                        if (property0.NameEquals("dedicatedHostCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.AppService
                             dedicatedHostCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("zoneRedundant"))
+                        if (property0.NameEquals("zoneRedundant"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

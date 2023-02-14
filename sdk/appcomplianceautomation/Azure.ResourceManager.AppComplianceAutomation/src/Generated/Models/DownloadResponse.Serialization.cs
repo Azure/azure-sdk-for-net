@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<DownloadResponseComplianceDetailedPdfReport> complianceDetailedPdfReport = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceList"))
+                if (property.NameEquals("resourceList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     resourceList = array;
                     continue;
                 }
-                if (property.NameEquals("complianceReport"))
+                if (property.NameEquals("complianceReport"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     complianceReport = array;
                     continue;
                 }
-                if (property.NameEquals("compliancePdfReport"))
+                if (property.NameEquals("compliancePdfReport"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     compliancePdfReport = DownloadResponseCompliancePdfReport.DeserializeDownloadResponseCompliancePdfReport(property.Value);
                     continue;
                 }
-                if (property.NameEquals("complianceDetailedPdfReport"))
+                if (property.NameEquals("complianceDetailedPdfReport"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

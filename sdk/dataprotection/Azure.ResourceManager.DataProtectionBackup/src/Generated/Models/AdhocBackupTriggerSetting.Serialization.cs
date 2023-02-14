@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RetentionTagOverride))
             {
-                writer.WritePropertyName("retentionTagOverride");
+                writer.WritePropertyName("retentionTagOverride"u8);
                 writer.WriteStringValue(RetentionTagOverride);
             }
             writer.WriteEndObject();

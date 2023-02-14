@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageSizeInGB))
             {
-                writer.WritePropertyName("storageSizeGB");
+                writer.WritePropertyName("storageSizeGB"u8);
                 writer.WriteNumberValue(StorageSizeInGB.Value);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<int> storageSizeGB = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageSizeGB"))
+                if (property.NameEquals("storageSizeGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

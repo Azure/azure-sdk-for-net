@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("notificationChannel");
+            writer.WritePropertyName("notificationChannel"u8);
             writer.WriteStringValue(NotificationChannel.ToString());
-            writer.WritePropertyName("receivers");
+            writer.WritePropertyName("receivers"u8);
             writer.WriteStartArray();
             foreach (var item in Receivers)
             {
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             IList<string> receivers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("notificationChannel"))
+                if (property.NameEquals("notificationChannel"u8))
                 {
                     notificationChannel = new ClusterNotificationChannel(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("receivers"))
+                if (property.NameEquals("receivers"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())

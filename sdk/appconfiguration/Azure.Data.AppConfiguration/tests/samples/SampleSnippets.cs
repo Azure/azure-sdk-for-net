@@ -17,7 +17,9 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void CreateClient()
         {
+#if !SNIPPET
             var connectionString = TestEnvironment.ConnectionString;
+#endif
 
             #region Snippet:CreateConfigurationClient
 #if SNIPPET
@@ -30,7 +32,9 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void CreateClientTokenCredential()
         {
+#if !SNIPPET
             var endpoint = TestEnvironment.Endpoint;
+#endif
 
             #region Snippet:CreateConfigurationClientTokenCredential
 #if SNIPPET
@@ -43,7 +47,9 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void CreateSetting()
         {
+#if !SNIPPET
             var connectionString = TestEnvironment.ConnectionString;
+#endif
 
             #region Snippet:CreateConfigurationSetting
 #if SNIPPET
@@ -58,11 +64,13 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void GetSetting()
         {
+#if !SNIPPET
             var connectionString = TestEnvironment.ConnectionString;
 
             // Make sure a setting exists.
             var setupClient = new ConfigurationClient(connectionString);
             setupClient.SetConfigurationSetting("some_key", "some_value");
+#endif
 
             #region Snippet:GetConfigurationSetting
 #if SNIPPET
@@ -76,7 +84,9 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void UpdateSetting()
         {
+#if !SNIPPET
             var connectionString = TestEnvironment.ConnectionString;
+#endif
 
             #region Snippet:UpdateConfigurationSetting
 #if SNIPPET
@@ -90,7 +100,9 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void DeleteSetting()
         {
+#if !SNIPPET
             var connectionString = TestEnvironment.ConnectionString;
+#endif
 
             #region Snippet:DeleteConfigurationSetting
 #if SNIPPET
@@ -104,7 +116,9 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void ThrowNotFoundError()
         {
+#if !SNIPPET
             var connectionString = TestEnvironment.ConnectionString;
+#endif
 
             try
             {
