@@ -386,7 +386,7 @@ namespace Azure.Core.Amqp.Shared
                 {
                     if (TryCreateNetPropertyFromAmqpProperty(pair.Value, out var propertyValue))
                     {
-                        message.ApplicationProperties[pair.Key.ToString()] = propertyValue;
+                        message.ApplicationProperties[pair.Key.ToString()] = propertyValue!;
                     }
                 }
             }
@@ -399,7 +399,7 @@ namespace Azure.Core.Amqp.Shared
                 {
                     if (TryCreateNetPropertyFromAmqpProperty(pair.Value, out var propertyValue))
                     {
-                        message.MessageAnnotations[pair.Key.ToString()] = propertyValue;
+                        message.MessageAnnotations[pair.Key.ToString()] = propertyValue!;
                     }
                 }
             }
@@ -412,7 +412,7 @@ namespace Azure.Core.Amqp.Shared
                 {
                     if (TryCreateNetPropertyFromAmqpProperty(pair.Value, out var eventValue))
                     {
-                        message.DeliveryAnnotations[pair.Key.ToString()] = eventValue;
+                        message.DeliveryAnnotations[pair.Key.ToString()] = eventValue!;
                     }
                 }
             }
@@ -425,7 +425,7 @@ namespace Azure.Core.Amqp.Shared
                 {
                     if (TryCreateNetPropertyFromAmqpProperty(pair.Value, out var eventValue))
                     {
-                        message.Footer[pair.Key.ToString()] = eventValue;
+                        message.Footer[pair.Key.ToString()] = eventValue!;
                     }
                 }
             }
@@ -750,7 +750,7 @@ namespace Azure.Core.Amqp.Shared
             return (convertedPropertyValue != null);
         }
 
-        private static void ThrowSerializationFailed(string propertyName, KeyValuePair<string, object?> pair)
+        private static void ThrowSerializationFailed(string propertyName, KeyValuePair<string, object> pair)
         {
             throw new NotSupportedException(
                 string.Format(
