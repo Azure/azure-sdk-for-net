@@ -113,6 +113,7 @@ namespace Azure.Storage.DataMovement
             {
                 if (_status != status)
                 {
+                    _status = status;
                     if (StorageTransferStatus.Completed == status ||
                         StorageTransferStatus.CompletedWithSkippedTransfers == status ||
                         StorageTransferStatus.CompletedWithFailedTransfers == status)
@@ -122,7 +123,6 @@ namespace Azure.Storage.DataMovement
                         // because it's acceptable to cancel or have an error occur before then.
                         _completionSource.TrySetResult(status);
                     }
-                    _status = status;
                 }
             }
         }
