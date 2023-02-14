@@ -28,7 +28,7 @@ This document demonstrates using [DefaultAzureCredential][default_cred_ref] to a
 
 Once you have chosen and configured your credential, you can create instances of the `SentSharesClient`.
 
-```C# Snippet:Azure_Analytics_Purview_Share_Authenticate_The_Client
+```C# Snippet:SentSharesClientSample_CreateSentSharesClient
 var credential = new DefaultAzureCredential();
 var endPoint = "https://<my-account-name>.purview.azure.com/share";
 var sentShareClient = new SentSharesClient(endPoint, credential);
@@ -62,7 +62,7 @@ The following section shows you how to initialize and authenticate your client a
 
 ### Create sent share
 
-```C# Snippet:Azure_Analytics_Purview_Share_Samples_CreateSentShare
+```C# Snippet:SentSharesClientSample_CreateSentShare
 var credential = new DefaultAzureCredential();
 var endPoint = "https://<my-account-name>.purview.azure.com/share";
 var sentShareClient = new SentSharesClient(endPoint, credential);
@@ -88,45 +88,7 @@ var inPlaceSentShareDto = new
 var sentShare = await sentShareClient.CreateOrUpdateAsync(sentShareName, RequestContent.Create(inPlaceSentShareDto));
 ```
 
-### Add an asset to a sent share
-
-```C# Snippet:Azure_Analytics_Purview_Share_Samples_AddAnAssetToASentShare
-var credential = new DefaultAzureCredential();
-var endPoint = "https://<my-account-name>.purview.azure.com/share";
-
-// Add asset to sent share
-var sentShareName = "sample-Share";
-var assetName = "fabrikam-blob-asset";
-var assetNameForReceiver = "receiver-visible-asset-name";
-var senderStorageResourceId = "<SENDER_STORAGE_ACCOUNT_RESOURCE_ID>";
-var senderStorageContainer = "fabrikamcontainer";
-var senderPathToShare = "folder/sample.txt";
-var pathNameForReceiver = "from-fabrikam";
-
-var assetData = new
-{
-    // For Adls Gen2 asset use "AdlsGen2Account"
-    kind = "blobAccount",
-    properties = new
-    {
-        storageAccountResourceId = senderStorageResourceId,
-        receiverAssetName = assetNameForReceiver,
-        paths = new[]
-        {
-            new
-            {
-                containerName = senderStorageContainer,
-                senderPath = senderPathToShare,
-                receiverPath = pathNameForReceiver
-            }
-        }
-    }
-};
-var assetsClient = new AssetsClient(endPoint, credential);
-await assetsClient.CreateAsync(WaitUntil.Started, sentShareName, assetName, RequestContent.Create(assetData));
-```
-
-### Send Invitation
+### Create a sent share invitation
 
 ```C# Snippet:Azure_Analytics_Purview_Share_Samples_SendInvitation
 var credential = new DefaultAzureCredential();
@@ -183,17 +145,6 @@ using var responseInvitationDocument = JsonDocument.Parse(responseInvitation);
 var targetEmail = responseInvitationDocument.RootElement.GetProperty("name");
 ```
 
-### View received invitations
-
-```C# Snippet:Azure_Analytics_Purview_Share_Samples_ViewReceivedInvitations
-var credential = new DefaultAzureCredential();
-var endPoint = "https://<my-account-name>.purview.azure.com/share";
-var receivedInvitationsClient = new ReceivedInvitationsClient(endPoint, credential);
-
-// View received invitations
-var receivedInvitations = await receivedInvitationsClient.GetReceivedInvitationsAsync().ToEnumerableAsync();
-```
-
 ### Create a received share
 
 ```C# Snippet:Azure_Analytics_Purview_Share_Samples_CreateAReceivedShare
@@ -234,65 +185,6 @@ var receivedShareData = new
 
 var receivedShareClient = new ReceivedSharesClient(endPoint, credential);
 var receivedShare = await receivedShareClient.CreateAsync(receivedShareName, RequestContent.Create(receivedShareData));
-```
-
-### View accepted shares
-
-```C# Snippet:Azure_Analytics_Purview_Share_Samples_ViewAcceptedShares
-var sentShareName = "sample-Share";
-var credential = new DefaultAzureCredential();
-var endPoint = "https://<my-account-name>.purview.azure.com/share";
-var acceptedSentSharesClient = new AcceptedSentSharesClient(endPoint, credential);
-
-// View accepted shares
-var acceptedSentShares = await acceptedSentSharesClient.GetAcceptedSentSharesAsync(sentShareName).ToEnumerableAsync();
-
-var acceptedSentShare = acceptedSentShares.FirstOrDefault();
-
-if (acceptedSentShare == null)
-{
-    //No accepted sent shares
-    return;
-}
-using var jsonDocument = JsonDocument.Parse(acceptedSentShare);
-var receiverEmail = jsonDocument.RootElement.GetProperty("properties").GetProperty("receiverEmail").GetString();
-```
-
-### Get received assets
-
-```C# Snippet:Azure_Analytics_Purview_Share_Samples_GetReceivedAssets
-var receivedShareName = "sample-share";
-var credential = new DefaultAzureCredential();
-var endPoint = "https://<my-account-name>.purview.azure.com/share";
-var receivedAssetsClient = new ReceivedAssetsClient(endPoint, credential);
-
-// Get received assets
-var receivedAssets = await receivedAssetsClient.GetReceivedAssetsAsync(receivedShareName).ToEnumerableAsync();
-using var jsonDocument = JsonDocument.Parse(receivedAssets.First());
-var receivedAssetName = jsonDocument.RootElement.GetProperty("name").GetString();
-
-string assetMappingName = "receiver-asset-mapping";
-string receiverContainerName = "receivedcontainer";
-string receiverFolderName = "receivedfolder";
-string receiverMountPath = "receivedmountpath";
-string receiverStorageResourceId = "<RECEIVER_STORAGE_ACCOUNT_RESOURCE_ID>";
-
-var assetMappingData = new
-{
-    // For Adls Gen2 asset use "AdlsGen2Account"
-    kind = "BlobAccount",
-    properties = new
-    {
-        assetId = Guid.Parse(receivedAssetName),
-        storageAccountResourceId = receiverStorageResourceId,
-        containerName = receiverContainerName,
-        folder = receiverFolderName,
-        mountPath = receiverMountPath
-    }
-};
-
-var assetMappingsClient = new AssetMappingsClient(endPoint, credential);
-var assetMapping = await assetMappingsClient.CreateAsync(WaitUntil.Completed, receivedShareName, assetMappingName, RequestContent.Create(assetMappingData));
 ```
 
 ## Troubleshooting
