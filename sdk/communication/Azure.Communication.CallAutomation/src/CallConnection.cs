@@ -316,16 +316,16 @@ namespace Azure.Communication.CallAutomation
             return request;
         }
 
-        /// <summary> Add participants to the call. </summary>
+        /// <summary> Add participant to the call. </summary>
         /// <param name="options"> Options for the Add Participants operation.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentNullException"> SourceCallerId is null in <paramref name="options"/> when adding PSTN participants.</exception>
         /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
-        public virtual async Task<Response<AddParticipantsResult>> AddParticipantsAsync(AddParticipantsOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AddParticipantResult>> AddParticipantAsync(AddParticipantOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(AddParticipants)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(AddParticipant)}");
             scope.Start();
             try
             {
@@ -343,7 +343,7 @@ namespace Azure.Communication.CallAutomation
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
 
-                var result = new AddParticipantsResult(response);
+                var result = new AddParticipantResult(response);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
 
                 return Response.FromValue(result, response.GetRawResponse());
@@ -355,16 +355,16 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Add participants to the call. </summary>
+        /// <summary> Add participant to the call. </summary>
         /// <param name="options"> Options for the Add Participants operation.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentNullException"> SourceCallerId is null in <paramref name="options"/> when adding PSTN participants.</exception>
         /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
-        public virtual Response<AddParticipantsResult> AddParticipants(AddParticipantsOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<AddParticipantResult> AddParticipant(AddParticipantOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(AddParticipants)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(AddParticipant)}");
             scope.Start();
             try
             {
@@ -382,7 +382,7 @@ namespace Azure.Communication.CallAutomation
                     cancellationToken: cancellationToken
                     );
 
-                var result = new AddParticipantsResult(response);
+                var result = new AddParticipantResult(response);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, result.OperationContext);
 
                 return Response.FromValue(result, response.GetRawResponse());
@@ -394,24 +394,18 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        private static AddParticipantRequestInternal CreateAddParticipantRequest(AddParticipantsOptions options)
+        private AddParticipantRequestInternal CreateAddParticipantRequest(AddParticipantOptions options)
         {
-            // when add PSTN participants, the SourceCallerId must be provided.
-            if (options.ParticipantsToAdd.Any(participant => participant is PhoneNumberIdentifier))
+            // validate ParticipantToAdd is not null
+            Argument.AssertNotNull(options.ParticipantToAdd, nameof(options.ParticipantToAdd));
+
+            AddParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToAdd.Target))
             {
-                Argument.AssertNotNull(options.SourceCallerId, nameof(options.SourceCallerId));
-            }
-
-            // validate ParticipantsToAdd is not null or empty
-            Argument.AssertNotNullOrEmpty(options.ParticipantsToAdd, nameof(options.ParticipantsToAdd));
-
-            // TODO: update logic
-            AddParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantsToAdd.FirstOrDefault()));
-
-            request.SourceCallerId = options.SourceCallerId == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerId.PhoneNumber);
-            request.SourceDisplayName = options.SourceDisplayName;
-            request.SourceIdentifier = options.SourceIdentifier != null ? CommunicationIdentifierSerializer.Serialize(options.SourceIdentifier) : null;
-            request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
+                SourceCallerId = options.SourceCallerIdNumber == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerIdNumber.PhoneNumber),
+                SourceDisplayName = options.SourceDisplayName,
+                SourceIdentifier = CommunicationIdentifierSerializer.Serialize(RestClient.Source),
+                OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext
+            };
 
             if (options.InvitationTimeoutInSeconds != null &&
                 (options.InvitationTimeoutInSeconds < CallAutomationConstants.InputValidation.MinInvitationTimeoutInSeconds ||

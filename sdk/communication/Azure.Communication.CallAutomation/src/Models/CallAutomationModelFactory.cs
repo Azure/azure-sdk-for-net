@@ -14,12 +14,12 @@ namespace Azure.Communication.CallAutomation
     public static partial class CallAutomationModelFactory
     {
         /// <summary> Initializes a new instance of AddParticipantsResult. </summary>
-        /// <param name="participants"> Participants of the call. </param>
+        /// <param name="participant"> Participant of the call. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <returns> A new <see cref="CallAutomation.AddParticipantsResult"/> instance for mocking. </returns>
-        public static AddParticipantsResult AddParticipantsResult(IEnumerable<CallParticipant> participants = default, string operationContext = default)
+        /// <returns> A new <see cref="CallAutomation.AddParticipantResult"/> instance for mocking. </returns>
+        public static AddParticipantResult AddParticipantsResult(CallParticipant participant = default, string operationContext = default)
         {
-            return new AddParticipantsResult(participants == null ? new List<CallParticipant>() : participants.ToList(), operationContext);
+            return new AddParticipantResult(participant, operationContext);
         }
 
         /// <summary> Initializes a new instance of AnswerCallResult. </summary>

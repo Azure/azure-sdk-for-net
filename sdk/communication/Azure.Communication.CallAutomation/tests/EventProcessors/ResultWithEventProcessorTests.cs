@@ -188,7 +188,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
             EventProcessor handler = callConnection.EventProcessor;
 
-            var response = callConnection.AddParticipants(new AddParticipantsOptions(CreateMoakTargets()));
+            var response = callConnection.AddParticipant(new AddParticipantOptions(CreateMockInvite()));
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
@@ -214,7 +214,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var callConnection = CreateMockCallConnection(successCode, TransferCallOrRemoveParticipantsPayload);
             EventProcessor handler = callConnection.EventProcessor;
 
-            var response = callConnection.AddParticipants(new AddParticipantsOptions(CreateMoakTargets()));
+            var response = callConnection.AddParticipant(new AddParticipantOptions(CreateMockInvite()));
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor

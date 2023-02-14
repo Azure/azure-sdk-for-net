@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -9,22 +9,22 @@ using System.Threading.Tasks;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>AddParticipantsResult Result.</summary>
-    public class AddParticipantsResult : ResultWithWaitForEventBase
+    public class AddParticipantResult : ResultWithWaitForEventBase
     {
-        internal AddParticipantsResult(IReadOnlyList<CallParticipant> participants, string operationContext)
+        internal AddParticipantResult(CallParticipant participant, string operationContext)
         {
-            Participants = participants;
+            Participant = participant;
             OperationContext = operationContext;
         }
 
-        internal AddParticipantsResult(AddParticipantsResponseInternal internalObj)
+        internal AddParticipantResult(AddParticipantsResponseInternal internalObj)
         {
-            Participants = internalObj.Participants.Select(t => new CallParticipant(t)).ToList();
+            Participant = internalObj.Participants.Select(t => new CallParticipant(t)).FirstOrDefault();
             OperationContext = internalObj.OperationContext;
         }
 
-        /// <summary>Gets the participants.</summary>
-        public IReadOnlyList<CallParticipant> Participants { get; }
+        /// <summary>Gets the participant.</summary>
+        public CallParticipant Participant { get; }
         /// <summary>The operation context provided by client.</summary>
         public string OperationContext { get; }
 
