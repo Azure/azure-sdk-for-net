@@ -12,8 +12,8 @@ namespace Azure.Core.Dynamic
     {
         /// <summary>
         /// Specifies whether properties in the <see cref="DynamicJson"/> can be read
-        /// as with either "PascalCase" or "camelCase" property names. If set to false,
-        /// property reads are case sensitive.
+        /// with either "PascalCase" or "camelCase" property names. If set to false,
+        /// property reads are strictly case sensitive.
         /// </summary>
         public bool AccessPropertyNamesPascalOrCamelCase { get; set; }
     }

@@ -41,21 +41,23 @@ namespace Azure.Core.Dynamic
 
         private object? GetProperty(string name)
         {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            MutableJsonElement element;
             if (!_options.AccessPropertyNamesPascalOrCamelCase)
             {
-            if (_element.TryGetProperty(name, out MutableJsonElement element))
-            {
-                return new DynamicJson(element);
+                if (_element.TryGetProperty(name, out element))
+                {
+                    return new DynamicJson(element);
+                }
+
+                return null;
             }
 
-            return null;
-			}
-
-
             string otherCaseName = GetAsOtherCasing(name);
-            if (_element.TryGetProperty(otherCaseName, out property))
+            if (_element.TryGetProperty(otherCaseName, out element))
             {
-                return new DynamicJson(property);
+                return new DynamicJson(element);
             }
 
             return null;
@@ -63,11 +65,6 @@ namespace Azure.Core.Dynamic
 
         private static string GetAsOtherCasing(string value)
         {
-            if (value.Length < 1)
-            {
-                throw new InvalidOperationException($"Invalid property name: {value}");
-            }
-
             if (char.IsUpper(value[0]))
             {
                 return $"{char.ToLowerInvariant(value[0])}{value.Substring(1)}";
