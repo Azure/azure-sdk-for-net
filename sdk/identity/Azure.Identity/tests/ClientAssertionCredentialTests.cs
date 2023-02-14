@@ -32,7 +32,8 @@ namespace Azure.Identity.Tests
             {
                 Transport = config.Transport,
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
-                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
+                TokenCachePersistenceOptions = config.TokenCachePersistenceOptions,
             };
             var pipeline = CredentialPipeline.GetInstance(options);
             options.Pipeline = pipeline;

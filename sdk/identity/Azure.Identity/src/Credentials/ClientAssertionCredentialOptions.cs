@@ -21,5 +21,8 @@ namespace Azure.Identity
 
         /// <inheritdoc/>
         public bool DisableInstanceDiscovery { get; set; }
+
+        /// <inheritdoc/>
+        public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
     }
 }

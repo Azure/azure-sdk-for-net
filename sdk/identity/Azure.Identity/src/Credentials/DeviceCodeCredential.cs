@@ -15,7 +15,7 @@ namespace Azure.Identity
     /// A <see cref="TokenCredential"/> implementation which authenticates a user using the device code flow, and provides access tokens for that user account.
     /// For more information on the device code authentication flow see https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/Device-Code-Flow.
     /// </summary>
-    public class DeviceCodeCredential : TokenCredential
+    public class DeviceCodeCredential : TokenCredential, ISupportsClearAccountCache
     {
         private readonly string _tenantId;
         internal readonly string[] AdditionallyAllowedTenantIds;
@@ -183,6 +183,32 @@ namespace Azure.Identity
 
             return Task.CompletedTask;
         }
+
+#pragma warning disable CA2119 // Seal methods that satisfy private interfaces
+        /// <inheritdoc/>
+        [ForwardsClientCalls(true)]
+        public virtual async Task ClearAccountCacheAsync(CancellationToken cancellationToken = default)
+        {
+            if (Record == null)
+            {
+                return;
+            }
+
+            await Client.RemoveUserAsync(new AuthenticationAccount(Record), cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc/>
+        [ForwardsClientCalls(true)]
+        public virtual void ClearAccountCache(CancellationToken cancellationToken = default)
+        {
+            if (Record == null)
+            {
+                return;
+            }
+
+            Client.RemoveUser(new AuthenticationAccount(Record), cancellationToken);
+        }
+#pragma warning restore CA2119 // Seal methods that satisfy private interfaces
 
         private async Task<AuthenticationRecord> AuthenticateImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {

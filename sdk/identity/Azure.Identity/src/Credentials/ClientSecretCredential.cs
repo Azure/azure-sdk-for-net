@@ -15,9 +15,11 @@ namespace Azure.Identity
     /// to configure a client secret can be found here:
     /// https://docs.microsoft.com/azure/active-directory/develop/quickstart-configure-app-access-web-apis#add-credentials-to-your-web-application
     /// </summary>
-    public class ClientSecretCredential : TokenCredential
+    public class ClientSecretCredential : TokenCredential, ISupportsClearAccountCache
     {
         private readonly CredentialPipeline _pipeline;
+
+        private IAccount _account;
 
         internal readonly string[] AdditionallyAllowedTenantIds;
 
@@ -116,6 +118,8 @@ namespace Azure.Identity
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
                 AuthenticationResult result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, true, cancellationToken).ConfigureAwait(false);
 
+                _account = result.Account;
+
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (Exception e)
@@ -139,6 +143,8 @@ namespace Azure.Identity
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
                 AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, false, cancellationToken).EnsureCompleted();
 
+                _account = result.Account;
+
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (Exception e)
@@ -146,5 +152,29 @@ namespace Azure.Identity
                 throw scope.FailWrapAndThrow(e);
             }
         }
+
+#pragma warning disable CA2119 // Seal methods that satisfy private interfaces
+        /// <inheritdoc/>
+        [ForwardsClientCalls(true)]
+        public virtual async Task ClearAccountCacheAsync(CancellationToken cancellationToken = default)
+        {
+            if (_account != null)
+            {
+                return;
+            }
+            await Client.RemoveUserAsync(_account, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc/>
+        [ForwardsClientCalls(true)]
+        public virtual void ClearAccountCache(CancellationToken cancellationToken = default)
+        {
+            if (_account != null)
+            {
+                return;
+            }
+            Client.RemoveUser(_account, cancellationToken);
+        }
+#pragma warning restore CA2119 // Seal methods that satisfy private interfaces
     }
 }

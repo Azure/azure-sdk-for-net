@@ -461,6 +461,28 @@ namespace Azure.Identity.Tests
             return Encoding.UTF8.GetBytes(cacheString);
         }
 
+        public static byte[] GetMockCacheBytesAccessTokenOnly(string objectId, string userName, string clientId, string tenantId, string token)
+        {
+            var cacheString = @$"{{
+  ""AccessToken"": {{
+      ""{objectId}.{tenantId}-login.microsoftonline.com-accesstoken-{clientId}-organizations-{MockScopes.Default}"": {{
+          ""credential_type"": ""AccessToken"",
+          ""secret"": ""{token}"",
+          ""home_account_id"": ""{objectId}.{tenantId}"",
+          ""environment"": ""login.microsoftonline.com"",
+          ""client_id"": ""{clientId}"",
+          ""target"": ""{MockScopes.Default}"",
+          ""realm"": ""organizations"",
+          ""token_type"": ""Bearer"",
+          ""cached_at"": ""1671572411"",
+          ""expires_on"": ""1671576858"",
+          ""extended_expires_on"": ""1671576858""
+      }}
+  }},
+}}";
+            return Encoding.UTF8.GetBytes(cacheString);
+        }
+
         public static MockResponse CreateMockMsalTokenResponse(int responseCode, string token, string tenantId, string userName, string objectId = null)
         {
             var response = new MockResponse(responseCode);

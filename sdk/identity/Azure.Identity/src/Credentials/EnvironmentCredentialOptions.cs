@@ -53,12 +53,10 @@ namespace Azure.Identity
         /// <inheritdoc/>
         public bool DisableInstanceDiscovery { get; set; }
 
-        /// <summary>
-        /// Specifies tenants in addition to the specified <see cref="TenantId"/> for which the credential may acquire tokens.
-        /// Add the wildcard value "*" to allow the credential to acquire tokens for any tenant the logged in account can access.
-        /// If no value is specified for <see cref="TenantId"/>, this option will have no effect on that authentication method, and the credential will acquire tokens for any requested tenant when using that method.
-        /// This value defaults to the value of the environment variable AZURE_ADDITIONALLY_ALLOWED_TENANTS.
-        /// </summary>
+        /// <inheritdoc/>
         public IList<string> AdditionallyAllowedTenants { get; internal set; } = EnvironmentVariables.AdditionallyAllowedTenants;
+
+        /// <inheritdoc/>
+        public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
     }
 }

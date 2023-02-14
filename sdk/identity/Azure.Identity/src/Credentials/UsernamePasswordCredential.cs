@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Microsoft.Identity.Client;
 using System;
-using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -16,7 +15,7 @@ namespace Azure.Identity
     ///  credential will fail to get a token throwing an <see cref="AuthenticationFailedException"/>. Also, this credential requires a high degree of
     ///  trust and is not recommended outside of prototyping when more secure credentials can be used.
     /// </summary>
-    public class UsernamePasswordCredential : TokenCredential
+    public class UsernamePasswordCredential : TokenCredential, ISupportsClearAccountCache
     {
         private const string NoDefaultScopeMessage = "Authenticating in this environment requires specifying a TokenRequestContext.";
         private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/usernamepasswordcredential/troubleshoot";
@@ -182,6 +181,32 @@ namespace Azure.Identity
         {
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
+
+#pragma warning disable CA2119 // Seal methods that satisfy private interfaces
+        /// <inheritdoc/>
+        [ForwardsClientCalls(true)]
+        public virtual async Task ClearAccountCacheAsync(CancellationToken cancellationToken = default)
+        {
+            if (_record == null)
+            {
+                return;
+            }
+
+            await Client.RemoveUserAsync(new AuthenticationAccount(_record), cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc/>
+        [ForwardsClientCalls(true)]
+        public virtual void ClearAccountCache(CancellationToken cancellationToken = default)
+        {
+            if (_record == null)
+            {
+                return;
+            }
+
+            Client.RemoveUser(new AuthenticationAccount(_record), cancellationToken);
+        }
+#pragma warning restore CA2119 // Seal methods that satisfy private interfaces
 
         private async Task<AuthenticationResult> AuthenticateImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {

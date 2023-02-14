@@ -3,7 +3,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -17,7 +16,7 @@ namespace Azure.Identity
     /// <seealso href="https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow" /> for more information
     /// about the authorization code authentication flow.
     /// </summary>
-    public class AuthorizationCodeCredential : TokenCredential
+    public class AuthorizationCodeCredential : TokenCredential, ISupportsClearAccountCache
     {
         private readonly string _authCode;
         private readonly string _clientId;
@@ -120,6 +119,32 @@ namespace Azure.Identity
             return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
 
+#pragma warning disable CA2119 // Seal methods that satisfy private interfaces
+        /// <inheritdoc/>
+        [ForwardsClientCalls(true)]
+        public virtual async Task ClearAccountCacheAsync(CancellationToken cancellationToken = default)
+        {
+            if (_record == null)
+            {
+                return;
+            }
+
+            await Client.RemoveUserAsync(new AuthenticationAccount(_record), cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc/>
+        [ForwardsClientCalls(true)]
+        public virtual void ClearAccountCache(CancellationToken cancellationToken = default)
+        {
+            if (_record == null)
+            {
+                return;
+            }
+
+            Client.RemoveUser(new AuthenticationAccount(_record), cancellationToken);
+        }
+#pragma warning restore CA2119 // Seal methods that satisfy private interfaces
+
         /// <summary>
         /// Obtains a token from the Azure Active Directory service, using the specified authorization code to authenticate. Acquired tokens
         /// are cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential
@@ -164,19 +189,6 @@ namespace Azure.Identity
             catch (Exception e)
             {
                 throw scope.FailWrapAndThrow(e);
-            }
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public async ValueTask Logout(CancellationToken cancellationToken = default)
-        {
-            if (_record is not null)
-            {
-                await _client.RemoveUser(true, new AuthenticationAccount(_record), cancellationToken).ConfigureAwait(false);
             }
         }
     }

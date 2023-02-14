@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -22,20 +23,13 @@ namespace Azure.Identity.Tests
 
         public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
         {
-            // Configure mock cache to return a token for the expected user
-            string resolvedTenantId = config.RequestContext.TenantId ?? config.TenantId ?? TenantId;
-            var mockBytes = CredentialTestHelpers.GetMockCacheBytes(ObjectId, ExpectedUsername, ClientId, resolvedTenantId, "token", "refreshToken");
-            var tokenCacheOptions = new MockTokenCache(
-                () => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes),
-                args => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes));
-
             var options = new InteractiveBrowserCredentialOptions
             {
                 Transport = config.Transport,
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
-                TokenCachePersistenceOptions = tokenCacheOptions,
+                TokenCachePersistenceOptions = config.TokenCachePersistenceOptions,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
-                AuthenticationRecord = new AuthenticationRecord(ExpectedUsername, "login.windows.net", $"{ObjectId}.{resolvedTenantId}", resolvedTenantId, ClientId),
+                AuthenticationRecord = new AuthenticationRecord(ExpectedUsername, "login.windows.net", $"{ObjectId}.{config.ResolvedTenantId}", config.ResolvedTenantId, ClientId),
             };
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(new InteractiveBrowserCredential(config.TenantId, ClientId, options, pipeline, null));

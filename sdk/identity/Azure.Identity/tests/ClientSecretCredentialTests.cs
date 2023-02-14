@@ -29,7 +29,8 @@ namespace Azure.Identity.Tests
             {
                 Transport = config.Transport,
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
-                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
+                TokenCachePersistenceOptions = config.TokenCachePersistenceOptions,
             };
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(new ClientSecretCredential(config.TenantId, ClientId, "secret", options, pipeline, null));

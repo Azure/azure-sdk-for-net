@@ -3,12 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -50,11 +49,10 @@ namespace Azure.Identity
     /// perform the authentication using these details. Please consult the
     /// documentation of that class for more details.
     /// </summary>
-    public class EnvironmentCredential : TokenCredential
+    public class EnvironmentCredential : TokenCredential, ISupportsClearAccountCache
     {
         private const string UnavailableErrorMessage = "EnvironmentCredential authentication unavailable. Environment variables are not fully configured. See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/environmentcredential/troubleshoot";
         private readonly CredentialPipeline _pipeline;
-
         internal TokenCredential Credential { get; }
 
         /// <summary>
@@ -159,6 +157,28 @@ namespace Azure.Identity
         {
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
+
+#pragma warning disable CA2119 // Seal methods that satisfy private interfaces
+        /// <inheritdoc/>
+        [ForwardsClientCalls(true)]
+        public virtual async Task ClearAccountCacheAsync(CancellationToken cancellationToken = default)
+        {
+            if (Credential is ISupportsClearAccountCache supportsClearAccountCache)
+            {
+                await supportsClearAccountCache.ClearAccountCacheAsync(cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        /// <inheritdoc/>
+        [ForwardsClientCalls(true)]
+        public virtual void ClearAccountCache(CancellationToken cancellationToken = default)
+        {
+            if (Credential is ISupportsClearAccountCache supportsClearAccountCache)
+            {
+                supportsClearAccountCache.ClearAccountCache(cancellationToken);
+            }
+        }
+#pragma warning restore CA2119 // Seal methods that satisfy private interfaces
 
         private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {

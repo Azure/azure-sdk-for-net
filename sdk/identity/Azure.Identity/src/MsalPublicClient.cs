@@ -232,13 +232,26 @@ namespace Azure.Identity
         }
 
         public async ValueTask RemoveUserAsync(IAccount account, CancellationToken cancellationToken) =>
-            await RemoveUserInternal(true, account, cancellationToken).ConfigureAwait(false);
+            await RemoveUser(true, account, cancellationToken).ConfigureAwait(false);
 
         public void RemoveUser(IAccount account, CancellationToken cancellationToken) =>
-            RemoveUserInternal(false, account, cancellationToken).EnsureCompleted();
+            RemoveUser(false, account, cancellationToken).EnsureCompleted();
 
-        private ValueTask RemoveUserInternal(bool async, IAccount account, CancellationToken cancellationToken) =>
-            RemoveUser(async, account, cancellationToken);
+        private async ValueTask RemoveUser(bool async, IAccount account, CancellationToken cancellationToken)
+        {
+            IPublicClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
+            if (async)
+            {
+                await client.RemoveAsync(account).ConfigureAwait(false);
+            }
+            else
+            {
+                // Only an async version is available
+#pragma warning disable AZC0107 // Public asynchronous method shouldn't be called in synchronous scope. Use synchronous version of the method if it is available.
+                client.RemoveAsync(account).EnsureCompleted();
+#pragma warning restore AZC0107 // Public asynchronous method shouldn't be called in synchronous scope. Use synchronous version of the method if it is available.
+            }
+        }
 
         private static async ValueTask<List<IAccount>> GetAccountsAsync(IPublicClientApplication client, bool async)
         {

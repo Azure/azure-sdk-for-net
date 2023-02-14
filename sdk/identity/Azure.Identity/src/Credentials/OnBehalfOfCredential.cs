@@ -14,7 +14,7 @@ namespace Azure.Identity
     /// <summary>
     /// Enables authentication to Azure Active Directory using an On-Behalf-Of flow.
     /// </summary>
-    public class OnBehalfOfCredential : TokenCredential
+    public class OnBehalfOfCredential : TokenCredential, ISupportsClearAccountCache
     {
         internal MsalConfidentialClient Client { get; }
         private readonly string _tenantId;
@@ -22,6 +22,7 @@ namespace Azure.Identity
         private readonly string _clientId;
         private readonly string _clientSecret;
         private readonly UserAssertion _userAssertion;
+        private IAccount _account;
         internal readonly string[] AdditionallyAllowedTenantIds;
 
         /// <summary>
@@ -177,6 +178,30 @@ namespace Azure.Identity
         public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
             GetTokenInternalAsync(requestContext, true, cancellationToken);
 
+#pragma warning disable CA2119 // Seal methods that satisfy private interfaces
+        /// <inheritdoc/>
+        [ForwardsClientCalls(true)]
+        public virtual async Task ClearAccountCacheAsync(CancellationToken cancellationToken = default)
+        {
+            if (_account != null)
+            {
+                return;
+            }
+            await Client.RemoveUserAsync(_account, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc/>
+        [ForwardsClientCalls(true)]
+        public virtual void ClearAccountCache(CancellationToken cancellationToken = default)
+        {
+            if (_account != null)
+            {
+                return;
+            }
+            Client.RemoveUser(_account, cancellationToken);
+        }
+#pragma warning restore CA2119 // Seal methods that satisfy private interfaces
+
         internal async ValueTask<AccessToken> GetTokenInternalAsync(TokenRequestContext requestContext, bool async, CancellationToken cancellationToken)
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("OnBehalfOfCredential.GetToken", requestContext);
@@ -188,6 +213,8 @@ namespace Azure.Identity
                 AuthenticationResult result = await Client
                     .AcquireTokenOnBehalfOfAsync(requestContext.Scopes, tenantId, _userAssertion, async, cancellationToken)
                     .ConfigureAwait(false);
+
+                _account = result.Account;
 
                 return new AccessToken(result.AccessToken, result.ExpiresOn);
             }

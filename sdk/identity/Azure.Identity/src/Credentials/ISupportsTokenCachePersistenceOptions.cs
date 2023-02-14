@@ -9,6 +9,9 @@ namespace Azure.Identity
 {
     internal interface ISupportsTokenCachePersistenceOptions
     {
+        /// <summary>
+        /// The <see cref="TokenCachePersistenceOptions"/>.
+        /// </summary>
         TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.IO;
-using System.Reflection;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -122,9 +122,22 @@ namespace Azure.Identity.Tests
                 DisableInstanceDiscovery = disable,
                 Transport = mockTransport,
                 TenantId = TenantId,
+                ResolvedTenantId = TenantId,
             };
+            // Configure mock cache to return a token for the expected user
+            byte[] mockBytes = null;
+            var tokenCacheOptions = new MockTokenCache(
+                () => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes),
+                args => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes));
+            config.TokenCachePersistenceOptions = tokenCacheOptions;
             var credential = GetTokenCredential(config);
             isPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+            mockBytes = isPubClient switch
+            {
+                false => CredentialTestHelpers.GetMockCacheBytesAccessTokenOnly(ObjectId, ExpectedUsername, ClientId, config.ResolvedTenantId, "token"),
+                _ => CredentialTestHelpers.GetMockCacheBytes(ObjectId, ExpectedUsername, ClientId, config.ResolvedTenantId, "token", "refreshToken")
+            };
+
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, null), default);
 
             Assert.AreNotEqual(disable, calledDiscoveryEndpoint);
@@ -172,9 +185,16 @@ namespace Azure.Identity.Tests
             {
                 Transport = mockTransport,
                 TenantId = parameters.TenantId,
+                ResolvedTenantId = resolvedTenantId,
                 RequestContext = parameters.TokenRequestContext,
                 AdditionallyAllowedTenants = parameters.AdditionallyAllowedTenants
             };
+            // Configure mock cache to return a token for the expected user
+            byte[] mockBytes = null;
+            var tokenCacheOptions = new MockTokenCache(
+                () => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes),
+                args => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes));
+            config.TokenCachePersistenceOptions = tokenCacheOptions;
             var credential = GetTokenCredential(config);
 
             if (credential is SharedTokenCacheCredential)
@@ -183,7 +203,107 @@ namespace Azure.Identity.Tests
             }
 
             isPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+            mockBytes = isPubClient switch
+            {
+                false => CredentialTestHelpers.GetMockCacheBytesAccessTokenOnly(ObjectId, ExpectedUsername, ClientId, config.ResolvedTenantId, "token"),
+                _ => CredentialTestHelpers.GetMockCacheBytes(ObjectId, ExpectedUsername, ClientId, config.ResolvedTenantId, "token", "refreshToken")
+            };
             await AssertAllowedTenantIdsEnforcedAsync(parameters, credential);
+        }
+
+        [Test]
+        public async Task VerifyClearAccountCacheClearsCache()
+        {
+            // Configure the transport
+            var token = Guid.NewGuid().ToString();
+            var idToken = CredentialTestHelpers.CreateMsalIdToken(Guid.NewGuid().ToString(), "userName", TenantId);
+            bool calledDiscoveryEndpoint = false;
+            bool isPubClient = false;
+            var mockTransport = new MockTransport(req =>
+            {
+                calledDiscoveryEndpoint |= req.Uri.Path.Contains("discovery/instance");
+
+                MockResponse response = new(200);
+                if (req.Uri.Path.EndsWith("/devicecode"))
+                {
+                    response = CredentialTestHelpers.CreateMockMsalDeviceCodeResponse();
+                }
+                else if (req.Uri.Path.Contains("/userrealm/"))
+                {
+                    response.SetContent(UserrealmResponse);
+                }
+                else
+                {
+                    if (isPubClient || typeof(TCredOptions) == typeof(AuthorizationCodeCredentialOptions))
+                    {
+                        response = CredentialTestHelpers.CreateMockMsalTokenResponse(200, token, TenantId, ExpectedUsername, ObjectId);
+                    }
+                    else
+                    {
+                        response.SetContent($"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"{token}\" }}");
+                    }
+                }
+
+                return response;
+            });
+
+            var config = new CommonCredentialTestConfig()
+            {
+                Transport = mockTransport,
+                TenantId = TenantId,
+                ResolvedTenantId = TenantId,
+                RequestContext = new TokenRequestContext(MockScopes.Default),
+                AdditionallyAllowedTenants = null,
+                DisableInstanceDiscovery = false
+            };
+            // Configure mock cache to return a token for the expected user
+            bool calledRemoveUser = false;
+            bool cacheAccessed = false;
+            config.ResolvedTenantId = config.RequestContext.TenantId ?? config.TenantId ?? TenantId;
+            byte[] mockBytes = null;
+            var tokenCacheOptions = new MockTokenCache(
+                () => Task.FromResult<ReadOnlyMemory<byte>>(mockBytes),
+                args =>
+                {
+                    cacheAccessed = true;
+                    int accessTokenCount = 0;
+                    using var json = JsonDocument.Parse(args.UnsafeCacheData);
+                    var accessTokenElement = json.RootElement.GetProperty("AccessToken");
+                    foreach (var prop in accessTokenElement.EnumerateObject())
+                    {
+                        Console.WriteLine(prop.Name);
+                        accessTokenCount++;
+                    }
+
+                    if (calledRemoveUser)
+                    {
+                        Assert.AreEqual(0, accessTokenCount, "The cache should be empty after calling RemoveUser");
+                    }
+                    else
+                    {
+                        Assert.GreaterOrEqual(accessTokenCount, 0, "The cache should contain at least one access token");
+                    }
+                    return Task.FromResult<ReadOnlyMemory<byte>>(mockBytes);
+                });
+            config.TokenCachePersistenceOptions = tokenCacheOptions;
+            TokenCredential credential = GetTokenCredential(config);
+            if (credential is ISupportsClearAccountCache clearCacheCredential)
+            {
+                isPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+                mockBytes = isPubClient switch
+                {
+                    false => CredentialTestHelpers.GetMockCacheBytesAccessTokenOnly(ObjectId, ExpectedUsername, ClientId, config.ResolvedTenantId, "token"),
+                    _ => CredentialTestHelpers.GetMockCacheBytes(ObjectId, ExpectedUsername, ClientId, config.ResolvedTenantId, "token", "refreshToken")
+                };
+                await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default).ConfigureAwait(false);
+                calledRemoveUser = true;
+                await clearCacheCredential.ClearAccountCacheAsync();
+                Assert.IsTrue(cacheAccessed, "The cache should have been accessed.");
+            }
+            else
+            {
+                Assert.Ignore("ClearAccountCacheAsync is not supported by this credential.");
+            }
         }
 
         public class AllowedTenantsTestParameters
@@ -390,6 +510,8 @@ namespace Azure.Identity.Tests
             public TokenRequestContext RequestContext { get; set; }
             public string TenantId { get; set; }
             public IList<string> AdditionallyAllowedTenants { get; set; } = new List<string>();
+            public string ResolvedTenantId { get; set; }
+            public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
         }
     }
 }

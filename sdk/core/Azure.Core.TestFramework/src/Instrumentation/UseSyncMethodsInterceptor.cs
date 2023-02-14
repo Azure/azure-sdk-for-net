@@ -127,6 +127,12 @@ namespace Azure.Core.TestFramework
                     return;
                 }
             }
+            // Handle the case where the sync method returns void
+            if (methodReturnType == typeof(Task))
+            {
+                invocation.ReturnValue = Task.CompletedTask;
+                return;
+            }
 
             throw new NotSupportedException();
         }
