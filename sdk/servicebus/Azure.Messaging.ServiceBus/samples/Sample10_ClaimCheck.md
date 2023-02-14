@@ -52,3 +52,7 @@ if (receivedMessage.ApplicationProperties.TryGetValue("blob-name", out object bl
     await blobClient.DeleteAsync();
 }
 ```
+
+## Additional Resources
+
+3rd party libraries like NServiceBus provide support for this pattern out of the box as described in their ["data bus" documentation](https://docs.particular.net/samples/azure/blob-storage-databus/).
