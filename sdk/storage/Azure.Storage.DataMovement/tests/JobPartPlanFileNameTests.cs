@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Azure.Storage.Test;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -86,35 +87,29 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public void Ctor_Error()
         {
-            Assert.Catch<ArgumentException>(
-                () => { new JobPartPlanFileName(""); },
-                "Cannot be null or empty",
-                default);
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new JobPartPlanFileName(""),
+                e => e.Message.Contains("Value cannot be an empty string"));
 
-            Assert.Catch<ArgumentException>(
-                () => { new JobPartPlanFileName(default); },
-                "Cannot be null or empty",
-                default);
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new JobPartPlanFileName(default),
+                e => e.Message.Contains("Value cannot be null"));
 
-            Assert.Catch<ArgumentException>(
-                () => { new JobPartPlanFileName("badname"); },
-                "Bad Name",
-                default);
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new JobPartPlanFileName("badname"),
+                e => e.Message.Contains("Invalid Job Part Plan File"));
 
-            Assert.Catch<ArgumentException>(
-                () => { new JobPartPlanFileName("invalidJobId--001.steV01"); },
-                "Invalid job id",
-                default);
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new JobPartPlanFileName("invalidJobId--001.steV01"),
+                e => e.Message.Contains("Invalid Job Part Plan File"));
 
-            Assert.Catch<ArgumentException>(
-                () => { new JobPartPlanFileName("abcdefgh-abcd-abcd-abcd-123456789abc--XY.steV01"); },
-                "Invalid job part num",
-                default);
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new JobPartPlanFileName("abcdefgh-abcd-abcd-abcd-123456789abc--XY.steV01"),
+                e => e.Message.Contains("Invalid Job Part Plan File"));
 
-            Assert.Catch<ArgumentException>(
-                () => { new JobPartPlanFileName("abcdefgh-abcd-abcd-abcd-123456789abc--001.txt"); },
-                "Invalid extension",
-                default);
+            TestHelper.AssertExpectedException<ArgumentException>(
+                () => new JobPartPlanFileName("abcdefgh-abcd-abcd-abcd-123456789abc--001.txt"),
+                e => e.Message.Contains("Invalid Job Part Plan File"));
         }
 
         [Test]

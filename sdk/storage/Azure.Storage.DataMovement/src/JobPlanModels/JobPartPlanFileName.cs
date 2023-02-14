@@ -99,7 +99,7 @@ namespace Azure.Storage.DataMovement
             int endTransferIdIndex = fileName.IndexOf(DataMovementConstants.PlanFile.JobPlanFileNameDelimiter, StringComparison.InvariantCultureIgnoreCase);
             if (endTransferIdIndex != DataMovementConstants.PlanFile.IdSize)
             {
-                throw new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains a Transfer ID that is either too long or short: {fileName}");
+                throw Errors.InvalidTransferIdFileName(fullPath);
             }
             Id = fullPath.Substring(0, endTransferIdIndex);
 
@@ -109,7 +109,7 @@ namespace Azure.Storage.DataMovement
 
             if (endPartIndex - partStartIndex != DataMovementConstants.PlanFile.JobPartLength)
             {
-                throw new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Part Number: {fileName}");
+                throw Errors.InvalidJobPartFileName(fullPath);
             }
             if (!int.TryParse(
                     fileName.Substring(partStartIndex, DataMovementConstants.PlanFile.JobPartLength),
@@ -117,7 +117,7 @@ namespace Azure.Storage.DataMovement
                     CultureInfo.InvariantCulture,
                     out int jobPartNumber))
             {
-                throw new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Part Number, could not convert to a integer: {fileName}");
+                throw Errors.InvalidJobPartNumberFileName(fullPath);
             }
             JobPartNumber = jobPartNumber;
 
@@ -125,12 +125,12 @@ namespace Azure.Storage.DataMovement
 
             if (schemaStartIndex + 1 >= fullPath.Length)
             {
-                throw new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Plan Schema Version: {fileName}");
+                throw Errors.InvalidSchemaLengthFileName(fullPath);
             }
             SchemaVersion = fullPath.Substring(schemaStartIndex);
             if (DataMovementConstants.PlanFile.SchemaVersion != SchemaVersion)
             {
-                throw new ArgumentException($"Invalid Job Part Plan File: Job Part Schema version: {SchemaVersion} does not match the Schema Version supported by the package {DataMovementConstants.PlanFile.SchemaVersion}. Please consider altering the package version that supports the respective version.");
+                throw Errors.InvalidSchemaVersionFileName(SchemaVersion);
             }
 
             FullPath = fullPath;

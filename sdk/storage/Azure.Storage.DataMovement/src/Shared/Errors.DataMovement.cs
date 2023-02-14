@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using Azure.Storage.DataMovement;
 using static Azure.Storage.Constants.Sas;
@@ -80,5 +81,20 @@ namespace Azure.Storage
 
         public static ArgumentException MissingCheckpointerPath(string directoryPath)
             => throw new ArgumentException($"Could not initialize the LocalTransferCheckpointer because the folderPath passed does not exist. Please create the {directoryPath}, folder path first.");
+
+        public static ArgumentException InvalidTransferIdFileName(string fileName)
+            => new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains a Transfer ID that is either too long or short: {fileName}");
+
+        public static ArgumentException InvalidJobPartFileName(string fileName)
+            => new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Part Number: {fileName}");
+
+        public static ArgumentException InvalidJobPartNumberFileName(string fileName)
+            => new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Part Number, could not convert to a integer: {fileName}");
+
+        public static ArgumentException InvalidSchemaLengthFileName(string fileName)
+            => new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Plan Schema Version: {fileName}");
+
+        public static ArgumentException InvalidSchemaVersionFileName(string schemaVersion)
+            => new ArgumentException($"Invalid Job Part Plan File: Job Part Schema version: {schemaVersion} does not match the Schema Version supported by the package {DataMovementConstants.PlanFile.SchemaVersion}. Please consider altering the package version that supports the respective version.");
     }
 }
