@@ -129,58 +129,55 @@ namespace Azure.AI.OpenAI.Tests
                 LogProbability = 1,
             };
 
-            Response<StreamingCompletions> disposableResponse = null;
-            try
-            {
-                disposableResponse = await client.GetCompletionsStreamingAsync(
+            Response<StreamingCompletions> response = await client.GetCompletionsStreamingAsync(
                     CompletionsDeploymentId,
                     requestOptions);
-                Assert.That(disposableResponse, Is.Not.Null);
-                Assert.That(disposableResponse.GetRawResponse(), Is.Not.Null.Or.Empty);
+            Assert.That(response, Is.Not.Null);
 
-                int originallyEnumeratedChoices = 0;
-                List<List<string>> originallyEnumeratedTextParts = new List<List<string>>();
+            // StreamingCompletions implements IDisposable; capturing the .Value field of `response` with a `using`
+            // statement is unusual but properly ensures that `.Dispose()` will be called, as `Response<T>` does *not*
+            // implement IDisposable or otherwise ensure that an `IDisposable` underlying `.Value` is disposed.
+            using StreamingCompletions responseValue = response.Value;
 
-                await foreach (StreamingChoice choice in disposableResponse.Value.GetChoicesStreaming())
-                {
-                    List<string> textPartsForChoice = new List<string>();
-                    StringBuilder choiceTextBuilder = new StringBuilder();
-                    await foreach (string choiceTextPart in choice.GetTextStreaming())
-                    {
-                        choiceTextBuilder.Append(choiceTextPart);
-                        textPartsForChoice.Add(choiceTextPart);
-                    }
-                    Assert.That(choiceTextBuilder.ToString(), Is.Not.Null.Or.Empty);
-                    Assert.That(choice.FinishReason, Is.Not.Null.Or.Empty);
-                    Assert.That(choice.Logprobs, Is.Not.Null);
-                    originallyEnumeratedChoices++;
-                    originallyEnumeratedTextParts.Add(textPartsForChoice);
-                }
+            int originallyEnumeratedChoices = 0;
+            List<List<string>> originallyEnumeratedTextParts = new List<List<string>>();
 
-                // Note: these top-level values *are likely not yet populated* until *after* at least one streaming
-                // choice has arrived.
-                Assert.That(disposableResponse.Value.Id, Is.Not.Null.Or.Empty);
-                Assert.That(disposableResponse.Value.Created, Is.GreaterThan(new DateTime(2022, 1, 1)));
-                Assert.That(disposableResponse.Value.Created, Is.LessThan(DateTime.Now.AddDays(2)));
-
-                // Validate stability of enumeration (non-cancelled case)
-                IReadOnlyList<StreamingChoice> secondPassChoices = await GetBlockingListFromIAsyncEnumerable(
-                    disposableResponse.Value.GetChoicesStreaming());
-                Assert.AreEqual(originallyEnumeratedChoices, secondPassChoices.Count);
-                for (int i = 0; i < secondPassChoices.Count; i++)
-                {
-                    IReadOnlyList<string> secondPassTextParts = await GetBlockingListFromIAsyncEnumerable(
-                        secondPassChoices[i].GetTextStreaming());
-                    Assert.AreEqual(originallyEnumeratedTextParts[i].Count, secondPassTextParts.Count);
-                    for (int j = 0; j < originallyEnumeratedTextParts[i].Count; j++)
-                    {
-                        Assert.AreEqual(originallyEnumeratedTextParts[i][j], secondPassTextParts[j]);
-                    }
-                }
-            }
-            finally
+            await foreach (StreamingChoice choice in responseValue.GetChoicesStreaming())
             {
-                disposableResponse.Value?.Dispose();
+                List<string> textPartsForChoice = new List<string>();
+                StringBuilder choiceTextBuilder = new StringBuilder();
+                await foreach (string choiceTextPart in choice.GetTextStreaming())
+                {
+                    choiceTextBuilder.Append(choiceTextPart);
+                    textPartsForChoice.Add(choiceTextPart);
+                }
+                Assert.That(choiceTextBuilder.ToString(), Is.Not.Null.Or.Empty);
+                Assert.That(choice.FinishReason, Is.Not.Null.Or.Empty);
+                Assert.That(choice.Logprobs, Is.Not.Null);
+                originallyEnumeratedChoices++;
+                originallyEnumeratedTextParts.Add(textPartsForChoice);
+            }
+
+            // Note: these top-level values *are likely not yet populated* until *after* at least one streaming
+            // choice has arrived.
+            Assert.That(response.GetRawResponse(), Is.Not.Null.Or.Empty);
+            Assert.That(responseValue.Id, Is.Not.Null.Or.Empty);
+            Assert.That(responseValue.Created, Is.GreaterThan(new DateTime(2022, 1, 1)));
+            Assert.That(responseValue.Created, Is.LessThan(DateTime.Now.AddDays(2)));
+
+            // Validate stability of enumeration (non-cancelled case)
+            IReadOnlyList<StreamingChoice> secondPassChoices = await GetBlockingListFromIAsyncEnumerable(
+                responseValue.GetChoicesStreaming());
+            Assert.AreEqual(originallyEnumeratedChoices, secondPassChoices.Count);
+            for (int i = 0; i < secondPassChoices.Count; i++)
+            {
+                IReadOnlyList<string> secondPassTextParts = await GetBlockingListFromIAsyncEnumerable(
+                    secondPassChoices[i].GetTextStreaming());
+                Assert.AreEqual(originallyEnumeratedTextParts[i].Count, secondPassTextParts.Count);
+                for (int j = 0; j < originallyEnumeratedTextParts[i].Count; j++)
+                {
+                    Assert.AreEqual(originallyEnumeratedTextParts[i][j], secondPassTextParts[j]);
+                }
             }
         }
 

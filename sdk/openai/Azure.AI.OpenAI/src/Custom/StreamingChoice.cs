@@ -15,10 +15,29 @@ namespace Azure.AI.OpenAI.Custom
         private readonly object _baseChoicesLock = new object();
         private readonly AsyncAutoResetEvent _updateAvailableEvent;
 
+        /// <summary>
+        /// Gets the response index associated with this StreamingChoice as represented relative to other Choices
+        /// in the same Completions response.
+        /// </summary>
+        /// <remarks>
+        /// Indices may be used to correlate individual Choices within a Completions result to their configured
+        /// prompts as provided in the request. As an example, if two Choices are requested for each of four prompts,
+        /// the Choices with indices 0 and 1 will correspond to the first prompt, 2 and 3 to the second, and so on.
+        /// </remarks>
         public int? Index => GetLocked(() => _baseChoices.Last().Index);
 
+        /// <summary>
+        /// Gets a value representing why response generation ended when producing this StreamingChoice.
+        /// </summary>
+        /// <remarks>
+        /// Normal termination typically provides "stop" and encountering token limits in a request typically
+        /// provides "length." If no value is present, this StreamingChoice is still in progress.
+        /// </remarks>
         public string FinishReason => GetLocked(() => _baseChoices.Last().FinishReason);
 
+        /// <summary>
+        /// Gets the log probabilities associated with tokens in this Choice.
+        /// </summary>
         public CompletionsLogProbability Logprobs => GetLocked(() => _baseChoices.Last().Logprobs);
 
         internal StreamingChoice(Choice originalBaseChoice)
@@ -36,6 +55,14 @@ namespace Azure.AI.OpenAI.Custom
             _updateAvailableEvent.Set();
         }
 
+        /// <summary>
+        /// Gets an asynchronous enumeration that will retrieve the Completion text associated with this Choice as it
+        /// becomes available. Each string will provide one or more tokens, including whitespace, and a full
+        /// concatenation of all enumerated strings is functionally equivalent to the single Text property on a
+        /// non-streaming Completions Choice.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async IAsyncEnumerable<string> GetTextStreaming(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
