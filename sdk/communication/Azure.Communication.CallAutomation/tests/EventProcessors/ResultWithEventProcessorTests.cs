@@ -192,7 +192,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, CallAutomationModelFactory.AddParticipantsSucceeded(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null));
+            SendAndProcessEvent(handler, CallAutomationModelFactory.AddParticipantSucceeded(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null));
 
             AddParticipantsEventResult returnedResult = await response.Value.WaitForEvent();
 
@@ -218,7 +218,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, CallAutomationModelFactory.AddParticipantsFailed(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null));
+            SendAndProcessEvent(handler, CallAutomationModelFactory.AddParticipantFailed(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null));
 
             AddParticipantsEventResult returnedResult = await response.Value.WaitForEvent();
 

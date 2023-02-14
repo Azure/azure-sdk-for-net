@@ -76,7 +76,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                     {
                         OperationContext = operationContext1,
                     };
-                    Response<RemoveParticipantsResult> removePartResponse = await response.CallConnection.RemoveParticipantAsync(removeParticipantsOptions);
+                    Response<RemoveParticipantResult> removePartResponse = await response.CallConnection.RemoveParticipantAsync(removeParticipantsOptions);
                     Assert.IsTrue(!removePartResponse.GetRawResponse().IsError);
                     Assert.AreEqual(operationContext1, removePartResponse.Value.OperationContext);
 

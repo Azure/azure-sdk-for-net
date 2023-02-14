@@ -93,7 +93,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Initializes a new instance of add participant failed event.
         /// </summary>
-        public static AddParticipantFailed AddParticipantsFailed(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
+        public static AddParticipantFailed AddParticipantFailed(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
         {
             var internalObject = new AddParticipantFailedInternal(
                 callConnectionId,
@@ -110,7 +110,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Initializes a new instance of add participant success event.
         /// </summary>
-        public static AddParticipantSucceeded AddParticipantsSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
+        public static AddParticipantSucceeded AddParticipantSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
         {
             var internalObject = new AddParticipantSucceededInternal(
                 callConnectionId,
