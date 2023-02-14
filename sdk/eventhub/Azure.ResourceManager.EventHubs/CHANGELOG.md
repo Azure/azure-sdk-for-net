@@ -5,7 +5,7 @@
 ### Features Added
 
 - Added operation support to `EventHubsApplicationGroup` & `NetworkSecurityPerimeterConfiguration`.
-- Supported EventHubsCluster creation with  `SupportsScaling`.
+- Supported EventHubsCluster creation with `SupportsScaling`.
 - Supported EventHubsNamespace creation with `MinimumTlsVersion` and `PublicNetworkAccess`.
 
 ### Other Changes
