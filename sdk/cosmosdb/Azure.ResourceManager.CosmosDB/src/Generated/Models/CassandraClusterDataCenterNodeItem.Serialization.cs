@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<double> cpuUsage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("address"))
+                if (property.NameEquals("address"u8))
                 {
                     address = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,17 +49,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     state = new CassandraNodeState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("load"))
+                if (property.NameEquals("load"u8))
                 {
                     load = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tokens"))
+                if (property.NameEquals("tokens"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     tokens = array;
                     continue;
                 }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("size"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     size = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("hostID"))
+                if (property.NameEquals("hostID"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     hostId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("rack"))
+                if (property.NameEquals("rack"u8))
                 {
                     rack = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     timestamp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskUsedKB"))
+                if (property.NameEquals("diskUsedKB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     diskUsedKB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("diskFreeKB"))
+                if (property.NameEquals("diskFreeKB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     diskFreeKB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("memoryUsedKB"))
+                if (property.NameEquals("memoryUsedKB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     memoryUsedKB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("memoryBuffersAndCachedKB"))
+                if (property.NameEquals("memoryBuffersAndCachedKB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     memoryBuffersAndCachedKB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("memoryFreeKB"))
+                if (property.NameEquals("memoryFreeKB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     memoryFreeKB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("memoryTotalKB"))
+                if (property.NameEquals("memoryTotalKB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     memoryTotalKB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("cpuUsage"))
+                if (property.NameEquals("cpuUsage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

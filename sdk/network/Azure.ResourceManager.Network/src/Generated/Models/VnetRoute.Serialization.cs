@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(StaticRoutes))
             {
-                writer.WritePropertyName("staticRoutes");
+                writer.WritePropertyName("staticRoutes"u8);
                 writer.WriteStartArray();
                 foreach (var item in StaticRoutes)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<StaticRoute>> staticRoutes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("staticRoutes"))
+                if (property.NameEquals("staticRoutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

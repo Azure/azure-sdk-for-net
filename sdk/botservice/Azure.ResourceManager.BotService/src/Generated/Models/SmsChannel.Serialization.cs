@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            writer.WritePropertyName("channelName");
+            writer.WritePropertyName("channelName"u8);
             writer.WriteStringValue(ChannelName);
             if (Optional.IsDefined(ETag))
             {
                 if (ETag != null)
                 {
-                    writer.WritePropertyName("etag");
+                    writer.WritePropertyName("etag"u8);
                     writer.WriteStringValue(ETag.ToString());
                 }
                 else
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WriteEndObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<AzureLocation> location = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.BotService.Models
                     properties = SmsChannelProperties.DeserializeSmsChannelProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("channelName"))
+                if (property.NameEquals("channelName"u8))
                 {
                     channelName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.BotService.Models
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     provisioningState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

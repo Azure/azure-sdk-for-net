@@ -21,12 +21,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> validationUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("validationCode"))
+                if (property.NameEquals("validationCode"u8))
                 {
                     validationCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("validationUrl"))
+                if (property.NameEquals("validationUrl"u8))
                 {
                     validationUrl = property.Value.GetString();
                     continue;

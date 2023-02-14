@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(RequestHeaderConfigurations))
             {
-                writer.WritePropertyName("requestHeaderConfigurations");
+                writer.WritePropertyName("requestHeaderConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in RequestHeaderConfigurations)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(ResponseHeaderConfigurations))
             {
-                writer.WritePropertyName("responseHeaderConfigurations");
+                writer.WritePropertyName("responseHeaderConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResponseHeaderConfigurations)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(UrlConfiguration))
             {
-                writer.WritePropertyName("urlConfiguration");
+                writer.WritePropertyName("urlConfiguration"u8);
                 writer.WriteObjectValue(UrlConfiguration);
             }
             writer.WriteEndObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ApplicationGatewayUrlConfiguration> urlConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("requestHeaderConfigurations"))
+                if (property.NameEquals("requestHeaderConfigurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
                     requestHeaderConfigurations = array;
                     continue;
                 }
-                if (property.NameEquals("responseHeaderConfigurations"))
+                if (property.NameEquals("responseHeaderConfigurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network.Models
                     responseHeaderConfigurations = array;
                     continue;
                 }
-                if (property.NameEquals("urlConfiguration"))
+                if (property.NameEquals("urlConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

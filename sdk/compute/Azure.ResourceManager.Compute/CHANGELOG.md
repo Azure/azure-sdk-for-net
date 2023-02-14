@@ -178,6 +178,8 @@ New design of track 2 initial commit.
 Example: Create a VM:
 
 Before upgrade:
+
+You need the following using statements:
 ```C#
 using System.Collections.Generic;
 using System.Linq;
@@ -193,7 +195,10 @@ using IPVersion = Microsoft.Azure.Management.Network.Models.IPVersion;
 using ResourceManagementClient = Microsoft.Azure.Management.ResourceManager.ResourceManagementClient;
 using Sku = Microsoft.Azure.Management.Compute.Models.Sku;
 using SubResource = Microsoft.Azure.Management.Compute.Models.SubResource;
+```
 
+The code looks like:
+```C#
 var credentials = new TokenCredentials("YOUR ACCESS TOKEN");;
 
 var resourceClient = new ResourceManagementClient(credentials);
@@ -298,7 +303,9 @@ await computeClient.VirtualMachines.BeginCreateOrUpdateAsync(resourceGroupName, 
 ```
 
 After upgrade:
-```C# Snippet:Changelog_New
+
+You need the following using statements:
+```C# Snippet:Changelog_NewUsing
 using Azure.Identity;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Network;
@@ -308,7 +315,10 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.Core;
 using System;
 using System.Linq;
+```
 
+The code looks like:
+```C# Snippet:Changelog_New
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 
 AzureLocation location = AzureLocation.WestUS;

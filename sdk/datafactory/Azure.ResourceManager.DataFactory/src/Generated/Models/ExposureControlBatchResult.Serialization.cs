@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IReadOnlyList<ExposureControlResult> exposureControlResponses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("exposureControlResponses"))
+                if (property.NameEquals("exposureControlResponses"u8))
                 {
                     List<ExposureControlResult> array = new List<ExposureControlResult>();
                     foreach (var item in property.Value.EnumerateArray())

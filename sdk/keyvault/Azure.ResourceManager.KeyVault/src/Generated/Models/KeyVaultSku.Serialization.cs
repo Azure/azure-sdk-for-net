@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("family");
+            writer.WritePropertyName("family"u8);
             writer.WriteStringValue(Family.ToString());
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToSerialString());
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.KeyVault.Models
             KeyVaultSkuName name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("family"))
+                if (property.NameEquals("family"u8))
                 {
                     family = new KeyVaultSkuFamily(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString().ToKeyVaultSkuName();
                     continue;

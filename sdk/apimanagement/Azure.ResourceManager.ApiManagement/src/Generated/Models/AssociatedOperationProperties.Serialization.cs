@@ -24,42 +24,42 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> uriTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("apiName"))
+                if (property.NameEquals("apiName"u8))
                 {
                     apiName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("apiRevision"))
+                if (property.NameEquals("apiRevision"u8))
                 {
                     apiRevision = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("apiVersion"))
+                if (property.NameEquals("apiVersion"u8))
                 {
                     apiVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("method"))
+                if (property.NameEquals("method"u8))
                 {
                     method = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("urlTemplate"))
+                if (property.NameEquals("urlTemplate"u8))
                 {
                     uriTemplate = property.Value.GetString();
                     continue;

@@ -18,7 +18,7 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<object> payload = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.IoT.Hub.Service.Models
                     status = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("payload"))
+                if (property.NameEquals("payload"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

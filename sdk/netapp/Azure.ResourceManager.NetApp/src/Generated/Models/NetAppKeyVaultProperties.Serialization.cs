@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.NetApp.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyVaultUri");
+            writer.WritePropertyName("keyVaultUri"u8);
             writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
-            writer.WritePropertyName("keyName");
+            writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName);
-            writer.WritePropertyName("keyVaultResourceId");
+            writer.WritePropertyName("keyVaultResourceId"u8);
             writer.WriteStringValue(KeyVaultResourceId);
             writer.WriteEndObject();
         }
@@ -34,27 +34,27 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<NetAppKeyVaultStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyVaultId"))
+                if (property.NameEquals("keyVaultId"u8))
                 {
                     keyVaultId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVaultUri"))
+                if (property.NameEquals("keyVaultUri"u8))
                 {
                     keyVaultUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyName"))
+                if (property.NameEquals("keyName"u8))
                 {
                     keyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVaultResourceId"))
+                if (property.NameEquals("keyVaultResourceId"u8))
                 {
                     keyVaultResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

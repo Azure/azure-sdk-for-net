@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Method))
             {
-                writer.WritePropertyName("method");
+                writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToString());
             }
             if (Optional.IsDefined(ClientSecretSettingName))
             {
-                writer.WritePropertyName("clientSecretSettingName");
+                writer.WritePropertyName("clientSecretSettingName"u8);
                 writer.WriteStringValue(ClientSecretSettingName);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> clientSecretSettingName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("method"))
+                if (property.NameEquals("method"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
                     method = new ClientCredentialMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("clientSecretSettingName"))
+                if (property.NameEquals("clientSecretSettingName"u8))
                 {
                     clientSecretSettingName = property.Value.GetString();
                     continue;

@@ -18,82 +18,82 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryPointRehydrationInfo))
             {
-                writer.WritePropertyName("recoveryPointRehydrationInfo");
+                writer.WritePropertyName("recoveryPointRehydrationInfo"u8);
                 writer.WriteObjectValue(RecoveryPointRehydrationInfo);
             }
             if (Optional.IsDefined(RecoveryPointId))
             {
-                writer.WritePropertyName("recoveryPointId");
+                writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
             if (Optional.IsDefined(RecoveryType))
             {
-                writer.WritePropertyName("recoveryType");
+                writer.WritePropertyName("recoveryType"u8);
                 writer.WriteStringValue(RecoveryType.Value.ToString());
             }
             if (Optional.IsDefined(SourceResourceId))
             {
-                writer.WritePropertyName("sourceResourceId");
+                writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
             if (Optional.IsDefined(TargetVirtualMachineId))
             {
-                writer.WritePropertyName("targetVirtualMachineId");
+                writer.WritePropertyName("targetVirtualMachineId"u8);
                 writer.WriteStringValue(TargetVirtualMachineId);
             }
             if (Optional.IsDefined(TargetResourceGroupId))
             {
-                writer.WritePropertyName("targetResourceGroupId");
+                writer.WritePropertyName("targetResourceGroupId"u8);
                 writer.WriteStringValue(TargetResourceGroupId);
             }
             if (Optional.IsDefined(StorageAccountId))
             {
-                writer.WritePropertyName("storageAccountId");
+                writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
             if (Optional.IsDefined(VirtualNetworkId))
             {
-                writer.WritePropertyName("virtualNetworkId");
+                writer.WritePropertyName("virtualNetworkId"u8);
                 writer.WriteStringValue(VirtualNetworkId);
             }
             if (Optional.IsDefined(SubnetId))
             {
-                writer.WritePropertyName("subnetId");
+                writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
             if (Optional.IsDefined(TargetDomainNameId))
             {
-                writer.WritePropertyName("targetDomainNameId");
+                writer.WritePropertyName("targetDomainNameId"u8);
                 writer.WriteStringValue(TargetDomainNameId);
             }
             if (Optional.IsDefined(Region))
             {
-                writer.WritePropertyName("region");
+                writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
             if (Optional.IsDefined(AffinityGroup))
             {
-                writer.WritePropertyName("affinityGroup");
+                writer.WritePropertyName("affinityGroup"u8);
                 writer.WriteStringValue(AffinityGroup);
             }
             if (Optional.IsDefined(CreateNewCloudService))
             {
-                writer.WritePropertyName("createNewCloudService");
+                writer.WritePropertyName("createNewCloudService"u8);
                 writer.WriteBooleanValue(CreateNewCloudService.Value);
             }
             if (Optional.IsDefined(OriginalStorageAccountOption))
             {
-                writer.WritePropertyName("originalStorageAccountOption");
+                writer.WritePropertyName("originalStorageAccountOption"u8);
                 writer.WriteBooleanValue(OriginalStorageAccountOption.Value);
             }
             if (Optional.IsDefined(EncryptionDetails))
             {
-                writer.WritePropertyName("encryptionDetails");
+                writer.WritePropertyName("encryptionDetails"u8);
                 writer.WriteObjectValue(EncryptionDetails);
             }
             if (Optional.IsCollectionDefined(RestoreDiskLunList))
             {
-                writer.WritePropertyName("restoreDiskLunList");
+                writer.WritePropertyName("restoreDiskLunList"u8);
                 writer.WriteStartArray();
                 foreach (var item in RestoreDiskLunList)
                 {
@@ -103,17 +103,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(RestoreWithManagedDisks))
             {
-                writer.WritePropertyName("restoreWithManagedDisks");
+                writer.WritePropertyName("restoreWithManagedDisks"u8);
                 writer.WriteBooleanValue(RestoreWithManagedDisks.Value);
             }
             if (Optional.IsDefined(DiskEncryptionSetId))
             {
-                writer.WritePropertyName("diskEncryptionSetId");
+                writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
-                writer.WritePropertyName("zones");
+                writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
                 foreach (var item in Zones)
                 {
@@ -123,15 +123,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(IdentityInfo))
             {
-                writer.WritePropertyName("identityInfo");
+                writer.WritePropertyName("identityInfo"u8);
                 writer.WriteObjectValue(IdentityInfo);
             }
             if (Optional.IsDefined(IdentityBasedRestoreDetails))
             {
-                writer.WritePropertyName("identityBasedRestoreDetails");
+                writer.WritePropertyName("identityBasedRestoreDetails"u8);
                 writer.WriteObjectValue(IdentityBasedRestoreDetails);
             }
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryPointRehydrationInfo"))
+                if (property.NameEquals("recoveryPointRehydrationInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -172,12 +172,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointRehydrationInfo = RecoveryPointRehydrationInfo.DeserializeRecoveryPointRehydrationInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("recoveryPointId"))
+                if (property.NameEquals("recoveryPointId"u8))
                 {
                     recoveryPointId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryType"))
+                if (property.NameEquals("recoveryType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -187,52 +187,52 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryType = new RecoveryType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceResourceId"))
+                if (property.NameEquals("sourceResourceId"u8))
                 {
                     sourceResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetVirtualMachineId"))
+                if (property.NameEquals("targetVirtualMachineId"u8))
                 {
                     targetVirtualMachineId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceGroupId"))
+                if (property.NameEquals("targetResourceGroupId"u8))
                 {
                     targetResourceGroupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageAccountId"))
+                if (property.NameEquals("storageAccountId"u8))
                 {
                     storageAccountId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("virtualNetworkId"))
+                if (property.NameEquals("virtualNetworkId"u8))
                 {
                     virtualNetworkId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subnetId"))
+                if (property.NameEquals("subnetId"u8))
                 {
                     subnetId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetDomainNameId"))
+                if (property.NameEquals("targetDomainNameId"u8))
                 {
                     targetDomainNameId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("region"))
+                if (property.NameEquals("region"u8))
                 {
                     region = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("affinityGroup"))
+                if (property.NameEquals("affinityGroup"u8))
                 {
                     affinityGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createNewCloudService"))
+                if (property.NameEquals("createNewCloudService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     createNewCloudService = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("originalStorageAccountOption"))
+                if (property.NameEquals("originalStorageAccountOption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     originalStorageAccountOption = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("encryptionDetails"))
+                if (property.NameEquals("encryptionDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     encryptionDetails = EncryptionDetails.DeserializeEncryptionDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("restoreDiskLunList"))
+                if (property.NameEquals("restoreDiskLunList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     restoreDiskLunList = array;
                     continue;
                 }
-                if (property.NameEquals("restoreWithManagedDisks"))
+                if (property.NameEquals("restoreWithManagedDisks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -287,12 +287,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     restoreWithManagedDisks = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("diskEncryptionSetId"))
+                if (property.NameEquals("diskEncryptionSetId"u8))
                 {
                     diskEncryptionSetId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("zones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     zones = array;
                     continue;
                 }
-                if (property.NameEquals("identityInfo"))
+                if (property.NameEquals("identityInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     identityInfo = IdentityInfo.DeserializeIdentityInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("identityBasedRestoreDetails"))
+                if (property.NameEquals("identityBasedRestoreDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     identityBasedRestoreDetails = IdentityBasedRestoreDetails.DeserializeIdentityBasedRestoreDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;

@@ -28,22 +28,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> timescale = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ingestUrl"))
+                if (property.NameEquals("ingestUrl"u8))
                 {
                     ingestUrl = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trackType"))
+                if (property.NameEquals("trackType"u8))
                 {
                     trackType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trackName"))
+                if (property.NameEquals("trackName"u8))
                 {
                     trackName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bitrate"))
+                if (property.NameEquals("bitrate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,27 +53,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     bitrate = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("encoderIp"))
+                if (property.NameEquals("encoderIp"u8))
                 {
                     encoderIp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encoderPort"))
+                if (property.NameEquals("encoderPort"u8))
                 {
                     encoderPort = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     timestamp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("duration"))
+                if (property.NameEquals("duration"u8))
                 {
                     duration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timescale"))
+                if (property.NameEquals("timescale"u8))
                 {
                     timescale = property.Value.GetString();
                     continue;

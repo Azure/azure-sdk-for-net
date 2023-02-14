@@ -18,32 +18,32 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CreatedBy))
             {
-                writer.WritePropertyName("createdBy");
+                writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
             if (Optional.IsDefined(CreatedByType))
             {
-                writer.WritePropertyName("createdByType");
+                writer.WritePropertyName("createdByType"u8);
                 writer.WriteStringValue(CreatedByType.Value.ToString());
             }
             if (Optional.IsDefined(CreatedOn))
             {
-                writer.WritePropertyName("createdAt");
+                writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(LastModifiedBy))
             {
-                writer.WritePropertyName("lastModifiedBy");
+                writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
             if (Optional.IsDefined(LastModifiedByType))
             {
-                writer.WritePropertyName("lastModifiedByType");
+                writer.WritePropertyName("lastModifiedByType"u8);
                 writer.WriteStringValue(LastModifiedByType.Value.ToString());
             }
             if (Optional.IsDefined(LastModifiedOn))
             {
-                writer.WritePropertyName("lastModifiedAt");
+                writer.WritePropertyName("lastModifiedAt"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             writer.WriteEndObject();
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             Optional<DateTimeOffset> lastModifiedAt = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("createdBy"))
+                if (property.NameEquals("createdBy"u8))
                 {
                     createdBy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdByType"))
+                if (property.NameEquals("createdByType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     createdByType = new IdentityType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("createdAt"))
+                if (property.NameEquals("createdAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     createdAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastModifiedBy"))
+                if (property.NameEquals("lastModifiedBy"u8))
                 {
                     lastModifiedBy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastModifiedByType"))
+                if (property.NameEquals("lastModifiedByType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     lastModifiedByType = new IdentityType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lastModifiedAt"))
+                if (property.NameEquals("lastModifiedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

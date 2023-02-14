@@ -20,22 +20,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> url = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientRequestId"))
+                if (property.NameEquals("clientRequestId"u8))
                 {
                     clientRequestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientIpAddress"))
+                if (property.NameEquals("clientIpAddress"u8))
                 {
                     clientIpAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("method"))
+                if (property.NameEquals("method"u8))
                 {
                     method = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     url = property.Value.GetString();
                     continue;

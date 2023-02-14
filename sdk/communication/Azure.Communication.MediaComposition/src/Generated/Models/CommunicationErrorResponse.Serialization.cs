@@ -15,7 +15,7 @@ namespace Azure.Communication.MediaComposition.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("error");
+            writer.WritePropertyName("error"u8);
             writer.WriteObjectValue(Error);
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.Communication.MediaComposition.Models
             CommunicationError error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     error = CommunicationError.DeserializeCommunicationError(property.Value);
                     continue;

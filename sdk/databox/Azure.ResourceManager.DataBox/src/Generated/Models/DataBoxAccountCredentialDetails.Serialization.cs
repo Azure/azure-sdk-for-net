@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<IReadOnlyList<ShareCredentialDetails>> shareCredentialDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountName"))
+                if (property.NameEquals("accountName"u8))
                 {
                     accountName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataAccountType"))
+                if (property.NameEquals("dataAccountType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.DataBox.Models
                     dataAccountType = property.Value.GetString().ToDataAccountType();
                     continue;
                 }
-                if (property.NameEquals("accountConnectionString"))
+                if (property.NameEquals("accountConnectionString"u8))
                 {
                     accountConnectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("shareCredentialDetails"))
+                if (property.NameEquals("shareCredentialDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

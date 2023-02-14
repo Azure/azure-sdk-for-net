@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ApplicationGatewayBackendHealthHttpSettings> backendHealthHttpSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("backendAddressPool"))
+                if (property.NameEquals("backendAddressPool"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
                     backendAddressPool = ApplicationGatewayBackendAddressPool.DeserializeApplicationGatewayBackendAddressPool(property.Value);
                     continue;
                 }
-                if (property.NameEquals("backendHealthHttpSettings"))
+                if (property.NameEquals("backendHealthHttpSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Table))
             {
-                writer.WritePropertyName("table");
+                writer.WritePropertyName("table"u8);
                 writer.WriteObjectValue(Table);
             }
             if (Optional.IsDefined(RenderingProperties))
             {
-                writer.WritePropertyName("renderingProperties");
+                writer.WritePropertyName("renderingProperties"u8);
                 writer.WriteObjectValue(RenderingProperties);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<DiagnosticDataRendering> renderingProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("table"))
+                if (property.NameEquals("table"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
                     table = DataTableResponseObject.DeserializeDataTableResponseObject(property.Value);
                     continue;
                 }
-                if (property.NameEquals("renderingProperties"))
+                if (property.NameEquals("renderingProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

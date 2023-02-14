@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BlobContainerUri))
             {
-                writer.WritePropertyName("blobContainerUri");
+                writer.WritePropertyName("blobContainerUri"u8);
                 writer.WriteStringValue(BlobContainerUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SasToken))
             {
-                writer.WritePropertyName("sasToken");
+                writer.WritePropertyName("sasToken"u8);
                 writer.WriteObjectValue(SasToken);
             }
             writer.WriteEndObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<SynapseSecureString> sasToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("blobContainerUri"))
+                if (property.NameEquals("blobContainerUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     blobContainerUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sasToken"))
+                if (property.NameEquals("sasToken"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

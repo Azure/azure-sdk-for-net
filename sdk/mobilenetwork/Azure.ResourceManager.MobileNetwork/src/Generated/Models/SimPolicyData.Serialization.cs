@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -30,24 +30,24 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("ueAmbr");
+            writer.WritePropertyName("ueAmbr"u8);
             writer.WriteObjectValue(UeAmbr);
-            writer.WritePropertyName("defaultSlice");
+            writer.WritePropertyName("defaultSlice"u8);
             JsonSerializer.Serialize(writer, DefaultSlice); if (Optional.IsDefined(RfspIndex))
             {
-                writer.WritePropertyName("rfspIndex");
+                writer.WritePropertyName("rfspIndex"u8);
                 writer.WriteNumberValue(RfspIndex.Value);
             }
             if (Optional.IsDefined(RegistrationTimer))
             {
-                writer.WritePropertyName("registrationTimer");
+                writer.WritePropertyName("registrationTimer"u8);
                 writer.WriteNumberValue(RegistrationTimer.Value);
             }
-            writer.WritePropertyName("sliceConfigurations");
+            writer.WritePropertyName("sliceConfigurations"u8);
             writer.WriteStartArray();
             foreach (var item in SliceConfigurations)
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MobileNetwork
             IList<SliceConfiguration> sliceConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,27 +90,27 @@ namespace Azure.ResourceManager.MobileNetwork
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("siteProvisioningState"))
+                        if (property0.NameEquals("siteProvisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -154,17 +154,17 @@ namespace Azure.ResourceManager.MobileNetwork
                             siteProvisioningState = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("ueAmbr"))
+                        if (property0.NameEquals("ueAmbr"u8))
                         {
                             ueAmbr = Ambr.DeserializeAmbr(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("defaultSlice"))
+                        if (property0.NameEquals("defaultSlice"u8))
                         {
                             defaultSlice = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("rfspIndex"))
+                        if (property0.NameEquals("rfspIndex"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             rfspIndex = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("registrationTimer"))
+                        if (property0.NameEquals("registrationTimer"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             registrationTimer = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("sliceConfigurations"))
+                        if (property0.NameEquals("sliceConfigurations"u8))
                         {
                             List<SliceConfiguration> array = new List<SliceConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())

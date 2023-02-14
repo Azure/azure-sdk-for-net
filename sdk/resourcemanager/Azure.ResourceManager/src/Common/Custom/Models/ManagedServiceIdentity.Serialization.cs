@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Models
             JsonSerializer.Serialize(writer, model.ManagedServiceIdentityType, options);
             if (Optional.IsCollectionDefined(model.UserAssignedIdentities))
             {
-                writer.WritePropertyName("userAssignedIdentities");
+                writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();
                 foreach (var item in model.UserAssignedIdentities)
                 {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Models
             Optional<IDictionary<ResourceIdentifier, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("principalId"))
+                if (property.NameEquals("principalId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.GetString().Length == 0)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.Models
                     principalId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.GetString().Length == 0)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = JsonSerializer.Deserialize<ManagedServiceIdentityType>("{"+property.ToString()+"}", options);
                     continue;
                 }
-                if (property.NameEquals("userAssignedIdentities"))
+                if (property.NameEquals("userAssignedIdentities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

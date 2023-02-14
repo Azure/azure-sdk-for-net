@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(IPv4Address))
             {
-                writer.WritePropertyName("ipv4Address");
+                writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStringValue(IPv4Address);
             }
             if (Optional.IsDefined(IPv4Subnet))
             {
-                writer.WritePropertyName("ipv4Subnet");
+                writer.WritePropertyName("ipv4Subnet"u8);
                 writer.WriteStringValue(IPv4Subnet);
             }
             if (Optional.IsDefined(IPv4Gateway))
             {
-                writer.WritePropertyName("ipv4Gateway");
+                writer.WritePropertyName("ipv4Gateway"u8);
                 writer.WriteStringValue(IPv4Gateway);
             }
             writer.WriteEndObject();
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Optional<string> ipv4Gateway = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipv4Address"))
+                if (property.NameEquals("ipv4Address"u8))
                 {
                     ipv4Address = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipv4Subnet"))
+                if (property.NameEquals("ipv4Subnet"u8))
                 {
                     ipv4Subnet = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipv4Gateway"))
+                if (property.NameEquals("ipv4Gateway"u8))
                 {
                     ipv4Gateway = property.Value.GetString();
                     continue;

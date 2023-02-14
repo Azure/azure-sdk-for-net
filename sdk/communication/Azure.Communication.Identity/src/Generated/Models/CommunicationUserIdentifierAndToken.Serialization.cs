@@ -19,12 +19,12 @@ namespace Azure.Communication.Identity
             Optional<CommunicationIdentityAccessToken> accessToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     identity = CommunicationIdentity.DeserializeCommunicationIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("accessToken"))
+                if (property.NameEquals("accessToken"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

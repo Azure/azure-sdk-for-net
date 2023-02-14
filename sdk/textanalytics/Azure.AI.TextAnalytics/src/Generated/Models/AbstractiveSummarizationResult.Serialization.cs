@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("errors");
+            writer.WritePropertyName("errors"u8);
             writer.WriteStartArray();
             foreach (var item in Errors)
             {
@@ -26,12 +26,12 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
-                writer.WritePropertyName("statistics");
+                writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics);
             }
-            writer.WritePropertyName("modelVersion");
+            writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);
-            writer.WritePropertyName("documents");
+            writer.WritePropertyName("documents"u8);
             writer.WriteStartArray();
             foreach (var item in Documents)
             {
@@ -49,7 +49,7 @@ namespace Azure.AI.TextAnalytics.Models
             IList<AbstractiveSummaryDocumentResultWithDetectedLanguage> documents = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     List<InputError> array = new List<InputError>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -59,7 +59,7 @@ namespace Azure.AI.TextAnalytics.Models
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("statistics"))
+                if (property.NameEquals("statistics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,12 +69,12 @@ namespace Azure.AI.TextAnalytics.Models
                     statistics = TextDocumentBatchStatistics.DeserializeTextDocumentBatchStatistics(property.Value);
                     continue;
                 }
-                if (property.NameEquals("modelVersion"))
+                if (property.NameEquals("modelVersion"u8))
                 {
                     modelVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("documents"))
+                if (property.NameEquals("documents"u8))
                 {
                     List<AbstractiveSummaryDocumentResultWithDetectedLanguage> array = new List<AbstractiveSummaryDocumentResultWithDetectedLanguage>();
                     foreach (var item in property.Value.EnumerateArray())

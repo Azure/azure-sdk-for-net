@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyVaultResourceId");
+            writer.WritePropertyName("keyVaultResourceId"u8);
             writer.WriteStringValue(KeyVaultResourceId);
-            writer.WritePropertyName("encryptionKeyName");
+            writer.WritePropertyName("encryptionKeyName"u8);
             writer.WriteStringValue(EncryptionKeyName);
-            writer.WritePropertyName("encryptionKeyVersion");
+            writer.WritePropertyName("encryptionKeyVersion"u8);
             writer.WriteStringValue(EncryptionKeyVersion);
             writer.WriteEndObject();
         }
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             string encryptionKeyVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyVaultResourceId"))
+                if (property.NameEquals("keyVaultResourceId"u8))
                 {
                     keyVaultResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptionKeyName"))
+                if (property.NameEquals("encryptionKeyName"u8))
                 {
                     encryptionKeyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptionKeyVersion"))
+                if (property.NameEquals("encryptionKeyVersion"u8))
                 {
                     encryptionKeyVersion = property.Value.GetString();
                     continue;

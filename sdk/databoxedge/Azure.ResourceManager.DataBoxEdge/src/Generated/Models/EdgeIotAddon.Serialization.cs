@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("ioTDeviceDetails");
+            writer.WritePropertyName("ioTDeviceDetails"u8);
             writer.WriteObjectValue(IotDeviceDetails);
-            writer.WritePropertyName("ioTEdgeDeviceDetails");
+            writer.WritePropertyName("ioTEdgeDeviceDetails"u8);
             writer.WriteObjectValue(IotEdgeDeviceDetails);
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -43,27 +43,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<DataBoxEdgeRoleAddonProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new AddonType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,22 +82,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("ioTDeviceDetails"))
+                        if (property0.NameEquals("ioTDeviceDetails"u8))
                         {
                             iotDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("ioTEdgeDeviceDetails"))
+                        if (property0.NameEquals("ioTEdgeDeviceDetails"u8))
                         {
                             iotEdgeDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("version"))
+                        if (property0.NameEquals("version"u8))
                         {
                             version = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("hostPlatform"))
+                        if (property0.NameEquals("hostPlatform"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             hostPlatform = new DataBoxEdgeOSPlatformType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("hostPlatformType"))
+                        if (property0.NameEquals("hostPlatformType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             hostPlatformType = new HostPlatformType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

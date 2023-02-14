@@ -7,6 +7,7 @@ using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Core.Json;
 
 namespace Azure.Core.Dynamic
 {
@@ -14,7 +15,7 @@ namespace Azure.Core.Dynamic
     /// Dynamic layer over MutableJsonDocument.
     /// </summary>
     [JsonConverter(typeof(JsonConverter))]
-    public partial class DynamicJson : DynamicData
+    public sealed partial class DynamicJson : DynamicData, IDisposable
     {
         private static readonly MethodInfo GetPropertyMethod = typeof(DynamicJson).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
         private static readonly MethodInfo SetPropertyMethod = typeof(DynamicJson).GetMethod(nameof(SetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
@@ -36,12 +37,17 @@ namespace Azure.Core.Dynamic
             writer.Flush();
         }
 
-        private object GetProperty(string name)
+        private object? GetProperty(string name)
         {
-            return new DynamicJson(_element.GetProperty(name));
+            if (_element.TryGetProperty(name, out MutableJsonElement element))
+            {
+                return new DynamicJson(element);
+            }
+
+            return null;
         }
 
-        private object GetViaIndexer(object index)
+        private object? GetViaIndexer(object index)
         {
             switch (index)
             {
@@ -96,6 +102,12 @@ namespace Azure.Core.Dynamic
         public override string ToString()
         {
             return _element.ToString();
+        }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            _element.DisposeRoot();
         }
 
         private class JsonConverter : JsonConverter<DynamicJson>

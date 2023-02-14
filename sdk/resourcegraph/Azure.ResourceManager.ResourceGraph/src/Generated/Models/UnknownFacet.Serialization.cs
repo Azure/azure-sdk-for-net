@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             string resultType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("expression"))
+                if (property.NameEquals("expression"u8))
                 {
                     expression = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultType"))
+                if (property.NameEquals("resultType"u8))
                 {
                     resultType = property.Value.GetString();
                     continue;

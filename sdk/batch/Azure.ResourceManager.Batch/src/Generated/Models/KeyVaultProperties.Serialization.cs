@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyIdentifier))
             {
-                writer.WritePropertyName("keyIdentifier");
+                writer.WritePropertyName("keyIdentifier"u8);
                 writer.WriteStringValue(KeyIdentifier.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<Uri> keyIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyIdentifier"))
+                if (property.NameEquals("keyIdentifier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

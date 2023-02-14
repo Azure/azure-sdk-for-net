@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Batch.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("storageAccountId");
+            writer.WritePropertyName("storageAccountId"u8);
             writer.WriteStringValue(StorageAccountId);
             if (Optional.IsDefined(AuthenticationMode))
             {
-                writer.WritePropertyName("authenticationMode");
+                writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToSerialString());
             }
             if (Optional.IsDefined(NodeIdentity))
             {
-                writer.WritePropertyName("nodeIdentityReference");
+                writer.WritePropertyName("nodeIdentityReference"u8);
                 writer.WriteObjectValue(NodeIdentity);
             }
             writer.WriteEndObject();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<ComputeNodeIdentityReference> nodeIdentityReference = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageAccountId"))
+                if (property.NameEquals("storageAccountId"u8))
                 {
                     storageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("authenticationMode"))
+                if (property.NameEquals("authenticationMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Batch.Models
                     authenticationMode = property.Value.GetString().ToBatchAutoStorageAuthenticationMode();
                     continue;
                 }
-                if (property.NameEquals("nodeIdentityReference"))
+                if (property.NameEquals("nodeIdentityReference"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

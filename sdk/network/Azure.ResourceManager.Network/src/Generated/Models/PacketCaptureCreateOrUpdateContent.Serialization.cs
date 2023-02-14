@@ -15,30 +15,30 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("target");
+            writer.WritePropertyName("target"u8);
             writer.WriteStringValue(Target);
             if (Optional.IsDefined(BytesToCapturePerPacket))
             {
-                writer.WritePropertyName("bytesToCapturePerPacket");
+                writer.WritePropertyName("bytesToCapturePerPacket"u8);
                 writer.WriteNumberValue(BytesToCapturePerPacket.Value);
             }
             if (Optional.IsDefined(TotalBytesPerSession))
             {
-                writer.WritePropertyName("totalBytesPerSession");
+                writer.WritePropertyName("totalBytesPerSession"u8);
                 writer.WriteNumberValue(TotalBytesPerSession.Value);
             }
             if (Optional.IsDefined(TimeLimitInSeconds))
             {
-                writer.WritePropertyName("timeLimitInSeconds");
+                writer.WritePropertyName("timeLimitInSeconds"u8);
                 writer.WriteNumberValue(TimeLimitInSeconds.Value);
             }
-            writer.WritePropertyName("storageLocation");
+            writer.WritePropertyName("storageLocation"u8);
             writer.WriteObjectValue(StorageLocation);
             if (Optional.IsCollectionDefined(Filters))
             {
-                writer.WritePropertyName("filters");
+                writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {

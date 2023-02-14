@@ -18,20 +18,20 @@ namespace Azure.AI.OpenAI
             writer.WriteStartObject();
             if (Optional.IsDefined(User))
             {
-                writer.WritePropertyName("user");
+                writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
             if (Optional.IsDefined(InputType))
             {
-                writer.WritePropertyName("input_type");
+                writer.WritePropertyName("input_type"u8);
                 writer.WriteStringValue(InputType);
             }
             if (Optional.IsDefined(Model))
             {
-                writer.WritePropertyName("model");
+                writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            writer.WritePropertyName("input");
+            writer.WritePropertyName("input"u8);
             writer.WriteStringValue(Input);
             writer.WriteEndObject();
         }
@@ -44,22 +44,22 @@ namespace Azure.AI.OpenAI
             string input = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("user"))
+                if (property.NameEquals("user"u8))
                 {
                     user = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("input_type"))
+                if (property.NameEquals("input_type"u8))
                 {
                     inputType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("model"))
+                if (property.NameEquals("model"u8))
                 {
                     model = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("input"))
+                if (property.NameEquals("input"u8))
                 {
                     input = property.Value.GetString();
                     continue;

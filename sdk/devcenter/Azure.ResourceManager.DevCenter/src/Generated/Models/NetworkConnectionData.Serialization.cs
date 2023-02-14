@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevCenter
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,43 +29,43 @@ namespace Azure.ResourceManager.DevCenter
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(SubnetId))
             {
-                writer.WritePropertyName("subnetId");
+                writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
             if (Optional.IsDefined(DomainName))
             {
-                writer.WritePropertyName("domainName");
+                writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
             if (Optional.IsDefined(OrganizationUnit))
             {
-                writer.WritePropertyName("organizationUnit");
+                writer.WritePropertyName("organizationUnit"u8);
                 writer.WriteStringValue(OrganizationUnit);
             }
             if (Optional.IsDefined(DomainUsername))
             {
-                writer.WritePropertyName("domainUsername");
+                writer.WritePropertyName("domainUsername"u8);
                 writer.WriteStringValue(DomainUsername);
             }
             if (Optional.IsDefined(DomainPassword))
             {
-                writer.WritePropertyName("domainPassword");
+                writer.WritePropertyName("domainPassword"u8);
                 writer.WriteStringValue(DomainPassword);
             }
             if (Optional.IsDefined(NetworkingResourceGroupName))
             {
-                writer.WritePropertyName("networkingResourceGroupName");
+                writer.WritePropertyName("networkingResourceGroupName"u8);
                 writer.WriteStringValue(NetworkingResourceGroupName);
             }
             if (Optional.IsDefined(DomainJoinType))
             {
-                writer.WritePropertyName("domainJoinType");
+                writer.WritePropertyName("domainJoinType"u8);
                 writer.WriteStringValue(DomainJoinType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DevCenter
             Optional<DomainJoinType> domainJoinType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,27 +106,27 @@ namespace Azure.ResourceManager.DevCenter
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DevCenter
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -145,37 +145,37 @@ namespace Azure.ResourceManager.DevCenter
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("subnetId"))
+                        if (property0.NameEquals("subnetId"u8))
                         {
                             subnetId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("domainName"))
+                        if (property0.NameEquals("domainName"u8))
                         {
                             domainName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("organizationUnit"))
+                        if (property0.NameEquals("organizationUnit"u8))
                         {
                             organizationUnit = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("domainUsername"))
+                        if (property0.NameEquals("domainUsername"u8))
                         {
                             domainUsername = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("domainPassword"))
+                        if (property0.NameEquals("domainPassword"u8))
                         {
                             domainPassword = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("healthCheckStatus"))
+                        if (property0.NameEquals("healthCheckStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -185,12 +185,12 @@ namespace Azure.ResourceManager.DevCenter
                             healthCheckStatus = new HealthCheckStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("networkingResourceGroupName"))
+                        if (property0.NameEquals("networkingResourceGroupName"u8))
                         {
                             networkingResourceGroupName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("domainJoinType"))
+                        if (property0.NameEquals("domainJoinType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

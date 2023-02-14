@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("certificateType");
+            writer.WritePropertyName("certificateType"u8);
             writer.WriteStringValue(CertificateType.ToString());
             if (Optional.IsDefined(MinimumTlsVersion))
             {
-                writer.WritePropertyName("minimumTlsVersion");
+                writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
             }
             if (Optional.IsDefined(Secret))
             {
                 if (Secret != null)
                 {
-                    writer.WritePropertyName("secret");
+                    writer.WritePropertyName("secret"u8);
                     writer.WriteObjectValue(Secret);
                 }
                 else
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<FrontDoorCustomDomainHttpsContentSecret> secret = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("certificateType"))
+                if (property.NameEquals("certificateType"u8))
                 {
                     certificateType = new FrontDoorCertificateType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("minimumTlsVersion"))
+                if (property.NameEquals("minimumTlsVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     minimumTlsVersion = property.Value.GetString().ToFrontDoorMinimumTlsVersion();
                     continue;
                 }
-                if (property.NameEquals("secret"))
+                if (property.NameEquals("secret"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

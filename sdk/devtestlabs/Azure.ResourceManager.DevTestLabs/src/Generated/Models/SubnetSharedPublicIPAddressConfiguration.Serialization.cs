@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllowedPorts))
             {
-                writer.WritePropertyName("allowedPorts");
+                writer.WritePropertyName("allowedPorts"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedPorts)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<IList<DevTestLabPort>> allowedPorts = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowedPorts"))
+                if (property.NameEquals("allowedPorts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

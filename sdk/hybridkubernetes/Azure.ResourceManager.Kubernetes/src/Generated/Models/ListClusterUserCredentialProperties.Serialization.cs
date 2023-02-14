@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Kubernetes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("authenticationMethod");
+            writer.WritePropertyName("authenticationMethod"u8);
             writer.WriteStringValue(AuthenticationMethod.ToString());
-            writer.WritePropertyName("clientProxy");
+            writer.WritePropertyName("clientProxy"u8);
             writer.WriteBooleanValue(ClientProxy);
             writer.WriteEndObject();
         }

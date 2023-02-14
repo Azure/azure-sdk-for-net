@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 if (SolutionType != null)
                 {
-                    writer.WritePropertyName("type");
+                    writer.WritePropertyName("type"u8);
                     writer.WriteStringValue(SolutionType.Value.ToString());
                 }
                 else
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             Optional<VnetSolutionType?> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

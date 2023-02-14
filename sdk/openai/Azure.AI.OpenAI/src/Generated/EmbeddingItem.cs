@@ -16,33 +16,29 @@ namespace Azure.AI.OpenAI
     public partial class EmbeddingItem
     {
         /// <summary> Initializes a new instance of EmbeddingItem. </summary>
-        /// <param name="object"> Name of the field in which the embedding is contained. </param>
         /// <param name="embedding"> List of embeddings value for the input prompt. These represents a measurement of releated of text strings. </param>
         /// <param name="index"> Index of the prompt to which the EmbeddingItem corresponds. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="object"/> or <paramref name="embedding"/> is null. </exception>
-        internal EmbeddingItem(string @object, IEnumerable<float> embedding, int index)
+        /// <exception cref="ArgumentNullException"> <paramref name="embedding"/> is null. </exception>
+        internal EmbeddingItem(IEnumerable<float> embedding, int index)
         {
-            Argument.AssertNotNull(@object, nameof(@object));
             Argument.AssertNotNull(embedding, nameof(embedding));
 
-            Object = @object;
             Embedding = embedding.ToList();
             Index = index;
         }
 
         /// <summary> Initializes a new instance of EmbeddingItem. </summary>
-        /// <param name="object"> Name of the field in which the embedding is contained. </param>
         /// <param name="embedding"> List of embeddings value for the input prompt. These represents a measurement of releated of text strings. </param>
         /// <param name="index"> Index of the prompt to which the EmbeddingItem corresponds. </param>
-        internal EmbeddingItem(string @object, IReadOnlyList<float> embedding, int index)
+        internal EmbeddingItem(IReadOnlyList<float> embedding, int index)
         {
-            Object = @object;
             Embedding = embedding.ToList();
             Index = index;
         }
 
         /// <summary> Name of the field in which the embedding is contained. </summary>
-        public string Object { get; }
+        internal string Object { get; } = "embedding";
+
         /// <summary> List of embeddings value for the input prompt. These represents a measurement of releated of text strings. </summary>
         public IReadOnlyList<float> Embedding { get; }
         /// <summary> Index of the prompt to which the EmbeddingItem corresponds. </summary>

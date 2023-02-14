@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<DateTimeOffset> endDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("secretText"))
+                if (property.NameEquals("secretText"u8))
                 {
                     secretText = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyId"))
+                if (property.NameEquals("keyId"u8))
                 {
                     keyId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startDateTime"))
+                if (property.NameEquals("startDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Models
                     startDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endDateTime"))
+                if (property.NameEquals("endDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

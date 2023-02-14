@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<IReadOnlyList<PrivateStoreCollectionDetails>> failed = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("succeeded"))
+                if (property.NameEquals("succeeded"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     succeeded = array;
                     continue;
                 }
-                if (property.NameEquals("failed"))
+                if (property.NameEquals("failed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

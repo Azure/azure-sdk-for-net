@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<ProviderAuthorizationConsentState> providerAuthorizationConsentState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("applicationId"))
+                if (property.NameEquals("applicationId"u8))
                 {
                     applicationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("roleDefinition"))
+                if (property.NameEquals("roleDefinition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources.Models
                     roleDefinition = AzureRoleDefinition.DeserializeAzureRoleDefinition(property.Value);
                     continue;
                 }
-                if (property.NameEquals("managedByRoleDefinition"))
+                if (property.NameEquals("managedByRoleDefinition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources.Models
                     managedByRoleDefinition = AzureRoleDefinition.DeserializeAzureRoleDefinition(property.Value);
                     continue;
                 }
-                if (property.NameEquals("providerAuthorizationConsentState"))
+                if (property.NameEquals("providerAuthorizationConsentState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

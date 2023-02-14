@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<IdentityManagementType> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

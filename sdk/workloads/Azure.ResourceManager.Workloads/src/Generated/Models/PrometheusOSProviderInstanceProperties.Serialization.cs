@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrometheusUri))
             {
-                writer.WritePropertyName("prometheusUrl");
+                writer.WritePropertyName("prometheusUrl"u8);
                 writer.WriteStringValue(PrometheusUri.AbsoluteUri);
             }
-            writer.WritePropertyName("providerType");
+            writer.WritePropertyName("providerType"u8);
             writer.WriteStringValue(ProviderType);
             writer.WriteEndObject();
         }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Workloads.Models
             string providerType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("prometheusUrl"))
+                if (property.NameEquals("prometheusUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     prometheusUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("providerType"))
+                if (property.NameEquals("providerType"u8))
                 {
                     providerType = property.Value.GetString();
                     continue;
