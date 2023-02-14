@@ -4,48 +4,135 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core.Sse;
 
 namespace Azure.AI.OpenAI.Custom
 {
     public class StreamingCompletions : IDisposable
     {
-        private Response _baseResponse;
+        private readonly Response _baseResponse;
+        private readonly SseReader _reader;
+        private readonly IList<Completions> _baseCompletions;
+        private readonly object _baseCompletionsLock = new object();
+        private readonly IList<StreamingChoice> _streamingChoices;
+        private readonly object _streamingChoicesLock = new object();
+        private readonly AsyncAutoResetEvent _updateAvailableEvent;
+        private bool _streamingTaskComplete;
         private bool _disposedValue;
-        private SseReader _reader;
+
+        public int? Created => GetLocked(() => _baseCompletions.First().Created);
+        public string Id => GetLocked(() => _baseCompletions.First().Id);
+        public string Model => GetLocked(() => _baseCompletions.First().Model);
 
         internal StreamingCompletions(Response response)
         {
             _baseResponse = response;
             _reader = new SseReader(response.ContentStream);
+            _updateAvailableEvent = new AsyncAutoResetEvent();
+            _baseCompletions = new List<Completions>();
+            _streamingChoices = new List<StreamingChoice>();
+            _streamingTaskComplete = false;
+            _ = Task.Run(async () =>
+            {
+                while (true)
+                {
+                    SseLine? sseEvent = await _reader.TryReadSingleFieldEventAsync().ConfigureAwait(false);
+                    if (sseEvent == null)
+                    {
+                        _baseResponse.ContentStream.Dispose();
+                        break;
+                    }
+
+                    ReadOnlyMemory<char> name = sseEvent.Value.FieldName;
+                    if (!name.Span.SequenceEqual("data".AsSpan()))
+                        throw new InvalidDataException();
+
+                    ReadOnlyMemory<char> value = sseEvent.Value.FieldValue;
+                    if (value.Span.SequenceEqual("[DONE]".AsSpan()))
+                    {
+                        _baseResponse.ContentStream.Dispose();
+                        break;
+                    }
+
+                    JsonDocument sseMessageJson = JsonDocument.Parse(sseEvent.Value.FieldValue);
+                    Completions completionsFromSse = Completions.DeserializeCompletions(sseMessageJson.RootElement);
+
+                    lock (_baseCompletionsLock)
+                    {
+                        _baseCompletions.Add(completionsFromSse);
+                    }
+
+                    foreach (Choice choiceFromSse in completionsFromSse.Choices)
+                    {
+                        lock (_streamingChoicesLock)
+                        {
+                            StreamingChoice existingStreamingChoice = _streamingChoices
+                                .FirstOrDefault(choice => choice.Index == choiceFromSse.Index);
+                            if (existingStreamingChoice == null)
+                            {
+                                StreamingChoice newStreamingChoice = new StreamingChoice(choiceFromSse);
+                                _streamingChoices.Add(newStreamingChoice);
+                                _updateAvailableEvent.Set();
+                            }
+                            else
+                            {
+                                existingStreamingChoice.UpdateFromEventStreamChoice(choiceFromSse);
+                            }
+                        }
+                    }
+                }
+
+                _streamingTaskComplete = true;
+                _updateAvailableEvent.Set();
+            });
         }
 
-        public async IAsyncEnumerable<string> GetAsyncMessages()
+        public async IAsyncEnumerable<StreamingChoice> GetChoicesStreaming(
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            while (true)
+            bool isFinalIndex = false;
+            for (int i = 0; !isFinalIndex && !cancellationToken.IsCancellationRequested; i++)
             {
-                SseLine? sseEvent = await _reader.TryReadSingleFieldEventAsync().ConfigureAwait(false);
-                if (sseEvent == null)
+                bool doneWaiting = false;
+                while (!doneWaiting)
                 {
-                    _baseResponse.ContentStream.Dispose();
-                    // await _baseResponse.ContentStream!.DisposeAsync().ConfigureAwait(false);
-                    break;
+                    lock (_streamingChoicesLock)
+                    {
+                        doneWaiting = _streamingTaskComplete || i < _streamingChoices.Count;
+                        isFinalIndex = _streamingTaskComplete && i == _streamingChoices.Count - 1;
+                    }
+
+                    if (!doneWaiting)
+                    {
+                        await _updateAvailableEvent.WaitAsync(cancellationToken).ConfigureAwait(false);
+                    }
                 }
 
-                var name = sseEvent.Value.FieldName;
-                if (!name.Span.SequenceEqual("data".AsSpan()))
-                    throw new InvalidDataException();
-
-                var value = sseEvent.Value.FieldValue;
-                if (value.Span.SequenceEqual("[DONE]".AsSpan()))
+                StreamingChoice newChoice = null;
+                lock (_streamingChoicesLock)
                 {
-                    _baseResponse.ContentStream.Dispose();
-                    // await _baseResponse.ContentStream!.DisposeAsync().ConfigureAwait(false);
-                    break;
+                    if (i < _streamingChoices.Count)
+                    {
+                        newChoice = _streamingChoices[i];
+                    }
                 }
 
-                yield return sseEvent.Value.FieldValue.ToString();
+                if (newChoice != null)
+                {
+                    yield return newChoice;
+                }
             }
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
 
         protected virtual void Dispose(bool disposing)
@@ -55,27 +142,18 @@ namespace Azure.AI.OpenAI.Custom
                 if (disposing)
                 {
                     _reader.Dispose();
-                    // TODO: dispose managed state (managed objects)
                 }
 
-                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-                // TODO: set large fields to null
                 _disposedValue = true;
             }
         }
 
-        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        // ~StreamingCompletions()
-        // {
-        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-        //     Dispose(disposing: false);
-        // }
-
-        public void Dispose()
+        private T GetLocked<T>(Func<T> func)
         {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
+            lock (_baseCompletionsLock)
+            {
+                return func.Invoke();
+            }
         }
     }
 }

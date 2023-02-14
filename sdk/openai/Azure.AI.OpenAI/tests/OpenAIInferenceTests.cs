@@ -8,6 +8,7 @@ using Azure.AI.OpenAI.Custom;
 using System.Diagnostics;
 using System;
 using System.IO;
+using System.Text;
 
 namespace Azure.AI.OpenAI.Tests
 {
@@ -123,19 +124,30 @@ namespace Azure.AI.OpenAI.Tests
                     "What are some disturbing facts about papayas?"
                 },
                 MaxTokens = 512,
+                LogProbability = 1,
             };
 
-            using var fileWriter = File.CreateText("foo.txt");
-
-            fileWriter.WriteLine($"{Environment.TickCount} : START");
             Response<StreamingCompletions> response = await client.GetStreamingCompletionsAsync(
                 CompletionsDeploymentId,
                 requestOptions);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.Not.Null);
 
-            await foreach (string message in response.Value.GetAsyncMessages())
+            await foreach (StreamingChoice choice in response.Value.GetChoicesStreaming())
             {
-                fileWriter.WriteLine($"{Environment.TickCount} : {message}");
+                StringBuilder choiceTextBuilder = new StringBuilder();
+                await foreach (string choiceTextPart in choice.GetTextStreaming())
+                {
+                    choiceTextBuilder.Append(choiceTextPart);
+                }
+                Assert.That(choiceTextBuilder.ToString(), Is.Not.Null.Or.Empty);
+                Assert.That(choice.FinishReason, Is.Not.Null.Or.Empty);
+                Assert.That(choice.Logprobs, Is.Not.Null);
             }
+
+            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Model, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Created, Is.GreaterThan(0));
         }
     }
 }

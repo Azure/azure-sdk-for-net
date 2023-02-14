@@ -77,12 +77,38 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        public virtual Task<Response<StreamingCompletions>> GetStreamingCompletionsAsync(
+        public virtual async Task<Response<StreamingCompletions>> GetStreamingCompletionsAsync(
             string deploymentId,
             CompletionsOptions completionsOptions,
             CancellationToken cancellationToken = default)
         {
-            return Task.FromResult<Response<StreamingCompletions>>(null);
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(
+                "OpenAIClient.GetStreamingCompletions");
+            scope.Start();
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+
+            RequestContent nonStreamingContent = completionsOptions.ToRequestContent();
+            RequestContent streamingContent = GetStreamingEnabledRequestContent(nonStreamingContent);
+
+            try
+            {
+                HttpMessage message = CreateGetCompletionsRequest(deploymentId, streamingContent, context);
+                message.BufferResponse = false;
+                Response baseResponse = await _pipeline.ProcessMessageAsync(
+                    message,
+                    context,
+                    cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new StreamingCompletions(baseResponse), baseResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         private static RequestContent GetStreamingEnabledRequestContent(RequestContent originalRequestContent)
