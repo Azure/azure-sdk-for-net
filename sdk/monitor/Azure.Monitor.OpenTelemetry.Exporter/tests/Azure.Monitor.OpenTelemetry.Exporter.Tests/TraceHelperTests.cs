@@ -89,7 +89,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 startTime: DateTime.UtcNow)
                 ?? throw new Exception("Failed to create Activity");
 
-            string expectedMSlinks = GetExpectedMSlinks(links);
+            string? expectedMSlinks = GetExpectedMSlinks(links);
             string? actualMSlinks = null;
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
@@ -128,7 +128,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 links.Add(activityLink);
             }
 
-            string expectedMSlinks = GetExpectedMSlinks(links.GetRange(0, MaxLinksAllowed));
+            string? expectedMSlinks = GetExpectedMSlinks(links.GetRange(0, MaxLinksAllowed));
             string? actualMSlinks = null;
 
             using var activity = activitySource.StartActivity(
@@ -193,7 +193,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 startTime: DateTime.UtcNow)
                 ?? throw new Exception("Failed to create Activity");
 
-            string expectedMslinks = GetExpectedMSlinks(links);
+            string? expectedMslinks = GetExpectedMSlinks(links);
             string? actualMSlinks = null;
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
@@ -346,7 +346,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("Request", telemetryItems[0].Name);
         }
 
-        private string GetExpectedMSlinks(IEnumerable<ActivityLink> links)
+        private string? GetExpectedMSlinks(IEnumerable<ActivityLink> links)
         {
             if (links != null && links.Any())
             {
