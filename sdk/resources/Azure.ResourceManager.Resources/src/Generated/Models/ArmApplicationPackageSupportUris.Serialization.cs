@@ -13,34 +13,5 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ArmApplicationPackageSupportUris
     {
-        internal static ArmApplicationPackageSupportUris DeserializeArmApplicationPackageSupportUris(JsonElement element)
-        {
-            Optional<Uri> publicAzure = default;
-            Optional<Uri> governmentCloud = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("publicAzure"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        publicAzure = null;
-                        continue;
-                    }
-                    publicAzure = new Uri(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("governmentCloud"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        governmentCloud = null;
-                        continue;
-                    }
-                    governmentCloud = new Uri(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new ArmApplicationPackageSupportUris(publicAzure.Value, governmentCloud.Value);
-        }
     }
 }

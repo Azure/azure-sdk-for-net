@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateDeploymentAtAGivenScope()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/examples/PutDeploymentAtScope.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/PutDeploymentAtScope.json
             // this example is just showing the usage of "Deployments_CreateOrUpdateAtScope" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task WhatIf_PredictTemplateChangesAtManagementGroupScope()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/examples/PostDeploymentWhatIfOnTenant.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/PostDeploymentWhatIfOnTenant.json
             // this example is just showing the usage of "Deployments_WhatIfAtTenantScope" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,7 +91,10 @@ namespace Azure.ResourceManager.Resources.Samples
             // invoke the operation
             ArmDeploymentWhatIfContent content = new ArmDeploymentWhatIfContent(new ArmDeploymentWhatIfProperties(ArmDeploymentMode.Incremental)
             {
-                TemplateLink = null,
+                TemplateLink = new ArmDeploymentTemplateLink()
+                {
+                    Uri = new Uri("https://example.com/exampleTemplate.json"),
+                },
                 Parameters = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
                 }),
@@ -110,7 +113,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task WhatIf_PredictTemplateChangesAtManagementGroupScope1()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/examples/PostDeploymentWhatIfOnManagementGroup.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/PostDeploymentWhatIfOnManagementGroup.json
             // this example is just showing the usage of "Deployments_WhatIfAtManagementGroupScope" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -129,7 +132,10 @@ namespace Azure.ResourceManager.Resources.Samples
             // invoke the operation
             ArmDeploymentWhatIfContent content = new ArmDeploymentWhatIfContent(new ArmDeploymentWhatIfProperties(ArmDeploymentMode.Incremental)
             {
-                TemplateLink = null,
+                TemplateLink = new ArmDeploymentTemplateLink()
+                {
+                    Uri = new Uri("https://example.com/exampleTemplate.json"),
+                },
                 Parameters = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
                 }),
@@ -148,7 +154,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task WhatIf_PredictTemplateChangesAtSubscriptionScope()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/examples/PostDeploymentWhatIfOnSubscription.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/PostDeploymentWhatIfOnSubscription.json
             // this example is just showing the usage of "Deployments_WhatIfAtSubscriptionScope" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -167,7 +173,10 @@ namespace Azure.ResourceManager.Resources.Samples
             // invoke the operation
             ArmDeploymentWhatIfContent content = new ArmDeploymentWhatIfContent(new ArmDeploymentWhatIfProperties(ArmDeploymentMode.Incremental)
             {
-                TemplateLink = null,
+                TemplateLink = new ArmDeploymentTemplateLink()
+                {
+                    Uri = new Uri("https://example.com/exampleTemplate.json"),
+                },
                 Parameters = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
                 }),
@@ -186,7 +195,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task WhatIf_PredictTemplateChangesAtResourceGroupScope()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/examples/PostDeploymentWhatIfOnResourceGroup.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/PostDeploymentWhatIfOnResourceGroup.json
             // this example is just showing the usage of "Deployments_WhatIf" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -206,7 +215,10 @@ namespace Azure.ResourceManager.Resources.Samples
             // invoke the operation
             ArmDeploymentWhatIfContent content = new ArmDeploymentWhatIfContent(new ArmDeploymentWhatIfProperties(ArmDeploymentMode.Incremental)
             {
-                TemplateLink = null,
+                TemplateLink = new ArmDeploymentTemplateLink()
+                {
+                    Uri = new Uri("https://example.com/exampleTemplate.json"),
+                },
                 Parameters = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
                 }),
@@ -222,7 +234,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CalculateDeploymentTemplateHash_CalculateTemplateHash()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/examples/CalculateTemplateHash.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/CalculateTemplateHash.json
             // this example is just showing the usage of "Deployments_CalculateTemplateHash" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
