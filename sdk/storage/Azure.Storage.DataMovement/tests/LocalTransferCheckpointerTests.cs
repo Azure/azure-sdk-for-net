@@ -16,6 +16,7 @@ namespace Azure.Storage.DataMovement.Tests
 {
     public class LocalTransferCheckpointerTests
     {
+        public static string GetNewTransferId() => Guid.NewGuid().ToString();
         public static DisposingLocalDirectory GetTestLocalDirectoryAsync(string directoryPath = default)
         {
             if (string.IsNullOrEmpty(directoryPath))
@@ -23,12 +24,6 @@ namespace Azure.Storage.DataMovement.Tests
                 directoryPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             }
             return new DisposingLocalDirectory(directoryPath);
-        }
-
-        public string CreateCheckpointerPath()
-        {
-            DirectoryInfo dir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), "checkpointerPath"));
-            return dir.FullName;
         }
 
         internal void CreateJobPlanFile(
@@ -81,6 +76,32 @@ namespace Azure.Storage.DataMovement.Tests
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 transferCheckpointer.AddNewJobAsync(transferId),
                 e => Assert.AreEqual(Errors.MissingCheckpointerPath(customPath).Message, e.Message));
+        }
+
+        [Test]
+        public async Task AddNewJobAsync_Exists()
+        {
+            string customPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            DisposingLocalDirectory test = GetTestLocalDirectoryAsync(customPath);
+
+            string transferId = Guid.NewGuid().ToString();
+            int jobPartAmount = 2;
+            CreateJobPlanFile(test.DirectoryPath, transferId, jobPartAmount);
+            TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+
+            await transferCheckpointer.AddNewJobAsync(transferId);
+        }
+
+        [Test]
+        public async Task AddNewJobAsync_New()
+        {
+            string customPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            DisposingLocalDirectory test = GetTestLocalDirectoryAsync(customPath);
+
+            string transferId = Guid.NewGuid().ToString();
+            TransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+
+            await transferCheckpointer.AddNewJobAsync(transferId);
         }
     }
 }

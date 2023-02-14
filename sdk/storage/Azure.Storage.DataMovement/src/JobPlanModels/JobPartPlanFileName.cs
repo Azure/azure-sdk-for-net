@@ -87,10 +87,8 @@ namespace Azure.Storage.DataMovement
             // Check if empty
             Argument.CheckNotNullOrEmpty(fullPath, nameof(fullPath));
 
-            FileInfo fileInfo = new FileInfo(fullPath);
-            PrefixPath = fileInfo.DirectoryName;
-
-            string fileName = fileInfo.Name;
+            PrefixPath = Path.GetDirectoryName(fullPath);
+            string fileName = Path.GetFileName(fullPath);
 
             // Format of the job plan file name
             // {transferid}--{jobpartNumber}.steV{schemaVersion}
@@ -101,7 +99,7 @@ namespace Azure.Storage.DataMovement
             {
                 throw Errors.InvalidTransferIdFileName(fullPath);
             }
-            Id = fullPath.Substring(0, endTransferIdIndex);
+            Id = fileName.Substring(0, endTransferIdIndex);
 
             // Check for valid transfer part number
             int partStartIndex = endTransferIdIndex + DataMovementConstants.PlanFile.JobPlanFileNameDelimiter.Length;
@@ -123,12 +121,12 @@ namespace Azure.Storage.DataMovement
 
             int schemaStartIndex = endPartIndex + DataMovementConstants.PlanFile.FileExtension.Length;
 
-            if (schemaStartIndex + 1 >= fullPath.Length)
+            if (schemaStartIndex + 1 >= fileName.Length)
             {
                 throw Errors.InvalidSchemaLengthFileName(fullPath);
             }
-            SchemaVersion = fullPath.Substring(schemaStartIndex);
-            if (DataMovementConstants.PlanFile.SchemaVersion != SchemaVersion)
+            SchemaVersion = fileName.Substring(schemaStartIndex);
+            if (!DataMovementConstants.PlanFile.SchemaVersion.Equals(SchemaVersion))
             {
                 throw Errors.InvalidSchemaVersionFileName(SchemaVersion);
             }

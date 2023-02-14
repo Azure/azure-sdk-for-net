@@ -82,11 +82,6 @@ namespace Azure.Storage.DataMovement
         private CancellationToken _cancellationToken => _channelCancellationTokenSource.Token;
 
         /// <summary>
-        /// All transfer ids
-        /// </summary>
-        internal List<string> _ids;
-
-        /// <summary>
         /// Array pools for reading from streams to upload
         /// </summary>
         internal ArrayPool<byte> UploadArrayPool => _arrayPool;
@@ -658,7 +653,7 @@ namespace Azure.Storage.DataMovement
         private string GetNewTransferId()
         {
             string id = Guid.NewGuid().ToString();
-            while (_ids.Contains(id))
+            while (_dataTransfers.FindIndex(transfer => transfer.Id.Equals(id)) >= 0)
             {
                 CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
                 id = Guid.NewGuid().ToString();

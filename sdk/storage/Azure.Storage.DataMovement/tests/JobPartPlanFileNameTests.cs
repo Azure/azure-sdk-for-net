@@ -56,9 +56,9 @@ namespace Azure.Storage.DataMovement.Tests
             // "12345678-1234-1234-1234-123456789abc--001.steV01"
             // Transfer Id: 12345678-1234-1234-1234-123456789abc
             // Part Num: 001
-            JobPartPlanFileName jobFileName = new JobPartPlanFileName($"C:/folder/subfolder/12345678-1234-1234-1234-123456789abc--00001.steV{schemaVersion}");
+            JobPartPlanFileName jobFileName = new JobPartPlanFileName($"C:\\folder\\subfolder\\12345678-1234-1234-1234-123456789abc--00001.steV{schemaVersion}");
 
-            Assert.AreEqual("C:/folder/subfolder/", jobFileName.PrefixPath);
+            Assert.AreEqual("C:\\folder\\subfolder", jobFileName.PrefixPath);
             Assert.AreEqual("12345678-1234-1234-1234-123456789abc", jobFileName.Id);
             Assert.AreEqual(1, jobFileName.JobPartNumber);
             Assert.AreEqual(schemaVersion, jobFileName.SchemaVersion);
@@ -66,9 +66,9 @@ namespace Azure.Storage.DataMovement.Tests
             // "randomtransferidthataddsupto36charac--jobpart.steV01"
             // Transfer Id: randomtransferidthataddsupto36charac
             // Part Num: 001
-            JobPartPlanFileName jobFileName2 = new JobPartPlanFileName($"F:/folder/foo/randomtransferidthataddsupto36charac--00001.steV{schemaVersion}");
+            JobPartPlanFileName jobFileName2 = new JobPartPlanFileName($"F:\\folder\\foo\\randomtransferidthataddsupto36charac--00001.steV{schemaVersion}");
 
-            Assert.AreEqual("F:/folder/foo/", jobFileName2.PrefixPath);
+            Assert.AreEqual("F:\\folder\\foo", jobFileName2.PrefixPath);
             Assert.AreEqual("randomtransferidthataddsupto36charac", jobFileName2.Id);
             Assert.AreEqual(1, jobFileName2.JobPartNumber);
             Assert.AreEqual(schemaVersion, jobFileName2.SchemaVersion);
