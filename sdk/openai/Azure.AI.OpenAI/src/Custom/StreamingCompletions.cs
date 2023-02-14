@@ -15,8 +15,9 @@ namespace Azure.AI.OpenAI.Custom
 {
     public class StreamingCompletions : IDisposable
     {
+        private static readonly DateTime s_epochStartUtc = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         private readonly Response _baseResponse;
-        private readonly SseReader _reader;
+        private readonly SseReader _baseResponseReader;
         private readonly IList<Completions> _baseCompletions;
         private readonly object _baseCompletionsLock = new object();
         private readonly IList<StreamingChoice> _streamingChoices;
@@ -25,14 +26,27 @@ namespace Azure.AI.OpenAI.Custom
         private bool _streamingTaskComplete;
         private bool _disposedValue;
 
-        public int? Created => GetLocked(() => _baseCompletions.First().Created);
+        /// <summary>
+        /// Gets the earliest Completion creation timestamp associated with this streamed response.
+        /// </summary>
+        public DateTime Created
+        {
+            get
+            {
+                int baseSecondsAfterEpoch = GetLocked(() => _baseCompletions.First().Created.Value);
+                return s_epochStartUtc.AddSeconds(baseSecondsAfterEpoch);
+            }
+        }
+
+        /// <summary>
+        /// Gets the unique identifier associated with this streaming Completions response.
+        /// </summary>
         public string Id => GetLocked(() => _baseCompletions.First().Id);
-        public string Model => GetLocked(() => _baseCompletions.First().Model);
 
         internal StreamingCompletions(Response response)
         {
             _baseResponse = response;
-            _reader = new SseReader(response.ContentStream);
+            _baseResponseReader = new SseReader(response.ContentStream);
             _updateAvailableEvent = new AsyncAutoResetEvent();
             _baseCompletions = new List<Completions>();
             _streamingChoices = new List<StreamingChoice>();
@@ -41,7 +55,7 @@ namespace Azure.AI.OpenAI.Custom
             {
                 while (true)
                 {
-                    SseLine? sseEvent = await _reader.TryReadSingleFieldEventAsync().ConfigureAwait(false);
+                    SseLine? sseEvent = await _baseResponseReader.TryReadSingleFieldEventAsync().ConfigureAwait(false);
                     if (sseEvent == null)
                     {
                         _baseResponse.ContentStream.Dispose();
@@ -141,7 +155,7 @@ namespace Azure.AI.OpenAI.Custom
             {
                 if (disposing)
                 {
-                    _reader.Dispose();
+                    _baseResponseReader.Dispose();
                 }
 
                 _disposedValue = true;

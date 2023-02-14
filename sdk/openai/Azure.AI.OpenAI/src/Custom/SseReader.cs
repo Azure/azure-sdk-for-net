@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Sse
@@ -21,33 +20,16 @@ namespace Azure.Core.Sse
             _reader = new StreamReader(stream);
         }
 
-        public SseLine? TryReadSingleFieldEvent() // CancellationToken cancellationToken = default)
+        public SseLine? TryReadSingleFieldEvent()
         {
             while (true)
             {
-                var line = TryReadLine(); // cancellationToken);
+                var line = TryReadLine();
                 if (line == null)
                     return null;
                 if (line.Value.IsEmpty)
                     throw new InvalidDataException("event expected.");
-                var empty = TryReadLine(); // cancellationToken);
-                if (empty != null && !empty.Value.IsEmpty)
-                    throw new NotSupportedException("Multi-filed events not supported.");
-                if (!line.Value.IsComment)
-                    return line; // skip comment lines
-            }
-        }
-
-        public async Task<SseLine?> TryReadSingleFieldEventAsync() // CancellationToken cancellationToken = default)
-        {
-            while (true)
-            {
-                var line = await TryReadLineAsync().ConfigureAwait(false); // cancellationToken).ConfigureAwait(false);
-                if (line == null)
-                    return null;
-                if (line.Value.IsEmpty)
-                    throw new InvalidDataException("event expected.");
-                var empty = await TryReadLineAsync().ConfigureAwait(false); // cancellationToken).ConfigureAwait(false);
+                var empty = TryReadLine();
                 if (empty != null && !empty.Value.IsEmpty)
                     throw new NotSupportedException("Multi-filed events not supported.");
                 if (!line.Value.IsComment)
@@ -56,27 +38,44 @@ namespace Azure.Core.Sse
         }
 
         // TODO: we should support cancellation tokens, but StreamReader does not in NS2
-        public SseLine? TryReadLine() // CancellationToken cancellationToken = default)
+        public async Task<SseLine?> TryReadSingleFieldEventAsync()
+        {
+            while (true)
+            {
+                var line = await TryReadLineAsync().ConfigureAwait(false);
+                if (line == null)
+                    return null;
+                if (line.Value.IsEmpty)
+                    throw new InvalidDataException("event expected.");
+                var empty = await TryReadLineAsync().ConfigureAwait(false);
+                if (empty != null && !empty.Value.IsEmpty)
+                    throw new NotSupportedException("Multi-filed events not supported.");
+                if (!line.Value.IsComment)
+                    return line; // skip comment lines
+            }
+        }
+
+        public SseLine? TryReadLine()
         {
             if (_reader.EndOfStream)
                 return null;
             string lineText = _reader.ReadLine();
             if (lineText.Length == 0)
                 return SseLine.Empty;
-            if (TryParseLine(lineText, out var line))
+            if (TryParseLine(lineText, out SseLine line))
                 return line;
             return null;
         }
 
         // TODO: we should support cancellation tokens, but StreamReader does not in NS2
-        public async Task<SseLine?> TryReadLineAsync() // CancellationToken cancellationToken = default)
+        public async Task<SseLine?> TryReadLineAsync()
         {
             if (_reader.EndOfStream)
                 return null;
             string lineText = await _reader.ReadLineAsync().ConfigureAwait(false);
             if (lineText.Length == 0)
                 return SseLine.Empty;
-            if (TryParseLine(lineText, out var line))
+            if (TryParseLine(lineText, out SseLine line))
                 return line;
             return null;
         }
@@ -91,8 +90,8 @@ namespace Azure.Core.Sse
 
             int colonIndex = lineText.IndexOf(':');
 
-            var lineSpan = lineText.AsSpan();
-            var fieldValue = lineSpan.Slice(colonIndex + 1);
+            ReadOnlySpan<char> lineSpan = lineText.AsSpan();
+            ReadOnlySpan<char> fieldValue = lineSpan.Slice(colonIndex + 1);
 
             bool hasSpace = false;
             if (fieldValue.Length > 0 && fieldValue[0] == ' ')
@@ -109,25 +108,13 @@ namespace Azure.Core.Sse
                 {
                     _reader.Dispose();
                     _stream.Dispose();
-                    // TODO: dispose managed state (managed objects)
                 }
 
-                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-                // TODO: set large fields to null
                 _disposedValue = true;
             }
         }
-
-        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        // ~SseReader()
-        // {
-        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-        //     Dispose(disposing: false);
-        // }
-
         public void Dispose()
         {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }

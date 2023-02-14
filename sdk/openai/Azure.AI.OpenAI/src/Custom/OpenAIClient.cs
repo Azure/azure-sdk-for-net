@@ -46,7 +46,7 @@ namespace Azure.AI.OpenAI
             return GetCompletions(deploymentId, completionsOptions, cancellationToken);
         }
 
-        public virtual Response<StreamingCompletions> GetStreamingCompletions(
+        public virtual Response<StreamingCompletions> GetCompletionsStreaming(
             string deploymentId,
             CompletionsOptions completionsOptions,
             CancellationToken cancellationToken = default)
@@ -55,7 +55,7 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope(
-                "OpenAIClient.GetStreamingCompletions");
+                "OpenAIClient.GetCompletionsStreaming");
             scope.Start();
 
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -77,7 +77,7 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        public virtual async Task<Response<StreamingCompletions>> GetStreamingCompletionsAsync(
+        public virtual async Task<Response<StreamingCompletions>> GetCompletionsStreamingAsync(
             string deploymentId,
             CompletionsOptions completionsOptions,
             CancellationToken cancellationToken = default)
@@ -86,7 +86,7 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope(
-                "OpenAIClient.GetStreamingCompletions");
+                "OpenAIClient.GetCompletionsStreaming");
             scope.Start();
 
             RequestContext context = FromCancellationToken(cancellationToken);
