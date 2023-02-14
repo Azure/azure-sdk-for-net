@@ -250,12 +250,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedSpanId: spanId,
                 expectedProperties: null);
 
-            Assert.True(logTelemetryItems.Any(), "Unit test failed to collect telemetry.");
+            Assert.True(logTelemetryItems?.Any(), "Unit test failed to collect telemetry.");
             this.telemetryOutput.Write(logTelemetryItems);
-            var logTelemetryItem = logTelemetryItems.Single();
+            var logTelemetryItem = logTelemetryItems?.Single();
 
             TelemetryItemValidationHelper.AssertMessageTelemetry(
-                telemetryItem: logTelemetryItem,
+                telemetryItem: logTelemetryItem!,
                 expectedSeverityLevel: expectedSeverityLevel,
                 expectedMessage: "Hello {name}.",
                 expectedMessageProperties: new Dictionary<string, string> { { "name", "World" } },
