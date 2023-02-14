@@ -29,7 +29,7 @@ namespace Azure.Analytics.Purview.Share
         {
             Version = version switch
             {
-                ServiceVersion.V2023_02_15_Preview => "2022-06-30-preview",
+                ServiceVersion.V2023_02_15_Preview => "2023-02-15-preview",
                 _ => throw new NotSupportedException()
             };
         }

@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ads-perf-westeurope-pv.purview.azure.com/share/receivedShares/detached?api-version=2022-06-30-preview",
+      "RequestUri": "https://ads-perf-westeurope-pv.purview.azure.com/share/receivedShares/detached?api-version=2023-02-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-56e8348f3197527289839b070e0d5d60-2e4d9db9ef1e9b63-00",
-        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20230208.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "847406edb3c7e3d2d8f351f771fc009d",
+        "traceparent": "00-65b88f319641057602d84eadc7dec80e-fdf8291eabcbd609-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20230213.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a88099d078fff9876300fafa50ca872d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -16,17 +16,17 @@
       "ResponseHeaders": {
         "Content-Length": "457",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 10 Feb 2023 22:54:21 GMT",
+        "Date": "Tue, 14 Feb 2023 01:09:04 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "d0ca69c9-c115-42db-abff-8e40594b570c"
+        "x-ms-correlation-request-id": "778507c4-adb6-49a1-aad9-e5ca082a5412"
       },
       "ResponseBody": {
         "value": [
           {
             "properties": {
-              "createdAt": "2023-02-10T22:48:47.0138898Z",
-              "sharedAt": "2023-02-10T22:48:47.0138898Z",
+              "createdAt": "2023-02-14T01:06:38.1185272Z",
+              "sharedAt": "2023-02-14T01:06:38.1185272Z",
               "displayName": "testDisplayName1",
               "provisioningState": "Succeeded",
               "shareStatus": "Detached",
@@ -37,7 +37,7 @@
               "assetStoreKind": "AdlsGen2Account"
             },
             "shareKind": "InPlace",
-            "id": "56f029a1-7692-46aa-8412-8bab6e685965",
+            "id": "fd19de76-ced3-4199-99cc-001ad46fa5c5",
             "type": "ReceivedShare"
           }
         ]
@@ -47,6 +47,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": null,
     "PURVIEW_SHARE_URL": "https://ads-perf-westeurope-pv.purview.azure.com/share",
-    "RandomSeed": "598693411"
+    "RandomSeed": "2095899620"
   }
 }

@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ads-perf-westeurope-pv.purview.azure.com/share/sentShares/e802f487-92bf-4dc3-bf1d-86afe0d757a3?api-version=2022-06-30-preview",
+      "RequestUri": "https://ads-perf-westeurope-pv.purview.azure.com/share/sentShares/e802f487-92bf-4dc3-bf1d-86afe0d757a3?api-version=2023-02-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-bd9ec680bd0ac1d839b7d28f6e016973-993f228954c87d89-00",
-        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20230211.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "64388a5414d70458dc31623267c6e845",
+        "traceparent": "00-b2636c636b4d7d7ab2412aea04f98206-414021fb3f181f6e-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20230213.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a1d62024da1998fe26f70127d13c6e48",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -16,10 +16,10 @@
       "ResponseHeaders": {
         "Content-Length": "698",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 12 Feb 2023 07:21:52 GMT",
+        "Date": "Tue, 14 Feb 2023 01:01:05 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "9add8365-d008-4888-a12a-95fe1eec5fd8"
+        "x-ms-correlation-request-id": "3feea1b0-aea6-451b-be8e-c53c3e52cc15"
       },
       "ResponseBody": {
         "properties": {
@@ -43,7 +43,7 @@
             }
           },
           "provisioningState": "Succeeded",
-          "createdAt": "2023-02-12T07:21:33.1924067Z",
+          "createdAt": "2023-02-14T01:00:35.7684289Z",
           "dependsOn": [],
           "senderName": "SyMS",
           "senderTenantName": "Microsoft"
@@ -54,14 +54,37 @@
       }
     },
     {
-      "RequestUri": "https://ads-perf-westeurope-pv.purview.azure.com/share/sentShares?referenceName=%2Fsubscriptions%2F0f3dcfc3-18f8-4099-b381-8353e19d43a7%2FresourceGroups%2Ffaisalaltell%2Fproviders%2FMicrosoft.Storage%2FstorageAccounts%2Fftsharersan\u0026api-version=2022-06-30-preview",
+      "RequestUri": "https://ads-perf-westeurope-pv.purview.azure.com/share/sentShares?referenceName=%2Fsubscriptions%2F0f3dcfc3-18f8-4099-b381-8353e19d43a7%2FresourceGroups%2Ffaisalaltell%2Fproviders%2FMicrosoft.Storage%2FstorageAccounts%2Fftsharersan\u0026api-version=2023-02-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-8c8970879d227173908169a6ddf92b4a-cea19cbe3b4c3f5a-00",
-        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20230211.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "908bf7bd013f66153e088eafc5bbf5e5",
+        "traceparent": "00-4d773d725bb9ada4ad5c9e01e1703bda-24860ddb5dcfaa93-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20230213.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "78a5734ae9649d2829b5856ba5b3800a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 500,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, no-cache",
+        "Date": "Tue, 14 Feb 2023 01:02:46 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Transfer-Encoding": "chunked",
+        "x-ms-correlation-request-id": "abbd619e-25e0-4049-8edb-0c9168f7208b"
+      },
+      "ResponseBody": "eyJlcnJvciI6eyJjb2RlIjoiRXJyb3IiLCJtZXNzYWdlIjoiSW50ZXJuYWwgc2VydmVyIGVycm9yIn19"
+    },
+    {
+      "RequestUri": "https://ads-perf-westeurope-pv.purview.azure.com/share/sentShares?referenceName=%2Fsubscriptions%2F0f3dcfc3-18f8-4099-b381-8353e19d43a7%2FresourceGroups%2Ffaisalaltell%2Fproviders%2FMicrosoft.Storage%2FstorageAccounts%2Fftsharersan\u0026api-version=2023-02-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-4d773d725bb9ada4ad5c9e01e1703bda-24860ddb5dcfaa93-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20230213.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "78a5734ae9649d2829b5856ba5b3800a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -69,10 +92,10 @@
       "ResponseHeaders": {
         "Content-Length": "2915",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sun, 12 Feb 2023 07:21:52 GMT",
+        "Date": "Tue, 14 Feb 2023 01:02:47 GMT",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "cd5ade9a-8621-46c1-92d8-4458956c5bd2"
+        "x-ms-correlation-request-id": "7371ade6-d845-47fa-bc17-94fdb9e00d1c"
       },
       "ResponseBody": {
         "value": [
@@ -193,7 +216,7 @@
                 }
               },
               "provisioningState": "Succeeded",
-              "createdAt": "2023-02-12T07:21:33.1924067Z",
+              "createdAt": "2023-02-14T01:00:35.7684289Z",
               "dependsOn": [],
               "senderName": "SyMS",
               "senderTenantName": "Microsoft"
@@ -209,6 +232,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": null,
     "PURVIEW_SHARE_URL": "https://ads-perf-westeurope-pv.purview.azure.com/share",
-    "RandomSeed": "404679502"
+    "RandomSeed": "1698777106"
   }
 }
