@@ -111,6 +111,7 @@ namespace Azure.Core.Dynamic
     public static partial class BinaryDataExtensions
     {
         public static dynamic ToDynamic(this System.BinaryData data) { throw null; }
+        public static dynamic ToDynamic(this System.BinaryData data, Azure.Core.Dynamic.DynamicJsonOptions options) { throw null; }
     }
     public abstract partial class DynamicData
     {
@@ -150,6 +151,31 @@ namespace Azure.Core.Dynamic
             System.Collections.Generic.IEnumerator<Azure.Core.Dynamic.DynamicJson> System.Collections.Generic.IEnumerable<Azure.Core.Dynamic.DynamicJson>.GetEnumerator() { throw null; }
             System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct DynamicJsonOptions
+    {
+        private int _dummyPrimitive;
+        public DynamicJsonOptions() { throw null; }
+        public Azure.Core.Dynamic.DynamicJsonPropertyCasing PropertyCasing { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct DynamicJsonPropertyCasing
+    {
+        private int _dummyPrimitive;
+        public static readonly Azure.Core.Dynamic.DynamicJsonPropertyCasing Default;
+        public Azure.Core.Dynamic.ExistingPropertyCasing ExistingPropertyAccess { get { throw null; } set { } }
+        public Azure.Core.Dynamic.NewPropertyCasing NewPropertyAccess { get { throw null; } set { } }
+    }
+    public enum ExistingPropertyCasing
+    {
+        CaseSensitive = 0,
+        AllowPascalCase = 1,
+    }
+    public enum NewPropertyCasing
+    {
+        CaseSensitive = 0,
+        WriteCamelCase = 1,
     }
 }
 namespace Azure.Core.Json
