@@ -16,10 +16,13 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     internal class DataTransferState
     {
-        private readonly object statusLock = new object();
+        private readonly object _statusLock = new object();
         private string _id;
         private StorageTransferStatus _status;
+
         private long _currentTransferredBytes;
+        private object _lockCurrentBytes = new object();
+
         public TaskCompletionSource<StorageTransferStatus> _completionSource;
 
         public StorageTransferStatus Status => _status;
@@ -104,9 +107,9 @@ namespace Azure.Storage.DataMovement
         /// Sets the completion status
         /// </summary>
         /// <param name="status"></param>
-        public Task SetTransferStatus(StorageTransferStatus status)
+        public void SetTransferStatus(StorageTransferStatus status)
         {
-            lock (statusLock)
+            lock (_statusLock)
             {
                 if (_status != status)
                 {
@@ -122,7 +125,6 @@ namespace Azure.Storage.DataMovement
                     _status = status;
                 }
             }
-            return Task.CompletedTask;
         }
 
         /// <summary>
@@ -130,7 +132,10 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public void ResetTransferredBytes()
         {
-            Volatile.Write(ref _currentTransferredBytes, 0);
+            lock (_lockCurrentBytes)
+            {
+                Volatile.Write(ref _currentTransferredBytes, 0);
+            }
         }
 
         /// <summary>
@@ -139,7 +144,10 @@ namespace Azure.Storage.DataMovement
         /// <param name="transferredBytes"></param>
         public void UpdateTransferBytes(long transferredBytes)
         {
-            Interlocked.Add(ref _currentTransferredBytes, transferredBytes);
+            lock (_lockCurrentBytes)
+            {
+                Interlocked.Add(ref _currentTransferredBytes, transferredBytes);
+            }
         }
     }
 }
