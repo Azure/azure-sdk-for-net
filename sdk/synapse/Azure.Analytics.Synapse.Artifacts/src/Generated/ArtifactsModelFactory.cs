@@ -1124,6 +1124,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of ManagedIntegrationRuntime. </summary>
+        /// <param name="type"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="state"> Integration runtime state, only valid for managed dedicated integration runtime. </param>
@@ -1131,11 +1132,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="computeProperties"> The compute resource for managed integration runtime. </param>
         /// <param name="ssisProperties"> SSIS properties for managed integration runtime. </param>
         /// <returns> A new <see cref="Models.ManagedIntegrationRuntime"/> instance for mocking. </returns>
-        public static ManagedIntegrationRuntime ManagedIntegrationRuntime(string description = null, IDictionary<string, object> additionalProperties = null, IntegrationRuntimeState? state = null, ManagedVirtualNetworkReference managedVirtualNetwork = null, IntegrationRuntimeComputeProperties computeProperties = null, IntegrationRuntimeSsisProperties ssisProperties = null)
+        public static ManagedIntegrationRuntime ManagedIntegrationRuntime(IntegrationRuntimeType type = default, string description = null, IDictionary<string, object> additionalProperties = null, IntegrationRuntimeState? state = null, ManagedVirtualNetworkReference managedVirtualNetwork = null, IntegrationRuntimeComputeProperties computeProperties = null, IntegrationRuntimeSsisProperties ssisProperties = null)
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new ManagedIntegrationRuntime(IntegrationRuntimeType.Managed, description, additionalProperties, state, managedVirtualNetwork, computeProperties, ssisProperties);
+            return new ManagedIntegrationRuntime(type, description, additionalProperties, state, managedVirtualNetwork, computeProperties, ssisProperties);
         }
     }
 }
