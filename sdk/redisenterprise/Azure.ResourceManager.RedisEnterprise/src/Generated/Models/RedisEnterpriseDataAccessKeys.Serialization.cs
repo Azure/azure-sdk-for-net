@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             Optional<string> secondaryKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryKey"))
+                if (property.NameEquals("primaryKey"u8))
                 {
                     primaryKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryKey"))
+                if (property.NameEquals("secondaryKey"u8))
                 {
                     secondaryKey = property.Value.GetString();
                     continue;

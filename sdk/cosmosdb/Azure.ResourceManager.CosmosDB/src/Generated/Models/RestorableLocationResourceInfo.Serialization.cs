@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<DateTimeOffset> deletionTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("locationName"))
+                if (property.NameEquals("locationName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     locationName = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("regionalDatabaseAccountInstanceId"))
+                if (property.NameEquals("regionalDatabaseAccountInstanceId"u8))
                 {
                     regionalDatabaseAccountInstanceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("creationTime"))
+                if (property.NameEquals("creationTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     creationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("deletionTime"))
+                if (property.NameEquals("deletionTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

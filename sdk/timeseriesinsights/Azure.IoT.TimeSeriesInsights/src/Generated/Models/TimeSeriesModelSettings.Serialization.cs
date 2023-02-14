@@ -20,12 +20,12 @@ namespace Azure.IoT.TimeSeriesInsights
             Optional<string> defaultTypeId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timeSeriesIdProperties"))
+                if (property.NameEquals("timeSeriesIdProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +40,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     timeSeriesIdProperties = array;
                     continue;
                 }
-                if (property.NameEquals("defaultTypeId"))
+                if (property.NameEquals("defaultTypeId"u8))
                 {
                     defaultTypeId = property.Value.GetString();
                     continue;

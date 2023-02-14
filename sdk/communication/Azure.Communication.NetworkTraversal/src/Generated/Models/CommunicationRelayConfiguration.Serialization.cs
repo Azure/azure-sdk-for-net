@@ -19,9 +19,9 @@ namespace Azure.Communication.NetworkTraversal
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("expiresOn");
+            writer.WritePropertyName("expiresOn"u8);
             writer.WriteStringValue(ExpiresOn, "O");
-            writer.WritePropertyName("iceServers");
+            writer.WritePropertyName("iceServers"u8);
             writer.WriteStartArray();
             foreach (var item in IceServers)
             {
@@ -37,12 +37,12 @@ namespace Azure.Communication.NetworkTraversal
             IList<CommunicationIceServer> iceServers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("expiresOn"))
+                if (property.NameEquals("expiresOn"u8))
                 {
                     expiresOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("iceServers"))
+                if (property.NameEquals("iceServers"u8))
                 {
                     List<CommunicationIceServer> array = new List<CommunicationIceServer>();
                     foreach (var item in property.Value.EnumerateArray())

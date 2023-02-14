@@ -21,26 +21,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
-                writer.WritePropertyName("linkedServiceName");
+                writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteObjectValue(LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
-                writer.WritePropertyName("policy");
+                writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
-                writer.WritePropertyName("dependsOn");
+                writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(UserProperties))
             {
-                writer.WritePropertyName("userProperties");
+                writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
@@ -58,28 +58,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("command");
+            writer.WritePropertyName("command"u8);
             writer.WriteObjectValue(Command);
             if (Optional.IsDefined(ResourceLinkedService))
             {
-                writer.WritePropertyName("resourceLinkedService");
+                writer.WritePropertyName("resourceLinkedService"u8);
                 writer.WriteObjectValue(ResourceLinkedService);
             }
             if (Optional.IsDefined(FolderPath))
             {
-                writer.WritePropertyName("folderPath");
+                writer.WritePropertyName("folderPath"u8);
                 writer.WriteObjectValue(FolderPath);
             }
             if (Optional.IsDefined(ReferenceObjects))
             {
-                writer.WritePropertyName("referenceObjects");
+                writer.WritePropertyName("referenceObjects"u8);
                 writer.WriteObjectValue(ReferenceObjects);
             }
             if (Optional.IsCollectionDefined(ExtendedProperties))
             {
-                writer.WritePropertyName("extendedProperties");
+                writer.WritePropertyName("extendedProperties"u8);
                 writer.WriteStartObject();
                 foreach (var item in ExtendedProperties)
                 {
@@ -90,12 +90,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsDefined(RetentionTimeInDays))
             {
-                writer.WritePropertyName("retentionTimeInDays");
+                writer.WritePropertyName("retentionTimeInDays"u8);
                 writer.WriteObjectValue(RetentionTimeInDays);
             }
             if (Optional.IsDefined(AutoUserSpecification))
             {
-                writer.WritePropertyName("autoUserSpecification");
+                writer.WritePropertyName("autoUserSpecification"u8);
                 writer.WriteObjectValue(AutoUserSpecification);
             }
             writer.WriteEndObject();
@@ -127,7 +127,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("linkedServiceName"))
+                if (property.NameEquals("linkedServiceName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -137,7 +137,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("policy"))
+                if (property.NameEquals("policy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -147,22 +147,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dependsOn"))
+                if (property.NameEquals("dependsOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -177,7 +177,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     dependsOn = array;
                     continue;
                 }
-                if (property.NameEquals("userProperties"))
+                if (property.NameEquals("userProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -192,7 +192,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     userProperties = array;
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -201,12 +201,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("command"))
+                        if (property0.NameEquals("command"u8))
                         {
                             command = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("resourceLinkedService"))
+                        if (property0.NameEquals("resourceLinkedService"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -216,7 +216,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             resourceLinkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("folderPath"))
+                        if (property0.NameEquals("folderPath"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -226,7 +226,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             folderPath = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("referenceObjects"))
+                        if (property0.NameEquals("referenceObjects"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -236,7 +236,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             referenceObjects = CustomActivityReferenceObject.DeserializeCustomActivityReferenceObject(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("extendedProperties"))
+                        if (property0.NameEquals("extendedProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -251,7 +251,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             extendedProperties = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("retentionTimeInDays"))
+                        if (property0.NameEquals("retentionTimeInDays"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -261,7 +261,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             retentionTimeInDays = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("autoUserSpecification"))
+                        if (property0.NameEquals("autoUserSpecification"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

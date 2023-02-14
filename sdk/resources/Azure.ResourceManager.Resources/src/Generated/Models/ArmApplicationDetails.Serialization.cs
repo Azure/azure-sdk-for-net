@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<Guid> applicationId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("oid"))
+                if (property.NameEquals("oid"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Resources.Models
                     oid = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("puid"))
+                if (property.NameEquals("puid"u8))
                 {
                     puid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("applicationId"))
+                if (property.NameEquals("applicationId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

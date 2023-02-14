@@ -18,29 +18,29 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ActivationEvaluationWindow))
             {
-                writer.WritePropertyName("activationEvaluationWindow");
+                writer.WritePropertyName("activationEvaluationWindow"u8);
                 writer.WriteStringValue(ActivationEvaluationWindow);
             }
             if (Optional.IsDefined(ActivationSignalOffset))
             {
-                writer.WritePropertyName("activationSignalOffset");
+                writer.WritePropertyName("activationSignalOffset"u8);
                 writer.WriteStringValue(ActivationSignalOffset);
             }
             if (Optional.IsDefined(MinimumActivationTime))
             {
-                writer.WritePropertyName("minimumActivationTime");
+                writer.WritePropertyName("minimumActivationTime"u8);
                 writer.WriteStringValue(MinimumActivationTime);
             }
             if (Optional.IsDefined(MaximumActivationTime))
             {
-                writer.WritePropertyName("maximumActivationTime");
+                writer.WritePropertyName("maximumActivationTime"u8);
                 writer.WriteStringValue(MaximumActivationTime);
             }
-            writer.WritePropertyName("@type");
+            writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("inputs");
+            writer.WritePropertyName("inputs"u8);
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
@@ -61,37 +61,37 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             IList<NodeInput> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("activationEvaluationWindow"))
+                if (property.NameEquals("activationEvaluationWindow"u8))
                 {
                     activationEvaluationWindow = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("activationSignalOffset"))
+                if (property.NameEquals("activationSignalOffset"u8))
                 {
                     activationSignalOffset = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("minimumActivationTime"))
+                if (property.NameEquals("minimumActivationTime"u8))
                 {
                     minimumActivationTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maximumActivationTime"))
+                if (property.NameEquals("maximumActivationTime"u8))
                 {
                     maximumActivationTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@type"))
+                if (property.NameEquals("@type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inputs"))
+                if (property.NameEquals("inputs"u8))
                 {
                     List<NodeInput> array = new List<NodeInput>();
                     foreach (var item in property.Value.EnumerateArray())

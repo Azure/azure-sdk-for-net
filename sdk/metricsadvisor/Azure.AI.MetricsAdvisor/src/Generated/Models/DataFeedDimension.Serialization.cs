@@ -15,11 +15,11 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("dimensionName");
+            writer.WritePropertyName("dimensionName"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("dimensionDisplayName");
+                writer.WritePropertyName("dimensionDisplayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             writer.WriteEndObject();
@@ -31,12 +31,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<string> dimensionDisplayName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dimensionName"))
+                if (property.NameEquals("dimensionName"u8))
                 {
                     dimensionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dimensionDisplayName"))
+                if (property.NameEquals("dimensionDisplayName"u8))
                 {
                     dimensionDisplayName = property.Value.GetString();
                     continue;

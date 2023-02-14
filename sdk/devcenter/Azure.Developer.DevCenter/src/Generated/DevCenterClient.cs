@@ -20,9 +20,7 @@ namespace Azure.Developer.DevCenter
         private static readonly string[] AuthorizationScopes = new string[] { "https://devcenter.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly string _tenantId;
-        private readonly string _devCenter;
-        private readonly string _devCenterDnsSuffix;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -37,35 +35,28 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary> Initializes a new instance of DevCenterClient. </summary>
-        /// <param name="tenantId"> The tenant to operate on. </param>
-        /// <param name="devCenter"> The DevCenter to operate on. </param>
+        /// <param name="endpoint"> The DevCenter-specific URI to operate on. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantId"/>, <paramref name="devCenter"/> or <paramref name="credential"/> is null. </exception>
-        public DevCenterClient(string tenantId, string devCenter, TokenCredential credential) : this(tenantId, devCenter, credential, "devcenter.azure.com", new DevCenterClientOptions())
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DevCenterClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DevCenterClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of DevCenterClient. </summary>
-        /// <param name="tenantId"> The tenant to operate on. </param>
-        /// <param name="devCenter"> The DevCenter to operate on. </param>
+        /// <param name="endpoint"> The DevCenter-specific URI to operate on. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="devCenterDnsSuffix"> The DNS suffix used as the base for all devcenter requests. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantId"/>, <paramref name="devCenter"/>, <paramref name="credential"/> or <paramref name="devCenterDnsSuffix"/> is null. </exception>
-        public DevCenterClient(string tenantId, string devCenter, TokenCredential credential, string devCenterDnsSuffix, DevCenterClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DevCenterClient(Uri endpoint, TokenCredential credential, DevCenterClientOptions options)
         {
-            Argument.AssertNotNull(tenantId, nameof(tenantId));
-            Argument.AssertNotNull(devCenter, nameof(devCenter));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(devCenterDnsSuffix, nameof(devCenterDnsSuffix));
             options ??= new DevCenterClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
-            _tenantId = tenantId;
-            _devCenter = devCenter;
-            _devCenterDnsSuffix = devCenterDnsSuffix;
+            _endpoint = endpoint;
             _apiVersion = options.Version;
         }
 
@@ -221,12 +212,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_tenantId, false);
-            uri.AppendRaw("-", false);
-            uri.AppendRaw(_devCenter, false);
-            uri.AppendRaw(".", false);
-            uri.AppendRaw(_devCenterDnsSuffix, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/projects", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
@@ -248,12 +234,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_tenantId, false);
-            uri.AppendRaw("-", false);
-            uri.AppendRaw(_devCenter, false);
-            uri.AppendRaw(".", false);
-            uri.AppendRaw(_devCenterDnsSuffix, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -268,12 +249,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_tenantId, false);
-            uri.AppendRaw("-", false);
-            uri.AppendRaw(_devCenter, false);
-            uri.AppendRaw(".", false);
-            uri.AppendRaw(_devCenterDnsSuffix, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/devboxes", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
@@ -295,12 +271,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_tenantId, false);
-            uri.AppendRaw("-", false);
-            uri.AppendRaw(_devCenter, false);
-            uri.AppendRaw(".", false);
-            uri.AppendRaw(_devCenterDnsSuffix, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/devboxes", false);
@@ -324,12 +295,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_tenantId, false);
-            uri.AppendRaw("-", false);
-            uri.AppendRaw(_devCenter, false);
-            uri.AppendRaw(".", false);
-            uri.AppendRaw(_devCenterDnsSuffix, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -342,12 +308,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_tenantId, false);
-            uri.AppendRaw("-", false);
-            uri.AppendRaw(_devCenter, false);
-            uri.AppendRaw(".", false);
-            uri.AppendRaw(_devCenterDnsSuffix, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -360,12 +321,7 @@ namespace Azure.Developer.DevCenter
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_tenantId, false);
-            uri.AppendRaw("-", false);
-            uri.AppendRaw(_devCenter, false);
-            uri.AppendRaw(".", false);
-            uri.AppendRaw(_devCenterDnsSuffix, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

@@ -17,21 +17,21 @@ namespace Azure.ResourceManager.DataFactory.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
             if (Optional.IsDefined(ConnectVia))
             {
-                writer.WritePropertyName("connectVia");
+                writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsCollectionDefined(Annotations))
             {
-                writer.WritePropertyName("annotations");
+                writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
@@ -54,21 +54,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("typeProperties");
+            writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("endpoint");
+            writer.WritePropertyName("endpoint"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Endpoint);
 #else
             JsonSerializer.Serialize(writer, JsonDocument.Parse(Endpoint.ToString()).RootElement);
 #endif
-            writer.WritePropertyName("marketplaceID");
+            writer.WritePropertyName("marketplaceID"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(MarketplaceId);
 #else
             JsonSerializer.Serialize(writer, JsonDocument.Parse(MarketplaceId.ToString()).RootElement);
 #endif
-            writer.WritePropertyName("sellerID");
+            writer.WritePropertyName("sellerID"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SellerId);
 #else
@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #endif
             if (Optional.IsDefined(MwsAuthToken))
             {
-                writer.WritePropertyName("mwsAuthToken");
+                writer.WritePropertyName("mwsAuthToken"u8);
                 writer.WriteObjectValue(MwsAuthToken);
             }
-            writer.WritePropertyName("accessKeyId");
+            writer.WritePropertyName("accessKeyId"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(AccessKeyId);
 #else
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.DataFactory.Models
 #endif
             if (Optional.IsDefined(SecretKey))
             {
-                writer.WritePropertyName("secretKey");
+                writer.WritePropertyName("secretKey"u8);
                 writer.WriteObjectValue(SecretKey);
             }
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
-                writer.WritePropertyName("useEncryptedEndpoints");
+                writer.WritePropertyName("useEncryptedEndpoints"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(UseEncryptedEndpoints);
 #else
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(UseHostVerification))
             {
-                writer.WritePropertyName("useHostVerification");
+                writer.WritePropertyName("useHostVerification"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(UseHostVerification);
 #else
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(UsePeerVerification))
             {
-                writer.WritePropertyName("usePeerVerification");
+                writer.WritePropertyName("usePeerVerification"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(UsePeerVerification);
 #else
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
-                writer.WritePropertyName("encryptedCredential");
+                writer.WritePropertyName("encryptedCredential"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(EncryptedCredential);
 #else
@@ -160,12 +160,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("connectVia"))
+                if (property.NameEquals("connectVia"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     parameters = dictionary;
                     continue;
                 }
-                if (property.NameEquals("annotations"))
+                if (property.NameEquals("annotations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     annotations = array;
                     continue;
                 }
-                if (property.NameEquals("typeProperties"))
+                if (property.NameEquals("typeProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -219,22 +219,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("endpoint"))
+                        if (property0.NameEquals("endpoint"u8))
                         {
                             endpoint = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("marketplaceID"))
+                        if (property0.NameEquals("marketplaceID"u8))
                         {
                             marketplaceId = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("sellerID"))
+                        if (property0.NameEquals("sellerID"u8))
                         {
                             sellerId = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("mwsAuthToken"))
+                        if (property0.NameEquals("mwsAuthToken"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -244,12 +244,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                             mwsAuthToken = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("accessKeyId"))
+                        if (property0.NameEquals("accessKeyId"u8))
                         {
                             accessKeyId = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("secretKey"))
+                        if (property0.NameEquals("secretKey"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             secretKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("useEncryptedEndpoints"))
+                        if (property0.NameEquals("useEncryptedEndpoints"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             useEncryptedEndpoints = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("useHostVerification"))
+                        if (property0.NameEquals("useHostVerification"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             useHostVerification = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("usePeerVerification"))
+                        if (property0.NameEquals("usePeerVerification"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             usePeerVerification = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("encryptedCredential"))
+                        if (property0.NameEquals("encryptedCredential"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

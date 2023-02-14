@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("requests");
+            writer.WritePropertyName("requests"u8);
             writer.WriteObjectValue(Requests);
             if (Optional.IsDefined(Limits))
             {
-                writer.WritePropertyName("limits");
+                writer.WritePropertyName("limits"u8);
                 writer.WriteObjectValue(Limits);
             }
             writer.WriteEndObject();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<ContainerResourceLimits> limits = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("requests"))
+                if (property.NameEquals("requests"u8))
                 {
                     requests = ContainerResourceRequestsContent.DeserializeContainerResourceRequestsContent(property.Value);
                     continue;
                 }
-                if (property.NameEquals("limits"))
+                if (property.NameEquals("limits"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

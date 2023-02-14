@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// This is optional if the target subscription can be identified with the URL field. If not
         /// then this is needed if CrossSubscriptionRestore field of BackupVault is in any of the disabled states
         /// </summary>
-        public string TargetResourceArmId { get; set; }
+        public ResourceIdentifier TargetResourceArmId { get; set; }
     }
 }

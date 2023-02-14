@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> jobVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobVersion"))
+                if (property.NameEquals("jobVersion"u8))
                 {
                     jobVersion = property.Value.GetString();
                     continue;

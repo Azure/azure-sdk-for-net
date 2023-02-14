@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(OrderBy))
             {
-                writer.WritePropertyName("orderBy");
+                writer.WritePropertyName("orderBy"u8);
                 writer.WriteStringValue(OrderBy);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> orderBy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("orderBy"))
+                if (property.NameEquals("orderBy"u8))
                 {
                     orderBy = property.Value.GetString();
                     continue;

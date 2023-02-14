@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<bool> ready = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phase"))
+                if (property.NameEquals("phase"u8))
                 {
                     phase = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ready"))
+                if (property.NameEquals("ready"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

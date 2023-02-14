@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("uri");
+                writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(RelativePath))
             {
-                writer.WritePropertyName("relativePath");
+                writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
             if (Optional.IsDefined(ContentVersion))
             {
-                writer.WritePropertyName("contentVersion");
+                writer.WritePropertyName("contentVersion"u8);
                 writer.WriteStringValue(ContentVersion);
             }
             if (Optional.IsDefined(QueryString))
             {
-                writer.WritePropertyName("queryString");
+                writer.WritePropertyName("queryString"u8);
                 writer.WriteStringValue(QueryString);
             }
             writer.WriteEndObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> queryString = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uri"))
+                if (property.NameEquals("uri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,22 +63,22 @@ namespace Azure.ResourceManager.Resources.Models
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("relativePath"))
+                if (property.NameEquals("relativePath"u8))
                 {
                     relativePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("contentVersion"))
+                if (property.NameEquals("contentVersion"u8))
                 {
                     contentVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("queryString"))
+                if (property.NameEquals("queryString"u8))
                 {
                     queryString = property.Value.GetString();
                     continue;

@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableRbac))
             {
-                writer.WritePropertyName("enableRbac");
+                writer.WritePropertyName("enableRbac"u8);
                 writer.WriteBooleanValue(EnableRbac.Value);
             }
             if (Optional.IsDefined(LinuxProfile))
             {
-                writer.WritePropertyName("linuxProfile");
+                writer.WritePropertyName("linuxProfile"u8);
                 writer.WriteObjectValue(LinuxProfile);
             }
             if (Optional.IsDefined(Features))
             {
-                writer.WritePropertyName("features");
+                writer.WritePropertyName("features"u8);
                 writer.WriteObjectValue(Features);
             }
             if (Optional.IsCollectionDefined(AddonProfiles))
             {
-                writer.WritePropertyName("addonProfiles");
+                writer.WritePropertyName("addonProfiles"u8);
                 writer.WriteStartObject();
                 foreach (var item in AddonProfiles)
                 {
@@ -44,27 +44,27 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
             if (Optional.IsDefined(ControlPlane))
             {
-                writer.WritePropertyName("controlPlane");
+                writer.WritePropertyName("controlPlane"u8);
                 writer.WriteObjectValue(ControlPlane);
             }
             if (Optional.IsDefined(KubernetesVersion))
             {
-                writer.WritePropertyName("kubernetesVersion");
+                writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
-                writer.WritePropertyName("networkProfile");
+                writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
             if (Optional.IsDefined(NodeResourceGroup))
             {
-                writer.WritePropertyName("nodeResourceGroup");
+                writer.WritePropertyName("nodeResourceGroup"u8);
                 writer.WriteStringValue(NodeResourceGroup);
             }
             if (Optional.IsCollectionDefined(AgentPoolProfiles))
             {
-                writer.WritePropertyName("agentPoolProfiles");
+                writer.WritePropertyName("agentPoolProfiles"u8);
                 writer.WriteStartArray();
                 foreach (var item in AgentPoolProfiles)
                 {
@@ -74,22 +74,22 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
             if (Optional.IsDefined(CloudProviderProfile))
             {
-                writer.WritePropertyName("cloudProviderProfile");
+                writer.WritePropertyName("cloudProviderProfile"u8);
                 writer.WriteObjectValue(CloudProviderProfile);
             }
             if (Optional.IsDefined(AadProfile))
             {
-                writer.WritePropertyName("aadProfile");
+                writer.WritePropertyName("aadProfile"u8);
                 writer.WriteObjectValue(AadProfile);
             }
             if (Optional.IsDefined(WindowsProfile))
             {
-                writer.WritePropertyName("windowsProfile");
+                writer.WritePropertyName("windowsProfile"u8);
                 writer.WriteObjectValue(WindowsProfile);
             }
             if (Optional.IsDefined(HttpProxyConfig))
             {
-                writer.WritePropertyName("httpProxyConfig");
+                writer.WritePropertyName("httpProxyConfig"u8);
                 writer.WriteObjectValue(HttpProxyConfig);
             }
             writer.WriteEndObject();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<HttpProxyConfigResponse> httpProxyConfig = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enableRbac"))
+                if (property.NameEquals("enableRbac"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     enableRbac = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("linuxProfile"))
+                if (property.NameEquals("linuxProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     linuxProfile = LinuxProfileProperties.DeserializeLinuxProfileProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("features"))
+                if (property.NameEquals("features"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     features = ProvisionedClustersCommonPropertiesFeatures.DeserializeProvisionedClustersCommonPropertiesFeatures(property.Value);
                     continue;
                 }
-                if (property.NameEquals("addonProfiles"))
+                if (property.NameEquals("addonProfiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     addonProfiles = dictionary;
                     continue;
                 }
-                if (property.NameEquals("controlPlane"))
+                if (property.NameEquals("controlPlane"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -169,12 +169,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     controlPlane = ControlPlaneProfile.DeserializeControlPlaneProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("kubernetesVersion"))
+                if (property.NameEquals("kubernetesVersion"u8))
                 {
                     kubernetesVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkProfile"))
+                if (property.NameEquals("networkProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -184,12 +184,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     networkProfile = NetworkProfile.DeserializeNetworkProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("nodeResourceGroup"))
+                if (property.NameEquals("nodeResourceGroup"u8))
                 {
                     nodeResourceGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentPoolProfiles"))
+                if (property.NameEquals("agentPoolProfiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     agentPoolProfiles = array;
                     continue;
                 }
-                if (property.NameEquals("cloudProviderProfile"))
+                if (property.NameEquals("cloudProviderProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     cloudProviderProfile = CloudProviderProfile.DeserializeCloudProviderProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     status = ProvisionedClustersCommonPropertiesStatus.DeserializeProvisionedClustersCommonPropertiesStatus(property.Value);
                     continue;
                 }
-                if (property.NameEquals("aadProfile"))
+                if (property.NameEquals("aadProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     aadProfile = AADProfileResponse.DeserializeAADProfileResponse(property.Value);
                     continue;
                 }
-                if (property.NameEquals("windowsProfile"))
+                if (property.NameEquals("windowsProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     windowsProfile = WindowsProfileResponse.DeserializeWindowsProfileResponse(property.Value);
                     continue;
                 }
-                if (property.NameEquals("httpProxyConfig"))
+                if (property.NameEquals("httpProxyConfig"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

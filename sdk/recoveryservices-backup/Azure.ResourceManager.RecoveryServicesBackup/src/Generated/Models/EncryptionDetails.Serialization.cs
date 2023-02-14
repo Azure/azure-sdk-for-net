@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EncryptionEnabled))
             {
-                writer.WritePropertyName("encryptionEnabled");
+                writer.WritePropertyName("encryptionEnabled"u8);
                 writer.WriteBooleanValue(EncryptionEnabled.Value);
             }
             if (Optional.IsDefined(KekUri))
             {
-                writer.WritePropertyName("kekUrl");
+                writer.WritePropertyName("kekUrl"u8);
                 writer.WriteStringValue(KekUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SecretKeyUri))
             {
-                writer.WritePropertyName("secretKeyUrl");
+                writer.WritePropertyName("secretKeyUrl"u8);
                 writer.WriteStringValue(SecretKeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(KekVaultId))
             {
-                writer.WritePropertyName("kekVaultId");
+                writer.WritePropertyName("kekVaultId"u8);
                 writer.WriteStringValue(KekVaultId);
             }
             if (Optional.IsDefined(SecretKeyVaultId))
             {
-                writer.WritePropertyName("secretKeyVaultId");
+                writer.WritePropertyName("secretKeyVaultId"u8);
                 writer.WriteStringValue(SecretKeyVaultId);
             }
             writer.WriteEndObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> secretKeyVaultId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("encryptionEnabled"))
+                if (property.NameEquals("encryptionEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     encryptionEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("kekUrl"))
+                if (property.NameEquals("kekUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     kekUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("secretKeyUrl"))
+                if (property.NameEquals("secretKeyUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     secretKeyUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kekVaultId"))
+                if (property.NameEquals("kekVaultId"u8))
                 {
                     kekVaultId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secretKeyVaultId"))
+                if (property.NameEquals("secretKeyVaultId"u8))
                 {
                     secretKeyVaultId = property.Value.GetString();
                     continue;

@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MaximumDuration))
             {
-                writer.WritePropertyName("maximumDuration");
+                writer.WritePropertyName("maximumDuration"u8);
                 writer.WriteStringValue(MaximumDuration.Value, "P");
             }
-            writer.WritePropertyName("rebootSetting");
+            writer.WritePropertyName("rebootSetting"u8);
             writer.WriteStringValue(RebootSetting.ToString());
             if (Optional.IsDefined(WindowsParameters))
             {
-                writer.WritePropertyName("windowsParameters");
+                writer.WritePropertyName("windowsParameters"u8);
                 writer.WriteObjectValue(WindowsParameters);
             }
             if (Optional.IsDefined(LinuxParameters))
             {
-                writer.WritePropertyName("linuxParameters");
+                writer.WritePropertyName("linuxParameters"u8);
                 writer.WriteObjectValue(LinuxParameters);
             }
             writer.WriteEndObject();

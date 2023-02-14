@@ -1,6 +1,6 @@
-# Microsoft Azure Provider Hub management client library for .NET
+# Microsoft Azure Provider Hub (Resource Provider as a Service) management client library for .NET
 
-This library supports managing Microsoft Azure Provider Hub resources.
+This library supports managing Microsoft Azure Provider Hub (RPaaS - Resource Provider as a Service) resources.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -10,11 +10,11 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - Better error-handling.
     - Support uniform telemetry across all languages.
 
-## Getting started 
+## Getting started
 
 ### Install the package
 
-Install the Microsoft Azure Provider Hub management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure Provider Hub (Resource Provider as a Service) management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.ProviderHub --prerelease

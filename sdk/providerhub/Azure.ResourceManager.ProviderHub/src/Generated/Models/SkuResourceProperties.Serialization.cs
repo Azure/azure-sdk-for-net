@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("skuSettings");
+            writer.WritePropertyName("skuSettings"u8);
             writer.WriteStartArray();
             foreach (var item in SkuSettings)
             {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WriteEndObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("skuSettings"))
+                if (property.NameEquals("skuSettings"u8))
                 {
                     List<SkuSetting> array = new List<SkuSetting>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     skuSettings = array;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

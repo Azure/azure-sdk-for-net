@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Datacenter))
             {
-                writer.WritePropertyName("datacenter");
+                writer.WritePropertyName("datacenter"u8);
                 writer.WriteStringValue(Datacenter);
             }
             if (Optional.IsDefined(Datastore))
             {
-                writer.WritePropertyName("datastore");
+                writer.WritePropertyName("datastore"u8);
                 writer.WriteStringValue(Datastore);
             }
             if (Optional.IsDefined(Folder))
             {
-                writer.WritePropertyName("folder");
+                writer.WritePropertyName("folder"u8);
                 writer.WriteStringValue(Folder);
             }
             if (Optional.IsDefined(ResourcePool))
             {
-                writer.WritePropertyName("resourcePool");
+                writer.WritePropertyName("resourcePool"u8);
                 writer.WriteStringValue(ResourcePool);
             }
             writer.WriteEndObject();
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<string> resourcePool = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("datacenter"))
+                if (property.NameEquals("datacenter"u8))
                 {
                     datacenter = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("datastore"))
+                if (property.NameEquals("datastore"u8))
                 {
                     datastore = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("folder"))
+                if (property.NameEquals("folder"u8))
                 {
                     folder = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourcePool"))
+                if (property.NameEquals("resourcePool"u8))
                 {
                     resourcePool = property.Value.GetString();
                     continue;

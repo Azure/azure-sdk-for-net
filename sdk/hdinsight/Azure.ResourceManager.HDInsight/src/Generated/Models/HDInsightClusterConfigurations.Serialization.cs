@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<IReadOnlyDictionary<string, IDictionary<string, string>>> configurations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("configurations"))
+                if (property.NameEquals("configurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

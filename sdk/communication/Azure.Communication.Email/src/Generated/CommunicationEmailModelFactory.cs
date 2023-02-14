@@ -10,7 +10,7 @@ using Azure.Communication.Email.Models;
 
 namespace Azure.Communication.Email
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class CommunicationEmailModelFactory
     {
         /// <summary> Initializes a new instance of SendStatusResult. </summary>

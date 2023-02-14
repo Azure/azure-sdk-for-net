@@ -333,6 +333,7 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: resourcemanager
+    BuildSnippets: false
     ArtifactName: packages
     Artifacts:
     - name: Azure.ResourceManager

@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Sql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("failoverPolicy");
+            writer.WritePropertyName("failoverPolicy"u8);
             writer.WriteStringValue(FailoverPolicy.ToString());
             if (Optional.IsDefined(FailoverWithDataLossGracePeriodMinutes))
             {
-                writer.WritePropertyName("failoverWithDataLossGracePeriodMinutes");
+                writer.WritePropertyName("failoverWithDataLossGracePeriodMinutes"u8);
                 writer.WriteNumberValue(FailoverWithDataLossGracePeriodMinutes.Value);
             }
             writer.WriteEndObject();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<int> failoverWithDataLossGracePeriodMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("failoverPolicy"))
+                if (property.NameEquals("failoverPolicy"u8))
                 {
                     failoverPolicy = new ReadWriteEndpointFailoverPolicy(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("failoverWithDataLossGracePeriodMinutes"))
+                if (property.NameEquals("failoverWithDataLossGracePeriodMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

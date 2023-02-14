@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EventName))
             {
-                writer.WritePropertyName("eventName");
+                writer.WritePropertyName("eventName"u8);
                 writer.WriteStringValue(EventName.Value.ToString());
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<DevTestLabNotificationChannelEventType> eventName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eventName"))
+                if (property.NameEquals("eventName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<IReadOnlyList<Uri>> assetContainerSasUris = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("assetContainerSasUrls"))
+                if (property.NameEquals("assetContainerSasUrls"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

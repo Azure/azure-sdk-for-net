@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Analysis.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AsAdministratorIdentities))
             {
-                writer.WritePropertyName("members");
+                writer.WritePropertyName("members"u8);
                 writer.WriteStartArray();
                 foreach (var item in AsAdministratorIdentities)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Analysis.Models
             Optional<IList<string>> members = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("members"))
+                if (property.NameEquals("members"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

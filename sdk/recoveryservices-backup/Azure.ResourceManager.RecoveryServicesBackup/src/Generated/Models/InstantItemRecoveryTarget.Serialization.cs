@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IReadOnlyList<ClientScriptForConnect>> clientScripts = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientScripts"))
+                if (property.NameEquals("clientScripts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

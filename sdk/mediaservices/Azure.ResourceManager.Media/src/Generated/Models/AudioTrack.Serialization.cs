@@ -17,34 +17,34 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FileName))
             {
-                writer.WritePropertyName("fileName");
+                writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(LanguageCode))
             {
-                writer.WritePropertyName("languageCode");
+                writer.WritePropertyName("languageCode"u8);
                 writer.WriteStringValue(LanguageCode);
             }
             if (Optional.IsDefined(HlsSettings))
             {
-                writer.WritePropertyName("hlsSettings");
+                writer.WritePropertyName("hlsSettings"u8);
                 writer.WriteObjectValue(HlsSettings);
             }
             if (Optional.IsDefined(DashSettings))
             {
-                writer.WritePropertyName("dashSettings");
+                writer.WritePropertyName("dashSettings"u8);
                 writer.WriteObjectValue(DashSettings);
             }
             if (Optional.IsDefined(Mpeg4TrackId))
             {
                 if (Mpeg4TrackId != null)
                 {
-                    writer.WritePropertyName("mpeg4TrackId");
+                    writer.WritePropertyName("mpeg4TrackId"u8);
                     writer.WriteNumberValue(Mpeg4TrackId.Value);
                 }
                 else
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Media.Models
                     writer.WriteNull("mpeg4TrackId");
                 }
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
@@ -69,22 +69,22 @@ namespace Azure.ResourceManager.Media.Models
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fileName"))
+                if (property.NameEquals("fileName"u8))
                 {
                     fileName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("languageCode"))
+                if (property.NameEquals("languageCode"u8))
                 {
                     languageCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hlsSettings"))
+                if (property.NameEquals("hlsSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Media.Models
                     hlsSettings = HlsSettings.DeserializeHlsSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dashSettings"))
+                if (property.NameEquals("dashSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Media.Models
                     dashSettings = TrackDashSettings.DeserializeTrackDashSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("mpeg4TrackId"))
+                if (property.NameEquals("mpeg4TrackId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Media.Models
                     mpeg4TrackId = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("bitRate"))
+                if (property.NameEquals("bitRate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Media.Models
                     bitRate = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;

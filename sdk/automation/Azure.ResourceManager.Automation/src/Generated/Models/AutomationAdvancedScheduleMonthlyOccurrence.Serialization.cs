@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Occurrence))
             {
-                writer.WritePropertyName("occurrence");
+                writer.WritePropertyName("occurrence"u8);
                 writer.WriteNumberValue(Occurrence.Value);
             }
             if (Optional.IsDefined(Day))
             {
-                writer.WritePropertyName("day");
+                writer.WritePropertyName("day"u8);
                 writer.WriteStringValue(Day.Value.ToString());
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<AutomationDayOfWeek> day = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("occurrence"))
+                if (property.NameEquals("occurrence"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Automation.Models
                     occurrence = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("day"))
+                if (property.NameEquals("day"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

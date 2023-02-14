@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AccountAccess))
             {
-                writer.WritePropertyName("accountAccess");
+                writer.WritePropertyName("accountAccess"u8);
                 writer.WriteObjectValue(AccountAccess);
             }
             if (Optional.IsDefined(NodeManagementAccess))
             {
-                writer.WritePropertyName("nodeManagementAccess");
+                writer.WritePropertyName("nodeManagementAccess"u8);
                 writer.WriteObjectValue(NodeManagementAccess);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<BatchEndpointAccessProfile> nodeManagementAccess = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountAccess"))
+                if (property.NameEquals("accountAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Batch.Models
                     accountAccess = BatchEndpointAccessProfile.DeserializeBatchEndpointAccessProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("nodeManagementAccess"))
+                if (property.NameEquals("nodeManagementAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

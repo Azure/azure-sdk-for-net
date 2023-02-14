@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<IReadOnlyList<ManagedClusterCredential>> kubeconfigs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kubeconfigs"))
+                if (property.NameEquals("kubeconfigs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

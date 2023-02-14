@@ -5,6 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: DataProtectionBackup
 namespace: Azure.ResourceManager.DataProtectionBackup
@@ -90,6 +91,7 @@ rename-mapping:
   AzureBackupRecoveryPoint: DataProtectionBackupRecoveryPointProperties
   AzureBackupDiscreteRecoveryPoint: DataProtectionBackupDiscreteRecoveryPointProperties
   AzureBackupDiscreteRecoveryPoint.recoveryPointTime: RecoverOn
+  AzureBackupDiscreteRecoveryPoint.expiryTime: ExpireOn
   BackupInstanceResource: DataProtectionBackupInstance
   BackupInstance: DataProtectionBackupInstanceProperties
   BackupInstance.datasourceAuthCredentials: DataSourceAuthCredentials
@@ -208,6 +210,7 @@ rename-mapping:
   ResourceGuardOperation: ResourceGuardOperationDetails
   ResourceGuardOperation.requestResourceType: -|resource-type
   TargetDetails: RestoreFilesTargetDetails
+  TargetDetails.targetResourceArmId: -|arm-id
   RestoreJobRecoveryPointDetails.recoveryPointTime: RecoverOn
   RestoreTargetInfo.datasourceInfo: DataSourceInfo
   RestoreTargetInfo.datasourceSetInfo: DataSourceSetInfo
@@ -218,6 +221,27 @@ rename-mapping:
   SyncType: BackupInstanceSyncType
   ScheduleBasedBackupCriteria.daysOfTheWeek: DaysOfWeek
   ScheduleBasedBackupCriteria.weeksOfTheMonth: WeeksOfMonth
+  DeletedBackupInstanceResource: DeletedDataProtectionBackupInstance
+  DeletedBackupInstance: DeletedDataProtectionBackupInstanceProperties
+  BackupDatasourceParameters: BackupDataSourceSettings
+  BlobBackupDatasourceParameters: BlobBackupDataSourceSettings
+  KubernetesClusterBackupDatasourceParameters: KubernetesClusterBackupDataSourceSettings
+  KubernetesClusterBackupDatasourceParameters.snapshotVolumes: IsSnapshotVolumesEnabled
+  KubernetesClusterBackupDatasourceParameters.includeClusterScopeResources: IsClusterScopeResourcesIncluded
+  KubernetesClusterRestoreCriteria.includeClusterScopeResources: IsClusterScopeResourcesIncluded
+  CrossSubscriptionRestoreState: DataProtectionBackupCrossSubscriptionRestoreState
+  DeletionInfo: BackupInstanceDeletionInfo
+  DeletionInfo.deletionTime: DeleteOn|date-time
+  DeletionInfo.billingEndDate: BillingEndOn|date-time
+  DeletionInfo.scheduledPurgeTime: ScheduledPurgeOn|date-time
+  ExistingResourcePolicy: KubernetesClusterRestoreExistingResourcePolicy
+  ImmutabilityState: BackupVaultImmutabilityState
+  PatchBackupVaultInput: DataProtectionBackupVaultPatchProperties
+  PolicyParameters: BackupInstancePolicySettings
+  PolicyParameters.backupDatasourceParametersList: BackupDataSourceParametersList
+  SecuritySettings: BackupVaultSecuritySettings
+  SoftDeleteSettings: BackupVaultSoftDeleteSettings
+  SoftDeleteState: BackupVaultSoftDeleteState
 
 directive:
 # Correct the type of properties

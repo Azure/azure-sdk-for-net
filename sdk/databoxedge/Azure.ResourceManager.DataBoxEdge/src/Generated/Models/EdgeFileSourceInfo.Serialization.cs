@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("shareId");
+            writer.WritePropertyName("shareId"u8);
             writer.WriteStringValue(ShareId);
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier shareId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("shareId"))
+                if (property.NameEquals("shareId"u8))
                 {
                     shareId = new ResourceIdentifier(property.Value.GetString());
                     continue;

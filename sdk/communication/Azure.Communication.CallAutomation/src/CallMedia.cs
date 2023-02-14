@@ -311,6 +311,7 @@ namespace Azure.Communication.CallAutomation
                 RecognizeOptionsInternal recognizeConfigurationsInternal = new RecognizeOptionsInternal(CommunicationIdentifierSerializer.Serialize(recognizeChoiceOptions.TargetParticipant))
                 {
                     InterruptPrompt = recognizeChoiceOptions.InterruptPrompt,
+                    InitialSilenceTimeoutInSeconds = (int)recognizeChoiceOptions.InitialSilenceTimeout.TotalSeconds
                 };
 
                 recognizeChoiceOptions.RecognizeChoices

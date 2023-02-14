@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TieringMode))
             {
-                writer.WritePropertyName("tieringMode");
+                writer.WritePropertyName("tieringMode"u8);
                 writer.WriteStringValue(TieringMode.Value.ToString());
             }
             if (Optional.IsDefined(DurationValue))
             {
-                writer.WritePropertyName("duration");
+                writer.WritePropertyName("duration"u8);
                 writer.WriteNumberValue(DurationValue.Value);
             }
             if (Optional.IsDefined(DurationType))
             {
-                writer.WritePropertyName("durationType");
+                writer.WritePropertyName("durationType"u8);
                 writer.WriteStringValue(DurationType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<RetentionDurationType> durationType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tieringMode"))
+                if (property.NameEquals("tieringMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     tieringMode = new TieringMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("duration"))
+                if (property.NameEquals("duration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     duration = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("durationType"))
+                if (property.NameEquals("durationType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Nginx.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FrontEndIPConfiguration))
             {
-                writer.WritePropertyName("frontEndIPConfiguration");
+                writer.WritePropertyName("frontEndIPConfiguration"u8);
                 writer.WriteObjectValue(FrontEndIPConfiguration);
             }
             if (Optional.IsDefined(NetworkInterfaceConfiguration))
             {
-                writer.WritePropertyName("networkInterfaceConfiguration");
+                writer.WritePropertyName("networkInterfaceConfiguration"u8);
                 writer.WriteObjectValue(NetworkInterfaceConfiguration);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Nginx.Models
             Optional<NginxNetworkInterfaceConfiguration> networkInterfaceConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("frontEndIPConfiguration"))
+                if (property.NameEquals("frontEndIPConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     frontEndIPConfiguration = NginxFrontendIPConfiguration.DeserializeNginxFrontendIPConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("networkInterfaceConfiguration"))
+                if (property.NameEquals("networkInterfaceConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -33,49 +33,49 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IsAdminUserEnabled))
             {
-                writer.WritePropertyName("adminUserEnabled");
+                writer.WritePropertyName("adminUserEnabled"u8);
                 writer.WriteBooleanValue(IsAdminUserEnabled.Value);
             }
             if (Optional.IsDefined(NetworkRuleSet))
             {
-                writer.WritePropertyName("networkRuleSet");
+                writer.WritePropertyName("networkRuleSet"u8);
                 writer.WriteObjectValue(NetworkRuleSet);
             }
             if (Optional.IsDefined(Policies))
             {
-                writer.WritePropertyName("policies");
+                writer.WritePropertyName("policies"u8);
                 writer.WriteObjectValue(Policies);
             }
             if (Optional.IsDefined(Encryption))
             {
-                writer.WritePropertyName("encryption");
+                writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
             if (Optional.IsDefined(IsDataEndpointEnabled))
             {
-                writer.WritePropertyName("dataEndpointEnabled");
+                writer.WritePropertyName("dataEndpointEnabled"u8);
                 writer.WriteBooleanValue(IsDataEndpointEnabled.Value);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             if (Optional.IsDefined(NetworkRuleBypassOptions))
             {
-                writer.WritePropertyName("networkRuleBypassOptions");
+                writer.WritePropertyName("networkRuleBypassOptions"u8);
                 writer.WriteStringValue(NetworkRuleBypassOptions.Value.ToString());
             }
             if (Optional.IsDefined(IsAnonymousPullEnabled))
             {
-                writer.WritePropertyName("anonymousPullEnabled");
+                writer.WritePropertyName("anonymousPullEnabled"u8);
                 writer.WriteBooleanValue(IsAnonymousPullEnabled.Value);
             }
             writer.WriteEndObject();

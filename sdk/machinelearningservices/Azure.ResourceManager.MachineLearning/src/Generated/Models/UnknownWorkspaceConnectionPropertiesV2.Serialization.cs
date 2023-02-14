@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("authType");
+            writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToString());
             if (Optional.IsDefined(Category))
             {
-                writer.WritePropertyName("category");
+                writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
             if (Optional.IsDefined(Target))
             {
-                writer.WritePropertyName("target");
+                writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
             if (Optional.IsDefined(ValueFormat))
             {
-                writer.WritePropertyName("valueFormat");
+                writer.WritePropertyName("valueFormat"u8);
                 writer.WriteStringValue(ValueFormat.Value.ToString());
             }
             writer.WriteEndObject();
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningValueFormat> valueFormat = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("authType"))
+                if (property.NameEquals("authType"u8))
                 {
                     authType = new MachineLearningConnectionAuthType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     category = new MachineLearningConnectionCategory(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     target = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("valueFormat"))
+                if (property.NameEquals("valueFormat"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

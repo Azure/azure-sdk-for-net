@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<TextDocumentBatchStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("statistics"))
+                if (property.NameEquals("statistics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

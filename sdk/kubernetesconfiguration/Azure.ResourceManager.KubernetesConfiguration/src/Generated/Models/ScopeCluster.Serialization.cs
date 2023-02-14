@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ReleaseNamespace))
             {
-                writer.WritePropertyName("releaseNamespace");
+                writer.WritePropertyName("releaseNamespace"u8);
                 writer.WriteStringValue(ReleaseNamespace);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<string> releaseNamespace = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("releaseNamespace"))
+                if (property.NameEquals("releaseNamespace"u8))
                 {
                     releaseNamespace = property.Value.GetString();
                     continue;

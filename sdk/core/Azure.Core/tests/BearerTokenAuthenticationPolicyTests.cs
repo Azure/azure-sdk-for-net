@@ -677,6 +677,7 @@ namespace Azure.Core.Tests
 
         [Test]
         [Retry(3)] //https://github.com/Azure/azure-sdk-for-net/issues/21005
+        [NonParallelizable]
         public async Task BearerTokenAuthenticationPolicy_BackgroundRefreshCancelledAndLogs()
         {
             var requestMre = new ManualResetEventSlim(true);
@@ -704,7 +705,7 @@ namespace Azure.Core.Tests
                 },
                 IsAsync);
 
-            AzureEventSourceListener listener = new((args, text) =>
+            using AzureEventSourceListener listener = new((args, text) =>
             {
                 TestContext.WriteLine(text);
                 if (args.EventName == "BackgroundRefreshFailed" && text.Contains(msg))
@@ -733,6 +734,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [NonParallelizable]
         [Retry(3)] //https://github.com/Azure/azure-sdk-for-net/issues/21005
         public async Task BearerTokenAuthenticationPolicy_BackgroundRefreshFailsAndLogs()
         {
@@ -760,7 +762,7 @@ namespace Azure.Core.Tests
                 },
                 IsAsync);
 
-            AzureEventSourceListener listener = new((args, text) =>
+            using AzureEventSourceListener listener = new((args, text) =>
             {
                 TestContext.WriteLine(text);
                 if (args.EventName == "BackgroundRefreshFailed" && text.Contains(msg))

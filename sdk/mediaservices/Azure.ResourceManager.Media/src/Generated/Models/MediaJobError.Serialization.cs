@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<IReadOnlyList<MediaJobErrorDetail>> details = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.Media.Models
                     code = new MediaJobErrorCode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Media.Models
                     category = new MediaJobErrorCategory(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("retry"))
+                if (property.NameEquals("retry"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Media.Models
                     retry = new MediaJobRetry(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("details"))
+                if (property.NameEquals("details"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

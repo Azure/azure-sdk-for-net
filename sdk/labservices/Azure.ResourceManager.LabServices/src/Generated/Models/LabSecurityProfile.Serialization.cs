@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OpenAccess))
             {
-                writer.WritePropertyName("openAccess");
+                writer.WritePropertyName("openAccess"u8);
                 writer.WriteStringValue(OpenAccess.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.LabServices.Models
             Optional<LabServicesEnableState> openAccess = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("registrationCode"))
+                if (property.NameEquals("registrationCode"u8))
                 {
                     registrationCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("openAccess"))
+                if (property.NameEquals("openAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

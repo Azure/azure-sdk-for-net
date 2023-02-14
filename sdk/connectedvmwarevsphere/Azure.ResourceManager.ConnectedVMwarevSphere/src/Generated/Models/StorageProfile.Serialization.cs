@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Disks))
             {
-                writer.WritePropertyName("disks");
+                writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Optional<IReadOnlyList<VirtualScsiController>> scsiControllers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("disks"))
+                if (property.NameEquals("disks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     disks = array;
                     continue;
                 }
-                if (property.NameEquals("scsiControllers"))
+                if (property.NameEquals("scsiControllers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

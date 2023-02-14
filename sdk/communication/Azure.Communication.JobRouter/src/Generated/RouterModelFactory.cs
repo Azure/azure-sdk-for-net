@@ -12,7 +12,7 @@ using Azure.Communication.JobRouter;
 
 namespace Azure.Communication.JobRouter.Models
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class RouterModelFactory
     {
         /// <summary> Initializes a new instance of ClassificationPolicy. </summary>

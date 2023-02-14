@@ -14,10 +14,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class KubernetesClusterRestoreCriteria : ItemLevelRestoreCriteria
     {
         /// <summary> Initializes a new instance of KubernetesClusterRestoreCriteria. </summary>
-        /// <param name="includeClusterScopeResources"> Gets or sets the include cluster resources property. This property if enabled will include cluster scope resources during restore. </param>
-        public KubernetesClusterRestoreCriteria(bool includeClusterScopeResources)
+        /// <param name="isClusterScopeResourcesIncluded"> Gets or sets the include cluster resources property. This property if enabled will include cluster scope resources during restore. </param>
+        public KubernetesClusterRestoreCriteria(bool isClusterScopeResourcesIncluded)
         {
-            IncludeClusterScopeResources = includeClusterScopeResources;
+            IsClusterScopeResourcesIncluded = isClusterScopeResourcesIncluded;
             IncludedNamespaces = new ChangeTrackingList<string>();
             ExcludedNamespaces = new ChangeTrackingList<string>();
             IncludedResourceTypes = new ChangeTrackingList<string>();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Gets or sets the include cluster resources property. This property if enabled will include cluster scope resources during restore. </summary>
-        public bool IncludeClusterScopeResources { get; }
+        public bool IsClusterScopeResourcesIncluded { get; }
         /// <summary> Gets or sets the include namespaces property. This property sets the namespaces to be included during restore. </summary>
         public IList<string> IncludedNamespaces { get; }
         /// <summary> Gets or sets the exclude namespaces property. This property sets the namespaces to be excluded during restore. </summary>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Gets or sets the PV (Persistent Volume) Restore Mode property. This property sets whether volumes needs to be restored. </summary>
         public PersistentVolumeRestoreMode? PersistentVolumeRestoreMode { get; set; }
         /// <summary> Gets or sets the Conflict Policy property. This property sets policy during conflict of resources during restore. </summary>
-        public ExistingResourcePolicy? ConflictPolicy { get; set; }
+        public KubernetesClusterRestoreExistingResourcePolicy? ConflictPolicy { get; set; }
         /// <summary> Gets or sets the Namespace Mappings property. This property sets if namespace needs to be change during restore. </summary>
         public IDictionary<string, string> NamespaceMappings { get; }
     }

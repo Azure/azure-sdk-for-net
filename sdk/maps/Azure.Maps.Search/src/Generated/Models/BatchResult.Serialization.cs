@@ -17,7 +17,7 @@ namespace Azure.Maps.Search.Models
             Optional<BatchResultSummary> summary = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("summary"))
+                if (property.NameEquals("summary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,7 +17,7 @@ namespace Azure.IoT.Hub.Service.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsIotEdgeDevice))
             {
-                writer.WritePropertyName("iotEdge");
+                writer.WritePropertyName("iotEdge"u8);
                 writer.WriteBooleanValue(IsIotEdgeDevice.Value);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<bool> iotEdge = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("iotEdge"))
+                if (property.NameEquals("iotEdge"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

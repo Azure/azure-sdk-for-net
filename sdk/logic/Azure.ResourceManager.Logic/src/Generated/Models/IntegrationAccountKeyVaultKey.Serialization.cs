@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<DateTimeOffset> updated = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kid"))
+                if (property.NameEquals("kid"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Logic.Models
                     kid = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("attributes"))
+                if (property.NameEquals("attributes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Logic.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("enabled"))
+                        if (property0.NameEquals("enabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Logic.Models
                             enabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("created"))
+                        if (property0.NameEquals("created"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Logic.Models
                             created = property0.Value.GetDateTimeOffset("U");
                             continue;
                         }
-                        if (property0.NameEquals("updated"))
+                        if (property0.NameEquals("updated"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

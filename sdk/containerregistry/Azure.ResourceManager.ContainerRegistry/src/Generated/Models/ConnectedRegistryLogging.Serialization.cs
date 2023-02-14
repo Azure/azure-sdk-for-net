@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LogLevel))
             {
-                writer.WritePropertyName("logLevel");
+                writer.WritePropertyName("logLevel"u8);
                 writer.WriteStringValue(LogLevel.Value.ToString());
             }
             if (Optional.IsDefined(AuditLogStatus))
             {
-                writer.WritePropertyName("auditLogStatus");
+                writer.WritePropertyName("auditLogStatus"u8);
                 writer.WriteStringValue(AuditLogStatus.Value.ToString());
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<ConnectedRegistryAuditLogStatus> auditLogStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("logLevel"))
+                if (property.NameEquals("logLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     logLevel = new ConnectedRegistryLogLevel(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("auditLogStatus"))
+                if (property.NameEquals("auditLogStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

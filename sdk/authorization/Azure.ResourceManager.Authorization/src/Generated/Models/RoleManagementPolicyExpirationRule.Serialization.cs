@@ -18,24 +18,24 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsExpirationRequired))
             {
-                writer.WritePropertyName("isExpirationRequired");
+                writer.WritePropertyName("isExpirationRequired"u8);
                 writer.WriteBooleanValue(IsExpirationRequired.Value);
             }
             if (Optional.IsDefined(MaximumDuration))
             {
-                writer.WritePropertyName("maximumDuration");
+                writer.WritePropertyName("maximumDuration"u8);
                 writer.WriteStringValue(MaximumDuration.Value, "P");
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("ruleType");
+            writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
             if (Optional.IsDefined(Target))
             {
-                writer.WritePropertyName("target");
+                writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
             }
             writer.WriteEndObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<RoleManagementPolicyRuleTarget> target = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isExpirationRequired"))
+                if (property.NameEquals("isExpirationRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     isExpirationRequired = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("maximumDuration"))
+                if (property.NameEquals("maximumDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.Authorization.Models
                     maximumDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ruleType"))
+                if (property.NameEquals("ruleType"u8))
                 {
                     ruleType = new RoleManagementPolicyRuleType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

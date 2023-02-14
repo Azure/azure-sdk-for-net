@@ -20,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FileMissing))
             {
-                writer.WritePropertyName("fileMissing");
+                writer.WritePropertyName("fileMissing"u8);
                 writer.WriteObjectValue(FileMissing);
             }
             if (Optional.IsDefined(DataInconsistency))
             {
-                writer.WritePropertyName("dataInconsistency");
+                writer.WritePropertyName("dataInconsistency"u8);
                 writer.WriteObjectValue(DataInconsistency);
             }
             writer.WriteEndObject();
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> dataInconsistency = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fileMissing"))
+                if (property.NameEquals("fileMissing"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     fileMissing = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("dataInconsistency"))
+                if (property.NameEquals("dataInconsistency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

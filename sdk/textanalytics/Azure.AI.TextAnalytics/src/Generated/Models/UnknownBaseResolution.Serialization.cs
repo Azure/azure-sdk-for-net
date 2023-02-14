@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("resolutionKind");
+            writer.WritePropertyName("resolutionKind"u8);
             writer.WriteStringValue(ResolutionKind.ToString());
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics.Models
             ResolutionKind resolutionKind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resolutionKind"))
+                if (property.NameEquals("resolutionKind"u8))
                 {
                     resolutionKind = new ResolutionKind(property.Value.GetString());
                     continue;

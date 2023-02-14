@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Triggers))
             {
-                writer.WritePropertyName("triggers");
+                writer.WritePropertyName("triggers"u8);
                 writer.WriteObjectValue(Triggers);
             }
             if (Optional.IsDefined(Contents))
             {
-                writer.WritePropertyName("contents");
+                writer.WritePropertyName("contents"u8);
                 writer.WriteObjectValue(Contents);
             }
             if (Optional.IsDefined(Actions))
             {
-                writer.WritePropertyName("actions");
+                writer.WritePropertyName("actions"u8);
                 writer.WriteObjectValue(Actions);
             }
             if (Optional.IsDefined(WorkflowManagement))
             {
-                writer.WritePropertyName("workflowManagement");
+                writer.WritePropertyName("workflowManagement"u8);
                 writer.WriteObjectValue(WorkflowManagement);
             }
             writer.WriteEndObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<FlowAccessControlConfigurationPolicy> workflowManagement = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("triggers"))
+                if (property.NameEquals("triggers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Logic.Models
                     triggers = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("contents"))
+                if (property.NameEquals("contents"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Logic.Models
                     contents = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("actions"))
+                if (property.NameEquals("actions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Logic.Models
                     actions = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("workflowManagement"))
+                if (property.NameEquals("workflowManagement"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

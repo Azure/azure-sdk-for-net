@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VCpus))
             {
-                writer.WritePropertyName("vCPUs");
+                writer.WritePropertyName("vCPUs"u8);
                 writer.WriteObjectValue(VCpus);
             }
             if (Optional.IsDefined(Memory))
             {
-                writer.WritePropertyName("memory");
+                writer.WritePropertyName("memory"u8);
                 writer.WriteObjectValue(Memory);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<ResourceRange> memory = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vCPUs"))
+                if (property.NameEquals("vCPUs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
                     vCpus = ResourceRange.DeserializeResourceRange(property.Value);
                     continue;
                 }
-                if (property.NameEquals("memory"))
+                if (property.NameEquals("memory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

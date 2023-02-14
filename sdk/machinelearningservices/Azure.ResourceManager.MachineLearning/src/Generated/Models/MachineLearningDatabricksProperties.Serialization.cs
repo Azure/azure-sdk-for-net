@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DatabricksAccessToken))
             {
-                writer.WritePropertyName("databricksAccessToken");
+                writer.WritePropertyName("databricksAccessToken"u8);
                 writer.WriteStringValue(DatabricksAccessToken);
             }
             if (Optional.IsDefined(WorkspaceUri))
             {
-                writer.WritePropertyName("workspaceUrl");
+                writer.WritePropertyName("workspaceUrl"u8);
                 writer.WriteStringValue(WorkspaceUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<Uri> workspaceUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("databricksAccessToken"))
+                if (property.NameEquals("databricksAccessToken"u8))
                 {
                     databricksAccessToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workspaceUrl"))
+                if (property.NameEquals("workspaceUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

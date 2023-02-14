@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("contactDetails");
+            writer.WritePropertyName("contactDetails"u8);
             writer.WriteObjectValue(ContactDetails);
             if (Optional.IsDefined(ShippingAddress))
             {
-                writer.WritePropertyName("shippingAddress");
+                writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress);
             }
             if (Optional.IsCollectionDefined(DataImportDetails))
             {
-                writer.WritePropertyName("dataImportDetails");
+                writer.WritePropertyName("dataImportDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataImportDetails)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             if (Optional.IsCollectionDefined(DataExportDetails))
             {
-                writer.WritePropertyName("dataExportDetails");
+                writer.WritePropertyName("dataExportDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataExportDetails)
                 {
@@ -42,21 +42,21 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("jobDetailsType");
+            writer.WritePropertyName("jobDetailsType"u8);
             writer.WriteStringValue(JobDetailsType.ToSerialString());
             if (Optional.IsDefined(Preferences))
             {
-                writer.WritePropertyName("preferences");
+                writer.WritePropertyName("preferences"u8);
                 writer.WriteObjectValue(Preferences);
             }
             if (Optional.IsDefined(KeyEncryptionKey))
             {
-                writer.WritePropertyName("keyEncryptionKey");
+                writer.WritePropertyName("keyEncryptionKey"u8);
                 writer.WriteObjectValue(KeyEncryptionKey);
             }
             if (Optional.IsDefined(ExpectedDataSizeInTerabytes))
             {
-                writer.WritePropertyName("expectedDataSizeInTeraBytes");
+                writer.WritePropertyName("expectedDataSizeInTeraBytes"u8);
                 writer.WriteNumberValue(ExpectedDataSizeInTerabytes.Value);
             }
             writer.WriteEndObject();

@@ -25,7 +25,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Optional<IReadOnlyList<string>> instanceFieldValues = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeSeriesId"))
+                if (property.NameEquals("timeSeriesId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,22 +40,22 @@ namespace Azure.IoT.TimeSeriesInsights
                     timeSeriesId = array;
                     continue;
                 }
-                if (property.NameEquals("typeName"))
+                if (property.NameEquals("typeName"u8))
                 {
                     typeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hierarchyIds"))
+                if (property.NameEquals("hierarchyIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +70,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     hierarchyIds = array;
                     continue;
                 }
-                if (property.NameEquals("hierarchyNames"))
+                if (property.NameEquals("hierarchyNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +85,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     hierarchyNames = array;
                     continue;
                 }
-                if (property.NameEquals("instanceFieldNames"))
+                if (property.NameEquals("instanceFieldNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +100,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     instanceFieldNames = array;
                     continue;
                 }
-                if (property.NameEquals("instanceFieldValues"))
+                if (property.NameEquals("instanceFieldValues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

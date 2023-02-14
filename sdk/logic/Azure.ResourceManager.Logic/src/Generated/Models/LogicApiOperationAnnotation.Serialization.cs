@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(Family))
             {
-                writer.WritePropertyName("family");
+                writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
             if (Optional.IsDefined(Revision))
             {
-                writer.WritePropertyName("revision");
+                writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<int> revision = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Logic.Models
                     status = new LogicApiOperationAnnotationStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("family"))
+                if (property.NameEquals("family"u8))
                 {
                     family = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("revision"))
+                if (property.NameEquals("revision"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

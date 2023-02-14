@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
             }
-            writer.WritePropertyName("operatorType");
+            writer.WritePropertyName("operatorType"u8);
             writer.WriteStringValue(OperatorType.ToString());
             if (Optional.IsDefined(Key))
             {
-                writer.WritePropertyName("key");
+                writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
             writer.WriteEndObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<string> key = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.EventGrid.Models
                     value = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("operatorType"))
+                if (property.NameEquals("operatorType"u8))
                 {
                     operatorType = new AdvancedFilterOperatorType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = property.Value.GetString();
                     continue;

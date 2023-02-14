@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CollectionsThroughput))
             {
-                writer.WritePropertyName("collectionsThroughput");
+                writer.WritePropertyName("collectionsThroughput"u8);
                 writer.WriteNumberValue(CollectionsThroughput.Value);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<int> collectionsThroughput = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("collectionsThroughput"))
+                if (property.NameEquals("collectionsThroughput"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
