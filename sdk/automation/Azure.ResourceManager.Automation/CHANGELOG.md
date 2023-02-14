@@ -1,14 +1,15 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.1 (2023-02-14)
 
 ### Bugs Fixed
 
+- Fixed the problem that the method ReplaceContentRunbookDraft of AutomationRunbookResource will throw exception `stream must be seekable`.
+
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
 ## 1.0.0 (2022-11-04)
 
