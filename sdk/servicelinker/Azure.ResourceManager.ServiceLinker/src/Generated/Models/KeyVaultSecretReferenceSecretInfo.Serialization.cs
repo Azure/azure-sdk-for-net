@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Version))
             {
                 if (Version != null)
                 {
-                    writer.WritePropertyName("version");
+                    writer.WritePropertyName("version"u8);
                     writer.WriteStringValue(Version);
                 }
                 else
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("version");
                 }
             }
-            writer.WritePropertyName("secretType");
+            writer.WritePropertyName("secretType"u8);
             writer.WriteStringValue(SecretType.ToString());
             writer.WriteEndObject();
         }
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             LinkerSecretType secretType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secretType"))
+                if (property.NameEquals("secretType"u8))
                 {
                     secretType = new LinkerSecretType(property.Value.GetString());
                     continue;

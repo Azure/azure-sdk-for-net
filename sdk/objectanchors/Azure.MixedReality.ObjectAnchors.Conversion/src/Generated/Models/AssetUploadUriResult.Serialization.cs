@@ -17,7 +17,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             string inputAssetUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("inputAssetUri"))
+                if (property.NameEquals("inputAssetUri"u8))
                 {
                     inputAssetUri = property.Value.GetString();
                     continue;

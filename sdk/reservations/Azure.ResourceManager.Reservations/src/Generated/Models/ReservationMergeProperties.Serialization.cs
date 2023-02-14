@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<IReadOnlyList<string>> mergeSources = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mergeDestination"))
+                if (property.NameEquals("mergeDestination"u8))
                 {
                     mergeDestination = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mergeSources"))
+                if (property.NameEquals("mergeSources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

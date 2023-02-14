@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Network.Models
             Optional<int> instanceCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scaleUnit"))
+                if (property.NameEquals("scaleUnit"u8))
                 {
                     scaleUnit = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceCount"))
+                if (property.NameEquals("instanceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

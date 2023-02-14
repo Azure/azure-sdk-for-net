@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<DateTimeOffset> timestamp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -14,19 +14,40 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ClientCertificateCredentialTests : CredentialTestBase
+    public class ClientCertificateCredentialTests : CredentialTestBase<ClientCertificateCredentialOptions>
     {
         public ClientCertificateCredentialTests(bool isAsync) : base(isAsync)
         { }
 
         public override TokenCredential GetTokenCredential(TokenCredentialOptions options)
         {
-            var context = new TokenRequestContext(new[] { Scope });
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var mockCert = new X509Certificate2(certificatePath);
 
             return InstrumentClient(
                 new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, mockConfidentialMsalClient)
+            );
+        }
+
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
+        {
+            if (config.TenantId == null)
+            {
+                Assert.Ignore("Null TenantId test does not apply to this credential");
+            }
+
+            var options = new ClientCertificateCredentialOptions
+            {
+                Transport = config.Transport,
+                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false,
+                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants
+            };
+            var pipeline = CredentialPipeline.GetInstance(options);
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+            var mockCert = new X509Certificate2(certificatePath);
+
+            return InstrumentClient(
+                new ClientCertificateCredential(config.TenantId, ClientId, mockCert, options, pipeline, null)
             );
         }
 
@@ -193,37 +214,12 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
         }
 
-        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
-        {
-            Console.WriteLine(parameters.ToDebugString());
-
-            // no need to test with null TenantId since we can't construct this credential without it
-            if (parameters.TenantId == null)
-            {
-                Assert.Ignore("Null TenantId test does not apply to this credential");
-            }
-
-            var options = new ClientCertificateCredentialOptions();
-
-            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
-            {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
-            }
-
-            var mockCert = new X509Certificate2(Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx"));
-            var msalClientMock = new MockMsalConfidentialClient(AuthenticationResultFactory.Create());
-
-            var cred = InstrumentClient(new ClientCertificateCredential(parameters.TenantId, ClientId, mockCert, options, null, msalClientMock));
-
-            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
-        }
-
         [Test]
         public async Task SendCertificateChain([Values(true, false)] bool usePemFile, [Values(true)] bool sendCertChain)
         {
             TestSetup();
-            var _transport = Createx5cValidatingTransport(sendCertChain);
-            var _pipeline = new HttpPipeline(_transport, new[] {new BearerTokenAuthenticationPolicy(new MockCredential(), "scope")});
+            var _transport = CredentialTestHelpers.Createx5cValidatingTransport(sendCertChain, expectedToken);
+            var _pipeline = new HttpPipeline(_transport, new[] { new BearerTokenAuthenticationPolicy(new MockCredential(), "scope") });
             var context = new TokenRequestContext(new[] { Scope }, tenantId: TenantId);
             expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");

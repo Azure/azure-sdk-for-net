@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(NumaNodeIndex))
             {
-                writer.WritePropertyName("numaNodeIndex");
+                writer.WritePropertyName("numaNodeIndex"u8);
                 writer.WriteNumberValue(NumaNodeIndex.Value);
             }
             if (Optional.IsDefined(TotalMemoryInMB))
             {
-                writer.WritePropertyName("totalMemoryInMb");
+                writer.WritePropertyName("totalMemoryInMb"u8);
                 writer.WriteNumberValue(TotalMemoryInMB.Value);
             }
             if (Optional.IsDefined(LogicalCoreCountPerCore))
             {
-                writer.WritePropertyName("logicalCoreCountPerCore");
+                writer.WritePropertyName("logicalCoreCountPerCore"u8);
                 writer.WriteNumberValue(LogicalCoreCountPerCore.Value);
             }
             if (Optional.IsDefined(EffectiveAvailableMemoryInMB))
             {
-                writer.WritePropertyName("effectiveAvailableMemoryInMb");
+                writer.WritePropertyName("effectiveAvailableMemoryInMb"u8);
                 writer.WriteNumberValue(EffectiveAvailableMemoryInMB.Value);
             }
             if (Optional.IsCollectionDefined(FreeVCpuIndexesForHpn))
             {
-                writer.WritePropertyName("freeVCpuIndexesForHpn");
+                writer.WritePropertyName("freeVCpuIndexesForHpn"u8);
                 writer.WriteStartArray();
                 foreach (var item in FreeVCpuIndexesForHpn)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             if (Optional.IsCollectionDefined(VCpuIndexesForHpn))
             {
-                writer.WritePropertyName("vCpuIndexesForHpn");
+                writer.WritePropertyName("vCpuIndexesForHpn"u8);
                 writer.WriteStartArray();
                 foreach (var item in VCpuIndexesForHpn)
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             if (Optional.IsCollectionDefined(VCpuIndexesForRoot))
             {
-                writer.WritePropertyName("vCpuIndexesForRoot");
+                writer.WritePropertyName("vCpuIndexesForRoot"u8);
                 writer.WriteStartArray();
                 foreach (var item in VCpuIndexesForRoot)
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<IList<int>> vCpuIndexesForRoot = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("numaNodeIndex"))
+                if (property.NameEquals("numaNodeIndex"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     numaNodeIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("totalMemoryInMb"))
+                if (property.NameEquals("totalMemoryInMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     totalMemoryInMb = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("logicalCoreCountPerCore"))
+                if (property.NameEquals("logicalCoreCountPerCore"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     logicalCoreCountPerCore = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("effectiveAvailableMemoryInMb"))
+                if (property.NameEquals("effectiveAvailableMemoryInMb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     effectiveAvailableMemoryInMb = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("freeVCpuIndexesForHpn"))
+                if (property.NameEquals("freeVCpuIndexesForHpn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     freeVCpuIndexesForHpn = array;
                     continue;
                 }
-                if (property.NameEquals("vCpuIndexesForHpn"))
+                if (property.NameEquals("vCpuIndexesForHpn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     vCpuIndexesForHpn = array;
                     continue;
                 }
-                if (property.NameEquals("vCpuIndexesForRoot"))
+                if (property.NameEquals("vCpuIndexesForRoot"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

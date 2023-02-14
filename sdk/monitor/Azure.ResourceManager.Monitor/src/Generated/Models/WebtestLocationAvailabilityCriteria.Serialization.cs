@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Monitor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("webTestId");
+            writer.WritePropertyName("webTestId"u8);
             writer.WriteStringValue(WebTestId);
-            writer.WritePropertyName("componentId");
+            writer.WritePropertyName("componentId"u8);
             writer.WriteStringValue(ComponentId);
-            writer.WritePropertyName("failedLocationCount");
+            writer.WritePropertyName("failedLocationCount"u8);
             writer.WriteNumberValue(FailedLocationCount);
-            writer.WritePropertyName("odata.type");
+            writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType.ToString());
             foreach (var item in AdditionalProperties)
             {
@@ -47,22 +47,22 @@ namespace Azure.ResourceManager.Monitor.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("webTestId"))
+                if (property.NameEquals("webTestId"u8))
                 {
                     webTestId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("componentId"))
+                if (property.NameEquals("componentId"u8))
                 {
                     componentId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("failedLocationCount"))
+                if (property.NameEquals("failedLocationCount"u8))
                 {
                     failedLocationCount = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("odata.type"))
+                if (property.NameEquals("odata.type"u8))
                 {
                     odataType = new MonitorOdataType(property.Value.GetString());
                     continue;

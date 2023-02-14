@@ -17,17 +17,17 @@ namespace Azure.Communication.NetworkTraversal
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(RouteType))
             {
-                writer.WritePropertyName("routeType");
+                writer.WritePropertyName("routeType"u8);
                 writer.WriteStringValue(RouteType.Value.ToString());
             }
             if (Optional.IsDefined(Ttl))
             {
-                writer.WritePropertyName("ttl");
+                writer.WritePropertyName("ttl"u8);
                 writer.WriteNumberValue(Ttl.Value);
             }
             writer.WriteEndObject();

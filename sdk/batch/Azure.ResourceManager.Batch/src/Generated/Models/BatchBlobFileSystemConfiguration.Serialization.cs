@@ -15,30 +15,30 @@ namespace Azure.ResourceManager.Batch.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("accountName");
+            writer.WritePropertyName("accountName"u8);
             writer.WriteStringValue(AccountName);
-            writer.WritePropertyName("containerName");
+            writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
             if (Optional.IsDefined(AccountKey))
             {
-                writer.WritePropertyName("accountKey");
+                writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
             }
             if (Optional.IsDefined(SasKey))
             {
-                writer.WritePropertyName("sasKey");
+                writer.WritePropertyName("sasKey"u8);
                 writer.WriteStringValue(SasKey);
             }
             if (Optional.IsDefined(BlobfuseOptions))
             {
-                writer.WritePropertyName("blobfuseOptions");
+                writer.WritePropertyName("blobfuseOptions"u8);
                 writer.WriteStringValue(BlobfuseOptions);
             }
-            writer.WritePropertyName("relativeMountPath");
+            writer.WritePropertyName("relativeMountPath"u8);
             writer.WriteStringValue(RelativeMountPath);
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identityReference");
+                writer.WritePropertyName("identityReference"u8);
                 writer.WriteObjectValue(Identity);
             }
             writer.WriteEndObject();
@@ -55,37 +55,37 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<ComputeNodeIdentityReference> identityReference = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountName"))
+                if (property.NameEquals("accountName"u8))
                 {
                     accountName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerName"))
+                if (property.NameEquals("containerName"u8))
                 {
                     containerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accountKey"))
+                if (property.NameEquals("accountKey"u8))
                 {
                     accountKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sasKey"))
+                if (property.NameEquals("sasKey"u8))
                 {
                     sasKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("blobfuseOptions"))
+                if (property.NameEquals("blobfuseOptions"u8))
                 {
                     blobfuseOptions = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("relativeMountPath"))
+                if (property.NameEquals("relativeMountPath"u8))
                 {
                     relativeMountPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identityReference"))
+                if (property.NameEquals("identityReference"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

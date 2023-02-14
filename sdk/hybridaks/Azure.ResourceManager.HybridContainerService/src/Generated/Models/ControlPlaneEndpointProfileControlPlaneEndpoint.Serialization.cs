@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(HostIP))
             {
-                writer.WritePropertyName("hostIP");
+                writer.WritePropertyName("hostIP"u8);
                 writer.WriteStringValue(HostIP);
             }
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
+                writer.WritePropertyName("port"u8);
                 writer.WriteStringValue(Port);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<string> port = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hostIP"))
+                if (property.NameEquals("hostIP"u8))
                 {
                     hostIP = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     port = property.Value.GetString();
                     continue;

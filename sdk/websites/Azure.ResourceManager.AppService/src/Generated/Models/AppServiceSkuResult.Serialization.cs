@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IReadOnlyList<GlobalCsmSkuDescription>> skus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
                     resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("skus"))
+                if (property.NameEquals("skus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<Uri> billingInfoUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("billingMeterDetails"))
+                if (property.NameEquals("billingMeterDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     billingMeterDetails = array;
                     continue;
                 }
-                if (property.NameEquals("billingInfoUrl"))
+                if (property.NameEquals("billingInfoUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

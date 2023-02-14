@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -42,22 +42,22 @@ namespace Azure.ResourceManager.AppContainers
             Optional<ContainerAppRevisionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppContainers
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppContainers
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("createdTime"))
+                        if (property0.NameEquals("createdTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppContainers
                             createdTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastActiveTime"))
+                        if (property0.NameEquals("lastActiveTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.AppContainers
                             lastActiveTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("fqdn"))
+                        if (property0.NameEquals("fqdn"u8))
                         {
                             fqdn = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("template"))
+                        if (property0.NameEquals("template"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppContainers
                             template = ContainerAppTemplate.DeserializeContainerAppTemplate(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("active"))
+                        if (property0.NameEquals("active"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppContainers
                             active = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("replicas"))
+                        if (property0.NameEquals("replicas"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppContainers
                             replicas = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("trafficWeight"))
+                        if (property0.NameEquals("trafficWeight"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.AppContainers
                             trafficWeight = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningError"))
+                        if (property0.NameEquals("provisioningError"u8))
                         {
                             provisioningError = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("healthState"))
+                        if (property0.NameEquals("healthState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.AppContainers
                             healthState = new ContainerAppRevisionHealthState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

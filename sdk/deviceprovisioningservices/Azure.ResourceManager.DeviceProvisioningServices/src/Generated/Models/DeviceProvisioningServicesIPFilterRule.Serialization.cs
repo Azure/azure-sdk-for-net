@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("filterName");
+            writer.WritePropertyName("filterName"u8);
             writer.WriteStringValue(FilterName);
-            writer.WritePropertyName("action");
+            writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToSerialString());
-            writer.WritePropertyName("ipMask");
+            writer.WritePropertyName("ipMask"u8);
             writer.WriteStringValue(IPMask);
             if (Optional.IsDefined(Target))
             {
-                writer.WritePropertyName("target");
+                writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -37,22 +37,22 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             Optional<DeviceProvisioningServicesIPFilterTargetType> target = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("filterName"))
+                if (property.NameEquals("filterName"u8))
                 {
                     filterName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     action = property.Value.GetString().ToDeviceProvisioningServicesIPFilterActionType();
                     continue;
                 }
-                if (property.NameEquals("ipMask"))
+                if (property.NameEquals("ipMask"u8))
                 {
                     ipMask = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("target"))
+                if (property.NameEquals("target"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

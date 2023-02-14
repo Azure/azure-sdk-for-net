@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("mcc");
+            writer.WritePropertyName("mcc"u8);
             writer.WriteStringValue(Mcc);
-            writer.WritePropertyName("mnc");
+            writer.WritePropertyName("mnc"u8);
             writer.WriteStringValue(Mnc);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             string mnc = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mcc"))
+                if (property.NameEquals("mcc"u8))
                 {
                     mcc = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mnc"))
+                if (property.NameEquals("mnc"u8))
                 {
                     mnc = property.Value.GetString();
                     continue;

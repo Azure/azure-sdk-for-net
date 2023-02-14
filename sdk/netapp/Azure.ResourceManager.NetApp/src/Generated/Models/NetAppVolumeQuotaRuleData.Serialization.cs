@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,23 +29,23 @@ namespace Azure.ResourceManager.NetApp
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(QuotaSizeInKiBs))
             {
-                writer.WritePropertyName("quotaSizeInKiBs");
+                writer.WritePropertyName("quotaSizeInKiBs"u8);
                 writer.WriteNumberValue(QuotaSizeInKiBs.Value);
             }
             if (Optional.IsDefined(QuotaType))
             {
-                writer.WritePropertyName("quotaType");
+                writer.WritePropertyName("quotaType"u8);
                 writer.WriteStringValue(QuotaType.Value.ToString());
             }
             if (Optional.IsDefined(QuotaTarget))
             {
-                writer.WritePropertyName("quotaTarget");
+                writer.WritePropertyName("quotaTarget"u8);
                 writer.WriteStringValue(QuotaTarget);
             }
             writer.WriteEndObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NetApp
             Optional<string> quotaTarget = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,27 +81,27 @@ namespace Azure.ResourceManager.NetApp
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetApp
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.NetApp
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NetApp
                             provisioningState = property0.Value.GetString().ToNetAppProvisioningState();
                             continue;
                         }
-                        if (property0.NameEquals("quotaSizeInKiBs"))
+                        if (property0.NameEquals("quotaSizeInKiBs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.NetApp
                             quotaSizeInKiBs = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("quotaType"))
+                        if (property0.NameEquals("quotaType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.NetApp
                             quotaType = new NetAppVolumeQuotaType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("quotaTarget"))
+                        if (property0.NameEquals("quotaTarget"u8))
                         {
                             quotaTarget = property0.Value.GetString();
                             continue;

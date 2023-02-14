@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ServerAddresses))
             {
-                writer.WritePropertyName("serverAddresses");
+                writer.WritePropertyName("serverAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServerAddresses)
                 {
@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("dhcpType");
+            writer.WritePropertyName("dhcpType"u8);
             writer.WriteStringValue(DhcpType.ToString());
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Revision))
             {
-                writer.WritePropertyName("revision");
+                writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
             }
             writer.WriteEndObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<long> revision = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serverAddresses"))
+                if (property.NameEquals("serverAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.Avs.Models
                     serverAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("dhcpType"))
+                if (property.NameEquals("dhcpType"u8))
                 {
                     dhcpType = new DhcpTypeEnum(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("segments"))
+                if (property.NameEquals("segments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Avs.Models
                     segments = array;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Avs.Models
                     provisioningState = new WorkloadNetworkDhcpProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("revision"))
+                if (property.NameEquals("revision"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

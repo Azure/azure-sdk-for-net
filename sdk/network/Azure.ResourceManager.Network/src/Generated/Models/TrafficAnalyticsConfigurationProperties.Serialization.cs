@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Enabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
             if (Optional.IsDefined(WorkspaceId))
             {
-                writer.WritePropertyName("workspaceId");
+                writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
             }
             if (Optional.IsDefined(WorkspaceRegion))
             {
-                writer.WritePropertyName("workspaceRegion");
+                writer.WritePropertyName("workspaceRegion"u8);
                 writer.WriteStringValue(WorkspaceRegion);
             }
             if (Optional.IsDefined(WorkspaceResourceId))
             {
-                writer.WritePropertyName("workspaceResourceId");
+                writer.WritePropertyName("workspaceResourceId"u8);
                 writer.WriteStringValue(WorkspaceResourceId);
             }
             if (Optional.IsDefined(TrafficAnalyticsIntervalInMinutes))
             {
-                writer.WritePropertyName("trafficAnalyticsInterval");
+                writer.WritePropertyName("trafficAnalyticsInterval"u8);
                 writer.WriteNumberValue(TrafficAnalyticsIntervalInMinutes.Value);
             }
             writer.WriteEndObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<int> trafficAnalyticsInterval = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -62,17 +62,17 @@ namespace Azure.ResourceManager.Network.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("workspaceId"))
+                if (property.NameEquals("workspaceId"u8))
                 {
                     workspaceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workspaceRegion"))
+                if (property.NameEquals("workspaceRegion"u8))
                 {
                     workspaceRegion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workspaceResourceId"))
+                if (property.NameEquals("workspaceResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Models
                     workspaceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("trafficAnalyticsInterval"))
+                if (property.NameEquals("trafficAnalyticsInterval"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<IReadOnlyList<string>> dnsServers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("adapterId"))
+                if (property.NameEquals("adapterId"u8))
                 {
                     adapterId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("adapterPosition"))
+                if (property.NameEquals("adapterPosition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     adapterPosition = DataBoxEdgeNetworkAdapterPosition.DeserializeDataBoxEdgeNetworkAdapterPosition(property.Value);
                     continue;
                 }
-                if (property.NameEquals("index"))
+                if (property.NameEquals("index"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     index = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("nodeId"))
+                if (property.NameEquals("nodeId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,22 +68,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     nodeId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("networkAdapterName"))
+                if (property.NameEquals("networkAdapterName"u8))
                 {
                     networkAdapterName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("macAddress"))
+                if (property.NameEquals("macAddress"u8))
                 {
                     macAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("linkSpeed"))
+                if (property.NameEquals("linkSpeed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     linkSpeed = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     status = new DataBoxEdgeNetworkAdapterStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rdmaStatus"))
+                if (property.NameEquals("rdmaStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     rdmaStatus = new DataBoxEdgeNetworkAdapterRdmaStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dhcpStatus"))
+                if (property.NameEquals("dhcpStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     dhcpStatus = new DataBoxEdgeNetworkAdapterDhcpStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ipv4Configuration"))
+                if (property.NameEquals("ipv4Configuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     ipv4Configuration = DataBoxEdgeIPv4Config.DeserializeDataBoxEdgeIPv4Config(property.Value);
                     continue;
                 }
-                if (property.NameEquals("ipv6Configuration"))
+                if (property.NameEquals("ipv6Configuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     ipv6Configuration = DataBoxEdgeIPv6Config.DeserializeDataBoxEdgeIPv6Config(property.Value);
                     continue;
                 }
-                if (property.NameEquals("ipv6LinkLocalAddress"))
+                if (property.NameEquals("ipv6LinkLocalAddress"u8))
                 {
                     ipv6LinkLocalAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dnsServers"))
+                if (property.NameEquals("dnsServers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

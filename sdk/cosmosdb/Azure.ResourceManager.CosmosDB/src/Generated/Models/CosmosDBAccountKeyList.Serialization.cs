@@ -20,22 +20,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> secondaryReadonlyMasterKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryMasterKey"))
+                if (property.NameEquals("primaryMasterKey"u8))
                 {
                     primaryMasterKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryMasterKey"))
+                if (property.NameEquals("secondaryMasterKey"u8))
                 {
                     secondaryMasterKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primaryReadonlyMasterKey"))
+                if (property.NameEquals("primaryReadonlyMasterKey"u8))
                 {
                     primaryReadonlyMasterKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryReadonlyMasterKey"))
+                if (property.NameEquals("secondaryReadonlyMasterKey"u8))
                 {
                     secondaryReadonlyMasterKey = property.Value.GetString();
                     continue;

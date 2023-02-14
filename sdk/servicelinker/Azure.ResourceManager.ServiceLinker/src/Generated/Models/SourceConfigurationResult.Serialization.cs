@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             Optional<IReadOnlyList<SourceConfiguration>> configurations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("configurations"))
+                if (property.NameEquals("configurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

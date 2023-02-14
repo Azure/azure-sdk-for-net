@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IReadOnlyList<ErrorDetail>> validationResults = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("validationResults"))
+                if (property.NameEquals("validationResults"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

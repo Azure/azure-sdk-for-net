@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Role))
             {
-                writer.WritePropertyName("role");
+                writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> role = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("role"))
+                if (property.NameEquals("role"u8))
                 {
                     role = property.Value.GetString();
                     continue;

@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tagsParameter");
+            writer.WritePropertyName("tagsParameter"u8);
             writer.WriteStringValue(TagsParameter);
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string tagsParameter = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tagsParameter"))
+                if (property.NameEquals("tagsParameter"u8))
                 {
                     tagsParameter = property.Value.GetString();
                     continue;

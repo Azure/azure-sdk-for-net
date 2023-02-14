@@ -26,7 +26,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="vmId"> Gets the virtual machine unique id. </param>
         /// <param name="securityProfile"> Gets the security profile. </param>
         /// <param name="location"> Location of the VM from which the restore point was created. </param>
-        internal RestorePointSourceMetadata(VirtualMachineHardwareProfile hardwareProfile, RestorePointSourceVmStorageProfile storageProfile, VirtualMachineOSProfile osProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string vmId, SecurityProfile securityProfile, AzureLocation? location)
+        /// <param name="userData"> UserData associated with the source VM for which restore point is captured, which is a base-64 encoded value. </param>
+        internal RestorePointSourceMetadata(VirtualMachineHardwareProfile hardwareProfile, RestorePointSourceVmStorageProfile storageProfile, VirtualMachineOSProfile osProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string vmId, SecurityProfile securityProfile, AzureLocation? location, string userData)
         {
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
             VmId = vmId;
             SecurityProfile = securityProfile;
             Location = location;
+            UserData = userData;
         }
 
         /// <summary> Gets the hardware profile. </summary>
@@ -60,5 +62,7 @@ namespace Azure.ResourceManager.Compute.Models
         public SecurityProfile SecurityProfile { get; }
         /// <summary> Location of the VM from which the restore point was created. </summary>
         public AzureLocation? Location { get; }
+        /// <summary> UserData associated with the source VM for which restore point is captured, which is a base-64 encoded value. </summary>
+        public string UserData { get; }
     }
 }

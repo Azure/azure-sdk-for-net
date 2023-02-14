@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ScheduleRunDays))
             {
-                writer.WritePropertyName("scheduleRunDays");
+                writer.WritePropertyName("scheduleRunDays"u8);
                 writer.WriteStartArray();
                 foreach (var item in ScheduleRunDays)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsCollectionDefined(ScheduleRunTimes))
             {
-                writer.WritePropertyName("scheduleRunTimes");
+                writer.WritePropertyName("scheduleRunTimes"u8);
                 writer.WriteStartArray();
                 foreach (var item in ScheduleRunTimes)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IList<DateTimeOffset>> scheduleRunTimes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scheduleRunDays"))
+                if (property.NameEquals("scheduleRunDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     scheduleRunDays = array;
                     continue;
                 }
-                if (property.NameEquals("scheduleRunTimes"))
+                if (property.NameEquals("scheduleRunTimes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

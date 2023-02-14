@@ -25,22 +25,22 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<IReadOnlyList<Assessment>> assessments = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("controlId"))
+                if (property.NameEquals("controlId"u8))
                 {
                     controlId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("controlShortName"))
+                if (property.NameEquals("controlShortName"u8))
                 {
                     controlShortName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("controlFullName"))
+                if (property.NameEquals("controlFullName"u8))
                 {
                     controlFullName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("controlType"))
+                if (property.NameEquals("controlType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,17 +50,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     controlType = new ControlType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("controlDescription"))
+                if (property.NameEquals("controlDescription"u8))
                 {
                     controlDescription = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("controlDescriptionHyperLink"))
+                if (property.NameEquals("controlDescriptionHyperLink"u8))
                 {
                     controlDescriptionHyperLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("controlStatus"))
+                if (property.NameEquals("controlStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     controlStatus = new ControlStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("assessments"))
+                if (property.NameEquals("assessments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

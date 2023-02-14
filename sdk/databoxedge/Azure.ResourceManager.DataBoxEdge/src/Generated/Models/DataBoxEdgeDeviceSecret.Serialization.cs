@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<string> keyVaultId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("encryptedSecret"))
+                if (property.NameEquals("encryptedSecret"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     encryptedSecret = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property.Value);
                     continue;
                 }
-                if (property.NameEquals("keyVaultId"))
+                if (property.NameEquals("keyVaultId"u8))
                 {
                     keyVaultId = property.Value.GetString();
                     continue;

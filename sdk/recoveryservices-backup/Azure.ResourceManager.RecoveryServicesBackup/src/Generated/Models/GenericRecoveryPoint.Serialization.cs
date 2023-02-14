@@ -18,30 +18,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(RecoveryPointType))
             {
-                writer.WritePropertyName("recoveryPointType");
+                writer.WritePropertyName("recoveryPointType"u8);
                 writer.WriteStringValue(RecoveryPointType);
             }
             if (Optional.IsDefined(RecoveryPointOn))
             {
-                writer.WritePropertyName("recoveryPointTime");
+                writer.WritePropertyName("recoveryPointTime"u8);
                 writer.WriteStringValue(RecoveryPointOn.Value, "O");
             }
             if (Optional.IsDefined(RecoveryPointAdditionalInfo))
             {
-                writer.WritePropertyName("recoveryPointAdditionalInfo");
+                writer.WritePropertyName("recoveryPointAdditionalInfo"u8);
                 writer.WriteStringValue(RecoveryPointAdditionalInfo);
             }
             if (Optional.IsDefined(RecoveryPointProperties))
             {
-                writer.WritePropertyName("recoveryPointProperties");
+                writer.WritePropertyName("recoveryPointProperties"u8);
                 writer.WriteObjectValue(RecoveryPointProperties);
             }
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointType"))
+                if (property.NameEquals("recoveryPointType"u8))
                 {
                     recoveryPointType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointTime"))
+                if (property.NameEquals("recoveryPointTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("recoveryPointAdditionalInfo"))
+                if (property.NameEquals("recoveryPointAdditionalInfo"u8))
                 {
                     recoveryPointAdditionalInfo = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointProperties"))
+                if (property.NameEquals("recoveryPointProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointProperties = RecoveryPointProperties.DeserializeRecoveryPointProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;

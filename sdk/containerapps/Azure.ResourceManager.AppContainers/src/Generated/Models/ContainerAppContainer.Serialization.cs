@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Probes))
             {
-                writer.WritePropertyName("probes");
+                writer.WritePropertyName("probes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Probes)
                 {
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             if (Optional.IsDefined(Image))
             {
-                writer.WritePropertyName("image");
+                writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsCollectionDefined(Command))
             {
-                writer.WritePropertyName("command");
+                writer.WritePropertyName("command"u8);
                 writer.WriteStartArray();
                 foreach (var item in Command)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             if (Optional.IsCollectionDefined(Args))
             {
-                writer.WritePropertyName("args");
+                writer.WritePropertyName("args"u8);
                 writer.WriteStartArray();
                 foreach (var item in Args)
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             if (Optional.IsCollectionDefined(Env))
             {
-                writer.WritePropertyName("env");
+                writer.WritePropertyName("env"u8);
                 writer.WriteStartArray();
                 foreach (var item in Env)
                 {
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             if (Optional.IsDefined(Resources))
             {
-                writer.WritePropertyName("resources");
+                writer.WritePropertyName("resources"u8);
                 writer.WriteObjectValue(Resources);
             }
             if (Optional.IsCollectionDefined(VolumeMounts))
             {
-                writer.WritePropertyName("volumeMounts");
+                writer.WritePropertyName("volumeMounts"u8);
                 writer.WriteStartArray();
                 foreach (var item in VolumeMounts)
                 {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<IList<ContainerAppVolumeMount>> volumeMounts = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("probes"))
+                if (property.NameEquals("probes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,17 +111,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                     probes = array;
                     continue;
                 }
-                if (property.NameEquals("image"))
+                if (property.NameEquals("image"u8))
                 {
                     image = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("command"))
+                if (property.NameEquals("command"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     command = array;
                     continue;
                 }
-                if (property.NameEquals("args"))
+                if (property.NameEquals("args"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     args = array;
                     continue;
                 }
-                if (property.NameEquals("env"))
+                if (property.NameEquals("env"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     env = array;
                     continue;
                 }
-                if (property.NameEquals("resources"))
+                if (property.NameEquals("resources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     resources = AppContainerResources.DeserializeAppContainerResources(property.Value);
                     continue;
                 }
-                if (property.NameEquals("volumeMounts"))
+                if (property.NameEquals("volumeMounts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

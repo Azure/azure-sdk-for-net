@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using Azure.Core;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using OpenTelemetry;
@@ -57,7 +59,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     configure(exporterOptions);
                 }
 
-                return new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions, credential));
+                return new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
+                {
+                    new StandardMetricsExtractionProcessor(),
+                    new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions, credential))
+                });
             });
         }
     }

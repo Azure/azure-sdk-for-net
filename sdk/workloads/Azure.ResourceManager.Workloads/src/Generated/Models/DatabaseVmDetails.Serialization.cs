@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<SapVirtualInstanceStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("virtualMachineId"))
+                if (property.NameEquals("virtualMachineId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     virtualMachineId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxThroughput))
             {
-                writer.WritePropertyName("maxThroughput");
+                writer.WritePropertyName("maxThroughput"u8);
                 writer.WriteNumberValue(MaxThroughput.Value);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<int> maxThroughput = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxThroughput"))
+                if (property.NameEquals("maxThroughput"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<SchedulerCurrentState> currentState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("submittedAt"))
+                if (property.NameEquals("submittedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     submittedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("scheduledAt"))
+                if (property.NameEquals("scheduledAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     scheduledAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endedAt"))
+                if (property.NameEquals("endedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     endedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("cancellationRequestedAt"))
+                if (property.NameEquals("cancellationRequestedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     cancellationRequestedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("currentState"))
+                if (property.NameEquals("currentState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

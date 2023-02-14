@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<ConnectedRegistryActivationStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

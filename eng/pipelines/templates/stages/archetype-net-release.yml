@@ -197,7 +197,7 @@ stages:
                   runOnce:
                     deploy:
                       steps:
-                        - checkout: self
+                        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
                         - template: /eng/common/pipelines/templates/steps/publish-blobs.yml
                           parameters:
                             FolderForUpload: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}'

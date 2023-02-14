@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<double> estimatedLabCost = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("estimatedLabCost"))
+                if (property.NameEquals("estimatedLabCost"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

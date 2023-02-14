@@ -20,12 +20,12 @@ namespace Azure.Maps.Routing.Models
             Optional<RouteMatrixSummary> summary = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("formatVersion"))
+                if (property.NameEquals("formatVersion"u8))
                 {
                     formatVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("matrix"))
+                if (property.NameEquals("matrix"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.Maps.Routing.Models
                     matrix = array;
                     continue;
                 }
-                if (property.NameEquals("summary"))
+                if (property.NameEquals("summary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,33 +17,43 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxBatchInstancePercent))
             {
-                writer.WritePropertyName("maxBatchInstancePercent");
+                writer.WritePropertyName("maxBatchInstancePercent"u8);
                 writer.WriteNumberValue(MaxBatchInstancePercent.Value);
             }
             if (Optional.IsDefined(MaxUnhealthyInstancePercent))
             {
-                writer.WritePropertyName("maxUnhealthyInstancePercent");
+                writer.WritePropertyName("maxUnhealthyInstancePercent"u8);
                 writer.WriteNumberValue(MaxUnhealthyInstancePercent.Value);
             }
             if (Optional.IsDefined(MaxUnhealthyUpgradedInstancePercent))
             {
-                writer.WritePropertyName("maxUnhealthyUpgradedInstancePercent");
+                writer.WritePropertyName("maxUnhealthyUpgradedInstancePercent"u8);
                 writer.WriteNumberValue(MaxUnhealthyUpgradedInstancePercent.Value);
             }
             if (Optional.IsDefined(PauseTimeBetweenBatches))
             {
-                writer.WritePropertyName("pauseTimeBetweenBatches");
+                writer.WritePropertyName("pauseTimeBetweenBatches"u8);
                 writer.WriteStringValue(PauseTimeBetweenBatches);
             }
             if (Optional.IsDefined(EnableCrossZoneUpgrade))
             {
-                writer.WritePropertyName("enableCrossZoneUpgrade");
+                writer.WritePropertyName("enableCrossZoneUpgrade"u8);
                 writer.WriteBooleanValue(EnableCrossZoneUpgrade.Value);
             }
             if (Optional.IsDefined(PrioritizeUnhealthyInstances))
             {
-                writer.WritePropertyName("prioritizeUnhealthyInstances");
+                writer.WritePropertyName("prioritizeUnhealthyInstances"u8);
                 writer.WriteBooleanValue(PrioritizeUnhealthyInstances.Value);
+            }
+            if (Optional.IsDefined(RollbackFailedInstancesOnPolicyBreach))
+            {
+                writer.WritePropertyName("rollbackFailedInstancesOnPolicyBreach"u8);
+                writer.WriteBooleanValue(RollbackFailedInstancesOnPolicyBreach.Value);
+            }
+            if (Optional.IsDefined(IsMaxSurgeEnabled))
+            {
+                writer.WritePropertyName("maxSurge"u8);
+                writer.WriteBooleanValue(IsMaxSurgeEnabled.Value);
             }
             writer.WriteEndObject();
         }
@@ -56,9 +66,11 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> pauseTimeBetweenBatches = default;
             Optional<bool> enableCrossZoneUpgrade = default;
             Optional<bool> prioritizeUnhealthyInstances = default;
+            Optional<bool> rollbackFailedInstancesOnPolicyBreach = default;
+            Optional<bool> maxSurge = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxBatchInstancePercent"))
+                if (property.NameEquals("maxBatchInstancePercent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
                     maxBatchInstancePercent = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxUnhealthyInstancePercent"))
+                if (property.NameEquals("maxUnhealthyInstancePercent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +90,7 @@ namespace Azure.ResourceManager.Compute.Models
                     maxUnhealthyInstancePercent = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxUnhealthyUpgradedInstancePercent"))
+                if (property.NameEquals("maxUnhealthyUpgradedInstancePercent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,12 +100,12 @@ namespace Azure.ResourceManager.Compute.Models
                     maxUnhealthyUpgradedInstancePercent = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("pauseTimeBetweenBatches"))
+                if (property.NameEquals("pauseTimeBetweenBatches"u8))
                 {
                     pauseTimeBetweenBatches = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enableCrossZoneUpgrade"))
+                if (property.NameEquals("enableCrossZoneUpgrade"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
                     enableCrossZoneUpgrade = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("prioritizeUnhealthyInstances"))
+                if (property.NameEquals("prioritizeUnhealthyInstances"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,8 +125,28 @@ namespace Azure.ResourceManager.Compute.Models
                     prioritizeUnhealthyInstances = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("rollbackFailedInstancesOnPolicyBreach"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    rollbackFailedInstancesOnPolicyBreach = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("maxSurge"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    maxSurge = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new RollingUpgradePolicy(Optional.ToNullable(maxBatchInstancePercent), Optional.ToNullable(maxUnhealthyInstancePercent), Optional.ToNullable(maxUnhealthyUpgradedInstancePercent), pauseTimeBetweenBatches.Value, Optional.ToNullable(enableCrossZoneUpgrade), Optional.ToNullable(prioritizeUnhealthyInstances));
+            return new RollingUpgradePolicy(Optional.ToNullable(maxBatchInstancePercent), Optional.ToNullable(maxUnhealthyInstancePercent), Optional.ToNullable(maxUnhealthyUpgradedInstancePercent), pauseTimeBetweenBatches.Value, Optional.ToNullable(enableCrossZoneUpgrade), Optional.ToNullable(prioritizeUnhealthyInstances), Optional.ToNullable(rollbackFailedInstancesOnPolicyBreach), Optional.ToNullable(maxSurge));
         }
     }
 }

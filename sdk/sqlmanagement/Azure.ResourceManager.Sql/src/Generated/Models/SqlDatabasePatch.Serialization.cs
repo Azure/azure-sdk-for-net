@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -36,131 +36,131 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CreateMode))
             {
-                writer.WritePropertyName("createMode");
+                writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
             if (Optional.IsDefined(Collation))
             {
-                writer.WritePropertyName("collation");
+                writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
             if (Optional.IsDefined(MaxSizeBytes))
             {
-                writer.WritePropertyName("maxSizeBytes");
+                writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteNumberValue(MaxSizeBytes.Value);
             }
             if (Optional.IsDefined(SampleName))
             {
-                writer.WritePropertyName("sampleName");
+                writer.WritePropertyName("sampleName"u8);
                 writer.WriteStringValue(SampleName.Value.ToString());
             }
             if (Optional.IsDefined(ElasticPoolId))
             {
-                writer.WritePropertyName("elasticPoolId");
+                writer.WritePropertyName("elasticPoolId"u8);
                 writer.WriteStringValue(ElasticPoolId);
             }
             if (Optional.IsDefined(SourceDatabaseId))
             {
-                writer.WritePropertyName("sourceDatabaseId");
+                writer.WritePropertyName("sourceDatabaseId"u8);
                 writer.WriteStringValue(SourceDatabaseId);
             }
             if (Optional.IsDefined(RestorePointInTime))
             {
-                writer.WritePropertyName("restorePointInTime");
+                writer.WritePropertyName("restorePointInTime"u8);
                 writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
             if (Optional.IsDefined(SourceDatabaseDeletedOn))
             {
-                writer.WritePropertyName("sourceDatabaseDeletionDate");
+                writer.WritePropertyName("sourceDatabaseDeletionDate"u8);
                 writer.WriteStringValue(SourceDatabaseDeletedOn.Value, "O");
             }
             if (Optional.IsDefined(RecoveryServicesRecoveryPointId))
             {
-                writer.WritePropertyName("recoveryServicesRecoveryPointId");
+                writer.WritePropertyName("recoveryServicesRecoveryPointId"u8);
                 writer.WriteStringValue(RecoveryServicesRecoveryPointId);
             }
             if (Optional.IsDefined(LongTermRetentionBackupResourceId))
             {
-                writer.WritePropertyName("longTermRetentionBackupResourceId");
+                writer.WritePropertyName("longTermRetentionBackupResourceId"u8);
                 writer.WriteStringValue(LongTermRetentionBackupResourceId);
             }
             if (Optional.IsDefined(RecoverableDatabaseId))
             {
-                writer.WritePropertyName("recoverableDatabaseId");
+                writer.WritePropertyName("recoverableDatabaseId"u8);
                 writer.WriteStringValue(RecoverableDatabaseId);
             }
             if (Optional.IsDefined(RestorableDroppedDatabaseId))
             {
-                writer.WritePropertyName("restorableDroppedDatabaseId");
+                writer.WritePropertyName("restorableDroppedDatabaseId"u8);
                 writer.WriteStringValue(RestorableDroppedDatabaseId);
             }
             if (Optional.IsDefined(CatalogCollation))
             {
-                writer.WritePropertyName("catalogCollation");
+                writer.WritePropertyName("catalogCollation"u8);
                 writer.WriteStringValue(CatalogCollation.Value.ToString());
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
-                writer.WritePropertyName("zoneRedundant");
+                writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (Optional.IsDefined(LicenseType))
             {
-                writer.WritePropertyName("licenseType");
+                writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
             if (Optional.IsDefined(ReadScale))
             {
-                writer.WritePropertyName("readScale");
+                writer.WritePropertyName("readScale"u8);
                 writer.WriteStringValue(ReadScale.Value.ToString());
             }
             if (Optional.IsDefined(HighAvailabilityReplicaCount))
             {
-                writer.WritePropertyName("highAvailabilityReplicaCount");
+                writer.WritePropertyName("highAvailabilityReplicaCount"u8);
                 writer.WriteNumberValue(HighAvailabilityReplicaCount.Value);
             }
             if (Optional.IsDefined(SecondaryType))
             {
-                writer.WritePropertyName("secondaryType");
+                writer.WritePropertyName("secondaryType"u8);
                 writer.WriteStringValue(SecondaryType.Value.ToString());
             }
             if (Optional.IsDefined(AutoPauseDelay))
             {
-                writer.WritePropertyName("autoPauseDelay");
+                writer.WritePropertyName("autoPauseDelay"u8);
                 writer.WriteNumberValue(AutoPauseDelay.Value);
             }
             if (Optional.IsDefined(RequestedBackupStorageRedundancy))
             {
-                writer.WritePropertyName("requestedBackupStorageRedundancy");
+                writer.WritePropertyName("requestedBackupStorageRedundancy"u8);
                 writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
             }
             if (Optional.IsDefined(MinCapacity))
             {
-                writer.WritePropertyName("minCapacity");
+                writer.WritePropertyName("minCapacity"u8);
                 writer.WriteNumberValue(MinCapacity.Value);
             }
             if (Optional.IsDefined(MaintenanceConfigurationId))
             {
-                writer.WritePropertyName("maintenanceConfigurationId");
+                writer.WritePropertyName("maintenanceConfigurationId"u8);
                 writer.WriteStringValue(MaintenanceConfigurationId);
             }
             if (Optional.IsDefined(IsLedgerOn))
             {
-                writer.WritePropertyName("isLedgerOn");
+                writer.WritePropertyName("isLedgerOn"u8);
                 writer.WriteBooleanValue(IsLedgerOn.Value);
             }
             if (Optional.IsDefined(FederatedClientId))
             {
-                writer.WritePropertyName("federatedClientId");
+                writer.WritePropertyName("federatedClientId"u8);
                 writer.WriteStringValue(FederatedClientId.Value);
             }
             if (Optional.IsDefined(PreferredEnclaveType))
             {
-                writer.WritePropertyName("preferredEnclaveType");
+                writer.WritePropertyName("preferredEnclaveType"u8);
                 writer.WriteStringValue(PreferredEnclaveType.Value.ToString());
             }
             writer.WriteEndObject();

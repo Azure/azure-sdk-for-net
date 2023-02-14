@@ -30,12 +30,12 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<string> finalTrackingState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString().ToIndexerExecutionStatus();
                     continue;
                 }
-                if (property.NameEquals("statusDetail"))
+                if (property.NameEquals("statusDetail"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     statusDetail = new IndexerExecutionStatusDetail(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("currentState"))
+                if (property.NameEquals("currentState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,12 +55,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     currentState = IndexerState.DeserializeIndexerState(property.Value);
                     continue;
                 }
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,7 +70,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,7 +80,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     List<SearchIndexerError> array = new List<SearchIndexerError>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -90,7 +90,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("warnings"))
+                if (property.NameEquals("warnings"u8))
                 {
                     List<SearchIndexerWarning> array = new List<SearchIndexerWarning>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -100,22 +100,22 @@ namespace Azure.Search.Documents.Indexes.Models
                     warnings = array;
                     continue;
                 }
-                if (property.NameEquals("itemsProcessed"))
+                if (property.NameEquals("itemsProcessed"u8))
                 {
                     itemsProcessed = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("itemsFailed"))
+                if (property.NameEquals("itemsFailed"u8))
                 {
                     itemsFailed = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("initialTrackingState"))
+                if (property.NameEquals("initialTrackingState"u8))
                 {
                     initialTrackingState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("finalTrackingState"))
+                if (property.NameEquals("finalTrackingState"u8))
                 {
                     finalTrackingState = property.Value.GetString();
                     continue;

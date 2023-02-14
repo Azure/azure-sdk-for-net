@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("authMode");
+            writer.WritePropertyName("authMode"u8);
             writer.WriteStringValue(AuthMode.ToString());
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
-                    writer.WritePropertyName("description");
+                    writer.WritePropertyName("description"u8);
                     writer.WriteStringValue(Description);
                 }
                 else
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Keys != null)
                 {
-                    writer.WritePropertyName("keys");
+                    writer.WritePropertyName("keys"u8);
                     writer.WriteObjectValue(Keys);
                 }
                 else
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties != null)
                 {
-                    writer.WritePropertyName("properties");
+                    writer.WritePropertyName("properties"u8);
                     writer.WriteStartObject();
                     foreach (var item in Properties)
                     {
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<Uri> swaggerUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("authMode"))
+                if (property.NameEquals("authMode"u8))
                 {
                     authMode = new MachineLearningEndpointAuthMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keys"))
+                if (property.NameEquals("keys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     keys = MachineLearningEndpointAuthKeys.DeserializeMachineLearningEndpointAuthKeys(property.Value);
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("scoringUri"))
+                if (property.NameEquals("scoringUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     scoringUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("swaggerUri"))
+                if (property.NameEquals("swaggerUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

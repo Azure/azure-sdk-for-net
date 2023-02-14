@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
             Optional<string> environmentId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ingestionKey"))
+                if (property.NameEquals("ingestionKey"u8))
                 {
                     ingestionKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("environmentId"))
+                if (property.NameEquals("environmentId"u8))
                 {
                     environmentId = property.Value.GetString();
                     continue;
