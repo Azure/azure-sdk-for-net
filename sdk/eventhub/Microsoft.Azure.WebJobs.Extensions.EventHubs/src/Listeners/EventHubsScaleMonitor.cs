@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             _nextPartitionWarningTime = DateTime.UtcNow;
             _client = client;
 
-            Descriptor = new ScaleMonitorDescriptor($"{_functionId}-EventHubTrigger-{_client.EventHubName}-{_client.ConsumerGroup}".ToLowerInvariant());
+            Descriptor = new ScaleMonitorDescriptor($"{_functionId}-EventHubTrigger-{_client.EventHubName}-{_client.ConsumerGroup}".ToLowerInvariant(), _functionId);
         }
 
         public ScaleMonitorDescriptor Descriptor { get; }

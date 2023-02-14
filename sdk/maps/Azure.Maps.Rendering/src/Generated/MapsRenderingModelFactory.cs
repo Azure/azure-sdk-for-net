@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Azure.Maps.Rendering
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class MapsRenderingModelFactory
     {
         /// <summary> Initializes a new instance of CopyrightCaption. </summary>
