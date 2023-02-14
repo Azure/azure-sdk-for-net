@@ -47,7 +47,7 @@ namespace Azure.Storage.DataMovement
                         StorageTransferStatus.CompletedWithSkippedTransfers == status ||
                         StorageTransferStatus.CompletedWithFailedTransfers == status)
             {
-                _completionSource.SetResult(status);
+                _completionSource.TrySetResult(status);
             }
         }
 

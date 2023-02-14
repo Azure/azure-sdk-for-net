@@ -216,7 +216,11 @@ namespace Azure.Storage.DataMovement
                 }
 
                 // Execute the task we pulled out of the queue
-                Task task = Task.Run(item);
+                Task task = Task.Factory.StartNew(
+                    function: item,
+                    cancellationToken: _cancellationToken,
+                    creationOptions: TaskCreationOptions.None,
+                    scheduler: TaskScheduler.Default);
                 _currentChunkTasks.Add(task);
             }
         }
