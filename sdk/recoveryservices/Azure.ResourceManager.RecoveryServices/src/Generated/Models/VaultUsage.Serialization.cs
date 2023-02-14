@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         internal static VaultUsage DeserializeVaultUsage(JsonElement element)
         {
-            Optional<UsagesUnit> unit = default;
+            Optional<VaultUsageUnit> unit = default;
             Optional<string> quotaPeriod = default;
             Optional<DateTimeOffset> nextResetTime = default;
             Optional<long> currentValue = default;
             Optional<long> limit = default;
-            Optional<NameInfo> name = default;
+            Optional<VaultUsageNameInfo> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unit"u8))
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    unit = new UsagesUnit(property.Value.GetString());
+                    unit = new VaultUsageUnit(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("quotaPeriod"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = NameInfo.DeserializeNameInfo(property.Value);
+                    name = VaultUsageNameInfo.DeserializeVaultUsageNameInfo(property.Value);
                     continue;
                 }
             }

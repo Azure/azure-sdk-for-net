@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         internal static ReplicationUsage DeserializeReplicationUsage(JsonElement element)
         {
-            Optional<MonitoringSummary> monitoringSummary = default;
-            Optional<JobsSummary> jobsSummary = default;
+            Optional<VaultMonitoringSummary> monitoringSummary = default;
+            Optional<ReplicationJobSummary> jobsSummary = default;
             Optional<int> protectedItemCount = default;
             Optional<int> recoveryPlanCount = default;
             Optional<int> registeredServersCount = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    monitoringSummary = MonitoringSummary.DeserializeMonitoringSummary(property.Value);
+                    monitoringSummary = VaultMonitoringSummary.DeserializeVaultMonitoringSummary(property.Value);
                     continue;
                 }
                 if (property.NameEquals("jobsSummary"u8))
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    jobsSummary = JobsSummary.DeserializeJobsSummary(property.Value);
+                    jobsSummary = ReplicationJobSummary.DeserializeReplicationJobSummary(property.Value);
                     continue;
                 }
                 if (property.NameEquals("protectedItemCount"u8))

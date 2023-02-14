@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed `ManagedServiceIdentity` deserialization when services return empty string for `principalId` or `tenantId`.
+
 ### Other Changes
 
 ## 1.4.0 (2023-02-10)
