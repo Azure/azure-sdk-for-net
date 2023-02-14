@@ -68,9 +68,9 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public void EnsureCompleted(CancellationToken cancellationToken = default)
         {
-#pragma warning disable AZC0107 // Public asynchronous method shouldn't be called in synchronous scope. Use synchronous version of the method if it is available.
-            AwaitCompletion(cancellationToken).EnsureCompleted();
-#pragma warning restore AZC0107 // Public asynchronous method shouldn't be called in synchronous scope. Use synchronous version of the method if it is available.
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+            AwaitCompletion(cancellationToken).GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
         }
 
         /// <summary>
