@@ -442,12 +442,17 @@ namespace Azure.Communication.CallAutomation
                 request.InvitationTimeoutInSeconds = options.InvitationTimeoutInSeconds;
             }
 
-            /* TODO: Fix this once call invite is added here
-            if (options.SipHeaders != null || options.VoipHeaders != null)
+            request.CustomContext = new CustomContextInternal();
+
+            foreach (var sipHeader in options.ParticipantToAdd.SipHeaders)
             {
-                request.CustomContext = new CustomContextInternal(options.SipHeaders,options.VoipHeaders);
+                request.CustomContext.SipHeaders.Add(sipHeader.Key, sipHeader.Value);
             }
-            */
+
+            foreach (var voipHeader in options.ParticipantToAdd.VoipHeaders)
+            {
+                request.CustomContext.SipHeaders.Add(voipHeader.Key, voipHeader.Value);
+            }
 
             return request;
         }
