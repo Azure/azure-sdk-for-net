@@ -24,17 +24,6 @@ namespace Azure.Communication.CallAutomation
         public CallInvite ParticipantToAdd { get; }
 
         /// <summary>
-        /// The caller ID number to appear on the participant.
-        /// </summary>
-        public PhoneNumberIdentifier SourceCallerIdNumber { get; set; }
-
-        /// <summary>
-        /// (Optional) The display name of the source that is associated with this invite operation when
-        /// adding a PSTN participant or teams user.  Note: Will not update the display name in the roster.
-        /// </summary>
-        public string SourceDisplayName { get; set; }
-
-        /// <summary>
         /// The operationContext for this add participants call.
         /// </summary>
         public string OperationContext { get; set; }

@@ -318,6 +318,17 @@ namespace Azure.Communication.CallAutomation
             return request;
         }
 
+        /// <summary>
+        /// Add participant to the call.
+        /// </summary>
+        /// <param name="participantToAdd">Participant to add.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public virtual async Task<Response<AddParticipantResult>> AddParticipantAsync(CallInvite participantToAdd, CancellationToken cancellationToken = default)
+        {
+            return await AddParticipantAsync(new AddParticipantOptions(participantToAdd), cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary> Add participant to the call. </summary>
         /// <param name="options"> Options for the Add Participants operation.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
@@ -356,6 +367,15 @@ namespace Azure.Communication.CallAutomation
                 throw;
             }
         }
+
+        /// <summary>
+        /// Add participant to the call.
+        /// </summary>
+        /// <param name="participantToAdd">Participant to add.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public virtual Response<AddParticipantResult> AddParticipant(CallInvite participantToAdd, CancellationToken cancellationToken = default) =>
+            AddParticipant(new AddParticipantOptions(participantToAdd), cancellationToken);
 
         /// <summary> Add participant to the call. </summary>
         /// <param name="options"> Options for the Add Participants operation.</param>
@@ -403,8 +423,10 @@ namespace Azure.Communication.CallAutomation
 
             AddParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToAdd.Target))
             {
-                SourceCallerIdNumber = options.SourceCallerIdNumber == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerIdNumber.PhoneNumber),
-                SourceDisplayName = options.SourceDisplayName,
+                SourceCallerIdNumber = options.ParticipantToAdd.SourceCallerIdNumber == null
+                    ? null
+                    : new PhoneNumberIdentifierModel(options.ParticipantToAdd.SourceCallerIdNumber.PhoneNumber),
+                SourceDisplayName = options.ParticipantToAdd.SourceDisplayName,
                 SourceIdentity = CommunicationIdentifierSerializer.Serialize(Source),
                 OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext
             };
