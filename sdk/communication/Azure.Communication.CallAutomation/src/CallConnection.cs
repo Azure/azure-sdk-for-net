@@ -297,15 +297,17 @@ namespace Azure.Communication.CallAutomation
             TransferToParticipantRequestInternal request = new TransferToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target));
 
             request.TransfereeCallerId = options.CallInvite.SourceCallerIdNumber == null ? null : new PhoneNumberIdentifierModel(options.CallInvite.SourceCallerIdNumber.PhoneNumber);
-            if (options.UserToUserInformation != null && options.UserToUserInformation.Length > CallAutomationConstants.InputValidation.StringMaxLength)
+
+            foreach (var sipHeader in options.CallInvite.SipHeaders)
             {
-                throw new ArgumentException(CallAutomationErrorMessages.UserToUserInformationExceedsMaxLength);
+                request.CustomContext.SipHeaders.Add(sipHeader.Key, sipHeader.Value);
             }
-            // TODO: update logic
-            // else
-            // {
-            //     request.UserToUserInformation = options.UserToUserInformation;
-            // }
+
+            foreach (var voipHeader in options.CallInvite.VoipHeaders)
+            {
+                request.CustomContext.SipHeaders.Add(voipHeader.Key, voipHeader.Value);
+            }
+
             if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
             {
                 throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
