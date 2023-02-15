@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                                         "\"operationContext\": \"someOperationContext\"" +
                                         "}";
 
-        private const string AddParticipantPayload = "{\"participantToAdd\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"},\"isMuted\":false},\"operationContext\":\"someOperationContext\"}";
+        private const string AddParticipantPayload = "{\"participant\":{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false},\"operationContext\":\"someOperationContext\"}";
 
         private const string GetParticipantPayload = "{" +
             "\"identifier\":{" +
