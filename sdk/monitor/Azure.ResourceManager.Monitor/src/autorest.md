@@ -251,6 +251,7 @@ rename-mapping:
   AzureMonitorWorkspaceDefaultIngestionSettings: MonitorWorkspaceDefaultIngestionSettings
   AzureMonitorWorkspaceMetrics: MonitorWorkspaceMetrics
   AzureMonitorWorkspaceResourcePatch: MonitorWorkspaceResourcePatch
+  AzureMonitorWorkspaceResourceListResult: MonitorWorkspaceResourceListResult
 
 
 directive:
