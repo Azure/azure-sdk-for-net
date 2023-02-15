@@ -1,14 +1,11 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.0.1 (2023-02-15)
 
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
 ## 1.0.0 (2022-09-26)
 
@@ -23,7 +20,7 @@ Polishing since last public beta release:
 - Corrected all acronyms that not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
 - Corrected the suffix of `DateTimeOffset` properties / parameters.
 - Optimized the name of some models and functions.
-- Repalaced the model `ResourceModelWithAllowedPropertySetIdentity` with `Azure.ResourceManager.Models.ManagedServiceIdentit`.
+- Replaced the model `ResourceModelWithAllowedPropertySetIdentity` with `Azure.ResourceManager.Models.ManagedServiceIdentit`.
 
 ### Other Changes
 
