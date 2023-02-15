@@ -18,12 +18,12 @@ namespace Azure.Communication.Email.Models
             SendStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("messageId"))
+                if (property.NameEquals("messageId"u8))
                 {
                     messageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = new SendStatus(property.Value.GetString());
                     continue;

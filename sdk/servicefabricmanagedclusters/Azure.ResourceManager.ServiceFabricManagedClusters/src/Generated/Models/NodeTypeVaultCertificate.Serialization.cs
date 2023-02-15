@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("certificateUrl");
+            writer.WritePropertyName("certificateUrl"u8);
             writer.WriteStringValue(CertificateUri.AbsoluteUri);
-            writer.WritePropertyName("certificateStore");
+            writer.WritePropertyName("certificateStore"u8);
             writer.WriteStringValue(CertificateStore);
             writer.WriteEndObject();
         }
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             string certificateStore = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("certificateUrl"))
+                if (property.NameEquals("certificateUrl"u8))
                 {
                     certificateUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("certificateStore"))
+                if (property.NameEquals("certificateStore"u8))
                 {
                     certificateStore = property.Value.GetString();
                     continue;

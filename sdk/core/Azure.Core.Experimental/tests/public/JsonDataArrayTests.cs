@@ -69,7 +69,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CannotConvertArrayPropertyToLeaf()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": [1, 2, 3] }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": [1, 2, 3] }""");
 
             // TODO: Standardize Exception types.
             Assert.Throws<InvalidOperationException>(() => { var model = (int)data.value; });
@@ -81,7 +81,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CannotConvertArrayPropertyToModel()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": [1, 2, 3] }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": [1, 2, 3] }""");
             Assert.Throws<JsonException>(() => { var model = (SampleModel)data.value; });
         }
 
@@ -99,7 +99,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CannotGetMemberOnArrayProperty()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": [1, 2, 3] }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": [1, 2, 3] }""");
             Assert.Throws<InvalidOperationException>(() => { var x = data.value.Property; });
         }
 
@@ -117,7 +117,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CannotSetMemberOnArrayProperty()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": [1, 2, 3] }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": [1, 2, 3] }""");
             Assert.Throws<InvalidOperationException>(() => { data.value.Property = "invalid"; });
         }
 
@@ -135,7 +135,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CannotGetIndexPropertyOnArrayProperty()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": [1, 2, 3] }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": [1, 2, 3] }""");
             Assert.Throws<InvalidOperationException>(() => { var x = data.value["Property"]; });
         }
 
@@ -152,7 +152,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanGetArrayPropertyIndex()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": [1, 2, 3] }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": [1, 2, 3] }""");
 
             Assert.AreEqual(1, (int)data.value[0]);
             Assert.AreEqual(2, (int)data.value[1]);
@@ -163,7 +163,7 @@ namespace Azure.Core.Tests.Public
         public void CanGetObjectMemberViaArrayIndex()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson(
-                @"{ ""value"": [ { ""tag"": ""tagValue"" }, 2, 3] }"
+                """{ "value": [ { "tag": "tagValue" }, 2, 3] }"""
             );
 
             Assert.AreEqual("tagValue", (string)data.value[0].tag);
@@ -183,7 +183,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CannotSetIndexPropertyOnArrayProperty()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": [1, 2, 3] }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": [1, 2, 3] }""");
             Assert.Throws<InvalidOperationException>(() => { data.value["Property"] = "invalid"; });
         }
 
@@ -207,7 +207,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanSetArrayPropertyIndex()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": [1, 2, 3] }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": [1, 2, 3] }""");
 
             data.value[0] = 5;
             data.value[1] = "valid";
@@ -225,7 +225,7 @@ namespace Azure.Core.Tests.Public
         public void CanSetObjectMemberViaArrayIndex()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson(
-                @"{ ""value"": [ { ""tag"": ""tagValue"" }, 2, 3] }"
+                """{ "value": [ { "tag": "tagValue" }, 2, 3] }"""
             );
 
             data.value[0].tag = "newValue";
@@ -247,7 +247,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanGetArrayPropertyLength()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": [1, 2, 3] }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": [1, 2, 3] }""");
             Assert.AreEqual(3, ((int[])data.value).Length);
         }
 
@@ -266,7 +266,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanEnumerateArrayProperty()
         {
-            dynamic data = JsonDataTestHelpers.CreateFromJson(@"{ ""value"": [1, 2, 3] }");
+            dynamic data = JsonDataTestHelpers.CreateFromJson("""{ "value": [1, 2, 3] }""");
 
             int i = 1;
             foreach (int item in data.value)

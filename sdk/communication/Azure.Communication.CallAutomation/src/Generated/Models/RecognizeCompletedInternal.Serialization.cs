@@ -24,27 +24,27 @@ namespace Azure.Communication.CallAutomation
             Optional<ChoiceResult> choiceResult = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("callConnectionId"))
+                if (property.NameEquals("callConnectionId"u8))
                 {
                     callConnectionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverCallId"))
+                if (property.NameEquals("serverCallId"u8))
                 {
                     serverCallId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("correlationId"))
+                if (property.NameEquals("correlationId"u8))
                 {
                     correlationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operationContext"))
+                if (property.NameEquals("operationContext"u8))
                 {
                     operationContext = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultInformation"))
+                if (property.NameEquals("resultInformation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +54,7 @@ namespace Azure.Communication.CallAutomation
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("recognitionType"))
+                if (property.NameEquals("recognitionType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +64,7 @@ namespace Azure.Communication.CallAutomation
                     recognitionType = new CallMediaRecognitionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("collectTonesResult"))
+                if (property.NameEquals("collectTonesResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +74,7 @@ namespace Azure.Communication.CallAutomation
                     collectTonesResult = CollectTonesResult.DeserializeCollectTonesResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("choiceResult"))
+                if (property.NameEquals("choiceResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

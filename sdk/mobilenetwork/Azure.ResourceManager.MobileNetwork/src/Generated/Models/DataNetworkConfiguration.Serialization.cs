@@ -17,37 +17,37 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("dataNetwork");
-            JsonSerializer.Serialize(writer, DataNetwork); writer.WritePropertyName("sessionAmbr");
+            writer.WritePropertyName("dataNetwork"u8);
+            JsonSerializer.Serialize(writer, DataNetwork); writer.WritePropertyName("sessionAmbr"u8);
             writer.WriteObjectValue(SessionAmbr);
             if (Optional.IsDefined(FiveQi))
             {
-                writer.WritePropertyName("5qi");
+                writer.WritePropertyName("5qi"u8);
                 writer.WriteNumberValue(FiveQi.Value);
             }
             if (Optional.IsDefined(AllocationAndRetentionPriorityLevel))
             {
-                writer.WritePropertyName("allocationAndRetentionPriorityLevel");
+                writer.WritePropertyName("allocationAndRetentionPriorityLevel"u8);
                 writer.WriteNumberValue(AllocationAndRetentionPriorityLevel.Value);
             }
             if (Optional.IsDefined(PreemptionCapability))
             {
-                writer.WritePropertyName("preemptionCapability");
+                writer.WritePropertyName("preemptionCapability"u8);
                 writer.WriteStringValue(PreemptionCapability.Value.ToString());
             }
             if (Optional.IsDefined(PreemptionVulnerability))
             {
-                writer.WritePropertyName("preemptionVulnerability");
+                writer.WritePropertyName("preemptionVulnerability"u8);
                 writer.WriteStringValue(PreemptionVulnerability.Value.ToString());
             }
             if (Optional.IsDefined(DefaultSessionType))
             {
-                writer.WritePropertyName("defaultSessionType");
+                writer.WritePropertyName("defaultSessionType"u8);
                 writer.WriteStringValue(DefaultSessionType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(AdditionalAllowedSessionTypes))
             {
-                writer.WritePropertyName("additionalAllowedSessionTypes");
+                writer.WritePropertyName("additionalAllowedSessionTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdditionalAllowedSessionTypes)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("allowedServices");
+            writer.WritePropertyName("allowedServices"u8);
             writer.WriteStartArray();
             foreach (var item in AllowedServices)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(MaximumNumberOfBufferedPackets))
             {
-                writer.WritePropertyName("maximumNumberOfBufferedPackets");
+                writer.WritePropertyName("maximumNumberOfBufferedPackets"u8);
                 writer.WriteNumberValue(MaximumNumberOfBufferedPackets.Value);
             }
             writer.WriteEndObject();
@@ -84,17 +84,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Optional<int> maximumNumberOfBufferedPackets = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataNetwork"))
+                if (property.NameEquals("dataNetwork"u8))
                 {
                     dataNetwork = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("sessionAmbr"))
+                if (property.NameEquals("sessionAmbr"u8))
                 {
                     sessionAmbr = Ambr.DeserializeAmbr(property.Value);
                     continue;
                 }
-                if (property.NameEquals("5qi"))
+                if (property.NameEquals("5qi"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     _5qi = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("allocationAndRetentionPriorityLevel"))
+                if (property.NameEquals("allocationAndRetentionPriorityLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     allocationAndRetentionPriorityLevel = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("preemptionCapability"))
+                if (property.NameEquals("preemptionCapability"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     preemptionCapability = new PreemptionCapability(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("preemptionVulnerability"))
+                if (property.NameEquals("preemptionVulnerability"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     preemptionVulnerability = new PreemptionVulnerability(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("defaultSessionType"))
+                if (property.NameEquals("defaultSessionType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     defaultSessionType = new PduSessionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("additionalAllowedSessionTypes"))
+                if (property.NameEquals("additionalAllowedSessionTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     additionalAllowedSessionTypes = array;
                     continue;
                 }
-                if (property.NameEquals("allowedServices"))
+                if (property.NameEquals("allowedServices"u8))
                 {
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     allowedServices = array;
                     continue;
                 }
-                if (property.NameEquals("maximumNumberOfBufferedPackets"))
+                if (property.NameEquals("maximumNumberOfBufferedPackets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

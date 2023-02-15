@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.Billing.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BillingFrequency))
             {
-                writer.WritePropertyName("billingFrequency");
+                writer.WritePropertyName("billingFrequency"u8);
                 writer.WriteStringValue(BillingFrequency);
             }
             if (Optional.IsDefined(Quantity))
             {
-                writer.WritePropertyName("quantity");
+                writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
             if (Optional.IsDefined(TargetProductTypeId))
             {
-                writer.WritePropertyName("targetProductTypeId");
+                writer.WritePropertyName("targetProductTypeId"u8);
                 writer.WriteStringValue(TargetProductTypeId);
             }
             if (Optional.IsDefined(TargetSkuId))
             {
-                writer.WritePropertyName("targetSkuId");
+                writer.WritePropertyName("targetSkuId"u8);
                 writer.WriteStringValue(TargetSkuId);
             }
             if (Optional.IsDefined(TermDuration))
             {
-                writer.WritePropertyName("termDuration");
+                writer.WritePropertyName("termDuration"u8);
                 writer.WriteStringValue(TermDuration.Value, "P");
             }
             writer.WriteEndObject();

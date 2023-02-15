@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
-                writer.WritePropertyName("query");
+                writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Limit))
             {
-                writer.WritePropertyName("limit");
+                writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
             if (Optional.IsDefined(StartSearchOn))
             {
-                writer.WritePropertyName("startSearchTime");
+                writer.WritePropertyName("startSearchTime"u8);
                 writer.WriteStringValue(StartSearchOn.Value, "O");
             }
             if (Optional.IsDefined(EndSearchOn))
             {
-                writer.WritePropertyName("endSearchTime");
+                writer.WritePropertyName("endSearchTime"u8);
                 writer.WriteStringValue(EndSearchOn.Value, "O");
             }
             writer.WriteEndObject();
@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<Guid> azureAsyncOperationId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("query"))
+                if (property.NameEquals("query"u8))
                 {
                     query = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     limit = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("startSearchTime"))
+                if (property.NameEquals("startSearchTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     startSearchTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endSearchTime"))
+                if (property.NameEquals("endSearchTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     endSearchTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("sourceTable"))
+                if (property.NameEquals("sourceTable"u8))
                 {
                     sourceTable = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("azureAsyncOperationId"))
+                if (property.NameEquals("azureAsyncOperationId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

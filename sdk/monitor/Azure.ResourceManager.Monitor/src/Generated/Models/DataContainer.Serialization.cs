@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
             DataContainerWorkspace workspace = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("workspace"))
+                if (property.NameEquals("workspace"u8))
                 {
                     workspace = DataContainerWorkspace.DeserializeDataContainerWorkspace(property.Value);
                     continue;

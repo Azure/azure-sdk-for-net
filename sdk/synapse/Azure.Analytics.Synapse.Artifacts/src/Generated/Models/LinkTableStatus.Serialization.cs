@@ -28,22 +28,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<DateTimeOffset> lastTransactionCommitTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorMessage"))
+                if (property.NameEquals("errorMessage"u8))
                 {
                     errorMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     startTime = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("stopTime"))
+                if (property.NameEquals("stopTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,17 +63,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     stopTime = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("linkTableId"))
+                if (property.NameEquals("linkTableId"u8))
                 {
                     linkTableId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorCode"))
+                if (property.NameEquals("errorCode"u8))
                 {
                     errorCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastProcessedData"))
+                if (property.NameEquals("lastProcessedData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,7 +83,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     lastProcessedData = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastTransactionCommitTime"))
+                if (property.NameEquals("lastTransactionCommitTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

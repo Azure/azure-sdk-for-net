@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("scopes");
+            writer.WritePropertyName("scopes"u8);
             writer.WriteStartArray();
             foreach (var item in Scopes)
             {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Conditions))
             {
-                writer.WritePropertyName("conditions");
+                writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
             if (Optional.IsDefined(Schedule))
             {
-                writer.WritePropertyName("schedule");
+                writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule);
             }
-            writer.WritePropertyName("actions");
+            writer.WritePropertyName("actions"u8);
             writer.WriteStartArray();
             foreach (var item in Actions)
             {
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteEndArray();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WriteEndObject();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scopes"))
+                if (property.NameEquals("scopes"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     scopes = array;
                     continue;
                 }
-                if (property.NameEquals("conditions"))
+                if (property.NameEquals("conditions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     conditions = array;
                     continue;
                 }
-                if (property.NameEquals("schedule"))
+                if (property.NameEquals("schedule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     schedule = AlertProcessingRuleSchedule.DeserializeAlertProcessingRuleSchedule(property.Value);
                     continue;
                 }
-                if (property.NameEquals("actions"))
+                if (property.NameEquals("actions"u8))
                 {
                     List<AlertProcessingRuleAction> array = new List<AlertProcessingRuleAction>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -113,12 +113,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     actions = array;
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsCollectionDefined(DaysOfWeek))
             {
-                writer.WritePropertyName("daysOfWeek");
+                writer.WritePropertyName("daysOfWeek"u8);
                 writer.WriteStartArray();
                 foreach (var item in DaysOfWeek)
                 {
@@ -34,82 +34,82 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             if (Optional.IsDefined(RampUpStartOn))
             {
-                writer.WritePropertyName("rampUpStartTime");
+                writer.WritePropertyName("rampUpStartTime"u8);
                 writer.WriteStringValue(RampUpStartOn.Value, "O");
             }
             if (Optional.IsDefined(RampUpLoadBalancingAlgorithm))
             {
-                writer.WritePropertyName("rampUpLoadBalancingAlgorithm");
+                writer.WritePropertyName("rampUpLoadBalancingAlgorithm"u8);
                 writer.WriteStringValue(RampUpLoadBalancingAlgorithm.Value.ToString());
             }
             if (Optional.IsDefined(RampUpMinimumHostsPct))
             {
-                writer.WritePropertyName("rampUpMinimumHostsPct");
+                writer.WritePropertyName("rampUpMinimumHostsPct"u8);
                 writer.WriteNumberValue(RampUpMinimumHostsPct.Value);
             }
             if (Optional.IsDefined(RampUpCapacityThresholdPct))
             {
-                writer.WritePropertyName("rampUpCapacityThresholdPct");
+                writer.WritePropertyName("rampUpCapacityThresholdPct"u8);
                 writer.WriteNumberValue(RampUpCapacityThresholdPct.Value);
             }
             if (Optional.IsDefined(PeakStartOn))
             {
-                writer.WritePropertyName("peakStartTime");
+                writer.WritePropertyName("peakStartTime"u8);
                 writer.WriteStringValue(PeakStartOn.Value, "O");
             }
             if (Optional.IsDefined(PeakLoadBalancingAlgorithm))
             {
-                writer.WritePropertyName("peakLoadBalancingAlgorithm");
+                writer.WritePropertyName("peakLoadBalancingAlgorithm"u8);
                 writer.WriteStringValue(PeakLoadBalancingAlgorithm.Value.ToString());
             }
             if (Optional.IsDefined(RampDownStartOn))
             {
-                writer.WritePropertyName("rampDownStartTime");
+                writer.WritePropertyName("rampDownStartTime"u8);
                 writer.WriteStringValue(RampDownStartOn.Value, "O");
             }
             if (Optional.IsDefined(RampDownLoadBalancingAlgorithm))
             {
-                writer.WritePropertyName("rampDownLoadBalancingAlgorithm");
+                writer.WritePropertyName("rampDownLoadBalancingAlgorithm"u8);
                 writer.WriteStringValue(RampDownLoadBalancingAlgorithm.Value.ToString());
             }
             if (Optional.IsDefined(RampDownMinimumHostsPct))
             {
-                writer.WritePropertyName("rampDownMinimumHostsPct");
+                writer.WritePropertyName("rampDownMinimumHostsPct"u8);
                 writer.WriteNumberValue(RampDownMinimumHostsPct.Value);
             }
             if (Optional.IsDefined(RampDownCapacityThresholdPct))
             {
-                writer.WritePropertyName("rampDownCapacityThresholdPct");
+                writer.WritePropertyName("rampDownCapacityThresholdPct"u8);
                 writer.WriteNumberValue(RampDownCapacityThresholdPct.Value);
             }
             if (Optional.IsDefined(RampDownForceLogoffUsers))
             {
-                writer.WritePropertyName("rampDownForceLogoffUsers");
+                writer.WritePropertyName("rampDownForceLogoffUsers"u8);
                 writer.WriteBooleanValue(RampDownForceLogoffUsers.Value);
             }
             if (Optional.IsDefined(RampDownStopHostsWhen))
             {
-                writer.WritePropertyName("rampDownStopHostsWhen");
+                writer.WritePropertyName("rampDownStopHostsWhen"u8);
                 writer.WriteStringValue(RampDownStopHostsWhen.Value.ToString());
             }
             if (Optional.IsDefined(RampDownWaitTimeMinutes))
             {
-                writer.WritePropertyName("rampDownWaitTimeMinutes");
+                writer.WritePropertyName("rampDownWaitTimeMinutes"u8);
                 writer.WriteNumberValue(RampDownWaitTimeMinutes.Value);
             }
             if (Optional.IsDefined(RampDownNotificationMessage))
             {
-                writer.WritePropertyName("rampDownNotificationMessage");
+                writer.WritePropertyName("rampDownNotificationMessage"u8);
                 writer.WriteStringValue(RampDownNotificationMessage);
             }
             if (Optional.IsDefined(OffPeakStartOn))
             {
-                writer.WritePropertyName("offPeakStartTime");
+                writer.WritePropertyName("offPeakStartTime"u8);
                 writer.WriteStringValue(OffPeakStartOn.Value, "O");
             }
             if (Optional.IsDefined(OffPeakLoadBalancingAlgorithm))
             {
-                writer.WritePropertyName("offPeakLoadBalancingAlgorithm");
+                writer.WritePropertyName("offPeakLoadBalancingAlgorithm"u8);
                 writer.WriteStringValue(OffPeakLoadBalancingAlgorithm.Value.ToString());
             }
             writer.WriteEndObject();
@@ -137,12 +137,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Optional<SessionHostLoadBalancingAlgorithm> offPeakLoadBalancingAlgorithm = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("daysOfWeek"))
+                if (property.NameEquals("daysOfWeek"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     daysOfWeek = array;
                     continue;
                 }
-                if (property.NameEquals("rampUpStartTime"))
+                if (property.NameEquals("rampUpStartTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     rampUpStartTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("rampUpLoadBalancingAlgorithm"))
+                if (property.NameEquals("rampUpLoadBalancingAlgorithm"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     rampUpLoadBalancingAlgorithm = new SessionHostLoadBalancingAlgorithm(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rampUpMinimumHostsPct"))
+                if (property.NameEquals("rampUpMinimumHostsPct"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     rampUpMinimumHostsPct = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rampUpCapacityThresholdPct"))
+                if (property.NameEquals("rampUpCapacityThresholdPct"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     rampUpCapacityThresholdPct = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("peakStartTime"))
+                if (property.NameEquals("peakStartTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     peakStartTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("peakLoadBalancingAlgorithm"))
+                if (property.NameEquals("peakLoadBalancingAlgorithm"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     peakLoadBalancingAlgorithm = new SessionHostLoadBalancingAlgorithm(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rampDownStartTime"))
+                if (property.NameEquals("rampDownStartTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     rampDownStartTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("rampDownLoadBalancingAlgorithm"))
+                if (property.NameEquals("rampDownLoadBalancingAlgorithm"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     rampDownLoadBalancingAlgorithm = new SessionHostLoadBalancingAlgorithm(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rampDownMinimumHostsPct"))
+                if (property.NameEquals("rampDownMinimumHostsPct"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     rampDownMinimumHostsPct = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rampDownCapacityThresholdPct"))
+                if (property.NameEquals("rampDownCapacityThresholdPct"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     rampDownCapacityThresholdPct = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rampDownForceLogoffUsers"))
+                if (property.NameEquals("rampDownForceLogoffUsers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     rampDownForceLogoffUsers = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("rampDownStopHostsWhen"))
+                if (property.NameEquals("rampDownStopHostsWhen"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     rampDownStopHostsWhen = new DesktopVirtualizationStopHostsWhen(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rampDownWaitTimeMinutes"))
+                if (property.NameEquals("rampDownWaitTimeMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -287,12 +287,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     rampDownWaitTimeMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rampDownNotificationMessage"))
+                if (property.NameEquals("rampDownNotificationMessage"u8))
                 {
                     rampDownNotificationMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offPeakStartTime"))
+                if (property.NameEquals("offPeakStartTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     offPeakStartTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("offPeakLoadBalancingAlgorithm"))
+                if (property.NameEquals("offPeakLoadBalancingAlgorithm"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

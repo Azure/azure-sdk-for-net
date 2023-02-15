@@ -18,7 +18,7 @@ namespace Azure.Communication.JobRouter.Models
             Optional<string> etag = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobQueue"))
+                if (property.NameEquals("jobQueue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.Communication.JobRouter.Models
                     jobQueue = JobQueue.DeserializeJobQueue(property.Value);
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     etag = property.Value.GetString();
                     continue;

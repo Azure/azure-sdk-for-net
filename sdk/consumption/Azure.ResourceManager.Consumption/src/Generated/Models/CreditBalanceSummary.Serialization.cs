@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<ConsumptionAmountWithExchangeRate> estimatedBalanceInBillingCurrency = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("estimatedBalance"))
+                if (property.NameEquals("estimatedBalance"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     estimatedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property.Value);
                     continue;
                 }
-                if (property.NameEquals("currentBalance"))
+                if (property.NameEquals("currentBalance"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     currentBalance = ConsumptionAmount.DeserializeConsumptionAmount(property.Value);
                     continue;
                 }
-                if (property.NameEquals("estimatedBalanceInBillingCurrency"))
+                if (property.NameEquals("estimatedBalanceInBillingCurrency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

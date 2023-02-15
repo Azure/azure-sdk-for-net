@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MessageCount))
             {
-                writer.WritePropertyName("messageCount");
+                writer.WritePropertyName("messageCount"u8);
                 writer.WriteNumberValue(MessageCount.Value);
             }
             if (Optional.IsDefined(BatchSize))
             {
-                writer.WritePropertyName("batchSize");
+                writer.WritePropertyName("batchSize"u8);
                 writer.WriteNumberValue(BatchSize.Value);
             }
             if (Optional.IsDefined(Recurrence))
             {
-                writer.WritePropertyName("recurrence");
+                writer.WritePropertyName("recurrence"u8);
                 writer.WriteObjectValue(Recurrence);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<LogicWorkflowTriggerRecurrence> recurrence = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("messageCount"))
+                if (property.NameEquals("messageCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Logic.Models
                     messageCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("batchSize"))
+                if (property.NameEquals("batchSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Logic.Models
                     batchSize = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("recurrence"))
+                if (property.NameEquals("recurrence"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

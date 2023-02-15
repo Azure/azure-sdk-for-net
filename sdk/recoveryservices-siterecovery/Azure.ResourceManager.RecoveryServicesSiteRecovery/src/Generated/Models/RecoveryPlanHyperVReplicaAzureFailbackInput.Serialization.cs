@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("dataSyncOption");
+            writer.WritePropertyName("dataSyncOption"u8);
             writer.WriteStringValue(DataSyncOption.ToString());
-            writer.WritePropertyName("recoveryVmCreationOption");
+            writer.WritePropertyName("recoveryVmCreationOption"u8);
             writer.WriteStringValue(RecoveryVmCreationOption.ToString());
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

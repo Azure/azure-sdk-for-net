@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;

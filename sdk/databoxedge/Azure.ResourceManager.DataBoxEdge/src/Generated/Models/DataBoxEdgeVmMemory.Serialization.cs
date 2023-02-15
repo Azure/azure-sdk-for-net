@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StartupMemoryInMB))
             {
-                writer.WritePropertyName("startupMemoryMB");
+                writer.WritePropertyName("startupMemoryMB"u8);
                 writer.WriteNumberValue(StartupMemoryInMB.Value);
             }
             if (Optional.IsDefined(CurrentMemoryUsageInMB))
             {
-                writer.WritePropertyName("currentMemoryUsageMB");
+                writer.WritePropertyName("currentMemoryUsageMB"u8);
                 writer.WriteNumberValue(CurrentMemoryUsageInMB.Value);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<long> currentMemoryUsageMB = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("startupMemoryMB"))
+                if (property.NameEquals("startupMemoryMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     startupMemoryMB = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("currentMemoryUsageMB"))
+                if (property.NameEquals("currentMemoryUsageMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

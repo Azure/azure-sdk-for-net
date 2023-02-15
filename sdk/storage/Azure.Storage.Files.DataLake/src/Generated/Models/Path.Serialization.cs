@@ -28,12 +28,12 @@ namespace Azure.Storage.Files.DataLake.Models
             Optional<string> etag = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastModified"))
+                if (property.NameEquals("lastModified"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,47 +43,47 @@ namespace Azure.Storage.Files.DataLake.Models
                     lastModified = property.Value.GetDateTimeOffset("R");
                     continue;
                 }
-                if (property.NameEquals("owner"))
+                if (property.NameEquals("owner"u8))
                 {
                     owner = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("group"))
+                if (property.NameEquals("group"u8))
                 {
                     group = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("permissions"))
+                if (property.NameEquals("permissions"u8))
                 {
                     permissions = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("EncryptionScope"))
+                if (property.NameEquals("EncryptionScope"u8))
                 {
                     encryptionScope = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("creationTime"))
+                if (property.NameEquals("creationTime"u8))
                 {
                     creationTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expiryTime"))
+                if (property.NameEquals("expiryTime"u8))
                 {
                     expiryTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("contentLength"))
+                if (property.NameEquals("contentLength"u8))
                 {
                     contentLength = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isDirectory"))
+                if (property.NameEquals("isDirectory"u8))
                 {
                     isDirectory = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     etag = property.Value.GetString();
                     continue;

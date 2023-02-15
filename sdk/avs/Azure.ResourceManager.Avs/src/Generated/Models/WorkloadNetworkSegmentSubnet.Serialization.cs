@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DhcpRanges))
             {
-                writer.WritePropertyName("dhcpRanges");
+                writer.WritePropertyName("dhcpRanges"u8);
                 writer.WriteStartArray();
                 foreach (var item in DhcpRanges)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
             if (Optional.IsDefined(GatewayAddress))
             {
-                writer.WritePropertyName("gatewayAddress");
+                writer.WritePropertyName("gatewayAddress"u8);
                 writer.WriteStringValue(GatewayAddress);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<string> gatewayAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dhcpRanges"))
+                if (property.NameEquals("dhcpRanges"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Avs.Models
                     dhcpRanges = array;
                     continue;
                 }
-                if (property.NameEquals("gatewayAddress"))
+                if (property.NameEquals("gatewayAddress"u8))
                 {
                     gatewayAddress = property.Value.GetString();
                     continue;

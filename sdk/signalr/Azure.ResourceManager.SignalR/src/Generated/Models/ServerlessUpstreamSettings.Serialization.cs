@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SignalR.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Templates))
             {
-                writer.WritePropertyName("templates");
+                writer.WritePropertyName("templates"u8);
                 writer.WriteStartArray();
                 foreach (var item in Templates)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SignalR.Models
             Optional<IList<SignalRUpstreamTemplate>> templates = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("templates"))
+                if (property.NameEquals("templates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

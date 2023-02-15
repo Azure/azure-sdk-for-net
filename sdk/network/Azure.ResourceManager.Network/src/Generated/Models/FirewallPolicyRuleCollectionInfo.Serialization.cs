@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("ruleCollectionType");
+            writer.WritePropertyName("ruleCollectionType"u8);
             writer.WriteStringValue(RuleCollectionType.ToString());
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Priority))
             {
-                writer.WritePropertyName("priority");
+                writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
             writer.WriteEndObject();

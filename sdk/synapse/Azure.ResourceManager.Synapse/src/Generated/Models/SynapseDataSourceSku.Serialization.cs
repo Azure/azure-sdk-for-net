@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Synapse.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
             if (Optional.IsDefined(Capacity))
             {
-                writer.WritePropertyName("capacity");
+                writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            writer.WritePropertyName("size");
+            writer.WritePropertyName("size"u8);
             writer.WriteStringValue(Size.ToString());
             writer.WriteEndObject();
         }
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Synapse.Models
             KustoPoolSkuSize size = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = new SynapseSkuName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("capacity"))
+                if (property.NameEquals("capacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     capacity = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("size"))
+                if (property.NameEquals("size"u8))
                 {
                     size = new KustoPoolSkuSize(property.Value.GetString());
                     continue;

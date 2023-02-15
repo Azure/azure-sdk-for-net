@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("messageId");
+            writer.WritePropertyName("messageId"u8);
             writer.WriteStringValue(MessageId);
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Logic.Models
             string messageId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("messageId"))
+                if (property.NameEquals("messageId"u8))
                 {
                     messageId = property.Value.GetString();
                     continue;

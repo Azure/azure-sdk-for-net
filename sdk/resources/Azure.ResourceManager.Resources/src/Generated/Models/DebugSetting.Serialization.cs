@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DetailLevel))
             {
-                writer.WritePropertyName("detailLevel");
+                writer.WritePropertyName("detailLevel"u8);
                 writer.WriteStringValue(DetailLevel);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> detailLevel = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("detailLevel"))
+                if (property.NameEquals("detailLevel"u8))
                 {
                     detailLevel = property.Value.GetString();
                     continue;

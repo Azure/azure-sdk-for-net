@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             Optional<ETag> etag = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

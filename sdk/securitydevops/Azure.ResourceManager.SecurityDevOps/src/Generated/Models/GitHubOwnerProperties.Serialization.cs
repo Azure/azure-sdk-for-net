@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(OwnerUri))
             {
-                writer.WritePropertyName("ownerUrl");
+                writer.WritePropertyName("ownerUrl"u8);
                 writer.WriteStringValue(OwnerUri.AbsoluteUri);
             }
             writer.WriteEndObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             Optional<Uri> ownerUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ownerUrl"))
+                if (property.NameEquals("ownerUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

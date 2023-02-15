@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<NodeArcState> state = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("arcInstance"))
+                if (property.NameEquals("arcInstance"u8))
                 {
                     arcInstance = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

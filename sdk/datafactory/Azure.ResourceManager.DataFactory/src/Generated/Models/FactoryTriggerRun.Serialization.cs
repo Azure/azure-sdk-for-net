@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("triggerRunId"))
+                if (property.NameEquals("triggerRunId"u8))
                 {
                     triggerRunId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("triggerName"))
+                if (property.NameEquals("triggerName"u8))
                 {
                     triggerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("triggerType"))
+                if (property.NameEquals("triggerType"u8))
                 {
                     triggerType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("triggerRunTimestamp"))
+                if (property.NameEquals("triggerRunTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     triggerRunTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     status = new FactoryTriggerRunStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("triggeredPipelines"))
+                if (property.NameEquals("triggeredPipelines"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     triggeredPipelines = dictionary;
                     continue;
                 }
-                if (property.NameEquals("runDimension"))
+                if (property.NameEquals("runDimension"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     runDimension = dictionary;
                     continue;
                 }
-                if (property.NameEquals("dependencyStatus"))
+                if (property.NameEquals("dependencyStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

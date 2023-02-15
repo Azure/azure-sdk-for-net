@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Automation.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Automation.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("definition"))
+                        if (property0.NameEquals("definition"u8))
                         {
                             definition = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("parameterSets"))
+                        if (property0.NameEquals("parameterSets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Automation.Models
                             parameterSets = array;
                             continue;
                         }
-                        if (property0.NameEquals("outputTypes"))
+                        if (property0.NameEquals("outputTypes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Automation.Models
                             outputTypes = array;
                             continue;
                         }
-                        if (property0.NameEquals("creationTime"))
+                        if (property0.NameEquals("creationTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Automation.Models
                             creationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastModifiedTime"))
+                        if (property0.NameEquals("lastModifiedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Automation.Models
                             lastModifiedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;

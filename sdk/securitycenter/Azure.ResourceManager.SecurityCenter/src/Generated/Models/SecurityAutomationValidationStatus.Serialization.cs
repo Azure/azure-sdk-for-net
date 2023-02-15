@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isValid"))
+                if (property.NameEquals("isValid"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     isValid = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;

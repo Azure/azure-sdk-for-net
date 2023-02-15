@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryPointThresholdInMinutes))
             {
-                writer.WritePropertyName("recoveryPointThresholdInMinutes");
+                writer.WritePropertyName("recoveryPointThresholdInMinutes"u8);
                 writer.WriteNumberValue(RecoveryPointThresholdInMinutes.Value);
             }
             if (Optional.IsDefined(RecoveryPointHistory))
             {
-                writer.WritePropertyName("recoveryPointHistory");
+                writer.WritePropertyName("recoveryPointHistory"u8);
                 writer.WriteNumberValue(RecoveryPointHistory.Value);
             }
             if (Optional.IsDefined(CrashConsistentFrequencyInMinutes))
             {
-                writer.WritePropertyName("crashConsistentFrequencyInMinutes");
+                writer.WritePropertyName("crashConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(CrashConsistentFrequencyInMinutes.Value);
             }
             if (Optional.IsDefined(AppConsistentFrequencyInMinutes))
             {
-                writer.WritePropertyName("appConsistentFrequencyInMinutes");
+                writer.WritePropertyName("appConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(AppConsistentFrequencyInMinutes.Value);
             }
-            writer.WritePropertyName("multiVmSyncStatus");
+            writer.WritePropertyName("multiVmSyncStatus"u8);
             writer.WriteStringValue(MultiVmSyncStatus.ToString());
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

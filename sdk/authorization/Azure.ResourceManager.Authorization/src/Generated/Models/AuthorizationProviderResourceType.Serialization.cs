@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<IReadOnlyList<AuthorizationProviderOperationInfo>> operations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operations"))
+                if (property.NameEquals("operations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

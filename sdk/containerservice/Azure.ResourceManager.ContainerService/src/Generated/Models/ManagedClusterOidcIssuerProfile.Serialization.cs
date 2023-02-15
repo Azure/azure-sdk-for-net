@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WriteEndObject();
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("issuerURL"))
+                if (property.NameEquals("issuerURL"u8))
                 {
                     issuerURL = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

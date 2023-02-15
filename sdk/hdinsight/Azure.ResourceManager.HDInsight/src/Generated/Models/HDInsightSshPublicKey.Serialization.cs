@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CertificateData))
             {
-                writer.WritePropertyName("certificateData");
+                writer.WritePropertyName("certificateData"u8);
                 writer.WriteStringValue(CertificateData);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<string> certificateData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("certificateData"))
+                if (property.NameEquals("certificateData"u8))
                 {
                     certificateData = property.Value.GetString();
                     continue;

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Level))
             {
-                writer.WritePropertyName("level");
+                writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToSerialString());
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<WebAppLogLevel> level = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("level"))
+                if (property.NameEquals("level"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Streams))
             {
-                writer.WritePropertyName("streams");
+                writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
                 foreach (var item in Streams)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsCollectionDefined(Destinations))
             {
-                writer.WritePropertyName("destinations");
+                writer.WritePropertyName("destinations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Destinations)
                 {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsDefined(TransformKql))
             {
-                writer.WritePropertyName("transformKql");
+                writer.WritePropertyName("transformKql"u8);
                 writer.WriteStringValue(TransformKql);
             }
             if (Optional.IsDefined(OutputStream))
             {
-                writer.WritePropertyName("outputStream");
+                writer.WritePropertyName("outputStream"u8);
                 writer.WriteStringValue(OutputStream);
             }
             writer.WriteEndObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> outputStream = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("streams"))
+                if (property.NameEquals("streams"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     streams = array;
                     continue;
                 }
-                if (property.NameEquals("destinations"))
+                if (property.NameEquals("destinations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.Monitor.Models
                     destinations = array;
                     continue;
                 }
-                if (property.NameEquals("transformKql"))
+                if (property.NameEquals("transformKql"u8))
                 {
                     transformKql = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("outputStream"))
+                if (property.NameEquals("outputStream"u8))
                 {
                     outputStream = property.Value.GetString();
                     continue;

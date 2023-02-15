@@ -15,62 +15,62 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("controlStandardsId");
+            writer.WritePropertyName("controlStandardsId"u8);
             writer.WriteNumberValue(ControlStandardsId);
-            writer.WritePropertyName("useControlStandardsIdAsRepetitionCharacter");
+            writer.WritePropertyName("useControlStandardsIdAsRepetitionCharacter"u8);
             writer.WriteBooleanValue(UseControlStandardsIdAsRepetitionCharacter);
-            writer.WritePropertyName("senderApplicationId");
+            writer.WritePropertyName("senderApplicationId"u8);
             writer.WriteStringValue(SenderApplicationId);
-            writer.WritePropertyName("receiverApplicationId");
+            writer.WritePropertyName("receiverApplicationId"u8);
             writer.WriteStringValue(ReceiverApplicationId);
-            writer.WritePropertyName("controlVersionNumber");
+            writer.WritePropertyName("controlVersionNumber"u8);
             writer.WriteStringValue(ControlVersionNumber);
-            writer.WritePropertyName("interchangeControlNumberLowerBound");
+            writer.WritePropertyName("interchangeControlNumberLowerBound"u8);
             writer.WriteNumberValue(InterchangeControlNumberLowerBound);
-            writer.WritePropertyName("interchangeControlNumberUpperBound");
+            writer.WritePropertyName("interchangeControlNumberUpperBound"u8);
             writer.WriteNumberValue(InterchangeControlNumberUpperBound);
-            writer.WritePropertyName("rolloverInterchangeControlNumber");
+            writer.WritePropertyName("rolloverInterchangeControlNumber"u8);
             writer.WriteBooleanValue(RolloverInterchangeControlNumber);
-            writer.WritePropertyName("enableDefaultGroupHeaders");
+            writer.WritePropertyName("enableDefaultGroupHeaders"u8);
             writer.WriteBooleanValue(EnableDefaultGroupHeaders);
             if (Optional.IsDefined(FunctionalGroupId))
             {
-                writer.WritePropertyName("functionalGroupId");
+                writer.WritePropertyName("functionalGroupId"u8);
                 writer.WriteStringValue(FunctionalGroupId);
             }
-            writer.WritePropertyName("groupControlNumberLowerBound");
+            writer.WritePropertyName("groupControlNumberLowerBound"u8);
             writer.WriteNumberValue(GroupControlNumberLowerBound);
-            writer.WritePropertyName("groupControlNumberUpperBound");
+            writer.WritePropertyName("groupControlNumberUpperBound"u8);
             writer.WriteNumberValue(GroupControlNumberUpperBound);
-            writer.WritePropertyName("rolloverGroupControlNumber");
+            writer.WritePropertyName("rolloverGroupControlNumber"u8);
             writer.WriteBooleanValue(RolloverGroupControlNumber);
-            writer.WritePropertyName("groupHeaderAgencyCode");
+            writer.WritePropertyName("groupHeaderAgencyCode"u8);
             writer.WriteStringValue(GroupHeaderAgencyCode);
-            writer.WritePropertyName("groupHeaderVersion");
+            writer.WritePropertyName("groupHeaderVersion"u8);
             writer.WriteStringValue(GroupHeaderVersion);
-            writer.WritePropertyName("transactionSetControlNumberLowerBound");
+            writer.WritePropertyName("transactionSetControlNumberLowerBound"u8);
             writer.WriteNumberValue(TransactionSetControlNumberLowerBound);
-            writer.WritePropertyName("transactionSetControlNumberUpperBound");
+            writer.WritePropertyName("transactionSetControlNumberUpperBound"u8);
             writer.WriteNumberValue(TransactionSetControlNumberUpperBound);
-            writer.WritePropertyName("rolloverTransactionSetControlNumber");
+            writer.WritePropertyName("rolloverTransactionSetControlNumber"u8);
             writer.WriteBooleanValue(RolloverTransactionSetControlNumber);
             if (Optional.IsDefined(TransactionSetControlNumberPrefix))
             {
-                writer.WritePropertyName("transactionSetControlNumberPrefix");
+                writer.WritePropertyName("transactionSetControlNumberPrefix"u8);
                 writer.WriteStringValue(TransactionSetControlNumberPrefix);
             }
             if (Optional.IsDefined(TransactionSetControlNumberSuffix))
             {
-                writer.WritePropertyName("transactionSetControlNumberSuffix");
+                writer.WritePropertyName("transactionSetControlNumberSuffix"u8);
                 writer.WriteStringValue(TransactionSetControlNumberSuffix);
             }
-            writer.WritePropertyName("overwriteExistingTransactionSetControlNumber");
+            writer.WritePropertyName("overwriteExistingTransactionSetControlNumber"u8);
             writer.WriteBooleanValue(OverwriteExistingTransactionSetControlNumber);
-            writer.WritePropertyName("groupHeaderDateFormat");
+            writer.WritePropertyName("groupHeaderDateFormat"u8);
             writer.WriteStringValue(GroupHeaderDateFormat.ToString());
-            writer.WritePropertyName("groupHeaderTimeFormat");
+            writer.WritePropertyName("groupHeaderTimeFormat"u8);
             writer.WriteStringValue(GroupHeaderTimeFormat.ToString());
-            writer.WritePropertyName("usageIndicator");
+            writer.WritePropertyName("usageIndicator"u8);
             writer.WriteStringValue(UsageIndicator.ToString());
             writer.WriteEndObject();
         }
@@ -103,122 +103,122 @@ namespace Azure.ResourceManager.Logic.Models
             UsageIndicator usageIndicator = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("controlStandardsId"))
+                if (property.NameEquals("controlStandardsId"u8))
                 {
                     controlStandardsId = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("useControlStandardsIdAsRepetitionCharacter"))
+                if (property.NameEquals("useControlStandardsIdAsRepetitionCharacter"u8))
                 {
                     useControlStandardsIdAsRepetitionCharacter = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("senderApplicationId"))
+                if (property.NameEquals("senderApplicationId"u8))
                 {
                     senderApplicationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("receiverApplicationId"))
+                if (property.NameEquals("receiverApplicationId"u8))
                 {
                     receiverApplicationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("controlVersionNumber"))
+                if (property.NameEquals("controlVersionNumber"u8))
                 {
                     controlVersionNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("interchangeControlNumberLowerBound"))
+                if (property.NameEquals("interchangeControlNumberLowerBound"u8))
                 {
                     interchangeControlNumberLowerBound = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("interchangeControlNumberUpperBound"))
+                if (property.NameEquals("interchangeControlNumberUpperBound"u8))
                 {
                     interchangeControlNumberUpperBound = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rolloverInterchangeControlNumber"))
+                if (property.NameEquals("rolloverInterchangeControlNumber"u8))
                 {
                     rolloverInterchangeControlNumber = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableDefaultGroupHeaders"))
+                if (property.NameEquals("enableDefaultGroupHeaders"u8))
                 {
                     enableDefaultGroupHeaders = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("functionalGroupId"))
+                if (property.NameEquals("functionalGroupId"u8))
                 {
                     functionalGroupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("groupControlNumberLowerBound"))
+                if (property.NameEquals("groupControlNumberLowerBound"u8))
                 {
                     groupControlNumberLowerBound = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("groupControlNumberUpperBound"))
+                if (property.NameEquals("groupControlNumberUpperBound"u8))
                 {
                     groupControlNumberUpperBound = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rolloverGroupControlNumber"))
+                if (property.NameEquals("rolloverGroupControlNumber"u8))
                 {
                     rolloverGroupControlNumber = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("groupHeaderAgencyCode"))
+                if (property.NameEquals("groupHeaderAgencyCode"u8))
                 {
                     groupHeaderAgencyCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("groupHeaderVersion"))
+                if (property.NameEquals("groupHeaderVersion"u8))
                 {
                     groupHeaderVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("transactionSetControlNumberLowerBound"))
+                if (property.NameEquals("transactionSetControlNumberLowerBound"u8))
                 {
                     transactionSetControlNumberLowerBound = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("transactionSetControlNumberUpperBound"))
+                if (property.NameEquals("transactionSetControlNumberUpperBound"u8))
                 {
                     transactionSetControlNumberUpperBound = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rolloverTransactionSetControlNumber"))
+                if (property.NameEquals("rolloverTransactionSetControlNumber"u8))
                 {
                     rolloverTransactionSetControlNumber = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("transactionSetControlNumberPrefix"))
+                if (property.NameEquals("transactionSetControlNumberPrefix"u8))
                 {
                     transactionSetControlNumberPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("transactionSetControlNumberSuffix"))
+                if (property.NameEquals("transactionSetControlNumberSuffix"u8))
                 {
                     transactionSetControlNumberSuffix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("overwriteExistingTransactionSetControlNumber"))
+                if (property.NameEquals("overwriteExistingTransactionSetControlNumber"u8))
                 {
                     overwriteExistingTransactionSetControlNumber = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("groupHeaderDateFormat"))
+                if (property.NameEquals("groupHeaderDateFormat"u8))
                 {
                     groupHeaderDateFormat = new X12DateFormat(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("groupHeaderTimeFormat"))
+                if (property.NameEquals("groupHeaderTimeFormat"u8))
                 {
                     groupHeaderTimeFormat = new X12TimeFormat(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("usageIndicator"))
+                if (property.NameEquals("usageIndicator"u8))
                 {
                     usageIndicator = new UsageIndicator(property.Value.GetString());
                     continue;

@@ -19,12 +19,12 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Domain))
             {
-                writer.WritePropertyName("domain");
+                writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain.Value.ToString());
             }
             if (Optional.IsCollectionDefined(PiiCategories))
             {
-                writer.WritePropertyName("piiCategories");
+                writer.WritePropertyName("piiCategories"u8);
                 writer.WriteStartArray();
                 foreach (var item in PiiCategories)
                 {
@@ -34,17 +34,17 @@ namespace Azure.AI.TextAnalytics.Models
             }
             if (Optional.IsDefined(StringIndexType))
             {
-                writer.WritePropertyName("stringIndexType");
+                writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
             if (Optional.IsDefined(ModelVersion))
             {
-                writer.WritePropertyName("modelVersion");
+                writer.WritePropertyName("modelVersion"u8);
                 writer.WriteStringValue(ModelVersion);
             }
             if (Optional.IsDefined(LoggingOptOut))
             {
-                writer.WritePropertyName("loggingOptOut");
+                writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
             }
             writer.WriteEndObject();
@@ -59,7 +59,7 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<bool> loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("domain"))
+                if (property.NameEquals("domain"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +69,7 @@ namespace Azure.AI.TextAnalytics.Models
                     domain = new PiiDomain(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("piiCategories"))
+                if (property.NameEquals("piiCategories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +84,7 @@ namespace Azure.AI.TextAnalytics.Models
                     piiCategories = array;
                     continue;
                 }
-                if (property.NameEquals("stringIndexType"))
+                if (property.NameEquals("stringIndexType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,12 +94,12 @@ namespace Azure.AI.TextAnalytics.Models
                     stringIndexType = new StringIndexType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("modelVersion"))
+                if (property.NameEquals("modelVersion"u8))
                 {
                     modelVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("loggingOptOut"))
+                if (property.NameEquals("loggingOptOut"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

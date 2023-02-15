@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             Optional<IReadOnlyList<string>> fullyQualifiedDomainNames = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("direction"))
+                if (property.NameEquals("direction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     direction = new EventHubsNspAccessRuleDirection(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("addressPrefixes"))
+                if (property.NameEquals("addressPrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     addressPrefixes = array;
                     continue;
                 }
-                if (property.NameEquals("subscriptions"))
+                if (property.NameEquals("subscriptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     subscriptions = array;
                     continue;
                 }
-                if (property.NameEquals("networkSecurityPerimeters"))
+                if (property.NameEquals("networkSecurityPerimeters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     networkSecurityPerimeters = array;
                     continue;
                 }
-                if (property.NameEquals("fullyQualifiedDomainNames"))
+                if (property.NameEquals("fullyQualifiedDomainNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

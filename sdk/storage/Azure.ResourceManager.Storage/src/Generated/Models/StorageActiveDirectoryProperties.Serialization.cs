@@ -16,38 +16,38 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("domainName");
+            writer.WritePropertyName("domainName"u8);
             writer.WriteStringValue(DomainName);
             if (Optional.IsDefined(NetBiosDomainName))
             {
-                writer.WritePropertyName("netBiosDomainName");
+                writer.WritePropertyName("netBiosDomainName"u8);
                 writer.WriteStringValue(NetBiosDomainName);
             }
             if (Optional.IsDefined(ForestName))
             {
-                writer.WritePropertyName("forestName");
+                writer.WritePropertyName("forestName"u8);
                 writer.WriteStringValue(ForestName);
             }
-            writer.WritePropertyName("domainGuid");
+            writer.WritePropertyName("domainGuid"u8);
             writer.WriteStringValue(DomainGuid);
             if (Optional.IsDefined(DomainSid))
             {
-                writer.WritePropertyName("domainSid");
+                writer.WritePropertyName("domainSid"u8);
                 writer.WriteStringValue(DomainSid);
             }
             if (Optional.IsDefined(AzureStorageSid))
             {
-                writer.WritePropertyName("azureStorageSid");
+                writer.WritePropertyName("azureStorageSid"u8);
                 writer.WriteStringValue(AzureStorageSid);
             }
             if (Optional.IsDefined(SamAccountName))
             {
-                writer.WritePropertyName("samAccountName");
+                writer.WritePropertyName("samAccountName"u8);
                 writer.WriteStringValue(SamAccountName);
             }
             if (Optional.IsDefined(AccountType))
             {
-                writer.WritePropertyName("accountType");
+                writer.WritePropertyName("accountType"u8);
                 writer.WriteStringValue(AccountType.Value.ToString());
             }
             writer.WriteEndObject();
@@ -65,42 +65,42 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<ActiveDirectoryAccountType> accountType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("domainName"))
+                if (property.NameEquals("domainName"u8))
                 {
                     domainName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("netBiosDomainName"))
+                if (property.NameEquals("netBiosDomainName"u8))
                 {
                     netBiosDomainName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("forestName"))
+                if (property.NameEquals("forestName"u8))
                 {
                     forestName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("domainGuid"))
+                if (property.NameEquals("domainGuid"u8))
                 {
                     domainGuid = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("domainSid"))
+                if (property.NameEquals("domainSid"u8))
                 {
                     domainSid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("azureStorageSid"))
+                if (property.NameEquals("azureStorageSid"u8))
                 {
                     azureStorageSid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("samAccountName"))
+                if (property.NameEquals("samAccountName"u8))
                 {
                     samAccountName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accountType"))
+                if (property.NameEquals("accountType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

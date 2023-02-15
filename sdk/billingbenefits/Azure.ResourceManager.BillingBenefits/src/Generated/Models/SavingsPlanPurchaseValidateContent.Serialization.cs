@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Benefits))
             {
-                writer.WritePropertyName("benefits");
+                writer.WritePropertyName("benefits"u8);
                 writer.WriteStartArray();
                 foreach (var item in Benefits)
                 {

@@ -161,7 +161,7 @@ namespace Azure.Core.Amqp
         /// <seealso href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#section-message-format"/>
         /// </summary>
         /// <returns>A <see cref="BinaryData"/> instance representing the serialized message.</returns>
-        public virtual BinaryData ToBytes()
+        public BinaryData ToBytes()
         {
             var stream = AmqpAnnotatedMessageConverter.ToAmqpMessage(this).ToStream();
             return BinaryData.FromStream(stream);

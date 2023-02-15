@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("collections");
+            writer.WritePropertyName("collections"u8);
             writer.WriteStartObject();
             foreach (var item in Collections)
             {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteEndObject();
             if (Optional.IsDefined(TargetRUs))
             {
-                writer.WritePropertyName("targetRUs");
+                writer.WritePropertyName("targetRUs"u8);
                 writer.WriteNumberValue(TargetRUs.Value);
             }
             writer.WriteEndObject();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<int> targetRUs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("collections"))
+                if (property.NameEquals("collections"u8))
                 {
                     Dictionary<string, MongoDBCollectionSettings> dictionary = new Dictionary<string, MongoDBCollectionSettings>();
                     foreach (var property0 in property.Value.EnumerateObject())
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     collections = dictionary;
                     continue;
                 }
-                if (property.NameEquals("targetRUs"))
+                if (property.NameEquals("targetRUs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

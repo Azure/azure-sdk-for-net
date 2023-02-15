@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SourceType.Value.ToString());
             }
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     type = new GovernanceRuleOwnerSourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;

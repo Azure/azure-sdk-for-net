@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.FluidRelay.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IdentityType))
             {
-                writer.WritePropertyName("identityType");
+                writer.WritePropertyName("identityType"u8);
                 writer.WriteStringValue(IdentityType.Value.ToSerialString());
             }
             if (Optional.IsDefined(UserAssignedIdentityResourceId))
             {
-                writer.WritePropertyName("userAssignedIdentityResourceId");
+                writer.WritePropertyName("userAssignedIdentityResourceId"u8);
                 writer.WriteStringValue(UserAssignedIdentityResourceId);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             Optional<ResourceIdentifier> userAssignedIdentityResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identityType"))
+                if (property.NameEquals("identityType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                     identityType = property.Value.GetString().ToCmkIdentityType();
                     continue;
                 }
-                if (property.NameEquals("userAssignedIdentityResourceId"))
+                if (property.NameEquals("userAssignedIdentityResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

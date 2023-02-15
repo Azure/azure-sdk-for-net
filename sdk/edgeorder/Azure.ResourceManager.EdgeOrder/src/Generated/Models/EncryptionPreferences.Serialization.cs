@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DoubleEncryptionStatus))
             {
-                writer.WritePropertyName("doubleEncryptionStatus");
+                writer.WritePropertyName("doubleEncryptionStatus"u8);
                 writer.WriteStringValue(DoubleEncryptionStatus.Value.ToString());
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<DoubleEncryptionStatus> doubleEncryptionStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("doubleEncryptionStatus"))
+                if (property.NameEquals("doubleEncryptionStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TargetType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TargetType.Value.ToString());
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     type = new PipelineRunTargetType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;

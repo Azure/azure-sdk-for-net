@@ -56,19 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies Scheduled Event related configurations. </summary>
-        internal ScheduledEventsProfile ScheduledEventsProfile { get; set; }
-        /// <summary> Specifies Terminate Scheduled Event related configurations. </summary>
-        public TerminateNotificationProfile ScheduledEventsTerminateNotificationProfile
-        {
-            get => ScheduledEventsProfile is null ? default : ScheduledEventsProfile.TerminateNotificationProfile;
-            set
-            {
-                if (ScheduledEventsProfile is null)
-                    ScheduledEventsProfile = new ScheduledEventsProfile();
-                ScheduledEventsProfile.TerminateNotificationProfile = value;
-            }
-        }
-
+        public ComputeScheduledEventsProfile ScheduledEventsProfile { get; set; }
         /// <summary> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </summary>
         public string UserData { get; set; }
         /// <summary> Specifies the hardware profile related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-11-01. </summary>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("resourceContent");
+            writer.WritePropertyName("resourceContent"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ResourceContent);
 #else
@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 #endif
             if (Optional.IsDefined(ApiVersion))
             {
-                writer.WritePropertyName("apiVersion");
+                writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
             if (Optional.IsDefined(Scope))
             {
-                writer.WritePropertyName("scope");
+                writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
             writer.WriteEndObject();

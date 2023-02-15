@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningOperationTrigger> operationTrigger = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operationName"))
+                if (property.NameEquals("operationName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     operationName = new MachineLearningOperationName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("operationTime"))
+                if (property.NameEquals("operationTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     operationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("operationStatus"))
+                if (property.NameEquals("operationStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     operationStatus = new MachineLearningOperationStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("operationTrigger"))
+                if (property.NameEquals("operationTrigger"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

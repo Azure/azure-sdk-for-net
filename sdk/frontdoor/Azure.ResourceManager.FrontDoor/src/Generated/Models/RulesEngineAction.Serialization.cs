@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(RequestHeaderActions))
             {
-                writer.WritePropertyName("requestHeaderActions");
+                writer.WritePropertyName("requestHeaderActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in RequestHeaderActions)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             if (Optional.IsCollectionDefined(ResponseHeaderActions))
             {
-                writer.WritePropertyName("responseHeaderActions");
+                writer.WritePropertyName("responseHeaderActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResponseHeaderActions)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 if (RouteConfigurationOverride != null)
                 {
-                    writer.WritePropertyName("routeConfigurationOverride");
+                    writer.WritePropertyName("routeConfigurationOverride"u8);
                     writer.WriteObjectValue(RouteConfigurationOverride);
                 }
                 else
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<RouteConfiguration> routeConfigurationOverride = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("requestHeaderActions"))
+                if (property.NameEquals("requestHeaderActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     requestHeaderActions = array;
                     continue;
                 }
-                if (property.NameEquals("responseHeaderActions"))
+                if (property.NameEquals("responseHeaderActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     responseHeaderActions = array;
                     continue;
                 }
-                if (property.NameEquals("routeConfigurationOverride"))
+                if (property.NameEquals("routeConfigurationOverride"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

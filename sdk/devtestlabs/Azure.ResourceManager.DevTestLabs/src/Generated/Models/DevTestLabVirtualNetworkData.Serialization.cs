@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DevTestLabs
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllowedSubnets))
             {
-                writer.WritePropertyName("allowedSubnets");
+                writer.WritePropertyName("allowedSubnets"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedSubnets)
                 {
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.DevTestLabs
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(ExternalProviderResourceId))
             {
-                writer.WritePropertyName("externalProviderResourceId");
+                writer.WritePropertyName("externalProviderResourceId"u8);
                 writer.WriteStringValue(ExternalProviderResourceId);
             }
             if (Optional.IsCollectionDefined(SubnetOverrides))
             {
-                writer.WritePropertyName("subnetOverrides");
+                writer.WritePropertyName("subnetOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in SubnetOverrides)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,27 +101,27 @@ namespace Azure.ResourceManager.DevTestLabs
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("allowedSubnets"))
+                        if (property0.NameEquals("allowedSubnets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -155,17 +155,17 @@ namespace Azure.ResourceManager.DevTestLabs
                             allowedSubnets = array;
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("externalProviderResourceId"))
+                        if (property0.NameEquals("externalProviderResourceId"u8))
                         {
                             externalProviderResourceId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("externalSubnets"))
+                        if (property0.NameEquals("externalSubnets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             externalSubnets = array;
                             continue;
                         }
-                        if (property0.NameEquals("subnetOverrides"))
+                        if (property0.NameEquals("subnetOverrides"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             subnetOverrides = array;
                             continue;
                         }
-                        if (property0.NameEquals("createdDate"))
+                        if (property0.NameEquals("createdDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -205,12 +205,12 @@ namespace Azure.ResourceManager.DevTestLabs
                             createdDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("uniqueIdentifier"))
+                        if (property0.NameEquals("uniqueIdentifier"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

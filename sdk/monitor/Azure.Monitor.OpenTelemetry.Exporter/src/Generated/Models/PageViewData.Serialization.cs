@@ -15,28 +15,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("id");
+            writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Url))
             {
-                writer.WritePropertyName("url");
+                writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url);
             }
             if (Optional.IsDefined(Duration))
             {
-                writer.WritePropertyName("duration");
+                writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration);
             }
             if (Optional.IsDefined(ReferredUri))
             {
-                writer.WritePropertyName("referredUri");
+                writer.WritePropertyName("referredUri"u8);
                 writer.WriteStringValue(ReferredUri);
             }
             if (Optional.IsCollectionDefined(Properties))
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
                 foreach (var item in Properties)
                 {
@@ -47,7 +47,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
             if (Optional.IsCollectionDefined(Measurements))
             {
-                writer.WritePropertyName("measurements");
+                writer.WritePropertyName("measurements"u8);
                 writer.WriteStartObject();
                 foreach (var item in Measurements)
                 {
@@ -56,7 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("ver");
+            writer.WritePropertyName("ver"u8);
             writer.WriteNumberValue(Version);
             foreach (var item in AdditionalProperties)
             {

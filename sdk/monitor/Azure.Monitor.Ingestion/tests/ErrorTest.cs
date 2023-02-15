@@ -127,10 +127,10 @@ namespace Azure.Monitor.Ingestion.Tests
                 });
 
             // Make the request
-            UploadLogsOptions options = new UploadLogsOptions();
+            LogsUploadOptions options = new LogsUploadOptions();
             var cts = new CancellationTokenSource();
             bool isTriggered = false;
-            options.UploadFailedEventHandler += Options_UploadFailed;
+            options.UploadFailed += Options_UploadFailed;
             //await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options, cts.Token).ConfigureAwait(false);
             await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options).ConfigureAwait(false);
             Assert.IsTrue(isTriggered);
@@ -168,9 +168,9 @@ namespace Azure.Monitor.Ingestion.Tests
                 });
 
             // Make the request
-            UploadLogsOptions options = new UploadLogsOptions();
+            LogsUploadOptions options = new LogsUploadOptions();
             bool isTriggered = false;
-            options.UploadFailedEventHandler += Options_UploadFailed;
+            options.UploadFailed += Options_UploadFailed;
             await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options).ConfigureAwait(false);
             Assert.IsTrue(isTriggered);
             Task Options_UploadFailed(UploadFailedEventArgs e)

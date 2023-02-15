@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceControlType))
             {
-                writer.WritePropertyName("sourceControlType");
+                writer.WritePropertyName("sourceControlType"u8);
                 writer.WriteStringValue(SourceControlType.Value.ToString());
             }
             if (Optional.IsDefined(RepositoryUri))
             {
-                writer.WritePropertyName("repositoryUrl");
+                writer.WritePropertyName("repositoryUrl"u8);
                 writer.WriteStringValue(RepositoryUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Branch))
             {
-                writer.WritePropertyName("branch");
+                writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
             if (Optional.IsDefined(SourceControlAuthProperties))
             {
-                writer.WritePropertyName("sourceControlAuthProperties");
+                writer.WritePropertyName("sourceControlAuthProperties"u8);
                 writer.WriteObjectValue(SourceControlAuthProperties);
             }
             writer.WriteEndObject();
