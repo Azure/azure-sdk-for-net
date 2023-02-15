@@ -425,7 +425,7 @@ namespace Azure.Communication.CallAutomation
                     ? null
                     : new PhoneNumberIdentifierModel(options.ParticipantToAdd.SourceCallerIdNumber.PhoneNumber),
                 SourceDisplayName = options.ParticipantToAdd.SourceDisplayName,
-                SourceIdentity = CommunicationIdentifierSerializer.Serialize(Source),
+                SourceIdentity = Source == null ? null : CommunicationIdentifierSerializer.Serialize(Source),
                 OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext
             };
 

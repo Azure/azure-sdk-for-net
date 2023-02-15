@@ -187,12 +187,13 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
 
             var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
             EventProcessor handler = callConnection.EventProcessor;
+            var callInvite = CreateMockInvite();
 
-            var response = callConnection.AddParticipant(new AddParticipantOptions(CreateMockInvite()));
+            var response = callConnection.AddParticipant(new AddParticipantOptions(callInvite));
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, CallAutomationModelFactory.AddParticipantSucceeded(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null));
+            SendAndProcessEvent(handler, CallAutomationModelFactory.AddParticipantSucceeded(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
 
             AddParticipantsEventResult returnedResult = await response.Value.WaitForEvent();
 
@@ -214,11 +215,12 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var callConnection = CreateMockCallConnection(successCode, TransferCallOrRemoveParticipantsPayload);
             EventProcessor handler = callConnection.EventProcessor;
 
-            var response = callConnection.AddParticipant(new AddParticipantOptions(CreateMockInvite()));
+            var callInvite = CreateMockInvite();
+            var response = callConnection.AddParticipant(new AddParticipantOptions(callInvite));
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, CallAutomationModelFactory.AddParticipantFailed(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null));
+            SendAndProcessEvent(handler, CallAutomationModelFactory.AddParticipantFailed(CallConnectionId, ServerCallId, CorelationId, response.Value.OperationContext, null, callInvite.Target));
 
             AddParticipantsEventResult returnedResult = await response.Value.WaitForEvent();
 
