@@ -15,7 +15,7 @@ namespace Azure.Identity
     ///  credential will fail to get a token throwing an <see cref="AuthenticationFailedException"/>. Also, this credential requires a high degree of
     ///  trust and is not recommended outside of prototyping when more secure credentials can be used.
     /// </summary>
-    public class UsernamePasswordCredential : TokenCredential, ISupportsClearAccountCache
+    public class UsernamePasswordCredential : TokenCredential, ISupportsLogout
     {
         private const string NoDefaultScopeMessage = "Authenticating in this environment requires specifying a TokenRequestContext.";
         private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/usernamepasswordcredential/troubleshoot";
@@ -185,7 +185,7 @@ namespace Azure.Identity
 #pragma warning disable CA2119 // Seal methods that satisfy private interfaces
         /// <inheritdoc/>
         [ForwardsClientCalls(true)]
-        public virtual async Task ClearAccountCacheAsync(CancellationToken cancellationToken = default)
+        public virtual async Task LogoutAsync(CancellationToken cancellationToken = default)
         {
             if (_record == null)
             {
@@ -197,7 +197,7 @@ namespace Azure.Identity
 
         /// <inheritdoc/>
         [ForwardsClientCalls(true)]
-        public virtual void ClearAccountCache(CancellationToken cancellationToken = default)
+        public virtual void Logout(CancellationToken cancellationToken = default)
         {
             if (_record == null)
             {

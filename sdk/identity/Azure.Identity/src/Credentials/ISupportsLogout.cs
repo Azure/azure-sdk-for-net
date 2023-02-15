@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Azure.Identity
 {
-    internal interface ISupportsClearAccountCache
+    internal interface ISupportsLogout
     {
         /// <summary>
         /// Clears the token cache for the currently logged in account.
         /// </summary>
-        public void ClearAccountCache(CancellationToken cancellationToken = default);
+        public void Logout(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Clears the token cache for the currently logged in account.
         /// </summary>
-        public Task ClearAccountCacheAsync(CancellationToken cancellationToken = default);
+        public Task LogoutAsync(CancellationToken cancellationToken = default);
     }
 }

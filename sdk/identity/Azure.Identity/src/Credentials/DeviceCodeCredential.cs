@@ -15,7 +15,7 @@ namespace Azure.Identity
     /// A <see cref="TokenCredential"/> implementation which authenticates a user using the device code flow, and provides access tokens for that user account.
     /// For more information on the device code authentication flow see https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/Device-Code-Flow.
     /// </summary>
-    public class DeviceCodeCredential : TokenCredential, ISupportsClearAccountCache
+    public class DeviceCodeCredential : TokenCredential, ISupportsLogout
     {
         private readonly string _tenantId;
         internal readonly string[] AdditionallyAllowedTenantIds;
@@ -187,7 +187,7 @@ namespace Azure.Identity
 #pragma warning disable CA2119 // Seal methods that satisfy private interfaces
         /// <inheritdoc/>
         [ForwardsClientCalls(true)]
-        public virtual async Task ClearAccountCacheAsync(CancellationToken cancellationToken = default)
+        public virtual async Task LogoutAsync(CancellationToken cancellationToken = default)
         {
             if (Record == null)
             {
@@ -199,7 +199,7 @@ namespace Azure.Identity
 
         /// <inheritdoc/>
         [ForwardsClientCalls(true)]
-        public virtual void ClearAccountCache(CancellationToken cancellationToken = default)
+        public virtual void Logout(CancellationToken cancellationToken = default)
         {
             if (Record == null)
             {

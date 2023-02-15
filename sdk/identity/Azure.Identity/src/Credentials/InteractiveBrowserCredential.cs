@@ -15,7 +15,7 @@ namespace Azure.Identity
     /// A <see cref="TokenCredential"/> implementation which launches the system default browser to interactively authenticate a user, and obtain an access token.
     /// The browser will only be launched to authenticate the user once, then will silently acquire access tokens through the users refresh token as long as it's valid.
     /// </summary>
-    public class InteractiveBrowserCredential : TokenCredential, ISupportsClearAccountCache
+    public class InteractiveBrowserCredential : TokenCredential, ISupportsLogout
     {
         internal string TenantId { get; }
         internal string[] AdditionallyAllowedTenantIds { get; }
@@ -243,7 +243,7 @@ namespace Azure.Identity
 #pragma warning disable CA2119 // Seal methods that satisfy private interfaces
         /// <inheritdoc/>
         [ForwardsClientCalls(true)]
-        public virtual async Task ClearAccountCacheAsync(CancellationToken cancellationToken = default)
+        public virtual async Task LogoutAsync(CancellationToken cancellationToken = default)
         {
             if (Record == null)
             {
@@ -255,7 +255,7 @@ namespace Azure.Identity
 
         /// <inheritdoc/>
         [ForwardsClientCalls(true)]
-        public virtual void ClearAccountCache(CancellationToken cancellationToken = default)
+        public virtual void Logout(CancellationToken cancellationToken = default)
         {
             if (Record == null)
             {

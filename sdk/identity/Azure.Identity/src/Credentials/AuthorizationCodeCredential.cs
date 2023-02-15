@@ -16,7 +16,7 @@ namespace Azure.Identity
     /// <seealso href="https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow" /> for more information
     /// about the authorization code authentication flow.
     /// </summary>
-    public class AuthorizationCodeCredential : TokenCredential, ISupportsClearAccountCache
+    public class AuthorizationCodeCredential : TokenCredential, ISupportsLogout
     {
         private readonly string _authCode;
         private readonly string _clientId;
@@ -122,7 +122,7 @@ namespace Azure.Identity
 #pragma warning disable CA2119 // Seal methods that satisfy private interfaces
         /// <inheritdoc/>
         [ForwardsClientCalls(true)]
-        public virtual async Task ClearAccountCacheAsync(CancellationToken cancellationToken = default)
+        public virtual async Task LogoutAsync(CancellationToken cancellationToken = default)
         {
             if (_record == null)
             {
@@ -134,7 +134,7 @@ namespace Azure.Identity
 
         /// <inheritdoc/>
         [ForwardsClientCalls(true)]
-        public virtual void ClearAccountCache(CancellationToken cancellationToken = default)
+        public virtual void Logout(CancellationToken cancellationToken = default)
         {
             if (_record == null)
             {

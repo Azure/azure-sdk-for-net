@@ -18,7 +18,7 @@ namespace Azure.Identity
     /// Authenticates using tokens in a local cache file. This is a legacy mechanism for authenticating clients using credentials provided to Visual Studio.
     /// This mechanism for Visual Studio authentication has been replaced by the <see cref="VisualStudioCredential"/>.
     /// </summary>
-    public class SharedTokenCacheCredential : TokenCredential, ISupportsClearAccountCache
+    public class SharedTokenCacheCredential : TokenCredential, ISupportsLogout
     {
         internal const string NoAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. No accounts were found in the cache.";
         internal const string MultipleAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. Multiple accounts were found in the cache. Use username and tenant id to disambiguate.";
@@ -114,7 +114,7 @@ namespace Azure.Identity
 #pragma warning disable CA2119 // Seal methods that satisfy private interfaces
         /// <inheritdoc/>
         [ForwardsClientCalls(true)]
-        public virtual async Task ClearAccountCacheAsync(CancellationToken cancellationToken = default)
+        public virtual async Task LogoutAsync(CancellationToken cancellationToken = default)
         {
             if (_record == null)
             {
@@ -126,7 +126,7 @@ namespace Azure.Identity
 
         /// <inheritdoc/>
         [ForwardsClientCalls(true)]
-        public virtual void ClearAccountCache(CancellationToken cancellationToken = default)
+        public virtual void Logout(CancellationToken cancellationToken = default)
         {
             if (_record == null)
             {

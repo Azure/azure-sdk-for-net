@@ -40,6 +40,7 @@ namespace Azure.Identity.Tests
         protected AuthenticationResult result;
         protected string expectedCode;
         protected DeviceCodeResult deviceCodeResult;
+        private bool isPubClient;
 
         public CredentialTestBase(bool isAsync) : base(isAsync)
         {
@@ -88,34 +89,7 @@ namespace Azure.Identity.Tests
             var token = Guid.NewGuid().ToString();
             var idToken = CredentialTestHelpers.CreateMsalIdToken(Guid.NewGuid().ToString(), "userName", TenantId);
             bool calledDiscoveryEndpoint = false;
-            bool isPubClient = false;
-            var mockTransport = new MockTransport(req =>
-            {
-                calledDiscoveryEndpoint |= req.Uri.Path.Contains("discovery/instance");
-
-                MockResponse response = new(200);
-                if (req.Uri.Path.EndsWith("/devicecode"))
-                {
-                    response = CredentialTestHelpers.CreateMockMsalDeviceCodeResponse();
-                }
-                else if (req.Uri.Path.Contains("/userrealm/"))
-                {
-                    response.SetContent(UserrealmResponse);
-                }
-                else
-                {
-                    if (isPubClient || typeof(TCredOptions) == typeof(AuthorizationCodeCredentialOptions))
-                    {
-                        response = CredentialTestHelpers.CreateMockMsalTokenResponse(200, token, TenantId, ExpectedUsername, ObjectId);
-                    }
-                    else
-                    {
-                        response.SetContent($"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"{token}\" }}");
-                    }
-                }
-
-                return response;
-            });
+            var mockTransport = GetMockTransport(token, TenantId, (req) => calledDiscoveryEndpoint |= req.Uri.Path.Contains("discovery/instance"));
 
             var config = new CommonCredentialTestConfig()
             {
@@ -151,35 +125,7 @@ namespace Azure.Identity.Tests
             var token = Guid.NewGuid().ToString();
             string resolvedTenantId = parameters.TokenRequestContext.TenantId ?? parameters.TenantId ?? TenantId;
             var idToken = CredentialTestHelpers.CreateMsalIdToken(Guid.NewGuid().ToString(), "userName", resolvedTenantId);
-            bool calledDiscoveryEndpoint = false;
-            bool isPubClient = false;
-            var mockTransport = new MockTransport(req =>
-            {
-                calledDiscoveryEndpoint |= req.Uri.Path.Contains("discovery/instance");
-
-                MockResponse response = new(200);
-                if (req.Uri.Path.EndsWith("/devicecode"))
-                {
-                    response = CredentialTestHelpers.CreateMockMsalDeviceCodeResponse();
-                }
-                else if (req.Uri.Path.Contains("/userrealm/"))
-                {
-                    response.SetContent(UserrealmResponse);
-                }
-                else
-                {
-                    if (isPubClient || typeof(TCredOptions) == typeof(AuthorizationCodeCredentialOptions))
-                    {
-                        response = CredentialTestHelpers.CreateMockMsalTokenResponse(200, token, resolvedTenantId, ExpectedUsername, ObjectId);
-                    }
-                    else
-                    {
-                        response.SetContent($"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"{token}\" }}");
-                    }
-                }
-
-                return response;
-            });
+            var mockTransport = GetMockTransport(token, resolvedTenantId);
 
             var config = new CommonCredentialTestConfig()
             {
@@ -217,35 +163,7 @@ namespace Azure.Identity.Tests
             // Configure the transport
             var token = Guid.NewGuid().ToString();
             var idToken = CredentialTestHelpers.CreateMsalIdToken(Guid.NewGuid().ToString(), "userName", TenantId);
-            bool calledDiscoveryEndpoint = false;
-            bool isPubClient = false;
-            var mockTransport = new MockTransport(req =>
-            {
-                calledDiscoveryEndpoint |= req.Uri.Path.Contains("discovery/instance");
-
-                MockResponse response = new(200);
-                if (req.Uri.Path.EndsWith("/devicecode"))
-                {
-                    response = CredentialTestHelpers.CreateMockMsalDeviceCodeResponse();
-                }
-                else if (req.Uri.Path.Contains("/userrealm/"))
-                {
-                    response.SetContent(UserrealmResponse);
-                }
-                else
-                {
-                    if (isPubClient || typeof(TCredOptions) == typeof(AuthorizationCodeCredentialOptions))
-                    {
-                        response = CredentialTestHelpers.CreateMockMsalTokenResponse(200, token, TenantId, ExpectedUsername, ObjectId);
-                    }
-                    else
-                    {
-                        response.SetContent($"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"{token}\" }}");
-                    }
-                }
-
-                return response;
-            });
+            MockTransport mockTransport = GetMockTransport(token, TenantId);
 
             var config = new CommonCredentialTestConfig()
             {
@@ -287,7 +205,7 @@ namespace Azure.Identity.Tests
                 });
             config.TokenCachePersistenceOptions = tokenCacheOptions;
             TokenCredential credential = GetTokenCredential(config);
-            if (credential is ISupportsClearAccountCache clearCacheCredential)
+            if (credential is ISupportsLogout clearCacheCredential)
             {
                 isPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
                 mockBytes = isPubClient switch
@@ -297,7 +215,7 @@ namespace Azure.Identity.Tests
                 };
                 await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default).ConfigureAwait(false);
                 calledRemoveUser = true;
-                await clearCacheCredential.ClearAccountCacheAsync();
+                await clearCacheCredential.LogoutAsync();
                 Assert.IsTrue(cacheAccessed, "The cache should have been accessed.");
             }
             else
@@ -486,6 +404,36 @@ namespace Azure.Identity.Tests
                 Assert.AreEqual(expectedTenantId, tenant, "TenantId passed to msal should match");
                 return result;
             };
+        }
+
+        private MockTransport GetMockTransport(string token, string resolvedTenantId, Action<MockRequest> requestCallback = null)
+        {
+            return new MockTransport(req =>
+            {
+                requestCallback?.Invoke(req);
+                MockResponse response = new(200);
+                if (req.Uri.Path.EndsWith("/devicecode"))
+                {
+                    response = CredentialTestHelpers.CreateMockMsalDeviceCodeResponse();
+                }
+                else if (req.Uri.Path.Contains("/userrealm/"))
+                {
+                    response.SetContent(UserrealmResponse);
+                }
+                else
+                {
+                    if (isPubClient || typeof(TCredOptions) == typeof(AuthorizationCodeCredentialOptions))
+                    {
+                        response = CredentialTestHelpers.CreateMockMsalTokenResponse(200, token, resolvedTenantId, ExpectedUsername, ObjectId);
+                    }
+                    else
+                    {
+                        response.SetContent($"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"{token}\" }}");
+                    }
+                }
+
+                return response;
+            });
         }
 
         protected async Task<string> ReadMockRequestContent(MockRequest request)

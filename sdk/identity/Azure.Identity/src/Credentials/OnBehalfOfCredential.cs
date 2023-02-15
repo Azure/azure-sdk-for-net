@@ -14,7 +14,7 @@ namespace Azure.Identity
     /// <summary>
     /// Enables authentication to Azure Active Directory using an On-Behalf-Of flow.
     /// </summary>
-    public class OnBehalfOfCredential : TokenCredential, ISupportsClearAccountCache
+    public class OnBehalfOfCredential : TokenCredential, ISupportsLogout
     {
         internal MsalConfidentialClient Client { get; }
         private readonly string _tenantId;
@@ -181,7 +181,7 @@ namespace Azure.Identity
 #pragma warning disable CA2119 // Seal methods that satisfy private interfaces
         /// <inheritdoc/>
         [ForwardsClientCalls(true)]
-        public virtual async Task ClearAccountCacheAsync(CancellationToken cancellationToken = default)
+        public virtual async Task LogoutAsync(CancellationToken cancellationToken = default)
         {
             if (_account != null)
             {
@@ -192,7 +192,7 @@ namespace Azure.Identity
 
         /// <inheritdoc/>
         [ForwardsClientCalls(true)]
-        public virtual void ClearAccountCache(CancellationToken cancellationToken = default)
+        public virtual void Logout(CancellationToken cancellationToken = default)
         {
             if (_account != null)
             {

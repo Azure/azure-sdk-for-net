@@ -15,7 +15,7 @@ namespace Azure.Identity
     /// <summary>
     /// Enables authentication of an AAD service principal using a signed client assertion.
     /// </summary>
-    public class ClientAssertionCredential : TokenCredential, ISupportsClearAccountCache
+    public class ClientAssertionCredential : TokenCredential, ISupportsLogout
     {
         internal readonly string[] AdditionallyAllowedTenantIds;
 
@@ -123,7 +123,7 @@ namespace Azure.Identity
 #pragma warning disable CA2119 // Seal methods that satisfy private interfaces
         /// <inheritdoc/>
         [ForwardsClientCalls(true)]
-        public virtual async Task ClearAccountCacheAsync(CancellationToken cancellationToken = default)
+        public virtual async Task LogoutAsync(CancellationToken cancellationToken = default)
         {
             if (_account != null)
             {
@@ -134,7 +134,7 @@ namespace Azure.Identity
 
         /// <inheritdoc/>
         [ForwardsClientCalls(true)]
-        public virtual void ClearAccountCache(CancellationToken cancellationToken = default)
+        public virtual void Logout(CancellationToken cancellationToken = default)
         {
             if (_account != null)
             {

@@ -49,7 +49,7 @@ namespace Azure.Identity
     /// perform the authentication using these details. Please consult the
     /// documentation of that class for more details.
     /// </summary>
-    public class EnvironmentCredential : TokenCredential, ISupportsClearAccountCache
+    public class EnvironmentCredential : TokenCredential, ISupportsLogout
     {
         private const string UnavailableErrorMessage = "EnvironmentCredential authentication unavailable. Environment variables are not fully configured. See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/environmentcredential/troubleshoot";
         private readonly CredentialPipeline _pipeline;
@@ -161,21 +161,21 @@ namespace Azure.Identity
 #pragma warning disable CA2119 // Seal methods that satisfy private interfaces
         /// <inheritdoc/>
         [ForwardsClientCalls(true)]
-        public virtual async Task ClearAccountCacheAsync(CancellationToken cancellationToken = default)
+        public virtual async Task LogoutAsync(CancellationToken cancellationToken = default)
         {
-            if (Credential is ISupportsClearAccountCache supportsClearAccountCache)
+            if (Credential is ISupportsLogout supportsClearAccountCache)
             {
-                await supportsClearAccountCache.ClearAccountCacheAsync(cancellationToken).ConfigureAwait(false);
+                await supportsClearAccountCache.LogoutAsync(cancellationToken).ConfigureAwait(false);
             }
         }
 
         /// <inheritdoc/>
         [ForwardsClientCalls(true)]
-        public virtual void ClearAccountCache(CancellationToken cancellationToken = default)
+        public virtual void Logout(CancellationToken cancellationToken = default)
         {
-            if (Credential is ISupportsClearAccountCache supportsClearAccountCache)
+            if (Credential is ISupportsLogout supportsClearAccountCache)
             {
-                supportsClearAccountCache.ClearAccountCache(cancellationToken);
+                supportsClearAccountCache.Logout(cancellationToken);
             }
         }
 #pragma warning restore CA2119 // Seal methods that satisfy private interfaces

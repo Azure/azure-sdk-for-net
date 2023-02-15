@@ -17,7 +17,7 @@ namespace Azure.Identity
     /// on how to configure certificate authentication can be found here:
     /// https://docs.microsoft.com/azure/active-directory/develop/active-directory-certificate-credentials#register-your-certificate-with-azure-ad
     /// </summary>
-    public class ClientCertificateCredential : TokenCredential, ISupportsClearAccountCache
+    public class ClientCertificateCredential : TokenCredential, ISupportsLogout
     {
         internal const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/clientcertificatecredential/troubleshoot";
 
@@ -231,7 +231,7 @@ namespace Azure.Identity
 #pragma warning disable CA2119 // Seal methods that satisfy private interfaces
         /// <inheritdoc/>
         [ForwardsClientCalls(true)]
-        public virtual async Task ClearAccountCacheAsync(CancellationToken cancellationToken = default)
+        public virtual async Task LogoutAsync(CancellationToken cancellationToken = default)
         {
             if (_account != null)
             {
@@ -242,7 +242,7 @@ namespace Azure.Identity
 
         /// <inheritdoc/>
         [ForwardsClientCalls(true)]
-        public virtual void ClearAccountCache(CancellationToken cancellationToken = default)
+        public virtual void Logout(CancellationToken cancellationToken = default)
         {
             if (_account != null)
             {

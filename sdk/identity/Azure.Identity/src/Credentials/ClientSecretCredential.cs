@@ -15,7 +15,7 @@ namespace Azure.Identity
     /// to configure a client secret can be found here:
     /// https://docs.microsoft.com/azure/active-directory/develop/quickstart-configure-app-access-web-apis#add-credentials-to-your-web-application
     /// </summary>
-    public class ClientSecretCredential : TokenCredential, ISupportsClearAccountCache
+    public class ClientSecretCredential : TokenCredential, ISupportsLogout
     {
         private readonly CredentialPipeline _pipeline;
 
@@ -156,7 +156,7 @@ namespace Azure.Identity
 #pragma warning disable CA2119 // Seal methods that satisfy private interfaces
         /// <inheritdoc/>
         [ForwardsClientCalls(true)]
-        public virtual async Task ClearAccountCacheAsync(CancellationToken cancellationToken = default)
+        public virtual async Task LogoutAsync(CancellationToken cancellationToken = default)
         {
             if (_account != null)
             {
@@ -167,7 +167,7 @@ namespace Azure.Identity
 
         /// <inheritdoc/>
         [ForwardsClientCalls(true)]
-        public virtual void ClearAccountCache(CancellationToken cancellationToken = default)
+        public virtual void Logout(CancellationToken cancellationToken = default)
         {
             if (_account != null)
             {
