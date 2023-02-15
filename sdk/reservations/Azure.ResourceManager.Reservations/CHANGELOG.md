@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Introduced overloads for some methods that contain quite a few parameters in their signatures.
+- Introduced property bag for the methods with more than 5 parameters.
 
 ### Other Changes
 
