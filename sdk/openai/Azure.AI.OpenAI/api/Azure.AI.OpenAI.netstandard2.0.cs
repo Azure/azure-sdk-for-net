@@ -93,6 +93,8 @@ namespace Azure.AI.OpenAI
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Completions>> GetCompletionsAsync(string deploymentId, Azure.AI.OpenAI.CompletionsOptions completionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetCompletionsAsync(string deploymentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Completions>> GetCompletionsAsync(string deploymentId, string prompt, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Custom.StreamingCompletions> GetCompletionsStreaming(string deploymentId, Azure.AI.OpenAI.CompletionsOptions completionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Custom.StreamingCompletions>> GetCompletionsStreamingAsync(string deploymentId, Azure.AI.OpenAI.CompletionsOptions completionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Embeddings> GetEmbeddings(string deploymentId, Azure.AI.OpenAI.EmbeddingsOptions embeddingsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetEmbeddings(string deploymentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Embeddings>> GetEmbeddingsAsync(string deploymentId, Azure.AI.OpenAI.EmbeddingsOptions embeddingsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -105,5 +107,49 @@ namespace Azure.AI.OpenAI
         {
             V2022_12_01 = 1,
         }
+    }
+}
+namespace Azure.AI.OpenAI.Custom
+{
+    public partial class StreamingChoice
+    {
+        internal StreamingChoice() { }
+        public string FinishReason { get { throw null; } }
+        public int? Index { get { throw null; } }
+        public Azure.AI.OpenAI.CompletionsLogProbability Logprobs { get { throw null; } }
+        public System.Collections.Generic.IAsyncEnumerable<string> GetTextStreaming([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class StreamingCompletions : System.IDisposable
+    {
+        internal StreamingCompletions() { }
+        public System.DateTime Created { get { throw null; } }
+        public string Id { get { throw null; } }
+        public void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
+        public System.Collections.Generic.IAsyncEnumerable<Azure.AI.OpenAI.Custom.StreamingChoice> GetChoicesStreaming([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.Core.Sse
+{
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SseLine
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public static Azure.Core.Sse.SseLine Empty { get { throw null; } }
+        public System.ReadOnlyMemory<char> FieldName { get { throw null; } }
+        public System.ReadOnlyMemory<char> FieldValue { get { throw null; } }
+        public bool IsComment { get { throw null; } }
+        public bool IsEmpty { get { throw null; } }
+        public override string ToString() { throw null; }
+    }
+    public sealed partial class SseReader : System.IDisposable
+    {
+        public SseReader(System.IO.Stream stream) { }
+        public void Dispose() { }
+        public Azure.Core.Sse.SseLine? TryReadLine() { throw null; }
+        public System.Threading.Tasks.Task<Azure.Core.Sse.SseLine?> TryReadLineAsync() { throw null; }
+        public Azure.Core.Sse.SseLine? TryReadSingleFieldEvent() { throw null; }
+        public System.Threading.Tasks.Task<Azure.Core.Sse.SseLine?> TryReadSingleFieldEventAsync() { throw null; }
     }
 }
