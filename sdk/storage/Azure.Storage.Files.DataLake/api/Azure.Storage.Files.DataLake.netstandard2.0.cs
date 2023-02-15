@@ -561,7 +561,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public DataLakeFileAppendOptions() { }
         public byte[] ContentHash { get { throw null; } set { } }
         public bool? Flush { get { throw null; } set { } }
-        public Azure.Storage.Files.DataLake.Models.LeaseAction? LeaseAction { get { throw null; } set { } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseAction? LeaseAction { get { throw null; } set { } }
         public System.TimeSpan? LeaseDuration { get { throw null; } set { } }
         public string LeaseId { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
@@ -579,7 +579,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public bool? Close { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.PathHttpHeaders HttpHeaders { get { throw null; } set { } }
-        public Azure.Storage.Files.DataLake.Models.LeaseAction? LeaseAction { get { throw null; } set { } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseAction? LeaseAction { get { throw null; } set { } }
         public System.TimeSpan? LeaseDuration { get { throw null; } set { } }
         public string ProposedLeaseId { get { throw null; } set { } }
         public bool? RetainUncommittedData { get { throw null; } set { } }
@@ -649,6 +649,13 @@ namespace Azure.Storage.Files.DataLake.Models
         public System.DateTimeOffset LastModified { get { throw null; } }
         public string LeaseId { get { throw null; } }
         public int? LeaseTime { get { throw null; } }
+    }
+    public enum DataLakeLeaseAction
+    {
+        Acquire = 0,
+        AutoRenew = 1,
+        Release = 2,
+        AcquireRelease = 3,
     }
     public enum DataLakeLeaseDuration
     {
@@ -912,13 +919,6 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         None = 0,
         Metadata = 1,
-    }
-    public enum LeaseAction
-    {
-        Acquire = 0,
-        AutoRenew = 1,
-        Release = 2,
-        AcquireRelease = 3,
     }
     public partial class PathAccessControl
     {
