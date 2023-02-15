@@ -458,8 +458,8 @@ namespace Azure.Verticals.AgriFood.Farming
         public virtual Azure.AsyncPageable<System.BinaryData> GetScenesAsync(string provider, string partyId, string boundaryId, string source, System.DateTimeOffset? startDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? endDateTime = default(System.DateTimeOffset?), double? maxCloudCoveragePercentage = default(double?), double? maxDarkPixelCoveragePercentage = default(double?), System.Collections.Generic.IEnumerable<string> imageNames = null, System.Collections.Generic.IEnumerable<double> imageResolutions = null, System.Collections.Generic.IEnumerable<string> imageFormats = null, int? maxPageSize = default(int?), string skipToken = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetStacFeature(string collectionId, string featureId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetStacFeatureAsync(string collectionId, string featureId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response SearchFeatures(string collectionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SearchFeaturesAsync(string collectionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response SearchFeatures(string collectionId, Azure.Core.RequestContent content, int? maxpagesize = default(int?), int? skip = default(int?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SearchFeaturesAsync(string collectionId, Azure.Core.RequestContent content, int? maxpagesize = default(int?), int? skip = default(int?), Azure.RequestContext context = null) { throw null; }
     }
     public partial class SeasonalFields
     {
