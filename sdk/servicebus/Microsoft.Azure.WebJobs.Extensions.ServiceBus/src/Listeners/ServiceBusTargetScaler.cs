@@ -95,7 +95,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
             }
 
             int targetWorkerCount = (int)Math.Ceiling(messageCount / (decimal)concurrency);
-            _logger.LogInformation($"'Target worker count for function '{_functionId}' is '{targetWorkerCount}' (EntityPath='{_entityPath}', MessageCount ='{messageCount}', Concurrency='{concurrency}').");
+            _logger.LogInformation($"Target worker count for function '{_functionId}' is '{targetWorkerCount}' (EntityPath='{_entityPath}', MessageCount ='{messageCount}', Concurrency='{concurrency}').");
 
             return new TargetScalerResult
             {
