@@ -72,7 +72,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 
                     // try RemoveParticipants
                     string operationContext1 = "MyTestOperationcontext";
-                    var removeParticipantsOptions = new RemoveParticipantsOptions(new CommunicationIdentifier[] { target })
+                    var removeParticipantsOptions = new RemoveParticipantOptions(new CommunicationIdentifier[] { target })
                     {
                         OperationContext = operationContext1,
                     };
