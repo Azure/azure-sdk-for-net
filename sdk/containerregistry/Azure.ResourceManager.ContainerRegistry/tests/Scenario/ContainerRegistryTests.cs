@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tests
     public class ContainerRegistryTests : ContainerRegistryManagementTestBase
     {
         public ContainerRegistryTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)
         {
         }
 
