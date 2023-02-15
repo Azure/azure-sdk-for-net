@@ -554,16 +554,16 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='UpdateTaskRequestAsync(Guid,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> UpdateTaskRequestAsync(Guid taskId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='UpdateTaskStatusAsync(Guid,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> UpdateTaskStatusAsync(Guid taskId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PurviewWorkflowServiceClient.UpdateTaskRequest");
+            using var scope = ClientDiagnostics.CreateScope("PurviewWorkflowServiceClient.UpdateTaskStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateTaskRequestRequest(taskId, content, context);
+                using HttpMessage message = CreateUpdateTaskStatusRequest(taskId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -580,120 +580,16 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='UpdateTaskRequest(Guid,RequestContent,RequestContext)']/*" />
-        public virtual Response UpdateTaskRequest(Guid taskId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='UpdateTaskStatus(Guid,RequestContent,RequestContext)']/*" />
+        public virtual Response UpdateTaskStatus(Guid taskId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("PurviewWorkflowServiceClient.UpdateTaskRequest");
+            using var scope = ClientDiagnostics.CreateScope("PurviewWorkflowServiceClient.UpdateTaskStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateTaskRequestRequest(taskId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Claim a DSAR task request. </summary>
-        /// <param name="taskId"> The task id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='ClaimDsarTaskRequestAsync(Guid,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> ClaimDsarTaskRequestAsync(Guid taskId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("PurviewWorkflowServiceClient.ClaimDsarTaskRequest");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateClaimDsarTaskRequestRequest(taskId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Claim a DSAR task request. </summary>
-        /// <param name="taskId"> The task id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='ClaimDsarTaskRequest(Guid,RequestContent,RequestContext)']/*" />
-        public virtual Response ClaimDsarTaskRequest(Guid taskId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("PurviewWorkflowServiceClient.ClaimDsarTaskRequest");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateClaimDsarTaskRequestRequest(taskId, content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Release a DSAR task request. </summary>
-        /// <param name="taskId"> The task id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='ReleaseDsarTaskRequestAsync(Guid,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> ReleaseDsarTaskRequestAsync(Guid taskId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("PurviewWorkflowServiceClient.ReleaseDsarTaskRequest");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateReleaseDsarTaskRequestRequest(taskId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Release a DSAR task request. </summary>
-        /// <param name="taskId"> The task id. </param>
-        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='ReleaseDsarTaskRequest(Guid,RequestContent,RequestContext)']/*" />
-        public virtual Response ReleaseDsarTaskRequest(Guid taskId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("PurviewWorkflowServiceClient.ReleaseDsarTaskRequest");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateReleaseDsarTaskRequestRequest(taskId, content, context);
+                using HttpMessage message = CreateUpdateTaskStatusRequest(taskId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -731,17 +627,16 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="timeWindow"> Time window of filtering items. Allowed values: &quot;1d&quot; | &quot;7d&quot; | &quot;30d&quot; | &quot;90d&quot;. </param>
         /// <param name="orderby"> The key word which used to sort the results. Allowed values: &quot;status desc&quot; | &quot;status asc&quot; | &quot;requestor desc&quot; | &quot;requestor asc&quot; | &quot;startTime desc&quot; | &quot;startTime asc&quot; | &quot;createdTime desc&quot; | &quot;createdTime asc&quot;. </param>
         /// <param name="runStatuses"> Filter workflow runs by workflow run status. </param>
-        /// <param name="userRequestIds"> Filter items by user request id list. </param>
         /// <param name="workflowIds"> Filter items by workflow id list. </param>
         /// <param name="maxpagesize"> The maximum page size to get the items at one time. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRunsAsync(String,String,IEnumerable,IEnumerable,IEnumerable,Int32,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetWorkflowRunsAsync(string timeWindow = null, string orderby = null, IEnumerable<string> runStatuses = null, IEnumerable<string> userRequestIds = null, IEnumerable<string> workflowIds = null, int? maxpagesize = null, RequestContext context = null)
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRunsAsync(String,String,IEnumerable,IEnumerable,Int32,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetWorkflowRunsAsync(string timeWindow = null, string orderby = null, IEnumerable<string> runStatuses = null, IEnumerable<string> workflowIds = null, int? maxpagesize = null, RequestContext context = null)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowRunsRequest(timeWindow, orderby, runStatuses, userRequestIds, workflowIds, maxpagesize, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowRunsNextPageRequest(nextLink, timeWindow, orderby, runStatuses, userRequestIds, workflowIds, maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowRunsRequest(timeWindow, orderby, runStatuses, workflowIds, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowRunsNextPageRequest(nextLink, timeWindow, orderby, runStatuses, workflowIds, maxpagesize, context);
             return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowRuns", "value", "nextLink", context);
         }
 
@@ -749,17 +644,16 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="timeWindow"> Time window of filtering items. Allowed values: &quot;1d&quot; | &quot;7d&quot; | &quot;30d&quot; | &quot;90d&quot;. </param>
         /// <param name="orderby"> The key word which used to sort the results. Allowed values: &quot;status desc&quot; | &quot;status asc&quot; | &quot;requestor desc&quot; | &quot;requestor asc&quot; | &quot;startTime desc&quot; | &quot;startTime asc&quot; | &quot;createdTime desc&quot; | &quot;createdTime asc&quot;. </param>
         /// <param name="runStatuses"> Filter workflow runs by workflow run status. </param>
-        /// <param name="userRequestIds"> Filter items by user request id list. </param>
         /// <param name="workflowIds"> Filter items by workflow id list. </param>
         /// <param name="maxpagesize"> The maximum page size to get the items at one time. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRuns(String,String,IEnumerable,IEnumerable,IEnumerable,Int32,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetWorkflowRuns(string timeWindow = null, string orderby = null, IEnumerable<string> runStatuses = null, IEnumerable<string> userRequestIds = null, IEnumerable<string> workflowIds = null, int? maxpagesize = null, RequestContext context = null)
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRuns(String,String,IEnumerable,IEnumerable,Int32,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetWorkflowRuns(string timeWindow = null, string orderby = null, IEnumerable<string> runStatuses = null, IEnumerable<string> workflowIds = null, int? maxpagesize = null, RequestContext context = null)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowRunsRequest(timeWindow, orderby, runStatuses, userRequestIds, workflowIds, maxpagesize, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowRunsNextPageRequest(nextLink, timeWindow, orderby, runStatuses, userRequestIds, workflowIds, maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowRunsRequest(timeWindow, orderby, runStatuses, workflowIds, maxpagesize, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowRunsNextPageRequest(nextLink, timeWindow, orderby, runStatuses, workflowIds, maxpagesize, context);
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewWorkflowServiceClient.GetWorkflowRuns", "value", "nextLink", context);
         }
 
@@ -885,7 +779,7 @@ namespace Azure.Analytics.Purview.Workflows
             return message;
         }
 
-        internal HttpMessage CreateGetWorkflowRunsRequest(string timeWindow, string orderby, IEnumerable<string> runStatuses, IEnumerable<string> userRequestIds, IEnumerable<string> workflowIds, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetWorkflowRunsRequest(string timeWindow, string orderby, IEnumerable<string> runStatuses, IEnumerable<string> workflowIds, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -906,10 +800,6 @@ namespace Azure.Analytics.Purview.Workflows
             if (runStatuses != null)
             {
                 uri.AppendQueryDelimited("runStatuses", runStatuses, ",", true);
-            }
-            if (userRequestIds != null)
-            {
-                uri.AppendQueryDelimited("userRequestIds", userRequestIds, ",", true);
             }
             if (workflowIds != null)
             {
@@ -1078,7 +968,7 @@ namespace Azure.Analytics.Purview.Workflows
             return message;
         }
 
-        internal HttpMessage CreateUpdateTaskRequestRequest(Guid taskId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateTaskStatusRequest(Guid taskId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1089,44 +979,6 @@ namespace Azure.Analytics.Purview.Workflows
             uri.AppendPath("/workflowtasks/", false);
             uri.AppendPath(taskId, true);
             uri.AppendPath("/change-task-status", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateClaimDsarTaskRequestRequest(Guid taskId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/workflow", false);
-            uri.AppendPath("/workflowtasks/", false);
-            uri.AppendPath(taskId, true);
-            uri.AppendPath("/claim-task", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateReleaseDsarTaskRequestRequest(Guid taskId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/workflow", false);
-            uri.AppendPath("/workflowtasks/", false);
-            uri.AppendPath(taskId, true);
-            uri.AppendPath("/release-task", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1149,7 +1001,7 @@ namespace Azure.Analytics.Purview.Workflows
             return message;
         }
 
-        internal HttpMessage CreateGetWorkflowRunsNextPageRequest(string nextLink, string timeWindow, string orderby, IEnumerable<string> runStatuses, IEnumerable<string> userRequestIds, IEnumerable<string> workflowIds, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetWorkflowRunsNextPageRequest(string nextLink, string timeWindow, string orderby, IEnumerable<string> runStatuses, IEnumerable<string> workflowIds, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

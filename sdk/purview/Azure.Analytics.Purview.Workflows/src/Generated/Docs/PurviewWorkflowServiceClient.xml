@@ -38,16 +38,16 @@ Schema for <c>Workflow</c>:
   id: Guid, # Required. The id of workflow.
   triggers: [
     {
-      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot; | &quot;when_dsar_deletion_is_requested&quot; | &quot;when_dsar_export_is_requested&quot;, # Required.
+      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot;, # Required.
       underGlossaryHierarchy: string, # Optional. Glossary term hierarchy path.
       underCollection: string, # Optional. The collection name.
       underGlossary: string, # Optional. The glossary guid.
     }
   ], # Required. It describes under what condition a workflow will run.  
-  createdTime: string (ISO 8601 Format), # Required. The created time of workflow.
-  createdBy: string, # Required. The person who created the workflow.
-  lastUpdateTime: string (ISO 8601 Format), # Required. The last update time.
-  updatedBy: string, # Required. The person who updated the workflow.
+  createdTime: string (ISO 8601 Format), # Optional. The created time of workflow.
+  createdBy: string, # Optional. The person who created the workflow.
+  lastUpdateTime: string (ISO 8601 Format), # Optional. The last update time.
+  updatedBy: string, # Optional. The person who updated the workflow.
   name: string, # Required. The name of a workflow.
   isEnabled: boolean, # Required. Whether the workflow is enabled or not.
   description: string, # Required. Description of a workflow.
@@ -93,16 +93,16 @@ Schema for <c>Workflow</c>:
   id: Guid, # Required. The id of workflow.
   triggers: [
     {
-      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot; | &quot;when_dsar_deletion_is_requested&quot; | &quot;when_dsar_export_is_requested&quot;, # Required.
+      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot;, # Required.
       underGlossaryHierarchy: string, # Optional. Glossary term hierarchy path.
       underCollection: string, # Optional. The collection name.
       underGlossary: string, # Optional. The glossary guid.
     }
   ], # Required. It describes under what condition a workflow will run.  
-  createdTime: string (ISO 8601 Format), # Required. The created time of workflow.
-  createdBy: string, # Required. The person who created the workflow.
-  lastUpdateTime: string (ISO 8601 Format), # Required. The last update time.
-  updatedBy: string, # Required. The person who updated the workflow.
+  createdTime: string (ISO 8601 Format), # Optional. The created time of workflow.
+  createdBy: string, # Optional. The person who created the workflow.
+  lastUpdateTime: string (ISO 8601 Format), # Optional. The last update time.
+  updatedBy: string, # Optional. The person who updated the workflow.
   name: string, # Required. The name of a workflow.
   isEnabled: boolean, # Required. Whether the workflow is enabled or not.
   description: string, # Required. Description of a workflow.
@@ -136,10 +136,6 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("actionDag").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("createdTime").ToString());
-Console.WriteLine(result.GetProperty("createdBy").ToString());
-Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
-Console.WriteLine(result.GetProperty("updatedBy").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("isEnabled").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
@@ -192,7 +188,7 @@ Schema for <c>WorkflowCreateOrUpdateCommand</c>:
 <code>{
   triggers: [
     {
-      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot; | &quot;when_dsar_deletion_is_requested&quot; | &quot;when_dsar_export_is_requested&quot;, # Required.
+      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot;, # Required.
       underGlossaryHierarchy: string, # Optional. Glossary term hierarchy path.
       underCollection: string, # Optional. The collection name.
       underGlossary: string, # Optional. The glossary guid.
@@ -213,16 +209,16 @@ Schema for <c>Workflow</c>:
   id: Guid, # Required. The id of workflow.
   triggers: [
     {
-      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot; | &quot;when_dsar_deletion_is_requested&quot; | &quot;when_dsar_export_is_requested&quot;, # Required.
+      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot;, # Required.
       underGlossaryHierarchy: string, # Optional. Glossary term hierarchy path.
       underCollection: string, # Optional. The collection name.
       underGlossary: string, # Optional. The glossary guid.
     }
   ], # Required. It describes under what condition a workflow will run.  
-  createdTime: string (ISO 8601 Format), # Required. The created time of workflow.
-  createdBy: string, # Required. The person who created the workflow.
-  lastUpdateTime: string (ISO 8601 Format), # Required. The last update time.
-  updatedBy: string, # Required. The person who updated the workflow.
+  createdTime: string (ISO 8601 Format), # Optional. The created time of workflow.
+  createdBy: string, # Optional. The person who created the workflow.
+  lastUpdateTime: string (ISO 8601 Format), # Optional. The last update time.
+  updatedBy: string, # Optional. The person who updated the workflow.
   name: string, # Required. The name of a workflow.
   isEnabled: boolean, # Required. Whether the workflow is enabled or not.
   description: string, # Required. Description of a workflow.
@@ -256,10 +252,6 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("actionDag").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("triggers")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("createdTime").ToString());
-Console.WriteLine(result.GetProperty("createdBy").ToString());
-Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
-Console.WriteLine(result.GetProperty("updatedBy").ToString());
 Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("isEnabled").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
@@ -312,7 +304,7 @@ Schema for <c>WorkflowCreateOrUpdateCommand</c>:
 <code>{
   triggers: [
     {
-      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot; | &quot;when_dsar_deletion_is_requested&quot; | &quot;when_dsar_export_is_requested&quot;, # Required.
+      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot;, # Required.
       underGlossaryHierarchy: string, # Optional. Glossary term hierarchy path.
       underCollection: string, # Optional. The collection name.
       underGlossary: string, # Optional. The glossary guid.
@@ -333,16 +325,16 @@ Schema for <c>Workflow</c>:
   id: Guid, # Required. The id of workflow.
   triggers: [
     {
-      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot; | &quot;when_dsar_deletion_is_requested&quot; | &quot;when_dsar_export_is_requested&quot;, # Required.
+      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot;, # Required.
       underGlossaryHierarchy: string, # Optional. Glossary term hierarchy path.
       underCollection: string, # Optional. The collection name.
       underGlossary: string, # Optional. The glossary guid.
     }
   ], # Required. It describes under what condition a workflow will run.  
-  createdTime: string (ISO 8601 Format), # Required. The created time of workflow.
-  createdBy: string, # Required. The person who created the workflow.
-  lastUpdateTime: string (ISO 8601 Format), # Required. The last update time.
-  updatedBy: string, # Required. The person who updated the workflow.
+  createdTime: string (ISO 8601 Format), # Optional. The created time of workflow.
+  createdBy: string, # Optional. The person who created the workflow.
+  lastUpdateTime: string (ISO 8601 Format), # Optional. The last update time.
+  updatedBy: string, # Optional. The person who updated the workflow.
   name: string, # Required. The name of a workflow.
   isEnabled: boolean, # Required. Whether the workflow is enabled or not.
   description: string, # Required. Description of a workflow.
@@ -440,7 +432,7 @@ Schema for <c>UserRequestPayload</c>:
 <code>{
   operations: [
     {
-      type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot; | &quot;DSARDelete&quot; | &quot;DSARExport&quot;, # Required. The operation type.
+      type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The operation type.
       payload: AnyObject, # Required. The payload of each operation which user want to submit.
     }
   ], # Required. The list of operations user want to submit, each operation matches one Purview API call and will do the operation directly.
@@ -456,7 +448,7 @@ Schema for <c>UserRequestResponse</c>:
   requestor: Guid, # Required. The person who submitted the user request.
   operations: [
     {
-      type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot; | &quot;DSARDelete&quot; | &quot;DSARExport&quot;, # Required. The operation type.
+      type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The operation type.
       payload: AnyObject, # Required. The payload of each operation which user want to submit.
       workflowRunIds: [Guid], # Optional.
     }
@@ -531,7 +523,7 @@ Schema for <c>UserRequestPayload</c>:
 <code>{
   operations: [
     {
-      type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot; | &quot;DSARDelete&quot; | &quot;DSARExport&quot;, # Required. The operation type.
+      type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The operation type.
       payload: AnyObject, # Required. The payload of each operation which user want to submit.
     }
   ], # Required. The list of operations user want to submit, each operation matches one Purview API call and will do the operation directly.
@@ -547,7 +539,7 @@ Schema for <c>UserRequestResponse</c>:
   requestor: Guid, # Required. The person who submitted the user request.
   operations: [
     {
-      type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot; | &quot;DSARDelete&quot; | &quot;DSARExport&quot;, # Required. The operation type.
+      type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The operation type.
       payload: AnyObject, # Required. The payload of each operation which user want to submit.
       workflowRunIds: [Guid], # Optional.
     }
@@ -600,7 +592,7 @@ Schema for <c>WorkflowRun</c>:
   requestor: Guid, # Optional. The person who submitted the user request.
   userRequestId: Guid, # Optional. The user request id.
   runPayload: {
-    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot; | &quot;DSARDelete&quot; | &quot;DSARExport&quot;, # Required. The workflow run payload type.
+    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The workflow run payload type.
     targetValue: string, # Required. The target value which need involve workflow to update.
     payload: AnyObject, # Required. The payload of each operation which user want to submit.
   }, # Optional. The input of a workflow run. Align with operation in user request. 
@@ -659,7 +651,7 @@ Schema for <c>WorkflowRun</c>:
   requestor: Guid, # Optional. The person who submitted the user request.
   userRequestId: Guid, # Optional. The user request id.
   runPayload: {
-    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot; | &quot;DSARDelete&quot; | &quot;DSARExport&quot;, # Required. The workflow run payload type.
+    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The workflow run payload type.
     targetValue: string, # Required. The target value which need involve workflow to update.
     payload: AnyObject, # Required. The payload of each operation which user want to submit.
   }, # Optional. The input of a workflow run. Align with operation in user request. 
@@ -800,7 +792,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
   approvalDetail: {
     approvalType: &quot;PendingOnAny&quot; | &quot;PendingOnAll&quot;, # Required. The approval type of an approval task.
     status: &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Canceled&quot;, # Required. The status of an approval task.
-    approvers: AnyObject, # Required. The list of approvers with reply.
+    approvers: Dictionary&lt;string, ApproverResponse&gt;, # Required. The list of approvers with reply.
   }, # Optional. The approval task details
   type: Approval, # Required. The workflow task type.
   id: Guid, # Required. The workflow task id.
@@ -811,7 +803,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
   createdTime: string (ISO 8601 Format), # Required. The created time.
   lastUpdateTime: string (ISO 8601 Format), # Required. The last update time.
   payload: {
-    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot; | &quot;DSARDelete&quot; | &quot;DSARExport&quot;, # Required. The task payload type.
+    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The task payload type.
     targetValue: string, # Required. The target value of entity which user want to involve workflow to update.
     payload: AnyObject, # Optional. The payload of the task.
   }, # Required. Info and material that helps assignees to take action.
@@ -832,20 +824,13 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 }
 </code>
 </details>
-<details><summary>~+ 2 more JSON objects</summary><details><summary>SimpleTask</summary>Schema for <c>SimpleTask</c>:
+<details><summary>~+ 1 more JSON objects</summary><details><summary>SimpleTask</summary>Schema for <c>SimpleTask</c>:
 <code>{
   taskDetail: {
     taskBody: string, # Required. The simple task body.
     assignedTo: [Guid], # Required. The users or groups were assigned the simple task.
     status: &quot;NotStarted&quot; | &quot;InProgress&quot; | &quot;Completed&quot; | &quot;Canceled&quot;, # Required. Simple task status.
-    changeHistory: [
-      {
-        updatedBy: Guid, # Required.
-        updatedTime: string (ISO 8601 Format), # Required.
-        type: &quot;ApproveApproval&quot; | &quot;RejectApproval&quot; | &quot;Reassign&quot; | &quot;ChangeTaskStatus&quot; | &quot;ClaimTask&quot; | &quot;ReleaseTask&quot;, # Required.
-        change: AnyObject, # Required. The changes made on this task.
-      }
-    ], # Required.
+    changeHistory: [AnyObject], # Required.
   }, # Optional. Workflow simple task details.
   type: SimpleTask, # Required. The workflow task type.
   id: Guid, # Required. The workflow task id.
@@ -856,56 +841,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
   createdTime: string (ISO 8601 Format), # Required. The created time.
   lastUpdateTime: string (ISO 8601 Format), # Required. The last update time.
   payload: {
-    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot; | &quot;DSARDelete&quot; | &quot;DSARExport&quot;, # Required. The task payload type.
-    targetValue: string, # Required. The target value of entity which user want to involve workflow to update.
-    payload: AnyObject, # Optional. The payload of the task.
-  }, # Required. Info and material that helps assignees to take action.
-  reminderInfo: {
-    lastRemindTime: string (ISO 8601 Format), # Optional. The last update time.
-    nextRemindTime: string (ISO 8601 Format), # Required. The next remind time.
-    reminderSettings: AnyObject, # Required. The reminder settings.
-  }, # Optional. Info of task reminder.
-  expiryInfo: {
-    lastExpiryNotificationTime: string (ISO 8601 Format), # Optional. The last expiry notification time.
-    nextExpiryNotificationTime: string (ISO 8601 Format), # Required. The next expiry notification time.
-    expiryTime: string (ISO 8601 Format), # Required. The expiry time.
-    expirySettings: {
-      expireAfter: AnyObject, # Required. The time of expiry.
-      notifyOnExpiration: [Guid], # Optional.
-    }, # Required.
-  }, # Optional. Info of task expiry.
-}
-</code>
-</details>
-<details><summary>DsarTask</summary>Schema for <c>DsarTask</c>:
-<code>{
-  taskDetail: {
-    taskBody: string, # Required. The dsar task body.
-    assignedTo: [Guid], # Required. The users or groups were assigned the dsar task.
-    claimedBy: Guid, # Optional. The user who claimed the dsar task.
-    approvers: [Guid], # Required. The list of approvers.
-    dsarId: Guid, # Required. The dsar id.
-    dsarTaskId: Guid, # Required. The dsar task id.
-    status: &quot;NotStarted&quot; | &quot;InProgress&quot; | &quot;Completed&quot; | &quot;NotApplicable&quot; | &quot;Approved&quot; | &quot;Reopened&quot;, # Required. The dsar task status.
-    changeHistory: [
-      {
-        updatedBy: Guid, # Required.
-        updatedTime: string (ISO 8601 Format), # Required.
-        type: &quot;ApproveApproval&quot; | &quot;RejectApproval&quot; | &quot;Reassign&quot; | &quot;ChangeTaskStatus&quot; | &quot;ClaimTask&quot; | &quot;ReleaseTask&quot;, # Required.
-        change: AnyObject, # Required. The changes made on this task.
-      }
-    ], # Required.
-  }, # Optional. Workflow dsar task details.
-  type: DsarTask, # Required. The workflow task type.
-  id: Guid, # Required. The workflow task id.
-  title: string, # Optional. The workflow task title.
-  workflowRunId: Guid, # Required. The workflow run id.
-  workflowId: Guid, # Required. The workflow id.
-  requestor: Guid, # Required. The person who submitted the user request.
-  createdTime: string (ISO 8601 Format), # Required. The created time.
-  lastUpdateTime: string (ISO 8601 Format), # Required. The last update time.
-  payload: {
-    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot; | &quot;DSARDelete&quot; | &quot;DSARExport&quot;, # Required. The task payload type.
+    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The task payload type.
     targetValue: string, # Required. The target value of entity which user want to involve workflow to update.
     payload: AnyObject, # Optional. The payload of the task.
   }, # Required. Info and material that helps assignees to take action.
@@ -973,7 +909,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
   approvalDetail: {
     approvalType: &quot;PendingOnAny&quot; | &quot;PendingOnAll&quot;, # Required. The approval type of an approval task.
     status: &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Canceled&quot;, # Required. The status of an approval task.
-    approvers: AnyObject, # Required. The list of approvers with reply.
+    approvers: Dictionary&lt;string, ApproverResponse&gt;, # Required. The list of approvers with reply.
   }, # Optional. The approval task details
   type: Approval, # Required. The workflow task type.
   id: Guid, # Required. The workflow task id.
@@ -984,7 +920,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
   createdTime: string (ISO 8601 Format), # Required. The created time.
   lastUpdateTime: string (ISO 8601 Format), # Required. The last update time.
   payload: {
-    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot; | &quot;DSARDelete&quot; | &quot;DSARExport&quot;, # Required. The task payload type.
+    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The task payload type.
     targetValue: string, # Required. The target value of entity which user want to involve workflow to update.
     payload: AnyObject, # Optional. The payload of the task.
   }, # Required. Info and material that helps assignees to take action.
@@ -1005,20 +941,13 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 }
 </code>
 </details>
-<details><summary>~+ 2 more JSON objects</summary><details><summary>SimpleTask</summary>Schema for <c>SimpleTask</c>:
+<details><summary>~+ 1 more JSON objects</summary><details><summary>SimpleTask</summary>Schema for <c>SimpleTask</c>:
 <code>{
   taskDetail: {
     taskBody: string, # Required. The simple task body.
     assignedTo: [Guid], # Required. The users or groups were assigned the simple task.
     status: &quot;NotStarted&quot; | &quot;InProgress&quot; | &quot;Completed&quot; | &quot;Canceled&quot;, # Required. Simple task status.
-    changeHistory: [
-      {
-        updatedBy: Guid, # Required.
-        updatedTime: string (ISO 8601 Format), # Required.
-        type: &quot;ApproveApproval&quot; | &quot;RejectApproval&quot; | &quot;Reassign&quot; | &quot;ChangeTaskStatus&quot; | &quot;ClaimTask&quot; | &quot;ReleaseTask&quot;, # Required.
-        change: AnyObject, # Required. The changes made on this task.
-      }
-    ], # Required.
+    changeHistory: [AnyObject], # Required.
   }, # Optional. Workflow simple task details.
   type: SimpleTask, # Required. The workflow task type.
   id: Guid, # Required. The workflow task id.
@@ -1029,56 +958,7 @@ This method takes one of the JSON objects below as a payload. Please select a JS
   createdTime: string (ISO 8601 Format), # Required. The created time.
   lastUpdateTime: string (ISO 8601 Format), # Required. The last update time.
   payload: {
-    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot; | &quot;DSARDelete&quot; | &quot;DSARExport&quot;, # Required. The task payload type.
-    targetValue: string, # Required. The target value of entity which user want to involve workflow to update.
-    payload: AnyObject, # Optional. The payload of the task.
-  }, # Required. Info and material that helps assignees to take action.
-  reminderInfo: {
-    lastRemindTime: string (ISO 8601 Format), # Optional. The last update time.
-    nextRemindTime: string (ISO 8601 Format), # Required. The next remind time.
-    reminderSettings: AnyObject, # Required. The reminder settings.
-  }, # Optional. Info of task reminder.
-  expiryInfo: {
-    lastExpiryNotificationTime: string (ISO 8601 Format), # Optional. The last expiry notification time.
-    nextExpiryNotificationTime: string (ISO 8601 Format), # Required. The next expiry notification time.
-    expiryTime: string (ISO 8601 Format), # Required. The expiry time.
-    expirySettings: {
-      expireAfter: AnyObject, # Required. The time of expiry.
-      notifyOnExpiration: [Guid], # Optional.
-    }, # Required.
-  }, # Optional. Info of task expiry.
-}
-</code>
-</details>
-<details><summary>DsarTask</summary>Schema for <c>DsarTask</c>:
-<code>{
-  taskDetail: {
-    taskBody: string, # Required. The dsar task body.
-    assignedTo: [Guid], # Required. The users or groups were assigned the dsar task.
-    claimedBy: Guid, # Optional. The user who claimed the dsar task.
-    approvers: [Guid], # Required. The list of approvers.
-    dsarId: Guid, # Required. The dsar id.
-    dsarTaskId: Guid, # Required. The dsar task id.
-    status: &quot;NotStarted&quot; | &quot;InProgress&quot; | &quot;Completed&quot; | &quot;NotApplicable&quot; | &quot;Approved&quot; | &quot;Reopened&quot;, # Required. The dsar task status.
-    changeHistory: [
-      {
-        updatedBy: Guid, # Required.
-        updatedTime: string (ISO 8601 Format), # Required.
-        type: &quot;ApproveApproval&quot; | &quot;RejectApproval&quot; | &quot;Reassign&quot; | &quot;ChangeTaskStatus&quot; | &quot;ClaimTask&quot; | &quot;ReleaseTask&quot;, # Required.
-        change: AnyObject, # Required. The changes made on this task.
-      }
-    ], # Required.
-  }, # Optional. Workflow dsar task details.
-  type: DsarTask, # Required. The workflow task type.
-  id: Guid, # Required. The workflow task id.
-  title: string, # Optional. The workflow task title.
-  workflowRunId: Guid, # Required. The workflow run id.
-  workflowId: Guid, # Required. The workflow id.
-  requestor: Guid, # Required. The person who submitted the user request.
-  createdTime: string (ISO 8601 Format), # Required. The created time.
-  lastUpdateTime: string (ISO 8601 Format), # Required. The last update time.
-  payload: {
-    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot; | &quot;DSARDelete&quot; | &quot;DSARExport&quot;, # Required. The task payload type.
+    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The task payload type.
     targetValue: string, # Required. The target value of entity which user want to involve workflow to update.
     payload: AnyObject, # Optional. The payload of the task.
   }, # Required. Info and material that helps assignees to take action.
@@ -1363,33 +1243,33 @@ Schema for <c>ReassignCommand</c>:
 
 </remarks>
     </member>
-    <member name="UpdateTaskRequestAsync(Guid,RequestContent,RequestContext)">
+    <member name="UpdateTaskStatusAsync(Guid,RequestContent,RequestContext)">
 <example>
-This sample shows how to call UpdateTaskRequestAsync with required parameters and request content.
+This sample shows how to call UpdateTaskStatusAsync with required parameters and request content.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
 var data = new {
-    newStatus = "Not Started",
+    newStatus = "NotStarted",
 };
 
-Response response = await client.UpdateTaskRequestAsync(Guid.NewGuid(), RequestContent.Create(data));
+Response response = await client.UpdateTaskStatusAsync(Guid.NewGuid(), RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
-This sample shows how to call UpdateTaskRequestAsync with all parameters and request content.
+This sample shows how to call UpdateTaskStatusAsync with all parameters and request content.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
 var data = new {
-    newStatus = "Not Started",
+    newStatus = "NotStarted",
     comment = "<comment>",
 };
 
-Response response = await client.UpdateTaskRequestAsync(Guid.NewGuid(), RequestContent.Create(data));
+Response response = await client.UpdateTaskStatusAsync(Guid.NewGuid(), RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -1400,40 +1280,40 @@ Request Body:
 
 Schema for <c>TaskUpdateCommand</c>:
 <code>{
-  newStatus: &quot;Not Started&quot; | &quot;In Progress&quot; | &quot;Completed&quot; | &quot;Canceled&quot;, # Required. The new status will be used to update the task.
+  newStatus: &quot;NotStarted&quot; | &quot;InProgress&quot; | &quot;Completed&quot; | &quot;Canceled&quot;, # Required. The new status will be used to update the task.
   comment: string, # Optional. The comment when update a task.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="UpdateTaskRequest(Guid,RequestContent,RequestContext)">
+    <member name="UpdateTaskStatus(Guid,RequestContent,RequestContext)">
 <example>
-This sample shows how to call UpdateTaskRequest with required parameters and request content.
+This sample shows how to call UpdateTaskStatus with required parameters and request content.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
 var data = new {
-    newStatus = "Not Started",
+    newStatus = "NotStarted",
 };
 
-Response response = client.UpdateTaskRequest(Guid.NewGuid(), RequestContent.Create(data));
+Response response = client.UpdateTaskStatus(Guid.NewGuid(), RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
-This sample shows how to call UpdateTaskRequest with all parameters and request content.
+This sample shows how to call UpdateTaskStatus with all parameters and request content.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
 var data = new {
-    newStatus = "Not Started",
+    newStatus = "NotStarted",
     comment = "<comment>",
 };
 
-Response response = client.UpdateTaskRequest(Guid.NewGuid(), RequestContent.Create(data));
+Response response = client.UpdateTaskStatus(Guid.NewGuid(), RequestContent.Create(data));
 Console.WriteLine(response.Status);
 ]]></code>
 </example>
@@ -1444,168 +1324,8 @@ Request Body:
 
 Schema for <c>TaskUpdateCommand</c>:
 <code>{
-  newStatus: &quot;Not Started&quot; | &quot;In Progress&quot; | &quot;Completed&quot; | &quot;Canceled&quot;, # Required. The new status will be used to update the task.
+  newStatus: &quot;NotStarted&quot; | &quot;InProgress&quot; | &quot;Completed&quot; | &quot;Canceled&quot;, # Required. The new status will be used to update the task.
   comment: string, # Optional. The comment when update a task.
-}
-</code>
-
-</remarks>
-    </member>
-    <member name="ClaimDsarTaskRequestAsync(Guid,RequestContent,RequestContext)">
-<example>
-This sample shows how to call ClaimDsarTaskRequestAsync with required parameters.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewWorkflowServiceClient(endpoint, credential);
-
-var data = new {};
-
-Response response = await client.ClaimDsarTaskRequestAsync(Guid.NewGuid(), RequestContent.Create(data));
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call ClaimDsarTaskRequestAsync with all parameters and request content.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewWorkflowServiceClient(endpoint, credential);
-
-var data = new {
-    comment = "<comment>",
-};
-
-Response response = await client.ClaimDsarTaskRequestAsync(Guid.NewGuid(), RequestContent.Create(data));
-Console.WriteLine(response.Status);
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>DsarTaskClaimCommand</c>:
-<code>{
-  comment: string, # Optional. The comment when claiming a DSAR task.
-}
-</code>
-
-</remarks>
-    </member>
-    <member name="ClaimDsarTaskRequest(Guid,RequestContent,RequestContext)">
-<example>
-This sample shows how to call ClaimDsarTaskRequest with required parameters.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewWorkflowServiceClient(endpoint, credential);
-
-var data = new {};
-
-Response response = client.ClaimDsarTaskRequest(Guid.NewGuid(), RequestContent.Create(data));
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call ClaimDsarTaskRequest with all parameters and request content.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewWorkflowServiceClient(endpoint, credential);
-
-var data = new {
-    comment = "<comment>",
-};
-
-Response response = client.ClaimDsarTaskRequest(Guid.NewGuid(), RequestContent.Create(data));
-Console.WriteLine(response.Status);
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>DsarTaskClaimCommand</c>:
-<code>{
-  comment: string, # Optional. The comment when claiming a DSAR task.
-}
-</code>
-
-</remarks>
-    </member>
-    <member name="ReleaseDsarTaskRequestAsync(Guid,RequestContent,RequestContext)">
-<example>
-This sample shows how to call ReleaseDsarTaskRequestAsync with required parameters.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewWorkflowServiceClient(endpoint, credential);
-
-var data = new {};
-
-Response response = await client.ReleaseDsarTaskRequestAsync(Guid.NewGuid(), RequestContent.Create(data));
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call ReleaseDsarTaskRequestAsync with all parameters and request content.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewWorkflowServiceClient(endpoint, credential);
-
-var data = new {
-    comment = "<comment>",
-};
-
-Response response = await client.ReleaseDsarTaskRequestAsync(Guid.NewGuid(), RequestContent.Create(data));
-Console.WriteLine(response.Status);
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>DsarTaskReleaseCommand</c>:
-<code>{
-  comment: string, # Optional. The comment when releasing a DSAR task.
-}
-</code>
-
-</remarks>
-    </member>
-    <member name="ReleaseDsarTaskRequest(Guid,RequestContent,RequestContext)">
-<example>
-This sample shows how to call ReleaseDsarTaskRequest with required parameters.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewWorkflowServiceClient(endpoint, credential);
-
-var data = new {};
-
-Response response = client.ReleaseDsarTaskRequest(Guid.NewGuid(), RequestContent.Create(data));
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call ReleaseDsarTaskRequest with all parameters and request content.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new PurviewWorkflowServiceClient(endpoint, credential);
-
-var data = new {
-    comment = "<comment>",
-};
-
-Response response = client.ReleaseDsarTaskRequest(Guid.NewGuid(), RequestContent.Create(data));
-Console.WriteLine(response.Status);
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the request payload.
-
-Request Body:
-
-Schema for <c>DsarTaskReleaseCommand</c>:
-<code>{
-  comment: string, # Optional. The comment when releasing a DSAR task.
 }
 </code>
 
@@ -1647,16 +1367,16 @@ Schema for <c>WorkflowMetadataListValue</c>:
   id: Guid, # Required. The id of workflow.
   triggers: [
     {
-      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot; | &quot;when_dsar_deletion_is_requested&quot; | &quot;when_dsar_export_is_requested&quot;, # Required.
+      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot;, # Required.
       underGlossaryHierarchy: string, # Optional. Glossary term hierarchy path.
       underCollection: string, # Optional. The collection name.
       underGlossary: string, # Optional. The glossary guid.
     }
   ], # Required. It describes under what condition a workflow will run.  
-  createdTime: string (ISO 8601 Format), # Required. The created time of workflow.
-  createdBy: string, # Required. The person who created the workflow.
-  lastUpdateTime: string (ISO 8601 Format), # Required. The last update time.
-  updatedBy: string, # Required. The person who updated the workflow.
+  createdTime: string (ISO 8601 Format), # Optional. The created time of workflow.
+  createdBy: string, # Optional. The person who created the workflow.
+  lastUpdateTime: string (ISO 8601 Format), # Optional. The last update time.
+  updatedBy: string, # Optional. The person who updated the workflow.
   name: string, # Required. The name of a workflow.
   isEnabled: boolean, # Required. Whether the workflow is enabled or not.
   description: string, # Required. Description of a workflow.
@@ -1701,16 +1421,16 @@ Schema for <c>WorkflowMetadataListValue</c>:
   id: Guid, # Required. The id of workflow.
   triggers: [
     {
-      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot; | &quot;when_dsar_deletion_is_requested&quot; | &quot;when_dsar_export_is_requested&quot;, # Required.
+      type: &quot;when_term_creation_is_requested&quot; | &quot;when_term_deletion_is_requested&quot; | &quot;when_term_update_is_requested&quot; | &quot;when_terms_import_is_requested&quot; | &quot;when_data_access_grant_is_requested&quot; | &quot;when_asset_update_is_requested&quot;, # Required.
       underGlossaryHierarchy: string, # Optional. Glossary term hierarchy path.
       underCollection: string, # Optional. The collection name.
       underGlossary: string, # Optional. The glossary guid.
     }
   ], # Required. It describes under what condition a workflow will run.  
-  createdTime: string (ISO 8601 Format), # Required. The created time of workflow.
-  createdBy: string, # Required. The person who created the workflow.
-  lastUpdateTime: string (ISO 8601 Format), # Required. The last update time.
-  updatedBy: string, # Required. The person who updated the workflow.
+  createdTime: string (ISO 8601 Format), # Optional. The created time of workflow.
+  createdBy: string, # Optional. The person who created the workflow.
+  lastUpdateTime: string (ISO 8601 Format), # Optional. The last update time.
+  updatedBy: string, # Optional. The person who updated the workflow.
   name: string, # Required. The name of a workflow.
   isEnabled: boolean, # Required. Whether the workflow is enabled or not.
   description: string, # Required. Description of a workflow.
@@ -1719,7 +1439,7 @@ Schema for <c>WorkflowMetadataListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflowRunsAsync(String,String,IEnumerable,IEnumerable,IEnumerable,Int32,RequestContext)">
+    <member name="GetWorkflowRunsAsync(String,String,IEnumerable,IEnumerable,Int32,RequestContext)">
 <example>
 This sample shows how to call GetWorkflowRunsAsync and parse the result.
 <code><![CDATA[
@@ -1745,7 +1465,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-await foreach (var data in client.GetWorkflowRunsAsync("<timeWindow>", "<orderby>", new String[]{"<runStatuses>"}, new String[]{"<userRequestIds>"}, new String[]{"<workflowIds>"}, 1234))
+await foreach (var data in client.GetWorkflowRunsAsync("<timeWindow>", "<orderby>", new String[]{"<runStatuses>"}, new String[]{"<workflowIds>"}, 1234))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -1775,7 +1495,7 @@ Schema for <c>WorkflowRunListValue</c>:
   requestor: Guid, # Required. The person who submitted the user request.
   userRequestId: Guid, # Optional. The user request id.
   runPayload: {
-    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot; | &quot;DSARDelete&quot; | &quot;DSARExport&quot;, # Required. The workflow run payload type.
+    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The workflow run payload type.
     targetValue: string, # Required. The target value which need involve workflow to update.
   }, # Required. The input of a workflow run. Align with operation in user request. 
   status: &quot;NotStarted&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Completed&quot; | &quot;Canceling&quot; | &quot;CancellationFailed&quot; | &quot;Canceled&quot;, # Required. The status.
@@ -1787,7 +1507,7 @@ Schema for <c>WorkflowRunListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetWorkflowRuns(String,String,IEnumerable,IEnumerable,IEnumerable,Int32,RequestContext)">
+    <member name="GetWorkflowRuns(String,String,IEnumerable,IEnumerable,Int32,RequestContext)">
 <example>
 This sample shows how to call GetWorkflowRuns and parse the result.
 <code><![CDATA[
@@ -1813,7 +1533,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-foreach (var data in client.GetWorkflowRuns("<timeWindow>", "<orderby>", new String[]{"<runStatuses>"}, new String[]{"<userRequestIds>"}, new String[]{"<workflowIds>"}, 1234))
+foreach (var data in client.GetWorkflowRuns("<timeWindow>", "<orderby>", new String[]{"<runStatuses>"}, new String[]{"<workflowIds>"}, 1234))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -1843,7 +1563,7 @@ Schema for <c>WorkflowRunListValue</c>:
   requestor: Guid, # Required. The person who submitted the user request.
   userRequestId: Guid, # Optional. The user request id.
   runPayload: {
-    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot; | &quot;DSARDelete&quot; | &quot;DSARExport&quot;, # Required. The workflow run payload type.
+    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The workflow run payload type.
     targetValue: string, # Required. The target value which need involve workflow to update.
   }, # Required. The input of a workflow run. Align with operation in user request. 
   status: &quot;NotStarted&quot; | &quot;InProgress&quot; | &quot;Failed&quot; | &quot;Completed&quot; | &quot;Canceling&quot; | &quot;CancellationFailed&quot; | &quot;Canceled&quot;, # Required. The status.
@@ -1915,7 +1635,7 @@ Response Body:
 
 Schema for <c>TasksListValue</c>:
 <code>{
-  type: &quot;Approval&quot; | &quot;SimpleTask&quot; | &quot;DsarTask&quot; | &quot;approval&quot; | &quot;simpleTask&quot; | &quot;dsarTask&quot;, # Required. The workflow task type.
+  type: &quot;Approval&quot; | &quot;SimpleTask&quot; | &quot;approval&quot; | &quot;simpleTask&quot;, # Required. The workflow task type.
   id: Guid, # Required. The workflow task id.
   title: string, # Optional. The workflow task title.
   workflowRunId: Guid, # Required. The workflow run id.
@@ -1924,7 +1644,7 @@ Schema for <c>TasksListValue</c>:
   createdTime: string (ISO 8601 Format), # Required. The created time.
   lastUpdateTime: string (ISO 8601 Format), # Required. The last update time.
   payload: {
-    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot; | &quot;DSARDelete&quot; | &quot;DSARExport&quot;, # Required. The task payload type.
+    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The task payload type.
     targetValue: string, # Required. The target value of entity which user want to involve workflow to update.
     payload: AnyObject, # Optional. The payload of the task.
   }, # Required. Info and material that helps assignees to take action.
@@ -2007,7 +1727,7 @@ Response Body:
 
 Schema for <c>TasksListValue</c>:
 <code>{
-  type: &quot;Approval&quot; | &quot;SimpleTask&quot; | &quot;DsarTask&quot; | &quot;approval&quot; | &quot;simpleTask&quot; | &quot;dsarTask&quot;, # Required. The workflow task type.
+  type: &quot;Approval&quot; | &quot;SimpleTask&quot; | &quot;approval&quot; | &quot;simpleTask&quot;, # Required. The workflow task type.
   id: Guid, # Required. The workflow task id.
   title: string, # Optional. The workflow task title.
   workflowRunId: Guid, # Required. The workflow run id.
@@ -2016,7 +1736,7 @@ Schema for <c>TasksListValue</c>:
   createdTime: string (ISO 8601 Format), # Required. The created time.
   lastUpdateTime: string (ISO 8601 Format), # Required. The last update time.
   payload: {
-    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot; | &quot;DSARDelete&quot; | &quot;DSARExport&quot;, # Required. The task payload type.
+    type: &quot;CreateTerm&quot; | &quot;UpdateTerm&quot; | &quot;DeleteTerm&quot; | &quot;ImportTerms&quot; | &quot;UpdateAsset&quot; | &quot;GrantDataAccess&quot;, # Required. The task payload type.
     targetValue: string, # Required. The target value of entity which user want to involve workflow to update.
     payload: AnyObject, # Optional. The payload of the task.
   }, # Required. Info and material that helps assignees to take action.
