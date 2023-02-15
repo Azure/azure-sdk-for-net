@@ -1,20 +1,20 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0 (2023-02-16)
 
 ### Features Added
 
 Bumps the api-version
 
-- Compute RP to `2022-08-01` (AvailabilitySets, VirtualMachines, VirtualMachineScaleSets, etc)
+- Compute RP to `2022-11-01` (AvailabilitySets, VirtualMachines, VirtualMachineScaleSets, etc)
 - Disk RP to `2022-07-02` (ManagedDisks, Snapshots, etc)
 - Gallery RP to `2022-03-03` (Galleries, CommunityGalleries, etc)
-
-### Breaking Changes
-
-### Bugs Fixed
+- CloudService RP to `2022-09-04` (CloudServices, etc)
 
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
 ## 1.0.1 (2022-11-29)
 
