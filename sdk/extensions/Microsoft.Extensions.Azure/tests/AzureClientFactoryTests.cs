@@ -557,10 +557,10 @@ namespace Azure.Core.Extensions.Tests
             var disposableClient = disposableFactory.CreateClient(nameof(DisposableClient));
 
             var asyncDisposableFactory = provider.GetRequiredService<IAzureClientFactory<AsyncDisposableClient>>();
-            var asyncDispsableClient = asyncDisposableFactory.CreateClient(nameof(AsyncDisposableClient));
+            var asyncDisposableClient = asyncDisposableFactory.CreateClient(nameof(AsyncDisposableClient));
 
             var bothDisposableFactory = provider.GetRequiredService<IAzureClientFactory<BothDisposableClient>>();
-            var bothDispsableClient = bothDisposableFactory.CreateClient(nameof(BothDisposableClient));
+            var bothDisposableClient = bothDisposableFactory.CreateClient(nameof(BothDisposableClient));
 
             Assert.DoesNotThrow(provider.Dispose);
 
@@ -677,10 +677,10 @@ namespace Azure.Core.Extensions.Tests
             var disposableClient = disposableFactory.CreateClient(nameof(DisposableClient));
 
             var asyncDisposableFactory = provider.GetRequiredService<IAzureClientFactory<AsyncDisposableClient>>();
-            var asyncDispsableClient = asyncDisposableFactory.CreateClient(nameof(AsyncDisposableClient));
+            var asyncDisposableClient = asyncDisposableFactory.CreateClient(nameof(AsyncDisposableClient));
 
             var bothDisposableFactory = provider.GetRequiredService<IAzureClientFactory<BothDisposableClient>>();
-            var bothDispsableClient = bothDisposableFactory.CreateClient(nameof(BothDisposableClient));
+            var bothDisposableClient = bothDisposableFactory.CreateClient(nameof(BothDisposableClient));
 
             await provider.DisposeAsync();
 
