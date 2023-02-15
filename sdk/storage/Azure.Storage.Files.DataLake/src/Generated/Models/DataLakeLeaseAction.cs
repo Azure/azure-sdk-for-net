@@ -7,8 +7,8 @@
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    /// <summary> The LeaseAction. </summary>
-    public enum LeaseAction
+    /// <summary> The DataLakeLeaseAction. </summary>
+    public enum DataLakeLeaseAction
     {
         /// <summary> acquire. </summary>
         Acquire,
