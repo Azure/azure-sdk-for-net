@@ -427,6 +427,13 @@ namespace Azure.Monitor.Ingestion
                         shouldAbort = true;
                         AddException(ref exceptions, exceptionEventHandler);
                     }
+                    // Cancel all future Uploads if user triggers CancellationToken
+                    // if exception was not thrown on line 400 - token could still be cancelled
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        shouldAbort = true;
+                        AddException(ref exceptions, new OperationCanceledException());
+                    }
                 }
             }
             if (exceptions?.Count > 0)
