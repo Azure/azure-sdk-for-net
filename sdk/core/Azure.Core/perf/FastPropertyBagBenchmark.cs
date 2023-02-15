@@ -1,383 +1,346 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.TestFramework;
+//|           Categories | count |                           Method |         Mean |      Error |     StdDev | Ratio |  Gen 0 |  Gen 1 | Allocated |
+//|--------------------- |------ |--------------------------------- |-------------:|-----------:|-----------:|------:|-------:|-------:|----------:|
+//|                  Add |     2 |                       Dictionary |    58.775 ns |  0.3567 ns |  0.3162 ns |  1.00 | 0.0023 |      - |     216 B |
+//|                  Add |     2 |   ArrayBackedPropertyBag Dispose |     7.994 ns |  0.0537 ns |  0.0476 ns |  0.14 |      - |      - |         - |
+//|                  Add |     2 |           ArrayBackedPropertyBag |     7.648 ns |  0.0441 ns |  0.0413 ns |  0.13 |      - |      - |         - |
+//|                      |       |                                  |              |            |            |       |        |        |           |
+//|                  Add |    10 |                       Dictionary |   298.463 ns |  1.4606 ns |  1.2948 ns |  1.00 | 0.0105 |      - |     992 B |
+//|                  Add |    10 |   ArrayBackedPropertyBag Dispose |   109.127 ns |  0.1198 ns |  0.1001 ns |  0.37 |      - |      - |         - |
+//|                  Add |    10 |           ArrayBackedPropertyBag |   112.202 ns |  0.6289 ns |  0.5575 ns |  0.38 | 0.0029 |      - |     280 B |
+//|                      |       |                                  |              |            |            |       |        |        |           |
+//|                  Add |    30 |                       Dictionary |   679.226 ns |  3.4139 ns |  3.0264 ns |  1.00 | 0.0219 |      - |   2,080 B |
+//|                  Add |    30 |   ArrayBackedPropertyBag Dispose |   495.500 ns |  0.8588 ns |  0.7171 ns |  0.73 |      - |      - |         - |
+//|                  Add |    30 |           ArrayBackedPropertyBag |   549.329 ns |  2.3681 ns |  1.9775 ns |  0.81 | 0.0048 |      - |     536 B |
+//|                      |       |                                  |              |            |            |       |        |        |           |
+//|                  Add |   100 |                       Dictionary | 2,607.939 ns | 16.1310 ns | 15.0889 ns |  1.00 | 0.1068 | 0.0038 |  10,192 B |
+//|                  Add |   100 |   ArrayBackedPropertyBag Dispose | 3,958.022 ns |  2.0028 ns |  1.8734 ns |  1.52 |      - |      - |         - |
+//|                  Add |   100 |           ArrayBackedPropertyBag | 4,137.429 ns |  8.2181 ns |  6.8625 ns |  1.59 | 0.0153 |      - |   2,072 B |
+//|                      |       |                                  |              |            |            |       |        |        |           |
+//|         AddAndSearch |     2 |                       Dictionary |    69.193 ns |  0.0814 ns |  0.0635 ns |  1.00 | 0.0023 |      - |     216 B |
+//|         AddAndSearch |     2 |                            Array |    44.743 ns |  0.0486 ns |  0.0380 ns |  0.65 |      - |      - |         - |
+//|         AddAndSearch |     2 |   ArrayBackedPropertyBag Dispose |    12.617 ns |  0.0739 ns |  0.0691 ns |  0.18 |      - |      - |         - |
+//|         AddAndSearch |     2 |           ArrayBackedPropertyBag |    14.015 ns |  0.0910 ns |  0.0807 ns |  0.20 |      - |      - |         - |
+//|                      |       |                                  |              |            |            |       |        |        |           |
+//|         AddAndSearch |    10 |                       Dictionary |   354.885 ns |  0.5223 ns |  0.4361 ns |  1.00 | 0.0105 |      - |     992 B |
+//|         AddAndSearch |    10 |                            Array |   140.876 ns |  0.2853 ns |  0.2529 ns |  0.40 |      - |      - |         - |
+//|         AddAndSearch |    10 |   ArrayBackedPropertyBag Dispose |   167.121 ns |  0.4608 ns |  0.3848 ns |  0.47 |      - |      - |         - |
+//|         AddAndSearch |    10 |           ArrayBackedPropertyBag |   174.539 ns |  0.2559 ns |  0.2137 ns |  0.49 | 0.0029 |      - |     280 B |
+//|                      |       |                                  |              |            |            |       |        |        |           |
+//|         AddAndSearch |    30 |                       Dictionary |   842.348 ns |  2.0505 ns |  1.7122 ns |  1.00 | 0.0219 |      - |   2,080 B |
+//|         AddAndSearch |    30 |                            Array |   783.189 ns |  1.6935 ns |  1.4141 ns |  0.93 |      - |      - |         - |
+//|         AddAndSearch |    30 |   ArrayBackedPropertyBag Dispose | 1,062.949 ns |  4.1877 ns |  3.7123 ns |  1.26 |      - |      - |         - |
+//|         AddAndSearch |    30 |           ArrayBackedPropertyBag |   983.893 ns |  5.6787 ns |  5.3118 ns |  1.17 | 0.0038 |      - |     536 B |
+//|                      |       |                                  |              |            |            |       |        |        |           |
+//|         AddAndSearch |   100 |                       Dictionary | 3,205.095 ns | 14.6559 ns | 12.9920 ns |  1.00 | 0.1068 |      - |  10,192 B |
+//|         AddAndSearch |   100 |                            Array | 8,188.936 ns | 26.7824 ns | 25.0522 ns |  2.56 |      - |      - |         - |
+//|         AddAndSearch |   100 |   ArrayBackedPropertyBag Dispose | 9,617.326 ns |  6.4288 ns |  5.0192 ns |  3.00 |      - |      - |         - |
+//|         AddAndSearch |   100 |           ArrayBackedPropertyBag | 9,248.835 ns |  8.1260 ns |  7.6011 ns |  2.89 | 0.0153 |      - |   2,072 B |
+//|                      |       |                                  |              |            |            |       |        |        |           |
+//|            AddAndGet |    30 |                       Dictionary |   830.138 ns |  1.3406 ns |  1.0466 ns |  1.00 | 0.0219 |      - |   2,080 B |
+//|            AddAndGet |    30 |           ArrayBackedPropertyBag |   960.831 ns |  0.8947 ns |  0.6985 ns |  1.16 | 0.0038 |      - |     536 B |
+//|                      |       |                                  |              |            |            |       |        |        |           |
+//|            AddAndGet |   100 |                       Dictionary | 3,163.041 ns |  9.0416 ns |  8.4575 ns |  1.00 | 0.1068 |      - |  10,192 B |
+//|            AddAndGet |   100 |           ArrayBackedPropertyBag | 8,256.591 ns | 10.8845 ns |  9.0890 ns |  2.61 | 0.0153 |      - |   2,072 B |
+//|                      |       |                                  |              |            |            |       |        |        |           |
+//|   AddAndDeleteSingle |    10 |                       Dictionary |   301.349 ns |  1.5019 ns |  1.4048 ns |  1.00 | 0.0105 |      - |     992 B |
+//|   AddAndDeleteSingle |    10 |           ArrayBackedPropertyBag |   120.107 ns |  0.4251 ns |  0.3769 ns |  0.40 | 0.0029 |      - |     280 B |
+//|                      |       |                                  |              |            |            |       |        |        |           |
+//|   AddAndDeleteSingle |    30 |                       Dictionary |   682.782 ns |  1.2292 ns |  1.0264 ns |  1.00 | 0.0219 |      - |   2,080 B |
+//|   AddAndDeleteSingle |    30 |           ArrayBackedPropertyBag |   537.276 ns |  0.6337 ns |  0.4947 ns |  0.79 | 0.0048 |      - |     536 B |
+//|                      |       |                                  |              |            |            |       |        |        |           |
+//|   AddAndDeleteSingle |    50 |                       Dictionary | 1,267.437 ns |  7.6331 ns |  6.7666 ns |  1.00 | 0.0477 |      - |   4,624 B |
+//|   AddAndDeleteSingle |    50 |           ArrayBackedPropertyBag | 1,285.096 ns |  3.6396 ns |  3.4045 ns |  1.01 | 0.0095 |      - |   1,048 B |
+//|                      |       |                                  |              |            |            |       |        |        |           |
+//| AddAndDeleteMultiple |    10 |                       Dictionary |   324.364 ns |  1.4163 ns |  1.2555 ns |  1.00 | 0.0105 |      - |     992 B |
+//| AddAndDeleteMultiple |    10 |           ArrayBackedPropertyBag |   179.908 ns |  0.4543 ns |  0.3794 ns |  0.55 | 0.0029 |      - |     280 B |
+//|                      |       |                                  |              |            |            |       |        |        |           |
+//| AddAndDeleteMultiple |    30 |                       Dictionary |   767.497 ns |  2.3824 ns |  2.1120 ns |  1.00 | 0.0219 |      - |   2,080 B |
+//| AddAndDeleteMultiple |    30 |           ArrayBackedPropertyBag |   746.435 ns |  2.1788 ns |  2.0381 ns |  0.97 | 0.0048 |      - |     536 B |
+//|                      |       |                                  |              |            |            |       |        |        |           |
+//| AddAndDeleteMultiple |    50 |                       Dictionary | 1,403.626 ns |  6.2522 ns |  5.5424 ns |  1.00 | 0.0477 |      - |   4,624 B |
+//| AddAndDeleteMultiple |    50 |           ArrayBackedPropertyBag | 1,803.574 ns |  6.2322 ns |  5.2042 ns |  1.28 | 0.0076 |      - |   1,048 B |
+
+using System;
+using System.Buffers;
+using System.Collections.Generic;
+using System.Linq;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Diagnosers;
+using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Jobs;
 
 namespace Azure.Core.Perf
 {
     [MemoryDiagnoser]
-    [SimpleJob(RuntimeMoniker.Net462)]
-    [SimpleJob(RuntimeMoniker.Net60, baseline: true)]
+    [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
+    [CategoriesColumn]
+    [SimpleJob(RuntimeMoniker.Net60)]
     public class FastPropertyBagBenchmark
     {
-        private int readLoops = 30;
-        private static MockRequest _req = new();
+        private ulong[] _typeHandles;
+        private object[] _values;
+        private Type[] _types;
+
+        [GlobalSetup]
+        public void Setup()
+        {
+            _types = typeof(object).Assembly.ExportedTypes.Take(200).ToArray();
+            _typeHandles = _types.Select(t => (ulong)t.TypeHandle.Value).ToArray();
+            _values = _types.Select((_, i) => (object)new[] { i }).ToArray();
+        }
+
+        [Benchmark(Baseline = true)]
+        [BenchmarkCategory("Add")]
+        [Arguments(2)]
+        [Arguments(10)]
+        [Arguments(30)]
+        [Arguments(100)]
+        public Dictionary<ulong, object> Add_Dictionary(int count)
+        {
+            var dictionary = new Dictionary<ulong, object>();
+            for (int i = 0; i < count; i++)
+            {
+                dictionary[_typeHandles[i]] = _values[i];
+            }
+            return dictionary;
+        }
 
         [Benchmark]
-        // [Arguments(1)]
+        [BenchmarkCategory("Add")]
         [Arguments(2)]
-        // [Arguments(3)]
-        [Arguments(5)]
-        // [Arguments(10)]
+        [Arguments(10)]
         [Arguments(30)]
-        public void ArrayBackedPropertyBagPool(int items)
+        [Arguments(100)]
+        public void Add_ArrayBackedPropertyBag(int count)
         {
-            object val1;
-            object val2;
-            object val3;
-            object val4;
-            object val5;
-            object val6;
-            object val7;
-            object val8;
-            object val9;
-            object val10;
-            object val11;
-            object val12;
-            object val13;
-            object val14;
-            object val15;
-            object val16;
-            object val17;
-            object val18;
-            object val19;
-            object val20;
-            object val21;
-            object val22;
-            object val23;
-            object val24;
-            object val25;
-            object val26;
-            object val27;
-            object val28;
-            object val29;
-            object val30;
-
-            using HttpMessage message = new HttpMessage(_req, new ResponseClassifier());
-            switch (items)
+            var propertyBag = new ArrayBackedPropertyBag<ulong, object>();
+            for (int i = 0; i < count; i++)
             {
-                case 1:
-                    message.SetProperty(typeof(T1), new T1() { Value = 1234 });
-                    message.TryGetProperty(typeof(T1), out val1);
-                    break;
-                case 2:
-                    message.SetProperty(typeof(T1), new T1() { Value = 1234 });
-                    message.TryGetProperty(typeof(T1), out val1);
-                    message.SetProperty(typeof(T2), new T2() { Value = 1234 });
-                    message.TryGetProperty(typeof(T2), out val2);
-                    break;
-                case 3:
-                    message.SetProperty(typeof(T1), new T1() { Value = 1234 });
-                    message.TryGetProperty(typeof(T1), out val1);
-                    message.SetProperty(typeof(T2), new T2() { Value = 1234 });
-                    message.TryGetProperty(typeof(T2), out val2);
-                    message.SetProperty(typeof(T3), new T3() { Value = 1234 });
-                    message.TryGetProperty(typeof(T3), out val3);
-                    break;
-                case 5:
-                    var t3 = new T3() { Value = 1234 };
-                    message.SetProperty(typeof(T1), new T1() { Value = 1234 });
-                    message.TryGetProperty(typeof(T1), out val1);
-                    message.SetProperty(typeof(T2), new T2() { Value = 1234 });
-                    message.TryGetProperty(typeof(T2), out val2);
-                    message.SetProperty(typeof(T3), new T3() { Value = 1234 });
-                    message.TryGetProperty(typeof(T3), out val3);
-                    message.SetProperty(typeof(T4), new T4() { Value = 1234 });
-                    message.TryGetProperty(typeof(T4), out val4);
-                    message.SetProperty(typeof(T5), new T5() { Value = 1234 });
-                    message.TryGetProperty(typeof(T5), out val5);
-                    for (int i = 0; i < readLoops; i++)
-                    {
-                        t3.Value = i;
-                        message.SetProperty(typeof(T3), t3);
-                    }
-                    for (int i = 0; i < readLoops; i++)
-                    {
-                        message.TryGetProperty(typeof(T4), out val4);
-                    }
-                    break;
+                propertyBag.Set(_typeHandles[i], _values[i]);
+            }
+            propertyBag.Dispose();
+        }
 
-                case 10:
-                    message.SetProperty(typeof(T1), new T1() { Value = 1234 });
-                    message.SetProperty(typeof(T2), new T2() { Value = 1234 });
-                    message.SetProperty(typeof(T3), new T3() { Value = 1234 });
-                    message.SetProperty(typeof(T4), new T4() { Value = 1234 });
-                    message.SetProperty(typeof(T5), new T5() { Value = 1234 });
-                    message.SetProperty(typeof(T6), new T6() { Value = 1234 });
-                    message.SetProperty(typeof(T7), new T7() { Value = 1234 });
-                    message.SetProperty(typeof(T8), new T8() { Value = 1234 });
-                    message.SetProperty(typeof(T9), new T9() { Value = 1234 });
-                    message.SetProperty(typeof(T10), new T10() { Value = 1234 });
-                    message.TryGetProperty(typeof(T1), out val1);
-                    message.TryGetProperty(typeof(T2), out val2);
-                    message.TryGetProperty(typeof(T3), out val3);
-                    message.TryGetProperty(typeof(T4), out val4);
-                    message.TryGetProperty(typeof(T5), out val5);
-                    message.TryGetProperty(typeof(T6), out val6);
-                    message.TryGetProperty(typeof(T7), out val7);
-                    message.TryGetProperty(typeof(T8), out val8);
-                    message.TryGetProperty(typeof(T9), out val9);
-                    message.TryGetProperty(typeof(T10), out val10);
-                    break;
-
-                case 20:
-                    message.SetProperty(typeof(T1), new T1() { Value = 1234 });
-                    message.SetProperty(typeof(T2), new T2() { Value = 1234 });
-                    message.SetProperty(typeof(T3), new T3() { Value = 1234 });
-                    message.SetProperty(typeof(T4), new T4() { Value = 1234 });
-                    message.SetProperty(typeof(T5), new T5() { Value = 1234 });
-                    message.SetProperty(typeof(T6), new T6() { Value = 1234 });
-                    message.SetProperty(typeof(T7), new T7() { Value = 1234 });
-                    message.SetProperty(typeof(T8), new T8() { Value = 1234 });
-                    message.SetProperty(typeof(T9), new T9() { Value = 1234 });
-                    message.SetProperty(typeof(T10), new T10() { Value = 1234 });
-                    message.SetProperty(typeof(T11), new T11() { Value = 1234 });
-                    message.SetProperty(typeof(T12), new T12() { Value = 1234 });
-                    message.SetProperty(typeof(T13), new T13() { Value = 1234 });
-                    message.SetProperty(typeof(T14), new T14() { Value = 1234 });
-                    message.SetProperty(typeof(T15), new T15() { Value = 1234 });
-                    message.SetProperty(typeof(T16), new T16() { Value = 1234 });
-                    message.SetProperty(typeof(T17), new T17() { Value = 1234 });
-                    message.SetProperty(typeof(T18), new T18() { Value = 1234 });
-                    message.SetProperty(typeof(T19), new T19() { Value = 1234 });
-                    message.SetProperty(typeof(T20), new T20() { Value = 1234 });
-                    message.TryGetProperty(typeof(T1), out val1);
-                    message.TryGetProperty(typeof(T2), out val2);
-                    message.TryGetProperty(typeof(T3), out val3);
-                    message.TryGetProperty(typeof(T4), out val4);
-                    message.TryGetProperty(typeof(T5), out val5);
-                    message.TryGetProperty(typeof(T6), out val6);
-                    message.TryGetProperty(typeof(T7), out val7);
-                    message.TryGetProperty(typeof(T8), out val8);
-                    message.TryGetProperty(typeof(T9), out val9);
-                    message.TryGetProperty(typeof(T10), out val10);
-                    message.TryGetProperty(typeof(T11), out val11);
-                    message.TryGetProperty(typeof(T12), out val12);
-                    message.TryGetProperty(typeof(T13), out val13);
-                    message.TryGetProperty(typeof(T14), out val14);
-                    message.TryGetProperty(typeof(T15), out val15);
-                    message.TryGetProperty(typeof(T16), out val16);
-                    message.TryGetProperty(typeof(T17), out val17);
-                    message.TryGetProperty(typeof(T18), out val18);
-                    message.TryGetProperty(typeof(T19), out val19);
-                    message.TryGetProperty(typeof(T20), out val20);
-                    break;
-                case 30:
-                    message.SetProperty(typeof(T1), new T1() { Value = 1234 });
-                    message.SetProperty(typeof(T2), new T2() { Value = 1234 });
-                    message.SetProperty(typeof(T3), new T3() { Value = 1234 });
-                    message.SetProperty(typeof(T4), new T4() { Value = 1234 });
-                    message.SetProperty(typeof(T5), new T5() { Value = 1234 });
-                    message.SetProperty(typeof(T6), new T6() { Value = 1234 });
-                    message.SetProperty(typeof(T7), new T7() { Value = 1234 });
-                    message.SetProperty(typeof(T8), new T8() { Value = 1234 });
-                    message.SetProperty(typeof(T9), new T9() { Value = 1234 });
-                    message.SetProperty(typeof(T10), new T10() { Value = 1234 });
-                    message.SetProperty(typeof(T11), new T11() { Value = 1234 });
-                    message.SetProperty(typeof(T12), new T12() { Value = 1234 });
-                    message.SetProperty(typeof(T13), new T13() { Value = 1234 });
-                    message.SetProperty(typeof(T14), new T14() { Value = 1234 });
-                    message.SetProperty(typeof(T15), new T15() { Value = 1234 });
-                    message.SetProperty(typeof(T16), new T16() { Value = 1234 });
-                    message.SetProperty(typeof(T17), new T17() { Value = 1234 });
-                    message.SetProperty(typeof(T18), new T18() { Value = 1234 });
-                    message.SetProperty(typeof(T19), new T19() { Value = 1234 });
-                    message.SetProperty(typeof(T20), new T20() { Value = 1234 });
-                    message.SetProperty(typeof(T21), new T21() { Value = 1234 });
-                    message.SetProperty(typeof(T22), new T22() { Value = 1234 });
-                    message.SetProperty(typeof(T23), new T23() { Value = 1234 });
-                    message.SetProperty(typeof(T24), new T24() { Value = 1234 });
-                    message.SetProperty(typeof(T25), new T25() { Value = 1234 });
-                    message.SetProperty(typeof(T26), new T26() { Value = 1234 });
-                    message.SetProperty(typeof(T27), new T27() { Value = 1234 });
-                    message.SetProperty(typeof(T28), new T28() { Value = 1234 });
-                    message.SetProperty(typeof(T29), new T29() { Value = 1234 });
-                    message.SetProperty(typeof(T30), new T30() { Value = 1234 });
-                    message.TryGetProperty(typeof(T1), out val1);
-                    message.TryGetProperty(typeof(T2), out val2);
-                    message.TryGetProperty(typeof(T3), out val3);
-                    message.TryGetProperty(typeof(T4), out val4);
-                    message.TryGetProperty(typeof(T5), out val5);
-                    message.TryGetProperty(typeof(T6), out val6);
-                    message.TryGetProperty(typeof(T7), out val7);
-                    message.TryGetProperty(typeof(T8), out val8);
-                    message.TryGetProperty(typeof(T9), out val9);
-                    message.TryGetProperty(typeof(T10), out val10);
-                    message.TryGetProperty(typeof(T11), out val11);
-                    message.TryGetProperty(typeof(T12), out val12);
-                    message.TryGetProperty(typeof(T13), out val13);
-                    message.TryGetProperty(typeof(T14), out val14);
-                    message.TryGetProperty(typeof(T15), out val15);
-                    message.TryGetProperty(typeof(T16), out val16);
-                    message.TryGetProperty(typeof(T17), out val17);
-                    message.TryGetProperty(typeof(T18), out val18);
-                    message.TryGetProperty(typeof(T19), out val19);
-                    message.TryGetProperty(typeof(T20), out val20);
-                    message.TryGetProperty(typeof(T21), out val21);
-                    message.TryGetProperty(typeof(T22), out val22);
-                    message.TryGetProperty(typeof(T23), out val23);
-                    message.TryGetProperty(typeof(T24), out val24);
-                    message.TryGetProperty(typeof(T25), out val25);
-                    message.TryGetProperty(typeof(T26), out val26);
-                    message.TryGetProperty(typeof(T27), out val27);
-                    message.TryGetProperty(typeof(T28), out val28);
-                    message.TryGetProperty(typeof(T29), out val29);
-                    message.TryGetProperty(typeof(T30), out val30);
-                    break;
+        [Benchmark]
+        [BenchmarkCategory("Add")]
+        [Arguments(2)]
+        [Arguments(10)]
+        [Arguments(30)]
+        [Arguments(100)]
+        public void Add_ArrayBackedPropertyBag_NoDispose(int count)
+        {
+            var propertyBag = new ArrayBackedPropertyBag<ulong, object>();
+            for (int i = 0; i < count; i++)
+            {
+                propertyBag.Set(_typeHandles[i], _values[i]);
             }
         }
 
-        private struct T1
+        [Benchmark(Baseline = true)]
+        [BenchmarkCategory("AddAndSearch")]
+        [Arguments(2)]
+        [Arguments(10)]
+        [Arguments(30)]
+        [Arguments(100)]
+        public void AddAndSearch_Dictionary(int count)
         {
-            public int Value { get; set; }
+            var dictionary = new Dictionary<ulong, object>();
+            for (int i = 0; i < count; i++)
+            {
+                dictionary[_typeHandles[i]] = _values[i];
+            }
+
+            for (int i = 0; i < count; i += 1)
+            {
+                dictionary.TryGetValue(_typeHandles[i * 2], out _);
+            }
         }
 
-        private struct T2
+        [Benchmark]
+        [BenchmarkCategory("AddAndSearch")]
+        [Arguments(2)]
+        [Arguments(10)]
+        [Arguments(30)]
+        [Arguments(100)]
+        public void AddAndSearch_ArrayBackedPropertyBag(int count)
         {
-            public int Value { get; set; }
+            var propertyBag = new ArrayBackedPropertyBag<ulong, object>();
+            for (int i = 0; i < count; i++)
+            {
+                propertyBag.Set(_typeHandles[i], _values[i]);
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                propertyBag.TryGetValue(_typeHandles[i * 2], out _);
+            }
+
+            propertyBag.Dispose();
         }
 
-        private struct T3
+        [Benchmark]
+        [BenchmarkCategory("AddAndSearch")]
+        [Arguments(2)]
+        [Arguments(10)]
+        [Arguments(30)]
+        [Arguments(100)]
+        public void AddAndSearch_ArrayBackedPropertyBag_NoDispose(int count)
         {
-            public int Value { get; set; }
+            var propertyBag = new ArrayBackedPropertyBag<ulong, object>();
+            for (int i = 0; i < count; i++)
+            {
+                propertyBag.Set(_typeHandles[i], _values[i]);
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                propertyBag.TryGetValue(_typeHandles[i * 2], out _);
+            }
         }
 
-        private struct T4
+        [Benchmark]
+        [BenchmarkCategory("AddAndSearch")]
+        [Arguments(2)]
+        [Arguments(10)]
+        [Arguments(30)]
+        [Arguments(100)]
+        public void AddAndSearch_Array(int count)
         {
-            public int Value { get; set; }
+            var array =  ArrayPool<(ulong Key, object Value)>.Shared.Rent(count);
+            for (int i = 0; i < count; i++)
+            {
+                var index = 0;
+                var key = _typeHandles[i];
+                while (index < i)
+                {
+                    if (array[index].Key == key)
+                    {
+                        array[index] = (key, _values[i]);
+                        break;
+                    }
+
+                    index++;
+                }
+
+                if (i == index)
+                {
+                    array[index] = (key, _values[i]);
+                }
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                var key = _typeHandles[i * 2];
+                for (int j = 0; j < array.Length; j++)
+                {
+                    if (array[j].Key == key)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            ArrayPool<(ulong Key, object Value)>.Shared.Return(array);
         }
 
-        private struct T5
+        [Benchmark(Baseline = true)]
+        [BenchmarkCategory("AddAndGet")]
+        [Arguments(30)]
+        [Arguments(100)]
+        public void AddAndGet_Dictionary(int count)
         {
-            public int Value { get; set; }
+            var dictionary = new Dictionary<ulong, object>();
+            for (int i = 0; i < count; i++)
+            {
+                dictionary[_typeHandles[i]] = _values[i];
+                dictionary.TryGetValue(_typeHandles[i], out _);
+            }
         }
 
-        private struct T6
+        [Benchmark]
+        [BenchmarkCategory("AddAndGet")]
+        [Arguments(30)]
+        [Arguments(100)]
+        public void AddAndGet_ArrayBackedPropertyBag(int count)
         {
-            public int Value { get; set; }
+            var propertyBag = new ArrayBackedPropertyBag<ulong, object>();
+            for (int i = 0; i < count; i++)
+            {
+                propertyBag.Set(_typeHandles[i], _values[i]);
+                propertyBag.TryGetValue(_typeHandles[i], out _);
+            }
         }
 
-        private struct T7
+        [Benchmark(Baseline = true)]
+        [BenchmarkCategory("AddAndDeleteSingle")]
+        [Arguments(10)]
+        [Arguments(30)]
+        [Arguments(50)]
+        public Dictionary<ulong, object> AddAndDeleteSingle_Dictionary(int count)
         {
-            public int Value { get; set; }
+            var dictionary = new Dictionary<ulong, object>();
+            for (int i = 0; i < count; i++)
+            {
+                dictionary[_typeHandles[i]] = _values[i];
+            }
+
+            dictionary.Remove((ulong)(count / 2));
+            return dictionary;
         }
 
-        private struct T8
+        [Benchmark]
+        [BenchmarkCategory("AddAndDeleteSingle")]
+        [Arguments(10)]
+        [Arguments(30)]
+        [Arguments(50)]
+        public void AddAndDeleteSingle_ArrayBackedPropertyBag(int count)
         {
-            public int Value { get; set; }
+            var propertyBag = new ArrayBackedPropertyBag<ulong, object>();
+            for (int i = 0; i < count; i++)
+            {
+                propertyBag.Set(_typeHandles[i], _values[i]);
+            }
+            propertyBag.TryDelete((ulong)(count / 2));
         }
 
-        private struct T9
+        [Benchmark(Baseline = true)]
+        [BenchmarkCategory("AddAndDeleteMultiple")]
+        [Arguments(10)]
+        [Arguments(30)]
+        [Arguments(50)]
+        public Dictionary<ulong, object> AddAndDeleteMultiple_Dictionary(int count)
         {
-            public int Value { get; set; }
+            var dictionary = new Dictionary<ulong, object>();
+            for (int i = 0; i < count; i++)
+            {
+                dictionary[_typeHandles[i]] = _values[i];
+            }
+            for (int i = 0; i < count; i += 3)
+            {
+                dictionary.Remove(_typeHandles[i]);
+            }
+
+            return dictionary;
         }
 
-        private struct T10
+        [Benchmark]
+        [BenchmarkCategory("AddAndDeleteMultiple")]
+        [Arguments(10)]
+        [Arguments(30)]
+        [Arguments(50)]
+        public void AddAndDeleteMultiple_ArrayBackedPropertyBag(int count)
         {
-            public int Value { get; set; }
-        }
-
-        private struct T11
-        {
-            public int Value { get; set; }
-        }
-
-        private struct T12
-        {
-            public int Value { get; set; }
-        }
-
-        private struct T13
-        {
-            public int Value { get; set; }
-        }
-
-        private struct T14
-        {
-            public int Value { get; set; }
-        }
-
-        private struct T15
-        {
-            public int Value { get; set; }
-        }
-
-        private struct T16
-        {
-            public int Value { get; set; }
-        }
-
-        private struct T17
-        {
-            public int Value { get; set; }
-        }
-
-        private struct T18
-        {
-            public int Value { get; set; }
-        }
-
-        private struct T19
-        {
-            public int Value { get; set; }
-        }
-
-        private struct T20
-        {
-            public int Value { get; set; }
-        }
-
-        private struct T21
-        {
-            public int Value { get; set; }
-        }
-
-        private struct T22
-        {
-            public int Value { get; set; }
-        }
-
-        private struct T23
-        {
-            public int Value { get; set; }
-        }
-
-        private struct T24
-        {
-            public int Value { get; set; }
-        }
-
-        private struct T25
-        {
-            public int Value { get; set; }
-        }
-
-        private struct T26
-        {
-            public int Value { get; set; }
-        }
-
-        private struct T27
-        {
-            public int Value { get; set; }
-        }
-
-        private struct T28
-        {
-            public int Value { get; set; }
-        }
-
-        private struct T29
-        {
-            public int Value { get; set; }
-        }
-
-        private struct T30
-        {
-            public int Value { get; set; }
+            var propertyBag = new ArrayBackedPropertyBag<ulong, object>();
+            for (int i = 0; i < count; i++)
+            {
+                propertyBag.Set(_typeHandles[i], _values[i]);
+            }
+            for (int i = 0; i < count; i += 3)
+            {
+                propertyBag.TryDelete(_typeHandles[i]);
+            }
         }
     }
 }

@@ -9,6 +9,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
@@ -314,16 +315,6 @@ namespace Azure.Core.Pipeline
 #endif
         }
 
-        internal static void CopyHeaders(HttpHeaders from, HttpHeaders to)
-        {
-            foreach (KeyValuePair<string, IEnumerable<string>> header in from)
-            {
-                if (!to.TryAddWithoutValidation(header.Key, header.Value))
-                {
-                    throw new InvalidOperationException($"Unable to add header {header} to header collection.");
-                }
-            }
-        }
 #if NET6_0_OR_GREATER
         private static string JoinHeaderValues(HeaderStringValues values)
         {
@@ -343,28 +334,14 @@ namespace Azure.Core.Pipeline
 
         private sealed class PipelineRequest : Request
         {
-            private bool _wasSent;
-            private readonly HttpRequestMessage _requestMessage;
-
-            private PipelineContentAdapter? _requestContent;
             private string? _clientRequestId;
+            private ArrayBackedPropertyBag<IgnoreCaseString, object> _headers;
 
             public PipelineRequest()
             {
-                _requestMessage = new HttpRequestMessage();
-
-#if NETFRAMEWORK
-                _requestMessage.Headers.ExpectContinue = false;
-#endif
+                Method = RequestMethod.Get;
+                _headers = new ArrayBackedPropertyBag<IgnoreCaseString, object>();
             }
-
-            public override RequestMethod Method
-            {
-                get => RequestMethod.Parse(_requestMessage.Method.Method);
-                set => _requestMessage.Method = ToHttpClientMethod(value);
-            }
-
-            public override RequestContent? Content { get; set; }
 
             public override string ClientRequestId
             {
@@ -378,105 +355,147 @@ namespace Azure.Core.Pipeline
 
             protected internal override void SetHeader(string name, string value)
             {
-                // Authorization is special cased because it is in the hot path for auth polices that set this header on each request and retry.
-                if (name.Equals(HttpHeader.Names.Authorization) && AuthenticationHeaderValue.TryParse(value, out var authHeader))
-                {
-                    _requestMessage.Headers.Authorization = authHeader;
-                }
-                else
-                {
-                    base.SetHeader(name, value);
-                }
+                _headers.Set(new IgnoreCaseString(name), value);
             }
 
             protected internal override void AddHeader(string name, string value)
             {
-                if (_requestMessage.Headers.TryAddWithoutValidation(name, value))
+                if (_headers.TryAdd(new IgnoreCaseString(name), value, out var existingValue))
                 {
                     return;
                 }
 
-                PipelineContentAdapter requestContent = EnsureContentInitialized();
-                if (!requestContent.Headers.TryAddWithoutValidation(name, value))
+                switch (existingValue)
                 {
-                    throw new InvalidOperationException("Unable to add header to request or content");
+                    case string stringValue:
+                        _headers.Set(new IgnoreCaseString(name), new List<string> { stringValue, value });
+                        break;
+                    case List<string> listValue:
+                        listValue.Add(value);
+                        break;
                 }
             }
 
-            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value) => HttpClientTransport.TryGetHeader(_requestMessage.Headers, _requestContent, name, out value);
+            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
+            {
+                if (_headers.TryGetValue(new IgnoreCaseString(name), out var headerValue))
+                {
+                    value = GetHttpHeaderValue(name, headerValue);
+                    return true;
+                }
 
-            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values) => HttpClientTransport.TryGetHeader(_requestMessage.Headers, _requestContent, name, out values);
+                value = default;
+                return false;
+            }
 
-            protected internal override bool ContainsHeader(string name) => HttpClientTransport.ContainsHeader(_requestMessage.Headers, _requestContent, name);
+            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
+            {
+                if (_headers.TryGetValue(new IgnoreCaseString(name), out var value))
+                {
+                    values = value switch
+                    {
+                        string headerValue => new[]{ headerValue },
+                        List<string> headerValues => headerValues,
+                        _ => throw new InvalidOperationException($"Unexpected type for header {name}: {value.GetType()}")
+                    };
+                    return true;
+                }
 
-            protected internal override bool RemoveHeader(string name) => HttpClientTransport.RemoveHeader(_requestMessage.Headers, _requestContent, name);
+                values = default;
+                return false;
+            }
 
-            protected internal override IEnumerable<HttpHeader> EnumerateHeaders() => GetHeaders(_requestMessage.Headers, _requestContent);
+            protected internal override bool ContainsHeader(string name) => _headers.TryGetValue(new IgnoreCaseString(name), out _);
+
+            protected internal override bool RemoveHeader(string name) => _headers.TryDelete(new IgnoreCaseString(name));
+
+            protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
+            {
+                for (int i = 0; i < _headers.Count; i++)
+                {
+                    _headers.GetAt(i, out var headerName, out var headerValue);
+                    yield return new HttpHeader(headerName, GetHttpHeaderValue(headerName, headerValue));
+                }
+            }
 
             public HttpRequestMessage BuildRequestMessage(CancellationToken cancellation)
             {
-                HttpRequestMessage currentRequest;
-                if (_wasSent)
+                var method = ToHttpClientMethod(Method);
+                var uri = Uri.ToUri();
+                var currentRequest = new HttpRequestMessage(method, uri);
+                var currentContent = Content != null ? new PipelineContentAdapter(Content, cancellation) : null;
+                currentRequest.Content = currentContent;
+#if NETFRAMEWORK
+                currentRequest.Headers.ExpectContinue = false;
+#endif
+                for (int i = 0; i < _headers.Count; i++)
                 {
-                    // A copy of a message needs to be made because HttpClient does not allow sending the same message twice,
-                    // and so the retry logic fails.
-                    currentRequest = new HttpRequestMessage(_requestMessage.Method, Uri.ToUri());
-                    CopyHeaders(_requestMessage.Headers, currentRequest.Headers);
-                }
-                else
-                {
-                    currentRequest = _requestMessage;
-                }
-
-                currentRequest.RequestUri = Uri.ToUri();
-
-                if (Content != null)
-                {
-                    PipelineContentAdapter currentContent;
-                    if (_wasSent)
+                    _headers.GetAt(i, out var headerName, out var value);
+                    switch (value)
                     {
-                        currentContent = new PipelineContentAdapter();
-                        CopyHeaders(_requestContent!.Headers, currentContent.Headers);
+                        case string stringValue:
+                            // Authorization is special cased because it is in the hot path for auth polices that set this header on each request and retry.
+                            if (headerName == HttpHeader.Names.Authorization && AuthenticationHeaderValue.TryParse(stringValue, out var authHeader))
+                            {
+                                currentRequest.Headers.Authorization = authHeader;
+                            }
+                            else if (!currentRequest.Headers.TryAddWithoutValidation(headerName, stringValue))
+                            {
+                                if (currentContent != null && !currentContent.Headers.TryAddWithoutValidation(headerName, stringValue))
+                                {
+                                    throw new InvalidOperationException($"Unable to add header {headerName} to header collection.");
+                                }
+                            }
+                            break;
+                        case List<string> listValue:
+                            if (!currentRequest.Headers.TryAddWithoutValidation(headerName, listValue))
+                            {
+                                if (currentContent != null && !currentContent.Headers.TryAddWithoutValidation(headerName, listValue))
+                                {
+                                    throw new InvalidOperationException($"Unable to add header {headerName} to header collection.");
+                                }
+                            }
+                            break;
                     }
-                    else
-                    {
-                        currentContent = EnsureContentInitialized();
-                    }
-
-                    currentContent.CancellationToken = cancellation;
-                    currentContent.PipelineContent = Content;
-                    currentRequest.Content = currentContent;
                 }
 
+                AddPropertiesForBlazor(currentRequest);
+
+                return currentRequest;
+            }
+
+            private static void AddPropertiesForBlazor(HttpRequestMessage currentRequest)
+            {
                 // Disable response caching and enable streaming in Blazor apps
                 // see https://github.com/dotnet/aspnetcore/blob/3143d9550014006080bb0def5b5c96608b025a13/src/Components/WebAssembly/WebAssembly/src/Http/WebAssemblyHttpRequestMessageExtensions.cs
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
                 {
-                    SetPropertiesOrOptions(
-                        currentRequest,
-                        "WebAssemblyFetchOptions",
-                        new Dictionary<string, object> { { "cache", "no-store" } });
+                    SetPropertiesOrOptions(currentRequest, "WebAssemblyFetchOptions", new Dictionary<string, object> { { "cache", "no-store" } });
                     SetPropertiesOrOptions(currentRequest, "WebAssemblyEnableStreamingResponse", true);
                 }
-
-                _wasSent = true;
-                return currentRequest;
             }
+
+            private static string GetHttpHeaderValue(string headerName, object value) => value switch
+            {
+                string headerValue => headerValue,
+                List<string> headerValues => string.Join(",", headerValues),
+                _ => throw new InvalidOperationException($"Unexpected type for header {headerName}: {value.GetType()}")
+            };
 
             public override void Dispose()
             {
+                _headers.Dispose();
                 Content?.Dispose();
-                _requestContent?.Dispose();
-                _requestMessage.Dispose();
             }
 
-            public override string ToString() => _requestMessage.ToString();
+            public override string ToString() => BuildRequestMessage(default).ToString();
 
             private static readonly HttpMethod s_patch = new HttpMethod("PATCH");
 
             private static HttpMethod ToHttpClientMethod(RequestMethod requestMethod)
             {
                 var method = requestMethod.Method;
+
                 // Fast-path common values
                 if (method.Length == 3)
                 {
@@ -516,46 +535,52 @@ namespace Azure.Core.Pipeline
                 return new HttpMethod(method);
             }
 
-            private PipelineContentAdapter EnsureContentInitialized()
+            private readonly struct IgnoreCaseString : IEquatable<IgnoreCaseString>
             {
-                if (_requestContent == null)
+                private readonly string _value;
+
+                public IgnoreCaseString(string value)
                 {
-                    _requestContent = new PipelineContentAdapter();
+                    _value = value;
                 }
 
-                return _requestContent;
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                public bool Equals(IgnoreCaseString other) => string.Equals(_value, other._value, StringComparison.OrdinalIgnoreCase);
+                public override bool Equals(object? obj) => obj is IgnoreCaseString other && Equals(other);
+                public override int GetHashCode() => _value.GetHashCode();
+
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                public static bool operator ==(IgnoreCaseString left, IgnoreCaseString right) => left.Equals(right);
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                public static bool operator !=(IgnoreCaseString left, IgnoreCaseString right) => !left.Equals(right);
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                public static implicit operator string(IgnoreCaseString ics) => ics._value;
             }
 
             private sealed class PipelineContentAdapter : HttpContent
             {
-                public RequestContent? PipelineContent { get; set; }
+                private readonly RequestContent _pipelineContent;
+                private readonly CancellationToken _cancellationToken;
 
-                public CancellationToken CancellationToken { get; set; }
-
-                protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context)
+                public PipelineContentAdapter(RequestContent pipelineContent, CancellationToken cancellationToken)
                 {
-                    Debug.Assert(PipelineContent != null);
-                    await PipelineContent!.WriteToAsync(stream, CancellationToken).ConfigureAwait(false);
+                    _pipelineContent = pipelineContent;
+                    _cancellationToken = cancellationToken;
                 }
 
-                protected override bool TryComputeLength(out long length)
-                {
-                    Debug.Assert(PipelineContent != null);
+                protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context) => await _pipelineContent.WriteToAsync(stream, _cancellationToken).ConfigureAwait(false);
 
-                    return PipelineContent!.TryComputeLength(out length);
-                }
+                protected override bool TryComputeLength(out long length) => _pipelineContent.TryComputeLength(out length);
 
 #if NET5_0_OR_GREATER
                 protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
                 {
-                    Debug.Assert(PipelineContent != null);
-                    await PipelineContent!.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+                    await _pipelineContent!.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
                 }
 
                 protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
                 {
-                    Debug.Assert(PipelineContent != null);
-                    PipelineContent.WriteTo(stream, cancellationToken);
+                    _pipelineContent.WriteTo(stream, cancellationToken);
                 }
 #endif
             }
@@ -642,8 +667,7 @@ namespace Azure.Core.Pipeline
 #pragma warning restore CA1416 // 'X509Certificate2' is unsupported on 'browser'
             return httpHandler;
         }
-#endif
-
+#else
         private static HttpClientHandler ApplyOptionsToHandler(HttpClientHandler httpHandler, HttpPipelineTransportOptions? options)
         {
             if (options == null || RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
@@ -667,7 +691,7 @@ namespace Azure.Core.Pipeline
             }
             return httpHandler;
         }
-
+#endif
         /// <summary>
         /// Disposes the underlying <see cref="HttpClient"/>.
         /// </summary>
