@@ -1,4 +1,4 @@
-parameters: 
+parameters:
 - name: BuildToolsPath
   type: string
   default: '$(Build.SourcesDirectory)/azure-sdk-build-tools'
@@ -21,8 +21,8 @@ jobs:
     dependsOn: ${{ parameters.DependsOn }}
     pool:
       name: azsdk-pool-mms-win-2022-general
-      vmImage: MMS2022
-  
+      vmImage: MMS2022Compliant
+
     steps:
       - checkout: self
 
@@ -31,7 +31,7 @@ jobs:
       - download: current
         artifact: packages
         displayName: Download published Nuget Packages
-      
+
       - template: pipelines/steps/net-signing.yml@azure-sdk-build-tools
         parameters:
           PackagesPath: '$(PIPELINE.WORKSPACE)/packages'
@@ -69,7 +69,7 @@ jobs:
           displayName: 'Use NuGet ${{ parameters.NugetVersion }}'
           inputs:
             versionSpec: ${{ parameters.NugetVersion }}
-        
+
         - task: NuGetCommand@2
           displayName: 'Publish to Nuget'
           inputs:
@@ -77,9 +77,9 @@ jobs:
             packagesToPush: '$(PIPELINE.WORKSPACE)/packages/**/*.nupkg;!$(PIPELINE.WORKSPACE)/packages/**/*.symbols.nupkg'
             nuGetFeedType: external
             publishFeedCredentials: Nuget.org
-      
+
       - ${{ if eq(parameters.ShouldPublishToDevOps, 'true') }}:
-      
+
         - pwsh: |
             # For safety default to publishing to the private feed.
             # Publish to https://dev.azure.com/azure-sdk/internal/_packaging?_a=feed&feed=azure-sdk-for-net-pr

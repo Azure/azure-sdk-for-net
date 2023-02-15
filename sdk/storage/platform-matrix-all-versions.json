@@ -6,8 +6,8 @@
           "Pool": "azsdk-pool-mms-ubuntu-2004-storage"
       },
       "windows-2022": {
-          "OSVmImage": "MMS2022",
-          "Pool": "azsdk-pool-mms-win-2019-storage"
+          "OSVmImage": "MMS2022Compliant",
+          "Pool": "azsdk-pool-mms-win-2022-storage"
       }
     },
     "TestTargetFramework": [

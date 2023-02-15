@@ -10,7 +10,7 @@ pr:
 
 pool:
   name: azsdk-pool-mms-win-2022-general
-  vmImage: MMS2022
+  vmImage: MMS2022Compliant
 
 variables:
   - template: templates/variables/globals.yml

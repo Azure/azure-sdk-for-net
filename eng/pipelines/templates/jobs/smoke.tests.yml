@@ -53,15 +53,15 @@ jobs:
           TestTargetFramework: net6.0
         Windows_NetFramework:
           Pool: "azsdk-pool-mms-win-2022-general"
-          OSVmImage: "MMS2022"
+          OSVmImage: "MMS2022Compliant"
           TestTargetFramework: net461
         Windows_Net60:
           Pool: "azsdk-pool-mms-win-2022-general"
-          OSVmImage: "MMS2022"
+          OSVmImage: "MMS2022Compliant"
           TestTargetFramework: net6.0
         Windows_Net70:
           Pool: "azsdk-pool-mms-win-2022-general"
-          OSVmImage: "MMS2022"
+          OSVmImage: "MMS2022Compliant"
           TestTargetFramework: net7.0
     pool:
       name: $(Pool)
