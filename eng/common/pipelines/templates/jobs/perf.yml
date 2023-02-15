@@ -7,16 +7,16 @@ parameters:
   default: '360'
 - name: LinuxPool
   type: string
-  default: 'azsdk-pool-mms-ubuntu-2004-perf'
+  default: 'azsdk-pool-mms-ubuntu-2204-perf'
 - name: LinuxVmImage
   type: string
-  default: 'MMSUbuntu20.04'
+  default: 'MMSUbuntu22.04Compliant'
 - name: WindowsPool
   type: string
-  default: 'azsdk-pool-mms-win-2019-perf'
+  default: 'azsdk-pool-mms-win-2022-perf'
 - name: WindowsVmImage
   type: string
-  default: 'MMS2019'
+  default: 'MMS2022Compliant'
 - name: Language
   type: string
   default: ''
