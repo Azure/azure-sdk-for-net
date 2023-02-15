@@ -3,11 +3,20 @@
 Workflows are automated, repeatable business processes that users can create within Microsoft Purview to validate and orchestrate CUD (create, update, delete) operations on their data entities. Enabling these processes allow organizations to track changes, enforce policy compliance, and ensure quality data across their data landscape.
 
 Use the client library for Purview Workflow to:
+
 - Manage workflows
 - Submit user requests and monitor workflow runs
 - View and respond to workflow tasks
 
 **For more details about how to use workflow, please refer to the [service documentation][product_documentation]**
+
+## Getting started
+
+### Install the package
+
+```dotnetcli
+dotnet add package Azure.Analytics.Purview.Workflows --prerelease
+```
 
 ### Prerequisites
 
@@ -31,10 +40,21 @@ var client = new PurviewWorkflowServiceClient(endpoint, usernamePasswordCredenti
 ## Examples
 
 The following section provides several code snippets covering some of the most common scenarios, including:
-- [Create Workflow](#create-workflow)
-- [Submit User Requests](#submit-user-requests)
-- [Approve Workflow Task](#approve-workflow-task)
--
+
+- [Azure Purview Workflow client library for .NET](#azure-purview-workflow-client-library-for-net)
+  - [Getting started](#getting-started)
+    - [Install the package](#install-the-package)
+    - [Prerequisites](#prerequisites)
+    - [Authenticate the client](#authenticate-the-client)
+  - [Examples](#examples)
+    - [Create workflow](#create-workflow)
+    - [Submit user requests](#submit-user-requests)
+    - [Approve workflow task](#approve-workflow-task)
+  - [Key concepts](#key-concepts)
+  - [Troubleshooting](#troubleshooting)
+  - [Next steps](#next-steps)
+  - [Contributing](#contributing)
+
 ### Create workflow
 
 ```C# Snippet:Azure_Analytics_Purview_Workflows_CreateWorkflow
@@ -64,6 +84,24 @@ string request = "{\"comment\":\"Thanks!\"}";
 Response approveResult = await client.ApproveApprovalTaskAsync(taskId, RequestContent.Create(request));
 ```
 
+## Key concepts
+
+## Troubleshooting
+
+## Next steps
+
+This client SDK exposes operations using *protocol methods*, you can learn more about how to use SDK Clients which use protocol methods in our [documentation][protocol_client_quickstart].
+
+## Contributing
+
+See the [CONTRIBUTING.md][contributing] for details on building, testing, and contributing to this library.
+
+This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
+
+When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
+
+This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
+
 <!-- LINKS -->
 [product_documentation]: https://learn.microsoft.com/azure/purview/concept-workflow
 [azure_subscription]: https://azure.microsoft.com/free/dotnet/
@@ -71,3 +109,9 @@ Response approveResult = await client.ApproveApprovalTaskAsync(taskId, RequestCo
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md
 [app_registration]: https://learn.microsoft.com/azure/active-directory/develop/quickstart-register-app
 [username_password_credential]: https://learn.microsoft.com/dotnet/api/azure.identity.usernamepasswordcredential?view=azure-dotnet
+[protocol_client_quickstart]: https://aka.ms/azsdk/net/protocol/quickstart
+[cla]: https://cla.microsoft.com
+[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[coc_contact]: mailto:opencode@microsoft.com
+[contributing]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
