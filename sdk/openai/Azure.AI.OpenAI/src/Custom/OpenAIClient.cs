@@ -86,7 +86,7 @@ namespace Azure.AI.OpenAI
 
             CompletionsOptions completionsOptions = new CompletionsOptions();
             completionsOptions.Prompt.Add(prompt);
-            completionsOptions.Model = "text-davinci-003"; // OpenAI endpoints require model
+            completionsOptions.Model = "text-ada-001"; // OpenAI endpoints require model
             return GetOAICompletions(completionsOptions, cancellationToken);
         }
         public virtual Response<Completions> GetOAICompletions(CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)
