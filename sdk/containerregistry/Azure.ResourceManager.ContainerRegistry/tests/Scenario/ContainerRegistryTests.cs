@@ -500,7 +500,6 @@ steps:
 
         [TestCase]
         [RecordedTest]
-        [Ignore("Need permission of existing resource to run the tests")]
         public async Task ContainerRegistryTaskRun()
         {
             var location = AzureLocation.WestUS;
@@ -524,7 +523,7 @@ steps:
                 {
                     UserAssignedIdentities =
                     {
-                        { new ResourceIdentifier("/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/sdk-test/providers/Microsoft.ManagedIdentity/userAssignedIdentities/acrsdktestidentity"), new UserAssignedIdentity()}
+                        { new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/sdk-test/providers/Microsoft.ManagedIdentity/userAssignedIdentities/acrsdktestidentity"), new UserAssignedIdentity()}
                     }
                 },
                 RunRequest = new ContainerRegistryEncodedTaskRunContent(Convert.ToBase64String(Encoding.UTF8.GetBytes(taskString)), new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux) { Architecture = ContainerRegistryOSArchitecture.Amd64 })
@@ -538,9 +537,9 @@ steps:
                         CustomRegistries =
                         {
                             {
-                                "acrsdktestregistry.azurecr.io", new CustomRegistryCredentials()
+                                "netsdkacr.azurecr.io", new CustomRegistryCredentials()
                                 {
-                                    Identity = "84962bda-7c5e-403e-8515-5100e4ede735" // client id of acrsdktestidentity
+                                    Identity = "527def11-cef4-4b38-b6d2-3f11f86910a0" // client id of acrsdktestidentity
                                 }
                             }
                         }
@@ -550,7 +549,7 @@ steps:
             });
             ContainerRegistryTaskRunResource taskRun = lro.Value;
             Assert.AreEqual(taskRunName, taskRun.Data.Name);
-            // Assert.AreEqual("ca1", taskRun.Data.RunResult.RunId);
+            Assert.AreEqual("ca1", taskRun.Data.RunResult.RunId);
             // List taskruns
             await foreach (var taskRunFromList in taskRunCollection)
             {
