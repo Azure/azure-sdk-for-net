@@ -54,7 +54,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="spotRestorePolicy"> Specifies the Spot Restore properties for the virtual machine scale set. </param>
         /// <param name="priorityMixPolicy"> Specifies the desired targets for mixing Spot and Regular priority VMs within the same VMSS Flex instance. </param>
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine Scale Set resource was created.&lt;br&gt;&lt;br&gt;Minimum api-version: 2021-11-01. </param>
-        internal VirtualMachineScaleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, ComputePlan plan, ManagedServiceIdentity identity, IList<string> zones, ExtendedLocation extendedLocation, VirtualMachineScaleSetUpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, WritableSubResource proximityPlacementGroup, WritableSubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="isMaximumCapacityConstrained"> Optional property which must either be set to True or omitted. </param>
+        internal VirtualMachineScaleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, ComputePlan plan, ManagedServiceIdentity identity, IList<string> zones, ExtendedLocation extendedLocation, VirtualMachineScaleSetUpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, WritableSubResource proximityPlacementGroup, WritableSubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated, bool? isMaximumCapacityConstrained) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Plan = plan;
@@ -79,6 +80,7 @@ namespace Azure.ResourceManager.Compute
             SpotRestorePolicy = spotRestorePolicy;
             PriorityMixPolicy = priorityMixPolicy;
             TimeCreated = timeCreated;
+            IsMaximumCapacityConstrained = isMaximumCapacityConstrained;
         }
 
         /// <summary> The virtual machine scale set sku. </summary>
@@ -151,5 +153,7 @@ namespace Azure.ResourceManager.Compute
         public VirtualMachineScaleSetPriorityMixPolicy PriorityMixPolicy { get; set; }
         /// <summary> Specifies the time at which the Virtual Machine Scale Set resource was created.&lt;br&gt;&lt;br&gt;Minimum api-version: 2021-11-01. </summary>
         public DateTimeOffset? TimeCreated { get; }
+        /// <summary> Optional property which must either be set to True or omitted. </summary>
+        public bool? IsMaximumCapacityConstrained { get; set; }
     }
 }

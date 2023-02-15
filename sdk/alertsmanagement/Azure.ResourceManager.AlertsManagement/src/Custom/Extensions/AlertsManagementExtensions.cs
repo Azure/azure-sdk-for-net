@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<ServiceAlertSummary>> GetServiceAlertSummaryAsync(this SubscriptionResource subscriptionResource, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
-            SubscriptionGetServiceAlertSummaryOptions options = new SubscriptionGetServiceAlertSummaryOptions(groupby);
+            SubscriptionResourceGetServiceAlertSummaryOptions options = new SubscriptionResourceGetServiceAlertSummaryOptions(groupby);
             options.IncludeSmartGroupsCount = includeSmartGroupsCount;
             options.TargetResource = targetResource;
             options.TargetResourceType = targetResourceType;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<ServiceAlertSummary> GetServiceAlertSummary(this SubscriptionResource subscriptionResource, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
         {
-            SubscriptionGetServiceAlertSummaryOptions options = new SubscriptionGetServiceAlertSummaryOptions(groupby);
+            SubscriptionResourceGetServiceAlertSummaryOptions options = new SubscriptionResourceGetServiceAlertSummaryOptions(groupby);
             options.IncludeSmartGroupsCount = includeSmartGroupsCount;
             options.TargetResource = targetResource;
             options.TargetResourceType = targetResourceType;
