@@ -344,6 +344,8 @@ namespace Azure.Monitor.Ingestion
             // Partition the stream into individual blocks
             foreach (BatchedLogs batch in Batch(logs, options))
             {
+                // Cancel all future Uploads if user triggers CancellationToken
+                cancellationToken.ThrowIfCancellationRequested();
                 if (shouldAbort)
                     break;
                 try
@@ -400,12 +402,6 @@ namespace Azure.Monitor.Ingestion
                 catch (Exception ex)
                 {
                     // We do not want to log exceptions here as we will loop through all the tasks later
-                    // Cancel all future Uploads if user triggers CancellationToken
-                    if (ex is OperationCanceledException && cancellationToken.IsCancellationRequested)
-                    {
-                        shouldAbort = true;
-                        AddException(ref exceptions, ex);
-                    }
                 }
             }
 
@@ -426,13 +422,6 @@ namespace Azure.Monitor.Ingestion
                     {
                         shouldAbort = true;
                         AddException(ref exceptions, exceptionEventHandler);
-                    }
-                    // Cancel all future Uploads if user triggers CancellationToken
-                    // if exception was not thrown on line 400 - token could still be cancelled
-                    if (cancellationToken.IsCancellationRequested)
-                    {
-                        shouldAbort = true;
-                        AddException(ref exceptions, new OperationCanceledException());
                     }
                 }
             }

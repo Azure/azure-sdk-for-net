@@ -13,11 +13,11 @@ using NUnit.Framework;
 
 namespace Azure.Monitor.Ingestion.Tests
 {
-    [LiveOnly]
+    //[LiveOnly]
     public class ErrorTest : RecordedTestBase<MonitorIngestionTestEnvironment>
     {
         private const int Mb = 1024 * 1024;
-        public ErrorTest(bool isAsync) : base(isAsync)
+        public ErrorTest(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
 
@@ -204,9 +204,17 @@ namespace Azure.Monitor.Ingestion.Tests
                         AdditionalContext = 1
                     }
                 });
+            entries.Add(new object[] {
+                    new {
+                        Time = Recording.Now.DateTime,
+                        Computer = "Computer" + new string(';', Mb),
+                        AdditionalContext = 1
+                    }
+                });
 
             // Make the request
             UploadLogsOptions options = new UploadLogsOptions();
+            options.MaxConcurrency = 2;
             bool isTriggered = false;
             var cts = new CancellationTokenSource();
             options.UploadFailedEventHandler += Options_UploadFailed;
