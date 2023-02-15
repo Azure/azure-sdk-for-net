@@ -55,14 +55,14 @@ param (
   [string]$TargetDirectory = "",
   # The path used assumes the script is located in azure-sdk-tools/eng/common/scripts/get-codeowners.ps1
   [string]$CodeOwnerFileLocation = (Resolve-Path $PSScriptRoot/../../../.github/CODEOWNERS),
-  # The $ToolVersion 1.0.0-dev.20230213.7 includes following PR:
-  #    Enable the new, regex-based, wildcard-supporting CODEOWNERS matcher
-  #    https://github.com/Azure/azure-sdk-tools/pull/5088
+  # The $ToolVersion 1.0.0-dev.20230214.3 includes following PR:
+  #    Use CodeownersFile.UseRegexMatcherDefault everywhere where applicable + remove obsolete tests
+  #    https://github.com/Azure/azure-sdk-tools/pull/5437
   # 
   # but not this one:
   #    Remove the obsolete, prefix-based CODEOWNERS matcher & related tests
   #    https://github.com/Azure/azure-sdk-tools/pull/5431
-  [string]$ToolVersion = "1.0.0-dev.20230213.7",
+  [string]$ToolVersion = "1.0.0-dev.20230214.3",
   [string]$ToolPath = (Join-Path ([System.IO.Path]::GetTempPath()) "codeowners-tool-path"),
   [string]$DevOpsFeed = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json",
   [string]$VsoVariable = "",
