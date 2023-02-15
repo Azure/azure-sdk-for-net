@@ -120,13 +120,13 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
             var entries = new List<Object>();
             for (int i = 0; i < 100; i++)
             {
-                entries.Add(new Object[] {
+                entries.Add(
                     new {
                         Time = currentTime,
                         Computer = "Computer" + i.ToString(),
                         AdditionalContext = i
                     }
-                });
+                );
             }
             // Set concurrency and EventHandler in UploadLogsOptions
             UploadLogsOptions options = new UploadLogsOptions();
@@ -170,13 +170,13 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
             var entries = new List<Object>();
             for (int i = 0; i < 100; i++)
             {
-                entries.Add(new Object[] {
+                entries.Add(
                     new {
                         Time = currentTime,
                         Computer = "Computer" + i.ToString(),
                         AdditionalContext = i
                     }
-                });
+                );
             }
 
             // Upload our logs
