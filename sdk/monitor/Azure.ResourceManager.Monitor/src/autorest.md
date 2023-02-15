@@ -243,8 +243,19 @@ rename-mapping:
   Operator: MetricCriteriaOperator
   ComparisonOperationType: MetricTriggerComparisonOperation
   ConditionOperator: MonitorConditionOperator
+  ActionType: MonitorWorkspaceActionType
+  Metrics: MetricProperties
+  AzureMonitorWorkspaceResource: MonitorWorkspaceResource
+  AzureMonitorWorkspaceResourceCollection: MonitorWorkspaceResourceCollection
+  AzureMonitorWorkspaceResourceData: MonitorWorkspaceResourceData
+  AzureMonitorWorkspaceDefaultIngestionSettings: MonitorWorkspaceDefaultIngestionSettings
+  AzureMonitorWorkspaceMetrics: MonitorWorkspaceMetrics
+  AzureMonitorWorkspaceResourcePatch: MonitorWorkspaceResourcePatch
+
 
 directive:
+  # remove operation method supported by core lib
+  - remove-operation: MonitorOperations_List
   # fixing the format since rename-mapping has bugs on this
   - from: swagger-document
     where: $.definitions.ActionDetail.properties.SendTime
