@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.Azure
     /// <summary>
     /// Extension methods to add <see cref="WebPubSubServiceClient"/> client to clients builder.
     /// </summary>
-    public static class WebPubSubServiceClientBuilderExtensions
+    public static partial class WebPubSubServiceClientBuilderExtensions
     {
         /// <summary>
         /// Registers a <see cref="WebPubSubServiceClient"/> instance with the provided <paramref name="connectionString"/> and <paramref name="hub"/>
