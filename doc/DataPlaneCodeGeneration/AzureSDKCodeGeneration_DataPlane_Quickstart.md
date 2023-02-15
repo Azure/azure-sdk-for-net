@@ -122,7 +122,7 @@ options:
 
 We will generate SDK library under `sdk\<servie name>\<package name>` directory of `azure-sdk-for-net` repo. e.g. /home/azure-sdk-for-net/sdk/anomalydetector/Azure.AI.AnomalyDetector).
 
-If the sdk project directory does not exist, you can refer to [SDK project directory Set up](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneratio/AzureSDKPackage_Setup.md) to create one.
+If the sdk project directory does not exist, you can refer to [SDK project directory Set up](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/AzureSDKPackage_Setup.md) to create one.
 
 #### Generate SDK
 
