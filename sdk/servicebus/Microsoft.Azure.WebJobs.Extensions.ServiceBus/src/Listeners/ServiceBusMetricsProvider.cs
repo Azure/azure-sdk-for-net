@@ -70,7 +70,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
             }
             catch (UnauthorizedAccessException ex)
             {
-                _logger.LogWarning($"Connection string does not have 'Manage Claim' for {entityName} '{_entityPath}'. Unable to determine active message count.", ex);
+                if (TimeToLogWarning())
+                {
+                    _logger.LogWarning($"Connection string does not have 'Manage Claim' for {entityName} '{_entityPath}'. Unable to determine active message count.", ex);
+                }
                 throw ex;
             }
             catch (Exception e)
