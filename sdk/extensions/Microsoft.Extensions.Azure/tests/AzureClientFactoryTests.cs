@@ -492,7 +492,7 @@ namespace Azure.Core.Extensions.Tests
         }
 
         [Test]
-        public void DisposibleWorksWithMixedClients()
+        public void DisposableWorksWithMixedClients()
         {
             var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var services = new ServiceCollection();
