@@ -14,22 +14,22 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> A pageable list of resources. </summary>
-    internal partial class AzureMonitorWorkspaceResourceListResult
+    internal partial class MonitorWorkspaceResourceListResult
     {
-        /// <summary> Initializes a new instance of AzureMonitorWorkspaceResourceListResult. </summary>
+        /// <summary> Initializes a new instance of MonitorWorkspaceResourceListResult. </summary>
         /// <param name="value"> A list of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AzureMonitorWorkspaceResourceListResult(IEnumerable<MonitorWorkspaceResourceData> value)
+        internal MonitorWorkspaceResourceListResult(IEnumerable<MonitorWorkspaceResourceData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AzureMonitorWorkspaceResourceListResult. </summary>
+        /// <summary> Initializes a new instance of MonitorWorkspaceResourceListResult. </summary>
         /// <param name="value"> A list of resources. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal AzureMonitorWorkspaceResourceListResult(IReadOnlyList<MonitorWorkspaceResourceData> value, string nextLink)
+        internal MonitorWorkspaceResourceListResult(IReadOnlyList<MonitorWorkspaceResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

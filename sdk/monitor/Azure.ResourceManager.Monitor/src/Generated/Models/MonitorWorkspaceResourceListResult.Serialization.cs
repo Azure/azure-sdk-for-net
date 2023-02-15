@@ -12,9 +12,9 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class AzureMonitorWorkspaceResourceListResult
+    internal partial class MonitorWorkspaceResourceListResult
     {
-        internal static AzureMonitorWorkspaceResourceListResult DeserializeAzureMonitorWorkspaceResourceListResult(JsonElement element)
+        internal static MonitorWorkspaceResourceListResult DeserializeMonitorWorkspaceResourceListResult(JsonElement element)
         {
             IReadOnlyList<MonitorWorkspaceResourceData> value = default;
             Optional<string> nextLink = default;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new AzureMonitorWorkspaceResourceListResult(value, nextLink.Value);
+            return new MonitorWorkspaceResourceListResult(value, nextLink.Value);
         }
     }
 }
