@@ -457,7 +457,7 @@ namespace Azure.Core.Extensions.Tests
             var services = new ServiceCollection();
             var disposed = false;
 
-            Action disposeCallback= () =>
+            Action disposeCallback = () =>
             {
                 disposed = true;
                 tcs.TrySetResult(true);
