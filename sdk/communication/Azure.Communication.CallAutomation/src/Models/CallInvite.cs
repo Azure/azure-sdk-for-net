@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
@@ -48,6 +50,12 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <value></value>
         public PhoneNumberIdentifier SourceCallerIdNumber { get; }
+
+        /// <summary> Dictionary of VOIP headers. </summary>
+        public IDictionary<string, string> VoipHeaders { get; } = new Dictionary<string, string>();
+
+        /// <summary> Dictionary of SIP headers. </summary>
+        public IDictionary<string, string> SipHeaders { get; } = new Dictionary<string, string>();
 
         /// <summary>
         /// The display name to appear on target callee.

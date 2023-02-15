@@ -72,11 +72,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 
                     // try RemoveParticipants
                     string operationContext1 = "MyTestOperationcontext";
-                    var removeParticipantsOptions = new RemoveParticipantsOptions(new CommunicationIdentifier[] { target })
+                    var removeParticipantsOptions = new RemoveParticipantOptions(target)
                     {
                         OperationContext = operationContext1,
                     };
-                    Response<RemoveParticipantsResult> removePartResponse = await response.CallConnection.RemoveParticipantsAsync(removeParticipantsOptions);
+                    Response<RemoveParticipantResult> removePartResponse = await response.CallConnection.RemoveParticipantAsync(removeParticipantsOptions);
                     Assert.IsTrue(!removePartResponse.GetRawResponse().IsError);
                     Assert.AreEqual(operationContext1, removePartResponse.Value.OperationContext);
 

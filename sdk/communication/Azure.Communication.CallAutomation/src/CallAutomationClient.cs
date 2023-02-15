@@ -632,7 +632,7 @@ namespace Azure.Communication.CallAutomation
                     ? null
                     : new PhoneNumberIdentifierModel(options?.CallInvite?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.CallInvite?.SourceDisplayName,
-                CallSourceIdentifier = CommunicationIdentifierSerializer.Serialize(Source),
+                SourceIdentity = CommunicationIdentifierSerializer.Serialize(Source),
             };
             // Add custom cognitive service domain name
             if (options.AzureCognitiveServicesEndpointUrl != null)
@@ -659,7 +659,7 @@ namespace Azure.Communication.CallAutomation
                     ? null
                     : new PhoneNumberIdentifierModel(options?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.SourceDisplayName,
-                CallSourceIdentifier = CommunicationIdentifierSerializer.Serialize(Source),
+                SourceIdentity = CommunicationIdentifierSerializer.Serialize(Source),
             };
             // Add custom cognitive service domain name
             if (options.AzureCognitiveServicesEndpointUrl != null)
@@ -704,7 +704,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return new CallConnection(callConnectionId, CallConnectionRestClient, CallMediaRestClient, _clientDiagnostics, EventProcessor);
+                return new CallConnection(callConnectionId, CallConnectionRestClient, CallMediaRestClient, _clientDiagnostics, EventProcessor, Source);
             }
             catch (Exception ex)
             {

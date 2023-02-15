@@ -184,27 +184,23 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var serverCallId = "serverCallId";
             var correlationId = "correlationId";
             var operationContext = "operation context";
-            var participant1 = new CommunicationUserIdentifier("8:acs:12345");
-            var participant2 = new PhoneNumberIdentifier("+123456789");
-            var participants = new CommunicationIdentifier[] { participant1, participant2 };
-            var @event = CallAutomationModelFactory.AddParticipantsFailed(callConnectionId, serverCallId, correlationId, operationContext, new ResultInformation(403, 30, "result info message"), participants);
+            var participant = new CommunicationUserIdentifier("8:acs:12345");
+            var @event = CallAutomationModelFactory.AddParticipantFailed(callConnectionId, serverCallId, correlationId, operationContext, new ResultInformation(403, 30, "result info message"), participant);
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
 
             // act
-            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.AddParticipantsFailed");
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.AddParticipantFailed");
 
             // assert
-            if (parsedEvent is AddParticipantsFailed addParticipantsFailed)
+            if (parsedEvent is AddParticipantFailed addParticipantsFailed)
             {
                 Assert.AreEqual(callConnectionId, addParticipantsFailed.CallConnectionId);
                 Assert.AreEqual(serverCallId, addParticipantsFailed.ServerCallId);
                 Assert.AreEqual(correlationId, addParticipantsFailed.CorrelationId);
                 Assert.AreEqual(operationContext, addParticipantsFailed.OperationContext);
                 Assert.AreEqual(403, addParticipantsFailed.ResultInformation?.Code);
-                Assert.AreEqual(2, addParticipantsFailed.Participants.Count);
-                Assert.AreEqual("8:acs:12345", addParticipantsFailed.Participants[0].RawId);
-                Assert.IsTrue(addParticipantsFailed.Participants[1].RawId.EndsWith("123456789"));
+                Assert.AreEqual("8:acs:12345", addParticipantsFailed.Participant.RawId);
             }
             else
             {
@@ -220,27 +216,23 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var serverCallId = "serverCallId";
             var correlationId = "correlationId";
             var operationContext = "operation context";
-            var participant1 = new CommunicationUserIdentifier("8:acs:12345");
-            var participant2 = new PhoneNumberIdentifier("+123456789");
-            var participants = new CommunicationIdentifier[] { participant1, participant2 };
-            var @event = CallAutomationModelFactory.AddParticipantsSucceeded(callConnectionId, serverCallId, correlationId, operationContext, new ResultInformation(200, 30, "result info message"), participants);
+            var participant = new CommunicationUserIdentifier("8:acs:12345");
+            var @event = CallAutomationModelFactory.AddParticipantSucceeded(callConnectionId, serverCallId, correlationId, operationContext, new ResultInformation(200, 30, "result info message"), participant);
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
 
             // act
-            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.AddParticipantsSucceeded");
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.AddParticipantSucceeded");
 
             // assert
-            if (parsedEvent is AddParticipantsSucceeded addParticipantsSucceeded)
+            if (parsedEvent is AddParticipantSucceeded addParticipantsSucceeded)
             {
                 Assert.AreEqual(callConnectionId, addParticipantsSucceeded.CallConnectionId);
                 Assert.AreEqual(serverCallId, addParticipantsSucceeded.ServerCallId);
                 Assert.AreEqual(correlationId, addParticipantsSucceeded.CorrelationId);
                 Assert.AreEqual(operationContext, addParticipantsSucceeded.OperationContext);
                 Assert.AreEqual(200, addParticipantsSucceeded.ResultInformation?.Code);
-                Assert.AreEqual(2, addParticipantsSucceeded.Participants.Count);
-                Assert.AreEqual("8:acs:12345", addParticipantsSucceeded.Participants[0].RawId);
-                Assert.IsTrue(addParticipantsSucceeded.Participants[1].RawId.EndsWith("123456789"));
+                Assert.AreEqual("8:acs:12345", addParticipantsSucceeded.Participant.RawId);
             }
             else
             {

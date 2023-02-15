@@ -32,10 +32,10 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("sourceDisplayName");
                 writer.WriteStringValue(SourceDisplayName);
             }
-            if (Optional.IsDefined(CallSourceIdentifier))
+            if (Optional.IsDefined(SourceIdentity))
             {
-                writer.WritePropertyName("callSourceIdentifier");
-                writer.WriteObjectValue(CallSourceIdentifier);
+                writer.WritePropertyName("sourceIdentity");
+                writer.WriteObjectValue(SourceIdentity);
             }
             if (Optional.IsDefined(OperationContext))
             {

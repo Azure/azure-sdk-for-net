@@ -33,7 +33,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         protected const string TransferCallOrRemoveParticipantsPayload = "{\"operationContext\": \"someOperationContext\"}";
 
-        protected const string AddParticipantsPayload = "{\"participants\":[{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false},{\"identifier\":{\"rawId\":\"participantId2\",\"kind\":\"phoneNumber\",\"phoneNumber\":{\"value\":\"+11234567\"}},\"isMuted\":true}],\"operationContext\":\"someOperationContext\"}";
+        protected const string AddParticipantsPayload = "{\"participant\":{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false},\"operationContext\":\"someOperationContext\"}";
 
         protected const string GetParticipantPayload = "{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false}";
 

@@ -5,36 +5,33 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The participants successfully added event. </summary>
-    internal partial class AddParticipantsSucceededInternal
+    /// <summary> The failed to add participants event. </summary>
+    internal partial class AddParticipantFailedInternal
     {
-        /// <summary> Initializes a new instance of AddParticipantsSucceededInternal. </summary>
-        internal AddParticipantsSucceededInternal()
+        /// <summary> Initializes a new instance of AddParticipantFailedInternal. </summary>
+        internal AddParticipantFailedInternal()
         {
-            Participants = new ChangeTrackingList<CommunicationIdentifierModel>();
         }
 
-        /// <summary> Initializes a new instance of AddParticipantsSucceededInternal. </summary>
+        /// <summary> Initializes a new instance of AddParticipantFailedInternal. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <param name="participants"> The list of participants in the call. </param>
-        internal AddParticipantsSucceededInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, IReadOnlyList<CommunicationIdentifierModel> participants)
+        /// <param name="participant"> Participant. </param>
+        internal AddParticipantFailedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CommunicationIdentifierModel participant)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
             OperationContext = operationContext;
             ResultInformation = resultInformation;
-            Participants = participants;
+            Participant = participant;
         }
 
         /// <summary> Call connection ID. </summary>
@@ -47,7 +44,7 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; }
         /// <summary> Contains the resulting SIP code/sub-code and message from NGC services. </summary>
         public ResultInformation ResultInformation { get; }
-        /// <summary> The list of participants in the call. </summary>
-        public IReadOnlyList<CommunicationIdentifierModel> Participants { get; }
+        /// <summary> Participant. </summary>
+        public CommunicationIdentifierModel Participant { get; }
     }
 }
