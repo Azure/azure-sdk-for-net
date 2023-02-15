@@ -20,6 +20,7 @@ namespace Microsoft.Extensions.Azure
         private readonly bool _asyncDisposable;
         private readonly bool _disposable;
 
+        private bool _clientInitialized;
         private TClient _cachedClient;
         private ExceptionDispatchInfo _cachedException;
 
@@ -36,7 +37,7 @@ namespace Microsoft.Extensions.Azure
         {
             _cachedException?.Throw();
 
-            if (_cachedClient != null)
+            if (_clientInitialized)
             {
                 return _cachedClient;
             }
@@ -45,7 +46,7 @@ namespace Microsoft.Extensions.Azure
             {
                 _cachedException?.Throw();
 
-                if (_cachedClient != null)
+                if (_clientInitialized)
                 {
                     return _cachedClient;
                 }
@@ -58,6 +59,7 @@ namespace Microsoft.Extensions.Azure
                 try
                 {
                     _cachedClient = _factory(serviceProvider, options, tokenCredential);
+                    _clientInitialized = true;
                 }
                 catch (Exception e)
                 {
@@ -71,7 +73,7 @@ namespace Microsoft.Extensions.Azure
 
         public async ValueTask DisposeAsync()
         {
-            if (_cachedClient != null)
+            if (_clientInitialized)
             {
                 if (_asyncDisposable)
                 {
@@ -79,13 +81,15 @@ namespace Microsoft.Extensions.Azure
 
                     lock (_cacheLock)
                     {
-                       if (_cachedClient == null)
+                       if (!_clientInitialized)
                        {
                            return;
                        }
 
                        disposableClient = (IAsyncDisposable)_cachedClient;
+
                        _cachedClient = default;
+                       _clientInitialized = false;
                     }
 
                     await disposableClient.DisposeAsync().ConfigureAwait(false);
@@ -99,7 +103,7 @@ namespace Microsoft.Extensions.Azure
 
         public void Dispose()
         {
-            if (_cachedClient != null)
+            if (_clientInitialized)
             {
                 if (_disposable)
                 {
@@ -107,13 +111,15 @@ namespace Microsoft.Extensions.Azure
 
                     lock (_cacheLock)
                     {
-                       if (_cachedClient == null)
+                       if (!_clientInitialized)
                        {
                            return;
                        }
 
                        disposableClient = (IDisposable)_cachedClient;
+
                        _cachedClient = default;
+                       _clientInitialized = false;
                     }
 
                     disposableClient.Dispose();

@@ -375,6 +375,36 @@ namespace Azure.Core.Extensions.Tests
         }
 
         [Test]
+        public void CanRegisterStructClient()
+        {
+            var name = "Test";
+            var serviceCollection = new ServiceCollection();
+
+            serviceCollection.AddAzureClients(builder =>
+                builder.AddClient<ValueClient, object>(options => new ValueClient(name)));
+
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            ValueClient client = provider.GetService<ValueClient>();
+
+            Assert.AreEqual(name, client.Name);
+        }
+
+        [Test]
+        public void CanRegisterPrimitive()
+        {
+            var value = 55;
+            var serviceCollection = new ServiceCollection();
+
+            serviceCollection.AddAzureClients(builder =>
+                builder.AddClient<int, object>(options => value));
+
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            int clientValue = provider.GetService<int>();
+
+            Assert.AreEqual(value, clientValue);
+        }
+
+        [Test]
         public void CanRegisterCustomClientWithOptionsAndCredential()
         {
             var serviceCollection = new ServiceCollection();
@@ -566,6 +596,12 @@ namespace Azure.Core.Extensions.Tests
 
         private class NonDisposableClient
         {
+        }
+
+        private struct ValueClient
+        {
+            public string Name { get; }
+            public ValueClient(string name) => Name = name;
         }
     }
 }
