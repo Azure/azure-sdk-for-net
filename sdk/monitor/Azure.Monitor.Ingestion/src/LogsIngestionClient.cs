@@ -384,12 +384,12 @@ namespace Azure.Monitor.Ingestion
                             else
                             {
                                 var processCompletedTask = await ProcessCompletedTaskEventHandlerAsync(runningTask, batch.Logs, options, cancellationToken).ConfigureAwait(false);
-                                logsFailed += processCompletedTask.Item2;
+                                logsFailed += processCompletedTask.LogsCount;
                                 // if exception is thrown stop processing future batches
-                                if (processCompletedTask.Item1 != null)
+                                if (processCompletedTask.Ex != null)
                                 {
                                     shouldAbort = true;
-                                    AddException(ref exceptions, processCompletedTask.Item1);
+                                    AddException(ref exceptions, processCompletedTask.Ex);
                                 }
                             }
 
@@ -425,12 +425,12 @@ namespace Azure.Monitor.Ingestion
                 else
                 {
                     var processTaskResult = await ProcessCompletedTaskEventHandlerAsync(task.CurrentTask, task.Logs, options, cancellationToken).ConfigureAwait(false);
-                    logsFailed += processTaskResult.Item2;
+                    logsFailed += processTaskResult.LogsCount;
                     // if exception is thrown stop processing future batches
-                    if (processTaskResult.Item1 != null)
+                    if (processTaskResult.Ex != null)
                     {
                         shouldAbort = true;
-                        AddException(ref exceptions, processTaskResult.Item1);
+                        AddException(ref exceptions, processTaskResult.Ex);
                     }
                 }
             }
@@ -466,24 +466,24 @@ namespace Azure.Monitor.Ingestion
             }
         }
 
-        internal async Task<Tuple<Exception, int>> ProcessCompletedTaskEventHandlerAsync(Task<Response> completedTask, List<object> logs, UploadLogsOptions options, CancellationToken cancellationToken)
+        internal async Task<(Exception Ex, int LogsCount)> ProcessCompletedTaskEventHandlerAsync(Task<Response> completedTask, List<object> logs, UploadLogsOptions options, CancellationToken cancellationToken)
         {
             UploadFailedEventArgs eventArgs;
             if (completedTask.Exception != null)
             {
                 eventArgs = new UploadFailedEventArgs(logs, completedTask.Exception, isRunningSynchronously: false, ClientDiagnostics, cancellationToken);
                 var exception = await options.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
-                return new Tuple<Exception, int>(exception, logs.Count);
+                return (exception, logs.Count);
             }
             else if (completedTask.Result.Status != 204)
             {
                 eventArgs = new UploadFailedEventArgs(logs, new RequestFailedException(completedTask.Result), isRunningSynchronously: false, ClientDiagnostics, cancellationToken);
                 var exception = await options.OnUploadFailedAsync(eventArgs).ConfigureAwait(false);
-                return new Tuple<Exception, int>(exception, logs.Count);
+                return (exception, logs.Count);
             }
             else
             {
-                return new Tuple<Exception, int>(null, 0);
+                return (null, 0);
             }
         }
 
