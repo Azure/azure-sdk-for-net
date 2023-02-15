@@ -35,7 +35,7 @@ namespace Azure.Identity
             Validations.ValidateAuthorityHost(pipeline?.AuthorityHost);
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
             DisableInstanceDiscovery = options is ISupportsDisableInstanceDiscovery supportsDisableInstanceDiscovery && supportsDisableInstanceDiscovery.DisableInstanceDiscovery;
-            ITokenCacheOptions cacheOptions = options as ITokenCacheOptions;
+            ISupportsTokenCachePersistenceOptions cacheOptions = options as ISupportsTokenCachePersistenceOptions;
             IsPiiLoggingEnabled = options?.IsLoggingPIIEnabled ?? false;
             Pipeline = pipeline;
             TenantId = tenantId;

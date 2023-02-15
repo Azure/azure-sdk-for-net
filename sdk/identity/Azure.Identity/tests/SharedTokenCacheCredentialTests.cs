@@ -33,7 +33,6 @@ namespace Azure.Identity.Tests
             var options = new SharedTokenCacheCredentialOptions(tokenCacheOptions)
             {
                 Transport = config.Transport,
-                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants,
                 DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false
             };
             var pipeline = CredentialPipeline.GetInstance(options);

@@ -12,7 +12,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options to configure the <see cref="DefaultAzureCredential"/> authentication flow and requests made to Azure Identity services.
     /// </summary>
-    public class DefaultAzureCredentialOptions : TokenCredentialOptions, ISupportsDisableInstanceDiscovery
+    public class DefaultAzureCredentialOptions : TokenCredentialOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants
     {
         private struct UpdateTracker<T>
         {
@@ -38,11 +38,11 @@ namespace Azure.Identity
             public bool Updated => _updated;
         }
 
-        private UpdateTracker<string> _tenantId = new UpdateTracker<string>(GetNonEmptyStringOrNull(EnvironmentVariables.TenantId));
-        private UpdateTracker<string> _interactiveBrowserTenantId = new UpdateTracker<string>(GetNonEmptyStringOrNull(EnvironmentVariables.TenantId));
-        private UpdateTracker<string> _sharedTokenCacheTenantId = new UpdateTracker<string>(GetNonEmptyStringOrNull(EnvironmentVariables.TenantId));
-        private UpdateTracker<string> _visualStudioTenantId = new UpdateTracker<string>(GetNonEmptyStringOrNull(EnvironmentVariables.TenantId));
-        private UpdateTracker<string> _visualStudioCodeTenantId = new UpdateTracker<string>(GetNonEmptyStringOrNull(EnvironmentVariables.TenantId));
+        private UpdateTracker<string> _tenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
+        private UpdateTracker<string> _interactiveBrowserTenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
+        private UpdateTracker<string> _sharedTokenCacheTenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
+        private UpdateTracker<string> _visualStudioTenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
+        private UpdateTracker<string> _visualStudioCodeTenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
 
         /// <summary>
         /// The ID of the tenant to which the credential will authenticate by default. If not specified, the credential will authenticate to any requested tenant, and will default to the tenant to which the chosen authentication method was originally authenticated.
@@ -168,7 +168,7 @@ namespace Azure.Identity
         /// If no value is specified for <see cref="TenantId"/>, this option will have no effect on that authentication method, and the credential will acquire tokens for any requested tenant when using that method.
         /// This value can also be set by setting the environment variable AZURE_ADDITIONALLY_ALLOWED_TENANTS.
         /// </summary>
-        public IList<string> AdditionallyAllowedTenants { get; private set; } = EnvironmentVariables.AdditionallyAllowedTenants;
+        public IList<string> AdditionallyAllowedTenants { get; internal set; } = EnvironmentVariables.AdditionallyAllowedTenants;
 
         /// <summary>
         /// Specifies the preferred authentication account to be retrieved from the shared token cache for single sign on authentication with
@@ -178,7 +178,7 @@ namespace Azure.Identity
         /// If multiple accounts are found in the shared token cache and no value is specified, or the specified value matches no accounts in
         /// the cache the SharedTokenCacheCredential will not be used for authentication.
         /// </remarks>
-        public string SharedTokenCacheUsername { get; set; } = GetNonEmptyStringOrNull(EnvironmentVariables.Username);
+        public string SharedTokenCacheUsername { get; set; } = EnvironmentVariables.Username;
 
         /// <summary>
         /// Specifies the client id of the selected credential
@@ -188,7 +188,7 @@ namespace Azure.Identity
         /// <summary>
         /// Specifies the client id of a user assigned ManagedIdentity. If this value is configured, then <see cref="ManagedIdentityResourceId"/> should not be configured.
         /// </summary>
-        public string ManagedIdentityClientId { get; set; } = GetNonEmptyStringOrNull(EnvironmentVariables.ClientId);
+        public string ManagedIdentityClientId { get; set; } = EnvironmentVariables.ClientId;
 
         /// <summary>
         /// Specifies the resource id of a user assigned ManagedIdentity. If this value is configured, then <see cref="ManagedIdentityClientId"/> should not be configured.
@@ -255,43 +255,31 @@ namespace Azure.Identity
         /// <inheriteddoc/>
         public bool DisableInstanceDiscovery { get; set; }
 
-        internal DefaultAzureCredentialOptions ShallowClone()
+        internal DefaultAzureCredentialOptions Clone()
         {
-            var options = new DefaultAzureCredentialOptions
-            {
-                _tenantId = _tenantId,
-                _interactiveBrowserTenantId = _interactiveBrowserTenantId,
-                _sharedTokenCacheTenantId = _sharedTokenCacheTenantId,
-                _visualStudioTenantId = _visualStudioTenantId,
-                _visualStudioCodeTenantId = _visualStudioCodeTenantId,
-                SharedTokenCacheUsername = SharedTokenCacheUsername,
-                InteractiveBrowserCredentialClientId = InteractiveBrowserCredentialClientId,
-                ManagedIdentityClientId = ManagedIdentityClientId,
-                ManagedIdentityResourceId = ManagedIdentityResourceId,
-                DeveloperCredentialTimeout = DeveloperCredentialTimeout,
-                ExcludeEnvironmentCredential = ExcludeEnvironmentCredential,
-                ExcludeManagedIdentityCredential = ExcludeManagedIdentityCredential,
-                ExcludeAzureDeveloperCliCredential = ExcludeAzureDeveloperCliCredential,
-                ExcludeSharedTokenCacheCredential = ExcludeSharedTokenCacheCredential,
-                ExcludeInteractiveBrowserCredential = ExcludeInteractiveBrowserCredential,
-                ExcludeAzureCliCredential = ExcludeAzureCliCredential,
-                ExcludeVisualStudioCredential = ExcludeVisualStudioCredential,
-                ExcludeVisualStudioCodeCredential = ExcludeVisualStudioCodeCredential,
-                ExcludeAzurePowerShellCredential = ExcludeAzurePowerShellCredential,
-                AuthorityHost = AuthorityHost,
-                DisableInstanceDiscovery = DisableInstanceDiscovery,
-            };
+            var clone = this.Clone<DefaultAzureCredentialOptions>();
 
-            foreach (var addlTenant in AdditionallyAllowedTenants)
-            {
-                options.AdditionallyAllowedTenants.Add(addlTenant);
-            }
+            clone._tenantId = _tenantId;
+            clone._interactiveBrowserTenantId = _interactiveBrowserTenantId;
+            clone._sharedTokenCacheTenantId = _sharedTokenCacheTenantId;
+            clone._visualStudioTenantId = _visualStudioTenantId;
+            clone._visualStudioCodeTenantId = _visualStudioCodeTenantId;
+            clone.SharedTokenCacheUsername = SharedTokenCacheUsername;
+            clone.InteractiveBrowserCredentialClientId = InteractiveBrowserCredentialClientId;
+            clone.ManagedIdentityClientId = ManagedIdentityClientId;
+            clone.ManagedIdentityResourceId = ManagedIdentityResourceId;
+            clone.DeveloperCredentialTimeout = DeveloperCredentialTimeout;
+            clone.ExcludeEnvironmentCredential = ExcludeEnvironmentCredential;
+            clone.ExcludeManagedIdentityCredential = ExcludeManagedIdentityCredential;
+            clone.ExcludeAzureDeveloperCliCredential = ExcludeAzureDeveloperCliCredential;
+            clone.ExcludeSharedTokenCacheCredential = ExcludeSharedTokenCacheCredential;
+            clone.ExcludeInteractiveBrowserCredential = ExcludeInteractiveBrowserCredential;
+            clone.ExcludeAzureCliCredential = ExcludeAzureCliCredential;
+            clone.ExcludeVisualStudioCredential = ExcludeVisualStudioCredential;
+            clone.ExcludeVisualStudioCodeCredential = ExcludeVisualStudioCodeCredential;
+            clone.ExcludeAzurePowerShellCredential = ExcludeAzurePowerShellCredential;
 
-            return options;
-        }
-        private static string GetNonEmptyStringOrNull(string str)
-        {
-            return !string.IsNullOrEmpty(str) ? str : null;
+            return clone;
         }
     }
 }

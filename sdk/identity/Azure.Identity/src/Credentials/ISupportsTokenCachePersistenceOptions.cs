@@ -7,8 +7,8 @@ using System.Text;
 
 namespace Azure.Identity
 {
-    internal interface ITokenCacheOptions
+    internal interface ISupportsTokenCachePersistenceOptions
     {
-        TokenCachePersistenceOptions TokenCachePersistenceOptions { get; }
+        TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
     }
 }

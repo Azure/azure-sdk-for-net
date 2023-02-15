@@ -31,11 +31,6 @@ namespace Azure.Identity.Tests
                 Assert.Ignore("Null TenantId test does not apply to this credential");
             }
 
-            var options = new EnvironmentCredentialOptions
-            {
-                Transport = config.Transport,
-                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false,
-            };
             using (new TestEnvVar(
                 new()
                 {
@@ -48,6 +43,12 @@ namespace Azure.Identity.Tests
                     { "AZURE_CLIENT_CERTIFICATE_PATH", null }
                 }))
             {
+                var options = new EnvironmentCredentialOptions
+                {
+                    Transport = config.Transport,
+                    DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false,
+                };
+
                 return InstrumentClient(new EnvironmentCredential(options));
             }
         }
