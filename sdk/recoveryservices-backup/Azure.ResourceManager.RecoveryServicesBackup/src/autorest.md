@@ -282,6 +282,7 @@ rename-mapping:
   DpmJob: DpmBackupJob
   DpmJobExtendedInfo: DpmBackupJobExtendedInfo
   DpmJobTaskDetails: DpmBackupJobTaskDetails
+  IdentityInfo: BackupIdentityInfo
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -348,10 +349,8 @@ list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}
-
-request-path-to-singleton-resource:
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEncryptionConfigs/backupResourceEncryptionConfig: backupEncryptionConfigs/backupResourceEncryptionConfig
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupconfig/vaultconfig: backupconfig/vaultconfig
+  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupconfig/vaultconfig
+  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEncryptionConfigs/backupResourceEncryptionConfig
 
 directive:
   - remove-operation: Operation_Validate
@@ -383,6 +382,7 @@ directive:
     where: $.parameters
     transform: >
       $.AzureRegion['x-ms-format'] = 'azure-location';
+      $.AzureRegion['x-ms-client-name'] = 'location';
   # Autorest.CSharp can't find `nextLink` from parent (allOf), so here workaround.
   # Issues filed here: https://github.com/Azure/autorest.csharp/issues/2740.
   - from: bms.json

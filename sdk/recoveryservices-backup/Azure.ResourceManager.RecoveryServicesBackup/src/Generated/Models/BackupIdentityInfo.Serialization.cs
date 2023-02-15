@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IdentityInfo : IUtf8JsonSerializable
+    public partial class BackupIdentityInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteEndObject();
         }
 
-        internal static IdentityInfo DeserializeIdentityInfo(JsonElement element)
+        internal static BackupIdentityInfo DeserializeBackupIdentityInfo(JsonElement element)
         {
             Optional<bool> isSystemAssignedIdentity = default;
             Optional<ResourceIdentifier> managedIdentityResourceId = default;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new IdentityInfo(Optional.ToNullable(isSystemAssignedIdentity), managedIdentityResourceId.Value);
+            return new BackupIdentityInfo(Optional.ToNullable(isSystemAssignedIdentity), managedIdentityResourceId.Value);
         }
     }
 }

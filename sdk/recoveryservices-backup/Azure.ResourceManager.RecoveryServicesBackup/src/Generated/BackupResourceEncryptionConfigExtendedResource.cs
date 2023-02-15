@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> Vault encryption input config request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, BackupResourceEncryptionConfigExtendedCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, BackupResourceEncryptionConfigExtendedCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsClientDiagnostics.CreateScope("BackupResourceEncryptionConfigExtendedResource.CreateOrUpdate");
+            using var scope = _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsClientDiagnostics.CreateScope("BackupResourceEncryptionConfigExtendedResource.Update");
             scope.Start();
             try
             {
@@ -208,11 +208,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="content"> Vault encryption input config request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, BackupResourceEncryptionConfigExtendedCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Update(WaitUntil waitUntil, BackupResourceEncryptionConfigExtendedCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsClientDiagnostics.CreateScope("BackupResourceEncryptionConfigExtendedResource.CreateOrUpdate");
+            using var scope = _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsClientDiagnostics.CreateScope("BackupResourceEncryptionConfigExtendedResource.Update");
             scope.Start();
             try
             {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await CreateOrUpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
             }
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = CreateOrUpdate(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Get(cancellationToken: cancellationToken);
                 }
             }
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(current.Location);
                     patch.Tags.ReplaceWith(tags);
-                    var result = await CreateOrUpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
             }
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
                     var patch = new BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(current.Location);
                     patch.Tags.ReplaceWith(tags);
-                    var result = CreateOrUpdate(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Get(cancellationToken: cancellationToken);
                 }
             }
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await CreateOrUpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
             }
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = CreateOrUpdate(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Get(cancellationToken: cancellationToken);
                 }
             }

@@ -67,16 +67,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="azureRegion"> Azure region to hit Api. </param>
+        /// <param name="location"> Azure region to hit Api. </param>
         /// <param name="content"> Enable backup validation request on Virtual Machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PreValidateEnableBackupResult>> ValidateProtectionIntentAsync(AzureLocation azureRegion, PreValidateEnableBackupContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PreValidateEnableBackupResult>> ValidateProtectionIntentAsync(AzureLocation location, PreValidateEnableBackupContent content, CancellationToken cancellationToken = default)
         {
             using var scope = BackupProtectionIntentProtectionIntentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateProtectionIntent");
             scope.Start();
             try
             {
-                var response = await BackupProtectionIntentProtectionIntentRestClient.ValidateAsync(Id.SubscriptionId, azureRegion, content, cancellationToken).ConfigureAwait(false);
+                var response = await BackupProtectionIntentProtectionIntentRestClient.ValidateAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -102,16 +102,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="azureRegion"> Azure region to hit Api. </param>
+        /// <param name="location"> Azure region to hit Api. </param>
         /// <param name="content"> Enable backup validation request on Virtual Machine. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PreValidateEnableBackupResult> ValidateProtectionIntent(AzureLocation azureRegion, PreValidateEnableBackupContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PreValidateEnableBackupResult> ValidateProtectionIntent(AzureLocation location, PreValidateEnableBackupContent content, CancellationToken cancellationToken = default)
         {
             using var scope = BackupProtectionIntentProtectionIntentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateProtectionIntent");
             scope.Start();
             try
             {
-                var response = BackupProtectionIntentProtectionIntentRestClient.Validate(Id.SubscriptionId, azureRegion, content, cancellationToken);
+                var response = BackupProtectionIntentProtectionIntentRestClient.Validate(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -134,16 +134,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="azureRegion"> Azure region to hit Api. </param>
+        /// <param name="location"> Azure region to hit Api. </param>
         /// <param name="content"> Container Backup Status Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BackupStatusResult>> GetBackupStatusAsync(AzureLocation azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupStatusResult>> GetBackupStatusAsync(AzureLocation location, BackupStatusContent content, CancellationToken cancellationToken = default)
         {
             using var scope = BackupStatusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBackupStatus");
             scope.Start();
             try
             {
-                var response = await BackupStatusRestClient.GetAsync(Id.SubscriptionId, azureRegion, content, cancellationToken).ConfigureAwait(false);
+                var response = await BackupStatusRestClient.GetAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -166,16 +166,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="azureRegion"> Azure region to hit Api. </param>
+        /// <param name="location"> Azure region to hit Api. </param>
         /// <param name="content"> Container Backup Status Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BackupStatusResult> GetBackupStatus(AzureLocation azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
+        public virtual Response<BackupStatusResult> GetBackupStatus(AzureLocation location, BackupStatusContent content, CancellationToken cancellationToken = default)
         {
             using var scope = BackupStatusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBackupStatus");
             scope.Start();
             try
             {
-                var response = BackupStatusRestClient.Get(Id.SubscriptionId, azureRegion, content, cancellationToken);
+                var response = BackupStatusRestClient.Get(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -198,16 +198,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="azureRegion"> Azure region to hit Api. </param>
+        /// <param name="location"> Azure region to hit Api. </param>
         /// <param name="content"> Feature support request object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VmResourceFeatureSupportResult>> ValidateFeatureSupportAsync(AzureLocation azureRegion, FeatureSupportContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VmResourceFeatureSupportResult>> ValidateFeatureSupportAsync(AzureLocation location, FeatureSupportContent content, CancellationToken cancellationToken = default)
         {
             using var scope = FeatureSupportClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateFeatureSupport");
             scope.Start();
             try
             {
-                var response = await FeatureSupportRestClient.ValidateAsync(Id.SubscriptionId, azureRegion, content, cancellationToken).ConfigureAwait(false);
+                var response = await FeatureSupportRestClient.ValidateAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -230,16 +230,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="azureRegion"> Azure region to hit Api. </param>
+        /// <param name="location"> Azure region to hit Api. </param>
         /// <param name="content"> Feature support request object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VmResourceFeatureSupportResult> ValidateFeatureSupport(AzureLocation azureRegion, FeatureSupportContent content, CancellationToken cancellationToken = default)
+        public virtual Response<VmResourceFeatureSupportResult> ValidateFeatureSupport(AzureLocation location, FeatureSupportContent content, CancellationToken cancellationToken = default)
         {
             using var scope = FeatureSupportClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ValidateFeatureSupport");
             scope.Start();
             try
             {
-                var response = FeatureSupportRestClient.Validate(Id.SubscriptionId, azureRegion, content, cancellationToken);
+                var response = FeatureSupportRestClient.Validate(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

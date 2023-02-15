@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<bool> restoreWithManagedDisks = default;
             Optional<string> diskEncryptionSetId = default;
             Optional<IList<string>> zones = default;
-            Optional<IdentityInfo> identityInfo = default;
+            Optional<BackupIdentityInfo> identityInfo = default;
             Optional<IdentityBasedRestoreDetails> identityBasedRestoreDetails = default;
             string objectType = "IaasVMRestoreRequest";
             foreach (var property in element.EnumerateObject())
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identityInfo = IdentityInfo.DeserializeIdentityInfo(property.Value);
+                    identityInfo = BackupIdentityInfo.DeserializeBackupIdentityInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identityBasedRestoreDetails"u8))

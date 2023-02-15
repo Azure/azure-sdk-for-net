@@ -93,18 +93,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             return GetCachedClient(Client => new BackupProtectionIntentCollection(Client, Id));
         }
 
-        /// <summary> Gets an object representing a BackupResourceVaultConfigResource along with the instance operations that can be performed on it in the ResourceGroupResource. </summary>
-        /// <returns> Returns a <see cref="BackupResourceVaultConfigResource" /> object. </returns>
-        public virtual BackupResourceVaultConfigResource GetBackupResourceVaultConfig()
+        /// <summary> Gets a collection of BackupResourceVaultConfigResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of BackupResourceVaultConfigResources and their operations over a BackupResourceVaultConfigResource. </returns>
+        public virtual BackupResourceVaultConfigCollection GetBackupResourceVaultConfigs()
         {
-            return new BackupResourceVaultConfigResource(Client, new ResourceIdentifier(Id.ToString() + "/backupconfig/vaultconfig"));
+            return GetCachedClient(Client => new BackupResourceVaultConfigCollection(Client, Id));
         }
 
-        /// <summary> Gets an object representing a BackupResourceEncryptionConfigExtendedResource along with the instance operations that can be performed on it in the ResourceGroupResource. </summary>
-        /// <returns> Returns a <see cref="BackupResourceEncryptionConfigExtendedResource" /> object. </returns>
-        public virtual BackupResourceEncryptionConfigExtendedResource GetBackupResourceEncryptionConfigExtended()
+        /// <summary> Gets a collection of BackupResourceEncryptionConfigExtendedResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of BackupResourceEncryptionConfigExtendedResources and their operations over a BackupResourceEncryptionConfigExtendedResource. </returns>
+        public virtual BackupResourceEncryptionConfigExtendedCollection GetBackupResourceEncryptionConfigExtendeds()
         {
-            return new BackupResourceEncryptionConfigExtendedResource(Client, new ResourceIdentifier(Id.ToString() + "/backupEncryptionConfigs/backupResourceEncryptionConfig"));
+            return GetCachedClient(Client => new BackupResourceEncryptionConfigExtendedCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of BackupPrivateEndpointConnectionResources in the ResourceGroupResource. </summary>
