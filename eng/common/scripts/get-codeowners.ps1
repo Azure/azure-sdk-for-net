@@ -111,16 +111,19 @@ function Get-Codeowners(
   }
 
   $codeownersToolCommand = Get-CodeownersTool
+  Write-Host "Executing: & $codeownersToolCommand --target-path $targetPath --codeowners-file-path-or-url $codeownersFileLocation --exclude-non-user-aliases:$(!$includeNonUserAliases)"
   $commandOutput = & $codeownersToolCommand `
       --target-path $targetPath `
       --codeowners-file-path-or-url $codeownersFileLocation `
       --exclude-non-user-aliases:$(!$includeNonUserAliases) `
       2>&1
 
-  # Failed at the command of fetching code owners.
   if ($LASTEXITCODE -ne 0) {
-    Write-Host $commandOutput
+    Write-Host "Command $codeownersToolCommand execution failed (exit code = $LASTEXITCODE). Output string: $commandOutput"
     return ,@()
+  } else
+  {
+    Write-Host "Command $codeownersToolCommand executed successfully (exit code = 0). Output string length: $($commandOutput.length)"
   }
 
 # Assert: $commandOutput is a valid JSON representing:
@@ -139,9 +142,10 @@ $codeownersJson = $commandOutput | ConvertFrom-Json
   return ,@($codeownersJson.Owners)
 }
 
-function TestGetCodeowners([string]$targetDirectory, [string]$codeownersFileLocation, [bool]$includeNonUserAliases = $false, [string[]]$expectReturn) {
-  Write-Host "Testing on $targetDirectory..."
-  $actualReturn = Get-Codeowners -targetDirectory $targetDirectory -codeownersFileLocation $codeownersFileLocation -includeNonUserAliases $IncludeNonUserAliases
+function TestGetCodeowners([string]$targetPath, [string]$codeownersFileLocation, [bool]$includeNonUserAliases = $false, [string[]]$expectReturn) {
+  Write-Host "Test: find owners matching '$targetPath' ..."
+  
+  $actualReturn = Get-Codeowners -targetPath $targetPath -codeownersFileLocation $codeownersFileLocation -includeNonUserAliases $IncludeNonUserAliases
 
   if ($actualReturn.Count -ne $expectReturn.Count) {
     Write-Error "The length of actual result is not as expected. Expected length: $($expectReturn.Count), Actual length: $($actualReturn.Count)."
@@ -156,18 +160,16 @@ function TestGetCodeowners([string]$targetDirectory, [string]$codeownersFileLoca
 }
 
 if ($Test) {
-  # These tests have been removed; now instead we should run tests from RetrieveCodeOwnersProgramTests, and in a way as explained in:
+  # Most of tests here have been removed; now instead we should run tests from RetrieveCodeOwnersProgramTests, and in a way as explained in:
   # https://github.com/Azure/azure-sdk-tools/issues/5434
   # https://github.com/Azure/azure-sdk-tools/pull/5103#discussion_r1068680818
-  Write-Host "These tests have been removed. Please see https://github.com/Azure/azure-sdk-tools/issues/5434 for more."
-  #
-  # $testFile = (Resolve-Path $PSScriptRoot/../../../tools/code-owners-parser/Azure.Sdk.Tools.RetrieveCodeOwners.Tests/TestData/simple_path_CODEOWNERS)
-  # TestGetCodeOwner -targetDirectory "sdk" -codeOwnerFileLocation $testFile -includeNonUserAliases $true -expectReturn @("person1", "person2")
-  # TestGetCodeOwner -targetDirectory "sdk/noPath" -codeOwnerFileLocation $testFile -includeNonUserAliases $true -expectReturn @("person1", "person2")
-  # TestGetCodeOwner -targetDirectory "/sdk/azconfig" -codeOwnerFileLocation $testFile -includeNonUserAliases $true -expectReturn @("person3", "person4")
-  # TestGetCodeOwner -targetDirectory "/sdk/azconfig/package" -codeOwnerFileLocation $testFile -includeNonUserAliases $true  $testFile -expectReturn @("person3", "person4")
-  # TestGetCodeOwner -targetDirectory "/sd" -codeOwnerFileLocation $testFile -includeNonUserAliases $true  -expectReturn @()
-  # TestGetCodeOwner -targetDirectory "/sdk/testUser/" -codeOwnerFileLocation $testFile -expectReturn @("azure-sdk") 
+  Write-Host "Running reduced test suite at `$PSScriptRoot of $PSSCriptRoot. Please see https://github.com/Azure/azure-sdk-tools/issues/5434 for more."
+
+  $azSdkToolsCodeowners = (Resolve-Path "$PSScriptRoot/../../../.github/CODEOWNERS")
+  TestGetCodeowners -targetPath "eng/common/scripts/get-codeowners.ps1" -codeownersFileLocation $azSdkToolsCodeowners -includeNonUserAliases $true -expectReturn @("sima-zhu", "weshaggard", "benbp")
+  
+  $testCodeowners = (Resolve-Path "$PSScriptRoot/../../../tools/code-owners-parser/Azure.Sdk.Tools.RetrieveCodeOwners.Tests/TestData/glob_path_CODEOWNERS")
+  TestGetCodeowners -targetPath "tools/code-owners-parser/Azure.Sdk.Tools.RetrieveCodeOwners.Tests/TestData/InputDir/a.txt" -codeownersFileLocation $testCodeowners -includeNonUserAliases $true -expectReturn @("2star")
   exit 0
 }
 else {
