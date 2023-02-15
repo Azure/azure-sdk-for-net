@@ -22,32 +22,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> jobScenarioName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobId"))
+                if (property.NameEquals("jobId"u8))
                 {
                     jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobFriendlyName"))
+                if (property.NameEquals("jobFriendlyName"u8))
                 {
                     jobFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetObjectId"))
+                if (property.NameEquals("targetObjectId"u8))
                 {
                     targetObjectId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetObjectName"))
+                if (property.NameEquals("targetObjectName"u8))
                 {
                     targetObjectName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetInstanceType"))
+                if (property.NameEquals("targetInstanceType"u8))
                 {
                     targetInstanceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobScenarioName"))
+                if (property.NameEquals("jobScenarioName"u8))
                 {
                     jobScenarioName = property.Value.GetString();
                     continue;

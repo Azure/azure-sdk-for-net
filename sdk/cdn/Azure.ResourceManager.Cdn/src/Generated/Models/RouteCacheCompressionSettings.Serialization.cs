@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ContentTypesToCompress))
             {
-                writer.WritePropertyName("contentTypesToCompress");
+                writer.WritePropertyName("contentTypesToCompress"u8);
                 writer.WriteStartArray();
                 foreach (var item in ContentTypesToCompress)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(IsCompressionEnabled))
             {
-                writer.WritePropertyName("isCompressionEnabled");
+                writer.WritePropertyName("isCompressionEnabled"u8);
                 writer.WriteBooleanValue(IsCompressionEnabled.Value);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<bool> isCompressionEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("contentTypesToCompress"))
+                if (property.NameEquals("contentTypesToCompress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     contentTypesToCompress = array;
                     continue;
                 }
-                if (property.NameEquals("isCompressionEnabled"))
+                if (property.NameEquals("isCompressionEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

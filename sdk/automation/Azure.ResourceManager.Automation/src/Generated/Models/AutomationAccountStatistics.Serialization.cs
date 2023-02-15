@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("counterProperty"))
+                if (property.NameEquals("counterProperty"u8))
                 {
                     counterProperty = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("counterValue"))
+                if (property.NameEquals("counterValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Automation.Models
                     counterValue = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Automation.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endTime"))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Automation.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;

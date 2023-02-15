@@ -17,25 +17,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryPointId))
             {
-                writer.WritePropertyName("recoveryPointId");
+                writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
             if (Optional.IsDefined(VirtualMachineId))
             {
-                writer.WritePropertyName("virtualMachineId");
+                writer.WritePropertyName("virtualMachineId"u8);
                 writer.WriteStringValue(VirtualMachineId);
             }
             if (Optional.IsDefined(InitiatorName))
             {
-                writer.WritePropertyName("initiatorName");
+                writer.WritePropertyName("initiatorName"u8);
                 writer.WriteStringValue(InitiatorName);
             }
             if (Optional.IsDefined(RenewExistingRegistration))
             {
-                writer.WritePropertyName("renewExistingRegistration");
+                writer.WritePropertyName("renewExistingRegistration"u8);
                 writer.WriteBooleanValue(RenewExistingRegistration.Value);
             }
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }
@@ -49,22 +49,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryPointId"))
+                if (property.NameEquals("recoveryPointId"u8))
                 {
                     recoveryPointId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("virtualMachineId"))
+                if (property.NameEquals("virtualMachineId"u8))
                 {
                     virtualMachineId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("initiatorName"))
+                if (property.NameEquals("initiatorName"u8))
                 {
                     initiatorName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("renewExistingRegistration"))
+                if (property.NameEquals("renewExistingRegistration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     renewExistingRegistration = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;

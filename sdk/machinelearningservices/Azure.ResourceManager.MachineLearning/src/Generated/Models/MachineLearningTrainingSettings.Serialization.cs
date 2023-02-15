@@ -18,39 +18,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsDnnTrainingEnabled))
             {
-                writer.WritePropertyName("enableDnnTraining");
+                writer.WritePropertyName("enableDnnTraining"u8);
                 writer.WriteBooleanValue(IsDnnTrainingEnabled.Value);
             }
             if (Optional.IsDefined(IsModelExplainabilityEnabled))
             {
-                writer.WritePropertyName("enableModelExplainability");
+                writer.WritePropertyName("enableModelExplainability"u8);
                 writer.WriteBooleanValue(IsModelExplainabilityEnabled.Value);
             }
             if (Optional.IsDefined(IsOnnxCompatibleModelsEnabled))
             {
-                writer.WritePropertyName("enableOnnxCompatibleModels");
+                writer.WritePropertyName("enableOnnxCompatibleModels"u8);
                 writer.WriteBooleanValue(IsOnnxCompatibleModelsEnabled.Value);
             }
             if (Optional.IsDefined(IsStackEnsembleEnabled))
             {
-                writer.WritePropertyName("enableStackEnsemble");
+                writer.WritePropertyName("enableStackEnsemble"u8);
                 writer.WriteBooleanValue(IsStackEnsembleEnabled.Value);
             }
             if (Optional.IsDefined(IsVoteEnsembleEnabled))
             {
-                writer.WritePropertyName("enableVoteEnsemble");
+                writer.WritePropertyName("enableVoteEnsemble"u8);
                 writer.WriteBooleanValue(IsVoteEnsembleEnabled.Value);
             }
             if (Optional.IsDefined(EnsembleModelDownloadTimeout))
             {
-                writer.WritePropertyName("ensembleModelDownloadTimeout");
+                writer.WritePropertyName("ensembleModelDownloadTimeout"u8);
                 writer.WriteStringValue(EnsembleModelDownloadTimeout.Value, "P");
             }
             if (Optional.IsDefined(StackEnsembleSettings))
             {
                 if (StackEnsembleSettings != null)
                 {
-                    writer.WritePropertyName("stackEnsembleSettings");
+                    writer.WritePropertyName("stackEnsembleSettings"u8);
                     writer.WriteObjectValue(StackEnsembleSettings);
                 }
                 else
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningStackEnsembleSettings> stackEnsembleSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enableDnnTraining"))
+                if (property.NameEquals("enableDnnTraining"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     enableDnnTraining = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableModelExplainability"))
+                if (property.NameEquals("enableModelExplainability"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     enableModelExplainability = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableOnnxCompatibleModels"))
+                if (property.NameEquals("enableOnnxCompatibleModels"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     enableOnnxCompatibleModels = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableStackEnsemble"))
+                if (property.NameEquals("enableStackEnsemble"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     enableStackEnsemble = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableVoteEnsemble"))
+                if (property.NameEquals("enableVoteEnsemble"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     enableVoteEnsemble = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("ensembleModelDownloadTimeout"))
+                if (property.NameEquals("ensembleModelDownloadTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     ensembleModelDownloadTimeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("stackEnsembleSettings"))
+                if (property.NameEquals("stackEnsembleSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

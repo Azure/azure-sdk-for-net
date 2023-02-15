@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("uri");
+                writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            writer.WritePropertyName("secretStoreType");
+            writer.WritePropertyName("secretStoreType"u8);
             writer.WriteStringValue(SecretStoreType.ToString());
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
             writer.WriteEndObject();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uri"))
+                if (property.NameEquals("uri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("secretStoreType"))
+                if (property.NameEquals("secretStoreType"u8))
                 {
                     secretStoreType = new SecretStoreType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;

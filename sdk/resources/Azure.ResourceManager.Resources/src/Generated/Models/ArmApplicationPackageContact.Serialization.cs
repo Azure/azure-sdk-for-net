@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.Resources.Models
             string phone = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("contactName"))
+                if (property.NameEquals("contactName"u8))
                 {
                     contactName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("email"))
+                if (property.NameEquals("email"u8))
                 {
                     email = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phone"))
+                if (property.NameEquals("phone"u8))
                 {
                     phone = property.Value.GetString();
                     continue;

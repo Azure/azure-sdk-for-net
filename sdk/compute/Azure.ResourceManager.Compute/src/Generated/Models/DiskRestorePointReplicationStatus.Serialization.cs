@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> completionPercent = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
                     status = InstanceViewStatus.DeserializeInstanceViewStatus(property.Value);
                     continue;
                 }
-                if (property.NameEquals("completionPercent"))
+                if (property.NameEquals("completionPercent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

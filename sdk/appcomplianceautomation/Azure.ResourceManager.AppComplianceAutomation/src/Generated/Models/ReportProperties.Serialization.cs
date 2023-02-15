@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OfferGuid))
             {
-                writer.WritePropertyName("offerGuid");
+                writer.WritePropertyName("offerGuid"u8);
                 writer.WriteStringValue(OfferGuid);
             }
-            writer.WritePropertyName("timeZone");
+            writer.WritePropertyName("timeZone"u8);
             writer.WriteStringValue(TimeZone);
-            writer.WritePropertyName("triggerTime");
+            writer.WritePropertyName("triggerTime"u8);
             writer.WriteStringValue(TriggerOn, "O");
-            writer.WritePropertyName("resources");
+            writer.WritePropertyName("resources"u8);
             writer.WriteStartArray();
             foreach (var item in Resources)
             {
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     status = new ReportStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,27 +78,27 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("reportName"))
+                if (property.NameEquals("reportName"u8))
                 {
                     reportName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offerGuid"))
+                if (property.NameEquals("offerGuid"u8))
                 {
                     offerGuid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timeZone"))
+                if (property.NameEquals("timeZone"u8))
                 {
                     timeZone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("triggerTime"))
+                if (property.NameEquals("triggerTime"u8))
                 {
                     triggerTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("nextTriggerTime"))
+                if (property.NameEquals("nextTriggerTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     nextTriggerTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastTriggerTime"))
+                if (property.NameEquals("lastTriggerTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     lastTriggerTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("subscriptions"))
+                if (property.NameEquals("subscriptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     subscriptions = array;
                     continue;
                 }
-                if (property.NameEquals("resources"))
+                if (property.NameEquals("resources"u8))
                 {
                     List<ResourceMetadata> array = new List<ResourceMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     resources = array;
                     continue;
                 }
-                if (property.NameEquals("complianceStatus"))
+                if (property.NameEquals("complianceStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     complianceStatus = ReportComplianceStatus.DeserializeReportComplianceStatus(property.Value);
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

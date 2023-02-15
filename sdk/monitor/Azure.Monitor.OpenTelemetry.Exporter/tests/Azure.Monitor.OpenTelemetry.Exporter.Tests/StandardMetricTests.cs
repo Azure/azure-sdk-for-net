@@ -11,7 +11,6 @@ using OpenTelemetry.Trace;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Linq;
-using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 using System;
 using System.Threading;
 
@@ -63,12 +62,66 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("200", resultCode);
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.IsAutoCollectedKey, out var isAutoCollectedFlag));
             Assert.Equal("True", isAutoCollectedFlag);
-            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.IsSyntheticKey, out var isSynthetic));
-            Assert.Equal("False", isSynthetic);
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.CloudRoleInstanceKey, out _));
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.CloudRoleNameKey, out _));
             Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.MetricIdKey, out var metricId));
             Assert.Equal(StandardMetricConstants.RequestDurationMetricIdValue, metricId);
+        }
+
+        [Fact]
+        public void ValidateDependencyDurationMetric()
+        {
+            var activitySource = new ActivitySource(nameof(StandardMetricTests.ValidateDependencyDurationMetric));
+            var traceTelemetryItems = new ConcurrentBag<TelemetryItem>();
+            var metricTelemetryItems = new ConcurrentBag<TelemetryItem>();
+
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor();
+
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .SetSampler(new AlwaysOnSampler())
+                .AddSource(nameof(StandardMetricTests.ValidateDependencyDurationMetric))
+                .AddProcessor(standardMetricCustomProcessor)
+                .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new MockTransmitter(traceTelemetryItems))))
+                .Build();
+
+            using var meterProvider = Sdk.CreateMeterProviderBuilder()
+                 .AddMeter(StandardMetricConstants.StandardMetricMeterName)
+                .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)))
+                { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
+                .Build();
+
+            using (var activity = activitySource.StartActivity("Test", ActivityKind.Client))
+            {
+                activity?.SetTag(SemanticConventions.AttributeHttpStatusCode, 200);
+                activity?.SetTag(SemanticConventions.AttributeHttpMethod, "Get");
+                activity?.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.com");
+            }
+
+            tracerProvider?.ForceFlush();
+
+            WaitForActivityExport(traceTelemetryItems);
+
+            meterProvider?.ForceFlush();
+
+            Assert.Single(metricTelemetryItems);
+
+            var metricTelemetry = metricTelemetryItems.Single();
+            Assert.Equal("MetricData", metricTelemetry.Data.BaseType);
+            var metricData = (MetricsData)metricTelemetry.Data.BaseData;
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.DependencySuccessKey, out var isSuccess));
+            Assert.Equal("True", isSuccess);
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.DependencyResultCodeKey, out var resultCode));
+            Assert.Equal("200", resultCode);
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.IsAutoCollectedKey, out var isAutoCollectedFlag));
+            Assert.Equal("True", isAutoCollectedFlag);
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.CloudRoleInstanceKey, out _));
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.CloudRoleNameKey, out _));
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.MetricIdKey, out var metricId));
+            Assert.Equal(StandardMetricConstants.DependencyDurationMetricIdValue, metricId);
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.DependencyTypeKey, out var dependencyType));
+            Assert.Equal("Http", dependencyType);
+            Assert.True(metricData.Properties.TryGetValue(StandardMetricConstants.DependencyTargetKey, out var dependencyTarget));
+            Assert.Equal("www.foo.com", dependencyTarget);
         }
 
         private void WaitForActivityExport(ConcurrentBag<TelemetryItem> traceTelemetryItems)

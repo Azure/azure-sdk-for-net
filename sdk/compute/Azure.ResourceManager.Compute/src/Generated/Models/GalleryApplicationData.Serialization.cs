@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -30,43 +30,43 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Eula))
             {
-                writer.WritePropertyName("eula");
+                writer.WritePropertyName("eula"u8);
                 writer.WriteStringValue(Eula);
             }
             if (Optional.IsDefined(PrivacyStatementUri))
             {
-                writer.WritePropertyName("privacyStatementUri");
+                writer.WritePropertyName("privacyStatementUri"u8);
                 writer.WriteStringValue(PrivacyStatementUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ReleaseNoteUri))
             {
-                writer.WritePropertyName("releaseNoteUri");
+                writer.WritePropertyName("releaseNoteUri"u8);
                 writer.WriteStringValue(ReleaseNoteUri.AbsoluteUri);
             }
             if (Optional.IsDefined(EndOfLifeOn))
             {
-                writer.WritePropertyName("endOfLifeDate");
+                writer.WritePropertyName("endOfLifeDate"u8);
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
             if (Optional.IsDefined(SupportedOSType))
             {
-                writer.WritePropertyName("supportedOSType");
+                writer.WritePropertyName("supportedOSType"u8);
                 writer.WriteStringValue(SupportedOSType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(CustomActions))
             {
-                writer.WritePropertyName("customActions");
+                writer.WritePropertyName("customActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomActions)
                 {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute
             Optional<IList<GalleryApplicationCustomAction>> customActions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,27 +110,27 @@ namespace Azure.ResourceManager.Compute
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -149,17 +149,17 @@ namespace Azure.ResourceManager.Compute
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("eula"))
+                        if (property0.NameEquals("eula"u8))
                         {
                             eula = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("privacyStatementUri"))
+                        if (property0.NameEquals("privacyStatementUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Compute
                             privacyStatementUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("releaseNoteUri"))
+                        if (property0.NameEquals("releaseNoteUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Compute
                             releaseNoteUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("endOfLifeDate"))
+                        if (property0.NameEquals("endOfLifeDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Compute
                             endOfLifeDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("supportedOSType"))
+                        if (property0.NameEquals("supportedOSType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Compute
                             supportedOSType = property0.Value.GetString().ToSupportedOperatingSystemType();
                             continue;
                         }
-                        if (property0.NameEquals("customActions"))
+                        if (property0.NameEquals("customActions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

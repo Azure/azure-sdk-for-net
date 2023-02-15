@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<ResponseError> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AttachNewDataDiskOptions))
             {
-                writer.WritePropertyName("attachNewDataDiskOptions");
+                writer.WritePropertyName("attachNewDataDiskOptions"u8);
                 writer.WriteObjectValue(AttachNewDataDiskOptions);
             }
             if (Optional.IsDefined(ExistingLabDiskId))
             {
-                writer.WritePropertyName("existingLabDiskId");
+                writer.WritePropertyName("existingLabDiskId"u8);
                 writer.WriteStringValue(ExistingLabDiskId);
             }
             if (Optional.IsDefined(HostCaching))
             {
-                writer.WritePropertyName("hostCaching");
+                writer.WritePropertyName("hostCaching"u8);
                 writer.WriteStringValue(HostCaching.Value.ToString());
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<DevTestLabHostCachingOption> hostCaching = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("attachNewDataDiskOptions"))
+                if (property.NameEquals("attachNewDataDiskOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     attachNewDataDiskOptions = AttachNewDataDiskDetails.DeserializeAttachNewDataDiskDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("existingLabDiskId"))
+                if (property.NameEquals("existingLabDiskId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     existingLabDiskId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hostCaching"))
+                if (property.NameEquals("hostCaching"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

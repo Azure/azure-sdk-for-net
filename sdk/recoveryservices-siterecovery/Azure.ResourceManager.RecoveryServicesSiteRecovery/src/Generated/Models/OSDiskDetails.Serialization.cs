@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> vhdName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("osVhdId"))
+                if (property.NameEquals("osVhdId"u8))
                 {
                     osVhdId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vhdName"))
+                if (property.NameEquals("vhdName"u8))
                 {
                     vhdName = property.Value.GetString();
                     continue;

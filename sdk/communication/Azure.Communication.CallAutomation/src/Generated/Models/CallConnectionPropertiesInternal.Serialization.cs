@@ -25,17 +25,17 @@ namespace Azure.Communication.CallAutomation
             Optional<string> mediaSubscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("callConnectionId"))
+                if (property.NameEquals("callConnectionId"u8))
                 {
                     callConnectionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverCallId"))
+                if (property.NameEquals("serverCallId"u8))
                 {
                     serverCallId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.Communication.CallAutomation
                     source = CallSourceInternal.DeserializeCallSourceInternal(property.Value);
                     continue;
                 }
-                if (property.NameEquals("targets"))
+                if (property.NameEquals("targets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.Communication.CallAutomation
                     targets = array;
                     continue;
                 }
-                if (property.NameEquals("callConnectionState"))
+                if (property.NameEquals("callConnectionState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,12 +70,12 @@ namespace Azure.Communication.CallAutomation
                     callConnectionState = new CallConnectionState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("callbackUri"))
+                if (property.NameEquals("callbackUri"u8))
                 {
                     callbackUri = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mediaSubscriptionId"))
+                if (property.NameEquals("mediaSubscriptionId"u8))
                 {
                     mediaSubscriptionId = property.Value.GetString();
                     continue;

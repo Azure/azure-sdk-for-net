@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Throughput))
             {
-                writer.WritePropertyName("throughput");
+                writer.WritePropertyName("throughput"u8);
                 writer.WriteNumberValue(Throughput.Value);
             }
             if (Optional.IsDefined(AutoscaleSettings))
             {
-                writer.WritePropertyName("autoscaleSettings");
+                writer.WritePropertyName("autoscaleSettings"u8);
                 writer.WriteObjectValue(AutoscaleSettings);
             }
             writer.WriteEndObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> offerReplacePending = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("throughput"))
+                if (property.NameEquals("throughput"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     throughput = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("autoscaleSettings"))
+                if (property.NameEquals("autoscaleSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     autoscaleSettings = AutoscaleSettingsResourceInfo.DeserializeAutoscaleSettingsResourceInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("minimumThroughput"))
+                if (property.NameEquals("minimumThroughput"u8))
                 {
                     minimumThroughput = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offerReplacePending"))
+                if (property.NameEquals("offerReplacePending"u8))
                 {
                     offerReplacePending = property.Value.GetString();
                     continue;

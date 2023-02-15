@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<Uri> endpointUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("endpointUrl"))
+                if (property.NameEquals("endpointUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ObjectType))
             {
-                writer.WritePropertyName("objectType");
+                writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
             }
             if (Optional.IsCollectionDefined(ExcludedRPList))
             {
-                writer.WritePropertyName("excludedRPList");
+                writer.WritePropertyName("excludedRPList"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExcludedRPList)
                 {

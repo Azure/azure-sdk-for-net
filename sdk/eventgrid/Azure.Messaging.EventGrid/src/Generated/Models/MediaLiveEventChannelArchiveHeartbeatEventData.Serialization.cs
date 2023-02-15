@@ -21,12 +21,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string latencyResultCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("channelLatencyMs"))
+                if (property.NameEquals("channelLatencyMs"u8))
                 {
                     channelLatencyMs = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("latencyResultCode"))
+                if (property.NameEquals("latencyResultCode"u8))
                 {
                     latencyResultCode = property.Value.GetString();
                     continue;

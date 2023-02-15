@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (ClientId != null)
                 {
-                    writer.WritePropertyName("clientId");
+                    writer.WritePropertyName("clientId"u8);
                     writer.WriteStringValue(ClientId.Value);
                 }
                 else
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (TenantId != null)
                 {
-                    writer.WritePropertyName("tenantId");
+                    writer.WritePropertyName("tenantId"u8);
                     writer.WriteStringValue(TenantId.Value);
                 }
                 else
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (ClientSecret != null)
                 {
-                    writer.WritePropertyName("clientSecret");
+                    writer.WritePropertyName("clientSecret"u8);
                     writer.WriteStringValue(ClientSecret);
                 }
                 else
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (ClientCertificate != null)
                 {
-                    writer.WritePropertyName("clientCertificate");
+                    writer.WritePropertyName("clientCertificate"u8);
                     writer.WriteStringValue(ClientCertificate);
                 }
                 else
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (ClientCertificatePassword != null)
                 {
-                    writer.WritePropertyName("clientCertificatePassword");
+                    writer.WritePropertyName("clientCertificatePassword"u8);
                     writer.WriteStringValue(ClientCertificatePassword);
                 }
                 else
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             if (Optional.IsDefined(ClientCertificateSendChain))
             {
-                writer.WritePropertyName("clientCertificateSendChain");
+                writer.WritePropertyName("clientCertificateSendChain"u8);
                 writer.WriteBooleanValue(ClientCertificateSendChain.Value);
             }
             writer.WriteEndObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<bool> clientCertificateSendChain = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientId"))
+                if (property.NameEquals("clientId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     clientId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("clientSecret"))
+                if (property.NameEquals("clientSecret"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     clientSecret = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientCertificate"))
+                if (property.NameEquals("clientCertificate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     clientCertificate = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientCertificatePassword"))
+                if (property.NameEquals("clientCertificatePassword"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     clientCertificatePassword = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientCertificateSendChain"))
+                if (property.NameEquals("clientCertificateSendChain"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

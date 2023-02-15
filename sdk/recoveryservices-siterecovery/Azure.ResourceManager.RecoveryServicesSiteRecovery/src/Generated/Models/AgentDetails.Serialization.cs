@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<AgentDiskDetails>> disks = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("agentId"))
+                if (property.NameEquals("agentId"u8))
                 {
                     agentId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("machineId"))
+                if (property.NameEquals("machineId"u8))
                 {
                     machineId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("biosId"))
+                if (property.NameEquals("biosId"u8))
                 {
                     biosId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fqdn"))
+                if (property.NameEquals("fqdn"u8))
                 {
                     fqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("disks"))
+                if (property.NameEquals("disks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

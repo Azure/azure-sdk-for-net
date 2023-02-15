@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<string> operationId = default;
             Optional<DateTimeOffset> startTimeUtc = default;
             Optional<DateTimeOffset> completionTimeUtc = default;
-            Optional<string> sourceResourceId = default;
-            Optional<string> targetResourceId = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
+            Optional<ResourceIdentifier> targetResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operationId"))
+                if (property.NameEquals("operationId"u8))
                 {
                     operationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startTimeUtc"))
+                if (property.NameEquals("startTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     startTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("completionTimeUtc"))
+                if (property.NameEquals("completionTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,14 +53,24 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     completionTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("sourceResourceId"))
+                if (property.NameEquals("sourceResourceId"u8))
                 {
-                    sourceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sourceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetResourceId"))
+                if (property.NameEquals("targetResourceId"u8))
                 {
-                    targetResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    targetResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

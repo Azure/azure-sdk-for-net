@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<IReadOnlyList<ProviderResourceType>> resourceTypes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("namespace"))
+                if (property.NameEquals("namespace"u8))
                 {
                     @namespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceTypes"))
+                if (property.NameEquals("resourceTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

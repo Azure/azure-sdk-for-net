@@ -19,32 +19,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(ProtectionStatus))
             {
-                writer.WritePropertyName("protectionStatus");
+                writer.WritePropertyName("protectionStatus"u8);
                 writer.WriteStringValue(ProtectionStatus);
             }
             if (Optional.IsDefined(ProtectionState))
             {
-                writer.WritePropertyName("protectionState");
+                writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
             if (Optional.IsDefined(LastBackupStatus))
             {
-                writer.WritePropertyName("lastBackupStatus");
+                writer.WritePropertyName("lastBackupStatus"u8);
                 writer.WriteStringValue(LastBackupStatus);
             }
             if (Optional.IsDefined(LastBackupOn))
             {
-                writer.WritePropertyName("lastBackupTime");
+                writer.WritePropertyName("lastBackupTime"u8);
                 writer.WriteStringValue(LastBackupOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(KpisHealths))
             {
-                writer.WritePropertyName("kpisHealths");
+                writer.WritePropertyName("kpisHealths"u8);
                 writer.WriteStartObject();
                 foreach (var item in KpisHealths)
                 {
@@ -55,69 +55,69 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(ExtendedInfo))
             {
-                writer.WritePropertyName("extendedInfo");
+                writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
             }
-            writer.WritePropertyName("protectedItemType");
+            writer.WritePropertyName("protectedItemType"u8);
             writer.WriteStringValue(ProtectedItemType);
             if (Optional.IsDefined(ContainerName))
             {
-                writer.WritePropertyName("containerName");
+                writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
             if (Optional.IsDefined(SourceResourceId))
             {
-                writer.WritePropertyName("sourceResourceId");
+                writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
             if (Optional.IsDefined(PolicyId))
             {
-                writer.WritePropertyName("policyId");
+                writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
             if (Optional.IsDefined(LastRecoveryPoint))
             {
-                writer.WritePropertyName("lastRecoveryPoint");
+                writer.WritePropertyName("lastRecoveryPoint"u8);
                 writer.WriteStringValue(LastRecoveryPoint.Value, "O");
             }
             if (Optional.IsDefined(BackupSetName))
             {
-                writer.WritePropertyName("backupSetName");
+                writer.WritePropertyName("backupSetName"u8);
                 writer.WriteStringValue(BackupSetName);
             }
             if (Optional.IsDefined(CreateMode))
             {
-                writer.WritePropertyName("createMode");
+                writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
             if (Optional.IsDefined(DeferredDeleteTimeInUTC))
             {
-                writer.WritePropertyName("deferredDeleteTimeInUTC");
+                writer.WritePropertyName("deferredDeleteTimeInUTC"u8);
                 writer.WriteStringValue(DeferredDeleteTimeInUTC.Value, "O");
             }
             if (Optional.IsDefined(IsScheduledForDeferredDelete))
             {
-                writer.WritePropertyName("isScheduledForDeferredDelete");
+                writer.WritePropertyName("isScheduledForDeferredDelete"u8);
                 writer.WriteBooleanValue(IsScheduledForDeferredDelete.Value);
             }
             if (Optional.IsDefined(DeferredDeleteTimeRemaining))
             {
-                writer.WritePropertyName("deferredDeleteTimeRemaining");
+                writer.WritePropertyName("deferredDeleteTimeRemaining"u8);
                 writer.WriteStringValue(DeferredDeleteTimeRemaining);
             }
             if (Optional.IsDefined(IsDeferredDeleteScheduleUpcoming))
             {
-                writer.WritePropertyName("isDeferredDeleteScheduleUpcoming");
+                writer.WritePropertyName("isDeferredDeleteScheduleUpcoming"u8);
                 writer.WriteBooleanValue(IsDeferredDeleteScheduleUpcoming.Value);
             }
             if (Optional.IsDefined(IsRehydrate))
             {
-                writer.WritePropertyName("isRehydrate");
+                writer.WritePropertyName("isRehydrate"u8);
                 writer.WriteBooleanValue(IsRehydrate.Value);
             }
             if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
-                writer.WritePropertyName("resourceGuardOperationRequests");
+                writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceGuardOperationRequests)
                 {
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(IsArchiveEnabled))
             {
-                writer.WritePropertyName("isArchiveEnabled");
+                writer.WritePropertyName("isArchiveEnabled"u8);
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
             }
             if (Optional.IsDefined(PolicyName))
             {
-                writer.WritePropertyName("policyName");
+                writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
             if (Optional.IsDefined(SoftDeleteRetentionPeriod))
             {
-                writer.WritePropertyName("softDeleteRetentionPeriod");
+                writer.WritePropertyName("softDeleteRetentionPeriod"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionPeriod.Value);
             }
             writer.WriteEndObject();
@@ -172,17 +172,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<int> softDeleteRetentionPeriod = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectionStatus"))
+                if (property.NameEquals("protectionStatus"u8))
                 {
                     protectionStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectionState"))
+                if (property.NameEquals("protectionState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -192,12 +192,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectionState = new ProtectionState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lastBackupStatus"))
+                if (property.NameEquals("lastBackupStatus"u8))
                 {
                     lastBackupStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastBackupTime"))
+                if (property.NameEquals("lastBackupTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     lastBackupTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("kpisHealths"))
+                if (property.NameEquals("kpisHealths"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     kpisHealths = dictionary;
                     continue;
                 }
-                if (property.NameEquals("extendedInfo"))
+                if (property.NameEquals("extendedInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -232,12 +232,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     extendedInfo = AzureFileshareProtectedItemExtendedInfo.DeserializeAzureFileshareProtectedItemExtendedInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("protectedItemType"))
+                if (property.NameEquals("protectedItemType"u8))
                 {
                     protectedItemType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("backupManagementType"))
+                if (property.NameEquals("backupManagementType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     backupManagementType = new BackupManagementType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("workloadType"))
+                if (property.NameEquals("workloadType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -257,22 +257,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     workloadType = new DataSourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("containerName"))
+                if (property.NameEquals("containerName"u8))
                 {
                     containerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceResourceId"))
+                if (property.NameEquals("sourceResourceId"u8))
                 {
                     sourceResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyId"))
+                if (property.NameEquals("policyId"u8))
                 {
                     policyId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastRecoveryPoint"))
+                if (property.NameEquals("lastRecoveryPoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -282,12 +282,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     lastRecoveryPoint = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("backupSetName"))
+                if (property.NameEquals("backupSetName"u8))
                 {
                     backupSetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createMode"))
+                if (property.NameEquals("createMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     createMode = new CreateMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("deferredDeleteTimeInUTC"))
+                if (property.NameEquals("deferredDeleteTimeInUTC"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     deferredDeleteTimeInUTC = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("isScheduledForDeferredDelete"))
+                if (property.NameEquals("isScheduledForDeferredDelete"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -317,12 +317,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     isScheduledForDeferredDelete = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("deferredDeleteTimeRemaining"))
+                if (property.NameEquals("deferredDeleteTimeRemaining"u8))
                 {
                     deferredDeleteTimeRemaining = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isDeferredDeleteScheduleUpcoming"))
+                if (property.NameEquals("isDeferredDeleteScheduleUpcoming"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     isDeferredDeleteScheduleUpcoming = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isRehydrate"))
+                if (property.NameEquals("isRehydrate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     isRehydrate = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("resourceGuardOperationRequests"))
+                if (property.NameEquals("resourceGuardOperationRequests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     resourceGuardOperationRequests = array;
                     continue;
                 }
-                if (property.NameEquals("isArchiveEnabled"))
+                if (property.NameEquals("isArchiveEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -367,12 +367,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     isArchiveEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("policyName"))
+                if (property.NameEquals("policyName"u8))
                 {
                     policyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("softDeleteRetentionPeriod"))
+                if (property.NameEquals("softDeleteRetentionPeriod"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

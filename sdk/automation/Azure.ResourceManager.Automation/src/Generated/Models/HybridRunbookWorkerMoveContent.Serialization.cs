@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(HybridRunbookWorkerGroupName))
             {
-                writer.WritePropertyName("hybridRunbookWorkerGroupName");
+                writer.WritePropertyName("hybridRunbookWorkerGroupName"u8);
                 writer.WriteStringValue(HybridRunbookWorkerGroupName);
             }
             writer.WriteEndObject();

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<string> percentage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("percentage"))
+                if (property.NameEquals("percentage"u8))
                 {
                     percentage = property.Value.GetString();
                     continue;

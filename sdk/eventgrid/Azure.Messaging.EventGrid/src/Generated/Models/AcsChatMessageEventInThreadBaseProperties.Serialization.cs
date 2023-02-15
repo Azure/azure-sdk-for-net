@@ -25,12 +25,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("messageId"))
+                if (property.NameEquals("messageId"u8))
                 {
                     messageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("senderCommunicationIdentifier"))
+                if (property.NameEquals("senderCommunicationIdentifier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,12 +40,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     senderCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("senderDisplayName"))
+                if (property.NameEquals("senderDisplayName"u8))
                 {
                     senderDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("composeTime"))
+                if (property.NameEquals("composeTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,12 +55,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     composeTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,12 +70,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     version = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("transactionId"))
+                if (property.NameEquals("transactionId"u8))
                 {
                     transactionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("threadId"))
+                if (property.NameEquals("threadId"u8))
                 {
                     threadId = property.Value.GetString();
                     continue;

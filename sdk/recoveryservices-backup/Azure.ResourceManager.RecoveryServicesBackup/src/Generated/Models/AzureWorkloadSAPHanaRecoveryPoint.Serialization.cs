@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryPointTimeInUTC))
             {
-                writer.WritePropertyName("recoveryPointTimeInUTC");
+                writer.WritePropertyName("recoveryPointTimeInUTC"u8);
                 writer.WriteStringValue(RecoveryPointTimeInUTC.Value, "O");
             }
             if (Optional.IsDefined(RestorePointType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RestorePointType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(RecoveryPointTierDetails))
             {
-                writer.WritePropertyName("recoveryPointTierDetails");
+                writer.WritePropertyName("recoveryPointTierDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in RecoveryPointTierDetails)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsCollectionDefined(RecoveryPointMoveReadinessInfo))
             {
-                writer.WritePropertyName("recoveryPointMoveReadinessInfo");
+                writer.WritePropertyName("recoveryPointMoveReadinessInfo"u8);
                 writer.WriteStartObject();
                 foreach (var item in RecoveryPointMoveReadinessInfo)
                 {
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(RecoveryPointProperties))
             {
-                writer.WritePropertyName("recoveryPointProperties");
+                writer.WritePropertyName("recoveryPointProperties"u8);
                 writer.WriteObjectValue(RecoveryPointProperties);
             }
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryPointTimeInUTC"))
+                if (property.NameEquals("recoveryPointTimeInUTC"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointTimeInUTC = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     type = new RestorePointType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryPointTierDetails"))
+                if (property.NameEquals("recoveryPointTierDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointTierDetails = array;
                     continue;
                 }
-                if (property.NameEquals("recoveryPointMoveReadinessInfo"))
+                if (property.NameEquals("recoveryPointMoveReadinessInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointMoveReadinessInfo = dictionary;
                     continue;
                 }
-                if (property.NameEquals("recoveryPointProperties"))
+                if (property.NameEquals("recoveryPointProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointProperties = RecoveryPointProperties.DeserializeRecoveryPointProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;

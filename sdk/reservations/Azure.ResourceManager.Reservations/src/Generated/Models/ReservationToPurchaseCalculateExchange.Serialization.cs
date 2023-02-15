@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<PurchasePrice> billingCurrencyTotal = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     properties = ReservationPurchaseContent.DeserializeReservationPurchaseContent(property.Value);
                     continue;
                 }
-                if (property.NameEquals("billingCurrencyTotal"))
+                if (property.NameEquals("billingCurrencyTotal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

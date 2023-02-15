@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(NetworkId))
             {
-                writer.WritePropertyName("networkId");
+                writer.WritePropertyName("networkId"u8);
                 writer.WriteStringValue(NetworkId);
             }
             if (Optional.IsDefined(RecoveryPointId))
             {
-                writer.WritePropertyName("recoveryPointId");
+                writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
-            writer.WritePropertyName("instanceType");
+            writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();
         }

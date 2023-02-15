@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceGuardResourceId))
             {
-                writer.WritePropertyName("resourceGuardResourceId");
+                writer.WritePropertyName("resourceGuardResourceId"u8);
                 writer.WriteStringValue(ResourceGuardResourceId);
             }
             if (Optional.IsCollectionDefined(ResourceGuardOperationDetails))
             {
-                writer.WritePropertyName("resourceGuardOperationDetails");
+                writer.WritePropertyName("resourceGuardOperationDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceGuardOperationDetails)
                 {
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(LastUpdatedTime))
             {
-                writer.WritePropertyName("lastUpdatedTime");
+                writer.WritePropertyName("lastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedTime);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceGuardResourceId"))
+                if (property.NameEquals("resourceGuardResourceId"u8))
                 {
                     resourceGuardResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceGuardOperationDetails"))
+                if (property.NameEquals("resourceGuardOperationDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     resourceGuardOperationDetails = array;
                     continue;
                 }
-                if (property.NameEquals("lastUpdatedTime"))
+                if (property.NameEquals("lastUpdatedTime"u8))
                 {
                     lastUpdatedTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

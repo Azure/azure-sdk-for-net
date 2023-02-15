@@ -23,12 +23,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<IReadOnlyDictionary<string, string>> jobCorrelationData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("progress"))
+                if (property.NameEquals("progress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     progress = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("jobCorrelationData"))
+                if (property.NameEquals("jobCorrelationData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

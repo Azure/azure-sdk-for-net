@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryType))
             {
-                writer.WritePropertyName("recoveryType");
+                writer.WritePropertyName("recoveryType"u8);
                 writer.WriteStringValue(RecoveryType.Value.ToString());
             }
             if (Optional.IsDefined(SourceResourceId))
             {
-                writer.WritePropertyName("sourceResourceId");
+                writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
             if (Optional.IsCollectionDefined(PropertyBag))
             {
-                writer.WritePropertyName("propertyBag");
+                writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartObject();
                 foreach (var item in PropertyBag)
                 {
@@ -39,20 +39,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(TargetInfo))
             {
-                writer.WritePropertyName("targetInfo");
+                writer.WritePropertyName("targetInfo"u8);
                 writer.WriteObjectValue(TargetInfo);
             }
             if (Optional.IsDefined(RecoveryMode))
             {
-                writer.WritePropertyName("recoveryMode");
+                writer.WritePropertyName("recoveryMode"u8);
                 writer.WriteStringValue(RecoveryMode.Value.ToString());
             }
             if (Optional.IsDefined(TargetVirtualMachineId))
             {
-                writer.WritePropertyName("targetVirtualMachineId");
+                writer.WritePropertyName("targetVirtualMachineId"u8);
                 writer.WriteStringValue(TargetVirtualMachineId);
             }
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string objectType = "AzureWorkloadRestoreRequest";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryType"))
+                if (property.NameEquals("recoveryType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryType = new RecoveryType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceResourceId"))
+                if (property.NameEquals("sourceResourceId"u8))
                 {
                     sourceResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("propertyBag"))
+                if (property.NameEquals("propertyBag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     propertyBag = dictionary;
                     continue;
                 }
-                if (property.NameEquals("targetInfo"))
+                if (property.NameEquals("targetInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     targetInfo = TargetRestoreInfo.DeserializeTargetRestoreInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("recoveryMode"))
+                if (property.NameEquals("recoveryMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryMode = new RecoveryMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetVirtualMachineId"))
+                if (property.NameEquals("targetVirtualMachineId"u8))
                 {
                     targetVirtualMachineId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;

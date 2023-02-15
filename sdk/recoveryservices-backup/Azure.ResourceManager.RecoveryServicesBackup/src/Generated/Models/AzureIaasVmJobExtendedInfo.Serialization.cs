@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(TasksList))
             {
-                writer.WritePropertyName("tasksList");
+                writer.WritePropertyName("tasksList"u8);
                 writer.WriteStartArray();
                 foreach (var item in TasksList)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsCollectionDefined(PropertyBag))
             {
-                writer.WritePropertyName("propertyBag");
+                writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartObject();
                 foreach (var item in PropertyBag)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsCollectionDefined(InternalPropertyBag))
             {
-                writer.WritePropertyName("internalPropertyBag");
+                writer.WritePropertyName("internalPropertyBag"u8);
                 writer.WriteStartObject();
                 foreach (var item in InternalPropertyBag)
                 {
@@ -50,17 +50,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(ProgressPercentage))
             {
-                writer.WritePropertyName("progressPercentage");
+                writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);
             }
             if (Optional.IsDefined(EstimatedRemainingDurationValue))
             {
-                writer.WritePropertyName("estimatedRemainingDuration");
+                writer.WritePropertyName("estimatedRemainingDuration"u8);
                 writer.WriteStringValue(EstimatedRemainingDurationValue);
             }
             if (Optional.IsDefined(DynamicErrorMessage))
             {
-                writer.WritePropertyName("dynamicErrorMessage");
+                writer.WritePropertyName("dynamicErrorMessage"u8);
                 writer.WriteStringValue(DynamicErrorMessage);
             }
             writer.WriteEndObject();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> dynamicErrorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tasksList"))
+                if (property.NameEquals("tasksList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     tasksList = array;
                     continue;
                 }
-                if (property.NameEquals("propertyBag"))
+                if (property.NameEquals("propertyBag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     propertyBag = dictionary;
                     continue;
                 }
-                if (property.NameEquals("internalPropertyBag"))
+                if (property.NameEquals("internalPropertyBag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     internalPropertyBag = dictionary;
                     continue;
                 }
-                if (property.NameEquals("progressPercentage"))
+                if (property.NameEquals("progressPercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     progressPercentage = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("estimatedRemainingDuration"))
+                if (property.NameEquals("estimatedRemainingDuration"u8))
                 {
                     estimatedRemainingDuration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dynamicErrorMessage"))
+                if (property.NameEquals("dynamicErrorMessage"u8))
                 {
                     dynamicErrorMessage = property.Value.GetString();
                     continue;

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Optional<IReadOnlyList<MySqlFlexibleServerConfigurationData>> values = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("values"))
+                if (property.NameEquals("values"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

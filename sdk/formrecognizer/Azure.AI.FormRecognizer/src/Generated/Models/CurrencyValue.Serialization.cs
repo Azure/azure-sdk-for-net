@@ -18,12 +18,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Optional<string> currencySymbol = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("amount"))
+                if (property.NameEquals("amount"u8))
                 {
                     amount = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("currencySymbol"))
+                if (property.NameEquals("currencySymbol"u8))
                 {
                     currencySymbol = property.Value.GetString();
                     continue;

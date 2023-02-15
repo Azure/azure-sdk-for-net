@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceKind))
             {
                 if (SourceKind != null)
                 {
-                    writer.WritePropertyName("sourceKind");
+                    writer.WritePropertyName("sourceKind"u8);
                     writer.WriteStringValue(SourceKind.Value.ToString());
                 }
                 else
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (Suspend != null)
                 {
-                    writer.WritePropertyName("suspend");
+                    writer.WritePropertyName("suspend"u8);
                     writer.WriteBooleanValue(Suspend.Value);
                 }
                 else
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (GitRepository != null)
                 {
-                    writer.WritePropertyName("gitRepository");
+                    writer.WritePropertyName("gitRepository"u8);
                     writer.WriteObjectValue(GitRepository);
                 }
                 else
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (Bucket != null)
                 {
-                    writer.WritePropertyName("bucket");
+                    writer.WritePropertyName("bucket"u8);
                     writer.WriteObjectValue(Bucket);
                 }
                 else
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (AzureBlob != null)
                 {
-                    writer.WritePropertyName("azureBlob");
+                    writer.WritePropertyName("azureBlob"u8);
                     writer.WriteObjectValue(AzureBlob);
                 }
                 else
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (Kustomizations != null)
                 {
-                    writer.WritePropertyName("kustomizations");
+                    writer.WritePropertyName("kustomizations"u8);
                     writer.WriteStartObject();
                     foreach (var item in Kustomizations)
                     {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (ConfigurationProtectedSettings != null)
                 {
-                    writer.WritePropertyName("configurationProtectedSettings");
+                    writer.WritePropertyName("configurationProtectedSettings"u8);
                     writer.WriteStartObject();
                     foreach (var item in ConfigurationProtectedSettings)
                     {

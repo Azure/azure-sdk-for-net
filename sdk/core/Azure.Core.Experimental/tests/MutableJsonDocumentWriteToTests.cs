@@ -4,7 +4,7 @@
 using System;
 using System.IO;
 using System.Text.Json;
-using Azure.Core.Dynamic;
+using Azure.Core.Json;
 using NUnit.Framework;
 
 namespace Azure.Core.Experimental.Tests
@@ -16,8 +16,8 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanWriteBoolean()
         {
-            string jsonTrue = @"true";
-            string jsonFalse = @"false";
+            string jsonTrue = "true";
+            string jsonFalse = "false";
 
             MutableJsonDocument jdTrue = MutableJsonDocument.Parse(jsonTrue);
             MutableJsonDocument jdFalse = MutableJsonDocument.Parse(jsonFalse);
@@ -32,7 +32,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanWriteString()
         {
-            string json = @"""Hi!""";
+            string json = """ "Hi!" """;
 
             MutableJsonDocument jd = MutableJsonDocument.Parse(json);
 
@@ -44,11 +44,12 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanWriteBooleanObjectProperty()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Foo"" :  true,
-                  ""Bar"" :  false
-                }";
+                  "Foo" :  true,
+                  "Bar" :  false
+                }
+                """;
 
             MutableJsonDocument jd = MutableJsonDocument.Parse(json);
 
@@ -60,11 +61,12 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanWriteBooleanObjectPropertyWithChangesToOtherBranches()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Foo"" : true,
-                  ""Bar"" : 1
-                }";
+                  "Foo" : true,
+                  "Bar" : 1
+                }
+                """;
 
             MutableJsonDocument jd = MutableJsonDocument.Parse(json);
 
@@ -72,21 +74,23 @@ namespace Azure.Core.Experimental.Tests
 
             WriteToAndParse(jd, out string jsonString);
 
-            Assert.AreEqual(RemoveWhiteSpace(@"
+            Assert.AreEqual(RemoveWhiteSpace("""
                 {
-                  ""Foo"" : true,
-                  ""Bar"" : 2
-                }"),
+                  "Foo" : true,
+                  "Bar" : 2
+                }
+                """),
                 RemoveWhiteSpace(jsonString));
         }
 
         [Test]
         public void CanWriteBooleanObjectPropertyWithChangesToBool()
         {
-            string json = @"
+            string json = """
                 {
-                  ""Foo"" :  true
-                }";
+                  "Foo" :  true
+                }
+                """;
 
             MutableJsonDocument jd = MutableJsonDocument.Parse(json);
 
@@ -94,44 +98,46 @@ namespace Azure.Core.Experimental.Tests
 
             WriteToAndParse(jd, out string jsonString);
 
-            Assert.AreEqual(RemoveWhiteSpace(@"
+            Assert.AreEqual(RemoveWhiteSpace("""
                 {
-                  ""Foo"" :  false
-                }"),
+                  "Foo" :  false
+                }
+            """),
                 RemoveWhiteSpace(jsonString));
         }
 
         [Test]
         public void CanWriteObject()
         {
-            string json = @"
+            string json = """
                 {
-                  ""StringProperty"" :  ""Hi!"",
-                  ""IntProperty"" :  16,
-                  ""DoubleProperty"" :  16.56,
-                  ""ObjectProperty"" : {
-                      ""StringProperty"" :  ""Nested"",
-                      ""IntProperty"" :  22,
-                      ""DoubleProperty"" :  22.22
+                  "StringProperty" :  "Hi!",
+                  "IntProperty" :  16,
+                  "DoubleProperty" :  16.56,
+                  "ObjectProperty" : {
+                      "StringProperty" :  "Nested",
+                      "IntProperty" :  22,
+                      "DoubleProperty" :  22.22
                   },
-                  ""ArrayProperty"" : [
+                  "ArrayProperty" : [
                       {
-                          ""StringProperty"" :  ""First"",
-                          ""IntProperty"" :  1,
-                          ""DoubleProperty"" :  1.1
+                          "StringProperty" :  "First",
+                          "IntProperty" :  1,
+                          "DoubleProperty" :  1.1
                       },
                       {
-                          ""StringProperty"" :  ""Second"",
-                          ""IntProperty"" :  2,
-                          ""DoubleProperty"" :  2.2
+                          "StringProperty" :  "Second",
+                          "IntProperty" :  2,
+                          "DoubleProperty" :  2.2
                       },
                       {
-                          ""StringProperty"" :  ""Third"",
-                          ""IntProperty"" :  3,
-                          ""DoubleProperty"" :  3.3
+                          "StringProperty" :  "Third",
+                          "IntProperty" :  3,
+                          "DoubleProperty" :  3.3
                       }
                   ]
-                }";
+                }
+                """;
 
             MutableJsonDocument jd = MutableJsonDocument.Parse(json);
 
@@ -151,7 +157,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanWriteInt()
         {
-            string json = @"16";
+            string json = "16";
 
             MutableJsonDocument jd = MutableJsonDocument.Parse(json);
 
@@ -163,7 +169,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanWriteDouble()
         {
-            string json = @"16.56";
+            string json = "16.56";
 
             MutableJsonDocument jd = MutableJsonDocument.Parse(json);
 
@@ -175,7 +181,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanWriteNumberArray()
         {
-            string json = @"[ 1, 2.2, 3, -4]";
+            string json = "[ 1, 2.2, 3, -4]";
 
             MutableJsonDocument jd = MutableJsonDocument.Parse(json);
 
@@ -187,7 +193,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanWriteStringArray()
         {
-            string json = @"[ ""one"", ""two"", ""three""]";
+            string json = """[ "one", "two", "three"]""";
 
             MutableJsonDocument jd = MutableJsonDocument.Parse(json);
 

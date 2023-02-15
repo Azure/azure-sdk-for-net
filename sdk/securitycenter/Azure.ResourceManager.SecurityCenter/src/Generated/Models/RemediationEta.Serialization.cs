@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("eta");
+            writer.WritePropertyName("eta"u8);
             writer.WriteStringValue(Eta, "O");
-            writer.WritePropertyName("justification");
+            writer.WritePropertyName("justification"u8);
             writer.WriteStringValue(Justification);
             writer.WriteEndObject();
         }
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string justification = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eta"))
+                if (property.NameEquals("eta"u8))
                 {
                     eta = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("justification"))
+                if (property.NameEquals("justification"u8))
                 {
                     justification = property.Value.GetString();
                     continue;

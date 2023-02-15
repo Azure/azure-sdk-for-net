@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<SecurityAssessmentSeverity> severity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     code = new SubAssessmentStatusCode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cause"))
+                if (property.NameEquals("cause"u8))
                 {
                     cause = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("severity"))
+                if (property.NameEquals("severity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

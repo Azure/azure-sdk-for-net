@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IncludedUpdateClassifications))
             {
-                writer.WritePropertyName("includedUpdateClassifications");
+                writer.WritePropertyName("includedUpdateClassifications"u8);
                 writer.WriteStringValue(IncludedUpdateClassifications.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ExcludedKBNumbers))
             {
-                writer.WritePropertyName("excludedKbNumbers");
+                writer.WritePropertyName("excludedKbNumbers"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExcludedKBNumbers)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             if (Optional.IsCollectionDefined(IncludedKBNumbers))
             {
-                writer.WritePropertyName("includedKbNumbers");
+                writer.WritePropertyName("includedKbNumbers"u8);
                 writer.WriteStartArray();
                 foreach (var item in IncludedKBNumbers)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             if (Optional.IsDefined(RebootSetting))
             {
-                writer.WritePropertyName("rebootSetting");
+                writer.WritePropertyName("rebootSetting"u8);
                 writer.WriteStringValue(RebootSetting);
             }
             writer.WriteEndObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> rebootSetting = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("includedUpdateClassifications"))
+                if (property.NameEquals("includedUpdateClassifications"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Automation.Models
                     includedUpdateClassifications = new WindowsUpdateClassification(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("excludedKbNumbers"))
+                if (property.NameEquals("excludedKbNumbers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Automation.Models
                     excludedKbNumbers = array;
                     continue;
                 }
-                if (property.NameEquals("includedKbNumbers"))
+                if (property.NameEquals("includedKbNumbers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Automation.Models
                     includedKbNumbers = array;
                     continue;
                 }
-                if (property.NameEquals("rebootSetting"))
+                if (property.NameEquals("rebootSetting"u8))
                 {
                     rebootSetting = property.Value.GetString();
                     continue;

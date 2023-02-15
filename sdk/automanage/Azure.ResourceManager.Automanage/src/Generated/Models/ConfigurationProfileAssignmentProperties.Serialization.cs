@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automanage.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ConfigurationProfile))
             {
-                writer.WritePropertyName("configurationProfile");
+                writer.WritePropertyName("configurationProfile"u8);
                 writer.WriteStringValue(ConfigurationProfile);
             }
             writer.WriteEndObject();
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Automanage.Models
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("configurationProfile"))
+                if (property.NameEquals("configurationProfile"u8))
                 {
                     configurationProfile = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetId"))
+                if (property.NameEquals("targetId"u8))
                 {
                     targetId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;

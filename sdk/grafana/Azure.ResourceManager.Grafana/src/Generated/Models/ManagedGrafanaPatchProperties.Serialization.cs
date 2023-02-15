@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.Grafana.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ZoneRedundancy))
             {
-                writer.WritePropertyName("zoneRedundancy");
+                writer.WritePropertyName("zoneRedundancy"u8);
                 writer.WriteStringValue(ZoneRedundancy.Value.ToString());
             }
             if (Optional.IsDefined(ApiKey))
             {
-                writer.WritePropertyName("apiKey");
+                writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey.Value.ToString());
             }
             if (Optional.IsDefined(DeterministicOutboundIP))
             {
-                writer.WritePropertyName("deterministicOutboundIP");
+                writer.WritePropertyName("deterministicOutboundIP"u8);
                 writer.WriteStringValue(DeterministicOutboundIP.Value.ToString());
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             if (Optional.IsDefined(GrafanaIntegrations))
             {
-                writer.WritePropertyName("grafanaIntegrations");
+                writer.WritePropertyName("grafanaIntegrations"u8);
                 writer.WriteObjectValue(GrafanaIntegrations);
             }
             writer.WriteEndObject();

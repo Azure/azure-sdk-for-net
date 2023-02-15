@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("canary");
+            writer.WritePropertyName("canary"u8);
             writer.WriteObjectValue(Canary);
             if (Optional.IsDefined(ProviderRegistration))
             {
-                writer.WritePropertyName("providerRegistration");
+                writer.WritePropertyName("providerRegistration"u8);
                 writer.WriteObjectValue(ProviderRegistration);
             }
             if (Optional.IsCollectionDefined(ResourceTypeRegistrations))
             {
-                writer.WritePropertyName("resourceTypeRegistrations");
+                writer.WritePropertyName("resourceTypeRegistrations"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypeRegistrations)
                 {
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<IList<ResourceTypeRegistrationData>> resourceTypeRegistrations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("canary"))
+                if (property.NameEquals("canary"u8))
                 {
                     canary = CustomRolloutSpecificationCanary.DeserializeCustomRolloutSpecificationCanary(property.Value);
                     continue;
                 }
-                if (property.NameEquals("providerRegistration"))
+                if (property.NameEquals("providerRegistration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     providerRegistration = CustomRolloutSpecificationProviderRegistration.DeserializeCustomRolloutSpecificationProviderRegistration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("resourceTypeRegistrations"))
+                if (property.NameEquals("resourceTypeRegistrations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

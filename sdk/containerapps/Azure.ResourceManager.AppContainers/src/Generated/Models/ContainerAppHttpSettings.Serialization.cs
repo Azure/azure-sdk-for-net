@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RequireHttps))
             {
-                writer.WritePropertyName("requireHttps");
+                writer.WritePropertyName("requireHttps"u8);
                 writer.WriteBooleanValue(RequireHttps.Value);
             }
             if (Optional.IsDefined(Routes))
             {
-                writer.WritePropertyName("routes");
+                writer.WritePropertyName("routes"u8);
                 writer.WriteObjectValue(Routes);
             }
             if (Optional.IsDefined(ForwardProxy))
             {
-                writer.WritePropertyName("forwardProxy");
+                writer.WritePropertyName("forwardProxy"u8);
                 writer.WriteObjectValue(ForwardProxy);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<ContainerAppForwardProxy> forwardProxy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("requireHttps"))
+                if (property.NameEquals("requireHttps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     requireHttps = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("routes"))
+                if (property.NameEquals("routes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     routes = HttpSettingsRoutes.DeserializeHttpSettingsRoutes(property.Value);
                     continue;
                 }
-                if (property.NameEquals("forwardProxy"))
+                if (property.NameEquals("forwardProxy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

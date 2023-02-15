@@ -17,7 +17,7 @@ namespace Azure.Security.Attestation
             Optional<string> data = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("data"))
+                if (property.NameEquals("data"u8))
                 {
                     data = property.Value.GetString();
                     continue;

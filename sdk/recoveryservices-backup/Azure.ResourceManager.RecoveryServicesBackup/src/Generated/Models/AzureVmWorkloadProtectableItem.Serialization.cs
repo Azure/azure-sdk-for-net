@@ -17,64 +17,64 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ParentName))
             {
-                writer.WritePropertyName("parentName");
+                writer.WritePropertyName("parentName"u8);
                 writer.WriteStringValue(ParentName);
             }
             if (Optional.IsDefined(ParentUniqueName))
             {
-                writer.WritePropertyName("parentUniqueName");
+                writer.WritePropertyName("parentUniqueName"u8);
                 writer.WriteStringValue(ParentUniqueName);
             }
             if (Optional.IsDefined(ServerName))
             {
-                writer.WritePropertyName("serverName");
+                writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
             if (Optional.IsDefined(IsAutoProtectable))
             {
-                writer.WritePropertyName("isAutoProtectable");
+                writer.WritePropertyName("isAutoProtectable"u8);
                 writer.WriteBooleanValue(IsAutoProtectable.Value);
             }
             if (Optional.IsDefined(IsAutoProtected))
             {
-                writer.WritePropertyName("isAutoProtected");
+                writer.WritePropertyName("isAutoProtected"u8);
                 writer.WriteBooleanValue(IsAutoProtected.Value);
             }
             if (Optional.IsDefined(Subinquireditemcount))
             {
-                writer.WritePropertyName("subinquireditemcount");
+                writer.WritePropertyName("subinquireditemcount"u8);
                 writer.WriteNumberValue(Subinquireditemcount.Value);
             }
             if (Optional.IsDefined(Subprotectableitemcount))
             {
-                writer.WritePropertyName("subprotectableitemcount");
+                writer.WritePropertyName("subprotectableitemcount"u8);
                 writer.WriteNumberValue(Subprotectableitemcount.Value);
             }
             if (Optional.IsDefined(Prebackupvalidation))
             {
-                writer.WritePropertyName("prebackupvalidation");
+                writer.WritePropertyName("prebackupvalidation"u8);
                 writer.WriteObjectValue(Prebackupvalidation);
             }
             if (Optional.IsDefined(BackupManagementType))
             {
-                writer.WritePropertyName("backupManagementType");
+                writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType);
             }
             if (Optional.IsDefined(WorkloadType))
             {
-                writer.WritePropertyName("workloadType");
+                writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
-            writer.WritePropertyName("protectableItemType");
+            writer.WritePropertyName("protectableItemType"u8);
             writer.WriteStringValue(ProtectableItemType);
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(ProtectionState))
             {
-                writer.WritePropertyName("protectionState");
+                writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
             writer.WriteEndObject();
@@ -111,22 +111,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<ProtectionStatus> protectionState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("parentName"))
+                if (property.NameEquals("parentName"u8))
                 {
                     parentName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parentUniqueName"))
+                if (property.NameEquals("parentUniqueName"u8))
                 {
                     parentUniqueName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverName"))
+                if (property.NameEquals("serverName"u8))
                 {
                     serverName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isAutoProtectable"))
+                if (property.NameEquals("isAutoProtectable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     isAutoProtectable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isAutoProtected"))
+                if (property.NameEquals("isAutoProtected"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     isAutoProtected = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("subinquireditemcount"))
+                if (property.NameEquals("subinquireditemcount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     subinquireditemcount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("subprotectableitemcount"))
+                if (property.NameEquals("subprotectableitemcount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     subprotectableitemcount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("prebackupvalidation"))
+                if (property.NameEquals("prebackupvalidation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -176,27 +176,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     prebackupvalidation = PreBackupValidation.DeserializePreBackupValidation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("backupManagementType"))
+                if (property.NameEquals("backupManagementType"u8))
                 {
                     backupManagementType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workloadType"))
+                if (property.NameEquals("workloadType"u8))
                 {
                     workloadType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectableItemType"))
+                if (property.NameEquals("protectableItemType"u8))
                 {
                     protectableItemType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectionState"))
+                if (property.NameEquals("protectionState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

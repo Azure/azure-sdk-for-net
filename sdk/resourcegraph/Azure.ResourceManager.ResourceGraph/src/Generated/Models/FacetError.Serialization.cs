@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     List<FacetErrorDetails> array = new List<FacetErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("expression"))
+                if (property.NameEquals("expression"u8))
                 {
                     expression = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultType"))
+                if (property.NameEquals("resultType"u8))
                 {
                     resultType = property.Value.GetString();
                     continue;

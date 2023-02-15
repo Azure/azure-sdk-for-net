@@ -13,10 +13,10 @@ namespace Azure.Monitor.Ingestion
     }
     public partial class LogsIngestionClientOptions : Azure.Core.ClientOptions
     {
-        public LogsIngestionClientOptions(Azure.Monitor.Ingestion.LogsIngestionClientOptions.ServiceVersion version = Azure.Monitor.Ingestion.LogsIngestionClientOptions.ServiceVersion.V2021_11_01_Preview) { }
+        public LogsIngestionClientOptions(Azure.Monitor.Ingestion.LogsIngestionClientOptions.ServiceVersion version = Azure.Monitor.Ingestion.LogsIngestionClientOptions.ServiceVersion.V2023_01_01) { }
         public enum ServiceVersion
         {
-            V2021_11_01_Preview = 1,
+            V2023_01_01 = 1,
         }
     }
     public partial class UploadFailedEventArgs : Azure.SyncAsyncEventArgs
