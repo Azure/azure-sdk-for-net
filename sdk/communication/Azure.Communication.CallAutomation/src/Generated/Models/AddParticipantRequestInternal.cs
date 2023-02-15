@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -34,11 +33,6 @@ namespace Azure.Communication.CallAutomation
         /// adding a PSTN participant or teams user.  Note: Will not update the display name in the roster.
         /// </summary>
         public string SourceDisplayName { get; set; }
-        /// <summary>
-        /// (Optional) The identifier of the source of the call for this invite operation. If SourceDisplayName
-        /// is not set, the display name of the source will be used by default when adding a PSTN participant or teams user.
-        /// </summary>
-        public CommunicationIdentifierModel SourceIdentity { get; set; }
         /// <summary> The participant to invite. </summary>
         public CommunicationIdentifierModel ParticipantToAdd { get; }
         /// <summary>
