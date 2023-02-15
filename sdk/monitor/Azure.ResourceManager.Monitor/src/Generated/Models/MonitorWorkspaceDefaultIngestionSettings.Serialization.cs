@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class AzureMonitorWorkspaceDefaultIngestionSettings
+    public partial class MonitorWorkspaceDefaultIngestionSettings
     {
-        internal static AzureMonitorWorkspaceDefaultIngestionSettings DeserializeAzureMonitorWorkspaceDefaultIngestionSettings(JsonElement element)
+        internal static MonitorWorkspaceDefaultIngestionSettings DeserializeMonitorWorkspaceDefaultIngestionSettings(JsonElement element)
         {
             Optional<string> dataCollectionRuleResourceId = default;
             Optional<string> dataCollectionEndpointResourceId = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new AzureMonitorWorkspaceDefaultIngestionSettings(dataCollectionRuleResourceId.Value, dataCollectionEndpointResourceId.Value);
+            return new MonitorWorkspaceDefaultIngestionSettings(dataCollectionRuleResourceId.Value, dataCollectionEndpointResourceId.Value);
         }
     }
 }

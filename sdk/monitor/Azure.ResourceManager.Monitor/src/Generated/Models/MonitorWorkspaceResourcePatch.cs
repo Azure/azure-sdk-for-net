@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Definition of ARM tracked top level resource properties for update operation. </summary>
-    public partial class AzureMonitorWorkspaceResourcePatch
+    public partial class MonitorWorkspaceResourcePatch
     {
-        /// <summary> Initializes a new instance of AzureMonitorWorkspaceResourcePatch. </summary>
-        public AzureMonitorWorkspaceResourcePatch()
+        /// <summary> Initializes a new instance of MonitorWorkspaceResourcePatch. </summary>
+        public MonitorWorkspaceResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

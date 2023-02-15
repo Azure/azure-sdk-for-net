@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static AzureMonitorWorkspaceResourceListResult DeserializeAzureMonitorWorkspaceResourceListResult(JsonElement element)
         {
-            IReadOnlyList<AzureMonitorWorkspaceResourceData> value = default;
+            IReadOnlyList<MonitorWorkspaceResourceData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<AzureMonitorWorkspaceResourceData> array = new List<AzureMonitorWorkspaceResourceData>();
+                    List<MonitorWorkspaceResourceData> array = new List<MonitorWorkspaceResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureMonitorWorkspaceResourceData.DeserializeAzureMonitorWorkspaceResourceData(item));
+                        array.Add(MonitorWorkspaceResourceData.DeserializeMonitorWorkspaceResourceData(item));
                     }
                     value = array;
                     continue;

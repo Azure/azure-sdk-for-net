@@ -201,50 +201,6 @@ namespace Azure.ResourceManager.Monitor
         public virtual Azure.Response<Azure.ResourceManager.Monitor.AutoscaleSettingResource> Update(Azure.ResourceManager.Monitor.Models.AutoscaleSettingPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.AutoscaleSettingResource>> UpdateAsync(Azure.ResourceManager.Monitor.Models.AutoscaleSettingPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AzureMonitorWorkspaceResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AzureMonitorWorkspaceResource() { }
-        public virtual Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource> Update(Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource>> UpdateAsync(Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class AzureMonitorWorkspaceResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource>, System.Collections.IEnumerable
-    {
-        protected AzureMonitorWorkspaceResourceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string azureMonitorWorkspaceName, Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string azureMonitorWorkspaceName, Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string azureMonitorWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string azureMonitorWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource> Get(string azureMonitorWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource>> GetAsync(string azureMonitorWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AzureMonitorWorkspaceResourceData : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public AzureMonitorWorkspaceResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string AccountId { get { throw null; } }
-        public Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceDefaultIngestionSettings DefaultIngestionSettings { get { throw null; } }
-        public Azure.ETag? ETag { get { throw null; } }
-        public Azure.ResourceManager.Monitor.Models.AzureMonitorWorkspaceMetrics Metrics { get { throw null; } }
-        public Azure.ResourceManager.Monitor.Models.MonitorProvisioningState? ProvisioningState { get { throw null; } }
-    }
     public partial class DataCollectionEndpointCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Monitor.DataCollectionEndpointResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.DataCollectionEndpointResource>, System.Collections.IEnumerable
     {
         protected DataCollectionEndpointCollection() { }
@@ -588,12 +544,6 @@ namespace Azure.ResourceManager.Monitor
         public static Azure.ResourceManager.Monitor.AutoscaleSettingCollection GetAutoscaleSettings(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Monitor.AutoscaleSettingResource> GetAutoscaleSettings(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.AutoscaleSettingResource> GetAutoscaleSettingsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource GetAzureMonitorWorkspaceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource> GetAzureMonitorWorkspaceResource(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string azureMonitorWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource>> GetAzureMonitorWorkspaceResourceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string azureMonitorWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResourceCollection GetAzureMonitorWorkspaceResources(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource> GetAzureMonitorWorkspaceResources(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.AzureMonitorWorkspaceResource> GetAzureMonitorWorkspaceResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Monitor.DataCollectionEndpointResource> GetDataCollectionEndpoint(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string dataCollectionEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.DataCollectionEndpointResource>> GetDataCollectionEndpointAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string dataCollectionEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Monitor.DataCollectionEndpointResource GetDataCollectionEndpointResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -630,8 +580,6 @@ namespace Azure.ResourceManager.Monitor
         public static Azure.ResourceManager.Monitor.MetricAlertCollection GetMetricAlerts(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Monitor.MetricAlertResource> GetMetricAlerts(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.MetricAlertResource> GetMetricAlertsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Monitor.Models.OperationAutoGenerated> GetMonitorOperations(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.Models.OperationAutoGenerated> GetMonitorOperationsAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Monitor.MonitorPrivateEndpointConnectionResource GetMonitorPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Monitor.MonitorPrivateLinkResource GetMonitorPrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Monitor.MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScope(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string scopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -641,6 +589,12 @@ namespace Azure.ResourceManager.Monitor
         public static Azure.ResourceManager.Monitor.MonitorPrivateLinkScopeCollection GetMonitorPrivateLinkScopes(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Monitor.MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopes(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Monitor.MonitorWorkspaceResource GetMonitorWorkspaceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> GetMonitorWorkspaceResource(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string azureMonitorWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>> GetMonitorWorkspaceResourceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string azureMonitorWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Monitor.MonitorWorkspaceResourceCollection GetMonitorWorkspaceResources(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> GetMonitorWorkspaceResources(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> GetMonitorWorkspaceResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Monitor.Models.NotificationStatus> GetNotificationStatus(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string notificationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Monitor.Models.NotificationStatus> GetNotificationStatus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string notificationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.Models.NotificationStatus>> GetNotificationStatusAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string notificationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -810,6 +764,50 @@ namespace Azure.ResourceManager.Monitor
         public virtual Azure.Response<Azure.ResourceManager.Monitor.MonitorPrivateLinkScopeResource> Update(Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkScopePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.MonitorPrivateLinkScopeResource>> UpdateAsync(Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkScopePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class MonitorWorkspaceResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected MonitorWorkspaceResource() { }
+        public virtual Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> Update(Azure.ResourceManager.Monitor.Models.MonitorWorkspaceResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>> UpdateAsync(Azure.ResourceManager.Monitor.Models.MonitorWorkspaceResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MonitorWorkspaceResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>, System.Collections.IEnumerable
+    {
+        protected MonitorWorkspaceResourceCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string azureMonitorWorkspaceName, Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string azureMonitorWorkspaceName, Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string azureMonitorWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string azureMonitorWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> Get(string azureMonitorWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>> GetAsync(string azureMonitorWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class MonitorWorkspaceResourceData : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public MonitorWorkspaceResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public string AccountId { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorWorkspaceDefaultIngestionSettings DefaultIngestionSettings { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetrics Metrics { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorProvisioningState? ProvisioningState { get { throw null; } }
+    }
     public partial class ScheduledQueryRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Monitor.ScheduledQueryRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.ScheduledQueryRuleResource>, System.Collections.IEnumerable
     {
         protected ScheduledQueryRuleCollection() { }
@@ -903,23 +901,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public ActionGroupPatch() { }
         public bool? IsEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ActionType : System.IEquatable<Azure.ResourceManager.Monitor.Models.ActionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ActionType(string value) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.ActionType Internal { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Monitor.Models.ActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Monitor.Models.ActionType left, Azure.ResourceManager.Monitor.Models.ActionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Monitor.Models.ActionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Monitor.Models.ActionType left, Azure.ResourceManager.Monitor.Models.ActionType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ActivityLogAlertActionGroup
     {
@@ -1036,19 +1017,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public string MetricName { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
         public string Timespan { get { throw null; } }
-    }
-    public partial class AzureMonitorWorkspaceDefaultIngestionSettings : Azure.ResourceManager.Monitor.Models.IngestionSettings
-    {
-        internal AzureMonitorWorkspaceDefaultIngestionSettings() { }
-    }
-    public partial class AzureMonitorWorkspaceMetrics : Azure.ResourceManager.Monitor.Models.Metrics
-    {
-        internal AzureMonitorWorkspaceMetrics() { }
-    }
-    public partial class AzureMonitorWorkspaceResourcePatch
-    {
-        public AzureMonitorWorkspaceResourcePatch() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class ConditionFailingPeriods
     {
@@ -1610,9 +1578,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
     }
-    public partial class Metrics
+    public partial class MetricProperties
     {
-        internal Metrics() { }
+        internal MetricProperties() { }
         public string InternalId { get { throw null; } }
         public string PrometheusQueryEndpoint { get { throw null; } }
     }
@@ -2053,6 +2021,19 @@ namespace Azure.ResourceManager.Monitor.Models
         public bool? UseAadAuth { get { throw null; } set { } }
         public bool? UseCommonAlertSchema { get { throw null; } set { } }
     }
+    public partial class MonitorWorkspaceDefaultIngestionSettings : Azure.ResourceManager.Monitor.Models.IngestionSettings
+    {
+        internal MonitorWorkspaceDefaultIngestionSettings() { }
+    }
+    public partial class MonitorWorkspaceMetrics : Azure.ResourceManager.Monitor.Models.MetricProperties
+    {
+        internal MonitorWorkspaceMetrics() { }
+    }
+    public partial class MonitorWorkspaceResourcePatch
+    {
+        public MonitorWorkspaceResourcePatch() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
     public partial class MultiMetricCriteria
     {
         public MultiMetricCriteria(string name, string metricName, Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType timeAggregation) { }
@@ -2122,42 +2103,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.OnboardingStatus left, Azure.ResourceManager.Monitor.Models.OnboardingStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.OnboardingStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.OnboardingStatus left, Azure.ResourceManager.Monitor.Models.OnboardingStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class OperationAutoGenerated
-    {
-        internal OperationAutoGenerated() { }
-        public Azure.ResourceManager.Monitor.Models.ActionType? ActionType { get { throw null; } }
-        public Azure.ResourceManager.Monitor.Models.OperationDisplayAutoGenerated Display { get { throw null; } }
-        public bool? IsDataAction { get { throw null; } }
-        public string Name { get { throw null; } }
-        public Azure.ResourceManager.Monitor.Models.Origin? Origin { get { throw null; } }
-    }
-    public partial class OperationDisplayAutoGenerated
-    {
-        internal OperationDisplayAutoGenerated() { }
-        public string Description { get { throw null; } }
-        public string Operation { get { throw null; } }
-        public string Provider { get { throw null; } }
-        public string Resource { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Origin : System.IEquatable<Azure.ResourceManager.Monitor.Models.Origin>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Origin(string value) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.Origin System { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.Origin User { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.Origin UserSystem { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Monitor.Models.Origin other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Monitor.Models.Origin left, Azure.ResourceManager.Monitor.Models.Origin right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Monitor.Models.Origin (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Monitor.Models.Origin left, Azure.ResourceManager.Monitor.Models.Origin right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class PerfCounterDataSource

@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AzureMonitorWorkspaceResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<MonitorWorkspaceResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -216,13 +216,13 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        AzureMonitorWorkspaceResourceData value = default;
+                        MonitorWorkspaceResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AzureMonitorWorkspaceResourceData.DeserializeAzureMonitorWorkspaceResourceData(document.RootElement);
+                        value = MonitorWorkspaceResourceData.DeserializeMonitorWorkspaceResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AzureMonitorWorkspaceResourceData)null, message.Response);
+                    return Response.FromValue((MonitorWorkspaceResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AzureMonitorWorkspaceResourceData> Get(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
+        public Response<MonitorWorkspaceResourceData> Get(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -247,19 +247,19 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        AzureMonitorWorkspaceResourceData value = default;
+                        MonitorWorkspaceResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AzureMonitorWorkspaceResourceData.DeserializeAzureMonitorWorkspaceResourceData(document.RootElement);
+                        value = MonitorWorkspaceResourceData.DeserializeMonitorWorkspaceResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AzureMonitorWorkspaceResourceData)null, message.Response);
+                    return Response.FromValue((MonitorWorkspaceResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, AzureMonitorWorkspaceResourceData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, MonitorWorkspaceResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="azureMonitorWorkspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AzureMonitorWorkspaceResourceData>> CreateAsync(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, AzureMonitorWorkspaceResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<MonitorWorkspaceResourceData>> CreateAsync(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, MonitorWorkspaceResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -305,9 +305,9 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                 case 201:
                     {
-                        AzureMonitorWorkspaceResourceData value = default;
+                        MonitorWorkspaceResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AzureMonitorWorkspaceResourceData.DeserializeAzureMonitorWorkspaceResourceData(document.RootElement);
+                        value = MonitorWorkspaceResourceData.DeserializeMonitorWorkspaceResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="azureMonitorWorkspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AzureMonitorWorkspaceResourceData> Create(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, AzureMonitorWorkspaceResourceData data, CancellationToken cancellationToken = default)
+        public Response<MonitorWorkspaceResourceData> Create(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, MonitorWorkspaceResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -337,9 +337,9 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                 case 201:
                     {
-                        AzureMonitorWorkspaceResourceData value = default;
+                        MonitorWorkspaceResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AzureMonitorWorkspaceResourceData.DeserializeAzureMonitorWorkspaceResourceData(document.RootElement);
+                        value = MonitorWorkspaceResourceData.DeserializeMonitorWorkspaceResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, AzureMonitorWorkspaceResourcePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, MonitorWorkspaceResourcePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="azureMonitorWorkspaceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AzureMonitorWorkspaceResourceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, AzureMonitorWorkspaceResourcePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<MonitorWorkspaceResourceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, MonitorWorkspaceResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -392,9 +392,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        AzureMonitorWorkspaceResourceData value = default;
+                        MonitorWorkspaceResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AzureMonitorWorkspaceResourceData.DeserializeAzureMonitorWorkspaceResourceData(document.RootElement);
+                        value = MonitorWorkspaceResourceData.DeserializeMonitorWorkspaceResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="azureMonitorWorkspaceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AzureMonitorWorkspaceResourceData> Update(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, AzureMonitorWorkspaceResourcePatch patch, CancellationToken cancellationToken = default)
+        public Response<MonitorWorkspaceResourceData> Update(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, MonitorWorkspaceResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -423,9 +423,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        AzureMonitorWorkspaceResourceData value = default;
+                        MonitorWorkspaceResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AzureMonitorWorkspaceResourceData.DeserializeAzureMonitorWorkspaceResourceData(document.RootElement);
+                        value = MonitorWorkspaceResourceData.DeserializeMonitorWorkspaceResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

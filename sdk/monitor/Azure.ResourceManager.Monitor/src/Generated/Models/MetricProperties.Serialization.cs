@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class Metrics
+    public partial class MetricProperties
     {
-        internal static Metrics DeserializeMetrics(JsonElement element)
+        internal static MetricProperties DeserializeMetricProperties(JsonElement element)
         {
             Optional<string> prometheusQueryEndpoint = default;
             Optional<string> internalId = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new Metrics(prometheusQueryEndpoint.Value, internalId.Value);
+            return new MetricProperties(prometheusQueryEndpoint.Value, internalId.Value);
         }
     }
 }

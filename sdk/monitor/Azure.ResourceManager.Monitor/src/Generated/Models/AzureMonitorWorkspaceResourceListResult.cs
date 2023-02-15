@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of AzureMonitorWorkspaceResourceListResult. </summary>
         /// <param name="value"> A list of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AzureMonitorWorkspaceResourceListResult(IEnumerable<AzureMonitorWorkspaceResourceData> value)
+        internal AzureMonitorWorkspaceResourceListResult(IEnumerable<MonitorWorkspaceResourceData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of AzureMonitorWorkspaceResourceListResult. </summary>
         /// <param name="value"> A list of resources. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal AzureMonitorWorkspaceResourceListResult(IReadOnlyList<AzureMonitorWorkspaceResourceData> value, string nextLink)
+        internal AzureMonitorWorkspaceResourceListResult(IReadOnlyList<MonitorWorkspaceResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of resources. </summary>
-        public IReadOnlyList<AzureMonitorWorkspaceResourceData> Value { get; }
+        public IReadOnlyList<MonitorWorkspaceResourceData> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }

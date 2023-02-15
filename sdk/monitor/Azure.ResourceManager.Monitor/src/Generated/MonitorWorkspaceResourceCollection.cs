@@ -20,28 +20,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AzureMonitorWorkspaceResource" /> and their operations.
-    /// Each <see cref="AzureMonitorWorkspaceResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="AzureMonitorWorkspaceResourceCollection" /> instance call the GetAzureMonitorWorkspaceResources method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="MonitorWorkspaceResource" /> and their operations.
+    /// Each <see cref="MonitorWorkspaceResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="MonitorWorkspaceResourceCollection" /> instance call the GetMonitorWorkspaceResources method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
-    public partial class AzureMonitorWorkspaceResourceCollection : ArmCollection, IEnumerable<AzureMonitorWorkspaceResource>, IAsyncEnumerable<AzureMonitorWorkspaceResource>
+    public partial class MonitorWorkspaceResourceCollection : ArmCollection, IEnumerable<MonitorWorkspaceResource>, IAsyncEnumerable<MonitorWorkspaceResource>
     {
-        private readonly ClientDiagnostics _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics;
-        private readonly AzureMonitorWorkspacesRestOperations _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient;
+        private readonly ClientDiagnostics _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics;
+        private readonly AzureMonitorWorkspacesRestOperations _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AzureMonitorWorkspaceResourceCollection"/> class for mocking. </summary>
-        protected AzureMonitorWorkspaceResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="MonitorWorkspaceResourceCollection"/> class for mocking. </summary>
+        protected MonitorWorkspaceResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AzureMonitorWorkspaceResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MonitorWorkspaceResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal AzureMonitorWorkspaceResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MonitorWorkspaceResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", AzureMonitorWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AzureMonitorWorkspaceResource.ResourceType, out string azureMonitorWorkspaceResourceAzureMonitorWorkspacesApiVersion);
-            _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient = new AzureMonitorWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, azureMonitorWorkspaceResourceAzureMonitorWorkspacesApiVersion);
+            _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", MonitorWorkspaceResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MonitorWorkspaceResource.ResourceType, out string monitorWorkspaceResourceAzureMonitorWorkspacesApiVersion);
+            _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient = new AzureMonitorWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, monitorWorkspaceResourceAzureMonitorWorkspacesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,17 +72,17 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureMonitorWorkspaceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AzureMonitorWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string azureMonitorWorkspaceName, AzureMonitorWorkspaceResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MonitorWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string azureMonitorWorkspaceName, MonitorWorkspaceResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("AzureMonitorWorkspaceResourceCollection.CreateOrUpdate");
+            using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, azureMonitorWorkspaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<AzureMonitorWorkspaceResource>(Response.FromValue(new AzureMonitorWorkspaceResource(Client, response), response.GetRawResponse()));
+                var response = await _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, azureMonitorWorkspaceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new MonitorArmOperation<MonitorWorkspaceResource>(Response.FromValue(new MonitorWorkspaceResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -113,17 +113,17 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureMonitorWorkspaceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AzureMonitorWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string azureMonitorWorkspaceName, AzureMonitorWorkspaceResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MonitorWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string azureMonitorWorkspaceName, MonitorWorkspaceResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("AzureMonitorWorkspaceResourceCollection.CreateOrUpdate");
+            using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, azureMonitorWorkspaceName, data, cancellationToken);
-                var operation = new MonitorArmOperation<AzureMonitorWorkspaceResource>(Response.FromValue(new AzureMonitorWorkspaceResource(Client, response), response.GetRawResponse()));
+                var response = _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, azureMonitorWorkspaceName, data, cancellationToken);
+                var operation = new MonitorArmOperation<MonitorWorkspaceResource>(Response.FromValue(new MonitorWorkspaceResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -152,18 +152,18 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureMonitorWorkspaceName"/> is null. </exception>
-        public virtual async Task<Response<AzureMonitorWorkspaceResource>> GetAsync(string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MonitorWorkspaceResource>> GetAsync(string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
 
-            using var scope = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("AzureMonitorWorkspaceResourceCollection.Get");
+            using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, azureMonitorWorkspaceName, cancellationToken).ConfigureAwait(false);
+                var response = await _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, azureMonitorWorkspaceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AzureMonitorWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MonitorWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,18 +189,18 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureMonitorWorkspaceName"/> is null. </exception>
-        public virtual Response<AzureMonitorWorkspaceResource> Get(string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<MonitorWorkspaceResource> Get(string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
 
-            using var scope = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("AzureMonitorWorkspaceResourceCollection.Get");
+            using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, azureMonitorWorkspaceName, cancellationToken);
+                var response = _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, azureMonitorWorkspaceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AzureMonitorWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MonitorWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -223,12 +223,12 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzureMonitorWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AzureMonitorWorkspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MonitorWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MonitorWorkspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureMonitorWorkspaceResource(Client, AzureMonitorWorkspaceResourceData.DeserializeAzureMonitorWorkspaceResourceData(e)), _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics, Pipeline, "AzureMonitorWorkspaceResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MonitorWorkspaceResource(Client, MonitorWorkspaceResourceData.DeserializeMonitorWorkspaceResourceData(e)), _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics, Pipeline, "MonitorWorkspaceResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -245,12 +245,12 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureMonitorWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AzureMonitorWorkspaceResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MonitorWorkspaceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureMonitorWorkspaceResource(Client, AzureMonitorWorkspaceResourceData.DeserializeAzureMonitorWorkspaceResourceData(e)), _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics, Pipeline, "AzureMonitorWorkspaceResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MonitorWorkspaceResource(Client, MonitorWorkspaceResourceData.DeserializeMonitorWorkspaceResourceData(e)), _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics, Pipeline, "MonitorWorkspaceResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -274,11 +274,11 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
 
-            using var scope = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("AzureMonitorWorkspaceResourceCollection.Exists");
+            using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, azureMonitorWorkspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, azureMonitorWorkspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -309,11 +309,11 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
 
-            using var scope = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("AzureMonitorWorkspaceResourceCollection.Exists");
+            using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, azureMonitorWorkspaceName, cancellationToken: cancellationToken);
+                var response = _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, azureMonitorWorkspaceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        IEnumerator<AzureMonitorWorkspaceResource> IEnumerable<AzureMonitorWorkspaceResource>.GetEnumerator()
+        IEnumerator<MonitorWorkspaceResource> IEnumerable<MonitorWorkspaceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Monitor
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<AzureMonitorWorkspaceResource> IAsyncEnumerable<AzureMonitorWorkspaceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<MonitorWorkspaceResource> IAsyncEnumerable<MonitorWorkspaceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class AzureMonitorWorkspaceResourceData : IUtf8JsonSerializable
+    public partial class MonitorWorkspaceResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteEndObject();
         }
 
-        internal static AzureMonitorWorkspaceResourceData DeserializeAzureMonitorWorkspaceResourceData(JsonElement element)
+        internal static MonitorWorkspaceResourceData DeserializeMonitorWorkspaceResourceData(JsonElement element)
         {
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Monitor
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> accountId = default;
-            Optional<AzureMonitorWorkspaceMetrics> metrics = default;
+            Optional<MonitorWorkspaceMetrics> metrics = default;
             Optional<MonitorProvisioningState> provisioningState = default;
-            Optional<AzureMonitorWorkspaceDefaultIngestionSettings> defaultIngestionSettings = default;
+            Optional<MonitorWorkspaceDefaultIngestionSettings> defaultIngestionSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            metrics = AzureMonitorWorkspaceMetrics.DeserializeAzureMonitorWorkspaceMetrics(property0.Value);
+                            metrics = MonitorWorkspaceMetrics.DeserializeMonitorWorkspaceMetrics(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            defaultIngestionSettings = AzureMonitorWorkspaceDefaultIngestionSettings.DeserializeAzureMonitorWorkspaceDefaultIngestionSettings(property0.Value);
+                            defaultIngestionSettings = MonitorWorkspaceDefaultIngestionSettings.DeserializeMonitorWorkspaceDefaultIngestionSettings(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new AzureMonitorWorkspaceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), accountId.Value, metrics.Value, Optional.ToNullable(provisioningState), defaultIngestionSettings.Value);
+            return new MonitorWorkspaceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), accountId.Value, metrics.Value, Optional.ToNullable(provisioningState), defaultIngestionSettings.Value);
         }
     }
 }

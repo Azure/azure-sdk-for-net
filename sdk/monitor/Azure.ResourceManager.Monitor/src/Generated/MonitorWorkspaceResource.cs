@@ -20,46 +20,46 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A Class representing an AzureMonitorWorkspaceResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AzureMonitorWorkspaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAzureMonitorWorkspaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAzureMonitorWorkspaceResource method.
+    /// A Class representing a MonitorWorkspaceResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MonitorWorkspaceResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetMonitorWorkspaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetMonitorWorkspaceResource method.
     /// </summary>
-    public partial class AzureMonitorWorkspaceResource : ArmResource
+    public partial class MonitorWorkspaceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AzureMonitorWorkspaceResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="MonitorWorkspaceResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/accounts/{azureMonitorWorkspaceName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics;
-        private readonly AzureMonitorWorkspacesRestOperations _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient;
-        private readonly AzureMonitorWorkspaceResourceData _data;
+        private readonly ClientDiagnostics _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics;
+        private readonly AzureMonitorWorkspacesRestOperations _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient;
+        private readonly MonitorWorkspaceResourceData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="AzureMonitorWorkspaceResource"/> class for mocking. </summary>
-        protected AzureMonitorWorkspaceResource()
+        /// <summary> Initializes a new instance of the <see cref="MonitorWorkspaceResource"/> class for mocking. </summary>
+        protected MonitorWorkspaceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AzureMonitorWorkspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "MonitorWorkspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AzureMonitorWorkspaceResource(ArmClient client, AzureMonitorWorkspaceResourceData data) : this(client, data.Id)
+        internal MonitorWorkspaceResource(ArmClient client, MonitorWorkspaceResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AzureMonitorWorkspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MonitorWorkspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AzureMonitorWorkspaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MonitorWorkspaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string azureMonitorWorkspaceResourceAzureMonitorWorkspacesApiVersion);
-            _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient = new AzureMonitorWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, azureMonitorWorkspaceResourceAzureMonitorWorkspacesApiVersion);
+            _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string monitorWorkspaceResourceAzureMonitorWorkspacesApiVersion);
+            _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient = new AzureMonitorWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, monitorWorkspaceResourceAzureMonitorWorkspacesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual AzureMonitorWorkspaceResourceData Data
+        public virtual MonitorWorkspaceResourceData Data
         {
             get
             {
@@ -103,16 +103,16 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AzureMonitorWorkspaceResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MonitorWorkspaceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("AzureMonitorWorkspaceResource.Get");
+            using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResource.Get");
             scope.Start();
             try
             {
-                var response = await _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AzureMonitorWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MonitorWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,16 +135,16 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AzureMonitorWorkspaceResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<MonitorWorkspaceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("AzureMonitorWorkspaceResource.Get");
+            using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResource.Get");
             scope.Start();
             try
             {
-                var response = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AzureMonitorWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MonitorWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("AzureMonitorWorkspaceResource.Delete");
+            using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResource.Delete");
             scope.Start();
             try
             {
-                var response = await _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new MonitorArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -204,11 +204,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("AzureMonitorWorkspaceResource.Delete");
+            using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResource.Delete");
             scope.Start();
             try
             {
-                var response = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new MonitorArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -237,16 +237,16 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="patch"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<AzureMonitorWorkspaceResource>> UpdateAsync(AzureMonitorWorkspaceResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MonitorWorkspaceResource>> UpdateAsync(MonitorWorkspaceResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("AzureMonitorWorkspaceResource.Update");
+            using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResource.Update");
             scope.Start();
             try
             {
-                var response = await _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new AzureMonitorWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                var response = await _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new MonitorWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -271,16 +271,16 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="patch"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<AzureMonitorWorkspaceResource> Update(AzureMonitorWorkspaceResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<MonitorWorkspaceResource> Update(MonitorWorkspaceResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("AzureMonitorWorkspaceResource.Update");
+            using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResource.Update");
             scope.Start();
             try
             {
-                var response = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new AzureMonitorWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                var response = _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new MonitorWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -306,12 +306,12 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<AzureMonitorWorkspaceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MonitorWorkspaceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("AzureMonitorWorkspaceResource.AddTag");
+            using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResource.AddTag");
             scope.Start();
             try
             {
@@ -320,13 +320,13 @@ namespace Azure.ResourceManager.Monitor
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AzureMonitorWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new MonitorWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AzureMonitorWorkspaceResourcePatch();
+                    var patch = new MonitorWorkspaceResourcePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -360,12 +360,12 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<AzureMonitorWorkspaceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<MonitorWorkspaceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("AzureMonitorWorkspaceResource.AddTag");
+            using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResource.AddTag");
             scope.Start();
             try
             {
@@ -374,13 +374,13 @@ namespace Azure.ResourceManager.Monitor
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new AzureMonitorWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new MonitorWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AzureMonitorWorkspaceResourcePatch();
+                    var patch = new MonitorWorkspaceResourcePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -413,11 +413,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<AzureMonitorWorkspaceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MonitorWorkspaceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("AzureMonitorWorkspaceResource.SetTags");
+            using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResource.SetTags");
             scope.Start();
             try
             {
@@ -427,13 +427,13 @@ namespace Azure.ResourceManager.Monitor
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AzureMonitorWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new MonitorWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AzureMonitorWorkspaceResourcePatch();
+                    var patch = new MonitorWorkspaceResourcePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -462,11 +462,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<AzureMonitorWorkspaceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<MonitorWorkspaceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("AzureMonitorWorkspaceResource.SetTags");
+            using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResource.SetTags");
             scope.Start();
             try
             {
@@ -476,13 +476,13 @@ namespace Azure.ResourceManager.Monitor
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new AzureMonitorWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new MonitorWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AzureMonitorWorkspaceResourcePatch();
+                    var patch = new MonitorWorkspaceResourcePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -511,11 +511,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<AzureMonitorWorkspaceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MonitorWorkspaceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("AzureMonitorWorkspaceResource.RemoveTag");
+            using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResource.RemoveTag");
             scope.Start();
             try
             {
@@ -524,13 +524,13 @@ namespace Azure.ResourceManager.Monitor
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AzureMonitorWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new MonitorWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AzureMonitorWorkspaceResourcePatch();
+                    var patch = new MonitorWorkspaceResourcePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -563,11 +563,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<AzureMonitorWorkspaceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<MonitorWorkspaceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("AzureMonitorWorkspaceResource.RemoveTag");
+            using var scope = _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics.CreateScope("MonitorWorkspaceResource.RemoveTag");
             scope.Start();
             try
             {
@@ -576,13 +576,13 @@ namespace Azure.ResourceManager.Monitor
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _azureMonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new AzureMonitorWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new MonitorWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AzureMonitorWorkspaceResourcePatch();
+                    var patch = new MonitorWorkspaceResourcePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

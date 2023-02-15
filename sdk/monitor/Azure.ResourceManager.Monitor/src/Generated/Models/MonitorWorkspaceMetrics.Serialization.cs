@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class AzureMonitorWorkspaceMetrics
+    public partial class MonitorWorkspaceMetrics
     {
-        internal static AzureMonitorWorkspaceMetrics DeserializeAzureMonitorWorkspaceMetrics(JsonElement element)
+        internal static MonitorWorkspaceMetrics DeserializeMonitorWorkspaceMetrics(JsonElement element)
         {
             Optional<string> prometheusQueryEndpoint = default;
             Optional<string> internalId = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new AzureMonitorWorkspaceMetrics(prometheusQueryEndpoint.Value, internalId.Value);
+            return new MonitorWorkspaceMetrics(prometheusQueryEndpoint.Value, internalId.Value);
         }
     }
 }

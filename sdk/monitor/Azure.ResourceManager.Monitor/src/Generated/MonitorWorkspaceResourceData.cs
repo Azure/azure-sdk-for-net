@@ -13,16 +13,16 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the AzureMonitorWorkspaceResource data model. </summary>
-    public partial class AzureMonitorWorkspaceResourceData : TrackedResourceData
+    /// <summary> A class representing the MonitorWorkspaceResource data model. </summary>
+    public partial class MonitorWorkspaceResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AzureMonitorWorkspaceResourceData. </summary>
+        /// <summary> Initializes a new instance of MonitorWorkspaceResourceData. </summary>
         /// <param name="location"> The location. </param>
-        public AzureMonitorWorkspaceResourceData(AzureLocation location) : base(location)
+        public MonitorWorkspaceResourceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of AzureMonitorWorkspaceResourceData. </summary>
+        /// <summary> Initializes a new instance of MonitorWorkspaceResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="metrics"> Information about metrics for the Azure Monitor workspace. </param>
         /// <param name="provisioningState"> The provisioning state of the Azure Monitor workspace. Set to Succeeded if everything is healthy. </param>
         /// <param name="defaultIngestionSettings"> The Data Collection Rule and Endpoint used for ingestion by default. </param>
-        internal AzureMonitorWorkspaceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string accountId, AzureMonitorWorkspaceMetrics metrics, MonitorProvisioningState? provisioningState, AzureMonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings) : base(id, name, resourceType, systemData, tags, location)
+        internal MonitorWorkspaceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string accountId, MonitorWorkspaceMetrics metrics, MonitorProvisioningState? provisioningState, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             AccountId = accountId;
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> The immutable ID of the Azure Monitor workspace. This property is read-only. </summary>
         public string AccountId { get; }
         /// <summary> Information about metrics for the Azure Monitor workspace. </summary>
-        public AzureMonitorWorkspaceMetrics Metrics { get; }
+        public MonitorWorkspaceMetrics Metrics { get; }
         /// <summary> The provisioning state of the Azure Monitor workspace. Set to Succeeded if everything is healthy. </summary>
         public MonitorProvisioningState? ProvisioningState { get; }
         /// <summary> The Data Collection Rule and Endpoint used for ingestion by default. </summary>
-        public AzureMonitorWorkspaceDefaultIngestionSettings DefaultIngestionSettings { get; }
+        public MonitorWorkspaceDefaultIngestionSettings DefaultIngestionSettings { get; }
     }
 }
