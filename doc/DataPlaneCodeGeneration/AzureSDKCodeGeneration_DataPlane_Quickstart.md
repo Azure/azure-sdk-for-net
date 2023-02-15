@@ -91,7 +91,7 @@ parameters:
   "js-sdk-folder":
     default: "{cwd}/azure-sdk-for-js/"
   "csharp-sdk-folder":
-    default: "{cwd}/azure-sdk-for-chsarp/"
+    default: "{cwd}/azure-sdk-for-csharp/"
   "openapi-folder":
     default: "{project-root}/../dataplane/"
   "service-directory-name":
