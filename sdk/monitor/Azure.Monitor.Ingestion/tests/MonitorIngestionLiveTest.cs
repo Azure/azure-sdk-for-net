@@ -155,7 +155,7 @@ namespace Azure.Monitor.Ingestion.Tests
             LogsIngestionClient client = CreateClient(policy);
 
             // Make the request
-            UploadLogsOptions options = new UploadLogsOptions();
+            LogsUploadOptions options = new LogsUploadOptions();
             options.MaxConcurrency = 10;
             Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(8, Recording.Now.DateTime), options).ConfigureAwait(false);
             //Check the response
@@ -242,9 +242,9 @@ namespace Azure.Monitor.Ingestion.Tests
             var entries = GenerateEntries(200, Recording.Now.DateTime);
 
             // Make the request
-            UploadLogsOptions options = new UploadLogsOptions();
+            LogsUploadOptions options = new LogsUploadOptions();
             bool isTriggered = false;
-            options.UploadLogsFailed += Options_UploadFailed;
+            options.UploadFailed += Options_UploadFailed;
             await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options).ConfigureAwait(false);
             Assert.IsFalse(isTriggered);
             Task Options_UploadFailed(UploadFailedEventArgs e)

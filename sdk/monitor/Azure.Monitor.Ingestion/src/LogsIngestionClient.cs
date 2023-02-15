@@ -80,7 +80,7 @@ namespace Azure.Monitor.Ingestion
         /// <param name="logEntries"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        internal static IEnumerable<BatchedLogs> Batch<T>(IEnumerable<T> logEntries, UploadLogsOptions options = null)
+        internal static IEnumerable<BatchedLogs> Batch<T>(IEnumerable<T> logEntries, LogsUploadOptions options = null)
         {
             // Create an ArrayBufferWriter as backing store for Utf8JsonWriter
             ArrayBufferWriter<byte> arrayBuffer = new ArrayBufferWriter<byte>(SingleUploadThreshold);
@@ -196,7 +196,7 @@ namespace Azure.Monitor.Ingestion
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual Response Upload<T>(string ruleId, string streamName, IEnumerable<T> logs, UploadLogsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response Upload<T>(string ruleId, string streamName, IEnumerable<T> logs, LogsUploadOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
@@ -205,7 +205,7 @@ namespace Azure.Monitor.Ingestion
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
             Response response = null;
             List<Exception> exceptions = null;
-            options ??= new UploadLogsOptions();
+            options ??= new LogsUploadOptions();
             scope.Start();
 
             // Keep track of the number of failed logs across batches
@@ -306,12 +306,12 @@ namespace Azure.Monitor.Ingestion
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual async Task<Response> UploadAsync<T>(string ruleId, string streamName, IEnumerable<T> logs, UploadLogsOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UploadAsync<T>(string ruleId, string streamName, IEnumerable<T> logs, LogsUploadOptions options = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
             Argument.AssertNotNullOrEmpty(logs, nameof(logs));
-            options ??= new UploadLogsOptions();
+            options ??= new LogsUploadOptions();
 
             using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
 
@@ -431,7 +431,7 @@ namespace Azure.Monitor.Ingestion
             }
         }
 
-        internal async Task<Exception> ProcessCompletedTaskEventHandlerAsync(Task<Response> completedTask, List<object> logs, UploadLogsOptions options, CancellationToken cancellationToken)
+        internal async Task<Exception> ProcessCompletedTaskEventHandlerAsync(Task<Response> completedTask, List<object> logs, LogsUploadOptions options, CancellationToken cancellationToken)
         {
             UploadFailedEventArgs eventArgs;
             if (completedTask.Exception != null)

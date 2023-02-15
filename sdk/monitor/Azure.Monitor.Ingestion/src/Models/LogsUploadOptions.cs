@@ -15,7 +15,7 @@ namespace Azure.Monitor.Ingestion
     /// <summary>
     /// The options model to configure the request to upload logs to Azure Monitor.
     /// </summary>
-    public class UploadLogsOptions
+    public class LogsUploadOptions
     {
         /// <summary>
         /// The serializer to use to convert the log objects to JSON.
@@ -38,11 +38,11 @@ namespace Azure.Monitor.Ingestion
         /// <summary>
         /// An optional EventHandler that provides the list of failed logs and the corresponding exception.
         /// </summary>
-        public event SyncAsyncEventHandler<UploadFailedEventArgs> UploadLogsFailed;
+        public event SyncAsyncEventHandler<UploadFailedEventArgs> UploadFailed;
 
         internal virtual async Task InvokeEvent(UploadFailedEventArgs uploadFailedArgs)
         {
-            await UploadLogsFailed.RaiseAsync(uploadFailedArgs, nameof(LogsIngestionClient), "Upload", uploadFailedArgs.ClientDiagnostics).ConfigureAwait(false);
+            await UploadFailed.RaiseAsync(uploadFailedArgs, nameof(LogsIngestionClient), "Upload", uploadFailedArgs.ClientDiagnostics).ConfigureAwait(false);
         }
 
         internal virtual async Task<Exception> OnUploadFailedAsync(UploadFailedEventArgs eventArgs)
@@ -79,6 +79,6 @@ namespace Azure.Monitor.Ingestion
                 return argumentValue;
         }
 
-        internal bool HasHandler => UploadLogsFailed != null;
+        internal bool HasHandler => UploadFailed != null;
     }
 }
