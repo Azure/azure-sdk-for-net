@@ -239,9 +239,11 @@ namespace Azure.Communication.CallAutomation
         public CallInvite(Azure.Communication.CommunicationUserIdentifier targetIdentity) { }
         public CallInvite(Azure.Communication.MicrosoftTeamsUserIdentifier targetIdentity) { }
         public CallInvite(Azure.Communication.PhoneNumberIdentifier targetPhoneNumberIdentity, Azure.Communication.PhoneNumberIdentifier callerIdNumber) { }
+        public System.Collections.Generic.IDictionary<string, string> SipHeaders { get { throw null; } }
         public Azure.Communication.PhoneNumberIdentifier SourceCallerIdNumber { get { throw null; } }
         public string SourceDisplayName { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier Target { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> VoipHeaders { get { throw null; } }
     }
     public abstract partial class CallLocator : System.IEquatable<Azure.Communication.CallAutomation.CallLocator>
     {
@@ -432,12 +434,6 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.PhoneNumberIdentifier SourceCallerIdNumber { get { throw null; } set { } }
         public string SourceDisplayName { get { throw null; } set { } }
         public System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> Targets { get { throw null; } }
-    }
-    public partial class CustomContext
-    {
-        public CustomContext() { }
-        public System.Collections.Generic.IDictionary<string, string> SipHeaders { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> VoipHeaders { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DtmfTone : System.IEquatable<Azure.Communication.CallAutomation.DtmfTone>

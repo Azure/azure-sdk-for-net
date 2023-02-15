@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <param name="participant"> The list of participants in the call. </param>
+        /// <param name="participant"> Participant. </param>
         internal AddParticipantFailedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CommunicationIdentifierModel participant)
         {
             CallConnectionId = callConnectionId;
@@ -44,7 +44,7 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; }
         /// <summary> Contains the resulting SIP code/sub-code and message from NGC services. </summary>
         public ResultInformation ResultInformation { get; }
-        /// <summary> The list of participants in the call. </summary>
+        /// <summary> Participant. </summary>
         public CommunicationIdentifierModel Participant { get; }
     }
 }

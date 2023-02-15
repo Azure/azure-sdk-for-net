@@ -607,7 +607,7 @@ namespace Azure.Communication.CallAutomation
                     request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
                 }
 
-                return await RestClient.RemoveParticipantsAsync(
+                return await RestClient.RemoveParticipantAsync(
                     CallConnectionId,
                     request,
                      repeatabilityHeaders.RepeatabilityRequestId,
@@ -666,7 +666,7 @@ namespace Azure.Communication.CallAutomation
                     options.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
                 }
 
-                return RestClient.RemoveParticipants(
+                return RestClient.RemoveParticipant(
                      CallConnectionId,
                      request,
                      repeatabilityHeaders.RepeatabilityRequestId,
