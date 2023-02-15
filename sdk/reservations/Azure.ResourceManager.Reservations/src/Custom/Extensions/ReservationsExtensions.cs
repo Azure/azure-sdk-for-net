@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> An async collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ReservationDetailResource> GetReservationDetailsAsync(this TenantResource tenantResource, string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
         {
-            TenantGetReservationDetailsOptions options = new TenantGetReservationDetailsOptions();
+            TenantResourceGetReservationDetailsOptions options = new TenantResourceGetReservationDetailsOptions();
             options.Filter = filter;
             options.Orderby = orderby;
             options.RefreshSummary = refreshSummary;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> A collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ReservationDetailResource> GetReservationDetails(this TenantResource tenantResource, string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
         {
-            TenantGetReservationDetailsOptions options = new TenantGetReservationDetailsOptions();
+            TenantResourceGetReservationDetailsOptions options = new TenantResourceGetReservationDetailsOptions();
             options.Filter = filter;
             options.Orderby = orderby;
             options.RefreshSummary = refreshSummary;

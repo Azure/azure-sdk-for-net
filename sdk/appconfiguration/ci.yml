@@ -31,7 +31,6 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: appconfiguration
-    BuildSnippets: false
     ArtifactName: packages
     Artifacts:
     - name: Azure.Data.AppConfiguration

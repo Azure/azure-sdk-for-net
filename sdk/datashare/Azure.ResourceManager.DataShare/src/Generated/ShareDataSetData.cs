@@ -15,8 +15,6 @@ namespace Azure.ResourceManager.DataShare
     /// A class representing the ShareDataSet data model.
     /// Please note <see cref="ShareDataSetData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AdlsGen1FileDataSet"/>, <see cref="AdlsGen1FolderDataSet"/>, <see cref="AdlsGen2FileDataSet"/>, <see cref="AdlsGen2FileSystemDataSet"/>, <see cref="AdlsGen2FolderDataSet"/>, <see cref="BlobDataSet"/>, <see cref="BlobFolderDataSet"/>, <see cref="BlobContainerDataSet"/>, <see cref="KustoClusterDataSet"/>, <see cref="KustoDatabaseDataSet"/>, <see cref="KustoTableDataSet"/>, <see cref="SqlDBTableDataSet"/>, <see cref="SqlDWTableDataSet"/> and <see cref="SynapseWorkspaceSqlPoolTableDataSet"/>.
-    /// Please note <see cref="ShareDataSetData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AdlsGen1FileDataSet"/>, <see cref="AdlsGen1FolderDataSet"/>, <see cref="AdlsGen2FileDataSet"/>, <see cref="AdlsGen2FileSystemDataSet"/>, <see cref="AdlsGen2FolderDataSet"/>, <see cref="BlobDataSet"/>, <see cref="BlobFolderDataSet"/>, <see cref="BlobContainerDataSet"/>, <see cref="KustoClusterDataSet"/>, <see cref="KustoDatabaseDataSet"/>, <see cref="KustoTableDataSet"/>, <see cref="SqlDBTableDataSet"/>, <see cref="SqlDWTableDataSet"/> and <see cref="SynapseWorkspaceSqlPoolTableDataSet"/>.
     /// </summary>
     public partial class ShareDataSetData : ResourceData
     {

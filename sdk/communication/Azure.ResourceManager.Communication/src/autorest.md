@@ -5,6 +5,7 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
+generate-model-factory: false
 title: communication
 namespace: Azure.ResourceManager.Communication
 # default tag is a preview version
