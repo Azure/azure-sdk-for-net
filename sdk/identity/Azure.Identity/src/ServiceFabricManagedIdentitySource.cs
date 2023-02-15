@@ -42,7 +42,7 @@ namespace Azure.Identity
             {
                 var customSslHttpPipline = HttpPipelineBuilder.Build(new TokenCredentialOptions { Transport = GetServiceFabricMITransport() });
 
-                pipeline = new CredentialPipeline(pipeline.AuthorityHost, customSslHttpPipline, pipeline.Diagnostics);
+                pipeline = new CredentialPipeline(customSslHttpPipline, pipeline.Diagnostics);
             }
 
             return new ServiceFabricManagedIdentitySource(pipeline, endpointUri, identityHeader, options);
