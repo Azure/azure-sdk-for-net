@@ -70,45 +70,45 @@ Console.WriteLine(result.GetProperty("locations")[0].GetProperty("location").Get
 Console.WriteLine(result.GetProperty("locations")[0].GetProperty("location").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("locations")[0].GetProperty("requestCompletionTime").ToString());
 Console.WriteLine(result.GetProperty("locations")[0].GetProperty("lastRefreshedDateTime").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("wetBulbTemperature").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("wetBulbTemperature").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("cloudCover").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("cloudCover").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("dayOfWeek").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("dayOrNight").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("expirationTime").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("iconCode").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("iconCodeExtend").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("hasPrecipitation").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("pressureMeanSeaLevel").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("pressureMeanSeaLevel").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("relativeHumidity").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("relativeHumidity").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperature").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperature").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureDewPoint").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureDewPoint").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureFeelsLike").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureFeelsLike").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureHeatIndex").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureHeatIndex").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureWindChill").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureWindChill").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("uvDescription").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("uvIndex").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("validTimeLocal").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("validTime").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("visibility").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("visibility").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windDirection").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windDirection").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windGust").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windGust").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windSpeed").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windSpeed").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("wxPhraseLong").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("wxPhraseShort").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("additionalAttributes").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("wetBulbTemperature").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("wetBulbTemperature").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("cloudCover").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("cloudCover").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("dayOfWeek")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("dayOrNight")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("expirationTime")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("iconCode")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("iconCodeExtend")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("hasPrecipitation")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("pressureMeanSeaLevel").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("pressureMeanSeaLevel").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("relativeHumidity").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("relativeHumidity").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperature").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperature").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureDewPoint").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureDewPoint").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureFeelsLike").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureFeelsLike").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureHeatIndex").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureHeatIndex").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureWindChill").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureWindChill").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("uvDescription")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("uvIndex")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("validTimeLocal")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("validTime")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("visibility").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("visibility").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windDirection").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windDirection").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windGust").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windGust").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windSpeed").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windSpeed").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("wxPhraseLong")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("wxPhraseShort")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("additionalAttributes").GetProperty("<test>").ToString());
 Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("location").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("location").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("code").ToString());
@@ -173,41 +173,39 @@ Schema for <c>WeatherDataProviderResponse</c>:
       }, # Optional. Schema of Location data.
       requestCompletionTime: string, # Optional. Request Completion Time in Utc of the location.
       lastRefreshedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last requested, sample format: yyyy-MM-ddTHH:mm:ssZ.
-      data: [
-        {
-          wetBulbTemperature: {
-            unit: string, # Optional. Data unit.
-            value: number, # Optional. Data value.
-          }, # Optional. Schema for storing measurement reading and unit.
-          cloudCover: Measure, # Optional. Schema for storing measurement reading and unit.
-          dayOfWeek: string, # Optional. Day of week.
-          dayOrNight: string, # Optional. This data field indicates whether it is daytime or nighttime based on the Local Apparent Time of the location.
-          expirationTime: string, # Optional. Expiration time in Utc format.
-          iconCode: string, # Optional. This number is the key to the weather icon lookup. The data field shows the icon number that is matched to represent the observed weather conditions.
-          iconCodeExtend: string, # Optional. Code representing full set sensible weather.
-          hasPrecipitation: boolean, # Optional. Indicates whether there is precipitation or not.
-          pressureMeanSeaLevel: Measure, # Optional. Schema for storing measurement reading and unit.
-          relativeHumidity: Measure, # Optional. Schema for storing measurement reading and unit.
-          temperature: Measure, # Optional. Schema for storing measurement reading and unit.
-          temperatureDewPoint: Measure, # Optional. Schema for storing measurement reading and unit.
-          temperatureFeelsLike: Measure, # Optional. Schema for storing measurement reading and unit.
-          temperatureHeatIndex: Measure, # Optional. Schema for storing measurement reading and unit.
-          temperatureWindChill: Measure, # Optional. Schema for storing measurement reading and unit.
-          uvDescription: string, # Optional. The UV Index Description which complements the UV Index value by providing an associated level of risk of skin damage due to exposure (-2 = Not Available, -1 = No Report, 0 to 2 = Low, 3 to 5 = Moderate, 6 to 7 = High, 8 to 10 = Very High, 11 to 16 = Extreme).
-          uvIndex: string, # Optional. Hourly maximum UV index.
-          validTimeLocal: string, # Optional. Time forecast is valid in local apparent time.
-          validTime: string, # Optional. Time forecast is valid in Utc format.
-          visibility: Measure, # Optional. Schema for storing measurement reading and unit.
-          windDirection: Measure, # Optional. Schema for storing measurement reading and unit.
-          windGust: Measure, # Optional. Schema for storing measurement reading and unit.
-          windSpeed: Measure, # Optional. Schema for storing measurement reading and unit.
-          wxPhraseLong: string, # Optional. Hourly sensible weather phrase containing longer description.
-          wxPhraseShort: string, # Optional. Hourly sensible weather phrase containing short description.
-          additionalAttributes: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource. Each pair must not have a key greater than 50 characters and must not have a value greater than 250 characters. Note: A maximum of 100 key value pairs can be provided for a resource and only string and numeral values are supported.
-        }
-      ], # Optional. List of Weather Data returned by the provider.
+      data: {
+        wetBulbTemperature: {
+          unit: string, # Optional. Data unit.
+          values: [number], # Optional. Data values.
+        }, # Optional. Schema for storing measurement readings and unit.
+        cloudCover: Measures, # Optional. Schema for storing measurement readings and unit.
+        dayOfWeek: [string], # Optional. Day of week.
+        dayOrNight: [string], # Optional. This data field indicates whether it is daytime or nighttime based on the Local Apparent Time of the location.
+        expirationTime: [string], # Optional. Expiration time in Utc format.
+        iconCode: [string], # Optional. This number is the key to the weather icon lookup. The data field shows the icon number that is matched to represent the observed weather conditions.
+        iconCodeExtend: [string], # Optional. Code representing full set sensible weather.
+        hasPrecipitation: [boolean], # Optional. Indicates whether there is precipitation or not.
+        pressureMeanSeaLevel: Measures, # Optional. Schema for storing measurement readings and unit.
+        relativeHumidity: Measures, # Optional. Schema for storing measurement readings and unit.
+        temperature: Measures, # Optional. Schema for storing measurement readings and unit.
+        temperatureDewPoint: Measures, # Optional. Schema for storing measurement readings and unit.
+        temperatureFeelsLike: Measures, # Optional. Schema for storing measurement readings and unit.
+        temperatureHeatIndex: Measures, # Optional. Schema for storing measurement readings and unit.
+        temperatureWindChill: Measures, # Optional. Schema for storing measurement readings and unit.
+        uvDescription: [string], # Optional. The UV Index Description which complements the UV Index value by providing an associated level of risk of skin damage due to exposure (-2 = Not Available, -1 = No Report, 0 to 2 = Low, 3 to 5 = Moderate, 6 to 7 = High, 8 to 10 = Very High, 11 to 16 = Extreme).
+        uvIndex: [string], # Optional. Hourly maximum UV index.
+        validTimeLocal: [string], # Optional. Time forecast is valid in local apparent time.
+        validTime: [string], # Optional. Time forecast is valid in Utc format.
+        visibility: Measures, # Optional. Schema for storing measurement readings and unit.
+        windDirection: Measures, # Optional. Schema for storing measurement readings and unit.
+        windGust: Measures, # Optional. Schema for storing measurement readings and unit.
+        windSpeed: Measures, # Optional. Schema for storing measurement readings and unit.
+        wxPhraseLong: [string], # Optional. Hourly sensible weather phrase containing longer description.
+        wxPhraseShort: [string], # Optional. Hourly sensible weather phrase containing short description.
+        additionalAttributes: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource. Each pair must not have a key greater than 50 characters and must not have a value greater than 250 characters. Note: A maximum of 100 key value pairs can be provided for a resource and only string and numeral values are supported.
+      }, # Optional. Schema of weather data.
     }
-  ], # Optional. List of locations along with corresponding weather data.
+  ], # Optional. List of weather data for all the weather locations.
   errors: {
     locations: [
       {
@@ -292,45 +290,45 @@ Console.WriteLine(result.GetProperty("locations")[0].GetProperty("location").Get
 Console.WriteLine(result.GetProperty("locations")[0].GetProperty("location").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("locations")[0].GetProperty("requestCompletionTime").ToString());
 Console.WriteLine(result.GetProperty("locations")[0].GetProperty("lastRefreshedDateTime").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("wetBulbTemperature").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("wetBulbTemperature").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("cloudCover").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("cloudCover").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("dayOfWeek").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("dayOrNight").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("expirationTime").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("iconCode").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("iconCodeExtend").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("hasPrecipitation").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("pressureMeanSeaLevel").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("pressureMeanSeaLevel").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("relativeHumidity").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("relativeHumidity").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperature").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperature").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureDewPoint").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureDewPoint").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureFeelsLike").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureFeelsLike").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureHeatIndex").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureHeatIndex").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureWindChill").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("temperatureWindChill").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("uvDescription").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("uvIndex").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("validTimeLocal").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("validTime").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("visibility").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("visibility").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windDirection").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windDirection").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windGust").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windGust").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windSpeed").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("windSpeed").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("wxPhraseLong").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("wxPhraseShort").ToString());
-Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data")[0].GetProperty("additionalAttributes").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("wetBulbTemperature").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("wetBulbTemperature").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("cloudCover").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("cloudCover").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("dayOfWeek")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("dayOrNight")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("expirationTime")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("iconCode")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("iconCodeExtend")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("hasPrecipitation")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("pressureMeanSeaLevel").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("pressureMeanSeaLevel").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("relativeHumidity").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("relativeHumidity").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperature").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperature").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureDewPoint").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureDewPoint").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureFeelsLike").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureFeelsLike").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureHeatIndex").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureHeatIndex").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureWindChill").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureWindChill").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("uvDescription")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("uvIndex")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("validTimeLocal")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("validTime")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("visibility").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("visibility").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windDirection").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windDirection").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windGust").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windGust").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windSpeed").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windSpeed").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("wxPhraseLong")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("wxPhraseShort")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("additionalAttributes").GetProperty("<test>").ToString());
 Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("location").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("location").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("code").ToString());
@@ -395,41 +393,39 @@ Schema for <c>WeatherDataProviderResponse</c>:
       }, # Optional. Schema of Location data.
       requestCompletionTime: string, # Optional. Request Completion Time in Utc of the location.
       lastRefreshedDateTime: string (ISO 8601 Format), # Optional. Date-time when resource was last requested, sample format: yyyy-MM-ddTHH:mm:ssZ.
-      data: [
-        {
-          wetBulbTemperature: {
-            unit: string, # Optional. Data unit.
-            value: number, # Optional. Data value.
-          }, # Optional. Schema for storing measurement reading and unit.
-          cloudCover: Measure, # Optional. Schema for storing measurement reading and unit.
-          dayOfWeek: string, # Optional. Day of week.
-          dayOrNight: string, # Optional. This data field indicates whether it is daytime or nighttime based on the Local Apparent Time of the location.
-          expirationTime: string, # Optional. Expiration time in Utc format.
-          iconCode: string, # Optional. This number is the key to the weather icon lookup. The data field shows the icon number that is matched to represent the observed weather conditions.
-          iconCodeExtend: string, # Optional. Code representing full set sensible weather.
-          hasPrecipitation: boolean, # Optional. Indicates whether there is precipitation or not.
-          pressureMeanSeaLevel: Measure, # Optional. Schema for storing measurement reading and unit.
-          relativeHumidity: Measure, # Optional. Schema for storing measurement reading and unit.
-          temperature: Measure, # Optional. Schema for storing measurement reading and unit.
-          temperatureDewPoint: Measure, # Optional. Schema for storing measurement reading and unit.
-          temperatureFeelsLike: Measure, # Optional. Schema for storing measurement reading and unit.
-          temperatureHeatIndex: Measure, # Optional. Schema for storing measurement reading and unit.
-          temperatureWindChill: Measure, # Optional. Schema for storing measurement reading and unit.
-          uvDescription: string, # Optional. The UV Index Description which complements the UV Index value by providing an associated level of risk of skin damage due to exposure (-2 = Not Available, -1 = No Report, 0 to 2 = Low, 3 to 5 = Moderate, 6 to 7 = High, 8 to 10 = Very High, 11 to 16 = Extreme).
-          uvIndex: string, # Optional. Hourly maximum UV index.
-          validTimeLocal: string, # Optional. Time forecast is valid in local apparent time.
-          validTime: string, # Optional. Time forecast is valid in Utc format.
-          visibility: Measure, # Optional. Schema for storing measurement reading and unit.
-          windDirection: Measure, # Optional. Schema for storing measurement reading and unit.
-          windGust: Measure, # Optional. Schema for storing measurement reading and unit.
-          windSpeed: Measure, # Optional. Schema for storing measurement reading and unit.
-          wxPhraseLong: string, # Optional. Hourly sensible weather phrase containing longer description.
-          wxPhraseShort: string, # Optional. Hourly sensible weather phrase containing short description.
-          additionalAttributes: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource. Each pair must not have a key greater than 50 characters and must not have a value greater than 250 characters. Note: A maximum of 100 key value pairs can be provided for a resource and only string and numeral values are supported.
-        }
-      ], # Optional. List of Weather Data returned by the provider.
+      data: {
+        wetBulbTemperature: {
+          unit: string, # Optional. Data unit.
+          values: [number], # Optional. Data values.
+        }, # Optional. Schema for storing measurement readings and unit.
+        cloudCover: Measures, # Optional. Schema for storing measurement readings and unit.
+        dayOfWeek: [string], # Optional. Day of week.
+        dayOrNight: [string], # Optional. This data field indicates whether it is daytime or nighttime based on the Local Apparent Time of the location.
+        expirationTime: [string], # Optional. Expiration time in Utc format.
+        iconCode: [string], # Optional. This number is the key to the weather icon lookup. The data field shows the icon number that is matched to represent the observed weather conditions.
+        iconCodeExtend: [string], # Optional. Code representing full set sensible weather.
+        hasPrecipitation: [boolean], # Optional. Indicates whether there is precipitation or not.
+        pressureMeanSeaLevel: Measures, # Optional. Schema for storing measurement readings and unit.
+        relativeHumidity: Measures, # Optional. Schema for storing measurement readings and unit.
+        temperature: Measures, # Optional. Schema for storing measurement readings and unit.
+        temperatureDewPoint: Measures, # Optional. Schema for storing measurement readings and unit.
+        temperatureFeelsLike: Measures, # Optional. Schema for storing measurement readings and unit.
+        temperatureHeatIndex: Measures, # Optional. Schema for storing measurement readings and unit.
+        temperatureWindChill: Measures, # Optional. Schema for storing measurement readings and unit.
+        uvDescription: [string], # Optional. The UV Index Description which complements the UV Index value by providing an associated level of risk of skin damage due to exposure (-2 = Not Available, -1 = No Report, 0 to 2 = Low, 3 to 5 = Moderate, 6 to 7 = High, 8 to 10 = Very High, 11 to 16 = Extreme).
+        uvIndex: [string], # Optional. Hourly maximum UV index.
+        validTimeLocal: [string], # Optional. Time forecast is valid in local apparent time.
+        validTime: [string], # Optional. Time forecast is valid in Utc format.
+        visibility: Measures, # Optional. Schema for storing measurement readings and unit.
+        windDirection: Measures, # Optional. Schema for storing measurement readings and unit.
+        windGust: Measures, # Optional. Schema for storing measurement readings and unit.
+        windSpeed: Measures, # Optional. Schema for storing measurement readings and unit.
+        wxPhraseLong: [string], # Optional. Hourly sensible weather phrase containing longer description.
+        wxPhraseShort: [string], # Optional. Hourly sensible weather phrase containing short description.
+        additionalAttributes: Dictionary&lt;string, any&gt;, # Optional. A collection of key value pairs that belongs to the resource. Each pair must not have a key greater than 50 characters and must not have a value greater than 250 characters. Note: A maximum of 100 key value pairs can be provided for a resource and only string and numeral values are supported.
+      }, # Optional. Schema of weather data.
     }
-  ], # Optional. List of locations along with corresponding weather data.
+  ], # Optional. List of weather data for all the weather locations.
   errors: {
     locations: [
       {

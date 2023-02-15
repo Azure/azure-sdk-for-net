@@ -1,390 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="SearchFeaturesAsync(String,RequestContent,RequestContext)">
-<example>
-This sample shows how to call SearchFeaturesAsync with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
-
-var data = new {
-    startDateTime = "2022-05-10T18:57:31.2311892Z",
-    endDateTime = "2022-05-10T18:57:31.2311892Z",
-};
-
-Response response = await client.SearchFeaturesAsync("<collectionId>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacVersion").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("properties").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("href").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("rel").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
-Console.WriteLine(result.GetProperty("returned").ToString());
-]]></code>
-This sample shows how to call SearchFeaturesAsync with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
-
-var data = new {
-    startDateTime = "2022-05-10T18:57:31.2311892Z",
-    endDateTime = "2022-05-10T18:57:31.2311892Z",
-    intersects = new {
-        coordinates = new[] {
-            new[] {
-                new[] {
-                    new[] {
-                        123.45d
-                    }
-                }
-            }
-        },
-        type = "MultiPolygon",
-    },
-    bbox = new[] {
-        123.45d
-    },
-    featureIds = new[] {
-        "<String>"
-    },
-    limit = 1234,
-    next = 1234,
-};
-
-Response response = await client.SearchFeaturesAsync("<collectionId>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacVersion").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacExtensions")[0].ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("geometry").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("bbox")[0].ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("properties").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("href").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("rel").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("title").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("title").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("roles")[0].ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("collection").ToString());
-Console.WriteLine(result.GetProperty("next").ToString());
-Console.WriteLine(result.GetProperty("returned").ToString());
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>SearchFeaturesQuery</c>:
-<code>{
-  startDateTime: string (ISO 8601 Format), # Required. Start datetime of the time interval in which to search for Features.
-  endDateTime: string (ISO 8601 Format), # Required. End datetime of the time interval in which to search for Features.
-  intersects: {
-    type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
-  }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
-  bbox: [number], # Optional. Only features that have a geometry that intersects the bounding box are selected.
-The bounding box is provided as four numbers. The coordinate reference system of the values is WGS84 longitude/latitude.
-  featureIds: [string], # Optional. Array of feature ids to return.
-  limit: number, # Optional. Maximum number of features needed (inclusive).
-Minimum = 1, Maximum = 100, Default value = 10.
-  next: number, # Optional. Skip token for getting next set of results.
-}
-</code>
-
-Response Body:
-
-Schema for <c>SearchFeaturesResponse</c>:
-<code>{
-  features: [
-    {
-      stacVersion: string, # Required. The STAC version the Feature implements.
-      stacExtensions: [string], # Optional. A list of extensions the Feature implements.
-      id: string, # Required. Provider identifier. Globally unique ID by Data provider.
-      type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
-      geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
-Its a GeoJSON geometry.
-      bbox: [number], # Optional. Bounding box of the feature.
-      properties: AnyObject, # Required. A dictionary of additional metadata for the item.
-      links: [
-        {
-          href: string, # Required. The actual link in the format of an URL.
-          rel: string, # Required. Relationship between the current document and the linked document.
-          type: string, # Optional. Media type of the referenced entity.
-          title: string, # Optional. A human readable title to be used in rendered displays of the link.
-        }
-      ], # Required. List of link objects to resources and related URLs.
-      assets: Dictionary&lt;string, StacFeatureAsset&gt;, # Required. Dictionary of asset objects, each with a unique key.
-      collection: string, # Optional. The id of the STAC Collection this Feature references.
-    }
-  ], # Required. List of features.
-  next: number, # Optional. Merge this next property in next search request
-to get next set of results.
-  returned: number, # Required. No of features returned.
-}
-</code>
-
-</remarks>
-    </member>
-    <member name="SearchFeatures(String,RequestContent,RequestContext)">
-<example>
-This sample shows how to call SearchFeatures with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
-
-var data = new {
-    startDateTime = "2022-05-10T18:57:31.2311892Z",
-    endDateTime = "2022-05-10T18:57:31.2311892Z",
-};
-
-Response response = client.SearchFeatures("<collectionId>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacVersion").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("properties").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("href").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("rel").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
-Console.WriteLine(result.GetProperty("returned").ToString());
-]]></code>
-This sample shows how to call SearchFeatures with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
-
-var data = new {
-    startDateTime = "2022-05-10T18:57:31.2311892Z",
-    endDateTime = "2022-05-10T18:57:31.2311892Z",
-    intersects = new {
-        coordinates = new[] {
-            new[] {
-                new[] {
-                    new[] {
-                        123.45d
-                    }
-                }
-            }
-        },
-        type = "MultiPolygon",
-    },
-    bbox = new[] {
-        123.45d
-    },
-    featureIds = new[] {
-        "<String>"
-    },
-    limit = 1234,
-    next = 1234,
-};
-
-Response response = client.SearchFeatures("<collectionId>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacVersion").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacExtensions")[0].ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("geometry").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("bbox")[0].ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("properties").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("href").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("rel").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("title").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("title").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("roles")[0].ToString());
-Console.WriteLine(result.GetProperty("features")[0].GetProperty("collection").ToString());
-Console.WriteLine(result.GetProperty("next").ToString());
-Console.WriteLine(result.GetProperty("returned").ToString());
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>SearchFeaturesQuery</c>:
-<code>{
-  startDateTime: string (ISO 8601 Format), # Required. Start datetime of the time interval in which to search for Features.
-  endDateTime: string (ISO 8601 Format), # Required. End datetime of the time interval in which to search for Features.
-  intersects: {
-    type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
-  }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
-  bbox: [number], # Optional. Only features that have a geometry that intersects the bounding box are selected.
-The bounding box is provided as four numbers. The coordinate reference system of the values is WGS84 longitude/latitude.
-  featureIds: [string], # Optional. Array of feature ids to return.
-  limit: number, # Optional. Maximum number of features needed (inclusive).
-Minimum = 1, Maximum = 100, Default value = 10.
-  next: number, # Optional. Skip token for getting next set of results.
-}
-</code>
-
-Response Body:
-
-Schema for <c>SearchFeaturesResponse</c>:
-<code>{
-  features: [
-    {
-      stacVersion: string, # Required. The STAC version the Feature implements.
-      stacExtensions: [string], # Optional. A list of extensions the Feature implements.
-      id: string, # Required. Provider identifier. Globally unique ID by Data provider.
-      type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
-      geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
-Its a GeoJSON geometry.
-      bbox: [number], # Optional. Bounding box of the feature.
-      properties: AnyObject, # Required. A dictionary of additional metadata for the item.
-      links: [
-        {
-          href: string, # Required. The actual link in the format of an URL.
-          rel: string, # Required. Relationship between the current document and the linked document.
-          type: string, # Optional. Media type of the referenced entity.
-          title: string, # Optional. A human readable title to be used in rendered displays of the link.
-        }
-      ], # Required. List of link objects to resources and related URLs.
-      assets: Dictionary&lt;string, StacFeatureAsset&gt;, # Required. Dictionary of asset objects, each with a unique key.
-      collection: string, # Optional. The id of the STAC Collection this Feature references.
-    }
-  ], # Required. List of features.
-  next: number, # Optional. Merge this next property in next search request
-to get next set of results.
-  returned: number, # Required. No of features returned.
-}
-</code>
-
-</remarks>
-    </member>
-    <member name="GetStacFeatureAsync(String,String,RequestContext)">
-<example>
-This sample shows how to call GetStacFeatureAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
-
-Response response = await client.GetStacFeatureAsync("<collectionId>", "<featureId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("stacVersion").ToString());
-Console.WriteLine(result.GetProperty("stacExtensions")[0].ToString());
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("geometry").ToString());
-Console.WriteLine(result.GetProperty("bbox")[0].ToString());
-Console.WriteLine(result.GetProperty("properties").ToString());
-Console.WriteLine(result.GetProperty("links")[0].GetProperty("href").ToString());
-Console.WriteLine(result.GetProperty("links")[0].GetProperty("rel").ToString());
-Console.WriteLine(result.GetProperty("links")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("links")[0].GetProperty("title").ToString());
-Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
-Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("title").ToString());
-Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("roles")[0].ToString());
-Console.WriteLine(result.GetProperty("collection").ToString());
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>StacFeature</c>:
-<code>{
-  stacVersion: string, # Required. The STAC version the Feature implements.
-  stacExtensions: [string], # Optional. A list of extensions the Feature implements.
-  id: string, # Required. Provider identifier. Globally unique ID by Data provider.
-  type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
-  geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
-Its a GeoJSON geometry.
-  bbox: [number], # Optional. Bounding box of the feature.
-  properties: AnyObject, # Required. A dictionary of additional metadata for the item.
-  links: [
-    {
-      href: string, # Required. The actual link in the format of an URL.
-      rel: string, # Required. Relationship between the current document and the linked document.
-      type: string, # Optional. Media type of the referenced entity.
-      title: string, # Optional. A human readable title to be used in rendered displays of the link.
-    }
-  ], # Required. List of link objects to resources and related URLs.
-  assets: Dictionary&lt;string, StacFeatureAsset&gt;, # Required. Dictionary of asset objects, each with a unique key.
-  collection: string, # Optional. The id of the STAC Collection this Feature references.
-}
-</code>
-
-</remarks>
-    </member>
-    <member name="GetStacFeature(String,String,RequestContext)">
-<example>
-This sample shows how to call GetStacFeature with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
-
-Response response = client.GetStacFeature("<collectionId>", "<featureId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("stacVersion").ToString());
-Console.WriteLine(result.GetProperty("stacExtensions")[0].ToString());
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("geometry").ToString());
-Console.WriteLine(result.GetProperty("bbox")[0].ToString());
-Console.WriteLine(result.GetProperty("properties").ToString());
-Console.WriteLine(result.GetProperty("links")[0].GetProperty("href").ToString());
-Console.WriteLine(result.GetProperty("links")[0].GetProperty("rel").ToString());
-Console.WriteLine(result.GetProperty("links")[0].GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("links")[0].GetProperty("title").ToString());
-Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
-Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("title").ToString());
-Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("type").ToString());
-Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("roles")[0].ToString());
-Console.WriteLine(result.GetProperty("collection").ToString());
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>StacFeature</c>:
-<code>{
-  stacVersion: string, # Required. The STAC version the Feature implements.
-  stacExtensions: [string], # Optional. A list of extensions the Feature implements.
-  id: string, # Required. Provider identifier. Globally unique ID by Data provider.
-  type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
-  geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
-Its a GeoJSON geometry.
-  bbox: [number], # Optional. Bounding box of the feature.
-  properties: AnyObject, # Required. A dictionary of additional metadata for the item.
-  links: [
-    {
-      href: string, # Required. The actual link in the format of an URL.
-      rel: string, # Required. Relationship between the current document and the linked document.
-      type: string, # Optional. Media type of the referenced entity.
-      title: string, # Optional. A human readable title to be used in rendered displays of the link.
-    }
-  ], # Required. List of link objects to resources and related URLs.
-  assets: Dictionary&lt;string, StacFeatureAsset&gt;, # Required. Dictionary of asset objects, each with a unique key.
-  collection: string, # Optional. The id of the STAC Collection this Feature references.
-}
-</code>
-
-</remarks>
-    </member>
     <member name="DownloadAsync(String,RequestContext)">
 <example>
 This sample shows how to call DownloadAsync with required parameters and parse the result.
@@ -570,6 +186,374 @@ Each pair must not have a key greater than 50 characters
 and must not have a value greater than 150 characters.
 Note: A maximum of 25 key value pairs can be provided for a resource and only string,
 numeral and datetime (yyyy-MM-ddTHH:mm:ssZ) values are supported.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="SearchFeaturesAsync(String,RequestContent,Int32,Int32,RequestContext)">
+<example>
+This sample shows how to call SearchFeaturesAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
+
+var data = new {
+    startDateTime = "2022-05-10T18:57:31.2311892Z",
+    endDateTime = "2022-05-10T18:57:31.2311892Z",
+};
+
+Response response = await client.SearchFeaturesAsync("<collectionId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacVersion").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("properties").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("rel").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
+]]></code>
+This sample shows how to call SearchFeaturesAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
+
+var data = new {
+    startDateTime = "2022-05-10T18:57:31.2311892Z",
+    endDateTime = "2022-05-10T18:57:31.2311892Z",
+    intersects = new {
+        coordinates = new[] {
+            new[] {
+                new[] {
+                    new[] {
+                        123.45d
+                    }
+                }
+            }
+        },
+        type = "MultiPolygon",
+    },
+    bbox = new[] {
+        123.45d
+    },
+    featureIds = new[] {
+        "<String>"
+    },
+};
+
+Response response = await client.SearchFeaturesAsync("<collectionId>", RequestContent.Create(data), 1234, 1234);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacVersion").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacExtensions")[0].ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("geometry").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("bbox")[0].ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("properties").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("rel").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("title").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("title").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("roles")[0].ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("collection").ToString());
+Console.WriteLine(result.GetProperty("nextLink").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>SearchFeaturesQuery</c>:
+<code>{
+  startDateTime: string (ISO 8601 Format), # Required. Start datetime of the time interval in which to search for Features.
+  endDateTime: string (ISO 8601 Format), # Required. End datetime of the time interval in which to search for Features.
+  intersects: {
+    type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+  }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
+  bbox: [number], # Optional. Only features that have a geometry that intersects the bounding box are selected.
+The bounding box is provided as four numbers. The coordinate reference system of the values is WGS84 longitude/latitude.
+  featureIds: [string], # Optional. Array of feature ids to return.
+}
+</code>
+
+Response Body:
+
+Schema for <c>SearchFeaturesResponse</c>:
+<code>{
+  features: [
+    {
+      stacVersion: string, # Required. The STAC version the Feature implements.
+      stacExtensions: [string], # Optional. A list of extensions the Feature implements.
+      id: string, # Required. Provider identifier. Globally unique ID by Data provider.
+      type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
+      geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
+Its a GeoJSON geometry.
+      bbox: [number], # Optional. Bounding box of the feature.
+      properties: AnyObject, # Required. A dictionary of additional metadata for the item.
+      links: [
+        {
+          href: string, # Required. The actual link in the format of an URL.
+          rel: string, # Required. Relationship between the current document and the linked document.
+          type: string, # Optional. Media type of the referenced entity.
+          title: string, # Optional. A human readable title to be used in rendered displays of the link.
+        }
+      ], # Required. List of link objects to resources and related URLs.
+      assets: Dictionary&lt;string, StacFeatureAsset&gt;, # Required. Dictionary of asset objects, each with a unique key.
+      collection: string, # Optional. The id of the STAC Collection this Feature references.
+    }
+  ], # Required. List of features.
+  nextLink: string, # Optional. URL to do the POST request with same filters,
+to get next set of features.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="SearchFeatures(String,RequestContent,Int32,Int32,RequestContext)">
+<example>
+This sample shows how to call SearchFeatures with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
+
+var data = new {
+    startDateTime = "2022-05-10T18:57:31.2311892Z",
+    endDateTime = "2022-05-10T18:57:31.2311892Z",
+};
+
+Response response = client.SearchFeatures("<collectionId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacVersion").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("properties").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("rel").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
+]]></code>
+This sample shows how to call SearchFeatures with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
+
+var data = new {
+    startDateTime = "2022-05-10T18:57:31.2311892Z",
+    endDateTime = "2022-05-10T18:57:31.2311892Z",
+    intersects = new {
+        coordinates = new[] {
+            new[] {
+                new[] {
+                    new[] {
+                        123.45d
+                    }
+                }
+            }
+        },
+        type = "MultiPolygon",
+    },
+    bbox = new[] {
+        123.45d
+    },
+    featureIds = new[] {
+        "<String>"
+    },
+};
+
+Response response = client.SearchFeatures("<collectionId>", RequestContent.Create(data), 1234, 1234);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacVersion").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("stacExtensions")[0].ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("geometry").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("bbox")[0].ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("properties").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("rel").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("links")[0].GetProperty("title").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("title").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("assets").GetProperty("<test>").GetProperty("roles")[0].ToString());
+Console.WriteLine(result.GetProperty("features")[0].GetProperty("collection").ToString());
+Console.WriteLine(result.GetProperty("nextLink").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>SearchFeaturesQuery</c>:
+<code>{
+  startDateTime: string (ISO 8601 Format), # Required. Start datetime of the time interval in which to search for Features.
+  endDateTime: string (ISO 8601 Format), # Required. End datetime of the time interval in which to search for Features.
+  intersects: {
+    type: &quot;Point&quot; | &quot;Polygon&quot; | &quot;MultiPolygon&quot;, # Required. GeoJSON object type.
+  }, # Optional. GeoJSON (For more details: https://geojson.org/). Note: Coordinates are expected in [Longitude, Latitude] format.
+  bbox: [number], # Optional. Only features that have a geometry that intersects the bounding box are selected.
+The bounding box is provided as four numbers. The coordinate reference system of the values is WGS84 longitude/latitude.
+  featureIds: [string], # Optional. Array of feature ids to return.
+}
+</code>
+
+Response Body:
+
+Schema for <c>SearchFeaturesResponse</c>:
+<code>{
+  features: [
+    {
+      stacVersion: string, # Required. The STAC version the Feature implements.
+      stacExtensions: [string], # Optional. A list of extensions the Feature implements.
+      id: string, # Required. Provider identifier. Globally unique ID by Data provider.
+      type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
+      geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
+Its a GeoJSON geometry.
+      bbox: [number], # Optional. Bounding box of the feature.
+      properties: AnyObject, # Required. A dictionary of additional metadata for the item.
+      links: [
+        {
+          href: string, # Required. The actual link in the format of an URL.
+          rel: string, # Required. Relationship between the current document and the linked document.
+          type: string, # Optional. Media type of the referenced entity.
+          title: string, # Optional. A human readable title to be used in rendered displays of the link.
+        }
+      ], # Required. List of link objects to resources and related URLs.
+      assets: Dictionary&lt;string, StacFeatureAsset&gt;, # Required. Dictionary of asset objects, each with a unique key.
+      collection: string, # Optional. The id of the STAC Collection this Feature references.
+    }
+  ], # Required. List of features.
+  nextLink: string, # Optional. URL to do the POST request with same filters,
+to get next set of features.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetStacFeatureAsync(String,String,RequestContext)">
+<example>
+This sample shows how to call GetStacFeatureAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
+
+Response response = await client.GetStacFeatureAsync("<collectionId>", "<featureId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("stacVersion").ToString());
+Console.WriteLine(result.GetProperty("stacExtensions")[0].ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("geometry").ToString());
+Console.WriteLine(result.GetProperty("bbox")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").ToString());
+Console.WriteLine(result.GetProperty("links")[0].GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("links")[0].GetProperty("rel").ToString());
+Console.WriteLine(result.GetProperty("links")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("links")[0].GetProperty("title").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("title").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("roles")[0].ToString());
+Console.WriteLine(result.GetProperty("collection").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>StacFeature</c>:
+<code>{
+  stacVersion: string, # Required. The STAC version the Feature implements.
+  stacExtensions: [string], # Optional. A list of extensions the Feature implements.
+  id: string, # Required. Provider identifier. Globally unique ID by Data provider.
+  type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
+  geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
+Its a GeoJSON geometry.
+  bbox: [number], # Optional. Bounding box of the feature.
+  properties: AnyObject, # Required. A dictionary of additional metadata for the item.
+  links: [
+    {
+      href: string, # Required. The actual link in the format of an URL.
+      rel: string, # Required. Relationship between the current document and the linked document.
+      type: string, # Optional. Media type of the referenced entity.
+      title: string, # Optional. A human readable title to be used in rendered displays of the link.
+    }
+  ], # Required. List of link objects to resources and related URLs.
+  assets: Dictionary&lt;string, StacFeatureAsset&gt;, # Required. Dictionary of asset objects, each with a unique key.
+  collection: string, # Optional. The id of the STAC Collection this Feature references.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetStacFeature(String,String,RequestContext)">
+<example>
+This sample shows how to call GetStacFeature with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new FarmBeatsClient(credential).GetScenesClient(<2022-11-01-preview>);
+
+Response response = client.GetStacFeature("<collectionId>", "<featureId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("stacVersion").ToString());
+Console.WriteLine(result.GetProperty("stacExtensions")[0].ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("geometry").ToString());
+Console.WriteLine(result.GetProperty("bbox")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").ToString());
+Console.WriteLine(result.GetProperty("links")[0].GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("links")[0].GetProperty("rel").ToString());
+Console.WriteLine(result.GetProperty("links")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("links")[0].GetProperty("title").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("href").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("title").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("<test>").GetProperty("roles")[0].ToString());
+Console.WriteLine(result.GetProperty("collection").ToString());
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>StacFeature</c>:
+<code>{
+  stacVersion: string, # Required. The STAC version the Feature implements.
+  stacExtensions: [string], # Optional. A list of extensions the Feature implements.
+  id: string, # Required. Provider identifier. Globally unique ID by Data provider.
+  type: string, # Required. Type of the GeoJSON Object. It&apos;s value is always Feature.
+  geometry: AnyObject, # Optional. Defines the full footprint of the asset represented by this item.
+Its a GeoJSON geometry.
+  bbox: [number], # Optional. Bounding box of the feature.
+  properties: AnyObject, # Required. A dictionary of additional metadata for the item.
+  links: [
+    {
+      href: string, # Required. The actual link in the format of an URL.
+      rel: string, # Required. Relationship between the current document and the linked document.
+      type: string, # Optional. Media type of the referenced entity.
+      title: string, # Optional. A human readable title to be used in rendered displays of the link.
+    }
+  ], # Required. List of link objects to resources and related URLs.
+  assets: Dictionary&lt;string, StacFeatureAsset&gt;, # Required. Dictionary of asset objects, each with a unique key.
+  collection: string, # Optional. The id of the STAC Collection this Feature references.
 }
 </code>
 
