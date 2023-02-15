@@ -95,16 +95,18 @@ namespace Azure.Communication.Email
 
         /// <summary> Queues an email message to be sent to one or more recipients. </summary>
         /// <param name="message"> Message payload for sending an email. </param>
+        /// <param name="operationId"> ID of the send email operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<EmailSendOperation> StartSendAsync(
             EmailMessage message,
+            Guid? operationId = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.Send");
             scope.Start();
             try
             {
-                return await SendEmailInternalAsync(message, cancellationToken).ConfigureAwait(false);
+                return await SendEmailInternalAsync(message, operationId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -143,7 +145,7 @@ namespace Azure.Communication.Email
                     {
                         new EmailAddress(toRecipient)
                     }));
-                return await SendEmailInternalAsync(message, cancellationToken).ConfigureAwait(false);
+                return await SendEmailInternalAsync(message, null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -154,16 +156,18 @@ namespace Azure.Communication.Email
 
         /// <summary> Queues an email message to be sent to one or more recipients. </summary>
         /// <param name="message"> Message payload for sending an email. </param>
+        /// <param name="operationId"> ID of the send email operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual EmailSendOperation StartSend(
             EmailMessage message,
+            Guid? operationId = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.Send");
             scope.Start();
             try
             {
-                return SendEmailInternal(message, cancellationToken);
+                return SendEmailInternal(message, operationId, cancellationToken);
             }
             catch (Exception e)
             {
@@ -202,7 +206,7 @@ namespace Azure.Communication.Email
                     {
                         new EmailAddress(toRecipient)
                     }));
-                return SendEmailInternal(message, cancellationToken);
+                return SendEmailInternal(message, null, cancellationToken);
             }
             catch (Exception e)
             {
@@ -211,20 +215,26 @@ namespace Azure.Communication.Email
             }
         }
 
-        private async Task<EmailSendOperation> SendEmailInternalAsync(EmailMessage message, CancellationToken cancellationToken)
+        private async Task<EmailSendOperation> SendEmailInternalAsync(
+            EmailMessage message,
+            Guid? operationId,
+            CancellationToken cancellationToken)
         {
             ValidateEmailMessage(message);
 
-            var operationId = Guid.NewGuid();
+            operationId ??= Guid.NewGuid();
             var originalResponse = await RestClient.SendAsync(message, operationId, cancellationToken).ConfigureAwait(false);
             return new EmailSendOperation(_clientDiagnostics, _pipeline, RestClient.CreateSendRequest(message, operationId).Request, originalResponse);
         }
 
-        private EmailSendOperation SendEmailInternal(EmailMessage message, CancellationToken cancellationToken)
+        private EmailSendOperation SendEmailInternal(
+            EmailMessage message,
+            Guid? operationId,
+            CancellationToken cancellationToken)
         {
             ValidateEmailMessage(message);
 
-            var operationId = Guid.NewGuid();
+            operationId ??= Guid.NewGuid();
             var originalResponse = RestClient.Send(message, operationId, cancellationToken);
             return new EmailSendOperation(_clientDiagnostics, _pipeline, RestClient.CreateSendRequest(message, operationId).Request, originalResponse);
         }

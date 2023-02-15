@@ -68,57 +68,5 @@ namespace Azure.Communication.Email
                 throw;
             }
         }
-
-        /// <summary> Queues an email message to be sent to one or more recipients. </summary>
-        /// <param name="message"> Message payload for sending an email. </param>
-        /// <param name="operationId"> This is the ID used by the status monitor for this long running operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        public virtual async Task<EmailSendOperation> StartSendAsync(EmailMessage message, Guid? operationId = null, CancellationToken cancellationToken = default)
-        {
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("EmailClient.StartSend");
-            scope.Start();
-            try
-            {
-                var originalResponse = await RestClient.SendAsync(message, operationId, cancellationToken).ConfigureAwait(false);
-                return new EmailSendOperation(_clientDiagnostics, _pipeline, RestClient.CreateSendRequest(message, operationId).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Queues an email message to be sent to one or more recipients. </summary>
-        /// <param name="message"> Message payload for sending an email. </param>
-        /// <param name="operationId"> This is the ID used by the status monitor for this long running operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        public virtual EmailSendOperation StartSend(EmailMessage message, Guid? operationId = null, CancellationToken cancellationToken = default)
-        {
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("EmailClient.StartSend");
-            scope.Start();
-            try
-            {
-                var originalResponse = RestClient.Send(message, operationId, cancellationToken);
-                return new EmailSendOperation(_clientDiagnostics, _pipeline, RestClient.CreateSendRequest(message, operationId).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
     }
 }
