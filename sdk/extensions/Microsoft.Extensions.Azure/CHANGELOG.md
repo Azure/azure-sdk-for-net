@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+- Added support for clients to be disposed via `IDisposable` or `IAsyncDisposable` when the service factory is disposed.
+- Changed tracking for client initialization to ensure that behavior is correct for value types registered as clients.
+
 ### Other Changes
 
 ## 1.6.0 (2022-10-12)
