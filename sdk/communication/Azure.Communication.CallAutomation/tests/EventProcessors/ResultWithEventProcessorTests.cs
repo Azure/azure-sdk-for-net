@@ -212,7 +212,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
         {
             int successCode = (int)HttpStatusCode.Accepted;
 
-            var callConnection = CreateMockCallConnection(successCode, TransferCallOrRemoveParticipantsPayload);
+            var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
             EventProcessor handler = callConnection.EventProcessor;
 
             var callInvite = CreateMockInvite();
