@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         // Capabilities for Microsoft.RecoveryServices/Vaults
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetCapabilitiesRecoveryService_CapabilitiesForMicrosoftRecoveryServicesVaults()
+        public async Task GetRecoveryServiceCapabilities_CapabilitiesForMicrosoftRecoveryServicesVaults()
         {
             // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/Capabilities.json
             // this example is just showing the usage of "RecoveryServices_Capabilities" operation, for the dependent resources, they will have to be created separately.
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("westus");
-            ResourceCapabilities input = new ResourceCapabilities("Microsoft.RecoveryServices/Vaults")
+            ResourceCapabilities input = new ResourceCapabilities(new ResourceType("Microsoft.RecoveryServices/Vaults"))
             {
                 CapabilitiesDnsZones =
 {
@@ -52,7 +52,7 @@ SubResource = VaultSubResourceType.AzureSiteRecovery,
 }
 },
             };
-            CapabilitiesResult result = await subscriptionResource.GetCapabilitiesRecoveryServiceAsync(location, input);
+            CapabilitiesResult result = await subscriptionResource.GetRecoveryServiceCapabilitiesAsync(location, input);
 
             Console.WriteLine($"Succeeded: {result}");
         }

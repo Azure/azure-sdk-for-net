@@ -29,18 +29,19 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var vmId = await CreateVirtualMachineFromTemplate(vmName, rg);
 
             // create assignment between custom profile and VM
-            await CreateAssignment(vmId, profile.Id);
+            var assignment = await CreateAssignment(vmId, profile.Id);
 
             // get reports
-            var reports = rg.GetReportsByConfigurationProfileAssignmentsAsync(vmName, "default");
+            var reports = assignment.GetAutomanageVmConfigurationProfileAssignmentReports();
 
             // assert
-            await foreach (var r in reports)
+            await foreach (var report in reports)
             {
-                Assert.IsNotNull(r);
-                Assert.IsNotNull(r.Name);
-                Assert.AreEqual(profileName, r.ConfigurationProfile);
-                Assert.IsNotNull(r.Id);
+                var reportData = report.Data;
+                Assert.IsNotNull(reportData);
+                Assert.IsNotNull(reportData.Name);
+                Assert.AreEqual(profileName, reportData.ConfigurationProfile);
+                Assert.IsNotNull(reportData.Id);
             }
         }
     }

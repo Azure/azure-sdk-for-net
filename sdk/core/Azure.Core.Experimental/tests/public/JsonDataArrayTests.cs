@@ -163,7 +163,7 @@ namespace Azure.Core.Tests.Public
         public void CanGetObjectMemberViaArrayIndex()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson(
-                @"{ ""value"": [ { ""tag"": ""tagValue"" }, 2, 3] }"
+                """{ "value": [ { "tag": "tagValue" }, 2, 3] }"""
             );
 
             Assert.AreEqual("tagValue", (string)data.value[0].tag);
@@ -225,7 +225,7 @@ namespace Azure.Core.Tests.Public
         public void CanSetObjectMemberViaArrayIndex()
         {
             dynamic data = JsonDataTestHelpers.CreateFromJson(
-                @"{ ""value"": [ { ""tag"": ""tagValue"" }, 2, 3] }"
+                """{ "value": [ { "tag": "tagValue" }, 2, 3] }"""
             );
 
             data.value[0].tag = "newValue";
