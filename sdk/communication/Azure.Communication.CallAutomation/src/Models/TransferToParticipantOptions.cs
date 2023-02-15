@@ -25,11 +25,6 @@ namespace Azure.Communication.CallAutomation
         public CallInvite CallInvite { get; }
 
         /// <summary>
-        /// The UserToUserInformation.
-        /// </summary>
-        public string UserToUserInformation { get; set; }
-
-        /// <summary>
         /// The operationContext for this transfer call.
         /// </summary>
         public string OperationContext { get; set; }

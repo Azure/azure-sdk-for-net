@@ -945,7 +945,6 @@ namespace Azure.Communication.CallAutomation
         public TransferToParticipantOptions(Azure.Communication.CallAutomation.CallInvite callInvite) { }
         public Azure.Communication.CallAutomation.CallInvite CallInvite { get { throw null; } }
         public string OperationContext { get { throw null; } set { } }
-        public string UserToUserInformation { get { throw null; } set { } }
     }
     public partial class UnmuteParticipantsOptions
     {

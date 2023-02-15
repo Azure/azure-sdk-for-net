@@ -190,20 +190,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.OperationContextExceedsMaxLength));
         }
 
-        [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
-        public void TransferCallToParticipant_ExceedsMaxUserToUserInformationLengthLength(CallInvite callInvite)
-        {
-            var callConnection = CreateMockCallConnection(202);
-
-            var options = new TransferToParticipantOptions(callInvite)
-            {
-                UserToUserInformation = new string('a', 1 + CallAutomationConstants.InputValidation.StringMaxLength)
-            };
-            ArgumentException? ex = Assert.Throws<ArgumentException>(() => callConnection.TransferCallToParticipant(options));
-            Assert.NotNull(ex);
-            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.UserToUserInformationExceedsMaxLength));
-        }
-
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipant))]
         public async Task AddParticipantsAsync_202Accepted(CommunicationIdentifier participantToAdd)
         {
@@ -575,7 +561,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             {
                 new object?[]
                 {
-                    new CallInvite(new CommunicationUserIdentifier("userId"))
+                    new CallInvite(new CommunicationUserIdentifier("userId")){
+                        SipHeaders = {{ "key1", "value1" }}}
                 },
             };
         }
