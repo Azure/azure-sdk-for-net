@@ -521,7 +521,7 @@ namespace Azure.Core.Extensions.Tests
             var client = factory.CreateClient(nameof(NonDisposableClient));
 
             var disposableFactory = provider.GetRequiredService<IAzureClientFactory<DisposableClient>>();
-            var dispsableClient = disposableFactory.CreateClient(nameof(DisposableClient));
+            var disposableClient = disposableFactory.CreateClient(nameof(DisposableClient));
 
             var asyncDisposableFactory = provider.GetRequiredService<IAzureClientFactory<AsyncDisposableClient>>();
             var asyncDispsableClient = asyncDisposableFactory.CreateClient(nameof(AsyncDisposableClient));
