@@ -18,6 +18,8 @@ namespace Azure.Core.Pipeline
     internal readonly struct DiagnosticScope : IDisposable
     {
         private const string AzureSdkScopeLabel = "az.sdk.scope";
+        internal const string OpenTelemetrySchemaAttribute = "az.schema_url";
+        internal const string OpenTelemetrySchemaVersion = "https://opentelemetry.io/schemas/1.17.0";
         private static readonly object AzureSdkScopeValue = bool.TrueString;
         private static readonly ConcurrentDictionary<string, object?> ActivitySources = new();
 
@@ -299,7 +301,7 @@ namespace Azure.Core.Pipeline
                 _currentActivity = StartActivitySourceActivity();
                 if (_currentActivity != null)
                 {
-                    _currentActivity.AddTag("az.schema_url", "https://opentelemetry.io/schemas/1.17.0");
+                    _currentActivity.AddTag(OpenTelemetrySchemaAttribute, OpenTelemetrySchemaVersion);
                 }
                 else
                 {

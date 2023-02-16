@@ -97,7 +97,7 @@ namespace Azure.Core.Tests
 
                 Assert.AreEqual(ActivityIdFormat.W3C, activity.IdFormat);
 
-                CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("az.schema_url", "https://opentelemetry.io/schemas/1.17.0"));
+                CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>(DiagnosticScope.OpenTelemetrySchemaAttribute, DiagnosticScope.OpenTelemetrySchemaVersion));
             }
             finally
             {
@@ -133,7 +133,7 @@ namespace Azure.Core.Tests
                 var activity = activityListener.Activities.Dequeue();
 
                 Assert.AreEqual("ActivityName", activity.DisplayName);
-                CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("az.schema_url", "https://opentelemetry.io/schemas/1.17.0"));
+                CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>(DiagnosticScope.OpenTelemetrySchemaAttribute, DiagnosticScope.OpenTelemetrySchemaVersion));
             }
             finally
             {
@@ -170,7 +170,7 @@ namespace Azure.Core.Tests
 
             nestedScope.Dispose();
             Assert.AreEqual("ClientName.ActivityName", Activity.Current.OperationName);
-            CollectionAssert.DoesNotContain(Activity.Current.Tags, new KeyValuePair<string, string>("az.schema_url", "https://opentelemetry.io/schemas/1.17.0"));
+            CollectionAssert.DoesNotContain(Activity.Current.Tags, new KeyValuePair<string, string>(DiagnosticScope.OpenTelemetrySchemaAttribute, DiagnosticScope.OpenTelemetrySchemaVersion));
         }
 
         [TestCase(DiagnosticScope.ActivityKind.Internal, true)]
@@ -201,7 +201,7 @@ namespace Azure.Core.Tests
             }
             nestedScope.Dispose();
             Assert.AreEqual("ClientName.ActivityName", Activity.Current.OperationName);
-            CollectionAssert.DoesNotContain(Activity.Current.Tags, new KeyValuePair<string, string>("az.schema_url", "https://opentelemetry.io/schemas/1.17.0"));
+            CollectionAssert.DoesNotContain(Activity.Current.Tags, new KeyValuePair<string, string>(DiagnosticScope.OpenTelemetrySchemaAttribute, DiagnosticScope.OpenTelemetrySchemaVersion));
         }
 
         [TestCase(DiagnosticScope.ActivityKind.Internal, true)]
@@ -267,7 +267,7 @@ namespace Azure.Core.Tests
             nestedScope.Dispose();
 
             Assert.AreEqual("ClientName.ActivityName", Activity.Current.OperationName);
-            CollectionAssert.Contains(Activity.Current.Tags, new KeyValuePair<string, string>("az.schema_url", "https://opentelemetry.io/schemas/1.17.0"));
+            CollectionAssert.Contains(Activity.Current.Tags, new KeyValuePair<string, string>(DiagnosticScope.OpenTelemetrySchemaAttribute, DiagnosticScope.OpenTelemetrySchemaVersion));
             scope.Dispose();
         }
 
@@ -289,7 +289,7 @@ namespace Azure.Core.Tests
             nestedScope.Start();
             Assert.IsTrue(nestedScope.IsEnabled);
             Assert.AreEqual("ClientName.NestedActivityName", Activity.Current.OperationName);
-            CollectionAssert.Contains(Activity.Current.Tags, new KeyValuePair<string, string>("az.schema_url", "https://opentelemetry.io/schemas/1.17.0"));
+            CollectionAssert.Contains(Activity.Current.Tags, new KeyValuePair<string, string>(DiagnosticScope.OpenTelemetrySchemaAttribute, DiagnosticScope.OpenTelemetrySchemaVersion));
 
             nestedScope.Dispose();
 
@@ -326,7 +326,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual("Value1", activitySourceActivity.TagObjects.Single(o => o.Key == "Attribute1").Value);
             Assert.AreEqual("2", activitySourceActivity.TagObjects.Single(o => o.Key == "Attribute2").Value);
             Assert.AreEqual("3", activitySourceActivity.TagObjects.Single(o => o.Key == "Attribute3").Value);
-            CollectionAssert.Contains(activitySourceActivity.Tags, new KeyValuePair<string, string>("az.schema_url", "https://opentelemetry.io/schemas/1.17.0"));
+            CollectionAssert.Contains(activitySourceActivity.Tags, new KeyValuePair<string, string>(DiagnosticScope.OpenTelemetrySchemaAttribute, DiagnosticScope.OpenTelemetrySchemaVersion));
 
             Assert.Null(Activity.Current);
             Assert.AreEqual("ClientName.ActivityName.Start", startEvent.Key);
@@ -340,7 +340,7 @@ namespace Azure.Core.Tests
 
             // Since both ActivitySource and DiagnosticSource listeners are used, we should see the az.schema_url tag set even in diagnostic source because they use the same
             // underlying activity.
-            CollectionAssert.Contains(diagnosticSourceActivity.Tags, new KeyValuePair<string, string>("az.schema_url", "https://opentelemetry.io/schemas/1.17.0"));
+            CollectionAssert.Contains(diagnosticSourceActivity.Tags, new KeyValuePair<string, string>(DiagnosticScope.OpenTelemetrySchemaAttribute, DiagnosticScope.OpenTelemetrySchemaVersion));
 
             Assert.AreEqual(activityAfterStart, diagnosticSourceActivity);
         }
