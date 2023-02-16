@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<int> metricValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metricName"))
+                if (property.NameEquals("metricName"u8))
                 {
                     metricName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricValue"))
+                if (property.NameEquals("metricValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

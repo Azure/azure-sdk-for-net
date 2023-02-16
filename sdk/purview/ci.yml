@@ -30,6 +30,8 @@ extends:
     ServiceDirectory: purview
     ArtifactName: packages
     Artifacts:
+    - name: Azure.Analytics.Purview.Workflows
+      safeName: AzureAnalyticsPurviewWorkflows
     - name: Azure.Analytics.Purview.Share
       safeName: AzureAnalyticsPurviewShare
     - name: Azure.Analytics.Purview.Account

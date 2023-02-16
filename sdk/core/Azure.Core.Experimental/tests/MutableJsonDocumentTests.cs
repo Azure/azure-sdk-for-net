@@ -3,9 +3,8 @@
 
 using System;
 using System.IO;
-using System.Security.Cryptography;
 using System.Text.Json;
-using Azure.Core.Dynamic;
+using Azure.Core.Json;
 using NUnit.Framework;
 
 namespace Azure.Core.Experimental.Tests
@@ -1015,6 +1014,21 @@ namespace Azure.Core.Experimental.Tests
             JsonDocument doc = JsonDocument.Parse(bytes);
 
             Assert.AreEqual("Hello", doc.RootElement.GetProperty("Foo").GetString());
+        }
+
+        [Test]
+        public void CanDispose()
+        {
+            string json = """
+                {
+                  "Foo" : "Hello"
+                }
+                """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            mdoc.Dispose();
+
+            Assert.Throws<ObjectDisposedException>(() => { var foo = mdoc.RootElement.GetProperty("Foo"); });
         }
     }
 }
