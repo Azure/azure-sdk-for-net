@@ -13,12 +13,24 @@ using NUnit.Framework;
 
 namespace Azure.Monitor.Ingestion.Tests
 {
-    [LiveOnly]
+    //[LiveOnly]
     public class ErrorTest : RecordedTestBase<MonitorIngestionTestEnvironment>
     {
         private const int Mb = 1024 * 1024;
-        public ErrorTest(bool isAsync) : base(isAsync)
+        public ErrorTest(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
+        }
+
+        [OneTimeSetUp]
+        public void SetUp()
+        {
+            LogsIngestionClient.Compression = "gzip";
+        }
+
+        [OneTimeTearDown]
+        public void CleanUp()
+        {
+            LogsIngestionClient.Compression = null;
         }
 
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
@@ -54,8 +66,6 @@ namespace Azure.Monitor.Ingestion.Tests
         public void OneFailure()
         {
             LogsIngestionClient client = CreateClient();
-            // set compression to gzip so SDK does not gzip data (assumes already gzipped)
-            LogsIngestionClient.Compression = "gzip";
             var entries = GenerateEntries(800, Recording.Now.DateTime);
             entries.Add(new object[] {
                     new {
@@ -81,8 +91,6 @@ namespace Azure.Monitor.Ingestion.Tests
         public void TwoFailures()
         {
             LogsIngestionClient client = CreateClient();
-            // set compression to gzip so SDK does not gzip data (assumes already gzipped)
-            LogsIngestionClient.Compression = "gzip";
             var entries = GenerateEntries(800, Recording.Now.DateTime);
             // Add 2 entries that are going to fail in 2 batches
             entries.Add(new object[] {
@@ -116,8 +124,6 @@ namespace Azure.Monitor.Ingestion.Tests
         public async Task OneFailureWithEventHandler()
         {
             LogsIngestionClient client = CreateClient();
-            // set compression to gzip so SDK does not gzip data (assumes already gzipped)
-            LogsIngestionClient.Compression = "gzip";
             var entries = GenerateEntries(800, Recording.Now.DateTime);
             entries.Add(new object[] {
                     new {
@@ -149,8 +155,6 @@ namespace Azure.Monitor.Ingestion.Tests
         public async Task TwoFailuresWithEventHandler()
         {
             LogsIngestionClient client = CreateClient();
-            // set compression to gzip so SDK does not gzip data (assumes already gzipped)
-            LogsIngestionClient.Compression = "gzip";
             var entries = GenerateEntries(800, Recording.Now.DateTime);
             entries.Add(new object[] {
                     new {
@@ -188,8 +192,6 @@ namespace Azure.Monitor.Ingestion.Tests
         public void TwoFailuresWithEventHandlerCancellationToken()
         {
             LogsIngestionClient client = CreateClient();
-            // set compression to gzip so SDK does not gzip data (assumes already gzipped)
-            LogsIngestionClient.Compression = "gzip";
             var entries = GenerateEntries(800, Recording.Now.DateTime);
             entries.Add(new object[] {
                     new {
@@ -208,7 +210,7 @@ namespace Azure.Monitor.Ingestion.Tests
             entries.Add(new object[] {
                     new {
                         Time = Recording.Now.DateTime,
-                        Computer = "Computer" + new string(';', Mb),
+                        Computer = "Computer" + new string(';', Mb*5),
                         AdditionalContext = 1
                     }
                 });

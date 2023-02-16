@@ -18,7 +18,7 @@ namespace Azure.Monitor.Ingestion.Tests
         private const int Mb = 1024 * 1024;
         private const int Kb = 1024;
 
-        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync)
+        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
 
@@ -38,6 +38,7 @@ namespace Azure.Monitor.Ingestion.Tests
         public void CleanUp()
         {
             LogsIngestionClient.SingleUploadThreshold = Mb;
+            LogsIngestionClient.Compression = null;
         }
 
         private LogsIngestionClient CreateClient(HttpPipelinePolicy policy = null)
@@ -78,7 +79,7 @@ namespace Azure.Monitor.Ingestion.Tests
             var exception = Assert.Throws<NullReferenceException>(() => client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, RequestContent.Create(stream)));
         }
 
-        [LiveOnly]
+        //[LiveOnly]
         [Test]
         public async Task UploadOneLogGreaterThan1Mb()
         {
