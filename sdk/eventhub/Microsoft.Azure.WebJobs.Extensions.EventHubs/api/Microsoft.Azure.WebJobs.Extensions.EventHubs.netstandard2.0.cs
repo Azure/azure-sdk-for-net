@@ -36,6 +36,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         public System.TimeSpan PartitionOwnershipExpirationInterval { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
         public long? PrefetchSizeInBytes { get { throw null; } set { } }
+        public int? TargetUnprocessedEventThreshold { get { throw null; } set { } }
         public bool TrackLastEnqueuedEventProperties { get { throw null; } set { } }
         public Azure.Messaging.EventHubs.EventHubsTransportType TransportType { get { throw null; } set { } }
         public System.Net.IWebProxy WebProxy { get { throw null; } set { } }
