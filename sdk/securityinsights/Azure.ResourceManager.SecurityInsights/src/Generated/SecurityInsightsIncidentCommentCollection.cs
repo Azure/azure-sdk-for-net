@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -230,37 +229,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> An async collection of <see cref="SecurityInsightsIncidentCommentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityInsightsIncidentCommentResource> GetAllAsync(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SecurityInsightsIncidentCommentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securityInsightsIncidentCommentIncidentCommentsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityInsightsIncidentCommentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SecurityInsightsIncidentCommentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securityInsightsIncidentCommentIncidentCommentsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityInsightsIncidentCommentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsIncidentCommentIncidentCommentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsIncidentCommentIncidentCommentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsIncidentCommentResource(Client, SecurityInsightsIncidentCommentData.DeserializeSecurityInsightsIncidentCommentData(e)), _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentCommentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -284,37 +255,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> A collection of <see cref="SecurityInsightsIncidentCommentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityInsightsIncidentCommentResource> GetAll(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<SecurityInsightsIncidentCommentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securityInsightsIncidentCommentIncidentCommentsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityInsightsIncidentCommentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SecurityInsightsIncidentCommentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics.CreateScope("SecurityInsightsIncidentCommentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securityInsightsIncidentCommentIncidentCommentsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityInsightsIncidentCommentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsIncidentCommentIncidentCommentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsIncidentCommentIncidentCommentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsIncidentCommentResource(Client, SecurityInsightsIncidentCommentData.DeserializeSecurityInsightsIncidentCommentData(e)), _securityInsightsIncidentCommentIncidentCommentsClientDiagnostics, Pipeline, "SecurityInsightsIncidentCommentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("isEnabled");
+            writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsDefined(ExpireOn))
             {
-                writer.WritePropertyName("expirationTimeUtc");
+                writer.WritePropertyName("expirationTimeUtc"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            writer.WritePropertyName("triggersOn");
+            writer.WritePropertyName("triggersOn"u8);
             writer.WriteStringValue(TriggersOn.ToString());
-            writer.WritePropertyName("triggersWhen");
+            writer.WritePropertyName("triggersWhen"u8);
             writer.WriteStringValue(TriggersWhen.ToString());
             if (Optional.IsCollectionDefined(Conditions))
             {
-                writer.WritePropertyName("conditions");
+                writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<IList<SecurityInsightsAutomationRuleCondition>> conditions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isEnabled"))
+                if (property.NameEquals("isEnabled"u8))
                 {
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("expirationTimeUtc"))
+                if (property.NameEquals("expirationTimeUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     expirationTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("triggersOn"))
+                if (property.NameEquals("triggersOn"u8))
                 {
                     triggersOn = new TriggersOn(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("triggersWhen"))
+                if (property.NameEquals("triggersWhen"u8))
                 {
                     triggersWhen = new TriggersWhen(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("conditions"))
+                if (property.NameEquals("conditions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

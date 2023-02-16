@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -227,37 +226,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> An async collection of <see cref="SecurityInsightsAlertRuleActionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityInsightsAlertRuleActionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SecurityInsightsAlertRuleActionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securityInsightsAlertRuleActionActionsClientDiagnostics.CreateScope("SecurityInsightsAlertRuleActionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securityInsightsAlertRuleActionActionsRestClient.ListByAlertRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityInsightsAlertRuleActionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SecurityInsightsAlertRuleActionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securityInsightsAlertRuleActionActionsClientDiagnostics.CreateScope("SecurityInsightsAlertRuleActionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securityInsightsAlertRuleActionActionsRestClient.ListByAlertRuleNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityInsightsAlertRuleActionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsAlertRuleActionActionsRestClient.CreateListByAlertRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsAlertRuleActionActionsRestClient.CreateListByAlertRuleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsAlertRuleActionResource(Client, SecurityInsightsAlertRuleActionData.DeserializeSecurityInsightsAlertRuleActionData(e)), _securityInsightsAlertRuleActionActionsClientDiagnostics, Pipeline, "SecurityInsightsAlertRuleActionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -277,37 +248,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> A collection of <see cref="SecurityInsightsAlertRuleActionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityInsightsAlertRuleActionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SecurityInsightsAlertRuleActionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securityInsightsAlertRuleActionActionsClientDiagnostics.CreateScope("SecurityInsightsAlertRuleActionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securityInsightsAlertRuleActionActionsRestClient.ListByAlertRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityInsightsAlertRuleActionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SecurityInsightsAlertRuleActionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securityInsightsAlertRuleActionActionsClientDiagnostics.CreateScope("SecurityInsightsAlertRuleActionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securityInsightsAlertRuleActionActionsRestClient.ListByAlertRuleNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityInsightsAlertRuleActionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsAlertRuleActionActionsRestClient.CreateListByAlertRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsAlertRuleActionActionsRestClient.CreateListByAlertRuleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsAlertRuleActionResource(Client, SecurityInsightsAlertRuleActionData.DeserializeSecurityInsightsAlertRuleActionData(e)), _securityInsightsAlertRuleActionActionsClientDiagnostics, Pipeline, "SecurityInsightsAlertRuleActionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
