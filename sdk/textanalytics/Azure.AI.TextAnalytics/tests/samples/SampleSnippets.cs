@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
@@ -19,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Samples
             #region Snippet:CreateTextAnalyticsClient
 #if SNIPPET
             Uri endpoint = new("<endpoint>");
-            AzureKeyCredential apiKey = new("<apiKey>");
+            AzureKeyCredential credential = new("<apiKey>");
 #else
             Uri endpoint = new(TestEnvironment.Endpoint);
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
