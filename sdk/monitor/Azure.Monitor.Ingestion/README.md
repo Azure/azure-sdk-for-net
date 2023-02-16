@@ -88,8 +88,8 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 - [Register the client with dependency injection](#register-the-client-with-dependency-injection)
 - [Upload custom logs](#upload-custom-logs)
-- [Upload custom logs as IEnumerable](#upload-custom-logs-ienumerable)
-- [Upload custom logs as IEnumerable with EventHandler](#upload-custom-logs-ienumerable-eventhandler)
+- [Upload custom logs as IEnumerable](#upload-custom-logs-as-ienumerable)
+- [Upload custom logs as IEnumerable with EventHandler](#upload-custom-logs-as-ienumerable-with-eventhandler)
 - [Verify logs](#verify-logs)
 
 You can familiarize yourself with different APIs using [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.Ingestion/samples).
@@ -100,7 +100,7 @@ To register `LogsIngestionClient` with the dependency injection (DI) container, 
 
 ### Upload custom logs
 
-You can upload logs using either the `LogsIngestionClient.Upload` or the `LogsIngestionClient.UploadAsync` method. Note the data ingestion [limits](https://learn.microsoft.com/azure/azure-monitor/service-limits#custom-logs). This method has an optional parameter: string contentEncoding. This refers to the encoding of the RequestContent that is being passed in. If you are passing in content that is already manipulated, set the contentEncoding parameter. For example if your content is gzipped, set contentEncoding to be "gzip". The default behavior if this parameter is not set is to `gzip` all input. 
+You can upload logs using either the `LogsIngestionClient.Upload` or the `LogsIngestionClient.UploadAsync` method. Note the data ingestion [limits](https://learn.microsoft.com/azure/azure-monitor/service-limits#custom-logs). This method has an optional parameter: string contentEncoding. This refers to the encoding of the RequestContent that is being passed in. If you're passing in content that is already manipulated, set the contentEncoding parameter. For example if your content is gzipped, set contentEncoding to be "gzip". If this parameter isn't set, the default behavior is to gzip all input.
 
 ```C# Snippet:UploadCustomLogsAsync
 var endpoint = new Uri("<data_collection_endpoint>");
@@ -263,7 +263,7 @@ To learn more about Azure Monitor, see the [Azure Monitor service documentation]
 
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [https://cla.microsoft.com](https://cla.microsoft.com).
 
-When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately. For example, labels and comments. Follow the instructions provided by the bot. You'll only need to sign the CLA once across all repos using our CLA.
+When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately. For example, labels and comments. Follow the instructions provided by the bot. You only need to sign the CLA once across all repos using our CLA.
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information, see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any questions or comments.
 
