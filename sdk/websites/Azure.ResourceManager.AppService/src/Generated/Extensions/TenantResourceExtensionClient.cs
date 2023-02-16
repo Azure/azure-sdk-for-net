@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="PublishingUserResource" /> object. </returns>
         public virtual PublishingUserResource GetPublishingUser()
         {
-            return new PublishingUserResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Web/publishingUsers/web"));
+            return new PublishingUserResource(Client, Id.AppendProviderResource("Microsoft.Web", "publishingUsers", "web"));
         }
 
         /// <summary> Gets a collection of AppServiceSourceControlResources in the TenantResource. </summary>

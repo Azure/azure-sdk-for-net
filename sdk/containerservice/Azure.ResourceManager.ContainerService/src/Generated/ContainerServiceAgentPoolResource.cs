@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="AgentPoolUpgradeProfileResource" /> object. </returns>
         public virtual AgentPoolUpgradeProfileResource GetAgentPoolUpgradeProfile()
         {
-            return new AgentPoolUpgradeProfileResource(Client, new ResourceIdentifier(Id.ToString() + "/upgradeProfiles/default"));
+            return new AgentPoolUpgradeProfileResource(Client, Id.AppendChildResource("upgradeProfiles", "default"));
         }
 
         /// <summary>

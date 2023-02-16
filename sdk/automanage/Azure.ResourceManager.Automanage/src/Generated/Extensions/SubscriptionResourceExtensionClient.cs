@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> Returns a <see cref="ServicePrincipalResource" /> object. </returns>
         public virtual ServicePrincipalResource GetServicePrincipal()
         {
-            return new ServicePrincipalResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Automanage/servicePrincipals/default"));
+            return new ServicePrincipalResource(Client, Id.AppendProviderResource("Microsoft.Automanage", "servicePrincipals", "default"));
         }
 
         /// <summary>

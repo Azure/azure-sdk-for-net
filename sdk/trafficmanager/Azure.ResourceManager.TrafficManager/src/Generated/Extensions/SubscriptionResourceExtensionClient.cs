@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <returns> Returns a <see cref="TrafficManagerUserMetricsResource" /> object. </returns>
         public virtual TrafficManagerUserMetricsResource GetTrafficManagerUserMetrics()
         {
-            return new TrafficManagerUserMetricsResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default"));
+            return new TrafficManagerUserMetricsResource(Client, Id.AppendProviderResource("Microsoft.Network", "trafficManagerUserMetricsKeys", "default"));
         }
 
         /// <summary>
