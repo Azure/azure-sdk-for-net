@@ -59,8 +59,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// Gets the balances for a scope by billing period and billingAccountId. Balances are available via this API only for May 1, 2014 or later.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/balances
-        /// Operation Id: Balances_GetForBillingPeriodByBillingAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/balances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Balances_GetForBillingPeriodByBillingAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ConsumptionBalanceResult>> GetBalanceAsync(CancellationToken cancellationToken = default)
@@ -81,8 +89,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// Gets the balances for a scope by billing period and billingAccountId. Balances are available via this API only for May 1, 2014 or later.
-        /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/balances
-        /// Operation Id: Balances_GetForBillingPeriodByBillingAccount
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/balances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Balances_GetForBillingPeriodByBillingAccount</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConsumptionBalanceResult> GetBalance(CancellationToken cancellationToken = default)
