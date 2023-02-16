@@ -9,22 +9,10 @@ namespace Azure.Monitor.OpenTelemetry
     {
         public AzureMonitorOpenTelemetryOptions() { }
         public string ConnectionString { get { throw null; } set { } }
-        public bool DisableLogs { get { throw null; } set { } }
-        public bool DisableMetrics { get { throw null; } set { } }
         public bool DisableOfflineStorage { get { throw null; } set { } }
-        public bool DisableTraces { get { throw null; } set { } }
-        public Azure.Monitor.OpenTelemetry.Metrics Metrics { get { throw null; } set { } }
+        public bool EnableLogs { get { throw null; } set { } }
+        public bool EnableMetrics { get { throw null; } set { } }
+        public bool EnableTraces { get { throw null; } set { } }
         public string StorageDirectory { get { throw null; } set { } }
-        public Azure.Monitor.OpenTelemetry.Traces Traces { get { throw null; } set { } }
-    }
-    public partial class Metrics
-    {
-        public Metrics() { }
-        public bool DisableAspNetInstrumentation { get { throw null; } set { } }
-    }
-    public partial class Traces
-    {
-        public Traces() { }
-        public bool DisableAspNetInstrumentation { get { throw null; } set { } }
     }
 }

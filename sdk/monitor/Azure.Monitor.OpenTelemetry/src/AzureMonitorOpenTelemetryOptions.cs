@@ -2,9 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable SA1402 // File may only contain a single type
-#pragma warning disable AZC0012 // Avoid single word type names
-#pragma warning disable CA1724 // Conflict Metrics name with OpenTelemetry.Metrics
 
 namespace Azure.Monitor.OpenTelemetry
 {
