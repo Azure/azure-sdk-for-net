@@ -49,7 +49,8 @@ namespace Azure.ResourceManager.Hci.Tests
             var clusterData = new HciClusterData(location == null ? resourceGroup.Data.Location : location.Value)
             {
                 AadClientId = new Guid(TestEnvironment.ClientId),
-                AadTenantId = new Guid(TestEnvironment.TenantId)
+                AadTenantId = new Guid(TestEnvironment.TenantId),
+                TypeIdentityType = ManagedServiceIdentityType.None
             };
             var lro = await resourceGroup.GetHciClusters().CreateOrUpdateAsync(WaitUntil.Completed, clusterName, clusterData);
             return lro.Value;
@@ -66,9 +67,16 @@ namespace Azure.ResourceManager.Hci.Tests
         {
             var arcExtensionData = new ArcExtensionData()
             {
+                ArcExtensionType = "MicrosoftMonitoringAgent",
+                Publisher = "Microsoft",
+                TypeHandlerVersion = "1.10",
                 Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
                     { "workspaceId", "5dcf9bc1-c220-4ed6-84f3-6919c3a393b6" }
+                }),
+                ProtectedSettings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                {
+                    { "workspaceKey", "5dcf9bc1-c220-4ed6-84f3-6919c3a393b6" }
                 })
             };
             var lro = await arcSetting.GetArcExtensions().CreateOrUpdateAsync(WaitUntil.Completed, arcExtensionName, arcExtensionData);
