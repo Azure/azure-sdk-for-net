@@ -129,27 +129,3 @@ namespace Azure.AI.OpenAI.Custom
         public System.Collections.Generic.IAsyncEnumerable<Azure.AI.OpenAI.Custom.StreamingChoice> GetChoicesStreaming([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
-namespace Azure.Core.Sse
-{
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SseLine
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public static Azure.Core.Sse.SseLine Empty { get { throw null; } }
-        public System.ReadOnlyMemory<char> FieldName { get { throw null; } }
-        public System.ReadOnlyMemory<char> FieldValue { get { throw null; } }
-        public bool IsComment { get { throw null; } }
-        public bool IsEmpty { get { throw null; } }
-        public override string ToString() { throw null; }
-    }
-    public sealed partial class SseReader : System.IDisposable
-    {
-        public SseReader(System.IO.Stream stream) { }
-        public void Dispose() { }
-        public Azure.Core.Sse.SseLine? TryReadLine() { throw null; }
-        public System.Threading.Tasks.Task<Azure.Core.Sse.SseLine?> TryReadLineAsync() { throw null; }
-        public Azure.Core.Sse.SseLine? TryReadSingleFieldEvent() { throw null; }
-        public System.Threading.Tasks.Task<Azure.Core.Sse.SseLine?> TryReadSingleFieldEventAsync() { throw null; }
-    }
-}
