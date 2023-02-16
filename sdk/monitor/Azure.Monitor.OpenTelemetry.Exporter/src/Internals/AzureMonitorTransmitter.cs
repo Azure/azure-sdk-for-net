@@ -35,49 +35,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             options.Retry.MaxRetries = 0;
-            _connectionVars = ConnectionStringParser.GetValues(options.ConnectionString);
 
-            HttpPipeline pipeline;
-            if (credential != null)
-            {
-                var scope = AadHelper.GetScope(_connectionVars.AadAudience);
-                var httpPipelinePolicy = new HttpPipelinePolicy[]
-                {
-                    new BearerTokenAuthenticationPolicy(credential, scope),
-                    new IngestionRedirectPolicy()
-                };
+            _connectionVars = InitializeConnectionVars(options);
 
-                pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
-                AzureMonitorExporterEventSource.Log.WriteInformational("SetAADCredentialsToPipeline", $"HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {credential.GetType().Name} Scope: {scope}");
-            }
-            else
-            {
-                var httpPipelinePolicy = new HttpPipelinePolicy[] { new IngestionRedirectPolicy() };
-                pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
-            }
+            _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars, credential);
 
-            _applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), pipeline, host: _connectionVars.IngestionEndpoint);
-
-            if (!options.DisableOfflineStorage)
-            {
-                try
-                {
-                    var storageDirectory = options.StorageDirectory ?? StorageHelper.GetDefaultStorageDirectory() ?? throw new InvalidOperationException("Unable to determine offline storage directory.");
-
-                    // TODO: Fallback to default location if location provided via options does not work.
-                    _fileBlobProvider = new FileBlobProvider(storageDirectory);
-
-                    AzureMonitorExporterEventSource.Log.WriteInformational("InitializedPersistentStorage", storageDirectory);
-                }
-                catch (Exception ex)
-                {
-                    // TODO:
-                    // Remove this when we add an option to disable offline storage.
-                    // So if someone opts in for storage and we cannot initialize, we can throw.
-                    // Change needed on persistent storage side to throw if not able to create storage directory.
-                    AzureMonitorExporterEventSource.Log.WriteError("FailedToInitializePersistentStorage", ex);
-                }
-            }
+            _fileBlobProvider = InitializeOfflineStorage(options);
         }
 
         public string InstrumentationKey => _connectionVars.InstrumentationKey;
@@ -178,6 +141,80 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             return ExportResult.Failure;
+        }
+
+        private static ApplicationInsightsRestClient InitializeRestClient(AzureMonitorExporterOptions options, ConnectionVars connectionVars, TokenCredential? credential)
+        {
+            HttpPipeline pipeline;
+
+            if (credential != null)
+            {
+                var scope = AadHelper.GetScope(connectionVars.AadAudience);
+                var httpPipelinePolicy = new HttpPipelinePolicy[]
+                {
+                    new BearerTokenAuthenticationPolicy(credential, scope),
+                    new IngestionRedirectPolicy()
+                };
+
+                pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
+                AzureMonitorExporterEventSource.Log.WriteInformational("SetAADCredentialsToPipeline", $"HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {credential.GetType().Name} Scope: {scope}");
+            }
+            else
+            {
+                var httpPipelinePolicy = new HttpPipelinePolicy[] { new IngestionRedirectPolicy() };
+                pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
+            }
+
+            return new ApplicationInsightsRestClient(new ClientDiagnostics(options), pipeline, host: connectionVars.IngestionEndpoint);
+        }
+
+        private static PersistentBlobProvider? InitializeOfflineStorage(AzureMonitorExporterOptions options)
+        {
+            if (!options.DisableOfflineStorage)
+            {
+                try
+                {
+                    var storageDirectory = options.StorageDirectory
+                        ?? StorageHelper.GetDefaultStorageDirectory()
+                        ?? throw new InvalidOperationException("Unable to determine offline storage directory.");
+
+                    // TODO: Fallback to default location if location provided via options does not work.
+                    AzureMonitorExporterEventSource.Log.WriteInformational("InitializedPersistentStorage", storageDirectory);
+
+                    return new FileBlobProvider(storageDirectory);
+                }
+                catch (Exception ex)
+                {
+                    // TODO:
+                    // Remove this when we add an option to disable offline storage.
+                    // So if someone opts in for storage and we cannot initialize, we can throw.
+                    // Change needed on persistent storage side to throw if not able to create storage directory.
+                    AzureMonitorExporterEventSource.Log.WriteError("FailedToInitializePersistentStorage", ex);
+
+                    return null;
+                }
+            }
+
+            return null;
+        }
+
+        private static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options)
+        {
+            if (options.ConnectionString == null)
+            {
+                var connectionString = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+
+                if (!string.IsNullOrWhiteSpace(connectionString))
+                {
+                    return ConnectionStringParser.GetValues(connectionString);
+                }
+            }
+            else
+            {
+                return ConnectionStringParser.GetValues(options.ConnectionString);
+            }
+
+            throw new ArgumentException("A connection string was not found. This MUST be provided via either AzureMonitorExporterOptions or set in the environment variable 'APPLICATIONINSIGHTS_CONNECTION_STRING'");
         }
 
         private ExportResult HandleFailures(HttpMessage httpMessage)
