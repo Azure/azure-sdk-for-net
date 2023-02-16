@@ -257,7 +257,7 @@ namespace Azure.Identity
 
         internal DefaultAzureCredentialOptions Clone()
         {
-            var clone = this.Clone<DefaultAzureCredentialOptions>();
+            var clone = Clone<DefaultAzureCredentialOptions>();
 
             clone._tenantId = _tenantId;
             clone._interactiveBrowserTenantId = _interactiveBrowserTenantId;

@@ -110,10 +110,7 @@ namespace Azure.Identity
         private static void CloneIfImplemented<T>(TokenCredentialOptions original, TokenCredentialOptions clone, Action<T, T> cloneOperation)
             where T : class
         {
-            T originalAsT = (original as T);
-            T cloneAsT = (clone as T);
-
-            if (originalAsT != null && cloneAsT != null)
+            if (original is T originalAsT && clone is T cloneAsT)
             {
                 cloneOperation(originalAsT, cloneAsT);
             }
