@@ -40,10 +40,10 @@ namespace Azure.Monitor.OpenTelemetry
 
             var builder = services.AddOpenTelemetry();
 
-            if (!options.DisableTraces)
+            if (options.EnableTraces)
             {
                 builder.WithTracing(b => b
-                             .ValidateAndAddInstrumentation((i) => i.AddAspNetCoreInstrumentation(), options.Traces.DisableAspNetInstrumentation)
+                             .AddAspNetCoreInstrumentation()
                              .AddAzureMonitorTraceExporter(o =>
                              {
                                  o.ConnectionString = options.ConnectionString;
@@ -52,10 +52,10 @@ namespace Azure.Monitor.OpenTelemetry
                              }));
             }
 
-            if (!options.DisableMetrics)
+            if (options.EnableMetrics)
             {
                 builder.WithMetrics(b => b
-                             .ValidateAndAddInstrumentation((i) => i.AddAspNetCoreInstrumentation(), options.Metrics.DisableAspNetInstrumentation)
+                             .AddAspNetCoreInstrumentation()
                              .AddAzureMonitorMetricExporter(o =>
                              {
                                  o.ConnectionString = options.ConnectionString;
@@ -65,16 +65,6 @@ namespace Azure.Monitor.OpenTelemetry
             }
 
             return services;
-        }
-
-        private static T ValidateAndAddInstrumentation<T>(this T builder, Action<T> configure, bool isDisabled)
-        {
-            if (!isDisabled)
-            {
-                configure(builder);
-            }
-
-            return builder;
         }
     }
 }

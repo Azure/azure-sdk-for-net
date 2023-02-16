@@ -24,17 +24,17 @@ namespace Azure.Monitor.OpenTelemetry
         /// <summary>
         /// Gets or sets a value indicating whether Traces should be enabled.
         /// </summary>
-        public bool DisableTraces { get; set; }
+        public bool EnableTraces { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a value indicating whether Metrics should be enabled.
         /// </summary>
-        public bool DisableMetrics { get; set; }
+        public bool EnableMetrics { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a value indicating whether Logs should be enabled.
         /// </summary>
-        public bool DisableLogs { get; set; }
+        public bool EnableLogs { get; set; } = true;
 
         /// <summary>
         /// Override the default directory for offline storage.
@@ -45,37 +45,5 @@ namespace Azure.Monitor.OpenTelemetry
         /// Disable offline storage.
         /// </summary>
         public bool DisableOfflineStorage { get; set; }
-
-        /// <summary>
-        /// Traces Configuration.
-        /// </summary>
-        public Traces Traces { get; set; } = new Traces();
-
-        /// <summary>
-        /// Metrics Configuration.
-        /// </summary>
-        public Metrics Metrics { get; set; } = new Metrics();
-    }
-
-    /// <summary>
-    /// Traces Configuration.
-    /// </summary>
-    public class Traces
-    {
-        /// <summary>
-        /// Gets or sets a value indicating whether AspNet Instrumentation should be enabled.
-        /// </summary>
-        public bool DisableAspNetInstrumentation { get; set; }
-    }
-
-    /// <summary>
-    /// Metrics Configuration.
-    /// </summary>
-    public class Metrics
-    {
-        /// <summary>
-        /// Gets or sets a value indicating whether AspNet Instrumentation should be enabled.
-        /// </summary>
-        public bool DisableAspNetInstrumentation { get; set; }
     }
 }

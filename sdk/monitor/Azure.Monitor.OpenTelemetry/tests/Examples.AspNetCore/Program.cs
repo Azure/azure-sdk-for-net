@@ -1,9 +1,27 @@
+using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry;
+using OpenTelemetry.Instrumentation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.Configure<AspNetCoreInstrumentationOptions>(o =>
+    {
+        o.EnrichWithHttpRequest = (activity, httpRequest) =>
+        {
+            activity.SetTag("requestProtocol", httpRequest.Protocol);
+        };
+        o.EnrichWithHttpResponse = (activity, httpResponse) =>
+        {
+            activity.SetTag("responseLength", httpResponse.ContentLength);
+        };
+        o.EnrichWithException = (activity, exception) =>
+        {
+            activity.SetTag("exceptionType", exception.GetType().ToString());
+        };
+    });
 
 builder.Services.AddAzureMonitorOpenTelemetry();
 
@@ -11,19 +29,6 @@ builder.Services.AddAzureMonitorOpenTelemetry();
 // builder.Services.AddAzureMonitorOpenTelemetry(builder.Configuration.GetSection("AzureMonitorOpenTelemetry"));
 
 var app = builder.Build();
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-}
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapGet("/", () => $"Hello World! OpenTelemetry Trace: {Activity.Current?.Id}");
 
 app.Run();
