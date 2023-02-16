@@ -142,9 +142,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             telemetryItems.Add(telemetryItem);
 
+            //Even though we are using different transmitter instances
+            // we need to use the same instance of fileProvider for this test.
+            var mockFileProvider = new MockFileProvider();
             // Transmit
             var mockResponse = new MockResponse(500).SetContent("Internal Server Error");
             var transmitter = GetTransmitter(mockResponse);
+            transmitter._fileBlobProvider = mockFileProvider;
             transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
 
             //Assert
@@ -153,6 +157,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // reset server logic to return 200
             mockResponse = new MockResponse(200).SetContent("{\"itemsReceived\": 1,\"itemsAccepted\": 1,\"errors\":[]}");
             transmitter = GetTransmitter(mockResponse);
+            transmitter._fileBlobProvider = mockFileProvider;
 
             transmitter.TransmitFromStorage(1, false, CancellationToken.None).EnsureCompleted();
 
@@ -207,14 +212,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             protected override bool OnTryCreateBlob(byte[] buffer, int leasePeriodMilliseconds, out PersistentBlob blob)
             {
-                blob = new MockFileBlob();
+                blob = new MockFileBlob(_mockStorage);
                 this._mockStorage.Add(blob);
                 return blob.TryWrite(buffer);
             }
 
             protected override bool OnTryCreateBlob(byte[] buffer, out PersistentBlob blob)
             {
-                blob = new MockFileBlob();
+                blob = new MockFileBlob(_mockStorage);
                 this._mockStorage.Add(blob);
                 return blob.TryWrite(buffer);
             }
@@ -230,6 +235,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         private class MockFileBlob : PersistentBlob
         {
             private byte[] _buffer;
+
+            private readonly List<PersistentBlob> _mockStorage;
+
+            public MockFileBlob(List<PersistentBlob> mockStorage)
+            {
+                _mockStorage = mockStorage;
+            }
 
             protected override bool OnTryRead(out byte[] buffer)
             {
@@ -252,7 +264,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             protected override bool OnTryDelete()
             {
-                throw new NotImplementedException();
+                try
+                {
+                    _mockStorage.RemoveAt(0);
+                }
+                catch
+                {
+                    return false;
+                }
+
+                return true;
             }
         }
     }
