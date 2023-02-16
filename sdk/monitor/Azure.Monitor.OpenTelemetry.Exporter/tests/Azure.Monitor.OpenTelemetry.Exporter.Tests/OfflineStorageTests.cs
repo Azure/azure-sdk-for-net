@@ -266,7 +266,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 try
                 {
-                    _mockStorage.RemoveAt(0);
+                    _mockStorage.Remove(this);
                 }
                 catch
                 {
