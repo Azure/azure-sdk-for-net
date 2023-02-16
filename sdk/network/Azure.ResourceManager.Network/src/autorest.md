@@ -100,6 +100,7 @@ rename-mapping:
   EndpointType: ConnectionMonitorEndpointType
   ConnectionState: NetworkConnectionState
   ApplicationGatewayAvailableSslOptions: ApplicationGatewayAvailableSslOptionsInfo
+  EffectiveNetworkSecurityGroup.tagMap: tagDict
 
 format-by-name-rules:
   'tenantId': 'uuid'
