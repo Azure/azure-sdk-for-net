@@ -46,14 +46,6 @@ namespace Azure.ResourceManager.Sql
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of InstanceFailoverGroupResources in the ResourceGroupResource. </summary>
-        /// <param name="locationName"> The name of the region where the resource is located. </param>
-        /// <returns> An object representing collection of InstanceFailoverGroupResources and their operations over a InstanceFailoverGroupResource. </returns>
-        public virtual InstanceFailoverGroupCollection GetInstanceFailoverGroups(AzureLocation locationName)
-        {
-            return new InstanceFailoverGroupCollection(Client, Id, locationName);
-        }
-
         /// <summary> Gets a collection of InstancePoolResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of InstancePoolResources and their operations over a InstancePoolResource. </returns>
         public virtual InstancePoolCollection GetInstancePools()
@@ -67,13 +59,6 @@ namespace Azure.ResourceManager.Sql
         public virtual SqlServerTrustGroupCollection GetSqlServerTrustGroups(AzureLocation locationName)
         {
             return new SqlServerTrustGroupCollection(Client, Id, locationName);
-        }
-
-        /// <summary> Gets a collection of SqlServerResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SqlServerResources and their operations over a SqlServerResource. </returns>
-        public virtual SqlServerCollection GetSqlServers()
-        {
-            return GetCachedClient(Client => new SqlServerCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ResourceGroupLongTermRetentionBackupResources in the ResourceGroupResource. </summary>
@@ -96,6 +81,21 @@ namespace Azure.ResourceManager.Sql
             return new ResourceGroupLongTermRetentionManagedInstanceBackupCollection(Client, Id, locationName, managedInstanceName, databaseName);
         }
 
+        /// <summary> Gets a collection of VirtualClusterResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of VirtualClusterResources and their operations over a VirtualClusterResource. </returns>
+        public virtual VirtualClusterCollection GetVirtualClusters()
+        {
+            return GetCachedClient(Client => new VirtualClusterCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of InstanceFailoverGroupResources in the ResourceGroupResource. </summary>
+        /// <param name="locationName"> The name of the region where the resource is located. </param>
+        /// <returns> An object representing collection of InstanceFailoverGroupResources and their operations over a InstanceFailoverGroupResource. </returns>
+        public virtual InstanceFailoverGroupCollection GetInstanceFailoverGroups(AzureLocation locationName)
+        {
+            return new InstanceFailoverGroupCollection(Client, Id, locationName);
+        }
+
         /// <summary> Gets a collection of ManagedInstanceResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ManagedInstanceResources and their operations over a ManagedInstanceResource. </returns>
         public virtual ManagedInstanceCollection GetManagedInstances()
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.Sql
             return GetCachedClient(Client => new ManagedInstanceCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualClusterResources and their operations over a VirtualClusterResource. </returns>
-        public virtual VirtualClusterCollection GetVirtualClusters()
+        /// <summary> Gets a collection of SqlServerResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of SqlServerResources and their operations over a SqlServerResource. </returns>
+        public virtual SqlServerCollection GetSqlServers()
         {
-            return GetCachedClient(Client => new VirtualClusterCollection(Client, Id));
+            return GetCachedClient(Client => new SqlServerCollection(Client, Id));
         }
 
         /// <summary>

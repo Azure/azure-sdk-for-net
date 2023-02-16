@@ -39,6 +39,17 @@ namespace Azure.ResourceManager.Sql
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Keys))
+            {
+                writer.WritePropertyName("keys"u8);
+                writer.WriteStartObject();
+                foreach (var item in Keys)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -58,6 +69,7 @@ namespace Azure.ResourceManager.Sql
             Optional<DateTimeOffset> deletionDate = default;
             Optional<DateTimeOffset> earliestRestoreDate = default;
             Optional<SqlBackupStorageRedundancy> backupStorageRedundancy = default;
+            Optional<IDictionary<string, SqlDatabaseKey>> keys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -179,11 +191,26 @@ namespace Azure.ResourceManager.Sql
                             backupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("keys"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            Dictionary<string, SqlDatabaseKey> dictionary = new Dictionary<string, SqlDatabaseKey>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, SqlDatabaseKey.DeserializeSqlDatabaseKey(property1.Value));
+                            }
+                            keys = dictionary;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new RestorableDroppedDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, databaseName.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(creationDate), Optional.ToNullable(deletionDate), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(backupStorageRedundancy));
+            return new RestorableDroppedDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, databaseName.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(creationDate), Optional.ToNullable(deletionDate), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(backupStorageRedundancy), Optional.ToDictionary(keys));
         }
     }
 }

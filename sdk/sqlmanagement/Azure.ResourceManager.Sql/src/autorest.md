@@ -5,13 +5,14 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 azure-arm: true
 generate-model-factory: false
-require: https://github.com/Azure/azure-rest-api-specs/blob/f3e7c1b20f032a637069d055524549b950830c22/specification/sql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/67527326606bd3c71700e2b96ff3c9ce9e655e29/specification/sql/resource-manager/readme.md
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 model-namespace: false
 public-clients: false
 head-as-boolean: false
@@ -85,6 +86,8 @@ rename-rules:
   CatchUP: CatchUp
   CCN: Ccn
   SSN: Ssn
+  DbCopying: DBCopying
+  DbMoving: DBMoving
 
 prepend-rp-prefix:
   - DatabaseAutomaticTuning
@@ -310,6 +313,18 @@ rename-mapping:
   RuleType: SqlVulnerabilityAssessmentRuleType
   SynapseLinkWorkspaceInfoProperties: SqlSynapseLinkWorkspaceInfo
   SynapseLinkWorkspaceInfoProperties.workspaceId: -|arm-id
+  ServerPublicNetworkAccessFlag: ServerNetworkAccessFlag
+  SecondaryInstanceType: GeoSecondaryInstanceType
+  StartStopManagedInstanceSchedule: ManagedInstanceStartStopSchedule
+  StartStopScheduleName: ManagedInstanceStartStopScheduleName
+  DatabaseKey: SqlDatabaseKey
+  DatabaseKeyType: SqlDatabaseKeyType
+  AvailabilityZoneType: SqlAvailabilityZoneType
+  EndpointDependency: ManagedInstanceEndpointDependency
+  EndpointDetail: ManagedInstanceEndpointDetail
+  ScheduleItem: SqlScheduleItem
+  ServerConfigurationOptionName: ManagedInstanceServerConfigurationOptionName
+  ServerConfigurationOption: ManagedInstanceServerConfigurationOption
 
 prompted-enum-values:
   - Default
@@ -518,3 +533,8 @@ directive:
         $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}/scans/{scanId}/scanResults'].get.parameters[2]['x-ms-enum']['name'] = 'VulnerabilityAssessmentName';
         $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}/scans/{scanId}/scanResults/{scanResultId}'].get.parameters[2]['x-ms-enum']['name'] = 'VulnerabilityAssessmentName';
       reason: unify the name to ensure the right hierarchy
+    - from: Servers.json
+      where: $.definitions.ServerProperties.properties.restrictOutboundNetworkAccess.enum
+      transform: >
+          $.push('SecuredByPerimeter');
+      reason: Align the enum choices to avoid breaking changes of one enum split into two.
