@@ -12,7 +12,7 @@ using Azure.Monitor.Ingestion;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="LogsIngestionClient"/> to client builder. </summary>
-    public static partial class IngestionUsingDataCollectionRulesClientBuilderExtensions
+    public static partial class IngestionClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="LogsIngestionClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>

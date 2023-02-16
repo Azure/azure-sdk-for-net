@@ -14,7 +14,7 @@ using Azure.Core.Extensions;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="ConversationAnalysisClient"/>, <see cref="ConversationAuthoringClient"/> to client builder. </summary>
-    public static partial class ConversationsClientBuilderExtensions
+    public static partial class ConversationAnalysisClientExtensions
     {
         /// <summary> Registers a <see cref="ConversationAnalysisClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
