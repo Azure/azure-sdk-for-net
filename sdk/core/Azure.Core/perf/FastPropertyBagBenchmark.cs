@@ -302,7 +302,7 @@ namespace Azure.Core.Perf
             {
                 propertyBag.Set(_typeHandles[i], _values[i]);
             }
-            propertyBag.TryDelete((ulong)(count / 2));
+            propertyBag.TryRemove((ulong)(count / 2));
         }
 
         [Benchmark(Baseline = true)]
@@ -339,7 +339,7 @@ namespace Azure.Core.Perf
             }
             for (int i = 0; i < count; i += 3)
             {
-                propertyBag.TryDelete(_typeHandles[i]);
+                propertyBag.TryRemove(_typeHandles[i]);
             }
         }
     }

@@ -407,7 +407,7 @@ namespace Azure.Core.Pipeline
 
             protected internal override bool ContainsHeader(string name) => _headers.TryGetValue(new IgnoreCaseString(name), out _);
 
-            protected internal override bool RemoveHeader(string name) => _headers.TryDelete(new IgnoreCaseString(name));
+            protected internal override bool RemoveHeader(string name) => _headers.TryRemove(new IgnoreCaseString(name));
 
             protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
             {

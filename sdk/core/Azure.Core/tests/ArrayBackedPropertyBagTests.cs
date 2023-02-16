@@ -97,7 +97,7 @@ namespace Azure.Core.Tests
             target.Set(5, 5);
             target.Set(6, 6);
             Assert.AreEqual(isDeleted, target.TryGetValue(keyToDelete, out _));
-            Assert.AreEqual(isDeleted, target.TryDelete(keyToDelete));
+            Assert.AreEqual(isDeleted, target.TryRemove(keyToDelete));
             Assert.AreEqual(false, target.TryGetValue(keyToDelete, out _));
             Assert.AreEqual(expectedKeys.Length, target.Count);
 
@@ -132,7 +132,7 @@ namespace Azure.Core.Tests
 
             for (var key = 0; key < total; key += increment)
             {
-                target.TryDelete(key);
+                target.TryRemove(key);
                 expected.Remove(key);
             }
 

@@ -44,11 +44,6 @@ namespace Azure.Core
 
         public void GetAt(int index, out TKey key, out TValue value)
         {
-            if (index >= _count)
-            {
-                throw new ArgumentOutOfRangeException(nameof(index));
-            }
-
             (key, value) = index switch
             {
                 0 => _first,
@@ -95,7 +90,7 @@ namespace Azure.Core
                 SetAt(index, new Kvp(key, value));
         }
 
-        public bool TryDelete(TKey key)
+        public bool TryRemove(TKey key)
         {
             switch (_count)
             {
