@@ -1,14 +1,17 @@
 # Release History
 
-## 1.1.0-beta.4 (Unreleased)
+## 1.1.0 (2023-02-15)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added support for new resources of `ContainerRegistryToken` and `ScopeMap`.
+- Added `GenerateCredentials` methods for `ContainerRegistryResource`.
 
 ### Other Changes
+
+- Upgraded container registry API version to `2022-12-01`.
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
 ## 1.1.0-beta.3 (2022-10-21)
 
