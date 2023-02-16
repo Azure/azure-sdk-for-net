@@ -20,21 +20,19 @@ namespace Azure.Communication.CallAutomation
         internal CallConnectionRestClient RestClient { get; }
         internal CallMediaRestClient CallMediaRestClient { get; }
         internal EventProcessor EventProcessor { get; }
-        internal CommunicationUserIdentifier Source { get; }
 
         /// <summary>
         /// The call connection id.
         /// </summary>
         public virtual string CallConnectionId { get; internal set; }
 
-        internal CallConnection(string callConnectionId, CallConnectionRestClient callConnectionRestClient, CallMediaRestClient callCallMediaRestClient, ClientDiagnostics clientDiagnostics, EventProcessor eventProcessor, CommunicationUserIdentifier source = null)
+        internal CallConnection(string callConnectionId, CallConnectionRestClient callConnectionRestClient, CallMediaRestClient callCallMediaRestClient, ClientDiagnostics clientDiagnostics, EventProcessor eventProcessor)
         {
             CallConnectionId = callConnectionId;
             RestClient = callConnectionRestClient;
             CallMediaRestClient = callCallMediaRestClient;
             _clientDiagnostics = clientDiagnostics;
             EventProcessor = eventProcessor;
-            Source = source;
         }
 
         /// <summary>Initializes a new instance of <see cref="CallConnection"/> for mocking.</summary>
@@ -416,7 +414,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        private AddParticipantRequestInternal CreateAddParticipantRequest(AddParticipantOptions options)
+        private static AddParticipantRequestInternal CreateAddParticipantRequest(AddParticipantOptions options)
         {
             // validate ParticipantToAdd is not null
             Argument.AssertNotNull(options.ParticipantToAdd, nameof(options.ParticipantToAdd));
@@ -427,7 +425,6 @@ namespace Azure.Communication.CallAutomation
                     ? null
                     : new PhoneNumberIdentifierModel(options.ParticipantToAdd.SourceCallerIdNumber.PhoneNumber),
                 SourceDisplayName = options.ParticipantToAdd.SourceDisplayName,
-                SourceIdentity = Source == null ? null : CommunicationIdentifierSerializer.Serialize(Source),
                 OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext
             };
 
