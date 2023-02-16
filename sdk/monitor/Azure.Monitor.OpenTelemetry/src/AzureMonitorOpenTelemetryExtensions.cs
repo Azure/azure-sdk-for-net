@@ -1,11 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Monitor.OpenTelemetry.Exporter;
+using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OpenTelemetry.Metrics;
-using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry
 {
@@ -17,9 +15,9 @@ namespace Azure.Monitor.OpenTelemetry
         /// <summary>
         /// Adds Azure Monitor OpenTelemetry into service collection.
         /// </summary>
-        /// <param name="services"><see cref="IServiceCollection"/>.</param>
+        /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
         /// <param name="configuration"><see cref="IConfiguration"/>.</param>
-        /// <returns><see cref="IServiceCollection"/></returns>
+        /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
         public static IServiceCollection AddAzureMonitorOpenTelemetry(this IServiceCollection services, IConfiguration configuration)
         {
             var options = new AzureMonitorOpenTelemetryOptions();
@@ -30,40 +28,37 @@ namespace Azure.Monitor.OpenTelemetry
         /// <summary>
         /// Adds Azure Monitor OpenTelemetry into service collection.
         /// </summary>
-        /// <param name="services"><see cref="IServiceCollection"/>.</param>
-        /// <param name="options">The <see cref="AzureMonitorOpenTelemetryOptions" /> instance for configuration.</param>
-        /// <returns><see cref="IServiceCollection"/></returns>
-        public static IServiceCollection AddAzureMonitorOpenTelemetry(this IServiceCollection services, AzureMonitorOpenTelemetryOptions? options = null)
+        /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
+        /// <param name="enableTraces">Flag to enable/disable traces.</param>
+        /// <param name="enableMetrics">Flag to enable/disable metrics.</param>
+        /// <param name="enableLogs">Flag to enable/disable logs.</param>
+        /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
+        public static IServiceCollection AddAzureMonitorOpenTelemetry(this IServiceCollection services, bool enableTraces = true, bool enableMetrics = true, bool enableLogs = true)
         {
-            options ??= new AzureMonitorOpenTelemetryOptions();
+            return AzureMonitorOpenTelemetryImplementations.AddAzureMonitorOpenTelemetrySeperateOptions(services, enableTraces, enableMetrics, enableLogs);
+        }
 
-            var builder = services.AddOpenTelemetry();
+        /// <summary>
+        /// Adds Azure Monitor OpenTelemetry into service collection.
+        /// </summary>
+        /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
+        /// <param name="options">The <see cref="AzureMonitorOpenTelemetryOptions" /> instance for configuration.</param>
+        /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
+        public static IServiceCollection AddAzureMonitorOpenTelemetry(this IServiceCollection services, AzureMonitorOpenTelemetryOptions options)
+        {
+            return AzureMonitorOpenTelemetryImplementations.AddAzureMonitorOpenTelemetryWithOptions(services, options);
+        }
 
-            if (options.EnableTraces)
-            {
-                builder.WithTracing(b => b
-                             .AddAspNetCoreInstrumentation()
-                             .AddAzureMonitorTraceExporter(o =>
-                             {
-                                 o.ConnectionString = options.ConnectionString;
-                                 o.DisableOfflineStorage = options.DisableOfflineStorage;
-                                 o.StorageDirectory = options.StorageDirectory;
-                             }));
-            }
-
-            if (options.EnableMetrics)
-            {
-                builder.WithMetrics(b => b
-                             .AddAspNetCoreInstrumentation()
-                             .AddAzureMonitorMetricExporter(o =>
-                             {
-                                 o.ConnectionString = options.ConnectionString;
-                                 o.DisableOfflineStorage = options.DisableOfflineStorage;
-                                 o.StorageDirectory = options.StorageDirectory;
-                             }));
-            }
-
-            return services;
+        /// <summary>
+        /// Adds Azure Monitor OpenTelemetry into service collection.
+        /// </summary>
+        /// <param name="services"><see cref="IServiceCollection"/>.</param>
+        /// <param name="configureAzureMonitorOpenTelemetry">Callback action for configuring <see cref="AzureMonitorOpenTelemetryOptions"/>.</param>
+        /// <param name="name">Name which is used when retrieving options.</param>
+        /// <returns><see cref="IServiceCollection"/>.</returns>
+        public static IServiceCollection AddAzureMonitorOpenTelemetry(this IServiceCollection services, Action<AzureMonitorOpenTelemetryOptions> configureAzureMonitorOpenTelemetry, string? name = null)
+        {
+            return AzureMonitorOpenTelemetryImplementations.AddAzureMonitorOpenTelemetryWithAction(services, configureAzureMonitorOpenTelemetry, name);
         }
     }
 }
