@@ -13,7 +13,6 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-tag: package-2023-01-31
  
 
 format-by-name-rules:

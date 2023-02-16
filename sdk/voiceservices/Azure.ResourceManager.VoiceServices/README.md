@@ -1,6 +1,11 @@
 # Microsoft Azure VoiceServices management client library for .NET
 
-**[Describe the service briefly first.]**
+The VoiceServices management client library supports managing Azure Communications Gateway resources.
+
+Azure Communications Gateway is a managed, cloud-based voice gateway that simplifies connecting
+operator fixed and mobile voice networks to Teams Phone. It combines a Teams-certified and
+mobile-standards-compliant Session Border Controller (SBC) with API mediation function—removing the
+need for disruptive voice network changes and substantial IT system integration projects.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
