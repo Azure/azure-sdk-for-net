@@ -332,7 +332,7 @@ namespace Azure.Core.Tests
                 await requestTask;
 
                 Assert.AreEqual(activity, testListener.Activities.Single());
-                // is this okay? Does OTel support TagObjects?
+
                 CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, int>("http.status_code", 201));
                 CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("http.url", url));
                 CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("http.method", "GET"));
