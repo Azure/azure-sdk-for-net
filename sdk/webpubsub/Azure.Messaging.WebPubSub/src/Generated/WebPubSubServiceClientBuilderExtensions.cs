@@ -15,12 +15,12 @@ namespace Microsoft.Extensions.Azure
     {
         /// <summary> Registers a <see cref="WebPubSubServiceClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> HTTP or HTTPS endpoint for the Web PubSub service instance. </param>
+        /// <param name="connectionString"> HTTP or HTTPS endpoint for the Web PubSub service instance. </param>
         /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
-        public static IAzureClientBuilder<WebPubSubServiceClient, WebPubSubServiceClientOptions> AddWebPubSubServiceClient<TBuilder>(this TBuilder builder, string endpoint, string hub)
+        public static IAzureClientBuilder<WebPubSubServiceClient, WebPubSubServiceClientOptions> AddWebPubSubServiceClient<TBuilder>(this TBuilder builder, string connectionString, string hub)
         where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<WebPubSubServiceClient, WebPubSubServiceClientOptions>((options) => new WebPubSubServiceClient(endpoint, hub, options));
+            return builder.RegisterClientFactory<WebPubSubServiceClient, WebPubSubServiceClientOptions>((options) => new WebPubSubServiceClient(connectionString, hub, options));
         }
 
         /// <summary> Registers a <see cref="WebPubSubServiceClient"/> instance. </summary>
