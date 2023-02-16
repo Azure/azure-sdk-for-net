@@ -30,14 +30,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> The location of the resource group to which the resource belongs. </param>
         /// <param name="accountName"> The name of the global database account. </param>
         /// <param name="createdOn"> The creation time of the restorable database account (ISO-8601 format). </param>
+        /// <param name="oldestRestorableOn"> The least recent time at which the database account can be restored to (ISO-8601 format). </param>
         /// <param name="deletedOn"> The time at which the restorable database account has been deleted (ISO-8601 format). </param>
         /// <param name="apiType"> The API type of the restorable database account. </param>
         /// <param name="restorableLocations"> List of regions where the of the database account can be restored from. </param>
-        internal RestorableCosmosDBAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string accountName, DateTimeOffset? createdOn, DateTimeOffset? deletedOn, CosmosDBApiType? apiType, IReadOnlyList<RestorableLocationResourceInfo> restorableLocations) : base(id, name, resourceType, systemData)
+        internal RestorableCosmosDBAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string accountName, DateTimeOffset? createdOn, DateTimeOffset? oldestRestorableOn, DateTimeOffset? deletedOn, CosmosDBApiType? apiType, IReadOnlyList<RestorableLocationResourceInfo> restorableLocations) : base(id, name, resourceType, systemData)
         {
             Location = location;
             AccountName = accountName;
             CreatedOn = createdOn;
+            OldestRestorableOn = oldestRestorableOn;
             DeletedOn = deletedOn;
             ApiType = apiType;
             RestorableLocations = restorableLocations;
@@ -49,6 +51,8 @@ namespace Azure.ResourceManager.CosmosDB
         public string AccountName { get; }
         /// <summary> The creation time of the restorable database account (ISO-8601 format). </summary>
         public DateTimeOffset? CreatedOn { get; }
+        /// <summary> The least recent time at which the database account can be restored to (ISO-8601 format). </summary>
+        public DateTimeOffset? OldestRestorableOn { get; }
         /// <summary> The time at which the restorable database account has been deleted (ISO-8601 format). </summary>
         public DateTimeOffset? DeletedOn { get; }
         /// <summary> The API type of the restorable database account. </summary>

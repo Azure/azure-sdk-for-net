@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.CosmosDB
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -44,6 +50,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         internal static ThroughputSettingData DeserializeThroughputSettingData(JsonElement element)
         {
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -53,6 +60,17 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<ExtendedThroughputSettingsResourceInfo> resource = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -121,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB
                     continue;
                 }
             }
-            return new ThroughputSettingData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource.Value);
+            return new ThroughputSettingData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource.Value, identity);
         }
     }
 }

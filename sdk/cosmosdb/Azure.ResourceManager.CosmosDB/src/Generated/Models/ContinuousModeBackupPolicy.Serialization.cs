@@ -15,6 +15,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(ContinuousModeProperties))
+            {
+                writer.WritePropertyName("continuousModeProperties"u8);
+                writer.WriteObjectValue(ContinuousModeProperties);
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(BackupPolicyType.ToString());
             if (Optional.IsDefined(MigrationState))
@@ -27,10 +32,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static ContinuousModeBackupPolicy DeserializeContinuousModeBackupPolicy(JsonElement element)
         {
+            Optional<ContinuousModeProperties> continuousModeProperties = default;
             BackupPolicyType type = default;
             Optional<BackupPolicyMigrationState> migrationState = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("continuousModeProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    continuousModeProperties = ContinuousModeProperties.DeserializeContinuousModeProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("type"u8))
                 {
                     type = new BackupPolicyType(property.Value.GetString());
@@ -47,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ContinuousModeBackupPolicy(type, migrationState.Value);
+            return new ContinuousModeBackupPolicy(type, migrationState.Value, continuousModeProperties.Value);
         }
     }
 }
