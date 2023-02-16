@@ -1,5 +1,3 @@
-
-
 # Generated code configuration
 
 Run `dotnet build /t:GenerateTests` to generate code.
