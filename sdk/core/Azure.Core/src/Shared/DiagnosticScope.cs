@@ -18,6 +18,8 @@ namespace Azure.Core.Pipeline
     internal readonly struct DiagnosticScope : IDisposable
     {
         private const string AzureSdkScopeLabel = "az.sdk.scope";
+        internal const string OpenTelemetrySchemaAttribute = "az.schema_url";
+        internal const string OpenTelemetrySchemaVersion = "https://opentelemetry.io/schemas/1.17.0";
         private static readonly object AzureSdkScopeValue = bool.TrueString;
         private static readonly ConcurrentDictionary<string, object?> ActivitySources = new();
 
@@ -72,6 +74,11 @@ namespace Azure.Core.Pipeline
         }
 
         public void AddAttribute(string name, string value)
+        {
+            _activityAdapter?.AddTag(name, value);
+        }
+
+        public void AddIntegerAttribute(string name, int value)
         {
             _activityAdapter?.AddTag(name, value);
         }
@@ -221,7 +228,7 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            public void AddTag(string name, string value)
+            public void AddTag(string name, object value)
             {
                 if (_currentActivity == null)
                 {
@@ -232,7 +239,7 @@ namespace Azure.Core.Pipeline
                 }
                 else
                 {
-                    _currentActivity?.AddTag(name, value!);
+                    _currentActivity?.AddObjectTag(name, value);
                 }
             }
 
@@ -292,8 +299,11 @@ namespace Azure.Core.Pipeline
             public Activity? Start()
             {
                 _currentActivity = StartActivitySourceActivity();
-
-                if (_currentActivity == null)
+                if (_currentActivity != null)
+                {
+                    _currentActivity.AddTag(OpenTelemetrySchemaAttribute, OpenTelemetrySchemaVersion);
+                }
+                else
                 {
                     if (!_diagnosticSource.IsEnabled(_activityName, _diagnosticSourceArgs))
                     {
@@ -315,7 +325,7 @@ namespace Azure.Core.Pipeline
                     {
                         foreach (var tag in _tagCollection)
                         {
-                            _currentActivity.AddTag(tag.Key, (string)tag.Value);
+                            _currentActivity.AddObjectTag(tag.Key, tag.Value);
                         }
                     }
 
@@ -561,7 +571,13 @@ namespace Azure.Core.Pipeline
 
                 if (method == null)
                 {
-                    ActivityAddTagMethod = (_, _, _) => { };
+                    // If the object overload is not available, fall back to the string overload. The assumption is that the object overload
+                    // not being available means that we cannot be using activity source, so the string cast should never fail because we will always
+                    // be passing a string value.
+                    ActivityAddTagMethod = (activityParameter, nameParameter, valueParameter) => activityParameter.AddTag(
+                        nameParameter,
+                        // null check is required to keep nullable reference compilation happy
+                        valueParameter == null ? null : (string)valueParameter);
                 }
                 else
                 {
