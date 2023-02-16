@@ -4,7 +4,7 @@
 
 ### Features Added
 
-Added operation support to `ArmConnectedVMwarevSphereModelFactory`.
+- Added operation support to `ArmConnectedVMwarevSphereModelFactory`.
 
 ### Other Changes
 
