@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         internal EffectiveNetworkSecurityGroup()
         {
             EffectiveSecurityRules = new ChangeTrackingList<EffectiveNetworkSecurityRule>();
+            TagMap = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
         /// <summary> Initializes a new instance of EffectiveNetworkSecurityGroup. </summary>
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="association"> Associated resources. </param>
         /// <param name="effectiveSecurityRules"> A collection of effective security rules. </param>
         /// <param name="tagMap"> Mapping of tags to list of IP Addresses included within the tag. </param>
-        internal EffectiveNetworkSecurityGroup(WritableSubResource networkSecurityGroup, EffectiveNetworkSecurityGroupAssociation association, IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules, string tagMap)
+        internal EffectiveNetworkSecurityGroup(WritableSubResource networkSecurityGroup, EffectiveNetworkSecurityGroupAssociation association, IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules, IReadOnlyDictionary<string, IList<string>> tagMap)
         {
             NetworkSecurityGroup = networkSecurityGroup;
             Association = association;
@@ -46,6 +47,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A collection of effective security rules. </summary>
         public IReadOnlyList<EffectiveNetworkSecurityRule> EffectiveSecurityRules { get; }
         /// <summary> Mapping of tags to list of IP Addresses included within the tag. </summary>
-        public string TagMap { get; }
+        public IReadOnlyDictionary<string, IList<string>> TagMap { get; }
     }
 }
