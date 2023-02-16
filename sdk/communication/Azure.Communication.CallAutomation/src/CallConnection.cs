@@ -296,6 +296,8 @@ namespace Azure.Communication.CallAutomation
 
             request.TransfereeCallerId = options.CallInvite.SourceCallerIdNumber == null ? null : new PhoneNumberIdentifierModel(options.CallInvite.SourceCallerIdNumber.PhoneNumber);
 
+            request.CustomContext = new CustomContextInternal();
+
             foreach (var sipHeader in options.CallInvite.SipHeaders)
             {
                 request.CustomContext.SipHeaders.Add(sipHeader.Key, sipHeader.Value);
