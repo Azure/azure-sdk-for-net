@@ -1,14 +1,17 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2023.02.16)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added support for the class `DataLakeStoreAccountCollection` overload operation `GetAll`&`GetAllAsync`
+- Added support for the class `DataLakeStoreExtensions` overload operation `GetAccounts`&`GetAccountsAsync`
+- Added operation support to `DataLakeStoreAccountCollectionGetAllOptions` & `SubscriptionResourceGetAccountsOptions`
 
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
 ## 1.0.0 (2022-12-05)
 
