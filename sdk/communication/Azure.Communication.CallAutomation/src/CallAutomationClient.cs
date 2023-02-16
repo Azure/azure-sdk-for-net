@@ -659,7 +659,7 @@ namespace Azure.Communication.CallAutomation
                     ? null
                     : new PhoneNumberIdentifierModel(options?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.SourceDisplayName,
-                SourceIdentity = CommunicationIdentifierSerializer.Serialize(Source),
+                SourceIdentity = Source == null ? null : CommunicationIdentifierSerializer.Serialize(Source),
             };
             // Add custom cognitive service domain name
             if (options.AzureCognitiveServicesEndpointUrl != null)

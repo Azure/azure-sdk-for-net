@@ -55,11 +55,7 @@ namespace Azure.Communication.CallAutomation
 
             if (callConnectionPropertiesDtoInternal.SourceCallerIdNumber != null)
             {
-                var communicationIdentifierModel = new CommunicationIdentifierModel
-                {
-                    PhoneNumber = callConnectionPropertiesDtoInternal.SourceCallerIdNumber,
-                };
-                SourceCallerIdNumber = (PhoneNumberIdentifier)CommunicationIdentifierSerializer.Deserialize(communicationIdentifierModel);
+                SourceCallerIdNumber = new PhoneNumberIdentifier(callConnectionPropertiesDtoInternal.SourceCallerIdNumber.Value);
             }
         }
 
