@@ -1,6 +1,6 @@
 # Generated code configuration
 
-Run `dotnet build /t:GenerateTests` to generate code.
+Run `dotnet build /t:GenerateTest` to generate code.
 
 # Azure.ResourceManager.PowerBIDedicated.Tests
 
