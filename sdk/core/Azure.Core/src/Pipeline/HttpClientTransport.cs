@@ -479,7 +479,7 @@ namespace Azure.Core.Pipeline
             {
                 string headerValue => headerValue,
                 List<string> headerValues => string.Join(",", headerValues),
-                _ => throw new InvalidOperationException($"Unexpected type for header {headerName}: {value.GetType()}")
+                _ => throw new InvalidOperationException($"Unexpected type for header {headerName}: {value?.GetType()}")
             };
 
             public override void Dispose()
