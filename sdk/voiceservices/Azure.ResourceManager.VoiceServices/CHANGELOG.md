@@ -1,8 +1,10 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0 (2023-02-16)
 
 ### General New Features
+
+Initial package version.
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
