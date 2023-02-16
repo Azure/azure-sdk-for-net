@@ -213,14 +213,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             protected override bool OnTryCreateBlob(byte[] buffer, int leasePeriodMilliseconds, out PersistentBlob blob)
             {
                 blob = new MockFileBlob(_mockStorage);
-                this._mockStorage.Add(blob);
                 return blob.TryWrite(buffer);
             }
 
             protected override bool OnTryCreateBlob(byte[] buffer, out PersistentBlob blob)
             {
                 blob = new MockFileBlob(_mockStorage);
-                this._mockStorage.Add(blob);
                 return blob.TryWrite(buffer);
             }
 
@@ -253,6 +251,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             protected override bool OnTryWrite(byte[] buffer, int leasePeriodMilliseconds = 0)
             {
                 this._buffer = buffer;
+                _mockStorage.Add(this);
 
                 return true;
             }
