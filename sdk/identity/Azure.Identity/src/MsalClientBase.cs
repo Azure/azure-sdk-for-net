@@ -32,7 +32,8 @@ namespace Azure.Identity
             // variable rather than in code. In this case we need to validate the endpoint before we use it. However, we can't validate in
             // CredentialPipeline as this is also used by the ManagedIdentityCredential which allows non TLS endpoints. For this reason
             // we validate here as all other credentials will create an MSAL client.
-            Validations.ValidateAuthorityHost(pipeline?.AuthorityHost);
+            Validations.ValidateAuthorityHost(options?.AuthorityHost);
+            AuthorityHost = options?.AuthorityHost ?? AzureAuthorityHosts.GetDefault();
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
             DisableInstanceDiscovery = options is ISupportsDisableInstanceDiscovery supportsDisableInstanceDiscovery && supportsDisableInstanceDiscovery.DisableInstanceDiscovery;
             ITokenCacheOptions cacheOptions = options as ITokenCacheOptions;
@@ -49,6 +50,8 @@ namespace Azure.Identity
         internal string ClientId { get; }
 
         internal TokenCache TokenCache { get; }
+
+        internal Uri AuthorityHost { get; }
 
         protected internal CredentialPipeline Pipeline { get; }
 

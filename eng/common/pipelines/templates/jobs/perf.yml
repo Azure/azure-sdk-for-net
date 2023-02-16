@@ -2,18 +2,15 @@ parameters:
 - name: JobName
   type: string
   default: 'Perf'
+- name: TimeoutInMinutes
+  type: number
+  default: '360'
 - name: LinuxPool
   type: string
-  default: 'azsdk-pool-mms-ubuntu-2004-perf'
-- name: LinuxVmImage
-  type: string
-  default: 'MMSUbuntu20.04'
+  default: 'azsdk-pool-mms-ubuntu-2204-perf'
 - name: WindowsPool
   type: string
-  default: 'azsdk-pool-mms-win-2019-perf'
-- name: WindowsVmImage
-  type: string
-  default: 'MMS2019'
+  default: 'azsdk-pool-mms-win-2022-perf'
 - name: Language
   type: string
   default: ''
@@ -65,18 +62,16 @@ parameters:
 
 jobs:
 - job: ${{ parameters.JobName }}
-  timeoutInMinutes: 360
+  timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
   strategy:
     matrix:
       ${{ if contains(parameters.OperatingSystems, 'Linux') }}:
         Linux:
           Pool: ${{ parameters.LinuxPool }}
-          OsVmImage: ${{ parameters.LinuxVmImage }}
           MatrixName: 'Linux'
       ${{ if contains(parameters.OperatingSystems, 'Windows') }}:
         Windows:
           Pool: ${{ parameters.WindowsPool }}
-          OsVmImage: ${{ parameters.WindowsVmImage }}
           MatrixName: 'Windows'
   variables:
   - ${{ parameters.Variables }}
@@ -87,7 +82,6 @@ jobs:
       value: ''
   pool:
     name: $(Pool)
-    vmImage: $(OSVmImage)
   steps:
 
   - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
@@ -105,10 +99,6 @@ jobs:
       - Name: Azure/azure-sdk-tools
         Commitish: ${{ parameters.ToolsRepoCommitish }}
         WorkingDirectory: $(System.DefaultWorkingDirectory)/azure-sdk-tools
-
-  - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
-    parameters:
-      AgentImage: $(OSVmImage)
 
   - ${{ parameters.InstallLanguageSteps }}
 
