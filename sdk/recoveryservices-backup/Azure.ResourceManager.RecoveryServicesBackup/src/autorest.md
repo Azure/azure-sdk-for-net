@@ -191,7 +191,6 @@ rename-mapping:
   BackupStatusResponse.vaultId: -|arm-id
   BEKDetails.secretVaultId: -|arm-id
   ContainerIdentityInfo.aadTenantId: -|uuid
-  ProtectableContainer.containerId: -|arm-id
   AzureFileShareBackupRequest.recoveryPointExpiryTimeInUTC: RecoveryPointExpireOn
   AzureFileShareRestoreRequest.sourceResourceId: -|arm-id
   IaasVMBackupRequest.recoveryPointExpiryTimeInUTC: RecoveryPointExpireOn
