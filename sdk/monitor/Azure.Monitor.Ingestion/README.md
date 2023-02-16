@@ -151,7 +151,7 @@ Response response = await client.UploadAsync(
 
 ### Upload custom logs as IEnumerable
 
-You can also upload logs using either the `LogsIngestionClient.Upload` or the `LogsIngestionClient.UploadAsync` method in which  logs are passed in a generic `IEnumerable` type along with an optional `UploadLogsOptions` parameter. The `UploadLogsOptions` parameter includes a serializer, concurrency, and an EventHandler.
+You can also upload logs using either the `LogsIngestionClient.Upload` or the `LogsIngestionClient.UploadAsync` method in which  logs are passed in a generic `IEnumerable` type along with an optional `LogsUploadOptions` parameter. The `LogsUploadOptions` parameter includes a serializer, concurrency, and an EventHandler.
 
 ```C# Snippet:UploadLogDataIEnumerableAsync
 var endpoint = new Uri("<data_collection_endpoint_uri>");
@@ -181,7 +181,7 @@ Response response = await client.UploadAsync(ruleId, streamName, entries).Config
 
 ### Upload custom logs as IEnumerable with EventHandler
 
-You can upload logs using either the `LogsIngestionClient.Upload` or the `LogsIngestionClient.UploadAsync` method. In these two methods, logs are passed in a generic `IEnumerable` type. Additionally, there's an `UploadLogsOptions`-typed parameter in which a serializer, concurrency, and EventHandler can be set. The default serializer is set to `System.Text.Json`, but you can pass in the serializer you would like used. The `MaxConcurrency` property sets the number of threads that will be used in the `UploadAsync` method. The default value is 5, and this parameter is unused in the `Upload` method. The EventHandler is used for error handling. It gives the user the option to abort the upload if a batch fails and access the failed logs and corresponding exception. Without the EventHandler, if an upload fails, an `AggregateException` will be thrown.
+You can upload logs using either the `LogsIngestionClient.Upload` or the `LogsIngestionClient.UploadAsync` method. In these two methods, logs are passed in a generic `IEnumerable` type. Additionally, there's an `LogsUploadOptions`-typed parameter in which a serializer, concurrency, and EventHandler can be set. The default serializer is set to `System.Text.Json`, but you can pass in the serializer you would like used. The `MaxConcurrency` property sets the number of threads that will be used in the `UploadAsync` method. The default value is 5, and this parameter is unused in the `Upload` method. The EventHandler is used for error handling. It gives the user the option to abort the upload if a batch fails and access the failed logs and corresponding exception. Without the EventHandler, if an upload fails, an `AggregateException` will be thrown.
 
 ```C# Snippet:LogDataIEnumerableEventHandlerAsync
 var endpoint = new Uri("<data_collection_endpoint_uri>");
@@ -204,10 +204,10 @@ for (int i = 0; i < 100; i++)
         }
     );
 }
-// Set concurrency and EventHandler in UploadLogsOptions
-UploadLogsOptions options = new UploadLogsOptions();
+// Set concurrency and EventHandler in LogsUploadOptions
+LogsUploadOptions options = new LogsUploadOptions();
 options.MaxConcurrency = 10;
-options.UploadFailedEventHandler += Options_UploadFailed;
+options.UploadFailed += Options_UploadFailed;
 
 // Upload our logs
 Response response = await client.UploadAsync(ruleId, streamName, entries, options).ConfigureAwait(false);

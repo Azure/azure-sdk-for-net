@@ -128,10 +128,10 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
                     }
                 );
             }
-            // Set concurrency and EventHandler in UploadLogsOptions
-            UploadLogsOptions options = new UploadLogsOptions();
+            // Set concurrency and EventHandler in LogsUploadOptions
+            LogsUploadOptions options = new LogsUploadOptions();
             options.MaxConcurrency = 10;
-            options.UploadFailedEventHandler += Options_UploadFailed;
+            options.UploadFailed += Options_UploadFailed;
 
             // Upload our logs
             Response response = await client.UploadAsync(ruleId, streamName, entries, options).ConfigureAwait(false);

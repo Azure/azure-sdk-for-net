@@ -466,7 +466,7 @@ namespace Azure.Monitor.Ingestion
             }
         }
 
-        internal async Task<Exception> ProcessCompletedTaskEventHandlerAsync(Task<Response> completedTask, List<object> logs, LogsUploadOptions options, CancellationToken cancellationToken)
+        internal async Task<(Exception Ex, int LogsCount)> ProcessCompletedTaskEventHandlerAsync(Task<Response> completedTask, List<object> logs, LogsUploadOptions options, CancellationToken cancellationToken)
         {
             UploadFailedEventArgs eventArgs;
             if (completedTask.Exception != null)

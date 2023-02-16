@@ -214,11 +214,11 @@ namespace Azure.Monitor.Ingestion.Tests
                 });
 
             // Make the request
-            UploadLogsOptions options = new UploadLogsOptions();
+            LogsUploadOptions options = new LogsUploadOptions();
             options.MaxConcurrency = 2;
             bool isTriggered = false;
             var cts = new CancellationTokenSource();
-            options.UploadFailedEventHandler += Options_UploadFailed;
+            options.UploadFailed += Options_UploadFailed;
             AggregateException exceptions = Assert.ThrowsAsync<AggregateException>(async () => { await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options, cts.Token).ConfigureAwait(false); });
             Assert.IsTrue(isTriggered);
             Assert.IsTrue(cts.IsCancellationRequested);
@@ -253,8 +253,8 @@ namespace Azure.Monitor.Ingestion.Tests
                 });
 
             // Make the request
-            UploadLogsOptions options = new UploadLogsOptions();
-            options.UploadFailedEventHandler += Options_UploadFailed;
+            LogsUploadOptions options = new LogsUploadOptions();
+            options.UploadFailed += Options_UploadFailed;
             var exceptions = Assert.ThrowsAsync<AggregateException>(async () => { await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options).ConfigureAwait(false); });
             Task Options_UploadFailed(UploadFailedEventArgs e)
             {
