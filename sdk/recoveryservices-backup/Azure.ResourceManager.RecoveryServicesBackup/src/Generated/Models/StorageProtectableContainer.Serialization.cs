@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<BackupManagementType> backupManagementType = default;
             ProtectableContainerType protectableContainerType = default;
             Optional<string> healthStatus = default;
-            Optional<ResourceIdentifier> containerId = default;
+            Optional<string> containerId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -76,12 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("containerId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    containerId = new ResourceIdentifier(property.Value.GetString());
+                    containerId = property.Value.GetString();
                     continue;
                 }
             }

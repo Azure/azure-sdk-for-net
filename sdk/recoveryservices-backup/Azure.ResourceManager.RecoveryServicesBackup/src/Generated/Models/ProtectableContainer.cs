@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
@@ -31,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </param>
         /// <param name="healthStatus"> Status of health of the container. </param>
         /// <param name="containerId"> Fabric Id of the container such as ARM Id. </param>
-        internal ProtectableContainer(string friendlyName, BackupManagementType? backupManagementType, ProtectableContainerType protectableContainerType, string healthStatus, ResourceIdentifier containerId)
+        internal ProtectableContainer(string friendlyName, BackupManagementType? backupManagementType, ProtectableContainerType protectableContainerType, string healthStatus, string containerId)
         {
             FriendlyName = friendlyName;
             BackupManagementType = backupManagementType;
@@ -53,6 +51,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Status of health of the container. </summary>
         public string HealthStatus { get; set; }
         /// <summary> Fabric Id of the container such as ARM Id. </summary>
-        public ResourceIdentifier ContainerId { get; set; }
+        public string ContainerId { get; set; }
     }
 }

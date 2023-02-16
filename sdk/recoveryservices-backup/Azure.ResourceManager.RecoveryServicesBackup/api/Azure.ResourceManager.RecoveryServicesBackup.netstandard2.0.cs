@@ -2086,7 +2086,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         protected ProtectableContainer() { }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupManagementType? BackupManagementType { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier ContainerId { get { throw null; } set { } }
+        public string ContainerId { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } set { } }
         public string HealthStatus { get { throw null; } set { } }
     }

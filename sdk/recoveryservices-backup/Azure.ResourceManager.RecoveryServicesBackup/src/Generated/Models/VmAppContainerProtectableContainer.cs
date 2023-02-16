@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure workload-specific container. </summary>
@@ -28,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </param>
         /// <param name="healthStatus"> Status of health of the container. </param>
         /// <param name="containerId"> Fabric Id of the container such as ARM Id. </param>
-        internal VmAppContainerProtectableContainer(string friendlyName, BackupManagementType? backupManagementType, ProtectableContainerType protectableContainerType, string healthStatus, ResourceIdentifier containerId) : base(friendlyName, backupManagementType, protectableContainerType, healthStatus, containerId)
+        internal VmAppContainerProtectableContainer(string friendlyName, BackupManagementType? backupManagementType, ProtectableContainerType protectableContainerType, string healthStatus, string containerId) : base(friendlyName, backupManagementType, protectableContainerType, healthStatus, containerId)
         {
             ProtectableContainerType = protectableContainerType;
         }
