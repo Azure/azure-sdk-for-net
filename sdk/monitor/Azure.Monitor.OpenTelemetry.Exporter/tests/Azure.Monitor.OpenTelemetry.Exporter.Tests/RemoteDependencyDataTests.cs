@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -43,8 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityName,
                 ActivityKind.Server,
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
-                startTime: DateTime.UtcNow)
-                ?? throw new Exception("Failed to create Activity");
+                startTime: DateTime.UtcNow);
 
             activity.SetTag(SemanticConventions.AttributeDbSystem, dbSystem);
 
@@ -60,10 +61,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void DependencyTypeisSetToInProcForInternalSpanWithParent()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
-            using var parentActivity = activitySource.StartActivity("ParentActivity", ActivityKind.Internal)
-                ?? throw new Exception("Failed to create Activity");
-            using var childActivity = activitySource.StartActivity("ChildActivity", ActivityKind.Internal)
-                ?? throw new Exception("Failed to create Activity");
+            using var parentActivity = activitySource.StartActivity("ParentActivity", ActivityKind.Internal);
+            using var childActivity = activitySource.StartActivity("ChildActivity", ActivityKind.Internal);
 
             var monitorTagsParent = TraceHelper.EnumerateActivityTags(parentActivity);
 
@@ -86,8 +85,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityName,
                 ActivityKind.Client,
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
-                startTime: DateTime.UtcNow)
-                ?? throw new Exception("Failed to create Activity");
+                startTime: DateTime.UtcNow);
             activity.Stop();
 
             var httpUrl = "https://www.foo.bar/search";
@@ -118,8 +116,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityName,
                 ActivityKind.Client,
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
-                startTime: DateTime.UtcNow)
-                ?? throw new Exception("Failed to create Activity");
+                startTime: DateTime.UtcNow);
             activity.Stop();
 
             activity.SetStatus(Status.Ok);
@@ -149,8 +146,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityName,
                 ActivityKind.Client,
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
-                startTime: DateTime.UtcNow)
-                ?? throw new Exception("Failed to create Activity");
+                startTime: DateTime.UtcNow);
 
             activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
 
