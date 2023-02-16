@@ -4,7 +4,7 @@
 
 ### Features Added
 
-Added operation support to `ArmDatadogModelFactory`.
+- Added operation support to `ArmDatadogModelFactory`.
 
 ### Other Changes
 
