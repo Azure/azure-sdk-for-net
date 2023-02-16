@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<IReadOnlyList<SecurityInsightsIncidentEntitiesMetadata>> metaData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("entities"))
+                if (property.NameEquals("entities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     entities = array;
                     continue;
                 }
-                if (property.NameEquals("metaData"))
+                if (property.NameEquals("metaData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

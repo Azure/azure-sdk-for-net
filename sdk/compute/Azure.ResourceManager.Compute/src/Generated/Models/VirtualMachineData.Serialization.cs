@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Compute
             Optional<string> vmId = default;
             Optional<string> extensionsTimeBudget = default;
             Optional<int> platformFaultDomain = default;
-            Optional<ScheduledEventsProfile> scheduledEventsProfile = default;
+            Optional<ComputeScheduledEventsProfile> scheduledEventsProfile = default;
             Optional<string> userData = default;
             Optional<CapacityReservationProfile> capacityReservation = default;
             Optional<ApplicationProfile> applicationProfile = default;
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            scheduledEventsProfile = ScheduledEventsProfile.DeserializeScheduledEventsProfile(property0.Value);
+                            scheduledEventsProfile = ComputeScheduledEventsProfile.DeserializeComputeScheduledEventsProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("userData"u8))

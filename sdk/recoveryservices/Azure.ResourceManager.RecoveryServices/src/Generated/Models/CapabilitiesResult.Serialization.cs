@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static CapabilitiesResult DeserializeCapabilitiesResult(JsonElement element)
         {
-            Optional<CapabilitiesResponseProperties> properties = default;
-            string type = default;
+            Optional<CapabilitiesResultProperties> properties = default;
+            ResourceType type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = CapabilitiesResponseProperties.DeserializeCapabilitiesResponseProperties(property.Value);
+                    properties = CapabilitiesResultProperties.DeserializeCapabilitiesResultProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
             }

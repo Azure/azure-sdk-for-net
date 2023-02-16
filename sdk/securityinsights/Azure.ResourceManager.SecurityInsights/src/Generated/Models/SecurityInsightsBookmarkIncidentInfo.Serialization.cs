@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IncidentId))
             {
-                writer.WritePropertyName("incidentId");
+                writer.WritePropertyName("incidentId"u8);
                 writer.WriteStringValue(IncidentId.Value);
             }
             if (Optional.IsDefined(Severity))
             {
-                writer.WritePropertyName("severity");
+                writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
             if (Optional.IsDefined(Title))
             {
-                writer.WritePropertyName("title");
+                writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
             if (Optional.IsDefined(RelationName))
             {
-                writer.WritePropertyName("relationName");
+                writer.WritePropertyName("relationName"u8);
                 writer.WriteStringValue(RelationName);
             }
             writer.WriteEndObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<string> relationName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("incidentId"))
+                if (property.NameEquals("incidentId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     incidentId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("severity"))
+                if (property.NameEquals("severity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     severity = new SecurityInsightsIncidentSeverity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("title"))
+                if (property.NameEquals("title"u8))
                 {
                     title = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("relationName"))
+                if (property.NameEquals("relationName"u8))
                 {
                     relationName = property.Value.GetString();
                     continue;
