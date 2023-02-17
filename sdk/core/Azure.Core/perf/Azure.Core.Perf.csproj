@@ -24,8 +24,6 @@
     <None Update="TestData\JsonFormattedString.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Compile Include="../src/Shared/AzureEventSource.cs " />
-    <Compile Include="../src/Shared/HttpMessageSanitizer.cs " />
   </ItemGroup>
 
 </Project>

@@ -214,7 +214,7 @@ namespace Azure.Core.Pipeline
             if (headers.NonValidated.TryGetValues(name, out HeaderStringValues values) ||
                 content is not null && content.Headers.NonValidated.TryGetValues(name, out values))
             {
-                value = JoinHeaderValues(values);
+                value = values.ToString();
                 return true;
             }
 #else
@@ -254,14 +254,14 @@ namespace Azure.Core.Pipeline
 #if NET6_0_OR_GREATER
             foreach (var (key, value) in headers.NonValidated)
             {
-                yield return new HttpHeader(key, JoinHeaderValues(value));
+                yield return new HttpHeader(key, value.ToString());
             }
 
             if (content is not null)
             {
                 foreach (var (key, value) in content.Headers.NonValidated)
                 {
-                    yield return new HttpHeader(key, JoinHeaderValues(value));
+                    yield return new HttpHeader(key, value.ToString());
                 }
             }
 #else
@@ -319,37 +319,7 @@ namespace Azure.Core.Pipeline
 #if NET6_0_OR_GREATER
         private static string JoinHeaderValues(HeaderStringValues values)
         {
-            var count = values.Count;
-            if (count == 0)
-            {
-                return string.Empty;
-            }
-
-            // Special case when HeaderStringValues.Count == 1, because HttpHeaders also special cases it and creates HeaderStringValues instance from a single string
-            // https://github.com/dotnet/runtime/blob/ef5e27eacecf34a36d72a8feb9082f408779675a/src/libraries/System.Net.Http/src/System/Net/Http/Headers/HttpHeadersNonValidated.cs#L150
-            // https://github.com/dotnet/runtime/blob/ef5e27eacecf34a36d72a8feb9082f408779675a/src/libraries/System.Net.Http/src/System/Net/Http/Headers/HttpHeaders.cs#L1105
-            // Which is later used in HeaderStringValues.ToString:
-            // https://github.com/dotnet/runtime/blob/729bf92e6e2f91aa337da9459bef079b14a0bf34/src/libraries/System.Net.Http/src/System/Net/Http/Headers/HeaderStringValues.cs#L47
-            if (count == 1)
-            {
-                return values.ToString();
-            }
-
-            var interpolatedStringHandler = new DefaultInterpolatedStringHandler(count-1, count);
-            var isFirst = true;
-            foreach (var str in values)
-            {
-                if (isFirst)
-                {
-                    isFirst = false;
-                }
-                else
-                {
-                    interpolatedStringHandler.AppendLiteral(",");
-                }
-                interpolatedStringHandler.AppendFormatted(str);
-            }
-            return string.Create(null, ref interpolatedStringHandler);
+            return values.Count != 0 ? values.ToString() : string.Empty;
         }
 #else
         private static string JoinHeaderValues(IEnumerable<string> values)
