@@ -11,8 +11,6 @@ using OpenTelemetry.Instrumentation.AspNetCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
-
 builder.Services.Configure<AspNetCoreInstrumentationOptions>(o =>
 {
     o.EnrichWithHttpRequest = (activity, httpRequest) =>
@@ -29,10 +27,16 @@ builder.Services.Configure<AspNetCoreInstrumentationOptions>(o =>
     };
 });
 
-builder.Services.AddAzureMonitorOpenTelemetry();
+// builder.Services.AddAzureMonitorOpenTelemetry();
 
-// This is another overload to call AddAzureMonitorOpenTelemetry with IConfiguration.
+// builder.Services.AddAzureMonitorOpenTelemetry(enableTraces: true, enableMetrics: true);
+
 // builder.Services.AddAzureMonitorOpenTelemetry(builder.Configuration.GetSection("AzureMonitorOpenTelemetry"));
+
+builder.Services.AddAzureMonitorOpenTelemetry(o =>
+{
+    o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
+});
 
 var app = builder.Build();
 app.MapGet("/", () => $"Hello World! OpenTelemetry Trace: {Activity.Current?.Id}");
