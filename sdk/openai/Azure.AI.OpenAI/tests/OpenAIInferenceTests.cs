@@ -176,6 +176,9 @@ namespace Azure.AI.OpenAI.Tests
                 CompletionsDeploymentId,
                 requestOptions);
             Assert.That(response, Is.Not.Null);
+            string rawResponse = response.GetRawResponse().Content.ToString();
+            Assert.That(rawResponse, Is.Not.Null.Or.Empty);
+
             Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
             Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
