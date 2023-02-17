@@ -37,10 +37,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             #region Snippet:ContainerRegistry_Samples_UploadArtifactAsync
 
             // Create a manifest to list files in this artifact
-            OciManifest manifest = new()
-            {
-                SchemaVersion = 2
-            };
+            OciManifest manifest = new();
 
             // Upload a config file
             using Stream config = BinaryData.FromString("Sample config").ToStream();
