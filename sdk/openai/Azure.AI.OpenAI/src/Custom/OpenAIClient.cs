@@ -8,7 +8,6 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.OpenAI.Custom;
 using Azure.Core;
 using Azure.Core.Pipeline;
 

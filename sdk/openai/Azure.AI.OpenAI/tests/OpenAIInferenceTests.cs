@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.AI.OpenAI.Custom;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
