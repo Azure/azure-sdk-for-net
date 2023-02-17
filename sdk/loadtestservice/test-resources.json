@@ -69,7 +69,23 @@
             "properties": {
               "value": "[variables('secretValue')]"
             }
-          }
+        },
+        {
+            "type": "Microsoft.LoadTestService/loadtests",
+            "name": "[concat('ALT', parameters('baseName'))]",
+            "apiVersion": "2022-12-01",
+            "location": "eastus",
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "name": "[concat('site', parameters('baseName'))]",
+            "apiVersion": "2021-02-01",
+            "location": "[parameters('location')]",
+            "properties": {
+
+            }
+        }
     ],
     "outputs": {
         "KEYVAULT_URL": {
@@ -79,6 +95,14 @@
         "KEYVAULT_SECRET": {
             "type": "string",
             "value": "[variables('secretValue')]"
+        },
+        "LOADTESTSERVICE_ENDPOINT": {
+            "type": "string",
+            "value": "[reference(concat('ALT', parameters('baseName'))).dataPlaneURI]"
+        },
+        "LOADTESTSERVICE_RESOURCE_ID": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.Web/sites', concat('site', parameters('baseName')))]"
         }
     }
 }
