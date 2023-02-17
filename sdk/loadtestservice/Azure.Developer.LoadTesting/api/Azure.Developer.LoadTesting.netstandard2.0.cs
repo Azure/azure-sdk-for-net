@@ -3,7 +3,7 @@ namespace Azure.Developer.LoadTesting
     public partial class FileUploadOperation : Azure.Operation<System.BinaryData>
     {
         protected FileUploadOperation() { }
-        public FileUploadOperation(string testId, string fileName, Azure.Developer.LoadTesting.LoadTestAdministrationClient client, Azure.Response initialResponse) { }
+        public FileUploadOperation(string testId, string fileName, Azure.Developer.LoadTesting.LoadTestAdministrationClient client, Azure.Response initialResponse = null) { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -69,12 +69,12 @@ namespace Azure.Developer.LoadTesting
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAppComponentsAsync(string testRunId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetMetricDefinitions(string testRunId, string metricNamespace, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetMetricDefinitionsAsync(string testRunId, string metricNamespace, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetMetricDimensionValues(string testRunId, string name, string metricname, string metricNamespace, string timespan, string interval = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetMetricDimensionValuesAsync(string testRunId, string name, string metricname, string metricNamespace, string timespan, string interval = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetMetricDimensionValues(string testRunId, string name, string metricName, string metricNamespace, string timeInterval, string interval = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetMetricDimensionValuesAsync(string testRunId, string name, string metricName, string metricNamespace, string timeInterval, string interval = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetMetricNamespaces(string testRunId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetMetricNamespacesAsync(string testRunId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetMetrics(string testRunId, string metricname, string metricNamespace, string timespan, Azure.Core.RequestContent content = null, string aggregation = null, string interval = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetMetricsAsync(string testRunId, string metricname, string metricNamespace, string timespan, Azure.Core.RequestContent content = null, string aggregation = null, string interval = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetMetrics(string testRunId, string metricName, string metricNamespace, string timespan, Azure.Core.RequestContent content = null, string aggregation = null, string interval = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetMetricsAsync(string testRunId, string metricName, string metricNamespace, string timespan, Azure.Core.RequestContent content = null, string aggregation = null, string interval = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetServerMetricsConfig(string testRunId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetServerMetricsConfigAsync(string testRunId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetTestRun(string testRunId, Azure.RequestContext context = null) { throw null; }
