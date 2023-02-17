@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using OpenTelemetry.Instrumentation.AspNetCore;
 
 namespace Azure.Monitor.OpenTelemetry.Demo
@@ -24,8 +23,6 @@ namespace Azure.Monitor.OpenTelemetry.Demo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-
             services.Configure<AspNetCoreInstrumentationOptions>(o =>
             {
                 o.EnrichWithHttpRequest = (activity, httpRequest) =>
@@ -54,8 +51,12 @@ namespace Azure.Monitor.OpenTelemetry.Demo
             });
         }
 
+#if NET461
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+#else
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+#endif
         {
             app.MapWhen(context => context.Request.Path.StartsWithSegments("/"), (appBuilder) =>
             {
