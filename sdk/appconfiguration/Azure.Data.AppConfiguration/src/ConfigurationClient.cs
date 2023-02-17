@@ -14,6 +14,12 @@ namespace Azure.Data.AppConfiguration
     /// <summary>
     /// The client to use for interacting with the Azure Configuration Store.
     /// </summary>
+    [CodeGenSuppress("CreateSnapshot", typeof(string), typeof(RequestContent), typeof(ContentType), typeof(RequestContext))]
+    [CodeGenSuppress("CreateSnapshotAsync", typeof(string), typeof(RequestContent), typeof(ContentType), typeof(RequestContext))]
+    [CodeGenSuppress("GetSnapshot", typeof(string), typeof(IEnumerable<string>), typeof(MatchConditions), typeof(RequestContext))]
+    [CodeGenSuppress("GetSnapshotAsync", typeof(string), typeof(IEnumerable<string>), typeof(MatchConditions), typeof(RequestContext))]
+    [CodeGenSuppress("UpdateSnapshotStatus", typeof(string), typeof(RequestContent), typeof(MatchConditions), typeof(RequestContext))]
+    [CodeGenSuppress("UpdateSnapshotStatusAsync", typeof(string), typeof(RequestContent), typeof(MatchConditions), typeof(RequestContext))]
     public partial class ConfigurationClient
     {
         private readonly SyncTokenPolicy _syncTokenPolicy;
