@@ -14,6 +14,7 @@ namespace Azure.Monitor.Ingestion.Tests
     {
         public volatile int Count;
         private int _maxConcurrency;
+        public volatile int MaxCount;
 
         public ConcurrencyCounterPolicy(int concurrency)
         {
@@ -24,7 +25,8 @@ namespace Azure.Monitor.Ingestion.Tests
         {
             Interlocked.Increment(ref Count);
             ProcessNext(message, pipeline);
-            Assert.GreaterOrEqual(1, Count); //in the sync case, the number of threads running should not exceed 1
+            //in the sync case, the number of threads running should not exceed 1
+            Assert.GreaterOrEqual(1, Count);
             Interlocked.Decrement(ref Count);
         }
 
@@ -32,7 +34,9 @@ namespace Azure.Monitor.Ingestion.Tests
         {
             Interlocked.Increment(ref Count);
             await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-            Assert.GreaterOrEqual(_maxConcurrency, Count); //in the async case, the number of threads running should not exceed the specified _maxConcurrency
+            //in the async case, the number of threads running should not exceed the specified _maxConcurrency
+            Assert.GreaterOrEqual(_maxConcurrency, Count);
+            MaxCount = Math.Max(Count, MaxCount);
             Interlocked.Decrement(ref Count);
         }
     }
