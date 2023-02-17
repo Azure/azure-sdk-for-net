@@ -42,12 +42,12 @@ namespace Azure.Communication.Email.Tests.Samples
             // Create the EmailMessage
             var emailMessage = new EmailMessage(
                 //@@ senderEmail: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                /*@@*/ senderEmail: TestEnvironment.SenderAddress,
+                /*@@*/ senderAddress: TestEnvironment.SenderAddress,
                 emailContent,
                 emailRecipients);
 
             EmailSendOperation emailSendOperation = await client.StartSendAsync(emailMessage, Guid.NewGuid());
-            Response<OperationStatus> response = await emailSendOperation.WaitForCompletionAsync();
+            Response<EmailSendResult> response = await emailSendOperation.WaitForCompletionAsync();
             var operationId = response.Value.Id;
 
             Console.WriteLine($"Email id: {operationId}");
@@ -117,12 +117,12 @@ namespace Azure.Communication.Email.Tests.Samples
             // Create the EmailMessage
             var emailMessage = new EmailMessage(
                 //@@ senderEmail: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                /*@@*/ senderEmail: TestEnvironment.SenderAddress,
+                /*@@*/ senderAddress: TestEnvironment.SenderAddress,
                 emailContent,
                 emailRecipients);
 
             EmailSendOperation emailSendOperation = await client.StartSendAsync(emailMessage, Guid.NewGuid());
-            Response<OperationStatus> response = await emailSendOperation.WaitForCompletionAsync();
+            Response<EmailSendResult> response = await emailSendOperation.WaitForCompletionAsync();
             var operationId = response.Value.Id;
 
             Console.WriteLine($"Email id: {operationId}");
@@ -155,7 +155,7 @@ namespace Azure.Communication.Email.Tests.Samples
             // Create the EmailMessage
             var emailMessage = new EmailMessage(
                 //@@ senderEmail: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                /*@@*/ senderEmail: TestEnvironment.SenderAddress,
+                /*@@*/ senderAddress: TestEnvironment.SenderAddress,
                 emailContent,
                 emailRecipients);
 
@@ -179,7 +179,7 @@ namespace Azure.Communication.Email.Tests.Samples
             emailMessage.Attachments.Add(emailAttachment);
 
             EmailSendOperation emailSendOperation = await client.StartSendAsync(emailMessage, Guid.NewGuid());
-            Response<OperationStatus> response = await emailSendOperation.WaitForCompletionAsync();
+            Response<EmailSendResult> response = await emailSendOperation.WaitForCompletionAsync();
             var operationId = response.Value.Id;
 
             Console.WriteLine($"Email id: {operationId}");
@@ -210,13 +210,13 @@ namespace Azure.Communication.Email.Tests.Samples
             // Create the EmailMessage
             var emailMessage = new EmailMessage(
                 //@@ senderEmail: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                /*@@*/ senderEmail: TestEnvironment.SenderAddress,
+                /*@@*/ senderAddress: TestEnvironment.SenderAddress,
                 emailContent,
                 emailRecipients);
 
             #region Snippet:Azure_Communication_Email_GetSendStatusAsync
             EmailSendOperation emailSendOperation = await client.StartSendAsync(emailMessage, Guid.NewGuid());
-            Response<OperationStatus> response = await emailSendOperation.WaitForCompletionAsync();
+            Response<EmailSendResult> response = await emailSendOperation.WaitForCompletionAsync();
             var operationId = response.Value.Id;
 
             Console.WriteLine($"Email id: {operationId}");

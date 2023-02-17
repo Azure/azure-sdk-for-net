@@ -52,24 +52,24 @@ namespace Azure.Communication.Email
 
         /// <summary> Initializes a new instance of <see cref="EmailClient"/>.</summary>
         /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
-        /// <param name="keyCredential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
+        /// <param name="credential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public EmailClient(Uri endpoint, AzureKeyCredential keyCredential, EmailClientOptions options = default)
+        public EmailClient(Uri endpoint, AzureKeyCredential credential, EmailClientOptions options = default)
             : this(
                 Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(keyCredential, nameof(keyCredential)),
+                Argument.CheckNotNull(credential, nameof(credential)),
                 options ?? new EmailClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="EmailClient"/>.</summary>
         /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
-        /// <param name="tokenCredential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
+        /// <param name="credential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public EmailClient(Uri endpoint, TokenCredential tokenCredential, EmailClientOptions options = default)
+        public EmailClient(Uri endpoint, TokenCredential credential, EmailClientOptions options = default)
             : this(
                 Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
-                Argument.CheckNotNull(tokenCredential, nameof(tokenCredential)),
+                Argument.CheckNotNull(credential, nameof(credential)),
                 options ?? new EmailClientOptions())
         { }
 
@@ -85,13 +85,13 @@ namespace Azure.Communication.Email
             RestClient = new EmailRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
         }
 
-        private EmailClient(string endpoint, AzureKeyCredential keyCredential, EmailClientOptions options)
-            : this(new Uri(endpoint), options.BuildHttpPipeline(keyCredential), options)
+        private EmailClient(string endpoint, AzureKeyCredential credential, EmailClientOptions options)
+            : this(new Uri(endpoint), options.BuildHttpPipeline(credential), options)
         {
         }
 
-        private EmailClient(string endpoint, TokenCredential tokenCredential, EmailClientOptions options)
-            : this(new Uri(endpoint), options.BuildHttpPipeline(tokenCredential), options)
+        private EmailClient(string endpoint, TokenCredential credential, EmailClientOptions options)
+            : this(new Uri(endpoint), options.BuildHttpPipeline(credential), options)
         { }
 
         /// <summary> Queues an email message to be sent to one or more recipients. </summary>
@@ -117,18 +117,18 @@ namespace Azure.Communication.Email
         }
 
         /// <summary> Queues an email message to be sent to a single recipient. </summary>
-        /// <param name="senderEmail"> From address of the email. </param>
-        /// <param name="toRecipient"> Email address of the TO recipient. </param>
+        /// <param name="from"> From address of the email. </param>
+        /// <param name="to"> Email address of the TO recipient. </param>
         /// <param name="subject"> Subject for the email. </param>
-        /// <param name="html"> Email body in HTML format. </param>
-        /// <param name="plainText"> Email body in plain text format. </param>
+        /// <param name="htmlContent"> Email body in HTML format. </param>
+        /// <param name="plainTextContent"> Email body in plain text format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<EmailSendOperation> StartSendAsync(
-            string senderEmail,
-            string toRecipient,
+            string from,
+            string to,
             string subject,
-            string html,
-            string plainText = "",
+            string htmlContent,
+            string plainTextContent = default,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.StartSend");
@@ -136,15 +136,15 @@ namespace Azure.Communication.Email
             try
             {
                 EmailMessage message = new EmailMessage(
-                    senderEmail,
+                    from,
                     new EmailContent(subject)
                     {
-                        PlainText = plainText,
-                        Html = html
+                        PlainText = plainTextContent,
+                        Html = htmlContent
                     },
                     new EmailRecipients(new List<EmailAddress>()
                     {
-                        new EmailAddress(toRecipient)
+                        new EmailAddress(to)
                     }));
                 return await SendEmailInternalAsync(message, null, cancellationToken).ConfigureAwait(false);
             }
@@ -178,18 +178,18 @@ namespace Azure.Communication.Email
         }
 
         /// <summary> Queues an email message to be sent to a single recipient. </summary>
-        /// <param name="senderEmail"> From address of the email. </param>
-        /// <param name="toRecipient"> Email address of the TO recipient. </param>
+        /// <param name="from"> From address of the email. </param>
+        /// <param name="to"> Email address of the TO recipient. </param>
         /// <param name="subject"> Subject for the email. </param>
-        /// <param name="html"> Email body in HTML format. </param>
-        /// <param name="plainText"> Email body in plain text format. </param>
+        /// <param name="htmlContent"> Email body in HTML format. </param>
+        /// <param name="plainTextContent"> Email body in plain text format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual EmailSendOperation StartSend(
-            string senderEmail,
-            string toRecipient,
+            string from,
+            string to,
             string subject,
-            string html,
-            string plainText = "",
+            string htmlContent,
+            string plainTextContent = default,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.Send");
@@ -197,15 +197,15 @@ namespace Azure.Communication.Email
             try
             {
                 EmailMessage message = new EmailMessage(
-                    senderEmail,
+                    from,
                     new EmailContent(subject)
                     {
-                        PlainText = plainText,
-                        Html = html
+                        PlainText = plainTextContent,
+                        Html = htmlContent
                     },
                     new EmailRecipients(new List<EmailAddress>()
                     {
-                        new EmailAddress(toRecipient)
+                        new EmailAddress(to)
                     }));
                 return SendEmailInternal(message, null, cancellationToken);
             }
@@ -284,7 +284,7 @@ namespace Azure.Communication.Email
 
         private static void ValidateSenderEmailAddress(EmailMessage emailMessage)
         {
-            if (string.IsNullOrEmpty(emailMessage.SenderEmail) || !ValidEmailAddress(emailMessage.SenderEmail))
+            if (string.IsNullOrEmpty(emailMessage.SenderAddress) || !ValidEmailAddress(emailMessage.SenderAddress))
             {
                 throw new ArgumentException(ErrorMessages.InvalidSenderEmail);
             }

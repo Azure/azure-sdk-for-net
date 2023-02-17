@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Communication.Email.Models
+namespace Azure.Communication.Email
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class EmailModelFactory
@@ -17,7 +17,7 @@ namespace Azure.Communication.Email.Models
         /// <param name="id"> The unique id of the operation. Use a UUID. </param>
         /// <param name="status"> Status of operation. </param>
         /// <param name="error"> Error details when status is a non-success terminal state. </param>
-        /// <returns> A new <see cref="Models.EmailSendResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Email.EmailSendResult"/> instance for mocking. </returns>
         public static EmailSendResult EmailSendResult(string id = null, EmailSendStatus status = default, ErrorDetail error = null)
         {
             return new EmailSendResult(id, status, error);
@@ -29,7 +29,7 @@ namespace Azure.Communication.Email.Models
         /// <param name="target"> The error target. </param>
         /// <param name="details"> The error details. </param>
         /// <param name="additionalInfo"> The error additional info. </param>
-        /// <returns> A new <see cref="Models.ErrorDetail"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Email.ErrorDetail"/> instance for mocking. </returns>
         public static ErrorDetail ErrorDetail(string code = null, string message = null, string target = null, IEnumerable<ErrorDetail> details = null, IEnumerable<ErrorAdditionalInfo> additionalInfo = null)
         {
             details ??= new List<ErrorDetail>();
@@ -41,7 +41,7 @@ namespace Azure.Communication.Email.Models
         /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
         /// <param name="type"> The additional info type. </param>
         /// <param name="info"> The additional info. </param>
-        /// <returns> A new <see cref="Models.ErrorAdditionalInfo"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Email.ErrorAdditionalInfo"/> instance for mocking. </returns>
         public static ErrorAdditionalInfo ErrorAdditionalInfo(string type = null, object info = null)
         {
             return new ErrorAdditionalInfo(type, info);

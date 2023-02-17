@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Communication.Email;
 using Azure.Core;
 
 namespace Azure.Communication.Email.Models

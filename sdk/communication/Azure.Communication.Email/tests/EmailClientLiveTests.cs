@@ -27,7 +27,7 @@ namespace Azure.Communication.Email.Tests
             EmailClient emailClient = CreateEmailClient();
             EmailRecipients emailRecipients = GetRecipients(setTo, setCc, setBcc);
 
-            OperationStatus statusMonitor = await SendEmailAndWaitForStatusAsync(emailClient, emailRecipients);
+            EmailSendResult statusMonitor = await SendEmailAndWaitForStatusAsync(emailClient, emailRecipients);
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(statusMonitor.Id));
             Console.WriteLine($"OperationId={statusMonitor.Id}");
@@ -43,14 +43,14 @@ namespace Azure.Communication.Email.Tests
             EmailClient emailClient = CreateEmailClient();
             EmailRecipients emailRecipients = GetRecipients(setTo, setCc, setBcc);
 
-            OperationStatus statusMonitor = SendEmailAndWaitForStatus(emailClient, emailRecipients);
+            EmailSendResult statusMonitor = SendEmailAndWaitForStatus(emailClient, emailRecipients);
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(statusMonitor.Id));
             Console.WriteLine($"OperationId={statusMonitor.Id}");
             Console.WriteLine(statusMonitor.Status);
         }
 
-        private OperationStatus SendEmailAndWaitForStatus(EmailClient emailClient, EmailRecipients emailRecipients)
+        private EmailSendResult SendEmailAndWaitForStatus(EmailClient emailClient, EmailRecipients emailRecipients)
         {
             var emailContent = new EmailContent("subject");
             emailContent.PlainText = "Test";
@@ -61,12 +61,12 @@ namespace Azure.Communication.Email.Tests
                 emailRecipients);
 
             EmailSendOperation emailSendOperation = emailClient.StartSend(emailMessage, Guid.NewGuid());
-            Response<OperationStatus>? statusMonitor = emailSendOperation.WaitForCompletion();
+            Response<EmailSendResult>? statusMonitor = emailSendOperation.WaitForCompletion();
 
             return statusMonitor;
         }
 
-        private async Task<OperationStatus> SendEmailAndWaitForStatusAsync(EmailClient emailClient, EmailRecipients emailRecipients)
+        private async Task<EmailSendResult> SendEmailAndWaitForStatusAsync(EmailClient emailClient, EmailRecipients emailRecipients)
         {
             var emailContent = new EmailContent("subject");
             emailContent.PlainText = "Test";
@@ -77,7 +77,7 @@ namespace Azure.Communication.Email.Tests
                 emailRecipients);
 
             EmailSendOperation emailSendOperation = await emailClient.StartSendAsync(emailMessage, Guid.NewGuid());
-            Response<OperationStatus>? statusMonitor = await emailSendOperation.WaitForCompletionAsync();
+            Response<EmailSendResult>? statusMonitor = await emailSendOperation.WaitForCompletionAsync();
 
             return statusMonitor;
         }

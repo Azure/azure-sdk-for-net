@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Communication.Email.Models
+namespace Azure.Communication.Email
 {
     /// <summary> Status of operation. </summary>
     public readonly partial struct EmailSendStatus : IEquatable<EmailSendStatus>

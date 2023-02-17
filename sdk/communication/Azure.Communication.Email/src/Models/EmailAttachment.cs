@@ -14,17 +14,17 @@ namespace Azure.Communication.Email.Models
     {
         /// <summary> Initializes a new instance of EmailAttachment. </summary>
         /// <param name="name"> Name of the attachment. </param>
-        /// <param name="type"> MIME type of the content being attached. </param>
+        /// <param name="contentType"> MIME type of the content being attached. </param>
         /// <param name="content"> BinaryData representing the contents of the attachment. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="type"/> or <paramref name="content"/> is null. </exception>
-        public EmailAttachment(string name, string type, BinaryData content)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="contentType"/> or <paramref name="content"/> is null. </exception>
+        public EmailAttachment(string name, string contentType, BinaryData content)
         {
             Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(type, nameof(type));
+            Argument.AssertNotNull(contentType, nameof(contentType));
             Argument.AssertNotNull(content, nameof(content));
 
             Name = name;
-            Type = type;
+            ContentType = contentType;
 
             try
             {

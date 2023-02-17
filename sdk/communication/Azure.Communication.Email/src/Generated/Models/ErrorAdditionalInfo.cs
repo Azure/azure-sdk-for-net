@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Communication.Email.Models
+namespace Azure.Communication.Email
 {
     /// <summary> The resource management error additional info. </summary>
     public partial class ErrorAdditionalInfo

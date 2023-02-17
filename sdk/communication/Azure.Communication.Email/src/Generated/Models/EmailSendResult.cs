@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Communication.Email.Models
+namespace Azure.Communication.Email
 {
     /// <summary> Status of the long running operation. </summary>
     public partial class EmailSendResult

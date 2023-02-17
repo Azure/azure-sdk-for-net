@@ -29,7 +29,7 @@ namespace Azure.Communication.Email.Models
             var hostParts = mailAddress.Host.Trim().Split('.');
             if (hostParts.Length < 2)
             {
-                throw new ArgumentException($"{Email}" + ErrorMessages.InvalidEmailAddress);
+                throw new ArgumentException($"{Address}" + ErrorMessages.InvalidEmailAddress);
             }
         }
 
@@ -37,11 +37,11 @@ namespace Azure.Communication.Email.Models
         {
             try
             {
-                return new MailAddress(Email);
+                return new MailAddress(Address);
             }
             catch
             {
-                throw new ArgumentException($"{Email}" + ErrorMessages.InvalidEmailAddress);
+                throw new ArgumentException($"{Address}" + ErrorMessages.InvalidEmailAddress);
             }
         }
     }

@@ -8,4 +8,5 @@ input-file:
 generation1-convenience-client: true
 payload-flattening-threshold: 3
 public-clients: true
+model-namespace: false
 ```
