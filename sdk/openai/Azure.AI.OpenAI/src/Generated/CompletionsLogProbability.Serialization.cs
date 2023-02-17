@@ -14,6 +14,5 @@ namespace Azure.AI.OpenAI
 {
     public partial class CompletionsLogProbability
     {
-        // Deserialization temporary moved to Custom pending nullable top_logprobs support
     }
 }
