@@ -243,7 +243,16 @@ namespace Azure.Identity
     public partial class EnvironmentCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public EnvironmentCredentialOptions() { }
+        public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
+        public string ClientCertificatePassword { get { throw null; } set { } }
+        public string ClientCertificatePath { get { throw null; } set { } }
+        public string ClientId { get { throw null; } set { } }
+        public string ClientSecret { get { throw null; } set { } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
+        public string Password { get { throw null; } set { } }
+        public bool SendCertificateChain { get { throw null; } set { } }
+        public string TenantId { get { throw null; } set { } }
+        public string Username { get { throw null; } set { } }
     }
     public static partial class IdentityModelFactory
     {
@@ -322,7 +331,7 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public bool EnableGuestTenantAuthentication { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
-        public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } }
+        public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

@@ -11,7 +11,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options to configure the <see cref="DeviceCodeCredential"/>.
     /// </summary>
-    public class DeviceCodeCredentialOptions : TokenCredentialOptions, ITokenCacheOptions, ISupportsDisableInstanceDiscovery
+    public class DeviceCodeCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants
     {
         private string _tenantId;
 
@@ -35,7 +35,7 @@ namespace Azure.Identity
         /// Add the wildcard value "*" to allow the credential to acquire tokens for any tenant the logged in account can access.
         /// If no value is specified for <see cref="TenantId"/>, this option will have no effect, and the credential will acquire tokens for any requested tenant.
         /// </summary>
-        public IList<string> AdditionallyAllowedTenants => AdditionallyAllowedTenantsCore;
+        public IList<string> AdditionallyAllowedTenants { get; internal set; } = new List<string>();
 
         /// <summary>
         /// The client ID of the application used to authenticate the user. If not specified the user will be authenticated with an Azure development application.
