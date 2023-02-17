@@ -16,6 +16,7 @@ namespace Azure.AI.TextAnalytics.Samples
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
+            #region Snippet:Sample11_DynamicClassifyBatchConvenience
             string documentA =
                 "“The Microsoft Adaptive Accessories are intended to remove the barriers that traditional mice and"
                 + " keyboards may present to people with limited mobility,” says Gabi Michel, director of Accessible"
@@ -75,6 +76,7 @@ namespace Azure.AI.TextAnalytics.Samples
                     Console.WriteLine();
                 }
             }
+            #endregion
         }
     }
 }

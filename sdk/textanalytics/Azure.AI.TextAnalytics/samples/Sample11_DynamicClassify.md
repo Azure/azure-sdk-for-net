@@ -60,7 +60,7 @@ catch (RequestFailedException exception)
 
 To classify multiple text documents at a time using dynamic classification, call `DynamicClassifyBatch` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter in addition to passing the categories that they can be classified with as another `IEnumerable<string>` parameter. This returns a `DynamicClassifyDocumentResultCollection`.
 
-```C# Snippet:Sample11_DynamicClassifyBatchConvenienceAsync
+```C# Snippet:Sample11_DynamicClassifyBatchConvenience
 string documentA =
     "“The Microsoft Adaptive Accessories are intended to remove the barriers that traditional mice and"
     + " keyboards may present to people with limited mobility,” says Gabi Michel, director of Accessible"
@@ -93,7 +93,7 @@ List<string> categories = new()
     "Technology"
 };
 
-Response<DynamicClassifyDocumentResultCollection> response = await client.DynamicClassifyBatchAsync(batchedDocuments, categories);
+Response<DynamicClassifyDocumentResultCollection> response = client.DynamicClassifyBatch(batchedDocuments, categories);
 DynamicClassifyDocumentResultCollection results = response.Value;
 
 int i = 0;

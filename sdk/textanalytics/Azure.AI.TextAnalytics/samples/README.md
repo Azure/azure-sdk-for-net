@@ -27,6 +27,8 @@ Text Analytics is part of the Azure Cognitive Service for Language, a cloud-base
 * Extractive text summarization
 * Abstractive text summarization
 
+See the [README][README] of the Text Analytics client library for more information, including useful links and instructions.
+
 ## Common scenarios samples
 
 * [Detect Language](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample1_DetectLanguage.md)
@@ -50,3 +52,5 @@ Text Analytics is part of the Azure Cognitive Service for Language, a cloud-base
 * [Recognize PII Entities with specific categories](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample5_RecognizePiiEntitiesWithCategoriesFilter.cs)
 * [Polling Long Running Operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_LROPolling.md)
 * [Mock client](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_MockClient.md)
+
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/textanalytics/Azure.AI.TextAnalytics/README.md
