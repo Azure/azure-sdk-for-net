@@ -115,6 +115,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             private readonly int _batchCheckpointFrequency;
             private int _batchCounter;
             private bool _disposed;
+            private readonly int _minBatchSize;
+            private List<EventData> _eventDatas;
 
             public EventProcessor(EventHubOptions options, ITriggeredFunctionExecutor executor, ILogger logger, bool singleDispatch)
             {
@@ -122,6 +124,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 _singleDispatch = singleDispatch;
                 _batchCheckpointFrequency = options.BatchCheckpointFrequency;
                 _logger = logger;
+                _minBatchSize = options.MinEventBatchSize;
+                _eventDatas = new List<EventData>();
             }
 
             public Task CloseAsync(EventProcessorHostPartition context, ProcessingStoppedReason reason)
@@ -164,11 +168,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
                     UpdateCheckpointContext(events, context);
 
+                    int eventCount = triggerInput.Events.Length;
+
                     if (_singleDispatch)
                     {
                         // Single dispatch
-                        int eventCount = triggerInput.Events.Length;
-
                         for (int i = 0; i < eventCount; i++)
                         {
                             if (linkedCts.Token.IsCancellationRequested)
@@ -189,15 +193,22 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     }
                     else
                     {
-                        // Batch dispatch
-                        TriggeredFunctionData input = new TriggeredFunctionData
+                        if (eventCount < _minBatchSize)
                         {
-                            TriggerValue = triggerInput,
-                            TriggerDetails = triggerInput.GetTriggerDetails(context)
-                        };
+                            _eventDatas.AddRange(events);
+                        }
+                        else
+                        {
+                            // Batch dispatch
+                            TriggeredFunctionData input = new TriggeredFunctionData
+                            {
+                                TriggerValue = triggerInput,
+                                TriggerDetails = triggerInput.GetTriggerDetails(context)
+                            };
 
-                        await _executor.TryExecuteAsync(input, linkedCts.Token).ConfigureAwait(false);
-                        eventToCheckpoint = events.LastOrDefault();
+                            await _executor.TryExecuteAsync(input, linkedCts.Token).ConfigureAwait(false);
+                            eventToCheckpoint = events.LastOrDefault();
+                        }
                     }
 
                     // Checkpoint if we processed any events.

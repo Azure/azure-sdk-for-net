@@ -217,6 +217,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             JObject options = new JObject
                 {
                     { nameof(MaxEventBatchSize), MaxEventBatchSize },
+                    { nameof(MinEventBatchSize), MinEventBatchSize },
                     { nameof(BatchCheckpointFrequency), BatchCheckpointFrequency },
                     { nameof(TransportType),  TransportType.ToString()},
                     { nameof(WebProxy),  WebProxy is WebProxy proxy ? proxy.Address.AbsoluteUri : string.Empty },

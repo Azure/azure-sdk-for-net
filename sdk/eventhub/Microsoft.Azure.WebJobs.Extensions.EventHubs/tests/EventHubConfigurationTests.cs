@@ -39,6 +39,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             EventHubOptions options = CreateOptionsFromConfig();
 
             Assert.AreEqual(123, options.MaxEventBatchSize);
+            Assert.AreEqual(121, options.MinEventBatchSize);
             Assert.AreEqual(true, options.EventProcessorOptions.TrackLastEnqueuedEventProperties);
             Assert.AreEqual(123, options.EventProcessorOptions.PrefetchCount);
             Assert.AreEqual(5, options.BatchCheckpointFrequency);
@@ -70,6 +71,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 jsonStream: new BinaryData(jObject.ToString()).ToStream());
 
             Assert.AreEqual(123, result.MaxEventBatchSize);
+            Assert.AreEqual(121, options.MinEventBatchSize);
             Assert.AreEqual(5, result.BatchCheckpointFrequency);
             Assert.True(result.TrackLastEnqueuedEventProperties);
             Assert.AreEqual(123, result.PrefetchCount);
