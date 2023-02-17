@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -118,6 +119,36 @@ namespace Azure.Monitor.Ingestion.Tests
                 Assert.IsNull(exception.InnerException);
                 Assert.AreEqual(413, exception.Status);
             }
+        }
+
+        [Test]
+        public async Task UploadOneLogAround1Mb()
+        {
+            LogsIngestionClient client = CreateClient();
+
+            var entries = GenerateEntries(8000, Recording.Now.DateTime);
+
+            // Make the request
+            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false);
+
+            // Check the response
+            Assert.IsNotNull(response);
+            Assert.AreEqual(204, response.Status);
+            Assert.IsFalse(response.IsError);
+        }
+
+        [Test]
+        public async Task ValidInputFromArrayAsJsonWithMultiBatchWithGzip()
+        {
+            LogsIngestionClient client = CreateClient();
+
+            // Make the request
+            var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(1000, Recording.Now.DateTime)).ConfigureAwait(false);
+
+            // Check the response
+            Assert.IsNotNull(response);
+            Assert.AreEqual(204, response.Status);
+            Assert.IsFalse(response.IsError);
         }
 
         [Test]
