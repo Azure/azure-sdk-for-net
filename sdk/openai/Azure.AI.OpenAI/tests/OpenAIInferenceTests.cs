@@ -217,8 +217,7 @@ namespace Azure.AI.OpenAI.Tests
                     "How long would it take an unladen swallow to travel between Seattle, WA"
                         + " and New York, NY?"
                 },
-                MaxTokens = 10,
-                Temperature = 0.4f,
+                MaxTokens = 3,
             };
             Response<Completions> response = await client.GetCompletionsAsync(
                 CompletionsDeploymentId,

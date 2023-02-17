@@ -6,45 +6,44 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "api-key": "***********",
-        "Content-Length": "138",
+        "Content-Length": "119",
         "Content-Type": "application/json",
-        "traceparent": "00-c97790aff7b7d3b82818d3d93fd89f50-001aeec1144e3482-00",
+        "traceparent": "00-af1b1e5bec41a77ab16989d49181666e-11d3c2570556b4da-00",
         "User-Agent": "azsdk-net-AI.OpenAI/1.0.0-alpha.20230217.1 (.NET 7.0.2; Microsoft Windows 10.0.22623)",
-        "x-ms-client-request-id": "9906ab5ce03025507a6292f777be1c55",
+        "x-ms-client-request-id": "d7300d7f8f6c70993524a4d866f9f28a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "prompt": [
           "How long would it take an unladen swallow to travel between Seattle, WA and New York, NY?"
         ],
-        "max_tokens": 10,
-        "temperature": 0.4
+        "max_tokens": 3
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
-        "apim-request-id": "9e11debf-ab4a-4741-9c34-741ba99cb7be",
+        "apim-request-id": "03f770fa-0ecb-4e67-aa98-7bb84bf6292f",
         "Cache-Control": "must-revalidate, no-cache",
-        "Content-Length": "314",
+        "Content-Length": "272",
         "Content-Type": "application/json",
-        "Date": "Fri, 17 Feb 2023 18:19:42 GMT",
+        "Date": "Fri, 17 Feb 2023 19:15:33 GMT",
         "openai-model": "text-davinci-002",
-        "openai-processing-ms": "271.5489",
+        "openai-processing-ms": "153.8701",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-accel-buffering": "no",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "9906ab5ce03025507a6292f777be1c55",
+        "x-ms-client-request-id": "d7300d7f8f6c70993524a4d866f9f28a",
         "x-ms-region": "West Europe",
-        "X-Request-ID": "f68e39a9-ccd4-4c92-a3ad-14d75aa384ae"
+        "X-Request-ID": "737bee93-da1d-4bb7-9416-5d576a2ab929"
       },
       "ResponseBody": {
-        "id": "cmpl-6kzcdzG69NzDyJZDZspCpyDyuvuEw",
+        "id": "cmpl-6l0UfDT4f7qhT6FWYyq2A9Epo53Yx",
         "object": "text_completion",
-        "created": 1676657983,
+        "created": 1676661333,
         "model": "text-davinci-002",
         "choices": [
           {
-            "text": "\n\nThere is no definitive answer to this question",
+            "text": "\n\nThere",
             "index": 0,
             "logprobs": null,
             "finish_reason": "length"
@@ -52,8 +51,8 @@
         ],
         "usage": {
           "prompt_tokens": 21,
-          "completion_tokens": 10,
-          "total_tokens": 31
+          "completion_tokens": 3,
+          "total_tokens": 24
         }
       }
     }
@@ -63,7 +62,7 @@
     "OPENAI_DEPLOYMENT_ID": "text-davinci-002",
     "OPENAI_EMBEDDINGS_DEPLOYMENT_ID": "text-similarity-davinci-001",
     "OPENAI_ENDPOINT": "https://sdk2319.openai.azure.com/",
-    "RandomSeed": "1534507072",
+    "RandomSeed": "177452353",
     "SUBSCRIPTION_ID": "e72e5254-f265-4e95-9bd2-9ee8e7329051"
   }
 }
