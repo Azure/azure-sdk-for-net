@@ -296,7 +296,9 @@ namespace Azure.Communication.CallAutomation
 
             request.TransfereeCallerId = options.CallInvite.SourceCallerIdNumber == null ? null : new PhoneNumberIdentifierModel(options.CallInvite.SourceCallerIdNumber.PhoneNumber);
 
-            request.CustomContext = new CustomContextInternal(options.CallInvite.SipHeaders, options.CallInvite.VoipHeaders);
+            request.CustomContext = new CustomContextInternal(
+                options.CallInvite.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.SipHeaders,
+                options.CallInvite.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.VoipHeaders);
 
             if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
             {
@@ -431,7 +433,9 @@ namespace Azure.Communication.CallAutomation
                 request.InvitationTimeoutInSeconds = options.InvitationTimeoutInSeconds;
             }
 
-            request.CustomContext = new CustomContextInternal(options.ParticipantToAdd.SipHeaders, options.ParticipantToAdd.VoipHeaders);
+            request.CustomContext = new CustomContextInternal(
+                options.ParticipantToAdd.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.ParticipantToAdd.SipHeaders,
+                options.ParticipantToAdd.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.ParticipantToAdd.VoipHeaders);
 
             return request;
         }
