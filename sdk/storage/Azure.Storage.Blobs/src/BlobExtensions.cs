@@ -890,7 +890,8 @@ namespace Azure.Storage.Blobs
                     ObjectReplicationDestinationPolicyId = response.Headers.ObjectReplicationPolicyId,
                     LastAccessed = response.Headers.LastAccessed.GetValueOrDefault(),
                     ImmutabilityPolicy = immutabilityPolicy,
-                    HasLegalHold = response.Headers.LegalHold.GetValueOrDefault()
+                    HasLegalHold = response.Headers.LegalHold.GetValueOrDefault(),
+                    CreatedOn = response.Headers.CreationTime.GetValueOrDefault()
                 }
             };
         }

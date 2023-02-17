@@ -66,7 +66,8 @@ namespace Azure.Storage.Files.DataLake
                 AcceptRanges = blobDownloadProperties.AcceptRanges,
                 IsServerEncrypted = blobDownloadProperties.IsServerEncrypted,
                 EncryptionKeySha256 = blobDownloadProperties.EncryptionKeySha256,
-                ContentHash = blobDownloadProperties.BlobContentHash
+                ContentHash = blobDownloadProperties.BlobContentHash,
+                CreatedOn = blobDownloadProperties.CreatedOn,
             };
 
         internal static FileDownloadInfo ToFileDownloadInfo(this BlobDownloadInfo blobDownloadInfo) =>

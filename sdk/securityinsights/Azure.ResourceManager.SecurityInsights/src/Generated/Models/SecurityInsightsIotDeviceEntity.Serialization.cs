@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -54,37 +54,37 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<IReadOnlyList<string>> protocols = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new SecurityInsightsEntityKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("additionalData"))
+                        if (property0.NameEquals("additionalData"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -108,27 +108,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             additionalData = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("friendlyName"))
+                        if (property0.NameEquals("friendlyName"u8))
                         {
                             friendlyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("deviceId"))
+                        if (property0.NameEquals("deviceId"u8))
                         {
                             deviceId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("deviceName"))
+                        if (property0.NameEquals("deviceName"u8))
                         {
                             deviceName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("source"))
+                        if (property0.NameEquals("source"u8))
                         {
                             source = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("iotSecurityAgentId"))
+                        if (property0.NameEquals("iotSecurityAgentId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -138,62 +138,62 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             iotSecurityAgentId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("deviceType"))
+                        if (property0.NameEquals("deviceType"u8))
                         {
                             deviceType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("vendor"))
+                        if (property0.NameEquals("vendor"u8))
                         {
                             vendor = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("edgeId"))
+                        if (property0.NameEquals("edgeId"u8))
                         {
                             edgeId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("macAddress"))
+                        if (property0.NameEquals("macAddress"u8))
                         {
                             macAddress = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("model"))
+                        if (property0.NameEquals("model"u8))
                         {
                             model = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("serialNumber"))
+                        if (property0.NameEquals("serialNumber"u8))
                         {
                             serialNumber = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("firmwareVersion"))
+                        if (property0.NameEquals("firmwareVersion"u8))
                         {
                             firmwareVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("operatingSystem"))
+                        if (property0.NameEquals("operatingSystem"u8))
                         {
                             operatingSystem = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("iotHubEntityId"))
+                        if (property0.NameEquals("iotHubEntityId"u8))
                         {
                             iotHubEntityId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("hostEntityId"))
+                        if (property0.NameEquals("hostEntityId"u8))
                         {
                             hostEntityId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("ipAddressEntityId"))
+                        if (property0.NameEquals("ipAddressEntityId"u8))
                         {
                             ipAddressEntityId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("threatIntelligence"))
+                        if (property0.NameEquals("threatIntelligence"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             threatIntelligence = array;
                             continue;
                         }
-                        if (property0.NameEquals("protocols"))
+                        if (property0.NameEquals("protocols"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

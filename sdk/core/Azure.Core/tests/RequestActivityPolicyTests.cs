@@ -289,8 +289,11 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [TestCase(443)]
+        [TestCase(8080)]
+        [TestCase(null)]
         [NonParallelizable]
-        public async Task ActivitySourceActivityStartedOnRequest()
+        public async Task ActivitySourceActivityStartedOnRequest(int? port)
         {
             using var _ = SetAppConfigSwitch();
 
@@ -310,10 +313,18 @@ namespace Azure.Core.Tests
                 });
 
                 string clientRequestId = null;
+                string url = null;
                 Task<Response> requestTask = SendRequestAsync(mockTransport, request =>
                 {
                     request.Method = RequestMethod.Get;
-                    request.Uri.Reset(new Uri("http://example.com"));
+                    request.Uri.Reset(new Uri("http://example.com/path"));
+                    if (port != null)
+                    {
+                        request.Uri.Port = port.Value;
+                    }
+
+                    url = request.Uri.ToString();
+
                     request.Headers.Add("User-Agent", "agent");
                     clientRequestId = request.ClientRequestId;
                 }, s_enabledPolicy);
@@ -321,13 +332,26 @@ namespace Azure.Core.Tests
                 await requestTask;
 
                 Assert.AreEqual(activity, testListener.Activities.Single());
-                CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.status_code", "201"));
-                CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.url", "http://example.com/"));
-                CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.method", "GET"));
-                CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.user_agent", "agent"));
-                CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("requestId", clientRequestId));
-                CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("serviceRequestId", "server request id"));
-                CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests"));
+
+                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, int>("http.status_code", 201));
+                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("http.url", url));
+                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("http.method", "GET"));
+                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("http.user_agent", "agent"));
+
+                CollectionAssert.DoesNotContain(activity.TagObjects, new KeyValuePair<string, string>("requestId", clientRequestId));
+                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("az.client_request_id", clientRequestId));
+
+                CollectionAssert.DoesNotContain(activity.TagObjects, new KeyValuePair<string, string>("serviceRequestId", "server request id"));
+                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("az.service_request_id", "server request id"));
+
+                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("net.peer.name", "example.com"));
+
+                if (port is null or 443)
+                    CollectionAssert.DoesNotContain(activity.TagObjects, new KeyValuePair<string, int>("net.peer.port", 443));
+                else
+                    CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, int>("net.peer.port", port.Value));
+
+                CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests"));
             }
             finally
             {
@@ -363,7 +387,7 @@ namespace Azure.Core.Tests
                 await requestTask;
 
                 Assert.AreEqual(1, testListener.Activities.Count);
-                CollectionAssert.Contains(testListener.Activities.Single().Tags, new KeyValuePair<string, string>("http.status_code", "201"));
+                CollectionAssert.Contains(testListener.Activities.Single().TagObjects, new KeyValuePair<string, int>("http.status_code", 201));
             }
             finally
             {

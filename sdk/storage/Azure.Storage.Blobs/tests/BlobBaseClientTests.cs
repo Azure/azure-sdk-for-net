@@ -1413,6 +1413,26 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotEmpty(destResponse.Value.Details.ObjectReplicationDestinationPolicyId);
             Assert.IsNull(destResponse.Value.Details.ObjectReplicationSourceProperties);
         }
+
+        [RecordedTest]
+        public async Task DownloadAsync_CreatedOn()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            // Act
+            Response<BlobDownloadInfo> response = await blob.DownloadAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Value.Details.CreatedOn);
+        }
         #endregion Sequential Download
 
         #region Parallel Download

@@ -1,14 +1,7 @@
 # Release History
 
 ## 5.1.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added Target Based Scaling support for Storage Queues and Blobs
 
 ## 5.1.0-beta.1 (2023-02-07)
 - Added logging for details of a storage blob listener on start/stop operations.

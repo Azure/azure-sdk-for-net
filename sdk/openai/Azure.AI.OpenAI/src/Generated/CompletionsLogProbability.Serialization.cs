@@ -17,7 +17,7 @@ namespace Azure.AI.OpenAI
         internal static CompletionsLogProbability DeserializeCompletionsLogProbability(JsonElement element)
         {
             Optional<IReadOnlyList<string>> tokens = default;
-            Optional<IReadOnlyList<float>> tokenLogprobs = default;
+            Optional<IReadOnlyList<float?>> tokenLogprobs = default;
             Optional<IReadOnlyList<IDictionary<string, float>>> topLogprobs = default;
             Optional<IReadOnlyList<int>> textOffset = default;
             foreach (var property in element.EnumerateObject())
@@ -44,10 +44,17 @@ namespace Azure.AI.OpenAI
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<float> array = new List<float>();
+                    List<float?> array = new List<float?>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetSingle());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetSingle());
+                        }
                     }
                     tokenLogprobs = array;
                     continue;

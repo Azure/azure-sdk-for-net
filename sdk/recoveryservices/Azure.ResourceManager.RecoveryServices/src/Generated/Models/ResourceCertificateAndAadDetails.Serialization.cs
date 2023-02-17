@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         internal static ResourceCertificateAndAadDetails DeserializeResourceCertificateAndAadDetails(JsonElement element)
         {
             string aadAuthority = default;
-            string aadTenantId = default;
+            Guid aadTenantId = default;
             string servicePrincipalClientId = default;
             string servicePrincipalObjectId = default;
             string azureManagementEndpointAudience = default;
-            Optional<string> serviceResourceId = default;
+            Optional<ResourceIdentifier> serviceResourceId = default;
             Optional<string> aadAudience = default;
             string authType = default;
             Optional<byte[]> certificate = default;
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<string> issuer = default;
             Optional<long> resourceId = default;
             Optional<string> subject = default;
-            Optional<string> thumbprint = default;
+            Optional<BinaryData> thumbprint = default;
             Optional<DateTimeOffset> validFrom = default;
             Optional<DateTimeOffset> validTo = default;
             foreach (var property in element.EnumerateObject())
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
                 if (property.NameEquals("aadTenantId"u8))
                 {
-                    aadTenantId = property.Value.GetString();
+                    aadTenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("servicePrincipalClientId"u8))
@@ -60,7 +60,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
                 if (property.NameEquals("serviceResourceId"u8))
                 {
-                    serviceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    serviceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("aadAudience"u8))
@@ -110,7 +115,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
                 if (property.NameEquals("thumbprint"u8))
                 {
-                    thumbprint = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    thumbprint = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("validFrom"u8))

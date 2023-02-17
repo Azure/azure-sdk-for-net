@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
@@ -22,7 +23,7 @@ namespace Azure.Monitor.Ingestion
         /// <param name="isRunningSynchronously"></param>
         /// <param name="clientDiagnostics"></param>
         /// <param name="cancellationToken"></param>
-        internal UploadFailedEventArgs(List<object> failedLogs, Exception exception, bool isRunningSynchronously, ClientDiagnostics clientDiagnostics, CancellationToken cancellationToken) : this (failedLogs, exception, isRunningSynchronously, cancellationToken)
+        internal UploadFailedEventArgs(IEnumerable<object> failedLogs, Exception exception, bool isRunningSynchronously, ClientDiagnostics clientDiagnostics, CancellationToken cancellationToken) : this (failedLogs, exception, isRunningSynchronously, cancellationToken)
         {
             ClientDiagnostics = clientDiagnostics;
         }
@@ -34,9 +35,9 @@ namespace Azure.Monitor.Ingestion
         /// <param name="exception"></param>
         /// <param name="isRunningSynchronously"></param>
         /// <param name="cancellationToken"></param>
-        public UploadFailedEventArgs(List<object> failedLogs, Exception exception, bool isRunningSynchronously, CancellationToken cancellationToken) : base(isRunningSynchronously, cancellationToken)
+        public UploadFailedEventArgs(IEnumerable<object> failedLogs, Exception exception, bool isRunningSynchronously, CancellationToken cancellationToken) : base(isRunningSynchronously, cancellationToken)
         {
-            FailedLogs = failedLogs;
+            FailedLogs = failedLogs.ToList();
             Exception = exception;
         }
 
