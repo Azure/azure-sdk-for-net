@@ -12,7 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
     <ProjectReference Include="..\tests\Azure.Core.Tests.csproj" />
-    <!-- 
+    <!--
       Explicit references to pull in patched versions of ASP.NET Core packages
     -->
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" />
@@ -24,8 +24,8 @@
     <None Update="TestData\JsonFormattedString.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Compile Include="../src/Shared/AzureEventSource.cs " />
-    <Compile Include="../src/Shared/HttpMessageSanitizer.cs " />
+    <Compile Condition="'$(AzureCoreVersion)' != ''" Include="../src/Shared/AzureEventSource.cs " />
+    <Compile Condition="'$(AzureCoreVersion)' != ''" Include="../src/Shared/HttpMessageSanitizer.cs " />
   </ItemGroup>
 
 </Project>

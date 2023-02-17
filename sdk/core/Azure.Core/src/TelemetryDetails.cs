@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -34,16 +36,20 @@ namespace Azure.Core
         /// <param name="applicationId">An optional value to be prepended to the <see cref="TelemetryDetails"/>.
         /// This value overrides the behavior of the <see cref="DiagnosticsOptions.ApplicationId"/> property for the <see cref="HttpMessage"/> it is applied to.</param>
         public TelemetryDetails(Assembly assembly, string? applicationId = null)
+            : this(assembly, applicationId, new RuntimeInformationWrapper())
+        { }
+
+        internal TelemetryDetails(Assembly assembly, string? applicationId = null, RuntimeInformationWrapper? runtimeInformation = default)
         {
             Argument.AssertNotNull(assembly, nameof(assembly));
-            if ( applicationId?.Length > MaxApplicationIdLength)
+            if (applicationId?.Length > MaxApplicationIdLength)
             {
                 throw new ArgumentOutOfRangeException(nameof(applicationId), $"{nameof(applicationId)} must be shorter than {MaxApplicationIdLength + 1} characters");
             }
 
             Assembly = assembly;
             ApplicationId = applicationId;
-            _userAgent = GenerateUserAgentString(assembly, applicationId);
+            _userAgent = GenerateUserAgentString(assembly, applicationId, runtimeInformation);
         }
 
         /// <summary>
@@ -56,7 +62,7 @@ namespace Azure.Core
             message.SetProperty(typeof(UserAgentValueKey), ToString());
         }
 
-        internal static string GenerateUserAgentString(Assembly clientAssembly, string? applicationId = null)
+        internal static string GenerateUserAgentString(Assembly clientAssembly, string? applicationId = null, RuntimeInformationWrapper? runtimeInformation = default)
         {
             const string PackagePrefix = "Azure.";
 
@@ -80,7 +86,8 @@ namespace Azure.Core
             {
                 version = version.Substring(0, hashSeparator);
             }
-            var platformInformation = $"({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})";
+            runtimeInformation ??= new RuntimeInformationWrapper();
+            var platformInformation = $"({runtimeInformation.FrameworkDescription}; {runtimeInformation.OSDescription})";
 
             return applicationId != null
                 ? $"{applicationId} azsdk-net-{assemblyName}/{version} {platformInformation}"
@@ -91,5 +98,72 @@ namespace Azure.Core
         /// The properly formatted UserAgent string based on this <see cref="TelemetryDetails"/> instance.
         /// </summary>
         public override string ToString() => _userAgent;
+
+        private static string ValidateAndFixMismatchedParenthesis(string userAgent)
+        {
+            var stack = new Stack<char>();
+            bool needsFix = false;
+            StringBuilder? fixedUserAgent = null;
+            for (int i = 0; i < userAgent.Length; i++)
+            {
+                switch (userAgent[i])
+                {
+                    case '(':
+                        stack.Push('(');
+                        if (needsFix)
+                        {
+                            // Since we're fixing the string, we need to copy the current char
+                            fixedUserAgent!.Append('(');
+                        }
+                        break;
+                    case ')':
+                        if (stack.Count == 0 || stack.Pop() != '(')
+                        {
+                            if (!needsFix)
+                            {
+                                needsFix = true;
+                                // We need to fix the string, so we need to copy it into a StringBuilder, excluding the invalid closing parenthesis
+                                fixedUserAgent = new(userAgent.Length);
+                                fixedUserAgent.Append(userAgent, 0, i - 1);
+                            }
+                        }
+                        else if (needsFix)
+                        {
+                            // Since we're fixing the string, we need to copy the current char
+                            fixedUserAgent!.Append(')');
+                        }
+                        break;
+                    default:
+                        if (needsFix)
+                        {
+                            // Since we're fixing the string, we need to copy the current char
+                            fixedUserAgent!.Append(userAgent[i]);
+                        }
+                        break;
+                }
+            }
+            if (stack.Count > 0)
+            {
+                if (!needsFix)
+                {
+                    // We need to fix the string, so we need to copy it into a StringBuilder, excluding the invalid closing parenthesis
+                    fixedUserAgent = new(userAgent.Length + stack.Count);
+                    fixedUserAgent.Append(userAgent);
+                }
+                while (stack.Count > 0)
+                {
+                    var paren = stack.Pop();
+                    if (paren == '(')
+                    {
+                        fixedUserAgent!.Append(')');
+                    }
+                    else
+                    {
+                        fixedUserAgent!.Append('(');
+                    }
+                }
+            }
+            return needsFix ? fixedUserAgent!.ToString() : userAgent;
+        }
     }
 }
