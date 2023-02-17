@@ -2247,7 +2247,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             ShareClientOptions options = GetOptions();
             options.AllowTrailingDot = true;
-            options.SourceAllowTrailingDot = sourceAllowTrailingDot;
+            options.AllowSourceTrailingDot = sourceAllowTrailingDot;
             await using DisposingShare test = await SharesClientBuilder.GetTestShareAsync(options: options);
             string destDirectoryName = GetNewDirectoryName() + ".";
             ShareDirectoryClient sourceDirectory = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName() + "."));

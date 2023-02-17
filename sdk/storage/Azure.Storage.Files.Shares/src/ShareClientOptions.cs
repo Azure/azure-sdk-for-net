@@ -144,7 +144,7 @@ namespace Azure.Storage.Files.Shares
         /// <see cref="ShareDirectoryClient.Rename(string, Models.ShareFileRenameOptions, System.Threading.CancellationToken)"/>,
         /// and <see cref="ShareDirectoryClient.RenameAsync(string, Models.ShareFileRenameOptions, System.Threading.CancellationToken)"/>.
         /// </summary>
-        public bool? SourceAllowTrailingDot { get; set; }
+        public bool? AllowSourceTrailingDot { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareClientOptions"/>

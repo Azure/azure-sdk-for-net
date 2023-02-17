@@ -481,7 +481,7 @@ namespace Azure.Storage.Files.Shares
                 version: _clientConfiguration.ClientOptions.Version.ToVersionString(),
                 fileRequestIntent: _clientConfiguration.FileRequestIntent,
                 allowTrailingDot: _clientConfiguration.ClientOptions.AllowTrailingDot,
-                allowSourceTrailingDot: _clientConfiguration.ClientOptions.SourceAllowTrailingDot);
+                allowSourceTrailingDot: _clientConfiguration.ClientOptions.AllowSourceTrailingDot);
         }
         #endregion ctors
 

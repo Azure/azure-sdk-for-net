@@ -2042,7 +2042,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             ShareClientOptions options = GetOptions();
             options.AllowTrailingDot = true;
-            options.SourceAllowTrailingDot = sourceAllowTrailingDot;
+            options.AllowSourceTrailingDot = sourceAllowTrailingDot;
             string sourceName = GetNewFileName() + ".";
             await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync(fileName: sourceName, options: options);
             ShareFileClient source = testSource.File;
@@ -4248,7 +4248,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             ShareClientOptions options = GetOptions();
             options.AllowTrailingDot = true;
-            options.SourceAllowTrailingDot = sourceAllowTrailingDot;
+            options.AllowSourceTrailingDot = sourceAllowTrailingDot;
             await using DisposingShare test = await GetTestShareAsync(options: options);
             ShareDirectoryClient directory = test.Share.GetDirectoryClient(GetNewDirectoryName());
             await directory.CreateAsync();
@@ -5889,7 +5889,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             ShareClientOptions options = GetOptions();
             options.AllowTrailingDot = true;
-            options.SourceAllowTrailingDot = sourceAllowTrailingDot;
+            options.AllowSourceTrailingDot = sourceAllowTrailingDot;
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(options: options);
             string destFileName = GetNewFileName() + ".";
             ShareFileClient sourceFile = InstrumentClient(test.Directory.GetFileClient(GetNewFileName() + "."));
