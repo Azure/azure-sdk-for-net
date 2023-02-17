@@ -42,46 +42,45 @@ namespace Azure.Storage
         {
             base.OnSendingRequest(message);
 
-            var request = message.Request;
-
             // Add a x-ms-date header
             if (IncludeXMsDate)
             {
                 var date = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture);
-                request.Headers.SetValue(Constants.HeaderNames.Date, date);
+                message.Request.Headers.SetValue(Constants.HeaderNames.Date, date);
             }
 
-            var stringToSign = BuildStringToSign(request.Method, request.Uri.ToUri(), request.Content, request.Headers.ToDictionary(h => h.Name, h => h.Value, StringComparer.OrdinalIgnoreCase));
+            var stringToSign = BuildStringToSign(message);
             var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(_credentials, stringToSign);
 
             var key = new AuthenticationHeaderValue(Constants.HeaderNames.SharedKey, _credentials.AccountName + ":" + signature).ToString();
-            request.Headers.SetValue(Constants.HeaderNames.Authorization, key);
+            message.Request.Headers.SetValue(Constants.HeaderNames.Authorization, key);
         }
 
         // If you change this method, make sure live tests are passing before merging PR.
-        private string BuildStringToSign(RequestMethod requestMethod, Uri uri, RequestContent content, Dictionary<string, string> headers)
+        private string BuildStringToSign(HttpMessage message)
         {
             // https://docs.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key
 
-            headers.TryGetValue(Constants.HeaderNames.ContentEncoding, out var contentEncoding);
-            headers.TryGetValue(Constants.HeaderNames.ContentLanguage, out var contentLanguage);
-            headers.TryGetValue(Constants.HeaderNames.ContentMD5, out var contentMD5);
-            headers.TryGetValue(Constants.HeaderNames.ContentType, out var contentType);
-            headers.TryGetValue(Constants.HeaderNames.IfModifiedSince, out var ifModifiedSince);
-            headers.TryGetValue(Constants.HeaderNames.IfMatch, out var ifMatch);
-            headers.TryGetValue(Constants.HeaderNames.IfNoneMatch, out var ifNoneMatch);
-            headers.TryGetValue(Constants.HeaderNames.IfUnmodifiedSince, out var ifUnmodifiedSince);
-            headers.TryGetValue(Constants.HeaderNames.Range, out var range);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentEncoding, out var contentEncoding);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentLanguage, out var contentLanguage);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentMD5, out var contentMD5);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentType, out var contentType);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.IfModifiedSince, out var ifModifiedSince);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.IfMatch, out var ifMatch);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.IfNoneMatch, out var ifNoneMatch);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.IfUnmodifiedSince, out var ifUnmodifiedSince);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.Range, out var range);
 
             string contentLengthString = string.Empty;
 
-            if (content != null && content.TryComputeLength(out long contentLength))
+            if (message.Request.Content != null && message.Request.Content.TryComputeLength(out long contentLength))
             {
                 contentLengthString = contentLength.ToString(CultureInfo.InvariantCulture);
             }
+            var uri = message.Request.Uri.ToUri();
 
             var stringBuilder = new StringBuilder(uri.AbsolutePath.Length + 64);
-            stringBuilder.Append(requestMethod.ToString().ToUpperInvariant()).Append('\n');
+            stringBuilder.Append(message.Request.Method.ToString().ToUpperInvariant()).Append('\n');
             stringBuilder.Append(contentEncoding ?? "").Append('\n');
             stringBuilder.Append(contentLanguage ?? "").Append('\n');
             stringBuilder.Append(contentLengthString == "0" ? "" : contentLengthString ?? "").Append('\n');
@@ -94,34 +93,28 @@ namespace Azure.Storage
             stringBuilder.Append(ifNoneMatch ?? "").Append('\n');
             stringBuilder.Append(ifUnmodifiedSince ?? "").Append('\n');
             stringBuilder.Append(range ?? "").Append('\n');
-            BuildCanonicalizedHeaders(stringBuilder, headers);
+            BuildCanonicalizedHeaders(stringBuilder, message);
             BuildCanonicalizedResource(stringBuilder, uri);
             return stringBuilder.ToString();
         }
 
         // If you change this method, make sure live tests are passing before merging PR.
-        private static void BuildCanonicalizedHeaders(StringBuilder stringBuilder, Dictionary<string, string> headers)
+        private static void BuildCanonicalizedHeaders(StringBuilder stringBuilder, HttpMessage message)
         {
             // Grab all the "x-ms-*" headers, trim whitespace, lowercase, sort,
             // and combine them with their values (separated by a colon).
-            var xmsHeaders = new List<HttpHeader>();
-            foreach (var kvp in headers)
+            foreach (var header in
+                message.Request.Headers
+                .Where(static h => h.Name.StartsWith(Constants.HeaderNames.XMsPrefix, StringComparison.OrdinalIgnoreCase))
+#pragma warning disable CA1308 // Normalize strings to uppercase
+                .Select(static h => (h.Name.ToLowerInvariant(), h.Value))
+#pragma warning restore CA1308 // Normalize strings to uppercase
+                .OrderBy(static h => h.Item1.Trim()))
             {
-                if (kvp.Key.StartsWith(Constants.HeaderNames.XMsPrefix, StringComparison.OrdinalIgnoreCase))
-                {
-                    xmsHeaders.Add(new HttpHeader(kvp.Key.ToLowerInvariant(), kvp.Value));
-                }
-            }
-
-            xmsHeaders.Sort(static (x, y) => string.CompareOrdinal(x.Name, y.Name));
-
-            foreach (var header in xmsHeaders)
-            {
-                stringBuilder
-                    .Append(header.Name)
-                    .Append(':')
-                    .Append(header.Value)
-                    .Append('\n');
+                stringBuilder.Append(header.Item1);
+                stringBuilder.Append(':');
+                stringBuilder.Append(header.Value);
+                stringBuilder.Append('\n');
             }
         }
 
