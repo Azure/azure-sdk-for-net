@@ -99,3 +99,13 @@ namespace Azure.Developer.LoadTesting
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Microsoft.Extensions.Azure
+{
+    public static partial class AzureLoadTestingClientBuilderExtensions
+    {
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Developer.LoadTesting.LoadTestAdministrationClient, Azure.Developer.LoadTesting.LoadTestingClientOptions> AddLoadTestAdministrationClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Developer.LoadTesting.LoadTestAdministrationClient, Azure.Developer.LoadTesting.LoadTestingClientOptions> AddLoadTestAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Developer.LoadTesting.LoadTestRunClient, Azure.Developer.LoadTesting.LoadTestingClientOptions> AddLoadTestRunClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Developer.LoadTesting.LoadTestRunClient, Azure.Developer.LoadTesting.LoadTestingClientOptions> AddLoadTestRunClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+    }
+}

@@ -8,20 +8,24 @@ using Azure.Core;
 using Azure.Core.Extensions;
 using Azure.Messaging.WebPubSub;
 
+//TODO: there is no way to only suppress a single memmber of a static class so we need to have everything custom here.
+[assembly: CodeGenSuppressType("WebPubSubServiceClientBuilderExtensions")]
+
 namespace Microsoft.Extensions.Azure
 {
     /// <summary>
     /// Extension methods to add <see cref="WebPubSubServiceClient"/> client to clients builder.
     /// </summary>
-    public static class WebPubSubServiceClientBuilderExtensions
+    public static partial class WebPubSubServiceClientBuilderExtensions
     {
-        /// <summary>
-        /// Registers a <see cref="WebPubSubServiceClient"/> instance with the provided <paramref name="connectionString"/> and <paramref name="hub"/>
-        /// </summary>
+        /// <summary> Registers a <see cref="WebPubSubServiceClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="connectionString"> HTTP or HTTPS endpoint for the Web PubSub service instance. </param>
+        /// <param name="hub"> Target hub name, which should start with alphabetic characters and only contain alpha-numeric characters or underscore. </param>
         public static IAzureClientBuilder<WebPubSubServiceClient, WebPubSubServiceClientOptions> AddWebPubSubServiceClient<TBuilder>(this TBuilder builder, string connectionString, string hub)
-            where TBuilder : IAzureClientFactoryBuilder
+        where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<WebPubSubServiceClient, WebPubSubServiceClientOptions>(options => new WebPubSubServiceClient(connectionString, hub, options));
+            return builder.RegisterClientFactory<WebPubSubServiceClient, WebPubSubServiceClientOptions>((options) => new WebPubSubServiceClient(connectionString, hub, options));
         }
 
         /// <summary>
@@ -42,11 +46,11 @@ namespace Microsoft.Extensions.Azure
             return builder.RegisterClientFactory<WebPubSubServiceClient, WebPubSubServiceClientOptions>(options => new WebPubSubServiceClient(endpoint, hub, credential, options));
         }
 
-        /// <summary>
-        /// Registers a <see cref="WebPubSubServiceClient"/> instance with connection options loaded from the provided <paramref name="configuration"/> instance.
-        /// </summary>
+        /// <summary> Registers a <see cref="WebPubSubServiceClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration values. </param>
         public static IAzureClientBuilder<WebPubSubServiceClient, WebPubSubServiceClientOptions> AddWebPubSubServiceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<WebPubSubServiceClient, WebPubSubServiceClientOptions>(configuration);
         }
