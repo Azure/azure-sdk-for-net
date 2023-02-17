@@ -49,43 +49,6 @@ namespace Azure.Monitor.OpenTelemetry
             return services;
         }
 
-#pragma warning disable CA1801 // Review unused parameters
-        internal static IServiceCollection AddAzureMonitorOpenTelemetrySeperateOptions(IServiceCollection services, bool enableTraces = true, bool enableMetrics = true, bool enableLogs = true)
-#pragma warning restore CA1801 // Review unused parameters
-        {
-            if (services == null)
-            {
-                throw new ArgumentNullException(nameof(services));
-            }
-
-            var builder = services.AddOpenTelemetry();
-
-            // TODO: Remove the hard-coded ConnectionString.
-            // If ConnectionString is not provided in config, exporter will throw.
-            // Modify exporter to read from configuration.
-            if (enableTraces)
-            {
-                builder.WithTracing(b => b
-                             .AddAspNetCoreInstrumentation()
-                             .AddAzureMonitorTraceExporter(o =>
-                             {
-                                 o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
-                             }));
-            }
-
-            if (enableMetrics)
-            {
-                builder.WithMetrics(b => b
-                             .AddAspNetCoreInstrumentation()
-                             .AddAzureMonitorMetricExporter(o =>
-                             {
-                                 o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
-                             }));
-            }
-
-            return services;
-        }
-
         internal static IServiceCollection AddAzureMonitorOpenTelemetryWithAction(IServiceCollection services, Action<AzureMonitorOpenTelemetryOptions> configureAzureMonitorOpenTelemetry, string? name)
         {
             if (services == null)
