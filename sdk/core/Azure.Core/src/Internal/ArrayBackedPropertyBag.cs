@@ -3,6 +3,7 @@
 
 using System;
 using System.Buffers;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
@@ -19,7 +20,9 @@ namespace Azure.Core
         private Kvp _second;
         private Kvp[] _rest;
         private int _count;
-
+#if DEBUG
+        private bool _disposed;
+#endif
         private readonly struct Kvp
         {
             public readonly TKey Key;
@@ -36,14 +39,31 @@ namespace Azure.Core
                 key = Key;
                 value = Value;
             }
+
+            public override string ToString() => $"[{Key}, {Value?.ToString() ?? "<null>"}]";
         }
 
-        public int Count => _count;
+        public int Count
+        {
+            get
+            {
+                CheckDisposed();
+                return _count;
+            }
+        }
 
-        public bool IsEmpty => _count == 0;
+        public bool IsEmpty
+        {
+            get
+            {
+                CheckDisposed();
+                return _count == 0;
+            }
+        }
 
         public void GetAt(int index, out TKey key, out TValue value)
         {
+            CheckDisposed();
             (key, value) = index switch
             {
                 0 => _first,
@@ -54,21 +74,21 @@ namespace Azure.Core
 
         public bool TryGetValue(TKey key, [MaybeNullWhen(false)] out TValue value)
         {
+            CheckDisposed();
             var index = GetIndex(key);
             if (index < 0)
             {
                 value = default;
                 return false;
             }
-            else
-            {
-                value = GetAt(index);
-                return true;
-            }
+
+            value = GetAt(index);
+            return true;
         }
 
         public bool TryAdd(TKey key, TValue value, out TValue? existingValue)
         {
+            CheckDisposed();
             var index = GetIndex(key);
             if (index >= 0)
             {
@@ -83,6 +103,7 @@ namespace Azure.Core
 
         public void Set(TKey key, TValue value)
         {
+            CheckDisposed();
             var index = GetIndex(key);
             if (index < 0)
                 AddInternal(key, value);
@@ -92,6 +113,7 @@ namespace Azure.Core
 
         public bool TryRemove(TKey key)
         {
+            CheckDisposed();
             switch (_count)
             {
                 case 0:
@@ -249,9 +271,22 @@ namespace Azure.Core
 
         internal void Dispose()
         {
+            CheckDisposed();
+#if DEBUG
+            _disposed = true;
+#endif
             if (_rest != null)
             {
                 ArrayPool<Kvp>.Shared.Return(_rest, true);
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public void CheckDisposed()
+        {
+            if (_disposed)
+            {
+                throw new InvalidOperationException($"{nameof(ArrayBackedPropertyBag<TKey, TValue>)} instance is already disposed");
             }
         }
     }
