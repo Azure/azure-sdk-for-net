@@ -41,7 +41,7 @@ namespace Azure.Identity
         /// </summary>
         internal bool IsLoggingPIIEnabled { get; set; }
 
-        internal T Clone<T>()
+        internal virtual T Clone<T>()
             where T : TokenCredentialOptions, new()
         {
             T clone = new T();

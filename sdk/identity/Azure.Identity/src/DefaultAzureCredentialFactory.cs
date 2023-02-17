@@ -24,7 +24,7 @@ namespace Azure.Identity
 
             _useDefaultCredentialChain = options == null;
 
-            Options = options?.Clone() ?? new DefaultAzureCredentialOptions();
+            Options = options?.Clone<DefaultAzureCredentialOptions>() ?? new DefaultAzureCredentialOptions();
         }
 
         public DefaultAzureCredentialOptions Options { get; }

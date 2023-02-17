@@ -255,29 +255,32 @@ namespace Azure.Identity
         /// <inheriteddoc/>
         public bool DisableInstanceDiscovery { get; set; }
 
-        internal DefaultAzureCredentialOptions Clone()
+        internal override T Clone<T>()
         {
-            var clone = Clone<DefaultAzureCredentialOptions>();
+            var clone = base.Clone<T>();
 
-            clone._tenantId = _tenantId;
-            clone._interactiveBrowserTenantId = _interactiveBrowserTenantId;
-            clone._sharedTokenCacheTenantId = _sharedTokenCacheTenantId;
-            clone._visualStudioTenantId = _visualStudioTenantId;
-            clone._visualStudioCodeTenantId = _visualStudioCodeTenantId;
-            clone.SharedTokenCacheUsername = SharedTokenCacheUsername;
-            clone.InteractiveBrowserCredentialClientId = InteractiveBrowserCredentialClientId;
-            clone.ManagedIdentityClientId = ManagedIdentityClientId;
-            clone.ManagedIdentityResourceId = ManagedIdentityResourceId;
-            clone.DeveloperCredentialTimeout = DeveloperCredentialTimeout;
-            clone.ExcludeEnvironmentCredential = ExcludeEnvironmentCredential;
-            clone.ExcludeManagedIdentityCredential = ExcludeManagedIdentityCredential;
-            clone.ExcludeAzureDeveloperCliCredential = ExcludeAzureDeveloperCliCredential;
-            clone.ExcludeSharedTokenCacheCredential = ExcludeSharedTokenCacheCredential;
-            clone.ExcludeInteractiveBrowserCredential = ExcludeInteractiveBrowserCredential;
-            clone.ExcludeAzureCliCredential = ExcludeAzureCliCredential;
-            clone.ExcludeVisualStudioCredential = ExcludeVisualStudioCredential;
-            clone.ExcludeVisualStudioCodeCredential = ExcludeVisualStudioCodeCredential;
-            clone.ExcludeAzurePowerShellCredential = ExcludeAzurePowerShellCredential;
+            if (clone is DefaultAzureCredentialOptions dacClone)
+            {
+                dacClone._tenantId = _tenantId;
+                dacClone._interactiveBrowserTenantId = _interactiveBrowserTenantId;
+                dacClone._sharedTokenCacheTenantId = _sharedTokenCacheTenantId;
+                dacClone._visualStudioTenantId = _visualStudioTenantId;
+                dacClone._visualStudioCodeTenantId = _visualStudioCodeTenantId;
+                dacClone.SharedTokenCacheUsername = SharedTokenCacheUsername;
+                dacClone.InteractiveBrowserCredentialClientId = InteractiveBrowserCredentialClientId;
+                dacClone.ManagedIdentityClientId = ManagedIdentityClientId;
+                dacClone.ManagedIdentityResourceId = ManagedIdentityResourceId;
+                dacClone.DeveloperCredentialTimeout = DeveloperCredentialTimeout;
+                dacClone.ExcludeEnvironmentCredential = ExcludeEnvironmentCredential;
+                dacClone.ExcludeManagedIdentityCredential = ExcludeManagedIdentityCredential;
+                dacClone.ExcludeAzureDeveloperCliCredential = ExcludeAzureDeveloperCliCredential;
+                dacClone.ExcludeSharedTokenCacheCredential = ExcludeSharedTokenCacheCredential;
+                dacClone.ExcludeInteractiveBrowserCredential = ExcludeInteractiveBrowserCredential;
+                dacClone.ExcludeAzureCliCredential = ExcludeAzureCliCredential;
+                dacClone.ExcludeVisualStudioCredential = ExcludeVisualStudioCredential;
+                dacClone.ExcludeVisualStudioCodeCredential = ExcludeVisualStudioCodeCredential;
+                dacClone.ExcludeAzurePowerShellCredential = ExcludeAzurePowerShellCredential;
+            }
 
             return clone;
         }
