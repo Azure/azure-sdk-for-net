@@ -140,7 +140,7 @@ namespace Azure.Monitor.Ingestion.Tests
             options.UploadFailed += Options_UploadFailed;
             await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options).ConfigureAwait(false);
             Assert.IsTrue(isTriggered);
-            Task Options_UploadFailed(UploadFailedEventArgs e)
+            Task Options_UploadFailed(LogsUploadFailedEventArgs e)
             {
                 isTriggered = true;
                 Assert.IsInstanceOf<RequestFailedException>(e.Exception);
@@ -177,7 +177,7 @@ namespace Azure.Monitor.Ingestion.Tests
             options.UploadFailed += Options_UploadFailed;
             await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options).ConfigureAwait(false);
             Assert.IsTrue(isTriggered);
-            Task Options_UploadFailed(UploadFailedEventArgs e)
+            Task Options_UploadFailed(LogsUploadFailedEventArgs e)
             {
                 isTriggered = true;
                 Assert.IsInstanceOf<RequestFailedException>(e.Exception);
@@ -227,7 +227,7 @@ namespace Azure.Monitor.Ingestion.Tests
             // check if OperationCanceledException is in the Exception list
             // may not be first one in async case
             Assert.IsTrue(exceptions.InnerExceptions.Any(exception => exception is OperationCanceledException));
-            Task Options_UploadFailed(UploadFailedEventArgs e)
+            Task Options_UploadFailed(LogsUploadFailedEventArgs e)
             {
                 cts.Cancel();
                 isTriggered = true;
@@ -258,7 +258,7 @@ namespace Azure.Monitor.Ingestion.Tests
             LogsUploadOptions options = new LogsUploadOptions();
             options.UploadFailed += Options_UploadFailed;
             var exceptions = Assert.ThrowsAsync<AggregateException>(async () => { await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options).ConfigureAwait(false); });
-            Task Options_UploadFailed(UploadFailedEventArgs e)
+            Task Options_UploadFailed(LogsUploadFailedEventArgs e)
             {
                 Assert.IsInstanceOf<RequestFailedException>(e.Exception);
                 Assert.AreEqual("ContentLengthLimitExceeded", ((RequestFailedException)(e.Exception)).ErrorCode);

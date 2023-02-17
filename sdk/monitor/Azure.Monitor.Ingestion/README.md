@@ -212,7 +212,7 @@ options.UploadFailed += Options_UploadFailed;
 // Upload our logs
 Response response = await client.UploadAsync(ruleId, streamName, entries, options).ConfigureAwait(false);
 
-Task Options_UploadFailed(UploadFailedEventArgs e)
+Task Options_UploadFailed(LogsUploadFailedEventArgs e)
 {
     // Throw exception from EventHandler to stop Upload if there is a failure
     IReadOnlyList<object> failedLogs = e.FailedLogs;
