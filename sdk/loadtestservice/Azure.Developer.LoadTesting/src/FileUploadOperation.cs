@@ -73,7 +73,7 @@ namespace Azure.Developer.LoadTesting
         /// <summary>
         /// FileUploadOperation.
         /// </summary>
-        public FileUploadOperation(string testId, string fileName, LoadTestAdministrationClient client, Response initialResponse)
+        public FileUploadOperation(string testId, string fileName, LoadTestAdministrationClient client, Response initialResponse = null)
         {
             _testId = testId;
             _fileName = fileName;
