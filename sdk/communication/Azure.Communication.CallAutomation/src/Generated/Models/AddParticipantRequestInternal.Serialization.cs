@@ -15,20 +15,20 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceCallerId))
+            if (Optional.IsDefined(SourceCallerIdNumber))
             {
-                writer.WritePropertyName("sourceCallerId"u8);
-                writer.WriteObjectValue(SourceCallerId);
+                writer.WritePropertyName("sourceCallerIdNumber");
+                writer.WriteObjectValue(SourceCallerIdNumber);
             }
             if (Optional.IsDefined(SourceDisplayName))
             {
                 writer.WritePropertyName("sourceDisplayName"u8);
                 writer.WriteStringValue(SourceDisplayName);
             }
-            if (Optional.IsDefined(SourceIdentifier))
+            if (Optional.IsDefined(SourceIdentity))
             {
-                writer.WritePropertyName("sourceIdentifier"u8);
-                writer.WriteObjectValue(SourceIdentifier);
+                writer.WritePropertyName("sourceIdentity");
+                writer.WriteObjectValue(SourceIdentity);
             }
             writer.WritePropertyName("participantToAdd");
             writer.WriteObjectValue(ParticipantToAdd);

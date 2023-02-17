@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class RemoveParticipantsResult
+    public partial class RemoveParticipantResult
     {
-        internal static RemoveParticipantsResult DeserializeRemoveParticipantsResult(JsonElement element)
+        internal static RemoveParticipantResult DeserializeRemoveParticipantResult(JsonElement element)
         {
             Optional<string> operationContext = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new RemoveParticipantsResult(operationContext.Value);
+            return new RemoveParticipantResult(operationContext.Value);
         }
     }
 }

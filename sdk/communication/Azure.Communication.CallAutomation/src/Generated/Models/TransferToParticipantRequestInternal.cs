@@ -29,7 +29,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> The caller ID of the transferee when transferring to PSTN. </summary>
         public PhoneNumberIdentifierModel TransfereeCallerId { get; set; }
         /// <summary> Used by customer to send custom context to targets. </summary>
-        public CustomContext CustomContext { get; set; }
+        public CustomContextInternal CustomContext { get; set; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; set; }
     }

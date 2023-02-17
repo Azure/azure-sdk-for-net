@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation
         /// The source caller Id, a phone number, that&apos;s shown to the PSTN participant being invited.
         /// Required only when inviting a PSTN participant.
         /// </summary>
-        public PhoneNumberIdentifierModel SourceCallerId { get; set; }
+        public PhoneNumberIdentifierModel SourceCallerIdNumber { get; set; }
         /// <summary>
         /// (Optional) The display name of the source that is associated with this invite operation when
         /// adding a PSTN participant or teams user.  Note: Will not update the display name in the roster.
@@ -38,7 +38,7 @@ namespace Azure.Communication.CallAutomation
         /// (Optional) The identifier of the source of the call for this invite operation. If SourceDisplayName
         /// is not set, the display name of the source will be used by default when adding a PSTN participant or teams user.
         /// </summary>
-        public CommunicationIdentifierModel SourceIdentifier { get; set; }
+        public CommunicationIdentifierModel SourceIdentity { get; set; }
         /// <summary> The participant to invite. </summary>
         public CommunicationIdentifierModel ParticipantToAdd { get; }
         /// <summary>
@@ -49,6 +49,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; set; }
         /// <summary> Used by customer to send custom context to targets. </summary>
-        public CustomContext CustomContext { get; set; }
+        public CustomContextInternal CustomContext { get; set; }
     }
 }

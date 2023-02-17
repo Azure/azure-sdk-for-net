@@ -5,23 +5,22 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class AddParticipantsSucceededInternal
+    internal partial class AddParticipantFailedInternal
     {
-        internal static AddParticipantsSucceededInternal DeserializeAddParticipantsSucceededInternal(JsonElement element)
+        internal static AddParticipantFailedInternal DeserializeAddParticipantFailedInternal(JsonElement element)
         {
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
-            Optional<IReadOnlyList<CommunicationIdentifierModel>> participants = default;
+            Optional<CommunicationIdentifierModel> participant = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -54,23 +53,18 @@ namespace Azure.Communication.CallAutomation
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("participants"u8))
+                if (property.NameEquals("participant"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CommunicationIdentifierModel> array = new List<CommunicationIdentifierModel>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(item));
-                    }
-                    participants = array;
+                    participant = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
             }
-            return new AddParticipantsSucceededInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, Optional.ToList(participants));
+            return new AddParticipantFailedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, participant.Value);
         }
     }
 }

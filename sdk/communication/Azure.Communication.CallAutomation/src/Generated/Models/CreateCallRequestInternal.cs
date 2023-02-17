@@ -39,7 +39,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Display name of the call if dialing out to a pstn number. </summary>
         public string SourceDisplayName { get; set; }
         /// <summary> The identifier of the source of the call. </summary>
-        public CommunicationIdentifierModel CallSourceIdentifier { get; set; }
+        public CommunicationIdentifierModel SourceIdentity { get; set; }
         /// <summary> A customer set value used to track the answering of a call. </summary>
         public string OperationContext { get; set; }
         /// <summary> The callback URI. </summary>

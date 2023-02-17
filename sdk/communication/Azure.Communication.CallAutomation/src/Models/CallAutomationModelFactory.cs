@@ -14,12 +14,12 @@ namespace Azure.Communication.CallAutomation
     public static partial class CallAutomationModelFactory
     {
         /// <summary> Initializes a new instance of AddParticipantsResult. </summary>
-        /// <param name="participants"> Participants of the call. </param>
+        /// <param name="participant"> Participant of the call. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <returns> A new <see cref="CallAutomation.AddParticipantsResult"/> instance for mocking. </returns>
-        public static AddParticipantsResult AddParticipantsResult(IEnumerable<CallParticipant> participants = default, string operationContext = default)
+        /// <returns> A new <see cref="CallAutomation.AddParticipantResult"/> instance for mocking. </returns>
+        public static AddParticipantResult AddParticipantsResult(CallParticipant participant = default, string operationContext = default)
         {
-            return new AddParticipantsResult(participants == null ? new List<CallParticipant>() : participants.ToList(), operationContext);
+            return new AddParticipantResult(participant, operationContext);
         }
 
         /// <summary> Initializes a new instance of AnswerCallResult. </summary>
@@ -93,35 +93,35 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Initializes a new instance of add participant failed event.
         /// </summary>
-        public static AddParticipantsFailed AddParticipantsFailed(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, IEnumerable<CommunicationIdentifier> participants = default)
+        public static AddParticipantFailed AddParticipantFailed(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
         {
-            var internalObject = new AddParticipantsFailedInternal(
+            var internalObject = new AddParticipantFailedInternal(
                 callConnectionId,
                 serverCallId,
                 correlationId,
                 operationContext,
                 resultInformation,
-                participants == null ? new List<CommunicationIdentifierModel>() : participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList()
+                participant: CommunicationIdentifierSerializer.Serialize(participant)
                 );
 
-            return new AddParticipantsFailed(internalObject);
+            return new AddParticipantFailed(internalObject);
         }
 
         /// <summary>
         /// Initializes a new instance of add participant success event.
         /// </summary>
-        public static AddParticipantsSucceeded AddParticipantsSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, IEnumerable<CommunicationIdentifier> participants = default)
+        public static AddParticipantSucceeded AddParticipantSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string operationContext = default, ResultInformation resultInformation = default, CommunicationIdentifier participant = default)
         {
-            var internalObject = new AddParticipantsSucceededInternal(
+            var internalObject = new AddParticipantSucceededInternal(
                 callConnectionId,
                 serverCallId,
                 correlationId,
                 operationContext,
                 resultInformation,
-                participants == null ? new List<CommunicationIdentifierModel>() : participants.Select(t => CommunicationIdentifierSerializer.Serialize(t)).ToList()
+                participant: CommunicationIdentifierSerializer.Serialize(participant)
                 );
 
-            return new AddParticipantsSucceeded(internalObject);
+            return new AddParticipantSucceeded(internalObject);
         }
 
         /// <summary>
