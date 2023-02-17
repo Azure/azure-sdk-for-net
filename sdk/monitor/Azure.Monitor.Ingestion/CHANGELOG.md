@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0 (2023-02-17)
 
 ### Features Added
 - Added EventHandler to LogsUploadOptions for error handling.
@@ -10,8 +10,6 @@
 ### Breaking Changes
  - Renamed UploadLogsOptions to LogsUploadOptions
  - Renamed UploadLogsFailedEventArgs to LogsUploadFailedEventArgs
-
-### Bugs Fixed
 
 ### Other Changes
 - Removed Model `UploadLogsResult` containing the result of a logs upload operation
