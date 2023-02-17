@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The flag which indicates whether this scheduled query rule is enabled. Value should be true or false. </summary>
         public bool? IsEnabled { get; set; }
         /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public MonitorPublicNetworkAccessState? PublicNetworkAccess { get; set; }
         /// <summary> The list of resource id&apos;s that this scheduled query rule is scoped to. </summary>
         public IList<string> Scopes { get; }
         /// <summary> How often the scheduled query rule is evaluated represented in ISO 8601 duration format. Relevant and required only for rules of the kind LogAlert. </summary>

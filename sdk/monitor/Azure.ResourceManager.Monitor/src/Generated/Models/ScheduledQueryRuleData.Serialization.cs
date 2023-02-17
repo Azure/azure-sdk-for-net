@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<string> displayName = default;
             Optional<AlertSeverity> severity = default;
             Optional<bool> enabled = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<MonitorPublicNetworkAccessState> publicNetworkAccess = default;
             Optional<IList<string>> scopes = default;
             Optional<TimeSpan> evaluationFrequency = default;
             Optional<TimeSpan> windowSize = default;
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new MonitorPublicNetworkAccessState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("scopes"u8))
