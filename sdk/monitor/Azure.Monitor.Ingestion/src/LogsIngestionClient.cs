@@ -446,14 +446,13 @@ namespace Azure.Monitor.Ingestion
             // If no exceptions return response
             if (runningTasks.Count == 0)
                 return firstTask.Result;
-
             else
                 return runningTasks.Select(_ => _.CurrentTask).Last().Result; //204 - response of last batch with header
         }
 
         private static void ProcessCompletedTask((Task<Response> CurrentTask, List<object> Logs) runningTask, ref List<Exception> exceptions, ref int logsFailed)
         {
-            // Only want to process task if it not canceled, processing canceled task throws exception
+            // If the task was canceled, the OperationCanceledException was already observed and tracked in our exception list.
             if (runningTask.CurrentTask.IsCanceled)
                 return;
             int logsCount = runningTask.Logs.Count;
@@ -477,7 +476,7 @@ namespace Azure.Monitor.Ingestion
 
         internal async Task<(Exception Exception, int FailedLogsCount)> ProcessCompletedTaskEventHandlerAsync(Task<Response> completedTask, List<object> logs, LogsUploadOptions options, CancellationToken cancellationToken)
         {
-            // Only want to process task if it not canceled, processing canceled task throws exception
+            // If the task was canceled, the OperationCanceledException was already observed and tracked in our exception list.
             if (completedTask.IsCanceled)
                 return (default, default);
 
