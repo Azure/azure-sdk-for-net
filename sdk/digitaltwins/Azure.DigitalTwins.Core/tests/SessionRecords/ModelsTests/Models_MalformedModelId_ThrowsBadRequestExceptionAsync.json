@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-0804377c01ad58402fba2d2d01a1a5ea-2d291382d0e2bafe-00",
-        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230131.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "0d1fef7cb84f14c80a2b36dedac84c26",
+        "traceparent": "00-e857f76cb5263747ac429184c404f60f-3d40b37f34cf814c-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.5.0-alpha.20230209.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "5caea04ebc41dfd61c0629da94942a44",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -16,10 +16,10 @@
       "ResponseHeaders": {
         "Content-Length": "199",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 01 Feb 2023 23:58:26 GMT",
-        "mise-correlation-id": "0af98ece-b1e1-4685-8909-8171bbc50a95",
+        "Date": "Wed, 15 Feb 2023 18:25:52 GMT",
+        "mise-correlation-id": "5e2a3114-fe0a-4f18-b6ee-3a2c21cc63ad",
         "Strict-Transport-Security": "max-age=2592000",
-        "traceresponse": "00-0804377c01ad58402fba2d2d01a1a5ea-48a3b6e74d4975a3-01"
+        "traceresponse": "00-e857f76cb5263747ac429184c404f60f-764539dd7ec09abe-01"
       },
       "ResponseBody": {
         "error": {
@@ -32,6 +32,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "DIGITALTWINS_URL": "https://fakeHost.api.wus2.digitaltwins.azure.net",
-    "RandomSeed": "138984298"
+    "RandomSeed": "467909884"
   }
 }

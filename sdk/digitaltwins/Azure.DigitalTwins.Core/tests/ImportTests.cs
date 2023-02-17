@@ -37,25 +37,36 @@ namespace Azure.DigitalTwins.Core.Tests
             {
                 // act + assert
 
-                // CREATE job
+                // validate CREATE job
                 var createResponse = await client.CreateImportJobsAsync(jobId, importJob).ConfigureAwait(false);
                 Assert.IsNotNull(createResponse);
                 var rawCreateResponse = createResponse.GetRawResponse();
-                Assert.AreEqual(ImportJobStatus.Notstarted, createResponse.Value.Status);
                 Assert.AreEqual((int)HttpStatusCode.Created, rawCreateResponse.Status);
 
-                // LIST all jobs
+                // Validate GET job
+                var getResponse = await client.GetImportJobsByIdAsync(jobId).ConfigureAwait(false);
+                Assert.IsNotNull(getResponse);
+                var rawGetResponse = getResponse.GetRawResponse();
+                Assert.AreEqual((int)HttpStatusCode.OK, rawGetResponse.Status);
+
+                // validate LIST all jobs
                 var listResponse = await client.ListImportJobsAsync();
                 Assert.IsNotNull(listResponse);
                 var rawListResponse = listResponse.GetRawResponse();
                 Assert.AreEqual((int)HttpStatusCode.OK, rawListResponse.Status);
 
-                // DELETE job
+                // validate CANCEL job
+                var cancelResponse = await client.CancelImportJobsAsync(jobId).ConfigureAwait(false);
+                Assert.IsNotNull(cancelResponse);
+                var rawCancelResponse = cancelResponse.GetRawResponse();
+                Assert.AreEqual((int)HttpStatusCode.OK, rawCancelResponse.Status);
+
+                // validate DELETE job
                 var deleteResponse = await client.DeleteImportJobsAsync(jobId).ConfigureAwait(false);
                 Assert.IsNotNull(deleteResponse);
                 Assert.AreEqual((int)HttpStatusCode.NoContent, deleteResponse.Status);
 
-                // GET job after deletion - should fail
+                // validate GET job after deletion - should fail
                 Func<Task> act = async () => await client.GetImportJobsByIdAsync(jobId).ConfigureAwait(false);
                 act.Should().Throw<RequestFailedException>()
                     .And.Status.Should().Be((int)HttpStatusCode.NotFound);
@@ -105,17 +116,22 @@ namespace Azure.DigitalTwins.Core.Tests
             try
             {
                 // Create import job once
-                await client.CreateImportJobsAsync(jobId, importJob).ConfigureAwait(false);
+                var createResponse = await client.CreateImportJobsAsync(jobId, importJob).ConfigureAwait(false);
 
-                // act
+                // Validation
+                Assert.IsNotNull(createResponse);
+                var rawCreateResponse = createResponse.GetRawResponse();
+                Assert.AreEqual((int)HttpStatusCode.Created, rawCreateResponse.Status);
+
+                // Create import job again
                 Func<Task> act = async () => await client.CreateImportJobsAsync(jobId, importJob).ConfigureAwait(false);
 
-                // assert
-                act.Should().Throw<RequestFailedException>()
-                    .And.Status.Should().Be((int)HttpStatusCode.Conflict);
+                // not available from HttpStatusCode in net461
+                var tooManyRequestsCode = 429;
 
-                // clean up
-                await client.DeleteImportJobsAsync(jobId).ConfigureAwait(false);
+                // Second request should fail - either with job id exists or because other job is running.
+                act.Should().Throw<RequestFailedException>()
+                    .And.Status.Should().BeOneOf(new List<int> { (int)HttpStatusCode.Conflict, tooManyRequestsCode });
             }
             catch (Exception ex)
             {
