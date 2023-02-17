@@ -246,6 +246,7 @@ rename-mapping:
   ConditionOperator: MonitorConditionOperator
   ActionType: MonitorWorkspaceActionType
   Metrics: MetricProperties
+  PublicNetworkAccess: MonitorPublicNetworkAccessState
   AzureMonitorWorkspaceResource: MonitorWorkspaceResource
   AzureMonitorWorkspaceResourceCollection: MonitorWorkspaceResourceCollection
   AzureMonitorWorkspaceResourceData: MonitorWorkspaceResourceData
