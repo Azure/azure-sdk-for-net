@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -318,12 +319,27 @@ namespace Azure.Core.Pipeline
 #if NET6_0_OR_GREATER
         private static string JoinHeaderValues(HeaderStringValues values)
         {
-            return values.Count switch
+            var count = values.Count;
+            if (count == 0)
             {
-                0 => string.Empty,
-                1 => values.ToString(),
-                _ => string.Join(",", values)
-            };
+                return string.Empty;
+            }
+
+            var interpolatedStringHandler = new DefaultInterpolatedStringHandler(count-1, count);
+            var isFirst = true;
+            foreach (var str in values)
+            {
+                if (isFirst)
+                {
+                    isFirst = false;
+                }
+                else
+                {
+                    interpolatedStringHandler.AppendLiteral(",");
+                }
+                interpolatedStringHandler.AppendFormatted(str);
+            }
+            return string.Create(null, ref interpolatedStringHandler);
         }
 #else
         private static string JoinHeaderValues(IEnumerable<string> values)
