@@ -374,11 +374,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
         public async Task CanUploadBlobInEqualSizeChunks()
         {
             // Arrange
-            var repositoryId = Recording.Random.NewGuid().ToString();
-            var client = CreateBlobClient(repositoryId);
-
             int blobSize = 1024;
             int chunkSize = 1024 / 4; // Four equal-sized chunks
+
+            var repositoryId = Recording.Random.NewGuid().ToString();
+            var client = CreateBlobClient(repositoryId, chunkSize);
 
             var data = GetConstantBuffer(blobSize, 1);
             UploadBlobResult uploadResult = default;
@@ -387,7 +387,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             using (var stream = new MemoryStream(data))
             {
                 digest = BlobHelper.ComputeDigest(stream);
-                uploadResult = await client.UploadBlobAsync(stream, new UploadBlobOptions(chunkSize));
+                uploadResult = await client.UploadBlobAsync(stream);
             }
 
             // Assert
@@ -402,13 +402,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
         public async Task CanUploadBlobInUnequalChunks()
         {
             // Arrange
-            var repositoryId = Recording.Random.NewGuid().ToString();
-            var client = CreateBlobClient(repositoryId);
-
             int blobSize = 1024;
             int chunkSize = 1024 / 4;    // Equal-sized chunks
             int remainderChunkSize = 20;
             blobSize += remainderChunkSize;
+
+            var repositoryId = Recording.Random.NewGuid().ToString();
+            var client = CreateBlobClient(repositoryId, chunkSize);
 
             var data = GetConstantBuffer(blobSize, 2);
             UploadBlobResult uploadResult = default;
@@ -417,7 +417,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             using (var stream = new MemoryStream(data))
             {
                 digest = BlobHelper.ComputeDigest(stream);
-                uploadResult = await client.UploadBlobAsync(stream, new UploadBlobOptions(chunkSize));
+                uploadResult = await client.UploadBlobAsync(stream);
             }
 
             // Assert
@@ -432,11 +432,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
         public async Task CanUploadBlobInSingleChunk()
         {
             // Arrange
-            var repositoryId = Recording.Random.NewGuid().ToString();
-            var client = CreateBlobClient(repositoryId);
-
             int blobSize = 512;
             int chunkSize = 1024;
+
+            var repositoryId = Recording.Random.NewGuid().ToString();
+            var client = CreateBlobClient(repositoryId, chunkSize);
 
             var data = GetConstantBuffer(blobSize, 3);
             UploadBlobResult uploadResult = default;
@@ -445,7 +445,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             using (var stream = new MemoryStream(data))
             {
                 digest = BlobHelper.ComputeDigest(stream);
-                uploadResult = await client.UploadBlobAsync(stream, new UploadBlobOptions(chunkSize));
+                uploadResult = await client.UploadBlobAsync(stream);
             }
 
             // Assert
@@ -460,11 +460,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
         public async Task CanUploadBlobFromNonSeekableStream()
         {
             // Arrange
-            var repositoryId = Recording.Random.NewGuid().ToString();
-            var client = CreateBlobClient(repositoryId);
-
             int blobSize = 1024;
             int chunkSize = 1024 / 4; // Four equal-sized chunks
+
+            var repositoryId = Recording.Random.NewGuid().ToString();
+            var client = CreateBlobClient(repositoryId, chunkSize);
 
             var data = GetConstantBuffer(blobSize, 3);
             UploadBlobResult uploadResult = default;
@@ -472,7 +472,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             using (var stream = new NonSeekableMemoryStream(data))
             {
-                uploadResult = await client.UploadBlobAsync(stream, new UploadBlobOptions(chunkSize));
+                uploadResult = await client.UploadBlobAsync(stream);
             }
 
             // Assert
