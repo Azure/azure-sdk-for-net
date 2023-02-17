@@ -27,15 +27,15 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
              * 5. Check the call if the call is terminated.
             */
 
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+
             try
             {
-                // create caller and receiver
-                CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
-                CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
-
-                CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
-                string? callConnectionId = null;
-
                 try
                 {
                     // setup service bus
@@ -53,7 +53,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 
                     // answer the call
                     var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
-                    AnswerCallResult answerResponse = await client.AnswerCallAsync(answerCallOptions);
+                    AnswerCallResult answerResponse = await targetClient.AnswerCallAsync(answerCallOptions);
 
                     // wait for callConnected
                     var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
@@ -91,14 +91,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 {
                     throw;
                 }
-                finally
-                {
-                    await CleanUpCall(client, callConnectionId);
-                }
             }
             catch (Exception ex)
             {
                 Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
             }
         }
     }
