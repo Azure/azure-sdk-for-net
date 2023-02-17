@@ -67,7 +67,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             });
 
             // Finally, upload the manifest file
-            await client.UploadManifestAsync(manifest, new UploadManifestOptions(tag));
+            await client.UploadManifestAsync(manifest, tag);
 
             #endregion
         }
@@ -95,31 +95,32 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             #region Snippet:ContainerRegistry_Samples_DownloadArtifactAsync
 
             // Download the manifest to obtain the list of files in the artifact
-            var manifestResult = await client.DownloadManifestAsync(new DownloadManifestOptions(tag));
-            OciManifest manifest = (OciManifest)manifestResult.Value.Manifest;
+            DownloadManifestResult result = await client.DownloadManifestAsync(tag);
+            OciManifest manifest = result.AsOciManifest();
 
-            await WriteFile(Path.Combine(path, "manifest.json"), manifestResult.Value.ManifestStream);
+            await WriteFile(Path.Combine(path, "manifest.json"), result.Content);
 
             // Download and write out the config
-            var configResult = await client.DownloadBlobAsync(manifest.Config.Digest);
+            DownloadBlobResult configBlob = await client.DownloadBlobAsync(manifest.Config.Digest);
 
-            await WriteFile(Path.Combine(path, "config.json"), configResult.Value.Content);
+            await WriteFile(Path.Combine(path, "config.json"), configBlob.Content);
 
             // Download and write out the layers
             foreach (var layerFile in manifest.Layers)
             {
-                var layerResult = await client.DownloadBlobAsync(layerFile.Digest);
-                Stream stream = layerResult.Value.Content;
-
-                await WriteFile(Path.Combine(path, TrimSha(layerFile.Digest)), configResult.Value.Content);
+                string fileName = Path.Combine(path, TrimSha(layerFile.Digest));
+                using (FileStream fs = File.Create(fileName))
+                {
+                    await client.DownloadBlobToAsync(layerFile.Digest, fs);
+                }
             }
 
             // Helper methods
-            async Task WriteFile(string path, Stream content)
+            async Task WriteFile(string path, BinaryData content)
             {
                 using (FileStream fs = File.Create(path))
                 {
-                    await content.CopyToAsync(fs);
+                    await content.ToStream().CopyToAsync(fs);
                 }
             }
 
