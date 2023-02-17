@@ -17,9 +17,9 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.Email
 {
     /// <summary> Queues an email message to be sent to one or more recipients. </summary>
-    public partial class EmailSendOperation : Operation<OperationStatus>, IOperationSource<OperationStatus>
+    public partial class EmailSendOperation : Operation<EmailSendResult>, IOperationSource<EmailSendResult>
     {
-        private readonly OperationInternal<OperationStatus> _operation;
+        private readonly OperationInternal<EmailSendResult> _operation;
 
         /// <summary> Initializes a new instance of EmailSendOperation for mocking. </summary>
         protected EmailSendOperation()
@@ -28,8 +28,8 @@ namespace Azure.Communication.Email
 
         internal EmailSendOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            IOperation<OperationStatus> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.AzureAsyncOperation);
-            _operation = new OperationInternal<OperationStatus>(clientDiagnostics, nextLinkOperation, response, "EmailSendOperation");
+            IOperation<EmailSendResult> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.AzureAsyncOperation);
+            _operation = new OperationInternal<EmailSendResult>(clientDiagnostics, nextLinkOperation, response, "EmailSendOperation");
         }
 
         /// <inheritdoc />
@@ -38,7 +38,7 @@ namespace Azure.Communication.Email
 #pragma warning restore CA1822
 
         /// <inheritdoc />
-        public override OperationStatus Value => _operation.Value;
+        public override EmailSendResult Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -56,27 +56,27 @@ namespace Azure.Communication.Email
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override Response<OperationStatus> WaitForCompletion(CancellationToken cancellationToken = default) => _operation.WaitForCompletion(cancellationToken);
+        public override Response<EmailSendResult> WaitForCompletion(CancellationToken cancellationToken = default) => _operation.WaitForCompletion(cancellationToken);
 
         /// <inheritdoc />
-        public override Response<OperationStatus> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletion(pollingInterval, cancellationToken);
+        public override Response<EmailSendResult> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletion(pollingInterval, cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<OperationStatus>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<EmailSendResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<OperationStatus>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<EmailSendResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        OperationStatus IOperationSource<OperationStatus>.CreateResult(Response response, CancellationToken cancellationToken)
+        EmailSendResult IOperationSource<EmailSendResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return OperationStatus.DeserializeOperationStatus(document.RootElement);
+            return EmailSendResult.DeserializeEmailSendResult(document.RootElement);
         }
 
-        async ValueTask<OperationStatus> IOperationSource<OperationStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<EmailSendResult> IOperationSource<EmailSendResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return OperationStatus.DeserializeOperationStatus(document.RootElement);
+            return EmailSendResult.DeserializeEmailSendResult(document.RootElement);
         }
     }
 }

@@ -14,17 +14,17 @@ namespace Azure.Communication.Email.Models
     public partial class EmailAddress
     {
         /// <summary> Initializes a new instance of EmailAddress. </summary>
-        /// <param name="email"> Email address. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
-        public EmailAddress(string email)
+        /// <param name="address"> Email address. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="address"/> is null. </exception>
+        public EmailAddress(string address)
         {
-            Argument.AssertNotNull(email, nameof(email));
+            Argument.AssertNotNull(address, nameof(address));
 
-            Email = email;
+            Address = address;
         }
 
         /// <summary> Email address. </summary>
-        public string Email { get; }
+        public string Address { get; }
         /// <summary> Email display name. </summary>
         public string DisplayName { get; set; }
     }

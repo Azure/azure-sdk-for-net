@@ -13,28 +13,38 @@ namespace Azure.Communication.Email.Models
     /// <summary> Model factory for read-only models. </summary>
     public static partial class EmailModelFactory
     {
-        /// <summary> Initializes a new instance of OperationStatus. </summary>
-        /// <param name="id"> The unique id of the operation. </param>
+        /// <summary> Initializes a new instance of EmailSendResult. </summary>
+        /// <param name="id"> The unique id of the operation. Use a UUID. </param>
         /// <param name="status"> Status of operation. </param>
         /// <param name="error"> Error details when status is a non-success terminal state. </param>
-        /// <returns> A new <see cref="Models.OperationStatus"/> instance for mocking. </returns>
-        public static OperationStatus OperationStatus(string id = null, EmailSendOperationStatus status = default, CommunicationError error = null)
+        /// <returns> A new <see cref="Models.EmailSendResult"/> instance for mocking. </returns>
+        public static EmailSendResult EmailSendResult(string id = null, EmailSendStatus status = default, ErrorDetail error = null)
         {
-            return new OperationStatus(id, status, error);
+            return new EmailSendResult(id, status, error);
         }
 
-        /// <summary> Initializes a new instance of CommunicationError. </summary>
+        /// <summary> Initializes a new instance of ErrorDetail. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="target"> The error target. </param>
-        /// <param name="details"> Further details about specific errors that led to this error. </param>
-        /// <param name="innerError"> The inner error if any. </param>
-        /// <returns> A new <see cref="Models.CommunicationError"/> instance for mocking. </returns>
-        public static CommunicationError CommunicationError(string code = null, string message = null, string target = null, IEnumerable<CommunicationError> details = null, CommunicationError innerError = null)
+        /// <param name="details"> The error details. </param>
+        /// <param name="additionalInfo"> The error additional info. </param>
+        /// <returns> A new <see cref="Models.ErrorDetail"/> instance for mocking. </returns>
+        public static ErrorDetail ErrorDetail(string code = null, string message = null, string target = null, IEnumerable<ErrorDetail> details = null, IEnumerable<ErrorAdditionalInfo> additionalInfo = null)
         {
-            details ??= new List<CommunicationError>();
+            details ??= new List<ErrorDetail>();
+            additionalInfo ??= new List<ErrorAdditionalInfo>();
 
-            return new CommunicationError(code, message, target, details?.ToList(), innerError);
+            return new ErrorDetail(code, message, target, details?.ToList(), additionalInfo?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
+        /// <param name="type"> The additional info type. </param>
+        /// <param name="info"> The additional info. </param>
+        /// <returns> A new <see cref="Models.ErrorAdditionalInfo"/> instance for mocking. </returns>
+        public static ErrorAdditionalInfo ErrorAdditionalInfo(string type = null, object info = null)
+        {
+            return new ErrorAdditionalInfo(type, info);
         }
     }
 }

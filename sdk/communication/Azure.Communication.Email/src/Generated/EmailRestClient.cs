@@ -38,7 +38,7 @@ namespace Azure.Communication.Email
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateGetOperationStatusRequest(string operationId)
+        internal HttpMessage CreateGetSendResultRequest(string operationId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -57,23 +57,23 @@ namespace Azure.Communication.Email
         /// <param name="operationId"> ID of the long running operation (GUID) returned from a previous call to send email. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<OperationStatus, EmailGetOperationStatusHeaders>> GetOperationStatusAsync(string operationId, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<EmailSendResult, EmailGetSendResultHeaders>> GetSendResultAsync(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
                 throw new ArgumentNullException(nameof(operationId));
             }
 
-            using var message = CreateGetOperationStatusRequest(operationId);
+            using var message = CreateGetSendResultRequest(operationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new EmailGetOperationStatusHeaders(message.Response);
+            var headers = new EmailGetSendResultHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        OperationStatus value = default;
+                        EmailSendResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OperationStatus.DeserializeOperationStatus(document.RootElement);
+                        value = EmailSendResult.DeserializeEmailSendResult(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -85,23 +85,23 @@ namespace Azure.Communication.Email
         /// <param name="operationId"> ID of the long running operation (GUID) returned from a previous call to send email. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public ResponseWithHeaders<OperationStatus, EmailGetOperationStatusHeaders> GetOperationStatus(string operationId, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<EmailSendResult, EmailGetSendResultHeaders> GetSendResult(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
                 throw new ArgumentNullException(nameof(operationId));
             }
 
-            using var message = CreateGetOperationStatusRequest(operationId);
+            using var message = CreateGetSendResultRequest(operationId);
             _pipeline.Send(message, cancellationToken);
-            var headers = new EmailGetOperationStatusHeaders(message.Response);
+            var headers = new EmailGetSendResultHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        OperationStatus value = default;
+                        EmailSendResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OperationStatus.DeserializeOperationStatus(document.RootElement);
+                        value = EmailSendResult.DeserializeEmailSendResult(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:

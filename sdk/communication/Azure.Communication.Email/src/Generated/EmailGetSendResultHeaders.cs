@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.Communication.Email
 {
-    internal partial class EmailGetOperationStatusHeaders
+    internal partial class EmailGetSendResultHeaders
     {
         private readonly Response _response;
-        public EmailGetOperationStatusHeaders(Response response)
+        public EmailGetSendResultHeaders(Response response)
         {
             _response = response;
         }

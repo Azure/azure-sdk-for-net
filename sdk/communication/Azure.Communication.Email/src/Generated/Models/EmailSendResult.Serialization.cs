@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.Communication.Email.Models
 {
-    public partial class OperationStatus
+    public partial class EmailSendResult
     {
-        internal static OperationStatus DeserializeOperationStatus(JsonElement element)
+        internal static EmailSendResult DeserializeEmailSendResult(JsonElement element)
         {
             string id = default;
-            EmailSendOperationStatus status = default;
-            Optional<CommunicationError> error = default;
+            EmailSendStatus status = default;
+            Optional<ErrorDetail> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -26,7 +26,7 @@ namespace Azure.Communication.Email.Models
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = new EmailSendOperationStatus(property.Value.GetString());
+                    status = new EmailSendStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error"))
@@ -36,11 +36,11 @@ namespace Azure.Communication.Email.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = CommunicationError.DeserializeCommunicationError(property.Value);
+                    error = ErrorDetail.DeserializeErrorDetail(property.Value);
                     continue;
                 }
             }
-            return new OperationStatus(id, status, error.Value);
+            return new EmailSendResult(id, status, error.Value);
         }
     }
 }

@@ -36,13 +36,13 @@ namespace Azure.Communication.Email
         /// <summary> Gets the status of the email send operation. </summary>
         /// <param name="operationId"> ID of the long running operation (GUID) returned from a previous call to send email. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OperationStatus>> GetOperationStatusAsync(string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EmailSendResult>> GetSendResultAsync(string operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EmailClient.GetOperationStatus");
+            using var scope = _clientDiagnostics.CreateScope("EmailClient.GetSendResult");
             scope.Start();
             try
             {
-                return await RestClient.GetOperationStatusAsync(operationId, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetSendResultAsync(operationId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -54,13 +54,13 @@ namespace Azure.Communication.Email
         /// <summary> Gets the status of the email send operation. </summary>
         /// <param name="operationId"> ID of the long running operation (GUID) returned from a previous call to send email. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperationStatus> GetOperationStatus(string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<EmailSendResult> GetSendResult(string operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("EmailClient.GetOperationStatus");
+            using var scope = _clientDiagnostics.CreateScope("EmailClient.GetSendResult");
             scope.Start();
             try
             {
-                return RestClient.GetOperationStatus(operationId, cancellationToken);
+                return RestClient.GetSendResult(operationId, cancellationToken);
             }
             catch (Exception e)
             {

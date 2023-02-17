@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.Communication.Email.Models
 {
-    public partial class CommunicationError
+    public partial class ErrorDetail
     {
-        internal static CommunicationError DeserializeCommunicationError(JsonElement element)
+        internal static ErrorDetail DeserializeErrorDetail(JsonElement element)
         {
-            string code = default;
-            string message = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
             Optional<string> target = default;
-            Optional<IReadOnlyList<CommunicationError>> details = default;
-            Optional<CommunicationError> innererror = default;
+            Optional<IReadOnlyList<ErrorDetail>> details = default;
+            Optional<IReadOnlyList<ErrorAdditionalInfo>> additionalInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -44,26 +44,31 @@ namespace Azure.Communication.Email.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CommunicationError> array = new List<CommunicationError>();
+                    List<ErrorDetail> array = new List<ErrorDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeCommunicationError(item));
+                        array.Add(DeserializeErrorDetail(item));
                     }
                     details = array;
                     continue;
                 }
-                if (property.NameEquals("innererror"))
+                if (property.NameEquals("additionalInfo"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    innererror = DeserializeCommunicationError(property.Value);
+                    List<ErrorAdditionalInfo> array = new List<ErrorAdditionalInfo>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ErrorAdditionalInfo.DeserializeErrorAdditionalInfo(item));
+                    }
+                    additionalInfo = array;
                     continue;
                 }
             }
-            return new CommunicationError(code, message, target.Value, Optional.ToList(details), innererror.Value);
+            return new ErrorDetail(code.Value, message.Value, target.Value, Optional.ToList(details), Optional.ToList(additionalInfo));
         }
     }
 }

@@ -15,18 +15,18 @@ namespace Azure.Communication.Email.Models
     public partial class EmailMessage
     {
         /// <summary> Initializes a new instance of EmailMessage. </summary>
-        /// <param name="senderEmail"> Sender email address from a verified domain. </param>
+        /// <param name="senderAddress"> Sender email address from a verified domain. </param>
         /// <param name="content"> Email content to be sent. </param>
         /// <param name="recipients"> Recipients for the email. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="senderEmail"/>, <paramref name="content"/> or <paramref name="recipients"/> is null. </exception>
-        public EmailMessage(string senderEmail, EmailContent content, EmailRecipients recipients)
+        /// <exception cref="ArgumentNullException"> <paramref name="senderAddress"/>, <paramref name="content"/> or <paramref name="recipients"/> is null. </exception>
+        public EmailMessage(string senderAddress, EmailContent content, EmailRecipients recipients)
         {
-            Argument.AssertNotNull(senderEmail, nameof(senderEmail));
+            Argument.AssertNotNull(senderAddress, nameof(senderAddress));
             Argument.AssertNotNull(content, nameof(content));
             Argument.AssertNotNull(recipients, nameof(recipients));
 
             Headers = new ChangeTrackingDictionary<string, string>();
-            SenderEmail = senderEmail;
+            SenderAddress = senderAddress;
             Content = content;
             Recipients = recipients;
             Attachments = new ChangeTrackingList<EmailAttachment>();
@@ -36,7 +36,7 @@ namespace Azure.Communication.Email.Models
         /// <summary> Custom email headers to be passed. </summary>
         public IDictionary<string, string> Headers { get; }
         /// <summary> Sender email address from a verified domain. </summary>
-        public string SenderEmail { get; }
+        public string SenderAddress { get; }
         /// <summary> Email content to be sent. </summary>
         public EmailContent Content { get; }
         /// <summary> Recipients for the email. </summary>

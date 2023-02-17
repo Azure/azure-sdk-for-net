@@ -81,6 +81,7 @@ namespace Azure.Communication.Email
         private EmailClient(Uri endpoint, HttpPipeline httpPipeline, EmailClientOptions options)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = httpPipeline;
             RestClient = new EmailRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
         }
 
@@ -102,7 +103,7 @@ namespace Azure.Communication.Email
             Guid? operationId = null,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.Send");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.StartSend");
             scope.Start();
             try
             {
@@ -130,7 +131,7 @@ namespace Azure.Communication.Email
             string plainText = "",
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.Send");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.StartSend");
             scope.Start();
             try
             {

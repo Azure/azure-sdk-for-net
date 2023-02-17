@@ -11,13 +11,13 @@ using Azure.Core;
 namespace Azure.Communication.Email.Models
 {
     /// <summary> Status of the long running operation. </summary>
-    public partial class OperationStatus
+    public partial class EmailSendResult
     {
-        /// <summary> Initializes a new instance of OperationStatus. </summary>
-        /// <param name="id"> The unique id of the operation. </param>
+        /// <summary> Initializes a new instance of EmailSendResult. </summary>
+        /// <param name="id"> The unique id of the operation. Use a UUID. </param>
         /// <param name="status"> Status of operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal OperationStatus(string id, EmailSendOperationStatus status)
+        internal EmailSendResult(string id, EmailSendStatus status)
         {
             Argument.AssertNotNull(id, nameof(id));
 
@@ -25,22 +25,22 @@ namespace Azure.Communication.Email.Models
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of OperationStatus. </summary>
-        /// <param name="id"> The unique id of the operation. </param>
+        /// <summary> Initializes a new instance of EmailSendResult. </summary>
+        /// <param name="id"> The unique id of the operation. Use a UUID. </param>
         /// <param name="status"> Status of operation. </param>
         /// <param name="error"> Error details when status is a non-success terminal state. </param>
-        internal OperationStatus(string id, EmailSendOperationStatus status, CommunicationError error)
+        internal EmailSendResult(string id, EmailSendStatus status, ErrorDetail error)
         {
             Id = id;
             Status = status;
             Error = error;
         }
 
-        /// <summary> The unique id of the operation. </summary>
+        /// <summary> The unique id of the operation. Use a UUID. </summary>
         public string Id { get; }
         /// <summary> Status of operation. </summary>
-        public EmailSendOperationStatus Status { get; }
+        public EmailSendStatus Status { get; }
         /// <summary> Error details when status is a non-success terminal state. </summary>
-        public CommunicationError Error { get; }
+        public ErrorDetail Error { get; }
     }
 }

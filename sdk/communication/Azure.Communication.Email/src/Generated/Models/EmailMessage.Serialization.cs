@@ -26,8 +26,8 @@ namespace Azure.Communication.Email.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("senderEmail");
-            writer.WriteStringValue(SenderEmail);
+            writer.WritePropertyName("senderAddress");
+            writer.WriteStringValue(SenderAddress);
             writer.WritePropertyName("content");
             writer.WriteObjectValue(Content);
             writer.WritePropertyName("recipients");

@@ -17,8 +17,8 @@ namespace Azure.Communication.Email.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(Type);
+            writer.WritePropertyName("contentType");
+            writer.WriteStringValue(ContentType);
             writer.WritePropertyName("contentBytesBase64");
             writer.WriteStringValue(ContentBytesBase64);
             writer.WriteEndObject();
