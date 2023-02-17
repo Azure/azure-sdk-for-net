@@ -367,8 +367,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             Assert.NotNull(properties);
             Assert.AreEqual("callConnectionId", properties.CallConnectionId);
             Assert.AreEqual(CallConnectionState.Connecting, properties.CallConnectionState);
-            Assert.NotNull(properties.CallSource);
-            Assert.AreEqual("dummySourceUser", properties.CallSource.Identifier.RawId);
+            Assert.AreEqual("dummySourceUser", properties.SourceIdentity.RawId);
             Assert.AreEqual("serverCallId", properties.ServerCallId);
             Assert.AreEqual(1, properties.Targets.Count);
         }

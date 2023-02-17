@@ -83,10 +83,10 @@ namespace Azure.Communication.CallAutomation
             _pipeline = httpPipeline;
             _resourceEndpoint = endpoint.AbsoluteUri;
             _clientDiagnostics = new ClientDiagnostics(options);
-            AzureCommunicationServicesRestClient = new AzureCommunicationServicesRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            CallConnectionRestClient = new CallConnectionRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            CallMediaRestClient = new CallMediaRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            CallRecordingRestClient = new CallRecordingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            AzureCommunicationServicesRestClient = new AzureCommunicationServicesRestClient(_clientDiagnostics, httpPipeline, endpoint.AbsolutePath, options.ApiVersion);
+            CallConnectionRestClient = new CallConnectionRestClient(_clientDiagnostics, httpPipeline, endpoint.AbsolutePath, options.ApiVersion);
+            CallMediaRestClient = new CallMediaRestClient(_clientDiagnostics, httpPipeline, endpoint.AbsolutePath, options.ApiVersion);
+            CallRecordingRestClient = new CallRecordingRestClient(_clientDiagnostics, httpPipeline, endpoint.AbsolutePath, options.ApiVersion);
             EventProcessor = new EventProcessor(options.EventProcessorOptions);
             Source = options.Source;
         }
@@ -624,18 +624,16 @@ namespace Azure.Communication.CallAutomation
 
         private CreateCallRequestInternal CreateCallRequest(CreateCallOptions options)
         {
-            CallSourceInternal sourceDto = new(CommunicationIdentifierSerializer.Serialize(Source))
+            CreateCallRequestInternal request = new(
+                targets: new List<CommunicationIdentifierModel>() { { CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target) } },
+                callbackUri: options.CallbackUri.AbsoluteUri)
             {
-                CallerId = options?.CallInvite?.SourceCallerIdNumber == null
+                SourceCallerIdNumber = options?.CallInvite?.SourceCallerIdNumber == null
                     ? null
                     : new PhoneNumberIdentifierModel(options?.CallInvite?.SourceCallerIdNumber?.PhoneNumber),
-                DisplayName = options.CallInvite.SourceDisplayName,
+                SourceDisplayName = options?.CallInvite?.SourceDisplayName,
+                CallSourceIdentifier = CommunicationIdentifierSerializer.Serialize(Source),
             };
-
-            CreateCallRequestInternal request = new(
-                new List<CommunicationIdentifierModel>() { { CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target) } },
-                sourceDto,
-                options.CallbackUri.AbsoluteUri);
             // Add custom cognitive service domain name
             if (options.AzureCognitiveServicesEndpointUrl != null)
             {
@@ -653,16 +651,16 @@ namespace Azure.Communication.CallAutomation
 
         private CreateCallRequestInternal CreateCallRequest(CreateGroupCallOptions options)
         {
-            CallSourceInternal sourceDto = new(CommunicationIdentifierSerializer.Serialize(Source))
-            {
-                CallerId = options?.SourceCallerIdNumber == null ? null : new PhoneNumberIdentifierModel(options?.SourceCallerIdNumber?.PhoneNumber),
-                DisplayName = options.SourceDisplayName,
-            };
-
             CreateCallRequestInternal request = new(
-                options.Targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
-                sourceDto,
-                options.CallbackUri.AbsoluteUri);
+                targets: options.Targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
+                callbackUri: options.CallbackUri.AbsoluteUri)
+            {
+                SourceCallerIdNumber = options?.SourceCallerIdNumber == null
+                    ? null
+                    : new PhoneNumberIdentifierModel(options?.SourceCallerIdNumber?.PhoneNumber),
+                SourceDisplayName = options?.SourceDisplayName,
+                CallSourceIdentifier = CommunicationIdentifierSerializer.Serialize(Source),
+            };
             // Add custom cognitive service domain name
             if (options.AzureCognitiveServicesEndpointUrl != null)
             {

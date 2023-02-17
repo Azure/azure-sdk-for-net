@@ -22,10 +22,10 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("transfereeCallerId"u8);
                 writer.WriteObjectValue(TransfereeCallerId);
             }
-            if (Optional.IsDefined(UserToUserInformation))
+            if (Optional.IsDefined(CustomContext))
             {
-                writer.WritePropertyName("userToUserInformation"u8);
-                writer.WriteStringValue(UserToUserInformation);
+                writer.WritePropertyName("customContext");
+                writer.WriteObjectValue(CustomContext);
             }
             if (Optional.IsDefined(OperationContext))
             {

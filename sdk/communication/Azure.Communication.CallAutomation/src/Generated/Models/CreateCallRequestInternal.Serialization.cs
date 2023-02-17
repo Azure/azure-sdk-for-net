@@ -22,8 +22,21 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            if (Optional.IsDefined(SourceCallerIdNumber))
+            {
+                writer.WritePropertyName("sourceCallerIdNumber");
+                writer.WriteObjectValue(SourceCallerIdNumber);
+            }
+            if (Optional.IsDefined(SourceDisplayName))
+            {
+                writer.WritePropertyName("sourceDisplayName");
+                writer.WriteStringValue(SourceDisplayName);
+            }
+            if (Optional.IsDefined(CallSourceIdentifier))
+            {
+                writer.WritePropertyName("callSourceIdentifier");
+                writer.WriteObjectValue(CallSourceIdentifier);
+            }
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);

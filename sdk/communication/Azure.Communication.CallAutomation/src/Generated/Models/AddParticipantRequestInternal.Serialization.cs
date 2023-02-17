@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class AddParticipantsRequestInternal : IUtf8JsonSerializable
+    internal partial class AddParticipantRequestInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,13 +30,8 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("sourceIdentifier"u8);
                 writer.WriteObjectValue(SourceIdentifier);
             }
-            writer.WritePropertyName("participantsToAdd"u8);
-            writer.WriteStartArray();
-            foreach (var item in ParticipantsToAdd)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
+            writer.WritePropertyName("participantToAdd");
+            writer.WriteObjectValue(ParticipantToAdd);
             if (Optional.IsDefined(InvitationTimeoutInSeconds))
             {
                 writer.WritePropertyName("invitationTimeoutInSeconds"u8);
@@ -46,6 +41,11 @@ namespace Azure.Communication.CallAutomation
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
+            }
+            if (Optional.IsDefined(CustomContext))
+            {
+                writer.WritePropertyName("customContext");
+                writer.WriteObjectValue(CustomContext);
             }
             writer.WriteEndObject();
         }
