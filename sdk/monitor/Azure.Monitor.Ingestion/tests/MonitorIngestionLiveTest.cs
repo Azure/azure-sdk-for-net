@@ -79,6 +79,30 @@ namespace Azure.Monitor.Ingestion.Tests
             var exception = Assert.Throws<NullReferenceException>(() => client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, RequestContent.Create(stream)));
         }
 
+        [LiveOnly]
+        [Test]
+        public async Task UploadOneLogGreaterThan1Mb()
+        {
+            LogsIngestionClient client = CreateClient();
+
+            var entries = new List<IEnumerable>();
+            entries.Add(new Object[] {
+                new {
+                    Time = "2021",
+                    Computer = "Computer" + new string('*', Mb * 5),
+                    AdditionalContext = 1
+                }
+            });
+
+            // Make the request
+            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false);
+
+            // Check the response
+            Assert.IsNotNull(response);
+            Assert.AreEqual(204, response.Status);
+            Assert.IsFalse(response.IsError);
+        }
+
         private static List<Object> GenerateEntries(int numEntries, DateTime recordingNow)
         {
             var entries = new List<Object>();
@@ -102,6 +126,21 @@ namespace Azure.Monitor.Ingestion.Tests
 
            // Make the request
            var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(10, Recording.Now.DateTime)).ConfigureAwait(false);
+
+            // Check the response
+            Assert.IsNotNull(response);
+            Assert.AreEqual(204, response.Status);
+            Assert.IsFalse(response.IsError);
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task ValidInputFromArrayAsJsonWithMultiBatchWithGzip()
+        {
+            LogsIngestionClient client = CreateClient();
+
+            // Make the request
+            var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(1000, Recording.Now.DateTime)).ConfigureAwait(false);
 
             // Check the response
             Assert.IsNotNull(response);
