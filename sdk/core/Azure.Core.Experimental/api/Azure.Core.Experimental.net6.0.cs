@@ -152,30 +152,18 @@ namespace Azure.Core.Dynamic
             System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         }
     }
+    public enum DynamicJsonNameMapping
+    {
+        None = 0,
+        PascalCaseGetters = 1,
+        PascalCaseGettersCamelCaseSetters = 2,
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct DynamicJsonOptions
     {
         private int _dummyPrimitive;
         public DynamicJsonOptions() { throw null; }
-        public Azure.Core.Dynamic.DynamicJsonPropertyCasing PropertyCasing { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public partial struct DynamicJsonPropertyCasing
-    {
-        private int _dummyPrimitive;
-        public static readonly Azure.Core.Dynamic.DynamicJsonPropertyCasing Default;
-        public Azure.Core.Dynamic.ExistingPropertyCasing ExistingPropertyAccess { get { throw null; } set { } }
-        public Azure.Core.Dynamic.NewPropertyCasing NewPropertyAccess { get { throw null; } set { } }
-    }
-    public enum ExistingPropertyCasing
-    {
-        CaseSensitive = 0,
-        AllowPascalCase = 1,
-    }
-    public enum NewPropertyCasing
-    {
-        CaseSensitive = 0,
-        WriteCamelCase = 1,
+        public Azure.Core.Dynamic.DynamicJsonNameMapping PropertyNameCasing { get { throw null; } set { } }
     }
 }
 namespace Azure.Core.Json

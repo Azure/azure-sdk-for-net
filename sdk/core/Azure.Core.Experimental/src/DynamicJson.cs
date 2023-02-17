@@ -7,6 +7,7 @@ using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Xml.Linq;
 using Azure.Core.Json;
 
 namespace Azure.Core.Dynamic
@@ -48,8 +49,7 @@ namespace Azure.Core.Dynamic
                 return new DynamicJson(element);
             }
 
-            if (_options.PropertyCasing.ExistingPropertyAccess == ExistingPropertyCasing.AllowPascalCase &&
-                char.IsUpper(name[0]))
+            if (PascalCaseGetters() && char.IsUpper(name[0]))
             {
                 if (_element.TryGetProperty(GetAsCamelCase(name), out element))
                 {
@@ -58,6 +58,18 @@ namespace Azure.Core.Dynamic
             }
 
             return null;
+        }
+
+        private bool PascalCaseGetters()
+        {
+            return
+                _options.PropertyNameCasing == DynamicJsonNameMapping.PascalCaseGetters ||
+                _options.PropertyNameCasing == DynamicJsonNameMapping.PascalCaseGettersCamelCaseSetters;
+        }
+
+        private bool CamelCaseSetters()
+        {
+            return _options.PropertyNameCasing == DynamicJsonNameMapping.PascalCaseGettersCamelCaseSetters;
         }
 
         private static string GetAsCamelCase(string value)
@@ -85,6 +97,37 @@ namespace Azure.Core.Dynamic
 
         private object? SetProperty(string name, object value)
         {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            if (_options.PropertyNameCasing == DynamicJsonNameMapping.None)
+            {
+                _element = _element.SetProperty(name, value);
+                return null;
+            }
+
+            if (!char.IsUpper(name[0]))
+            {
+                // Lookup name is camelCase, so set unchanged.
+                _element = _element.SetProperty(name, value);
+                return null;
+            }
+
+            // Other mappings have PascalCase getters, and lookup name is PascalCase.
+            // So, if it exists in either form, we'll set it in that form.
+            if (_element.TryGetProperty(name, out MutableJsonElement element))
+            {
+                element.Set(value);
+                return null;
+            }
+
+            if (_element.TryGetProperty(GetAsCamelCase(name), out element))
+            {
+                element.Set(value);
+                return null;
+            }
+
+            // It's a new property, so set according to the mapping.
+            name = CamelCaseSetters() ? GetAsCamelCase(name) : name;
             _element = _element.SetProperty(name, value);
 
             // Binding machinery expects the call site signature to return an object
