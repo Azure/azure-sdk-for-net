@@ -17,7 +17,7 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(VoipHeaders))
             {
-                writer.WritePropertyName("voipHeaders");
+                writer.WritePropertyName("voipHeaders"u8);
                 writer.WriteStartObject();
                 foreach (var item in VoipHeaders)
                 {
@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation
             }
             if (Optional.IsCollectionDefined(SipHeaders))
             {
-                writer.WritePropertyName("sipHeaders");
+                writer.WritePropertyName("sipHeaders"u8);
                 writer.WriteStartObject();
                 foreach (var item in SipHeaders)
                 {

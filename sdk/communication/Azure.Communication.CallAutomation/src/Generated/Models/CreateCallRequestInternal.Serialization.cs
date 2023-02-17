@@ -24,17 +24,17 @@ namespace Azure.Communication.CallAutomation
             writer.WriteEndArray();
             if (Optional.IsDefined(SourceCallerIdNumber))
             {
-                writer.WritePropertyName("sourceCallerIdNumber");
+                writer.WritePropertyName("sourceCallerIdNumber"u8);
                 writer.WriteObjectValue(SourceCallerIdNumber);
             }
             if (Optional.IsDefined(SourceDisplayName))
             {
-                writer.WritePropertyName("sourceDisplayName");
+                writer.WritePropertyName("sourceDisplayName"u8);
                 writer.WriteStringValue(SourceDisplayName);
             }
             if (Optional.IsDefined(SourceIdentity))
             {
-                writer.WritePropertyName("sourceIdentity");
+                writer.WritePropertyName("sourceIdentity"u8);
                 writer.WriteObjectValue(SourceIdentity);
             }
             if (Optional.IsDefined(OperationContext))

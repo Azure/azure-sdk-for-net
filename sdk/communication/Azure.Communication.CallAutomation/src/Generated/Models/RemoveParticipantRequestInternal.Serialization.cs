@@ -15,7 +15,7 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("participantToRemove");
+            writer.WritePropertyName("participantToRemove"u8);
             writer.WriteObjectValue(ParticipantToRemove);
             if (Optional.IsDefined(OperationContext))
             {
