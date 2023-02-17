@@ -1,25 +1,41 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#if NETCOREAPP
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+#if NET6_0_OR_GREATER
+using System.Diagnostics;
+using Azure.Monitor.OpenTelemetry;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using OpenTelemetry.Instrumentation.AspNetCore;
 
-namespace Azure.Monitor.OpenTelemetry.Demo
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+
+builder.Services.Configure<AspNetCoreInstrumentationOptions>(o =>
 {
-    public class Program
+    o.EnrichWithHttpRequest = (activity, httpRequest) =>
     {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+        activity.SetTag("requestProtocol", httpRequest.Protocol);
+    };
+    o.EnrichWithHttpResponse = (activity, httpResponse) =>
+    {
+        activity.SetTag("responseLength", httpResponse.ContentLength);
+    };
+    o.EnrichWithException = (activity, exception) =>
+    {
+        activity.SetTag("exceptionType", exception.GetType().ToString());
+    };
+});
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
-}
+builder.Services.AddAzureMonitorOpenTelemetry();
+
+// This is another overload to call AddAzureMonitorOpenTelemetry with IConfiguration.
+// builder.Services.AddAzureMonitorOpenTelemetry(builder.Configuration.GetSection("AzureMonitorOpenTelemetry"));
+
+var app = builder.Build();
+app.MapGet("/", () => $"Hello World! OpenTelemetry Trace: {Activity.Current?.Id}");
+
+app.Run();
 #endif

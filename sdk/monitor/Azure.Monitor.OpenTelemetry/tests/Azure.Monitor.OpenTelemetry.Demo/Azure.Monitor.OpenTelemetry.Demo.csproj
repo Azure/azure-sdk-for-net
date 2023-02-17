@@ -4,23 +4,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
-    <!--We would prefer to use the meta package "Microsoft.AspNetCore.App" here.
-    But this package targets NetCoreApp2.1, while all the dependent packages target NetStandard2.0.
-    To support net461 so we must reference the dependent packages.-->
-    <PackageReference Include="Microsoft.AspNetCore" VersionOverride="[2.1.1, )" />
-    <PackageReference Include="Microsoft.AspNetCore.Hosting" VersionOverride="[2.1.1, )" />
-    <PackageReference Include="Microsoft.AspNetCore.HttpsPolicy" VersionOverride="[2.1.1, )" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" VersionOverride="[2.1.1, )" />
-    <!-- 
-      Explicit references to pull in patched versions of ASP.NET Core packages
-    -->
-    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Core" />
-    <PackageReference Include="Microsoft.AspNetCore.Http" />
-    <PackageReference Include="System.IO.Pipelines" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\src\Azure.Monitor.OpenTelemetry.csproj" />
   </ItemGroup>
