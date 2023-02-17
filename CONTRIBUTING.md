@@ -544,7 +544,7 @@ For information about breaking changes see [Breaking Change Rules](https://githu
 
 The libraries shipped out of this repo have [source link](https://docs.microsoft.com/dotnet/standard/library-guidance/sourcelink#using-source-link) enabled. Source link allows for symbols to be dynamically loaded while debugging, which allows you to step into the Azure SDK source code. This is often helpful when trying to step into Azure.Core code, as it is a package reference for most libraries. To enable using source link with the Azure SDK libraries in Visual Studio, you will need to check off Microsoft Symbol Servers as one of your Symbol file locations. Additionally, make sure that "Just My Code" is **_NOT_** enabled.
 
-## Styling
+## Samples
 
 ### Third-party dependencies
 
