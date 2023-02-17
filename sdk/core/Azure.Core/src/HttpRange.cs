@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using Azure.Core;
 
 namespace Azure
@@ -52,21 +53,21 @@ namespace Azure
         public override string ToString()
         {
             // No additional validation by design. API can validate parameter by case, and use this method.
-
-            //$"{Unit}={Offset}-{endRange}"
-            Span<char> span = stackalloc char[Unit.Length + 40]; // Int64.MaxValue requires 19 characters, so Offset and endRange require 38 or less chars.
-            var position = 0;
-            span.AppendString(ref position, Unit);
-            span.AppendChar(ref position, '=');
-            span.AppendLong(ref position, Offset, provider: CultureInfo.InvariantCulture);
-            span.AppendChar(ref position, '-');
-
             if (Length.HasValue && Length != 0)
             {
-                span.AppendLong(ref position, Offset + Length.Value - 1, provider: CultureInfo.InvariantCulture);
+                var endRange = Offset + Length.Value - 1;
+#if NET6_0_OR_GREATER
+                return string.Create(CultureInfo.InvariantCulture, $"{Unit}={Offset}-{endRange}");
+#else
+                return FormattableString.Invariant($"{Unit}={Offset}-{endRange}");
+#endif
             }
 
-            return span.Slice(0, position).ToString();
+#if NET6_0_OR_GREATER
+            return string.Create(CultureInfo.InvariantCulture, $"{Unit}={Offset}-");
+#else
+            return FormattableString.Invariant($"{Unit}={Offset}-");
+#endif
         }
 
         /// <summary>
