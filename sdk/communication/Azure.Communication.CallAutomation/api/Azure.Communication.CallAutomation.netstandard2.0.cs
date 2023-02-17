@@ -18,7 +18,6 @@ namespace Azure.Communication.CallAutomation
         public int? InvitationTimeoutInSeconds { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> ParticipantsToAdd { get { throw null; } }
-        public Azure.Communication.CallAutomation.RepeatabilityHeaders RepeatabilityHeaders { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> SipHeaders { get { throw null; } set { } }
         public Azure.Communication.PhoneNumberIdentifier SourceCallerId { get { throw null; } set { } }
         public string SourceDisplayName { get { throw null; } set { } }
@@ -50,7 +49,6 @@ namespace Azure.Communication.CallAutomation
         public System.Uri CallbackUri { get { throw null; } }
         public string IncomingCallContext { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.RepeatabilityHeaders RepeatabilityHeaders { get { throw null; } set { } }
     }
     public partial class AnswerCallResult : Azure.Communication.CallAutomation.ResultWithWaitForEventBase
     {
@@ -417,7 +415,6 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.CallSource CallSource { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.RepeatabilityHeaders RepeatabilityHeaders { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CommunicationIdentifier> Targets { get { throw null; } }
     }
     public partial class CreateCallResult : Azure.Communication.CallAutomation.ResultWithWaitForEventBase
@@ -513,7 +510,6 @@ namespace Azure.Communication.CallAutomation
     {
         public HangUpOptions(bool forEveryone) { }
         public bool ForEveryone { get { throw null; } }
-        public Azure.Communication.CallAutomation.RepeatabilityHeaders RepeatabilityHeaders { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MediaStreamingAudioChannel : System.IEquatable<Azure.Communication.CallAutomation.MediaStreamingAudioChannel>
@@ -619,7 +615,6 @@ namespace Azure.Communication.CallAutomation
     {
         public MuteParticipantsOptions(System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targetParticipants) { }
         public string OperationContext { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.RepeatabilityHeaders RepeatabilityHeaders { get { throw null; } set { } }
         public System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> TargetParticipants { get { throw null; } }
     }
     public partial class MuteParticipantsResponse
@@ -853,7 +848,6 @@ namespace Azure.Communication.CallAutomation
     {
         public RedirectCallOptions(string incomingCallContext, Azure.Communication.CommunicationIdentifier target) { }
         public string IncomingCallContext { get { throw null; } }
-        public Azure.Communication.CallAutomation.RepeatabilityHeaders RepeatabilityHeaders { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier Target { get { throw null; } }
     }
     public partial class RejectCallOptions
@@ -861,26 +855,17 @@ namespace Azure.Communication.CallAutomation
         public RejectCallOptions(string incomingCallContext) { }
         public Azure.Communication.CallAutomation.CallRejectReason CallRejectReason { get { throw null; } set { } }
         public string IncomingCallContext { get { throw null; } }
-        public Azure.Communication.CallAutomation.RepeatabilityHeaders RepeatabilityHeaders { get { throw null; } set { } }
     }
     public partial class RemoveParticipantsOptions
     {
         public RemoveParticipantsOptions(System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> participantsToRemove) { }
         public string OperationContext { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CommunicationIdentifier> ParticipantsToRemove { get { throw null; } }
-        public Azure.Communication.CallAutomation.RepeatabilityHeaders RepeatabilityHeaders { get { throw null; } set { } }
     }
     public partial class RemoveParticipantsResult
     {
         internal RemoveParticipantsResult() { }
         public string OperationContext { get { throw null; } }
-    }
-    public partial class RepeatabilityHeaders
-    {
-        public RepeatabilityHeaders() { }
-        public RepeatabilityHeaders(System.Guid repeatabilityRequestId, System.DateTimeOffset repeatabilityFirstSent) { }
-        public System.DateTimeOffset RepeatabilityFirstSent { get { throw null; } }
-        public System.Guid RepeatabilityRequestId { get { throw null; } }
     }
     public partial class ResultInformation
     {
@@ -921,7 +906,6 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.RecordingFormat RecordingFormat { get { throw null; } set { } }
         public System.Uri RecordingStateCallbackEndpoint { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.RecordingStorageType? RecordingStorageType { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.RepeatabilityHeaders RepeatabilityHeaders { get { throw null; } set { } }
     }
     public partial class TextSource : Azure.Communication.CallAutomation.PlaySource
     {
@@ -949,7 +933,6 @@ namespace Azure.Communication.CallAutomation
     {
         public TransferToParticipantOptions(Azure.Communication.CommunicationIdentifier targetParticipant) { }
         public string OperationContext { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.RepeatabilityHeaders RepeatabilityHeaders { get { throw null; } set { } }
         public Azure.Communication.PhoneNumberIdentifier SourceCallerId { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
         public string UserToUserInformation { get { throw null; } set { } }
@@ -958,7 +941,6 @@ namespace Azure.Communication.CallAutomation
     {
         public UnmuteParticipantsOptions(System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targetParticipant) { }
         public string OperationContext { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.RepeatabilityHeaders RepeatabilityHeaders { get { throw null; } set { } }
         public System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> TargetParticipants { get { throw null; } }
     }
     public partial class UnmuteParticipantsResponse
