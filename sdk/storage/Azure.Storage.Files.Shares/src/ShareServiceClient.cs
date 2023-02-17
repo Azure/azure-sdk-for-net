@@ -234,15 +234,15 @@ namespace Azure.Storage.Files.Shares
         /// Note that service-level operations do not support token credential authentication.
         /// This constructor exists to allow the construction of a <see cref="ShareServiceClient"/> that can be used to derive
         /// a <see cref="ShareClient"/> that has token credential authentication.
+        ///
+        /// Also note that <see cref="ShareClientOptions.FileRequestIntent"/> is currently required for token authentication.
+        ///
         /// </summary>
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the file service.
         /// </param>
         /// <param name="credential">
         /// The token credential used to sign requests.
-        /// </param>
-        /// <param name="fileRequestIntent">
-        /// File request intent.
         /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
@@ -252,13 +252,11 @@ namespace Azure.Storage.Files.Shares
         public ShareServiceClient(
             Uri serviceUri,
             TokenCredential credential,
-            ShareFileRequestIntent? fileRequestIntent = default,
             ShareClientOptions options = default)
             : this(
                   serviceUri: serviceUri,
                   authentication: credential.AsPolicy(options),
-                  options: options ?? new ShareClientOptions(),
-                  fileRequestIntent: fileRequestIntent)
+                  options: options ?? new ShareClientOptions())
         {
             Errors.VerifyHttpsTokenAuth(serviceUri);
         }
@@ -281,15 +279,11 @@ namespace Azure.Storage.Files.Shares
         /// <param name="storageSharedKeyCredential">
         /// The shared key credential used to sign requests.
         /// </param>
-        /// <param name="fileRequestIntent">
-        /// File request intent.  OAuth only.
-        /// </param>
         internal ShareServiceClient(
             Uri serviceUri,
             HttpPipelinePolicy authentication,
             ShareClientOptions options,
-            StorageSharedKeyCredential storageSharedKeyCredential = default,
-            ShareFileRequestIntent? fileRequestIntent = default)
+            StorageSharedKeyCredential storageSharedKeyCredential = default)
         {
             Argument.AssertNotNull(serviceUri, nameof(serviceUri));
             options ??= new ShareClientOptions();
@@ -299,8 +293,7 @@ namespace Azure.Storage.Files.Shares
                 sharedKeyCredential: storageSharedKeyCredential,
                 sasCredential: null,
                 clientDiagnostics: new ClientDiagnostics(options),
-                clientOptions: options,
-                fileRequestIntent: fileRequestIntent);
+                clientOptions: options);
             _serviceRestClient = BuildServiceRestClient();
         }
 
@@ -336,8 +329,7 @@ namespace Azure.Storage.Files.Shares
                 sharedKeyCredential: null,
                 sasCredential: sasCredential,
                 clientDiagnostics: new ClientDiagnostics(options),
-                clientOptions: options,
-                fileRequestIntent: null);
+                clientOptions: options);
             _serviceRestClient = BuildServiceRestClient();
         }
 

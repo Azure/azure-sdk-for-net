@@ -26,8 +26,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 tenants,
                 (uri, clientOptions) => new ShareServiceClient(uri, clientOptions),
                 (uri, sharedKeyCredential, clientOptions) => new ShareServiceClient(uri, sharedKeyCredential, clientOptions),
-                default,
-                (uri, tokenCredential, fileIntent, clientOptions) => new ShareServiceClient(uri, tokenCredential, (ShareFileRequestIntent?)fileIntent, clientOptions),
+                (uri, tokenCredential, clientOptions) => new ShareServiceClient(uri, tokenCredential, clientOptions),
                 (uri, azureSasCredential, clientOptions) => new ShareServiceClient(uri, azureSasCredential, clientOptions),
                 () => new ShareClientOptions(serviceVersion));
 
@@ -46,9 +45,12 @@ namespace Azure.Storage.Files.Shares.Tests
             => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigDefault, options);
 
         public static ShareServiceClient GetServiceClient_OAuth(
-            this ShareClientBuilder clientBuilder,
-            ShareFileRequestIntent? fileRequestIntent = null) =>
-            clientBuilder.GetServiceClientFromOauthConfigWithParameter(clientBuilder.Tenants.TestConfigOAuth, parameter: fileRequestIntent);
+            this ShareClientBuilder clientBuilder, ShareClientOptions options = default)
+        {
+            options ??= clientBuilder.GetOptions();
+            options.FileRequestIntent = ShareFileRequestIntent.Backup;
+            return clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigOAuth, options);
+        }
 
         public static ShareServiceClient GetServiceClient_OAuthAccount_SharedKey(this ShareClientBuilder clientBuilder) =>
             clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigOAuth);

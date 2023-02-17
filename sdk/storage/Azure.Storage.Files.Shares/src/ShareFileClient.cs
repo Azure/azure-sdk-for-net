@@ -238,8 +238,7 @@ namespace Azure.Storage.Files.Shares
                   fileUri: fileUri,
                   authentication: (HttpPipelinePolicy)null,
                   options: options,
-                  storageSharedKeyCredential: null,
-                  fileRequestIntent: null)
+                  storageSharedKeyCredential: null)
         {
         }
 
@@ -267,8 +266,7 @@ namespace Azure.Storage.Files.Shares
                   fileUri: fileUri,
                   authentication: credential.AsPolicy(),
                   options: options,
-                  storageSharedKeyCredential: credential,
-                  fileRequestIntent: null)
+                  storageSharedKeyCredential: credential)
         {
         }
 
@@ -303,6 +301,8 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareFileClient"/>
         /// class.
+        ///
+        /// Note that <see cref="ShareClientOptions.FileRequestIntent"/> is currently required for token authentication.
         /// </summary>
         /// <param name="fileUri">
         /// A <see cref="Uri"/> referencing the file that includes the
@@ -312,9 +312,6 @@ namespace Azure.Storage.Files.Shares
         /// <param name="credential">
         /// The token credential used to sign requests.
         /// </param>
-        /// <param name="fileRequestIntent">
-        /// File request intent.
-        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
@@ -323,14 +320,12 @@ namespace Azure.Storage.Files.Shares
         public ShareFileClient(
             Uri fileUri,
             TokenCredential credential,
-            ShareFileRequestIntent? fileRequestIntent = default,
             ShareClientOptions options = default)
             : this(
                   fileUri: fileUri,
                   authentication: credential.AsPolicy(options),
                   options: options ?? new ShareClientOptions(),
-                  storageSharedKeyCredential: null,
-                  fileRequestIntent: fileRequestIntent)
+                  storageSharedKeyCredential: null)
         {
             Errors.VerifyHttpsTokenAuth(fileUri);
         }
@@ -355,15 +350,11 @@ namespace Azure.Storage.Files.Shares
         /// <param name="storageSharedKeyCredential">
         /// The shared key credential used to sign requests.
         /// </param>
-        /// <param name="fileRequestIntent">
-        /// File request intent.
-        /// </param>
         internal ShareFileClient(
             Uri fileUri,
             HttpPipelinePolicy authentication,
             ShareClientOptions options,
-            StorageSharedKeyCredential storageSharedKeyCredential,
-            ShareFileRequestIntent? fileRequestIntent)
+            StorageSharedKeyCredential storageSharedKeyCredential)
         {
             Argument.AssertNotNull(fileUri, nameof(fileUri));
             options ??= new ShareClientOptions();
@@ -373,8 +364,7 @@ namespace Azure.Storage.Files.Shares
                 sharedKeyCredential: storageSharedKeyCredential,
                 sasCredential: null,
                 clientDiagnostics: new ClientDiagnostics(options),
-                clientOptions: options,
-                fileRequestIntent: fileRequestIntent);
+                clientOptions: options);
             _fileRestClient = BuildFileRestClient(fileUri);
         }
 
@@ -479,7 +469,7 @@ namespace Azure.Storage.Files.Shares
                 pipeline: _clientConfiguration.Pipeline,
                 url: uri.AbsoluteUri,
                 version: _clientConfiguration.ClientOptions.Version.ToVersionString(),
-                fileRequestIntent: _clientConfiguration.FileRequestIntent,
+                fileRequestIntent: _clientConfiguration.ClientOptions.FileRequestIntent,
                 allowTrailingDot: _clientConfiguration.ClientOptions.AllowTrailingDot,
                 allowSourceTrailingDot: _clientConfiguration.ClientOptions.AllowSourceTrailingDot);
         }
