@@ -26,7 +26,7 @@ This library allows you to send data from virtually any source to supported buil
 Install the Azure Monitor Ingestion client library for .NET with NuGet:
 
 ```dotnetcli
-dotnet add package Azure.Monitor.Ingestion --prerelease
+dotnet add package Azure.Monitor.Ingestion
 ```
 
 ### Authenticate the client
