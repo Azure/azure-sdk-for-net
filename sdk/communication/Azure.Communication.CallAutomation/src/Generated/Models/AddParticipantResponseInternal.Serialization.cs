@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
             Optional<string> operationContext = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("participant"))
+                if (property.NameEquals("participant"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation
                     participant = CallParticipantInternal.DeserializeCallParticipantInternal(property.Value);
                     continue;
                 }
-                if (property.NameEquals("operationContext"))
+                if (property.NameEquals("operationContext"u8))
                 {
                     operationContext = property.Value.GetString();
                     continue;

@@ -20,7 +20,8 @@ namespace Azure.Communication.CallAutomation
         {
             Target = targetPhoneNumberIdentity;
             SourceCallerIdNumber = callerIdNumber;
-            SipHeaders= sipHeaders == null ? new Dictionary<string, string>() : sipHeaders;
+            SipHeaders = sipHeaders == null ? new Dictionary<string, string>() : sipHeaders;
+            VoipHeaders = new Dictionary<string, string>();
         }
 
         /// <summary>
@@ -31,7 +32,8 @@ namespace Azure.Communication.CallAutomation
         public CallInvite(CommunicationUserIdentifier targetIdentity, IDictionary<string, string> voipHeaders = null)
         {
             Target = targetIdentity;
-            VoipHeaders= voipHeaders == null ? new Dictionary<string, string>() : voipHeaders;
+            VoipHeaders = voipHeaders == null ? new Dictionary<string, string>() : voipHeaders;
+            SipHeaders = new Dictionary<string, string>();
         }
 
         /// <summary>

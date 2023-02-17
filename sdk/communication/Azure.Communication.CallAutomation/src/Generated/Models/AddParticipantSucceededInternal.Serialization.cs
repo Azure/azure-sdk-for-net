@@ -53,7 +53,7 @@ namespace Azure.Communication.CallAutomation
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("participant"))
+                if (property.NameEquals("participant"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
