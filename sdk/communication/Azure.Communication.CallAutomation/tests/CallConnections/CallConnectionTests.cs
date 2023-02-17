@@ -562,7 +562,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 new object?[]
                 {
                     new CallInvite(new CommunicationUserIdentifier("userId")){
-                        SipHeaders = {{ "key1", "value1" }}}
+                        VoipHeaders = {{ "key1", "value1" }}}
                 },
             };
         }
