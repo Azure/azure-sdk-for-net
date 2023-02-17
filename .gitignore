@@ -176,4 +176,3 @@ artifacts
 
 # Temporary cadl folders for cadl generation
 TempCadlFiles/
-/sdk/identity/Azure.Identity/tests/TokenCredentialOptionsTests.cs
