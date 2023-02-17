@@ -13,11 +13,11 @@ using NUnit.Framework;
 
 namespace Azure.Monitor.Ingestion.Tests
 {
-    //[LiveOnly]
+    [LiveOnly]
     public class ErrorTest : RecordedTestBase<MonitorIngestionTestEnvironment>
     {
         private const int Mb = 1024 * 1024;
-        public ErrorTest(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public ErrorTest(bool isAsync) : base(isAsync)
         {
         }
 
