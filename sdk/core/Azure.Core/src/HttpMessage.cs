@@ -14,7 +14,7 @@ namespace Azure.Core
     /// </summary>
     public sealed class HttpMessage : IDisposable
     {
-        private ArrayBackedPropertyBag _propertyBag;
+        private ArrayBackedPropertyBag<ulong, object> _propertyBag;
         private Response? _response;
 
         /// <summary>
@@ -27,6 +27,7 @@ namespace Azure.Core
             Request = request;
             ResponseClassifier = responseClassifier;
             BufferResponse = true;
+            _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
         }
 
         /// <summary>

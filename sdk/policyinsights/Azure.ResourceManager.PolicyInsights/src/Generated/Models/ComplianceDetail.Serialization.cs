@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<int> count = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("complianceState"))
+                if (property.NameEquals("complianceState"u8))
                 {
                     complianceState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -24,32 +24,32 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             Optional<IReadOnlyList<Facet>> facets = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("totalRecords"))
+                if (property.NameEquals("totalRecords"u8))
                 {
                     totalRecords = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     count = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("resultTruncated"))
+                if (property.NameEquals("resultTruncated"u8))
                 {
                     resultTruncated = property.Value.GetString().ToResultTruncated();
                     continue;
                 }
-                if (property.NameEquals("$skipToken"))
+                if (property.NameEquals("$skipToken"u8))
                 {
                     skipToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("data"))
+                if (property.NameEquals("data"u8))
                 {
                     data = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("facets"))
+                if (property.NameEquals("facets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

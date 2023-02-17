@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<int> accountQuota = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accountQuota"))
+                if (property.NameEquals("accountQuota"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

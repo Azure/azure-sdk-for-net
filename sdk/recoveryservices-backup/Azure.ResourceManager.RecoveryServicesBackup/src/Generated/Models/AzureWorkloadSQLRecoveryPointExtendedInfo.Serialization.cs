@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DataDirectoryTimeInUTC))
             {
-                writer.WritePropertyName("dataDirectoryTimeInUTC");
+                writer.WritePropertyName("dataDirectoryTimeInUTC"u8);
                 writer.WriteStringValue(DataDirectoryTimeInUTC.Value, "O");
             }
             if (Optional.IsCollectionDefined(DataDirectoryPaths))
             {
-                writer.WritePropertyName("dataDirectoryPaths");
+                writer.WritePropertyName("dataDirectoryPaths"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataDirectoryPaths)
                 {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IList<SQLDataDirectory>> dataDirectoryPaths = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataDirectoryTimeInUTC"))
+                if (property.NameEquals("dataDirectoryTimeInUTC"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     dataDirectoryTimeInUTC = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("dataDirectoryPaths"))
+                if (property.NameEquals("dataDirectoryPaths"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

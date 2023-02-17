@@ -19,32 +19,32 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Namespace))
             {
-                writer.WritePropertyName("namespace");
+                writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
             if (Optional.IsDefined(Prefix))
             {
-                writer.WritePropertyName("prefix");
+                writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
             if (Optional.IsDefined(IsAttribute))
             {
-                writer.WritePropertyName("attribute");
+                writer.WritePropertyName("attribute"u8);
                 writer.WriteBooleanValue(IsAttribute.Value);
             }
             if (Optional.IsDefined(IsWrapped))
             {
-                writer.WritePropertyName("wrapped");
+                writer.WritePropertyName("wrapped"u8);
                 writer.WriteBooleanValue(IsWrapped.Value);
             }
             if (Optional.IsCollectionDefined(Extensions))
             {
-                writer.WritePropertyName("extensions");
+                writer.WritePropertyName("extensions"u8);
                 writer.WriteStartObject();
                 foreach (var item in Extensions)
                 {
@@ -70,22 +70,22 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<IDictionary<string, BinaryData>> extensions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("namespace"))
+                if (property.NameEquals("namespace"u8))
                 {
                     @namespace = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("prefix"))
+                if (property.NameEquals("prefix"u8))
                 {
                     prefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("attribute"))
+                if (property.NameEquals("attribute"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
                     attribute = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("wrapped"))
+                if (property.NameEquals("wrapped"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Logic.Models
                     wrapped = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("extensions"))
+                if (property.NameEquals("extensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReservationDetailResource> GetReservationDetailsAsync(this TenantResource tenantResource, TenantGetReservationDetailsOptions options, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ReservationDetailResource> GetReservationDetailsAsync(this TenantResource tenantResource, TenantResourceGetReservationDetailsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new TenantGetReservationDetailsOptions();
+            options ??= new TenantResourceGetReservationDetailsOptions();
 
             return GetExtensionClient(tenantResource).GetReservationDetailsAsync(options, cancellationToken);
         }
@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReservationDetailResource> GetReservationDetails(this TenantResource tenantResource, TenantGetReservationDetailsOptions options, CancellationToken cancellationToken = default)
+        public static Pageable<ReservationDetailResource> GetReservationDetails(this TenantResource tenantResource, TenantResourceGetReservationDetailsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new TenantGetReservationDetailsOptions();
+            options ??= new TenantResourceGetReservationDetailsOptions();
 
             return GetExtensionClient(tenantResource).GetReservationDetails(options, cancellationToken);
         }

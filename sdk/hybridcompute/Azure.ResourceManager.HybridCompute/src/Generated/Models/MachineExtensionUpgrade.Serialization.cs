@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ExtensionTargets))
             {
-                writer.WritePropertyName("extensionTargets");
+                writer.WritePropertyName("extensionTargets"u8);
                 writer.WriteStartObject();
                 foreach (var item in ExtensionTargets)
                 {

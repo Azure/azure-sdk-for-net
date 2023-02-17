@@ -11,7 +11,7 @@ using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using static Azure.Identity.Tests.CredentialTestBase;
+using static Azure.Identity.Tests.CredentialTestBase<Azure.Identity.TokenCredentialOptions>;
 
 namespace Azure.Identity.Tests
 {
@@ -77,7 +77,7 @@ namespace Azure.Identity.Tests
 
         public static IEnumerable<AllowedTenantsTestParameters> GetAllowedTenantsTestCases()
         {
-            return CredentialTestBase.GetAllowedTenantsTestCases();
+            return CredentialTestBase<TokenCredentialOptions>.GetAllowedTenantsTestCases();
         }
 
         [TestCaseSource(nameof(GetAllowedTenantsTestCases))]

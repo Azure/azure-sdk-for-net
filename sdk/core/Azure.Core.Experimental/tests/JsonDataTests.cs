@@ -94,13 +94,14 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanAccessProperties()
         {
-            dynamic jsonData = DynamicJsonTests.GetDynamicJson(@"
+            dynamic jsonData = DynamicJsonTests.GetDynamicJson("""
                 {
-                  ""primitive"" : ""Hello"",
-                  ""nested"" : {
-                      ""nestedPrimitive"": true
+                  "primitive" : "Hello",
+                  "nested" : {
+                      "nestedPrimitive": true
                  }
-              }");
+              }
+            """);
 
             Assert.AreEqual("Hello", (string)jsonData.primitive);
             Assert.AreEqual(true, (bool)jsonData.nested.nestedPrimitive);

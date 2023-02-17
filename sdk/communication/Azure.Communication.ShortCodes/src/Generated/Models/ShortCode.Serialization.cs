@@ -23,12 +23,12 @@ namespace Azure.Communication.ShortCodes.Models
             Optional<DateTimeOffset> purchaseDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("number"))
+                if (property.NameEquals("number"u8))
                 {
                     number = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("numberType"))
+                if (property.NameEquals("numberType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,12 +38,12 @@ namespace Azure.Communication.ShortCodes.Models
                     numberType = new NumberType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("countryCode"))
+                if (property.NameEquals("countryCode"u8))
                 {
                     countryCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("programBriefIds"))
+                if (property.NameEquals("programBriefIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +58,7 @@ namespace Azure.Communication.ShortCodes.Models
                     programBriefIds = array;
                     continue;
                 }
-                if (property.NameEquals("purchaseDate"))
+                if (property.NameEquals("purchaseDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,11 +15,11 @@ namespace Azure.Communication.CallingServer
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("incomingCallContext");
+            writer.WritePropertyName("incomingCallContext"u8);
             writer.WriteStringValue(IncomingCallContext);
             if (Optional.IsDefined(CallRejectReason))
             {
-                writer.WritePropertyName("callRejectReason");
+                writer.WritePropertyName("callRejectReason"u8);
                 writer.WriteStringValue(CallRejectReason.Value.ToString());
             }
             writer.WriteEndObject();

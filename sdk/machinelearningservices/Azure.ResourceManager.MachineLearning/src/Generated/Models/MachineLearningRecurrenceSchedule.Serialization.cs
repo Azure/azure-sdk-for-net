@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("hours");
+            writer.WritePropertyName("hours"u8);
             writer.WriteStartArray();
             foreach (var item in Hours)
             {
                 writer.WriteNumberValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("minutes");
+            writer.WritePropertyName("minutes"u8);
             writer.WriteStartArray();
             foreach (var item in Minutes)
             {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (MonthDays != null)
                 {
-                    writer.WritePropertyName("monthDays");
+                    writer.WritePropertyName("monthDays"u8);
                     writer.WriteStartArray();
                     foreach (var item in MonthDays)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (WeekDays != null)
                 {
-                    writer.WritePropertyName("weekDays");
+                    writer.WritePropertyName("weekDays"u8);
                     writer.WriteStartArray();
                     foreach (var item in WeekDays)
                     {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IList<MachineLearningDayOfWeek>> weekDays = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hours"))
+                if (property.NameEquals("hours"u8))
                 {
                     List<int> array = new List<int>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     hours = array;
                     continue;
                 }
-                if (property.NameEquals("minutes"))
+                if (property.NameEquals("minutes"u8))
                 {
                     List<int> array = new List<int>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     minutes = array;
                     continue;
                 }
-                if (property.NameEquals("monthDays"))
+                if (property.NameEquals("monthDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     monthDays = array;
                     continue;
                 }
-                if (property.NameEquals("weekDays"))
+                if (property.NameEquals("weekDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

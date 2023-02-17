@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
-using Azure.Core.TestFramework;
-using System.Threading.Tasks;
-using Azure.Core.Pipeline;
-using Azure.Core;
 using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.OpenAI.Tests
 {
@@ -23,9 +23,9 @@ namespace Azure.AI.OpenAI.Tests
         [RecordedTest]
         public void InstanceTest()
         {
-            var client = GetClient();
+            OpenAIClient client = GetClient();
             Assert.That(client, Is.InstanceOf<OpenAIClient>());
-            var tokenClient = GetClientWithCredential();
+            OpenAIClient tokenClient = GetClientWithCredential();
             Assert.That(tokenClient, Is.InstanceOf<OpenAIClient>());
         }
 
@@ -35,13 +35,25 @@ namespace Azure.AI.OpenAI.Tests
         [RecordedTest]
         public async Task CompletionTest()
         {
-            var client = GetClient();
-            CompletionsOptions completionsRequest = new CompletionsOptions();
-            completionsRequest.Prompt.Add("Hello world");
-            completionsRequest.Prompt.Add("running over the same old ground");
-            Assert.That(completionsRequest, Is.InstanceOf<CompletionsOptions>());
-            var response = await client.GetCompletionsAsync(CompletionsDeploymentId, completionsRequest);
+            OpenAIClient client = GetClient();
+            CompletionsOptions requestOptions = new CompletionsOptions()
+            {
+                Prompt =
+                {
+                    "Hello world",
+                    "running over the same old ground",
+                },
+            };
+            Assert.That(requestOptions, Is.InstanceOf<CompletionsOptions>());
+            Response<Completions> response = await client.GetCompletionsAsync(
+                CompletionsDeploymentId,
+                requestOptions);
+            Assert.That(response, Is.Not.Null);
             Assert.That(response, Is.InstanceOf<Response<Completions>>());
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Choices.Count, Is.EqualTo(requestOptions.Prompt.Count));
+            Assert.That(response.Value.Choices[0].FinishReason, Is.Not.Null.Or.Empty);
         }
 
         /// <summary>
@@ -67,8 +79,8 @@ namespace Azure.AI.OpenAI.Tests
         [RecordedTest]
         public async Task SimpleCompletionTest()
         {
-            var client = GetClientWithCredential();
-            var response = await client.GetCompletionsAsync(CompletionsDeploymentId, "Hello World!");
+            OpenAIClient client = GetClientWithCredential();
+            Response<Completions> response = await client.GetCompletionsAsync(CompletionsDeploymentId, "Hello World!");
             Assert.That(response, Is.InstanceOf<Response<Completions>>());
         }
 
@@ -78,10 +90,10 @@ namespace Azure.AI.OpenAI.Tests
         [RecordedTest]
         public async Task EmbeddingTest()
         {
-            var client = GetClient();
+            OpenAIClient client = GetClient();
             EmbeddingsOptions embeddingsRequest = new EmbeddingsOptions("Your text string goes here");
             Assert.That(embeddingsRequest, Is.InstanceOf<EmbeddingsOptions>());
-            var response = await client.GetEmbeddingsAsync(EmbeddingsDeploymentId, embeddingsRequest);
+            Response<Embeddings> response = await client.GetEmbeddingsAsync(EmbeddingsDeploymentId, embeddingsRequest);
             Assert.That(response, Is.InstanceOf<Response<Embeddings>>());
         }
 
@@ -129,19 +141,6 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(response.Value.Choices[2].Index, Is.EqualTo(2));
         }
 
-        public class SnoopPolicy : HttpPipelinePolicy
-        {
-            public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         [RecordedTest]
         public async Task TestLogProbs()
         {
@@ -165,12 +164,12 @@ namespace Azure.AI.OpenAI.Tests
             CompletionsOptions requestOptions = new CompletionsOptions()
             {
                 Prompt = { promptText },
-                //GenerationSampleCount = 3,
-                //CacheLevel = 0,
-                //Temperature = 0.75f,
-                //User = "AzureSDKOpenAITests",
-                // Echo = true,
-                //Model = "this is a bogus model parameter in the body",
+                GenerationSampleCount = 3,
+                CacheLevel = 0,
+                Temperature = 0.75f,
+                User = "AzureSDKOpenAITests",
+                Echo = true,
+                Model = "this is a bogus model parameter in the body",
                 LogProbability = 1,
             };
             Response<Completions> response = await client.GetCompletionsAsync(
@@ -193,10 +192,13 @@ namespace Azure.AI.OpenAI.Tests
         [RecordedTest]
         public void RequestFailedExceptionTest()
         {
-            var client = GetClient();
+            OpenAIClient client = GetClient();
             CompletionsOptions completionsRequest = new CompletionsOptions();
             completionsRequest.Prompt.Add("Hello world");
-            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await client.GetCompletionsAsync("BAD_DEPLOYMENT_ID", completionsRequest); });
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await client.GetCompletionsAsync("BAD_DEPLOYMENT_ID", completionsRequest);
+            });
             Assert.AreEqual(404, exception.Status);
             Assert.That(exception.ErrorCode, Is.EqualTo("DeploymentNotFound"));
         }
@@ -213,6 +215,7 @@ namespace Azure.AI.OpenAI.Tests
                         + " and New York, NY?"
                 },
                 MaxTokens = 10,
+                Temperature = 0.4f,
             };
             Response<Completions> response = await client.GetCompletionsAsync(
                 CompletionsDeploymentId,
@@ -221,6 +224,85 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
             Assert.That(response.Value.Choices[0].FinishReason, Is.EqualTo("length"));
+        }
+
+        [RecordedTest]
+        public async Task StreamingCompletionsTest()
+        {
+            OpenAIClient client = GetClient();
+            CompletionsOptions requestOptions = new CompletionsOptions()
+            {
+                Prompt =
+                {
+                    "Tell me some jokes about mangos",
+                    "What are some disturbing facts about papayas?"
+                },
+                MaxTokens = 512,
+                LogProbability = 1,
+            };
+
+            Response<StreamingCompletions> response = await client.GetCompletionsStreamingAsync(
+                    CompletionsDeploymentId,
+                    requestOptions);
+            Assert.That(response, Is.Not.Null);
+
+            // StreamingCompletions implements IDisposable; capturing the .Value field of `response` with a `using`
+            // statement is unusual but properly ensures that `.Dispose()` will be called, as `Response<T>` does *not*
+            // implement IDisposable or otherwise ensure that an `IDisposable` underlying `.Value` is disposed.
+            using StreamingCompletions responseValue = response.Value;
+
+            int originallyEnumeratedChoices = 0;
+            List<List<string>> originallyEnumeratedTextParts = new List<List<string>>();
+
+            await foreach (StreamingChoice choice in responseValue.GetChoicesStreaming())
+            {
+                List<string> textPartsForChoice = new List<string>();
+                StringBuilder choiceTextBuilder = new StringBuilder();
+                await foreach (string choiceTextPart in choice.GetTextStreaming())
+                {
+                    choiceTextBuilder.Append(choiceTextPart);
+                    textPartsForChoice.Add(choiceTextPart);
+                }
+                Assert.That(choiceTextBuilder.ToString(), Is.Not.Null.Or.Empty);
+                Assert.That(choice.FinishReason, Is.Not.Null.Or.Empty);
+                Assert.That(choice.Logprobs, Is.Not.Null);
+                originallyEnumeratedChoices++;
+                originallyEnumeratedTextParts.Add(textPartsForChoice);
+            }
+
+            // Note: these top-level values *are likely not yet populated* until *after* at least one streaming
+            // choice has arrived.
+            Assert.That(response.GetRawResponse(), Is.Not.Null.Or.Empty);
+            Assert.That(responseValue.Id, Is.Not.Null.Or.Empty);
+            Assert.That(responseValue.Created, Is.GreaterThan(new DateTime(2022, 1, 1)));
+            Assert.That(responseValue.Created, Is.LessThan(DateTime.Now.AddDays(2)));
+
+            // Validate stability of enumeration (non-cancelled case)
+            IReadOnlyList<StreamingChoice> secondPassChoices = await GetBlockingListFromIAsyncEnumerable(
+                responseValue.GetChoicesStreaming());
+            Assert.AreEqual(originallyEnumeratedChoices, secondPassChoices.Count);
+            for (int i = 0; i < secondPassChoices.Count; i++)
+            {
+                IReadOnlyList<string> secondPassTextParts = await GetBlockingListFromIAsyncEnumerable(
+                    secondPassChoices[i].GetTextStreaming());
+                Assert.AreEqual(originallyEnumeratedTextParts[i].Count, secondPassTextParts.Count);
+                for (int j = 0; j < originallyEnumeratedTextParts[i].Count; j++)
+                {
+                    Assert.AreEqual(originallyEnumeratedTextParts[i][j], secondPassTextParts[j]);
+                }
+            }
+        }
+
+        // Lightweight reimplementation of .NET 7 .ToBlockingEnumerable().ToList()
+        private static async Task<IReadOnlyList<T>> GetBlockingListFromIAsyncEnumerable<T>(
+            IAsyncEnumerable<T> asyncValues)
+        {
+            List<T> result = new List<T>();
+            await foreach (T asyncValue in asyncValues)
+            {
+                result.Add(asyncValue);
+            }
+            return result;
         }
     }
 }

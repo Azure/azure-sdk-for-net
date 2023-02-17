@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<CheckRestrictionsResultContentEvaluationResult> contentEvaluationResult = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fieldRestrictions"))
+                if (property.NameEquals("fieldRestrictions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     fieldRestrictions = array;
                     continue;
                 }
-                if (property.NameEquals("contentEvaluationResult"))
+                if (property.NameEquals("contentEvaluationResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

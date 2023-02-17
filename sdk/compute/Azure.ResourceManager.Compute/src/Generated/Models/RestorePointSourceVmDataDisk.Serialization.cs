@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<WritableSubResource> diskRestorePoint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lun"))
+                if (property.NameEquals("lun"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.Compute.Models
                     lun = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("caching"))
+                if (property.NameEquals("caching"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
                     caching = property.Value.GetString().ToCachingType();
                     continue;
                 }
-                if (property.NameEquals("diskSizeGB"))
+                if (property.NameEquals("diskSizeGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
                     diskSizeGB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("managedDisk"))
+                if (property.NameEquals("managedDisk"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
                     managedDisk = VirtualMachineManagedDisk.DeserializeVirtualMachineManagedDisk(property.Value);
                     continue;
                 }
-                if (property.NameEquals("diskRestorePoint"))
+                if (property.NameEquals("diskRestorePoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

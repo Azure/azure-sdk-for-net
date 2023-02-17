@@ -17,40 +17,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EntityFriendlyName))
             {
-                writer.WritePropertyName("entityFriendlyName");
+                writer.WritePropertyName("entityFriendlyName"u8);
                 writer.WriteStringValue(EntityFriendlyName);
             }
             if (Optional.IsDefined(BackupManagementType))
             {
-                writer.WritePropertyName("backupManagementType");
+                writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
             if (Optional.IsDefined(Operation))
             {
-                writer.WritePropertyName("operation");
+                writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
             if (Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startTime");
+                writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
             if (Optional.IsDefined(EndOn))
             {
-                writer.WritePropertyName("endTime");
+                writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
             if (Optional.IsDefined(ActivityId))
             {
-                writer.WritePropertyName("activityId");
+                writer.WritePropertyName("activityId"u8);
                 writer.WriteStringValue(ActivityId);
             }
-            writer.WritePropertyName("jobType");
+            writer.WritePropertyName("jobType"u8);
             writer.WriteStringValue(JobType);
             writer.WriteEndObject();
         }

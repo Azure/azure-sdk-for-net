@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<DataBoxCopyStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serialNumber"))
+                if (property.NameEquals("serialNumber"u8))
                 {
                     serialNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bytesCopied"))
+                if (property.NameEquals("bytesCopied"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     bytesCopied = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("percentComplete"))
+                if (property.NameEquals("percentComplete"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     percentComplete = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

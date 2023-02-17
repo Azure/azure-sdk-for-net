@@ -23,27 +23,27 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<PatchInstallationState> installationState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("patchId"))
+                if (property.NameEquals("patchId"u8))
                 {
                     patchId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kbId"))
+                if (property.NameEquals("kbId"u8))
                 {
                     kbId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("classifications"))
+                if (property.NameEquals("classifications"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
                     classifications = array;
                     continue;
                 }
-                if (property.NameEquals("installationState"))
+                if (property.NameEquals("installationState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

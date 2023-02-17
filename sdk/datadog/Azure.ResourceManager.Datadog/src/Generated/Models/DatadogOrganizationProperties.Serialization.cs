@@ -18,32 +18,32 @@ namespace Azure.ResourceManager.Datadog.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkingAuthCode))
             {
-                writer.WritePropertyName("linkingAuthCode");
+                writer.WritePropertyName("linkingAuthCode"u8);
                 writer.WriteStringValue(LinkingAuthCode);
             }
             if (Optional.IsDefined(LinkingClientId))
             {
-                writer.WritePropertyName("linkingClientId");
+                writer.WritePropertyName("linkingClientId"u8);
                 writer.WriteStringValue(LinkingClientId);
             }
             if (Optional.IsDefined(RedirectUri))
             {
-                writer.WritePropertyName("redirectUri");
+                writer.WritePropertyName("redirectUri"u8);
                 writer.WriteStringValue(RedirectUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ApiKey))
             {
-                writer.WritePropertyName("apiKey");
+                writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
             if (Optional.IsDefined(ApplicationKey))
             {
-                writer.WritePropertyName("applicationKey");
+                writer.WritePropertyName("applicationKey"u8);
                 writer.WriteStringValue(ApplicationKey);
             }
             if (Optional.IsDefined(EnterpriseAppId))
             {
-                writer.WritePropertyName("enterpriseAppId");
+                writer.WritePropertyName("enterpriseAppId"u8);
                 writer.WriteStringValue(EnterpriseAppId);
             }
             writer.WriteEndObject();
@@ -61,27 +61,27 @@ namespace Azure.ResourceManager.Datadog.Models
             Optional<string> enterpriseAppId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("linkingAuthCode"))
+                if (property.NameEquals("linkingAuthCode"u8))
                 {
                     linkingAuthCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("linkingClientId"))
+                if (property.NameEquals("linkingClientId"u8))
                 {
                     linkingClientId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("redirectUri"))
+                if (property.NameEquals("redirectUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,17 +91,17 @@ namespace Azure.ResourceManager.Datadog.Models
                     redirectUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("apiKey"))
+                if (property.NameEquals("apiKey"u8))
                 {
                     apiKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("applicationKey"))
+                if (property.NameEquals("applicationKey"u8))
                 {
                     applicationKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enterpriseAppId"))
+                if (property.NameEquals("enterpriseAppId"u8))
                 {
                     enterpriseAppId = property.Value.GetString();
                     continue;

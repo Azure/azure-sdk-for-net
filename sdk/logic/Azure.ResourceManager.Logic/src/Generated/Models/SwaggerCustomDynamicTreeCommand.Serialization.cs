@@ -18,42 +18,42 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OperationId))
             {
-                writer.WritePropertyName("operationId");
+                writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
             if (Optional.IsDefined(ItemsPath))
             {
-                writer.WritePropertyName("itemsPath");
+                writer.WritePropertyName("itemsPath"u8);
                 writer.WriteStringValue(ItemsPath);
             }
             if (Optional.IsDefined(ItemValuePath))
             {
-                writer.WritePropertyName("itemValuePath");
+                writer.WritePropertyName("itemValuePath"u8);
                 writer.WriteStringValue(ItemValuePath);
             }
             if (Optional.IsDefined(ItemTitlePath))
             {
-                writer.WritePropertyName("itemTitlePath");
+                writer.WritePropertyName("itemTitlePath"u8);
                 writer.WriteStringValue(ItemTitlePath);
             }
             if (Optional.IsDefined(ItemFullTitlePath))
             {
-                writer.WritePropertyName("itemFullTitlePath");
+                writer.WritePropertyName("itemFullTitlePath"u8);
                 writer.WriteStringValue(ItemFullTitlePath);
             }
             if (Optional.IsDefined(ItemIsParent))
             {
-                writer.WritePropertyName("itemIsParent");
+                writer.WritePropertyName("itemIsParent"u8);
                 writer.WriteStringValue(ItemIsParent);
             }
             if (Optional.IsDefined(SelectableFilter))
             {
-                writer.WritePropertyName("selectableFilter");
+                writer.WritePropertyName("selectableFilter"u8);
                 writer.WriteStringValue(SelectableFilter);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
@@ -77,42 +77,42 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<IDictionary<string, SwaggerCustomDynamicTreeParameterInfo>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operationId"))
+                if (property.NameEquals("operationId"u8))
                 {
                     operationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("itemsPath"))
+                if (property.NameEquals("itemsPath"u8))
                 {
                     itemsPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("itemValuePath"))
+                if (property.NameEquals("itemValuePath"u8))
                 {
                     itemValuePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("itemTitlePath"))
+                if (property.NameEquals("itemTitlePath"u8))
                 {
                     itemTitlePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("itemFullTitlePath"))
+                if (property.NameEquals("itemFullTitlePath"u8))
                 {
                     itemFullTitlePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("itemIsParent"))
+                if (property.NameEquals("itemIsParent"u8))
                 {
                     itemIsParent = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("selectableFilter"))
+                if (property.NameEquals("selectableFilter"u8))
                 {
                     selectableFilter = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

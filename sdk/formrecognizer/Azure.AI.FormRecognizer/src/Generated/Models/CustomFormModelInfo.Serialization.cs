@@ -23,32 +23,32 @@ namespace Azure.AI.FormRecognizer.Training
             Optional<CustomFormModelProperties> attributes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("modelId"))
+                if (property.NameEquals("modelId"u8))
                 {
                     modelId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString().ToCustomFormModelStatus();
                     continue;
                 }
-                if (property.NameEquals("createdDateTime"))
+                if (property.NameEquals("createdDateTime"u8))
                 {
                     createdDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdatedDateTime"))
+                if (property.NameEquals("lastUpdatedDateTime"u8))
                 {
                     lastUpdatedDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("modelName"))
+                if (property.NameEquals("modelName"u8))
                 {
                     modelName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("attributes"))
+                if (property.NameEquals("attributes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

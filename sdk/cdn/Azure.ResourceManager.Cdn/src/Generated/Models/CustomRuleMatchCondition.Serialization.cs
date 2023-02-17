@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("matchVariable");
+            writer.WritePropertyName("matchVariable"u8);
             writer.WriteStringValue(MatchVariable.ToString());
             if (Optional.IsDefined(Selector))
             {
-                writer.WritePropertyName("selector");
+                writer.WritePropertyName("selector"u8);
                 writer.WriteStringValue(Selector);
             }
-            writer.WritePropertyName("operator");
+            writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(MatchOperator.ToString());
             if (Optional.IsDefined(NegateCondition))
             {
-                writer.WritePropertyName("negateCondition");
+                writer.WritePropertyName("negateCondition"u8);
                 writer.WriteBooleanValue(NegateCondition.Value);
             }
-            writer.WritePropertyName("matchValue");
+            writer.WritePropertyName("matchValue"u8);
             writer.WriteStartArray();
             foreach (var item in MatchValue)
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Transforms))
             {
-                writer.WritePropertyName("transforms");
+                writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
                 foreach (var item in Transforms)
                 {
@@ -60,22 +60,22 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<IList<TransformType>> transforms = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("matchVariable"))
+                if (property.NameEquals("matchVariable"u8))
                 {
                     matchVariable = new WafMatchVariable(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("selector"))
+                if (property.NameEquals("selector"u8))
                 {
                     selector = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operator"))
+                if (property.NameEquals("operator"u8))
                 {
                     @operator = new MatchOperator(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("negateCondition"))
+                if (property.NameEquals("negateCondition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     negateCondition = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("matchValue"))
+                if (property.NameEquals("matchValue"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     matchValue = array;
                     continue;
                 }
-                if (property.NameEquals("transforms"))
+                if (property.NameEquals("transforms"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

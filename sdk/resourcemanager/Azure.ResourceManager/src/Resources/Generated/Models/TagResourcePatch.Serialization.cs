@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PatchMode))
             {
-                writer.WritePropertyName("operation");
+                writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(PatchMode.Value.ToString());
             }
             if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
             writer.WriteEndObject();

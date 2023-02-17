@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ComputeType))
             {
-                writer.WritePropertyName("computeType");
+                writer.WritePropertyName("computeType"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ComputeType);
 #else
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             if (Optional.IsDefined(CoreCount))
             {
-                writer.WritePropertyName("coreCount");
+                writer.WritePropertyName("coreCount"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(CoreCount);
 #else
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> coreCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("computeType"))
+                if (property.NameEquals("computeType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     computeType = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("coreCount"))
+                if (property.NameEquals("coreCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

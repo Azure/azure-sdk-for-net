@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = "JobTaskDetails";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("jobTask"))
+                if (property.NameEquals("jobTask"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     jobTask = JobEntity.DeserializeJobEntity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

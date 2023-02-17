@@ -15,11 +15,11 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("applicationId");
+            writer.WritePropertyName("applicationId"u8);
             writer.WriteStringValue(ApplicationId);
             if (Optional.IsDefined(ApplicationSecret))
             {
-                writer.WritePropertyName("applicationSecret");
+                writer.WritePropertyName("applicationSecret"u8);
                 writer.WriteStringValue(ApplicationSecret);
             }
             writer.WriteEndObject();
@@ -31,12 +31,12 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<string> applicationSecret = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("applicationId"))
+                if (property.NameEquals("applicationId"u8))
                 {
                     applicationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("applicationSecret"))
+                if (property.NameEquals("applicationSecret"u8))
                 {
                     applicationSecret = property.Value.GetString();
                     continue;

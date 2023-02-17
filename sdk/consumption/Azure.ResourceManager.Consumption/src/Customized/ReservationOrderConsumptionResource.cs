@@ -63,8 +63,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// Lists the reservations summaries for daily or monthly grain.
-        /// Request Path: /providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationSummaries
-        /// Operation Id: ReservationsSummaries_ListByReservationOrder
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationSummaries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationsSummaries_ListByReservationOrder</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="grain"> Can be daily or monthly. </param>
         /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
@@ -107,8 +115,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// Lists the reservations summaries for daily or monthly grain.
-        /// Request Path: /providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationSummaries
-        /// Operation Id: ReservationsSummaries_ListByReservationOrder
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationSummaries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationsSummaries_ListByReservationOrder</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="grain"> Can be daily or monthly. </param>
         /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
@@ -151,8 +167,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// Lists the reservations details for provided date range. Note: ARM has a payload size limit of 12MB, so currently callers get 502 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges.
-        /// Request Path: /providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationDetails
-        /// Operation Id: ReservationsDetails_ListByReservationOrder
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationsDetails_ListByReservationOrder</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -197,8 +221,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// Lists the reservations details for provided date range. Note: ARM has a payload size limit of 12MB, so currently callers get 502 when the response size exceeds the ARM limit. In such cases, API call should be made with smaller date ranges.
-        /// Request Path: /providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationDetails
-        /// Operation Id: ReservationsDetails_ListByReservationOrder
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationorders/{reservationOrderId}/providers/Microsoft.Consumption/reservationDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReservationsDetails_ListByReservationOrder</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports &apos;le&apos; and  &apos;ge&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

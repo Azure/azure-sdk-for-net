@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (ConnectionString != null)
                 {
-                    writer.WritePropertyName("connectionString");
+                    writer.WritePropertyName("connectionString"u8);
                     writer.WriteStringValue(ConnectionString);
                 }
                 else
@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (Database != null)
                 {
-                    writer.WritePropertyName("database");
+                    writer.WritePropertyName("database"u8);
                     writer.WriteStringValue(Database);
                 }
                 else
@@ -43,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (UserName != null)
                 {
-                    writer.WritePropertyName("userName");
+                    writer.WritePropertyName("userName"u8);
                     writer.WriteStringValue(UserName);
                 }
                 else
@@ -55,7 +55,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (Password != null)
                 {
-                    writer.WritePropertyName("password");
+                    writer.WritePropertyName("password"u8);
                     writer.WriteStringValue(Password);
                 }
                 else
@@ -65,7 +65,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             if (Query != null)
             {
-                writer.WritePropertyName("query");
+                writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
             else
@@ -84,7 +84,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             string query = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectionString"))
+                if (property.NameEquals("connectionString"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     connectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("database"))
+                if (property.NameEquals("database"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     database = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userName"))
+                if (property.NameEquals("userName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +114,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     userName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +124,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     password = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("query"))
+                if (property.NameEquals("query"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

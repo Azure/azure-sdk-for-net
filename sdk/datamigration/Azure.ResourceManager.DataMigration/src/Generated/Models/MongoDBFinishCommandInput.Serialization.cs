@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("immediate");
+            writer.WritePropertyName("immediate"u8);
             writer.WriteBooleanValue(Immediate);
             if (Optional.IsDefined(ObjectName))
             {
-                writer.WritePropertyName("objectName");
+                writer.WritePropertyName("objectName"u8);
                 writer.WriteStringValue(ObjectName);
             }
             writer.WriteEndObject();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> objectName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("immediate"))
+                if (property.NameEquals("immediate"u8))
                 {
                     immediate = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("objectName"))
+                if (property.NameEquals("objectName"u8))
                 {
                     objectName = property.Value.GetString();
                     continue;

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             string instanceType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("instanceType"))
+                if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;

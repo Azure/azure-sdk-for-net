@@ -17,42 +17,42 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AppLocation))
             {
-                writer.WritePropertyName("appLocation");
+                writer.WritePropertyName("appLocation"u8);
                 writer.WriteStringValue(AppLocation);
             }
             if (Optional.IsDefined(ApiLocation))
             {
-                writer.WritePropertyName("apiLocation");
+                writer.WritePropertyName("apiLocation"u8);
                 writer.WriteStringValue(ApiLocation);
             }
             if (Optional.IsDefined(AppArtifactLocation))
             {
-                writer.WritePropertyName("appArtifactLocation");
+                writer.WritePropertyName("appArtifactLocation"u8);
                 writer.WriteStringValue(AppArtifactLocation);
             }
             if (Optional.IsDefined(OutputLocation))
             {
-                writer.WritePropertyName("outputLocation");
+                writer.WritePropertyName("outputLocation"u8);
                 writer.WriteStringValue(OutputLocation);
             }
             if (Optional.IsDefined(AppBuildCommand))
             {
-                writer.WritePropertyName("appBuildCommand");
+                writer.WritePropertyName("appBuildCommand"u8);
                 writer.WriteStringValue(AppBuildCommand);
             }
             if (Optional.IsDefined(ApiBuildCommand))
             {
-                writer.WritePropertyName("apiBuildCommand");
+                writer.WritePropertyName("apiBuildCommand"u8);
                 writer.WriteStringValue(ApiBuildCommand);
             }
             if (Optional.IsDefined(SkipGithubActionWorkflowGeneration))
             {
-                writer.WritePropertyName("skipGithubActionWorkflowGeneration");
+                writer.WritePropertyName("skipGithubActionWorkflowGeneration"u8);
                 writer.WriteBooleanValue(SkipGithubActionWorkflowGeneration.Value);
             }
             if (Optional.IsDefined(GithubActionSecretNameOverride))
             {
-                writer.WritePropertyName("githubActionSecretNameOverride");
+                writer.WritePropertyName("githubActionSecretNameOverride"u8);
                 writer.WriteStringValue(GithubActionSecretNameOverride);
             }
             writer.WriteEndObject();
@@ -70,37 +70,37 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> githubActionSecretNameOverride = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("appLocation"))
+                if (property.NameEquals("appLocation"u8))
                 {
                     appLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("apiLocation"))
+                if (property.NameEquals("apiLocation"u8))
                 {
                     apiLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appArtifactLocation"))
+                if (property.NameEquals("appArtifactLocation"u8))
                 {
                     appArtifactLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("outputLocation"))
+                if (property.NameEquals("outputLocation"u8))
                 {
                     outputLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appBuildCommand"))
+                if (property.NameEquals("appBuildCommand"u8))
                 {
                     appBuildCommand = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("apiBuildCommand"))
+                if (property.NameEquals("apiBuildCommand"u8))
                 {
                     apiBuildCommand = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("skipGithubActionWorkflowGeneration"))
+                if (property.NameEquals("skipGithubActionWorkflowGeneration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService.Models
                     skipGithubActionWorkflowGeneration = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("githubActionSecretNameOverride"))
+                if (property.NameEquals("githubActionSecretNameOverride"u8))
                 {
                     githubActionSecretNameOverride = property.Value.GetString();
                     continue;

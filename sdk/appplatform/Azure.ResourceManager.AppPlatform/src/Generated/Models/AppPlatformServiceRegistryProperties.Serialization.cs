@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<IReadOnlyList<AppPlatformServiceRegistryInstance>> instances = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     provisioningState = new AppPlatformServiceRegistryProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceRequests"))
+                if (property.NameEquals("resourceRequests"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     resourceRequests = AppPlatformServiceRegistryResourceRequirements.DeserializeAppPlatformServiceRegistryResourceRequirements(property.Value);
                     continue;
                 }
-                if (property.NameEquals("instances"))
+                if (property.NameEquals("instances"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

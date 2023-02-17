@@ -18,12 +18,12 @@ namespace Azure.Communication.JobRouter
             writer.WriteStartObject();
             if (Optional.IsDefined(ClassificationPolicyId))
             {
-                writer.WritePropertyName("classificationPolicyId");
+                writer.WritePropertyName("classificationPolicyId"u8);
                 writer.WriteStringValue(ClassificationPolicyId);
             }
             if (Optional.IsCollectionDefined(_labelsToUpsert))
             {
-                writer.WritePropertyName("labelsToUpsert");
+                writer.WritePropertyName("labelsToUpsert"u8);
                 writer.WriteStartObject();
                 foreach (var item in _labelsToUpsert)
                 {
@@ -32,7 +32,7 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             writer.WriteEndObject();
         }
@@ -44,12 +44,12 @@ namespace Azure.Communication.JobRouter
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("classificationPolicyId"))
+                if (property.NameEquals("classificationPolicyId"u8))
                 {
                     classificationPolicyId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("labelsToUpsert"))
+                if (property.NameEquals("labelsToUpsert"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +64,7 @@ namespace Azure.Communication.JobRouter
                     labelsToUpsert = dictionary;
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;

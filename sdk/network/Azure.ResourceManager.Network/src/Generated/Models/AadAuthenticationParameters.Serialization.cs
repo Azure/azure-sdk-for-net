@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AadTenant))
             {
-                writer.WritePropertyName("aadTenant");
+                writer.WritePropertyName("aadTenant"u8);
                 writer.WriteStringValue(AadTenant);
             }
             if (Optional.IsDefined(AadAudience))
             {
-                writer.WritePropertyName("aadAudience");
+                writer.WritePropertyName("aadAudience"u8);
                 writer.WriteStringValue(AadAudience);
             }
             if (Optional.IsDefined(AadIssuer))
             {
-                writer.WritePropertyName("aadIssuer");
+                writer.WritePropertyName("aadIssuer"u8);
                 writer.WriteStringValue(AadIssuer);
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> aadIssuer = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("aadTenant"))
+                if (property.NameEquals("aadTenant"u8))
                 {
                     aadTenant = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aadAudience"))
+                if (property.NameEquals("aadAudience"u8))
                 {
                     aadAudience = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aadIssuer"))
+                if (property.NameEquals("aadIssuer"u8))
                 {
                     aadIssuer = property.Value.GetString();
                     continue;

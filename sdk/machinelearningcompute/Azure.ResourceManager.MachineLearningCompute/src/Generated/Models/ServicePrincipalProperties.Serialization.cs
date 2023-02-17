@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("clientId");
+            writer.WritePropertyName("clientId"u8);
             writer.WriteStringValue(ClientId);
-            writer.WritePropertyName("secret");
+            writer.WritePropertyName("secret"u8);
             writer.WriteStringValue(Secret);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             string secret = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientId"))
+                if (property.NameEquals("clientId"u8))
                 {
                     clientId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secret"))
+                if (property.NameEquals("secret"u8))
                 {
                     secret = property.Value.GetString();
                     continue;

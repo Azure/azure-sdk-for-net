@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DaysOfTheMonth))
             {
-                writer.WritePropertyName("daysOfTheMonth");
+                writer.WritePropertyName("daysOfTheMonth"u8);
                 writer.WriteStartArray();
                 foreach (var item in DaysOfTheMonth)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IList<Day>> daysOfTheMonth = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("daysOfTheMonth"))
+                if (property.NameEquals("daysOfTheMonth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

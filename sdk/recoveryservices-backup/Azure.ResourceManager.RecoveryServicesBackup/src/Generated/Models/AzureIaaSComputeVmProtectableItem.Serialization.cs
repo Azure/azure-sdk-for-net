@@ -17,39 +17,39 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualMachineId))
             {
-                writer.WritePropertyName("virtualMachineId");
+                writer.WritePropertyName("virtualMachineId"u8);
                 writer.WriteStringValue(VirtualMachineId);
             }
             if (Optional.IsDefined(VirtualMachineVersion))
             {
-                writer.WritePropertyName("virtualMachineVersion");
+                writer.WritePropertyName("virtualMachineVersion"u8);
                 writer.WriteStringValue(VirtualMachineVersion);
             }
             if (Optional.IsDefined(ResourceGroup))
             {
-                writer.WritePropertyName("resourceGroup");
+                writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
             if (Optional.IsDefined(BackupManagementType))
             {
-                writer.WritePropertyName("backupManagementType");
+                writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType);
             }
             if (Optional.IsDefined(WorkloadType))
             {
-                writer.WritePropertyName("workloadType");
+                writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
-            writer.WritePropertyName("protectableItemType");
+            writer.WritePropertyName("protectableItemType"u8);
             writer.WriteStringValue(ProtectableItemType);
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(ProtectionState))
             {
-                writer.WritePropertyName("protectionState");
+                writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
             writer.WriteEndObject();
@@ -67,42 +67,42 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<ProtectionStatus> protectionState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("virtualMachineId"))
+                if (property.NameEquals("virtualMachineId"u8))
                 {
                     virtualMachineId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("virtualMachineVersion"))
+                if (property.NameEquals("virtualMachineVersion"u8))
                 {
                     virtualMachineVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceGroup"))
+                if (property.NameEquals("resourceGroup"u8))
                 {
                     resourceGroup = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("backupManagementType"))
+                if (property.NameEquals("backupManagementType"u8))
                 {
                     backupManagementType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workloadType"))
+                if (property.NameEquals("workloadType"u8))
                 {
                     workloadType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectableItemType"))
+                if (property.NameEquals("protectableItemType"u8))
                 {
                     protectableItemType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectionState"))
+                if (property.NameEquals("protectionState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

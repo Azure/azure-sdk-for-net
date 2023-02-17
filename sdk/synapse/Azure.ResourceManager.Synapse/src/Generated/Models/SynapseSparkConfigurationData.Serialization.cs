@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Synapse
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("configs");
+            writer.WritePropertyName("configs"u8);
             writer.WriteStartObject();
             foreach (var item in Configs)
             {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Synapse
             writer.WriteEndObject();
             if (Optional.IsCollectionDefined(Annotations))
             {
-                writer.WritePropertyName("annotations");
+                writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.Synapse
             }
             if (Optional.IsDefined(Notes))
             {
-                writer.WritePropertyName("notes");
+                writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
             if (Optional.IsDefined(CreatedBy))
             {
-                writer.WritePropertyName("createdBy");
+                writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
             if (Optional.IsDefined(CreatedOn))
             {
-                writer.WritePropertyName("created");
+                writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(ConfigMergeRule))
             {
-                writer.WritePropertyName("configMergeRule");
+                writer.WritePropertyName("configMergeRule"u8);
                 writer.WriteStartObject();
                 foreach (var item in ConfigMergeRule)
                 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Synapse
             Optional<IDictionary<string, string>> configMergeRule = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -100,22 +100,22 @@ namespace Azure.ResourceManager.Synapse
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Synapse
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -134,12 +134,12 @@ namespace Azure.ResourceManager.Synapse
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("configs"))
+                        if (property0.NameEquals("configs"u8))
                         {
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
                             foreach (var property1 in property0.Value.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Synapse
                             configs = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("annotations"))
+                        if (property0.NameEquals("annotations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -164,17 +164,17 @@ namespace Azure.ResourceManager.Synapse
                             annotations = array;
                             continue;
                         }
-                        if (property0.NameEquals("notes"))
+                        if (property0.NameEquals("notes"u8))
                         {
                             notes = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("createdBy"))
+                        if (property0.NameEquals("createdBy"u8))
                         {
                             createdBy = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("created"))
+                        if (property0.NameEquals("created"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Synapse
                             created = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("configMergeRule"))
+                        if (property0.NameEquals("configMergeRule"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

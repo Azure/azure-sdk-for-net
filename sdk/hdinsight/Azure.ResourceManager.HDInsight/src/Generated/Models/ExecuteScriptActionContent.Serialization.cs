@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ScriptActions))
             {
-                writer.WritePropertyName("scriptActions");
+                writer.WritePropertyName("scriptActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in ScriptActions)
                 {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("persistOnSuccess");
+            writer.WritePropertyName("persistOnSuccess"u8);
             writer.WriteBooleanValue(PersistOnSuccess);
             writer.WriteEndObject();
         }

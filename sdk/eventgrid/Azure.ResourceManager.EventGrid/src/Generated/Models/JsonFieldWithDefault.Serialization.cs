@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceField))
             {
-                writer.WritePropertyName("sourceField");
+                writer.WritePropertyName("sourceField"u8);
                 writer.WriteStringValue(SourceField);
             }
             if (Optional.IsDefined(DefaultValue))
             {
-                writer.WritePropertyName("defaultValue");
+                writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<string> defaultValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceField"))
+                if (property.NameEquals("sourceField"u8))
                 {
                     sourceField = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultValue"))
+                if (property.NameEquals("defaultValue"u8))
                 {
                     defaultValue = property.Value.GetString();
                     continue;

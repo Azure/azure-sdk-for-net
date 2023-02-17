@@ -17,36 +17,36 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AddressMailing))
             {
-                writer.WritePropertyName("addressMailing");
+                writer.WritePropertyName("addressMailing"u8);
                 writer.WriteObjectValue(AddressMailing);
             }
-            writer.WritePropertyName("email");
+            writer.WritePropertyName("email"u8);
             writer.WriteStringValue(Email);
             if (Optional.IsDefined(Fax))
             {
-                writer.WritePropertyName("fax");
+                writer.WritePropertyName("fax"u8);
                 writer.WriteStringValue(Fax);
             }
             if (Optional.IsDefined(JobTitle))
             {
-                writer.WritePropertyName("jobTitle");
+                writer.WritePropertyName("jobTitle"u8);
                 writer.WriteStringValue(JobTitle);
             }
-            writer.WritePropertyName("nameFirst");
+            writer.WritePropertyName("nameFirst"u8);
             writer.WriteStringValue(NameFirst);
-            writer.WritePropertyName("nameLast");
+            writer.WritePropertyName("nameLast"u8);
             writer.WriteStringValue(NameLast);
             if (Optional.IsDefined(NameMiddle))
             {
-                writer.WritePropertyName("nameMiddle");
+                writer.WritePropertyName("nameMiddle"u8);
                 writer.WriteStringValue(NameMiddle);
             }
             if (Optional.IsDefined(Organization))
             {
-                writer.WritePropertyName("organization");
+                writer.WritePropertyName("organization"u8);
                 writer.WriteStringValue(Organization);
             }
-            writer.WritePropertyName("phone");
+            writer.WritePropertyName("phone"u8);
             writer.WriteStringValue(Phone);
             writer.WriteEndObject();
         }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             string phone = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("addressMailing"))
+                if (property.NameEquals("addressMailing"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,42 +74,42 @@ namespace Azure.ResourceManager.AppService.Models
                     addressMailing = RegistrationAddressInfo.DeserializeRegistrationAddressInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("email"))
+                if (property.NameEquals("email"u8))
                 {
                     email = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fax"))
+                if (property.NameEquals("fax"u8))
                 {
                     fax = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobTitle"))
+                if (property.NameEquals("jobTitle"u8))
                 {
                     jobTitle = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nameFirst"))
+                if (property.NameEquals("nameFirst"u8))
                 {
                     nameFirst = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nameLast"))
+                if (property.NameEquals("nameLast"u8))
                 {
                     nameLast = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nameMiddle"))
+                if (property.NameEquals("nameMiddle"u8))
                 {
                     nameMiddle = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("organization"))
+                if (property.NameEquals("organization"u8))
                 {
                     organization = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phone"))
+                if (property.NameEquals("phone"u8))
                 {
                     phone = property.Value.GetString();
                     continue;

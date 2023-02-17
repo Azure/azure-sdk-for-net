@@ -17,29 +17,29 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(SampleSize))
             {
-                writer.WritePropertyName("sampleSize");
+                writer.WritePropertyName("sampleSize"u8);
                 writer.WriteNumberValue(SampleSize.Value);
             }
             if (Optional.IsDefined(SuccessfulSamplesRequired))
             {
-                writer.WritePropertyName("successfulSamplesRequired");
+                writer.WritePropertyName("successfulSamplesRequired"u8);
                 writer.WriteNumberValue(SuccessfulSamplesRequired.Value);
             }
             if (Optional.IsDefined(AdditionalLatencyMilliseconds))
             {
-                writer.WritePropertyName("additionalLatencyMilliseconds");
+                writer.WritePropertyName("additionalLatencyMilliseconds"u8);
                 writer.WriteNumberValue(AdditionalLatencyMilliseconds.Value);
             }
             writer.WriteEndObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<FrontDoorResourceState> resourceState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("sampleSize"))
+                        if (property0.NameEquals("sampleSize"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             sampleSize = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("successfulSamplesRequired"))
+                        if (property0.NameEquals("successfulSamplesRequired"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             successfulSamplesRequired = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("additionalLatencyMilliseconds"))
+                        if (property0.NameEquals("additionalLatencyMilliseconds"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             additionalLatencyMilliseconds = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("resourceState"))
+                        if (property0.NameEquals("resourceState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

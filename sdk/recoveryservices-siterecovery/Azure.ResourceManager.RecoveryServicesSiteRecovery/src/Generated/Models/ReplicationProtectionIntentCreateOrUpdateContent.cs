@@ -21,8 +21,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The ReplicationProviderInput. For A2A provider, it will be A2ACreateProtectionIntentInput object.
         /// Please note <see cref="CreateProtectionIntentProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2ACreateProtectionIntentInput"/>.
-        /// Please note <see cref="CreateProtectionIntentProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2ACreateProtectionIntentInput"/>.
         /// </summary>
         public CreateProtectionIntentProviderSpecificDetails CreateProtectionIntentProviderSpecificDetails
         {

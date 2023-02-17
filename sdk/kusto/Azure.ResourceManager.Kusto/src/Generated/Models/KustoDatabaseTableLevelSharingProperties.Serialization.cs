@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(TablesToInclude))
             {
-                writer.WritePropertyName("tablesToInclude");
+                writer.WritePropertyName("tablesToInclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in TablesToInclude)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
             if (Optional.IsCollectionDefined(TablesToExclude))
             {
-                writer.WritePropertyName("tablesToExclude");
+                writer.WritePropertyName("tablesToExclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in TablesToExclude)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
             if (Optional.IsCollectionDefined(ExternalTablesToInclude))
             {
-                writer.WritePropertyName("externalTablesToInclude");
+                writer.WritePropertyName("externalTablesToInclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExternalTablesToInclude)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
             if (Optional.IsCollectionDefined(ExternalTablesToExclude))
             {
-                writer.WritePropertyName("externalTablesToExclude");
+                writer.WritePropertyName("externalTablesToExclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExternalTablesToExclude)
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
             if (Optional.IsCollectionDefined(MaterializedViewsToInclude))
             {
-                writer.WritePropertyName("materializedViewsToInclude");
+                writer.WritePropertyName("materializedViewsToInclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in MaterializedViewsToInclude)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
             if (Optional.IsCollectionDefined(MaterializedViewsToExclude))
             {
-                writer.WritePropertyName("materializedViewsToExclude");
+                writer.WritePropertyName("materializedViewsToExclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in MaterializedViewsToExclude)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
             if (Optional.IsCollectionDefined(FunctionsToInclude))
             {
-                writer.WritePropertyName("functionsToInclude");
+                writer.WritePropertyName("functionsToInclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in FunctionsToInclude)
                 {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
             if (Optional.IsCollectionDefined(FunctionsToExclude))
             {
-                writer.WritePropertyName("functionsToExclude");
+                writer.WritePropertyName("functionsToExclude"u8);
                 writer.WriteStartArray();
                 foreach (var item in FunctionsToExclude)
                 {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<IList<string>> functionsToExclude = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tablesToInclude"))
+                if (property.NameEquals("tablesToInclude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     tablesToInclude = array;
                     continue;
                 }
-                if (property.NameEquals("tablesToExclude"))
+                if (property.NameEquals("tablesToExclude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     tablesToExclude = array;
                     continue;
                 }
-                if (property.NameEquals("externalTablesToInclude"))
+                if (property.NameEquals("externalTablesToInclude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     externalTablesToInclude = array;
                     continue;
                 }
-                if (property.NameEquals("externalTablesToExclude"))
+                if (property.NameEquals("externalTablesToExclude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     externalTablesToExclude = array;
                     continue;
                 }
-                if (property.NameEquals("materializedViewsToInclude"))
+                if (property.NameEquals("materializedViewsToInclude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     materializedViewsToInclude = array;
                     continue;
                 }
-                if (property.NameEquals("materializedViewsToExclude"))
+                if (property.NameEquals("materializedViewsToExclude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     materializedViewsToExclude = array;
                     continue;
                 }
-                if (property.NameEquals("functionsToInclude"))
+                if (property.NameEquals("functionsToInclude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     functionsToInclude = array;
                     continue;
                 }
-                if (property.NameEquals("functionsToExclude"))
+                if (property.NameEquals("functionsToExclude"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

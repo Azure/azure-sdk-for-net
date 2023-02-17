@@ -26,47 +26,47 @@ namespace Azure.AI.AnomalyDetector
             Optional<float?> severity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("period"))
+                if (property.NameEquals("period"u8))
                 {
                     period = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("suggestedWindow"))
+                if (property.NameEquals("suggestedWindow"u8))
                 {
                     suggestedWindow = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("expectedValue"))
+                if (property.NameEquals("expectedValue"u8))
                 {
                     expectedValue = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("upperMargin"))
+                if (property.NameEquals("upperMargin"u8))
                 {
                     upperMargin = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("lowerMargin"))
+                if (property.NameEquals("lowerMargin"u8))
                 {
                     lowerMargin = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("isAnomaly"))
+                if (property.NameEquals("isAnomaly"u8))
                 {
                     isAnomaly = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isNegativeAnomaly"))
+                if (property.NameEquals("isNegativeAnomaly"u8))
                 {
                     isNegativeAnomaly = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isPositiveAnomaly"))
+                if (property.NameEquals("isPositiveAnomaly"u8))
                 {
                     isPositiveAnomaly = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("severity"))
+                if (property.NameEquals("severity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

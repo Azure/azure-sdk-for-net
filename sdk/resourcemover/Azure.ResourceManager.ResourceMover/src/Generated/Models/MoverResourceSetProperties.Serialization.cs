@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceRegion");
+            writer.WritePropertyName("sourceRegion"u8);
             writer.WriteStringValue(SourceRegion);
-            writer.WritePropertyName("targetRegion");
+            writer.WritePropertyName("targetRegion"u8);
             writer.WriteStringValue(TargetRegion);
             writer.WriteEndObject();
         }
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<MoveCollectionPropertiesErrors> errors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceRegion"))
+                if (property.NameEquals("sourceRegion"u8))
                 {
                     sourceRegion = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetRegion"))
+                if (property.NameEquals("targetRegion"u8))
                 {
                     targetRegion = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     provisioningState = new MoverProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

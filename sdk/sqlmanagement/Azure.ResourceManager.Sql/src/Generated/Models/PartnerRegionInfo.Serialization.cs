@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WriteEndObject();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<InstanceFailoverGroupReplicationRole> replicationRole = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("replicationRole"))
+                if (property.NameEquals("replicationRole"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

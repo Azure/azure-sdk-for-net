@@ -1,0 +1,76 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://account-name.purview.azure.com/workflow/userrequests?api-version=2022-05-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "Content-Length": "204",
+        "Content-Type": "application/json",
+        "traceparent": "00-0408c2a0211b5845b4052cf5717a266d-39b92fdda4190d40-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Workflows/1.0.0-alpha.20230113.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "6a146f0851e0fcffc58179665b42ef4c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "operations": [
+          {
+            "type": "CreateTerm",
+            "payload": {
+              "glossaryTerm": {
+                "name": "term",
+                "anchor": {
+                  "glossaryGuid": "20031e20-b4df-4a66-a61d-1b0716f3fa48"
+                },
+                "status": "Approved",
+                "nickName": "term"
+              }
+            }
+          }
+        ],
+        "comment": "Thanks!"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "386",
+        "Content-Type": "application/json",
+        "Date": "Thu, 19 Jan 2023 13:49:39 GMT",
+        "Server": "MicrosoftPurview",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "6a146f0851e0fcffc58179665b42ef4c",
+        "x-ms-correlation-request-id": "11865611-c058-42f0-8906-b8965b63a40b",
+        "x-ms-request-id": "ddf3d866-e2f4-4467-ba9d-5cfaf72823a3"
+      },
+      "ResponseBody": {
+        "requestId": "c451c6d8-c5f6-43da-8170-b03c694ad438",
+        "requestor": "eece94d9-0619-4669-bb8a-d6ecec5220bc",
+        "operations": [
+          {
+            "type": "CreateTerm",
+            "payload": {
+              "glossaryTerm": {
+                "name": "term",
+                "anchor": {
+                  "glossaryGuid": "20031e20-b4df-4a66-a61d-1b0716f3fa48"
+                },
+                "status": "Approved",
+                "nickName": "term"
+              }
+            },
+            "workflowRunIds": [
+              "c451c6d8-c5f6-43da-8170-b03c694ad438"
+            ]
+          }
+        ],
+        "comment": "Thanks!",
+        "status": "InProgress"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "443753358",
+    "WORKFLOW_ENDPOINT": "https://account-name.purview.azure.com"
+  }
+}

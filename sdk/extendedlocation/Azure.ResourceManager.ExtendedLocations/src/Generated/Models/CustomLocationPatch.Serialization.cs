@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -31,16 +31,16 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Authentication))
             {
-                writer.WritePropertyName("authentication");
+                writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
             if (Optional.IsCollectionDefined(ClusterExtensionIds))
             {
-                writer.WritePropertyName("clusterExtensionIds");
+                writer.WritePropertyName("clusterExtensionIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in ClusterExtensionIds)
                 {
@@ -50,27 +50,27 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(HostResourceId))
             {
-                writer.WritePropertyName("hostResourceId");
+                writer.WritePropertyName("hostResourceId"u8);
                 writer.WriteStringValue(HostResourceId);
             }
             if (Optional.IsDefined(HostType))
             {
-                writer.WritePropertyName("hostType");
+                writer.WritePropertyName("hostType"u8);
                 writer.WriteStringValue(HostType.Value.ToString());
             }
             if (Optional.IsDefined(Namespace))
             {
-                writer.WritePropertyName("namespace");
+                writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
             writer.WriteEndObject();
