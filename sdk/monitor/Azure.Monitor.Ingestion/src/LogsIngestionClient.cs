@@ -401,10 +401,23 @@ namespace Azure.Monitor.Ingestion
                         }
                     }
                 } // foreach closed
+            } // end of try block
+            catch (Exception ex)
+            {
+                // We do not want to log exceptions here as we will loop through all the tasks later
+                // Cancel all future Uploads if user triggers CancellationToken
+                if (ex is OperationCanceledException && cancellationToken.IsCancellationRequested)
+                {
+                    shouldAbort = true;
+                    AddException(ref exceptions, ex);
+                }
+            }
 
+            try
+            {
                 // Wait for all the remaining blocks to finish uploading
                 await Task.WhenAll(runningTasks.Select(_ => _.CurrentTask)).ConfigureAwait(false);
-            } // end of try block
+            }
             catch (Exception ex)
             {
                 // We do not want to log exceptions here as we will loop through all the tasks later
