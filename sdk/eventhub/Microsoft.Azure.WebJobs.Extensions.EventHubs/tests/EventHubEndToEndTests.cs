@@ -8,12 +8,14 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Producer;
 using Azure.Messaging.EventHubs.Tests;
 using Microsoft.Azure.WebJobs.EventHubs;
+using Microsoft.Azure.WebJobs.Extensions.Clients.Shared;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -252,6 +254,17 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task CanSendAndReceive_AccountName_InConfiguration()
         {
+            // Use of an account name assumes an endpoint suffix that is only valid in some Azure
+            // cloud environments. If the current execution environment uses a different suffix,
+            // ignore the test.
+
+            var defaultSuffix = StorageClientProvider<object, ClientOptions>.DefaultStorageEndpointSuffix;
+
+            if (string.Equals(EventHubsTestEnvironment.Instance.StorageEndpointSuffix, defaultSuffix, StringComparison.OrdinalIgnoreCase))
+            {
+                Assert.Ignore($"This test can only be run in the Azure cloud associated  with the suffix: `{defaultSuffix}`.");
+            }
+
             await AssertCanSendReceiveMessage(host =>
                 host.ConfigureAppConfiguration(configurationBuilder =>
                     configurationBuilder.AddInMemoryCollection(new Dictionary<string, string>()
