@@ -27,14 +27,15 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
              * 5. once call is hung up, verify disconnected event
             */
 
+            // create caller and receiver
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+
             try
             {
-                // create caller and receiver
-                CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
-                CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
-                CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
-                string? callConnectionId = null;
-
                 try
                 {
                     // setup service bus
@@ -52,7 +53,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 
                     // answer the call
                     var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback));
-                    AnswerCallResult answerResponse = await client.AnswerCallAsync(answerCallOptions);
+                    AnswerCallResult answerResponse = await targetClient.AnswerCallAsync(answerCallOptions);
 
                     // wait for callConnected
                     var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
@@ -77,14 +78,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 {
                     throw;
                 }
-                finally
-                {
-                    await CleanUpCall(client, callConnectionId);
-                }
             }
             catch (Exception ex)
             {
                 Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -99,13 +100,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             */
 
             // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            string? callConnectionId = null;
+
             try
             {
-                CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
-                CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
-                CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
-                string? callConnectionId = null;
-
                 try
                 {
                     // setup service bus
@@ -148,14 +149,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 {
                     throw;
                 }
-                finally
-                {
-                    await CleanUpCall(client, callConnectionId);
-                }
             }
             catch (Exception ex)
             {
                 Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId);
             }
         }
     }
