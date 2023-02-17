@@ -548,6 +548,8 @@ The libraries shipped out of this repo have [source link](https://docs.microsoft
 
 ### Third-party dependencies
 
+Third party libraries should only be included in samples when necessary to demonstrate usage of an Azure SDK package; they should not be suggested or endorsed as alternatives to the Azure SDK
+
 When code samples take dependencies, readers should be able to use the material without significant license burden or research on terms. This goal requires restricting dependencies to certain types of open source or commercial licenses.
 
 Samples may take the following categories of dependencies:
