@@ -294,7 +294,7 @@ namespace Azure.Storage.Files.Shares
         /// Initializes a new instance of the <see cref="ShareDirectoryClient"/>
         /// class.
         ///
-        /// Note that <see cref="ShareClientOptions.FileRequestIntent"/> is currently required for token authentication.
+        /// Note that <see cref="ShareClientOptions.ShareTokenIntent"/> is currently required for token authentication.
         /// </summary>
         /// <param name="directoryUri">
         /// A <see cref="Uri"/> referencing the directory that includes the
@@ -463,7 +463,7 @@ namespace Azure.Storage.Files.Shares
                 pipeline: _clientConfiguration.Pipeline,
                 url: uri.AbsoluteUri,
                 version: _clientConfiguration.ClientOptions.Version.ToVersionString(),
-                fileRequestIntent: _clientConfiguration.ClientOptions.FileRequestIntent,
+                fileRequestIntent: _clientConfiguration.ClientOptions.ShareTokenIntent,
                 allowTrailingDot: _clientConfiguration.ClientOptions.AllowTrailingDot,
                 allowSourceTrailingDot: _clientConfiguration.ClientOptions.AllowSourceTrailingDot);
         }

@@ -48,7 +48,7 @@ namespace Azure.Storage.Files.Shares.Tests
             this ShareClientBuilder clientBuilder, ShareClientOptions options = default)
         {
             options ??= clientBuilder.GetOptions();
-            options.FileRequestIntent = ShareFileRequestIntent.Backup;
+            options.ShareTokenIntent = ShareTokenIntent.Backup;
             return clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigOAuth, options);
         }
 

@@ -255,7 +255,7 @@ namespace Azure.Storage.Files.Shares
         /// This constructor also allow the construction of a <see cref="ShareServiceClient"/> that can be used to derive
         /// a <see cref="ShareClient"/> that has token credential authentication.
         ///
-        /// Also note that <see cref="ShareClientOptions.FileRequestIntent"/> is currently required for token authentication.
+        /// Also note that <see cref="ShareClientOptions.ShareTokenIntent"/> is currently required for token authentication.
         /// </summary>
         /// <param name="shareUri">
         /// A <see cref="Uri"/> referencing the share that includes the
@@ -382,7 +382,7 @@ namespace Azure.Storage.Files.Shares
                 _clientConfiguration.Pipeline,
                 uri.AbsoluteUri,
                 _clientConfiguration.ClientOptions.Version.ToVersionString(),
-                _clientConfiguration.ClientOptions.FileRequestIntent);
+                _clientConfiguration.ClientOptions.ShareTokenIntent);
         }
         #endregion ctors
 
