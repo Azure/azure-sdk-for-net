@@ -268,6 +268,7 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual("ClientName.ActivityName", Activity.Current.OperationName);
             CollectionAssert.Contains(Activity.Current.Tags, new KeyValuePair<string, string>(DiagnosticScope.OpenTelemetrySchemaAttribute, DiagnosticScope.OpenTelemetrySchemaVersion));
+            CollectionAssert.DoesNotContain(Activity.Current.Tags, new KeyValuePair<string, string>("kind", "internal"));
             scope.Dispose();
         }
 
@@ -290,7 +291,7 @@ namespace Azure.Core.Tests
             Assert.IsTrue(nestedScope.IsEnabled);
             Assert.AreEqual("ClientName.NestedActivityName", Activity.Current.OperationName);
             CollectionAssert.Contains(Activity.Current.Tags, new KeyValuePair<string, string>(DiagnosticScope.OpenTelemetrySchemaAttribute, DiagnosticScope.OpenTelemetrySchemaVersion));
-
+            CollectionAssert.DoesNotContain(Activity.Current.Tags, new KeyValuePair<string, string>("kind", "internal"));
             nestedScope.Dispose();
 
             Assert.IsNull(Activity.Current);
