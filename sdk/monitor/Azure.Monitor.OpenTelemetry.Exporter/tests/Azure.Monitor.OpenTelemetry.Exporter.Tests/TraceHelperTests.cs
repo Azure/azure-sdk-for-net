@@ -48,9 +48,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityName,
                 ActivityKind.Client,
                 parentContext: default,
-                startTime: DateTime.UtcNow)
-                ?? throw new Exception("Failed to create Activity");
+                startTime: DateTime.UtcNow);
 
+            Assert.NotNull(activity);
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
             if (telemetryType == "RequestData")
@@ -86,9 +86,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 parentContext: default,
                 null,
                 links,
-                startTime: DateTime.UtcNow)
-                ?? throw new Exception("Failed to create Activity");
+                startTime: DateTime.UtcNow);
 
+            Assert.NotNull(activity);
             string? expectedMSlinks = GetExpectedMSlinks(links);
             string? actualMSlinks = null;
 
@@ -137,9 +137,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 parentContext: default,
                 null,
                 links,
-                startTime: DateTime.UtcNow)
-                ?? throw new Exception("Failed to create Activity");
+                startTime: DateTime.UtcNow);
 
+            Assert.NotNull(activity);
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
             if (telemetryType == "RequestData")
@@ -190,9 +190,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 parentContext: default,
                 null,
                 links,
-                startTime: DateTime.UtcNow)
-                ?? throw new Exception("Failed to create Activity");
+                startTime: DateTime.UtcNow);
 
+            Assert.NotNull(activity);
             string? expectedMslinks = GetExpectedMSlinks(links);
             string? actualMSlinks = null;
 
@@ -230,9 +230,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
                 ActivityName,
-                ActivityKind.Server)
-                ?? throw new Exception("Failed to create Activity");
+                ActivityKind.Server);
 
+            Assert.NotNull(activity);
             activity.RecordException(new Exception(exceptionMessage));
 
             Activity[] activityList = new Activity[1];
@@ -246,10 +246,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("Exception", telemetryItems[0].Name);
             Assert.Equal("Request", telemetryItems[1].Name);
 
-            var telemetryExceptionData = (telemetryItems[0].Data.BaseData as TelemetryExceptionData) ?? throw new Exception("Invalid BaseData");
-            Assert.Equal(exceptionMessage, telemetryExceptionData?.Exceptions.First().Message);
-            Assert.Equal("System.Exception", telemetryExceptionData?.Exceptions.First().TypeName);
-            Assert.Equal("System.Exception: Exception Message", telemetryExceptionData?.Exceptions.First().Stack);
+            var telemetryExceptionData = (telemetryItems[0].Data.BaseData as TelemetryExceptionData);
+            Assert.NotNull(telemetryExceptionData);
+            Assert.Equal(exceptionMessage, telemetryExceptionData.Exceptions.First().Message);
+            Assert.Equal("System.Exception", telemetryExceptionData.Exceptions.First().TypeName);
+            Assert.Equal("System.Exception: Exception Message", telemetryExceptionData.Exceptions.First().Stack);
         }
 
         [Fact]
@@ -259,9 +260,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
                 ActivityName,
-                ActivityKind.Server)
-                ?? throw new Exception("Failed to create Activity");
+                ActivityKind.Server);
 
+            Assert.NotNull(activity);
             var tagsCollection = new ActivityTagsCollection
             {
                 { "key1", "value1" },
@@ -295,8 +296,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
                 ActivityName,
-                ActivityKind.Server)
-                ?? throw new Exception("Failed to create Activity");
+                ActivityKind.Server);
+
+            Assert.NotNull(activity);
 
             // Checking with empty string here as OTel
             // adds the exception only if it non-null and non-empty.
@@ -321,8 +323,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
                 ActivityName,
-                ActivityKind.Server)
-                ?? throw new Exception("Failed to create Activity");
+                ActivityKind.Server);
+
+            Assert.NotNull(activity);
 
             // Type is not null when using RecordException so creating the event manually
             // similar to https://github.com/open-telemetry/opentelemetry-dotnet/blob/872a52f5291804c7af19e90307b5cc097b2da709/src/OpenTelemetry.Api/Trace/ActivityExtensions.cs#L96-L113

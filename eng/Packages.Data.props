@@ -278,8 +278,8 @@
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
     <PackageDownload Include="Azure.Sdk.Tools.Testproxy" Version="[$(TestProxyVersion)]" />
     <PackageReference Update="WindowsAzure.ServiceBus" Version="5.1.0" />
-    <PackageReference Update="xunit.runner.visualstudio" Version="2.4.1" />
-    <PackageReference Update="xunit" Version="2.4.1" />
+    <PackageReference Update="xunit.runner.visualstudio" Version="2.4.2" />
+    <PackageReference Update="xunit" Version="2.4.2" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">

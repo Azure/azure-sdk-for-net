@@ -92,8 +92,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityName,
                 ActivityKind.Client,
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
-                startTime: DateTime.UtcNow)
-                ?? throw new Exception("Failed to create Activity");
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity);
             var resource = CreateTestResource();
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
@@ -120,9 +121,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityName,
                 ActivityKind.Server,
                 null,
-                startTime: DateTime.UtcNow)
-                ?? throw new Exception("Failed to create Activity");
+                startTime: DateTime.UtcNow);
 
+            Assert.NotNull(activity);
             activity.DisplayName = "/getaction";
 
             activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
@@ -153,9 +154,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityName,
                 ActivityKind.Server,
                 null,
-                startTime: DateTime.UtcNow)
-                ?? throw new Exception("Failed to create Activity");
+                startTime: DateTime.UtcNow);
 
+            Assert.NotNull(activity);
             activity.DisplayName = "displayname";
 
             activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
@@ -175,9 +176,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityName,
                 ActivityKind.Server,
                 null,
-                startTime: DateTime.UtcNow)
-                ?? throw new Exception("Failed to create Activity");
+                startTime: DateTime.UtcNow);
 
+            Assert.NotNull(activity);
             activity.DisplayName = "displayname";
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
@@ -194,9 +195,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityName,
                 ActivityKind.Server,
                 null,
-                startTime: DateTime.UtcNow)
-                ?? throw new Exception("Failed to create Activity");
+                startTime: DateTime.UtcNow);
 
+            Assert.NotNull(activity);
             activity.SetTag(SemanticConventions.AttributeHttpClientIP, "127.0.0.1");
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
@@ -213,9 +214,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityName,
                 ActivityKind.Server,
                 null,
-                startTime: DateTime.UtcNow)
-                ?? throw new Exception("Failed to create Activity");
+                startTime: DateTime.UtcNow);
 
+            Assert.NotNull(activity);
             activity.SetTag(SemanticConventions.AttributeNetPeerIp, "127.0.0.1");
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
@@ -232,9 +233,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityName,
                 ActivityKind.Server,
                 null,
-                startTime: DateTime.UtcNow)
-                ?? throw new Exception("Failed to create Activity");
+                startTime: DateTime.UtcNow);
 
+            Assert.NotNull(activity);
             var userAgent = "Mozilla / 5.0(Windows NT 10.0;WOW64) AppleWebKit / 537.36(KHTML, like Gecko) Chrome / 91.0.4472.101 Safari / 537.36";
             activity.SetTag(SemanticConventions.AttributeHttpUserAgent, userAgent);
 
@@ -252,9 +253,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityName,
                 ActivityKind.Server,
                 null,
-                startTime: DateTime.UtcNow)
-                ?? throw new Exception("Failed to create Activity");
+                startTime: DateTime.UtcNow);
 
+            Assert.NotNull(activity);
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
             var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, string.Empty);
 
@@ -269,9 +270,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityName,
                 ActivityKind.Server,
                 null,
-                startTime: DateTime.UtcNow)
-                ?? throw new Exception("Failed to create Activity");
+                startTime: DateTime.UtcNow);
 
+            Assert.NotNull(activity);
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
             var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, string.Empty);
 
@@ -286,8 +287,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityName,
                 ActivityKind.Server,
                 null,
-                startTime: DateTime.UtcNow)
-                ?? throw new Exception("Failed to create Activity");
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity);
             var resource = CreateTestResource();
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
@@ -305,8 +307,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityName,
                 ActivityKind.Server,
                 null,
-                startTime: DateTime.UtcNow)
-                ?? throw new Exception("Failed to create Activity");
+                startTime: DateTime.UtcNow);
+
+            Assert.NotNull(activity);
             var resource = CreateTestResource(null, null, "serviceinstance");
 
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
@@ -326,9 +329,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ActivityName,
                 ActivityKind.Server,
                 null,
-                startTime: DateTime.UtcNow)
-                ?? throw new Exception("Failed to create Activity");
+                startTime: DateTime.UtcNow);
 
+            Assert.NotNull(activity);
             activity.DisplayName = "displayname";
             if (httpMethod != null)
             {
