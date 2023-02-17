@@ -6,7 +6,7 @@
           "Pool": "azsdk-pool-mms-ubuntu-2004-storage"
       },
       "windows-2022": {
-          "OSVmImage": "MMS2022Compliant",
+          "OSVmImage": "windows-2022",
           "Pool": "azsdk-pool-mms-win-2022-storage"
       }
     },

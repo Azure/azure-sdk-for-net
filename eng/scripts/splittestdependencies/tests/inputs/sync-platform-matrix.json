@@ -16,12 +16,12 @@
         "TestTargetFramework": "net6.0"
       },
       "windows2022_NET6.0": {
-        "OSVmImage": "MMS2022Compliant",
+        "OSVmImage": "windows-2022",
         "Pool": "azsdk-pool-mms-win-2022-general",
         "TestTargetFramework": "net6.0"
       },
       "windows2022_NET461": {
-        "OSVmImage": "MMS2022Compliant",
+        "OSVmImage": "windows-2022",
         "Pool": "azsdk-pool-mms-win-2022-general",
         "TestTargetFramework": "net461"
       },
@@ -49,7 +49,7 @@
     {
       "Agent": {
         "windows2022": {
-          "OSVmImage": "MMS2022Compliant",
+          "OSVmImage": "windows-2022",
           "Pool": "azsdk-pool-mms-win-2022-general",
           "TestTargetFramework": "netcoreapp3.1"
         }

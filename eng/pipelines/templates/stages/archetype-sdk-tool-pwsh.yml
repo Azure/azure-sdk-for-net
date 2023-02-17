@@ -23,7 +23,7 @@ stages:
           matrix:
             Windows:
               Pool: 'azsdk-pool-mms-win-2022-general'
-              Image: 'MMS2022Compliant'
+              Image: 'windows-2022'
             Linux:
               Pool: 'azsdk-pool-mms-ubuntu-2004-general'
               Image: 'MMSUbuntu20.04'
