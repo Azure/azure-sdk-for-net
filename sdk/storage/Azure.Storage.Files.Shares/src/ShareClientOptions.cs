@@ -149,7 +149,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// Share Token Intent.  For use with token authentication.  Used to indicate the intent of the request.
-        /// This is current required when using token authentication.
+        /// This is currently required when using token authentication.
         /// </summary>
         public ShareTokenIntent? ShareTokenIntent { get; set; }
 
