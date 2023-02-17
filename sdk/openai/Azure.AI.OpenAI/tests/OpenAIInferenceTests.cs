@@ -98,6 +98,98 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         /// <summary>
+        /// Exercises usage information within a completions response.
+        /// </summary>
+        /// <returns></returns>
+        [RecordedTest]
+        public async Task CompletionUsageTest()
+        {
+            OpenAIClient client = GetClient();
+            CompletionsOptions requestOptions = new CompletionsOptions()
+            {
+                Prompt =
+                {
+                    "Hello world",
+                    "This is a test",
+                },
+                MaxTokens = 1024,
+                SnippetCount = 3,
+                LogProbability = 1,
+            };
+            int expectedChoiceCount = (requestOptions.SnippetCount ?? 1) * requestOptions.Prompt.Count;
+            Response<Completions> response = await client.GetCompletionsAsync(CompletionsDeploymentId, requestOptions);
+            Assert.That(response.GetRawResponse(), Is.Not.Null.Or.Empty);
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Model, Is.EqualTo(CompletionsDeploymentId));
+            Assert.That(response.Value.Created, Is.GreaterThan(0));
+            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Choices.Count, Is.EqualTo(expectedChoiceCount), "Each prompt should produce `SnippetCount` choices");
+            Assert.That(response.Value.Usage, Is.Not.Null);
+            Assert.That(response.Value.Usage.TotalTokens, Is.GreaterThan(0));
+            Assert.That(response.Value.Usage.TotalTokens, Is.EqualTo(response.Value.Usage.CompletionTokens + response.Value.Usage.PromptTokens));
+
+            Choice firstChoice = response.Value.Choices[0];
+            Assert.That(firstChoice, Is.Not.Null);
+            Assert.That(firstChoice.FinishReason, Is.EqualTo("stop"));
+            Assert.That(firstChoice.Text, Is.Not.Null.Or.Empty);
+            Assert.That(firstChoice.Logprobs, Is.Not.Null);
+            Assert.That(firstChoice.Logprobs.Tokens, Is.Not.Null.Or.Empty);
+            Assert.That(firstChoice.Logprobs.Tokens.Count, Is.LessThan(response.Value.Usage.TotalTokens));
+            Assert.That(firstChoice.Logprobs.Tokens[0], Is.Not.Null.Or.Empty);
+
+            Assert.That(response.Value.Choices[2].Index, Is.EqualTo(2));
+        }
+
+        [RecordedTest]
+        public async Task TestLogProbs()
+        {
+            OpenAIClient client = GetClient();
+            CompletionsOptions requestOptions = new CompletionsOptions()
+            {
+                Prompt = { "Hello world" },
+                Echo = true,
+                LogProbability = 1,
+            };
+            Response<Completions> response = await client.GetCompletionsAsync(
+                CompletionsDeploymentId,
+                requestOptions);
+        }
+
+        [RecordedTest]
+        public async Task TestAdvancedCompletionsOptions()
+        {
+            OpenAIClient client = GetClient();
+            string promptText = "Are bananas especially radioactive?";
+            CompletionsOptions requestOptions = new CompletionsOptions()
+            {
+                Prompt = { promptText },
+                GenerationSampleCount = 3,
+                CacheLevel = 0,
+                Temperature = 0.75f,
+                User = "AzureSDKOpenAITests",
+                Echo = true,
+                Model = "this is a bogus model parameter in the body",
+                LogProbability = 1,
+            };
+            Response<Completions> response = await client.GetCompletionsAsync(
+                CompletionsDeploymentId,
+                requestOptions);
+            Assert.That(response, Is.Not.Null);
+            string rawResponse = response.GetRawResponse().Content.ToString();
+            Assert.That(rawResponse, Is.Not.Null.Or.Empty);
+
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
+            Assert.That(response.Value.Choices[0].Text.ToLower().StartsWith(promptText.ToLower()));
+
+            Assert.That(response.Value.Choices[0].Logprobs, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Choices[0].Logprobs.Tokens, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Usage.TotalTokens, Is.GreaterThan(response.Value.Choices[0].Logprobs.Tokens.Count));
+        }
+
+        /// <summary>
         /// Test Exception throw.
         /// </summary>
         [RecordedTest]
@@ -111,6 +203,29 @@ namespace Azure.AI.OpenAI.Tests
                 await client.GetCompletionsAsync("BAD_DEPLOYMENT_ID", completionsRequest);
             });
             Assert.AreEqual(404, exception.Status);
+            Assert.That(exception.ErrorCode, Is.EqualTo("DeploymentNotFound"));
+        }
+
+        [RecordedTest]
+        public async Task TestTokenCutoff()
+        {
+            OpenAIClient client = GetClient();
+            CompletionsOptions requestOptions = new CompletionsOptions()
+            {
+                Prompt =
+                {
+                    "How long would it take an unladen swallow to travel between Seattle, WA"
+                        + " and New York, NY?"
+                },
+                MaxTokens = 3,
+            };
+            Response<Completions> response = await client.GetCompletionsAsync(
+                CompletionsDeploymentId,
+                requestOptions);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
+            Assert.That(response.Value.Choices[0].FinishReason, Is.EqualTo("length"));
         }
 
         [RecordedTest]
