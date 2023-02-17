@@ -16,6 +16,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
+using Microsoft.Azure.WebJobs.Host;
+using Azure.Storage.Queues.Models;
+using Microsoft.Azure.WebJobs.Host.Scale;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners;
+using Microsoft.Azure.WebJobs.Host.Protocols;
+using Microsoft.Azure.WebJobs.Host.Timers;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
 {
@@ -33,6 +39,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
             _loggerProvider = new TestLoggerProvider();
             _loggerFactory.AddProvider(_loggerProvider);
             _mockQueue = new Mock<QueueClient>(new Uri("https://test.queue.core.windows.net/testqueue"), new QueueClientOptions());
+            _mockQueue.Setup(x => x.Name).Returns("testqueue");
             _metricsProvider = new QueueMetricsProvider(_mockQueue.Object, _loggerFactory);
         }
 
