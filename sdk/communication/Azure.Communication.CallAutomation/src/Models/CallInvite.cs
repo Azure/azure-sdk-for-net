@@ -15,28 +15,34 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="targetPhoneNumberIdentity"></param>
         /// <param name="callerIdNumber"></param>
-        public CallInvite(PhoneNumberIdentifier targetPhoneNumberIdentity, PhoneNumberIdentifier callerIdNumber)
+        /// /// <param name="sipHeaders"></param>
+        public CallInvite(PhoneNumberIdentifier targetPhoneNumberIdentity, PhoneNumberIdentifier callerIdNumber, IDictionary<string, string> sipHeaders = null)
         {
             Target = targetPhoneNumberIdentity;
             SourceCallerIdNumber = callerIdNumber;
+            SipHeaders= sipHeaders == null ? new Dictionary<string, string>() : sipHeaders;
         }
 
         /// <summary>
         /// Creates a new CallInvite object.
         /// </summary>
         /// <param name="targetIdentity"></param>
-        public CallInvite(CommunicationUserIdentifier targetIdentity)
+        /// <param name="voipHeaders"></param>
+        public CallInvite(CommunicationUserIdentifier targetIdentity, IDictionary<string, string> voipHeaders = null)
         {
             Target = targetIdentity;
+            VoipHeaders= voipHeaders == null ? new Dictionary<string, string>() : voipHeaders;
         }
 
         /// <summary>
         /// Creates a new CallInvite object.
         /// </summary>
         /// <param name="targetIdentity"></param>
-        public CallInvite(MicrosoftTeamsUserIdentifier targetIdentity)
+        /// <param name="voipHeaders"></param>
+        public CallInvite(MicrosoftTeamsUserIdentifier targetIdentity, IDictionary<string, string> voipHeaders = null)
         {
             Target = targetIdentity;
+            VoipHeaders = voipHeaders == null ? new Dictionary<string, string>() : voipHeaders;
         }
 
         /// <summary>
@@ -52,10 +58,10 @@ namespace Azure.Communication.CallAutomation
         public PhoneNumberIdentifier SourceCallerIdNumber { get; }
 
         /// <summary> Dictionary of VOIP headers. </summary>
-        public IDictionary<string, string> VoipHeaders { get; } = new Dictionary<string, string>();
+        public IDictionary<string, string> VoipHeaders { get; }
 
         /// <summary> Dictionary of SIP headers. </summary>
-        public IDictionary<string, string> SipHeaders { get; } = new Dictionary<string, string>();
+        public IDictionary<string, string> SipHeaders { get; }
 
         /// <summary>
         /// The display name to appear on target callee.
