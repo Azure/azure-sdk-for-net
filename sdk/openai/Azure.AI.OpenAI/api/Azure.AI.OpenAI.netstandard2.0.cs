@@ -21,7 +21,7 @@ namespace Azure.AI.OpenAI
     {
         internal CompletionsLogProbability() { }
         public System.Collections.Generic.IReadOnlyList<int> TextOffset { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<float> TokenLogProbability { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<float?> TokenLogProbability { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Tokens { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IDictionary<string, float>> TopLogProbability { get { throw null; } }
     }
