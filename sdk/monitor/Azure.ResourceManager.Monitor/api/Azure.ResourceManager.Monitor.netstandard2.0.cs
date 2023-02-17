@@ -842,7 +842,7 @@ namespace Azure.ResourceManager.Monitor
         public Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleKind? Kind { get { throw null; } set { } }
         public System.TimeSpan? MuteActionsDuration { get { throw null; } set { } }
         public System.TimeSpan? OverrideQueryTimeRange { get { throw null; } set { } }
-        public Azure.ResourceManager.Monitor.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccessState? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.RuleResolveConfiguration RuleResolveConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.AlertSeverity? Severity { get { throw null; } set { } }
@@ -1948,6 +1948,25 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccess left, Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccess right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MonitorPublicNetworkAccessState : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccessState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MonitorPublicNetworkAccessState(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccessState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccessState Enabled { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccessState SecuredByPerimeter { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccessState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccessState left, Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccessState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccessState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccessState left, Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccessState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public enum MonitorReceiverStatus
     {
         NotSpecified = 0,
@@ -2149,25 +2168,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public System.DateTimeOffset TimeStamp { get { throw null; } }
         public double Value { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PublicNetworkAccess : System.IEquatable<Azure.ResourceManager.Monitor.Models.PublicNetworkAccess>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PublicNetworkAccess(string value) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.PublicNetworkAccess Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.PublicNetworkAccess Enabled { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.PublicNetworkAccess SecuredByPerimeter { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Monitor.Models.PublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Monitor.Models.PublicNetworkAccess left, Azure.ResourceManager.Monitor.Models.PublicNetworkAccess right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Monitor.Models.PublicNetworkAccess (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Monitor.Models.PublicNetworkAccess left, Azure.ResourceManager.Monitor.Models.PublicNetworkAccess right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public enum RecurrenceFrequency
     {
         None = 0,
@@ -2314,7 +2314,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public bool? IsWorkspaceAlertsStorageConfigured { get { throw null; } }
         public System.TimeSpan? MuteActionsDuration { get { throw null; } set { } }
         public System.TimeSpan? OverrideQueryTimeRange { get { throw null; } set { } }
-        public Azure.ResourceManager.Monitor.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccessState? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.RuleResolveConfiguration RuleResolveConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.AlertSeverity? Severity { get { throw null; } set { } }
