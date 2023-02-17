@@ -24,7 +24,7 @@ namespace Azure.Communication.CallAutomation
             }
             if (Optional.IsDefined(CustomContext))
             {
-                writer.WritePropertyName("customContext");
+                writer.WritePropertyName("customContext"u8);
                 writer.WriteObjectValue(CustomContext);
             }
             if (Optional.IsDefined(OperationContext))

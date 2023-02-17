@@ -31,7 +31,7 @@ namespace Azure.Communication.CallAutomation
             }
             if (Optional.IsDefined(AnsweredByIdentifier))
             {
-                writer.WritePropertyName("answeredByIdentifier");
+                writer.WritePropertyName("answeredByIdentifier"u8);
                 writer.WriteObjectValue(AnsweredByIdentifier);
             }
             writer.WriteEndObject();

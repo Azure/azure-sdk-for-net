@@ -37,7 +37,7 @@ namespace Azure.Communication.CallAutomation
                     serverCallId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targets"))
+                if (property.NameEquals("targets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.Communication.CallAutomation
                     mediaSubscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceCallerIdNumber"))
+                if (property.NameEquals("sourceCallerIdNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,12 +82,12 @@ namespace Azure.Communication.CallAutomation
                     sourceCallerIdNumber = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sourceDisplayName"))
+                if (property.NameEquals("sourceDisplayName"u8))
                 {
                     sourceDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceIdentity"))
+                if (property.NameEquals("sourceIdentity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
