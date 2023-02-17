@@ -217,7 +217,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        private static AnswerCallRequestInternal CreateAnswerCallRequest(AnswerCallOptions options)
+        private AnswerCallRequestInternal CreateAnswerCallRequest(AnswerCallOptions options)
         {
             // validate callbackUri
             if (!IsValidHttpsUri(options.CallbackUri))
@@ -236,6 +236,7 @@ namespace Azure.Communication.CallAutomation
                 request.AzureCognitiveServicesEndpointUrl = options.AzureCognitiveServicesEndpointUrl.AbsoluteUri;
             }
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
+            request.AnsweredByIdentifier = Source == null ? null : CommunicationIdentifierSerializer.Serialize(Source);
 
             return request;
         }

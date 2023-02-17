@@ -305,7 +305,7 @@ namespace Azure.Communication.CallAutomation
 
             foreach (var voipHeader in options.CallInvite.VoipHeaders)
             {
-                request.CustomContext.SipHeaders.Add(voipHeader.Key, voipHeader.Value);
+                request.CustomContext.VoipHeaders.Add(voipHeader.Key, voipHeader.Value);
             }
 
             if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
@@ -450,7 +450,7 @@ namespace Azure.Communication.CallAutomation
 
             foreach (var voipHeader in options.ParticipantToAdd.VoipHeaders)
             {
-                request.CustomContext.SipHeaders.Add(voipHeader.Key, voipHeader.Value);
+                request.CustomContext.VoipHeaders.Add(voipHeader.Key, voipHeader.Value);
             }
 
             return request;
