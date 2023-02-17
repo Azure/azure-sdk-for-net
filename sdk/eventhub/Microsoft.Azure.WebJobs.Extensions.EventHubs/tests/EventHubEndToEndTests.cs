@@ -262,7 +262,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             if (!string.Equals(EventHubsTestEnvironment.Instance.StorageEndpointSuffix, defaultSuffix, StringComparison.OrdinalIgnoreCase))
             {
-                Assert.Ignore($"This test can only be run in the Azure cloud associated  with the suffix: `{defaultSuffix}`.");
+                Assert.Ignore($"This test can only be run in the Azure cloud associated with the suffix: `{defaultSuffix}`.");
             }
 
             await AssertCanSendReceiveMessage(host =>
