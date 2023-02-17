@@ -16,12 +16,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
-using Microsoft.Azure.WebJobs.Host;
-using Azure.Storage.Queues.Models;
-using Microsoft.Azure.WebJobs.Host.Scale;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners;
-using Microsoft.Azure.WebJobs.Host.Protocols;
-using Microsoft.Azure.WebJobs.Host.Timers;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
 {
