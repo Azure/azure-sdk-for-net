@@ -59,8 +59,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// Provides the aggregate cost of a management group and all child management groups by specified billing period
-        /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/aggregatedCost
-        /// Operation Id: AggregatedCost_GetForBillingPeriodByManagementGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/aggregatedCost</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AggregatedCost_GetForBillingPeriodByManagementGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ConsumptionAggregatedCostResult>> GetAggregatedCostAsync(CancellationToken cancellationToken = default)
@@ -81,8 +89,16 @@ namespace Azure.ResourceManager.Consumption
 
         /// <summary>
         /// Provides the aggregate cost of a management group and all child management groups by specified billing period
-        /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/aggregatedCost
-        /// Operation Id: AggregatedCost_GetForBillingPeriodByManagementGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/aggregatedCost</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AggregatedCost_GetForBillingPeriodByManagementGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConsumptionAggregatedCostResult> GetAggregatedCost(CancellationToken cancellationToken = default)
