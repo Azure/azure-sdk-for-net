@@ -18,7 +18,7 @@ namespace Azure.Monitor.Ingestion.Tests
         private const int Mb = 1024 * 1024;
         private const int Kb = 1024;
 
-        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync)
         {
         }
 
@@ -79,7 +79,7 @@ namespace Azure.Monitor.Ingestion.Tests
             var exception = Assert.Throws<NullReferenceException>(() => client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, RequestContent.Create(stream)));
         }
 
-        //[LiveOnly]
+        [LiveOnly]
         [Test]
         public async Task UploadOneLogGreaterThan1Mb()
         {
@@ -149,16 +149,19 @@ namespace Azure.Monitor.Ingestion.Tests
         }
 
         [AsyncOnly]
+        [LiveOnly]
         [Test]
         public async Task ConcurrencyMultiThread()
         {
-            var policy = new ConcurrencyCounterPolicy(10);
+            var policy = new ConcurrencyCounterPolicy(8);
             LogsIngestionClient client = CreateClient(policy);
-
+            LogsIngestionClient.Compression = "gzip";
+            LogsIngestionClient.SingleUploadThreshold = Kb;
             // Make the request
             LogsUploadOptions options = new LogsUploadOptions();
-            options.MaxConcurrency = 10;
-            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(8, Recording.Now.DateTime), options).ConfigureAwait(false);
+            options.MaxConcurrency = 8;
+            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(8000, Recording.Now.DateTime), options).ConfigureAwait(false);
+            Assert.Greater(policy.MaxCount, 1);
             //Check the response
             Assert.IsNotNull(response);
             Assert.AreEqual(204, response.Status);

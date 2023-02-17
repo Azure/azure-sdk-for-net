@@ -411,7 +411,6 @@ namespace Azure.Monitor.Ingestion
                 // Cancel all future Uploads if user triggers CancellationToken
                 if (ex is OperationCanceledException && cancellationToken.IsCancellationRequested)
                 {
-                    // do not add to Exception list here as we add when we process all runningTasks
                     shouldAbort = true;
                     AddException(ref exceptions, ex);
                 }
