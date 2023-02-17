@@ -256,11 +256,63 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             this.telemetryOutput.Write(logTelemetryItems);
             var logTelemetryItem = logTelemetryItems.Single();
 
-            TelemetryItemValidationHelper.AssertLog_As_MessageTelemetry(
+            TelemetryItemValidationHelper.AssertMessageTelemetry(
                 telemetryItem: logTelemetryItem,
                 expectedSeverityLevel: expectedSeverityLevel,
                 expectedMessage: "Hello {name}.",
-                expectedMeessageProperties: new Dictionary<string, string> { { "name", "World" } },
+                expectedMessageProperties: new Dictionary<string, string> { { "name", "World" } },
+                expectedSpanId: spanId,
+                expectedTraceId: traceId);
+        }
+
+        [Fact]
+        public void TestActivityEvents()
+        {
+            // SETUP
+            var uniqueTestId = Guid.NewGuid();
+
+            var activitySourceName = $"activitySourceName{uniqueTestId}";
+            using var activitySource = new ActivitySource(activitySourceName);
+
+            var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .AddSource(activitySourceName)
+                .AddAzureMonitorTraceExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems)
+                .Build();
+
+            // ACT
+            string spanId = null, traceId = null;
+
+            using (var activity = activitySource.StartActivity(name: "ActivityWithException"))
+            {
+                traceId = activity.TraceId.ToHexString();
+                spanId = activity.SpanId.ToHexString();
+
+                var eventTags = new Dictionary<string, object>
+                {
+                    { "integer", 1 },
+                    { "string", "Hello, World!" },
+                    { "intArray", new int[] { 1, 2, 3 } }
+                };
+                activity?.AddEvent(new("Gonna try it!", DateTimeOffset.Now, new(eventTags)));
+            }
+
+            // CLEANUP
+            tracerProvider.Dispose();
+
+            // ASSERT
+            Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
+            this.telemetryOutput.Write(telemetryItems);
+
+            var messageTelemetryItem = telemetryItems.First(x => x.Name == "Message");
+
+            TelemetryItemValidationHelper.AssertMessageTelemetry(
+                telemetryItem: messageTelemetryItem,
+                expectedSeverityLevel: null,
+                expectedMessage: "Gonna try it!",
+                expectedMessageProperties: new Dictionary<string, string> {
+                    { "integer", "1" },
+                    { "string", "Hello, World!" },
+                    { "intArray", "1,2,3" } },
                 expectedSpanId: spanId,
                 expectedTraceId: traceId);
         }

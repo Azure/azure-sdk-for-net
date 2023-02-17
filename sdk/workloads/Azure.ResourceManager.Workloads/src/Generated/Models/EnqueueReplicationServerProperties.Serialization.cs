@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<SapHealthState> health = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ersVersion"))
+                if (property.NameEquals("ersVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,32 +39,32 @@ namespace Azure.ResourceManager.Workloads.Models
                     ersVersion = new EnqueueReplicationServerType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("instanceNo"))
+                if (property.NameEquals("instanceNo"u8))
                 {
                     instanceNo = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hostname"))
+                if (property.NameEquals("hostname"u8))
                 {
                     hostname = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kernelVersion"))
+                if (property.NameEquals("kernelVersion"u8))
                 {
                     kernelVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("kernelPatch"))
+                if (property.NameEquals("kernelPatch"u8))
                 {
                     kernelPatch = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     ipAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("health"))
+                if (property.NameEquals("health"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

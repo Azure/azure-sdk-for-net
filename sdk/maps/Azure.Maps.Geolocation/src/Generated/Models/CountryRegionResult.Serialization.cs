@@ -19,7 +19,7 @@ namespace Azure.Maps.Geolocation
             Optional<IPAddress> ipAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("countryRegion"))
+                if (property.NameEquals("countryRegion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.Maps.Geolocation
                     countryRegion = Geolocation.CountryRegion.DeserializeCountryRegion(property.Value);
                     continue;
                 }
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Temporarily removed two operations `ConfigurationProfileAssignments_List` and `ConfigurationProfileAssignments_ListBySubscription`
+
 ### Bugs Fixed
 
 ### Other Changes

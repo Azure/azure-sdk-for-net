@@ -28,27 +28,27 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Optional<IReadOnlyList<AnalyzedDocument>> documents = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("apiVersion"))
+                if (property.NameEquals("apiVersion"u8))
                 {
                     apiVersion = new ApiVersion(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("modelId"))
+                if (property.NameEquals("modelId"u8))
                 {
                     modelId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stringIndexType"))
+                if (property.NameEquals("stringIndexType"u8))
                 {
                     stringIndexType = new StringIndexType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("content"))
+                if (property.NameEquals("content"u8))
                 {
                     content = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pages"))
+                if (property.NameEquals("pages"u8))
                 {
                     List<DocumentPage> array = new List<DocumentPage>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -58,7 +58,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     pages = array;
                     continue;
                 }
-                if (property.NameEquals("paragraphs"))
+                if (property.NameEquals("paragraphs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,7 +73,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     paragraphs = array;
                     continue;
                 }
-                if (property.NameEquals("tables"))
+                if (property.NameEquals("tables"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     tables = array;
                     continue;
                 }
-                if (property.NameEquals("keyValuePairs"))
+                if (property.NameEquals("keyValuePairs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -103,7 +103,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     keyValuePairs = array;
                     continue;
                 }
-                if (property.NameEquals("styles"))
+                if (property.NameEquals("styles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,7 +118,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     styles = array;
                     continue;
                 }
-                if (property.NameEquals("languages"))
+                if (property.NameEquals("languages"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,7 +133,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     languages = array;
                     continue;
                 }
-                if (property.NameEquals("documents"))
+                if (property.NameEquals("documents"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

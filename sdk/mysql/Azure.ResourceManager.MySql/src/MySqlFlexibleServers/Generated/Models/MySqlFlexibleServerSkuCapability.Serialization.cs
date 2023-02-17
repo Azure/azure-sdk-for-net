@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Optional<long> supportedMemoryPerVCoreMB = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vCores"))
+                if (property.NameEquals("vCores"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     vCores = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("supportedIops"))
+                if (property.NameEquals("supportedIops"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     supportedIops = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("supportedMemoryPerVCoreMB"))
+                if (property.NameEquals("supportedMemoryPerVCoreMB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

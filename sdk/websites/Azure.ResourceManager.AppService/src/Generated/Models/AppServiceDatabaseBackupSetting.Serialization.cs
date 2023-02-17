@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.AppService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("databaseType");
+            writer.WritePropertyName("databaseType"u8);
             writer.WriteStringValue(DatabaseType.ToString());
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(ConnectionStringName))
             {
-                writer.WritePropertyName("connectionStringName");
+                writer.WritePropertyName("connectionStringName"u8);
                 writer.WriteStringValue(ConnectionStringName);
             }
             if (Optional.IsDefined(ConnectionString))
             {
-                writer.WritePropertyName("connectionString");
+                writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
             writer.WriteEndObject();
@@ -43,22 +43,22 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> connectionString = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("databaseType"))
+                if (property.NameEquals("databaseType"u8))
                 {
                     databaseType = new AppServiceDatabaseType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("connectionStringName"))
+                if (property.NameEquals("connectionStringName"u8))
                 {
                     connectionStringName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("connectionString"))
+                if (property.NameEquals("connectionString"u8))
                 {
                     connectionString = property.Value.GetString();
                     continue;

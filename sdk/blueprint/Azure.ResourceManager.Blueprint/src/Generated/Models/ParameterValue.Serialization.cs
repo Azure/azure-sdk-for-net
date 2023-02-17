@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Value);
 #else
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
             if (Optional.IsDefined(Reference))
             {
-                writer.WritePropertyName("reference");
+                writer.WritePropertyName("reference"u8);
                 writer.WriteObjectValue(Reference);
             }
             writer.WriteEndObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             Optional<SecretValueReference> reference = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     value = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("reference"))
+                if (property.NameEquals("reference"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

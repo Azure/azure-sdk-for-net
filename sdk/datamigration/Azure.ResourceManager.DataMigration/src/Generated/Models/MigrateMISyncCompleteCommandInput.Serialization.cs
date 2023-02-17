@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceDatabaseName");
+            writer.WritePropertyName("sourceDatabaseName"u8);
             writer.WriteStringValue(SourceDatabaseName);
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string sourceDatabaseName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceDatabaseName"))
+                if (property.NameEquals("sourceDatabaseName"u8))
                 {
                     sourceDatabaseName = property.Value.GetString();
                     continue;

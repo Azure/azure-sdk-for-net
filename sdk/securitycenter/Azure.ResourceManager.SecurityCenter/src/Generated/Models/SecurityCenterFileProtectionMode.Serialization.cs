@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Exe))
             {
-                writer.WritePropertyName("exe");
+                writer.WritePropertyName("exe"u8);
                 writer.WriteStringValue(Exe.Value.ToString());
             }
             if (Optional.IsDefined(Msi))
             {
-                writer.WritePropertyName("msi");
+                writer.WritePropertyName("msi"u8);
                 writer.WriteStringValue(Msi.Value.ToString());
             }
             if (Optional.IsDefined(Script))
             {
-                writer.WritePropertyName("script");
+                writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script.Value.ToString());
             }
             if (Optional.IsDefined(Executable))
             {
-                writer.WritePropertyName("executable");
+                writer.WritePropertyName("executable"u8);
                 writer.WriteStringValue(Executable.Value.ToString());
             }
             writer.WriteEndObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<AdaptiveApplicationControlEnforcementMode> executable = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("exe"))
+                if (property.NameEquals("exe"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     exe = new AdaptiveApplicationControlEnforcementMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("msi"))
+                if (property.NameEquals("msi"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     msi = new AdaptiveApplicationControlEnforcementMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("script"))
+                if (property.NameEquals("script"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     script = new AdaptiveApplicationControlEnforcementMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("executable"))
+                if (property.NameEquals("executable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

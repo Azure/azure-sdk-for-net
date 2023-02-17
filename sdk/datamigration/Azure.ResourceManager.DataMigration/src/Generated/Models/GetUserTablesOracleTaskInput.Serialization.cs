@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("connectionInfo");
+            writer.WritePropertyName("connectionInfo"u8);
             writer.WriteObjectValue(ConnectionInfo);
-            writer.WritePropertyName("selectedSchemas");
+            writer.WritePropertyName("selectedSchemas"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedSchemas)
             {
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             IList<string> selectedSchemas = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectionInfo"))
+                if (property.NameEquals("connectionInfo"u8))
                 {
                     connectionInfo = OracleConnectionInfo.DeserializeOracleConnectionInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("selectedSchemas"))
+                if (property.NameEquals("selectedSchemas"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())

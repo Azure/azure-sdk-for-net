@@ -20,7 +20,7 @@ namespace Azure.Communication.PhoneNumbers
             PhoneNumberCost cost = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("phoneNumberType"))
+                if (property.NameEquals("phoneNumberType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +30,7 @@ namespace Azure.Communication.PhoneNumbers
                     phoneNumberType = new PhoneNumberType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("assignmentType"))
+                if (property.NameEquals("assignmentType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +40,7 @@ namespace Azure.Communication.PhoneNumbers
                     assignmentType = new PhoneNumberAssignmentType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("availableCapabilities"))
+                if (property.NameEquals("availableCapabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.Communication.PhoneNumbers
                     availableCapabilities = PhoneNumberCapabilities.DeserializePhoneNumberCapabilities(property.Value);
                     continue;
                 }
-                if (property.NameEquals("cost"))
+                if (property.NameEquals("cost"u8))
                 {
                     cost = PhoneNumberCost.DeserializePhoneNumberCost(property.Value);
                     continue;

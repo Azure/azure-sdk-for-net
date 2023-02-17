@@ -3,7 +3,7 @@
 
 using System.IO;
 using System.Text.Json;
-using Azure.Core.Dynamic;
+using Azure.Core.Json;
 using BenchmarkDotNet.Attributes;
 
 namespace Azure.Core.Experimental.Perf.Benchmarks

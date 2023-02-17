@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Relay.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyType");
+            writer.WritePropertyName("keyType"u8);
             writer.WriteStringValue(KeyType.ToString());
             if (Optional.IsDefined(Key))
             {
-                writer.WritePropertyName("key");
+                writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
             writer.WriteEndObject();

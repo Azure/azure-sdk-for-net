@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<DeviceTwinProperties> reported = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("desired"))
+                if (property.NameEquals("desired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     desired = DeviceTwinProperties.DeserializeDeviceTwinProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("reported"))
+                if (property.NameEquals("reported"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

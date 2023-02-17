@@ -78,7 +78,6 @@ any one table, it is ideal for scenarios where you need to create, delete, or li
 
 ```C# Snippet:TablesSample1CreateTable
 // Create a new table. The TableItem class stores properties of the created table.
-string tableName = "OfficeSupplies1p1";
 TableItem table = serviceClient.CreateTableIfNotExists(tableName);
 Console.WriteLine($"The created table's name is {table.Name}.");
 ```
@@ -175,7 +174,7 @@ or not it already exists.
 
 ```C# Snippet:TablesMigrationUpsertEntity
 // Upsert the newly created entity.
-tableClient.UpsertEntity(entity);
+tableClient.UpsertEntity(tableEntity);
 ```
 
 ### Fetching a single entity from the table

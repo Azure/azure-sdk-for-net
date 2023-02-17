@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PreflightSupported))
             {
-                writer.WritePropertyName("preflightSupported");
+                writer.WritePropertyName("preflightSupported"u8);
                 writer.WriteBooleanValue(PreflightSupported.Value);
             }
             if (Optional.IsCollectionDefined(PreflightOptions))
             {
-                writer.WritePropertyName("preflightOptions");
+                writer.WritePropertyName("preflightOptions"u8);
                 writer.WriteStartArray();
                 foreach (var item in PreflightOptions)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<IList<PreflightOption>> preflightOptions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("preflightSupported"))
+                if (property.NameEquals("preflightSupported"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     preflightSupported = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("preflightOptions"))
+                if (property.NameEquals("preflightOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

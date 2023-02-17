@@ -16,29 +16,29 @@ namespace Azure.ResourceManager.LabServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("createOption");
+            writer.WritePropertyName("createOption"u8);
             writer.WriteStringValue(CreateOption.ToSerialString());
-            writer.WritePropertyName("imageReference");
+            writer.WritePropertyName("imageReference"u8);
             writer.WriteObjectValue(ImageReference);
-            writer.WritePropertyName("sku");
+            writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
             if (Optional.IsDefined(AdditionalCapabilities))
             {
-                writer.WritePropertyName("additionalCapabilities");
+                writer.WritePropertyName("additionalCapabilities"u8);
                 writer.WriteObjectValue(AdditionalCapabilities);
             }
-            writer.WritePropertyName("usageQuota");
+            writer.WritePropertyName("usageQuota"u8);
             writer.WriteStringValue(UsageQuota, "P");
             if (Optional.IsDefined(UseSharedPassword))
             {
-                writer.WritePropertyName("useSharedPassword");
+                writer.WritePropertyName("useSharedPassword"u8);
                 writer.WriteStringValue(UseSharedPassword.Value.ToSerialString());
             }
-            writer.WritePropertyName("adminUser");
+            writer.WritePropertyName("adminUser"u8);
             writer.WriteObjectValue(AdminUser);
             if (Optional.IsDefined(NonAdminUser))
             {
-                writer.WritePropertyName("nonAdminUser");
+                writer.WritePropertyName("nonAdminUser"u8);
                 writer.WriteObjectValue(NonAdminUser);
             }
             writer.WriteEndObject();
@@ -57,17 +57,17 @@ namespace Azure.ResourceManager.LabServices.Models
             Optional<LabVirtualMachineCredential> nonAdminUser = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("createOption"))
+                if (property.NameEquals("createOption"u8))
                 {
                     createOption = property.Value.GetString().ToLabVirtualMachineCreateOption();
                     continue;
                 }
-                if (property.NameEquals("imageReference"))
+                if (property.NameEquals("imageReference"u8))
                 {
                     imageReference = LabVirtualMachineImageReference.DeserializeLabVirtualMachineImageReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.LabServices.Models
                     osType = property.Value.GetString().ToLabVirtualMachineImageOSType();
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     sku = LabServicesSku.DeserializeLabServicesSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("additionalCapabilities"))
+                if (property.NameEquals("additionalCapabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.LabServices.Models
                     additionalCapabilities = LabVirtualMachineAdditionalCapability.DeserializeLabVirtualMachineAdditionalCapability(property.Value);
                     continue;
                 }
-                if (property.NameEquals("usageQuota"))
+                if (property.NameEquals("usageQuota"u8))
                 {
                     usageQuota = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("useSharedPassword"))
+                if (property.NameEquals("useSharedPassword"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.LabServices.Models
                     useSharedPassword = property.Value.GetString().ToLabServicesEnableState();
                     continue;
                 }
-                if (property.NameEquals("adminUser"))
+                if (property.NameEquals("adminUser"u8))
                 {
                     adminUser = LabVirtualMachineCredential.DeserializeLabVirtualMachineCredential(property.Value);
                     continue;
                 }
-                if (property.NameEquals("nonAdminUser"))
+                if (property.NameEquals("nonAdminUser"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

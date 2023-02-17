@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(LoginServers))
             {
-                writer.WritePropertyName("loginServers");
+                writer.WritePropertyName("loginServers"u8);
                 writer.WriteStartArray();
                 foreach (var item in LoginServers)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
             if (Optional.IsCollectionDefined(OciArtifacts))
             {
-                writer.WritePropertyName("ociArtifacts");
+                writer.WritePropertyName("ociArtifacts"u8);
                 writer.WriteStartArray();
                 foreach (var item in OciArtifacts)
                 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Optional<IList<HealthcareApisServiceOciArtifactEntry>> ociArtifacts = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("loginServers"))
+                if (property.NameEquals("loginServers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     loginServers = array;
                     continue;
                 }
-                if (property.NameEquals("ociArtifacts"))
+                if (property.NameEquals("ociArtifacts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VmSize))
             {
-                writer.WritePropertyName("vmSize");
+                writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
             if (Optional.IsDefined(VmSku))
             {
-                writer.WritePropertyName("vmSku");
+                writer.WritePropertyName("vmSku"u8);
                 writer.WriteStringValue(VmSku);
             }
-            writer.WritePropertyName("featureType");
+            writer.WritePropertyName("featureType"u8);
             writer.WriteStringValue(FeatureType);
             writer.WriteEndObject();
         }

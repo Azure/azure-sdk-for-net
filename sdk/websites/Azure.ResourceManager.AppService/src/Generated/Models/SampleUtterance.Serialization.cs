@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Text))
             {
-                writer.WritePropertyName("text");
+                writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
             }
             if (Optional.IsCollectionDefined(Links))
             {
-                writer.WritePropertyName("links");
+                writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(Qid))
             {
-                writer.WritePropertyName("qid");
+                writer.WritePropertyName("qid"u8);
                 writer.WriteStringValue(Qid);
             }
             writer.WriteEndObject();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> qid = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("text"))
+                if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("links"))
+                if (property.NameEquals("links"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Models
                     links = array;
                     continue;
                 }
-                if (property.NameEquals("qid"))
+                if (property.NameEquals("qid"u8))
                 {
                     qid = property.Value.GetString();
                     continue;

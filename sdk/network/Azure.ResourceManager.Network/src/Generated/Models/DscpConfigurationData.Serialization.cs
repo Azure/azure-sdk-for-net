@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.Network
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
+                writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Markings))
             {
-                writer.WritePropertyName("markings");
+                writer.WritePropertyName("markings"u8);
                 writer.WriteStartArray();
                 foreach (var item in Markings)
                 {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsCollectionDefined(SourceIPRanges))
             {
-                writer.WritePropertyName("sourceIpRanges");
+                writer.WritePropertyName("sourceIpRanges"u8);
                 writer.WriteStartArray();
                 foreach (var item in SourceIPRanges)
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsCollectionDefined(DestinationIPRanges))
             {
-                writer.WritePropertyName("destinationIpRanges");
+                writer.WritePropertyName("destinationIpRanges"u8);
                 writer.WriteStartArray();
                 foreach (var item in DestinationIPRanges)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsCollectionDefined(SourcePortRanges))
             {
-                writer.WritePropertyName("sourcePortRanges");
+                writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
                 foreach (var item in SourcePortRanges)
                 {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsCollectionDefined(DestinationPortRanges))
             {
-                writer.WritePropertyName("destinationPortRanges");
+                writer.WritePropertyName("destinationPortRanges"u8);
                 writer.WriteStartArray();
                 foreach (var item in DestinationPortRanges)
                 {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsDefined(Protocol))
             {
-                writer.WritePropertyName("protocol");
+                writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
             writer.WriteEndObject();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.Network
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Network
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Network
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("markings"))
+                        if (property0.NameEquals("markings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Network
                             markings = array;
                             continue;
                         }
-                        if (property0.NameEquals("sourceIpRanges"))
+                        if (property0.NameEquals("sourceIpRanges"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Network
                             sourceIPRanges = array;
                             continue;
                         }
-                        if (property0.NameEquals("destinationIpRanges"))
+                        if (property0.NameEquals("destinationIpRanges"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Network
                             destinationIPRanges = array;
                             continue;
                         }
-                        if (property0.NameEquals("sourcePortRanges"))
+                        if (property0.NameEquals("sourcePortRanges"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network
                             sourcePortRanges = array;
                             continue;
                         }
-                        if (property0.NameEquals("destinationPortRanges"))
+                        if (property0.NameEquals("destinationPortRanges"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Network
                             destinationPortRanges = array;
                             continue;
                         }
-                        if (property0.NameEquals("protocol"))
+                        if (property0.NameEquals("protocol"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -275,12 +275,12 @@ namespace Azure.ResourceManager.Network
                             protocol = new ProtocolType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("qosCollectionId"))
+                        if (property0.NameEquals("qosCollectionId"u8))
                         {
                             qosCollectionId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("associatedNetworkInterfaces"))
+                        if (property0.NameEquals("associatedNetworkInterfaces"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Network
                             associatedNetworkInterfaces = array;
                             continue;
                         }
-                        if (property0.NameEquals("resourceGuid"))
+                        if (property0.NameEquals("resourceGuid"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Network
                             resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

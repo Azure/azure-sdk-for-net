@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.DataMigration.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("restoreDatabaseName");
+            writer.WritePropertyName("restoreDatabaseName"u8);
             writer.WriteStringValue(RestoreDatabaseName);
             if (Optional.IsDefined(BackupFileShare))
             {
-                writer.WritePropertyName("backupFileShare");
+                writer.WritePropertyName("backupFileShare"u8);
                 writer.WriteObjectValue(BackupFileShare);
             }
             if (Optional.IsCollectionDefined(BackupFilePaths))
             {
-                writer.WritePropertyName("backupFilePaths");
+                writer.WritePropertyName("backupFilePaths"u8);
                 writer.WriteStartArray();
                 foreach (var item in BackupFilePaths)
                 {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WriteEndObject();
@@ -52,17 +52,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("restoreDatabaseName"))
+                if (property.NameEquals("restoreDatabaseName"u8))
                 {
                     restoreDatabaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("backupFileShare"))
+                if (property.NameEquals("backupFileShare"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     backupFileShare = FileShare.DeserializeFileShare(property.Value);
                     continue;
                 }
-                if (property.NameEquals("backupFilePaths"))
+                if (property.NameEquals("backupFilePaths"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     backupFilePaths = array;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;

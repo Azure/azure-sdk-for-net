@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("service");
+            writer.WritePropertyName("service"u8);
             writer.WriteStringValue(Service);
             if (Optional.IsCollectionDefined(Locations))
             {
-                writer.WritePropertyName("locations");
+                writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Optional<IList<AzureLocation>> locations = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("service"))
+                if (property.NameEquals("service"u8))
                 {
                     service = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("locations"))
+                if (property.NameEquals("locations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

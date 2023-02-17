@@ -21,22 +21,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningWorkspaceGetNotebookKeysResult> notebookAccessKeys = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userStorageKey"))
+                if (property.NameEquals("userStorageKey"u8))
                 {
                     userStorageKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userStorageResourceId"))
+                if (property.NameEquals("userStorageResourceId"u8))
                 {
                     userStorageResourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appInsightsInstrumentationKey"))
+                if (property.NameEquals("appInsightsInstrumentationKey"u8))
                 {
                     appInsightsInstrumentationKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerRegistryCredentials"))
+                if (property.NameEquals("containerRegistryCredentials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     containerRegistryCredentials = MachineLearningContainerRegistryCredentials.DeserializeMachineLearningContainerRegistryCredentials(property.Value);
                     continue;
                 }
-                if (property.NameEquals("notebookAccessKeys"))
+                if (property.NameEquals("notebookAccessKeys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

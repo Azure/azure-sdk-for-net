@@ -20,17 +20,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ConnectVia))
             {
-                writer.WritePropertyName("connectVia");
+                writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
             if (Optional.IsDefined(StagingLinkedService))
             {
-                writer.WritePropertyName("stagingLinkedService");
+                writer.WritePropertyName("stagingLinkedService"u8);
                 writer.WriteObjectValue(StagingLinkedService);
             }
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             writer.WriteEndObject();
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> path = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectVia"))
+                if (property.NameEquals("connectVia"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     connectVia = EntityReference.DeserializeEntityReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("stagingLinkedService"))
+                if (property.NameEquals("stagingLinkedService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,7 +63,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     stagingLinkedService = EntityReference.DeserializeEntityReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;

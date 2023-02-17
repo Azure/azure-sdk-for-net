@@ -132,6 +132,27 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             }
         }
 
+        private int? _targetUnprocessedEventThreshold;
+
+        /// <summary>
+        /// Get or sets the target number of unprocessed events per worker for Event Hub-triggered functions. This is used in target-based scaling to override the default scaling threshold inferred from the <see cref="MaxEventBatchSize" /> option.
+        ///
+        /// If TargetUnprocessedEventThreshold is set, the total unprocessed event count will be divided by this value to determine the number of worker instances, which will then be rounded up to a worker instance count that creates a balanced partition distribution.
+        /// </summary>
+        public int? TargetUnprocessedEventThreshold
+        {
+            get => _targetUnprocessedEventThreshold;
+
+            set
+            {
+                if (value < 1)
+                {
+                    throw new ArgumentException("Unprocessed Event Threshold must be larger than 0.");
+                }
+                _targetUnprocessedEventThreshold = value;
+            }
+        }
+
         /// <summary>
         /// Gets the initial offset options to apply when processing. This only applies
         /// when no checkpoint information is available.
@@ -188,6 +209,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         {
             JObject options = new JObject
                 {
+                    { nameof(TargetUnprocessedEventThreshold), TargetUnprocessedEventThreshold },
                     { nameof(MaxEventBatchSize), MaxEventBatchSize },
                     { nameof(BatchCheckpointFrequency), BatchCheckpointFrequency },
                     { nameof(TransportType),  TransportType.ToString()},

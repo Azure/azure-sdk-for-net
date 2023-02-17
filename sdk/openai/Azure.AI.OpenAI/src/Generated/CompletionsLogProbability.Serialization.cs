@@ -17,12 +17,12 @@ namespace Azure.AI.OpenAI
         internal static CompletionsLogProbability DeserializeCompletionsLogProbability(JsonElement element)
         {
             Optional<IReadOnlyList<string>> tokens = default;
-            Optional<IReadOnlyList<float>> tokenLogprobs = default;
+            Optional<IReadOnlyList<float?>> tokenLogprobs = default;
             Optional<IReadOnlyList<IDictionary<string, float>>> topLogprobs = default;
             Optional<IReadOnlyList<int>> textOffset = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tokens"))
+                if (property.NameEquals("tokens"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,22 +37,29 @@ namespace Azure.AI.OpenAI
                     tokens = array;
                     continue;
                 }
-                if (property.NameEquals("token_logprobs"))
+                if (property.NameEquals("token_logprobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<float> array = new List<float>();
+                    List<float?> array = new List<float?>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetSingle());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetSingle());
+                        }
                     }
                     tokenLogprobs = array;
                     continue;
                 }
-                if (property.NameEquals("top_logprobs"))
+                if (property.NameEquals("top_logprobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +79,7 @@ namespace Azure.AI.OpenAI
                     topLogprobs = array;
                     continue;
                 }
-                if (property.NameEquals("text_offset"))
+                if (property.NameEquals("text_offset"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

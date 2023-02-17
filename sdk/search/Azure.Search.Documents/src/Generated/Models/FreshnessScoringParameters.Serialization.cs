@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("boostingDuration");
+            writer.WritePropertyName("boostingDuration"u8);
             writer.WriteStringValue(BoostingDuration, "P");
             writer.WriteEndObject();
         }
@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
             TimeSpan boostingDuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("boostingDuration"))
+                if (property.NameEquals("boostingDuration"u8))
                 {
                     boostingDuration = property.Value.GetTimeSpan("P");
                     continue;

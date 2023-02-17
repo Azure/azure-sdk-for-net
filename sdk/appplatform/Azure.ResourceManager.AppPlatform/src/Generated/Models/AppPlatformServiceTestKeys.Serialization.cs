@@ -21,27 +21,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryKey"))
+                if (property.NameEquals("primaryKey"u8))
                 {
                     primaryKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryKey"))
+                if (property.NameEquals("secondaryKey"u8))
                 {
                     secondaryKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primaryTestEndpoint"))
+                if (property.NameEquals("primaryTestEndpoint"u8))
                 {
                     primaryTestEndpoint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryTestEndpoint"))
+                if (property.NameEquals("secondaryTestEndpoint"u8))
                 {
                     secondaryTestEndpoint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

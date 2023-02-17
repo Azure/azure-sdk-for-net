@@ -19,49 +19,49 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceBusNamespace))
             {
-                writer.WritePropertyName("serviceBusNamespace");
+                writer.WritePropertyName("serviceBusNamespace"u8);
                 writer.WriteStringValue(ServiceBusNamespace);
             }
             if (Optional.IsDefined(RelayName))
             {
-                writer.WritePropertyName("relayName");
+                writer.WritePropertyName("relayName"u8);
                 writer.WriteStringValue(RelayName);
             }
             if (Optional.IsDefined(RelayArmUri))
             {
-                writer.WritePropertyName("relayArmUri");
+                writer.WritePropertyName("relayArmUri"u8);
                 writer.WriteStringValue(RelayArmUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Hostname))
             {
-                writer.WritePropertyName("hostname");
+                writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
+                writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
             if (Optional.IsDefined(SendKeyName))
             {
-                writer.WritePropertyName("sendKeyName");
+                writer.WritePropertyName("sendKeyName"u8);
                 writer.WriteStringValue(SendKeyName);
             }
             if (Optional.IsDefined(SendKeyValue))
             {
-                writer.WritePropertyName("sendKeyValue");
+                writer.WritePropertyName("sendKeyValue"u8);
                 writer.WriteStringValue(SendKeyValue);
             }
             if (Optional.IsDefined(ServiceBusSuffix))
             {
-                writer.WritePropertyName("serviceBusSuffix");
+                writer.WritePropertyName("serviceBusSuffix"u8);
                 writer.WriteStringValue(ServiceBusSuffix);
             }
             writer.WriteEndObject();
@@ -85,27 +85,27 @@ namespace Azure.ResourceManager.AppService
             Optional<string> serviceBusSuffix = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,17 +124,17 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("serviceBusNamespace"))
+                        if (property0.NameEquals("serviceBusNamespace"u8))
                         {
                             serviceBusNamespace = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("relayName"))
+                        if (property0.NameEquals("relayName"u8))
                         {
                             relayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("relayArmUri"))
+                        if (property0.NameEquals("relayArmUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.AppService
                             relayArmUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("hostname"))
+                        if (property0.NameEquals("hostname"u8))
                         {
                             hostname = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("port"))
+                        if (property0.NameEquals("port"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -159,17 +159,17 @@ namespace Azure.ResourceManager.AppService
                             port = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("sendKeyName"))
+                        if (property0.NameEquals("sendKeyName"u8))
                         {
                             sendKeyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sendKeyValue"))
+                        if (property0.NameEquals("sendKeyValue"u8))
                         {
                             sendKeyValue = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("serviceBusSuffix"))
+                        if (property0.NameEquals("serviceBusSuffix"u8))
                         {
                             serviceBusSuffix = property0.Value.GetString();
                             continue;

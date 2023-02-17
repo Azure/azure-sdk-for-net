@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("fieldMappings");
+            writer.WritePropertyName("fieldMappings"u8);
             writer.WriteStartArray();
             foreach (var item in FieldMappings)
             {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             IList<RelationshipTypeFieldMapping> fieldMappings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fieldMappings"))
+                if (property.NameEquals("fieldMappings"u8))
                 {
                     List<RelationshipTypeFieldMapping> array = new List<RelationshipTypeFieldMapping>();
                     foreach (var item in property.Value.EnumerateArray())

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vNetId"))
+                if (property.NameEquals("vNetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     vNetId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("alias"))
+                if (property.NameEquals("alias"u8))
                 {
                     @alias = property.Value.GetString();
                     continue;

@@ -16,16 +16,16 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("condition");
+            writer.WritePropertyName("condition"u8);
             writer.WriteObjectValue(Condition);
-            writer.WritePropertyName("labelSelectors");
+            writer.WritePropertyName("labelSelectors"u8);
             writer.WriteStartArray();
             foreach (var item in LabelSelectors)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             writer.WriteEndObject();
         }
@@ -37,12 +37,12 @@ namespace Azure.Communication.JobRouter
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("condition"))
+                if (property.NameEquals("condition"u8))
                 {
                     condition = RouterRule.DeserializeRouterRule(property.Value);
                     continue;
                 }
-                if (property.NameEquals("labelSelectors"))
+                if (property.NameEquals("labelSelectors"u8))
                 {
                     List<QueueSelector> array = new List<QueueSelector>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -52,7 +52,7 @@ namespace Azure.Communication.JobRouter
                     labelSelectors = array;
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;

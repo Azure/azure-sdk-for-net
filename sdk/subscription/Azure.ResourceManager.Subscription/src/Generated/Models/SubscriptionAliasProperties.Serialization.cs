@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Subscription.Models
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     provisioningState = new SubscriptionProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("acceptOwnershipUrl"))
+                if (property.NameEquals("acceptOwnershipUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     acceptOwnershipUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("acceptOwnershipState"))
+                if (property.NameEquals("acceptOwnershipState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Subscription.Models
                     acceptOwnershipState = new AcceptOwnershipState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("billingScope"))
+                if (property.NameEquals("billingScope"u8))
                 {
                     billingScope = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workload"))
+                if (property.NameEquals("workload"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,22 +85,22 @@ namespace Azure.ResourceManager.Subscription.Models
                     workload = new SubscriptionWorkload(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resellerId"))
+                if (property.NameEquals("resellerId"u8))
                 {
                     resellerId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subscriptionOwnerId"))
+                if (property.NameEquals("subscriptionOwnerId"u8))
                 {
                     subscriptionOwnerId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managementGroupId"))
+                if (property.NameEquals("managementGroupId"u8))
                 {
                     managementGroupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdTime"))
+                if (property.NameEquals("createdTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 if (ActiveDirectoryId != null)
                 {
-                    writer.WritePropertyName("activeDirectoryId");
+                    writer.WritePropertyName("activeDirectoryId"u8);
                     writer.WriteStringValue(ActiveDirectoryId);
                 }
                 else
@@ -31,42 +31,42 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             if (Optional.IsDefined(Username))
             {
-                writer.WritePropertyName("username");
+                writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
             if (Optional.IsDefined(Domain))
             {
-                writer.WritePropertyName("domain");
+                writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
             if (Optional.IsDefined(Dns))
             {
-                writer.WritePropertyName("dns");
+                writer.WritePropertyName("dns"u8);
                 writer.WriteStringValue(Dns);
             }
             if (Optional.IsDefined(SmbServerName))
             {
-                writer.WritePropertyName("smbServerName");
+                writer.WritePropertyName("smbServerName"u8);
                 writer.WriteStringValue(SmbServerName);
             }
             if (Optional.IsDefined(OrganizationalUnit))
             {
-                writer.WritePropertyName("organizationalUnit");
+                writer.WritePropertyName("organizationalUnit"u8);
                 writer.WriteStringValue(OrganizationalUnit);
             }
             if (Optional.IsDefined(Site))
             {
-                writer.WritePropertyName("site");
+                writer.WritePropertyName("site"u8);
                 writer.WriteStringValue(Site);
             }
             if (Optional.IsCollectionDefined(BackupOperators))
             {
-                writer.WritePropertyName("backupOperators");
+                writer.WritePropertyName("backupOperators"u8);
                 writer.WriteStartArray();
                 foreach (var item in BackupOperators)
                 {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             if (Optional.IsCollectionDefined(Administrators))
             {
-                writer.WritePropertyName("administrators");
+                writer.WritePropertyName("administrators"u8);
                 writer.WriteStartArray();
                 foreach (var item in Administrators)
                 {
@@ -86,32 +86,32 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             if (Optional.IsDefined(KdcIP))
             {
-                writer.WritePropertyName("kdcIP");
+                writer.WritePropertyName("kdcIP"u8);
                 writer.WriteStringValue(KdcIP.ToString());
             }
             if (Optional.IsDefined(AdName))
             {
-                writer.WritePropertyName("adName");
+                writer.WritePropertyName("adName"u8);
                 writer.WriteStringValue(AdName);
             }
             if (Optional.IsDefined(ServerRootCACertificate))
             {
-                writer.WritePropertyName("serverRootCACertificate");
+                writer.WritePropertyName("serverRootCACertificate"u8);
                 writer.WriteStringValue(ServerRootCACertificate);
             }
             if (Optional.IsDefined(IsAesEncryptionEnabled))
             {
-                writer.WritePropertyName("aesEncryption");
+                writer.WritePropertyName("aesEncryption"u8);
                 writer.WriteBooleanValue(IsAesEncryptionEnabled.Value);
             }
             if (Optional.IsDefined(IsLdapSigningEnabled))
             {
-                writer.WritePropertyName("ldapSigning");
+                writer.WritePropertyName("ldapSigning"u8);
                 writer.WriteBooleanValue(IsLdapSigningEnabled.Value);
             }
             if (Optional.IsCollectionDefined(SecurityOperators))
             {
-                writer.WritePropertyName("securityOperators");
+                writer.WritePropertyName("securityOperators"u8);
                 writer.WriteStartArray();
                 foreach (var item in SecurityOperators)
                 {
@@ -121,22 +121,22 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             if (Optional.IsDefined(IsLdapOverTlsEnabled))
             {
-                writer.WritePropertyName("ldapOverTLS");
+                writer.WritePropertyName("ldapOverTLS"u8);
                 writer.WriteBooleanValue(IsLdapOverTlsEnabled.Value);
             }
             if (Optional.IsDefined(AllowLocalNfsUsersWithLdap))
             {
-                writer.WritePropertyName("allowLocalNfsUsersWithLdap");
+                writer.WritePropertyName("allowLocalNfsUsersWithLdap"u8);
                 writer.WriteBooleanValue(AllowLocalNfsUsersWithLdap.Value);
             }
             if (Optional.IsDefined(EncryptDCConnections))
             {
-                writer.WritePropertyName("encryptDCConnections");
+                writer.WritePropertyName("encryptDCConnections"u8);
                 writer.WriteBooleanValue(EncryptDCConnections.Value);
             }
             if (Optional.IsDefined(LdapSearchScope))
             {
-                writer.WritePropertyName("ldapSearchScope");
+                writer.WritePropertyName("ldapSearchScope"u8);
                 writer.WriteObjectValue(LdapSearchScope);
             }
             writer.WriteEndObject();
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<NetAppLdapSearchScopeConfiguration> ldapSearchScope = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("activeDirectoryId"))
+                if (property.NameEquals("activeDirectoryId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -178,27 +178,27 @@ namespace Azure.ResourceManager.NetApp.Models
                     activeDirectoryId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("username"))
+                if (property.NameEquals("username"u8))
                 {
                     username = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"))
+                if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("domain"))
+                if (property.NameEquals("domain"u8))
                 {
                     domain = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dns"))
+                if (property.NameEquals("dns"u8))
                 {
                     dns = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -208,27 +208,27 @@ namespace Azure.ResourceManager.NetApp.Models
                     status = new NetAppAccountActiveDirectoryStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("statusDetails"))
+                if (property.NameEquals("statusDetails"u8))
                 {
                     statusDetails = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("smbServerName"))
+                if (property.NameEquals("smbServerName"u8))
                 {
                     smbServerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("organizationalUnit"))
+                if (property.NameEquals("organizationalUnit"u8))
                 {
                     organizationalUnit = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("site"))
+                if (property.NameEquals("site"u8))
                 {
                     site = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("backupOperators"))
+                if (property.NameEquals("backupOperators"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     backupOperators = array;
                     continue;
                 }
-                if (property.NameEquals("administrators"))
+                if (property.NameEquals("administrators"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     administrators = array;
                     continue;
                 }
-                if (property.NameEquals("kdcIP"))
+                if (property.NameEquals("kdcIP"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -268,17 +268,17 @@ namespace Azure.ResourceManager.NetApp.Models
                     kdcIP = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("adName"))
+                if (property.NameEquals("adName"u8))
                 {
                     adName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverRootCACertificate"))
+                if (property.NameEquals("serverRootCACertificate"u8))
                 {
                     serverRootCACertificate = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aesEncryption"))
+                if (property.NameEquals("aesEncryption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     aesEncryption = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("ldapSigning"))
+                if (property.NameEquals("ldapSigning"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     ldapSigning = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("securityOperators"))
+                if (property.NameEquals("securityOperators"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     securityOperators = array;
                     continue;
                 }
-                if (property.NameEquals("ldapOverTLS"))
+                if (property.NameEquals("ldapOverTLS"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     ldapOverTls = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("allowLocalNfsUsersWithLdap"))
+                if (property.NameEquals("allowLocalNfsUsersWithLdap"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     allowLocalNfsUsersWithLdap = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("encryptDCConnections"))
+                if (property.NameEquals("encryptDCConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     encryptDCConnections = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("ldapSearchScope"))
+                if (property.NameEquals("ldapSearchScope"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

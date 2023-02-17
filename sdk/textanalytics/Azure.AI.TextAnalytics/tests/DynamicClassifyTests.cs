@@ -56,17 +56,6 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateDocumentResult(classificationCategories, ClassificationType.Multi);
         }
 
-        [RecordedTest]
-        public async Task DynamicClassifyWithDisableServiceLogs()
-        {
-            TextAnalyticsClient client = GetClient();
-            DynamicClassifyOptions options = new() { DisableServiceLogs = true };
-
-            ClassificationCategoryCollection classificationCategories = await client.DynamicClassifyAsync(ClassifyDocument1, s_categories, options: options);
-
-            ValidateDocumentResult(classificationCategories, ClassificationType.Multi);
-        }
-
         #endregion
 
         #region Batch Convenience Tests
@@ -104,7 +93,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task DynamicClassifyBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
-            DynamicClassifyOptions options = new() { IncludeStatistics = true };
+            TextAnalyticsRequestOptions options = new() { IncludeStatistics = true };
 
             DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(s_batchConvenienceDocuments, s_categories, options: options);
 
@@ -116,7 +105,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task DynamicClassifyBatchConvenienceWithDisableServiceLogs()
         {
             TextAnalyticsClient client = GetClient();
-            DynamicClassifyOptions options = new() { DisableServiceLogs = true };
+            TextAnalyticsRequestOptions options = new() { DisableServiceLogs = true };
 
             DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(s_batchConvenienceDocuments, s_categories, options: options);
 
@@ -160,7 +149,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task DynamicClassifyBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
-            DynamicClassifyOptions options = new() { IncludeStatistics = true };
+            TextAnalyticsRequestOptions options = new() { IncludeStatistics = true };
 
             DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(s_batchDocuments, s_categories, options: options);
 
@@ -172,7 +161,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task DynamicClassifyBatchWithDisableServiceLogs()
         {
             TextAnalyticsClient client = GetClient();
-            DynamicClassifyOptions options = new() { DisableServiceLogs = true };
+            TextAnalyticsRequestOptions options = new() { DisableServiceLogs = true };
 
             DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(s_batchDocuments, s_categories, options: options);
 
@@ -216,9 +205,8 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task DynamicClassifyBatchWithSingleClassificationTypeTest()
         {
             TextAnalyticsClient client = GetClient();
-            DynamicClassifyOptions options = new() { ClassificationType = ClassificationType.Single };
 
-            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(s_batchDocuments, s_categories, options: options);
+            DynamicClassifyDocumentResultCollection results = await client.DynamicClassifyBatchAsync(s_batchDocuments, s_categories, ClassificationType.Single);
 
             ValidateBatchDocumentsResult(results, ClassificationType.Single);
         }

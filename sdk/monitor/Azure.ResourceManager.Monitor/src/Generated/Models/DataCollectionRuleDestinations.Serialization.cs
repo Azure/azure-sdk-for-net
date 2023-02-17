@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(LogAnalytics))
             {
-                writer.WritePropertyName("logAnalytics");
+                writer.WritePropertyName("logAnalytics"u8);
                 writer.WriteStartArray();
                 foreach (var item in LogAnalytics)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsDefined(AzureMonitorMetrics))
             {
-                writer.WritePropertyName("azureMonitorMetrics");
+                writer.WritePropertyName("azureMonitorMetrics"u8);
                 writer.WriteObjectValue(AzureMonitorMetrics);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<DestinationsSpecAzureMonitorMetrics> azureMonitorMetrics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("logAnalytics"))
+                if (property.NameEquals("logAnalytics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     logAnalytics = array;
                     continue;
                 }
-                if (property.NameEquals("azureMonitorMetrics"))
+                if (property.NameEquals("azureMonitorMetrics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             Optional<IReadOnlyList<ManagedNetworkPeeringPolicyData>> peerings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("groups"))
+                if (property.NameEquals("groups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     groups = array;
                     continue;
                 }
-                if (property.NameEquals("peerings"))
+                if (property.NameEquals("peerings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

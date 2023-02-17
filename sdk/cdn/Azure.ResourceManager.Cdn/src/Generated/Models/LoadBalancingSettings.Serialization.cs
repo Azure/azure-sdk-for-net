@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SampleSize))
             {
-                writer.WritePropertyName("sampleSize");
+                writer.WritePropertyName("sampleSize"u8);
                 writer.WriteNumberValue(SampleSize.Value);
             }
             if (Optional.IsDefined(SuccessfulSamplesRequired))
             {
-                writer.WritePropertyName("successfulSamplesRequired");
+                writer.WritePropertyName("successfulSamplesRequired"u8);
                 writer.WriteNumberValue(SuccessfulSamplesRequired.Value);
             }
             if (Optional.IsDefined(AdditionalLatencyInMilliseconds))
             {
-                writer.WritePropertyName("additionalLatencyInMilliseconds");
+                writer.WritePropertyName("additionalLatencyInMilliseconds"u8);
                 writer.WriteNumberValue(AdditionalLatencyInMilliseconds.Value);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<int> additionalLatencyInMilliseconds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sampleSize"))
+                if (property.NameEquals("sampleSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     sampleSize = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("successfulSamplesRequired"))
+                if (property.NameEquals("successfulSamplesRequired"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     successfulSamplesRequired = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("additionalLatencyInMilliseconds"))
+                if (property.NameEquals("additionalLatencyInMilliseconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,42 +18,42 @@ namespace Azure.ResourceManager.Peering.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ExchangeName))
             {
-                writer.WritePropertyName("exchangeName");
+                writer.WritePropertyName("exchangeName"u8);
                 writer.WriteStringValue(ExchangeName);
             }
             if (Optional.IsDefined(BandwidthInMbps))
             {
-                writer.WritePropertyName("bandwidthInMbps");
+                writer.WritePropertyName("bandwidthInMbps"u8);
                 writer.WriteNumberValue(BandwidthInMbps.Value);
             }
             if (Optional.IsDefined(MicrosoftIPv4Address))
             {
-                writer.WritePropertyName("microsoftIPv4Address");
+                writer.WritePropertyName("microsoftIPv4Address"u8);
                 writer.WriteStringValue(MicrosoftIPv4Address.ToString());
             }
             if (Optional.IsDefined(MicrosoftIPv6Address))
             {
-                writer.WritePropertyName("microsoftIPv6Address");
+                writer.WritePropertyName("microsoftIPv6Address"u8);
                 writer.WriteStringValue(MicrosoftIPv6Address.ToString());
             }
             if (Optional.IsDefined(FacilityIPv4Prefix))
             {
-                writer.WritePropertyName("facilityIPv4Prefix");
+                writer.WritePropertyName("facilityIPv4Prefix"u8);
                 writer.WriteStringValue(FacilityIPv4Prefix);
             }
             if (Optional.IsDefined(FacilityIPv6Prefix))
             {
-                writer.WritePropertyName("facilityIPv6Prefix");
+                writer.WritePropertyName("facilityIPv6Prefix"u8);
                 writer.WriteStringValue(FacilityIPv6Prefix);
             }
             if (Optional.IsDefined(PeeringDBFacilityId))
             {
-                writer.WritePropertyName("peeringDBFacilityId");
+                writer.WritePropertyName("peeringDBFacilityId"u8);
                 writer.WriteNumberValue(PeeringDBFacilityId.Value);
             }
             if (Optional.IsDefined(PeeringDBFacilityLink))
             {
-                writer.WritePropertyName("peeringDBFacilityLink");
+                writer.WritePropertyName("peeringDBFacilityLink"u8);
                 writer.WriteStringValue(PeeringDBFacilityLink);
             }
             writer.WriteEndObject();
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.Peering.Models
             Optional<string> peeringDBFacilityLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("exchangeName"))
+                if (property.NameEquals("exchangeName"u8))
                 {
                     exchangeName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bandwidthInMbps"))
+                if (property.NameEquals("bandwidthInMbps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Peering.Models
                     bandwidthInMbps = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("microsoftIPv4Address"))
+                if (property.NameEquals("microsoftIPv4Address"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Peering.Models
                     microsoftIPv4Address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("microsoftIPv6Address"))
+                if (property.NameEquals("microsoftIPv6Address"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,17 +106,17 @@ namespace Azure.ResourceManager.Peering.Models
                     microsoftIPv6Address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("facilityIPv4Prefix"))
+                if (property.NameEquals("facilityIPv4Prefix"u8))
                 {
                     facilityIPv4Prefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("facilityIPv6Prefix"))
+                if (property.NameEquals("facilityIPv6Prefix"u8))
                 {
                     facilityIPv6Prefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("peeringDBFacilityId"))
+                if (property.NameEquals("peeringDBFacilityId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Peering.Models
                     peeringDBFacilityId = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("peeringDBFacilityLink"))
+                if (property.NameEquals("peeringDBFacilityLink"u8))
                 {
                     peeringDBFacilityLink = property.Value.GetString();
                     continue;

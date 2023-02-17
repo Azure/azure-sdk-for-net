@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (CountryOrRegionForHolidays != null)
                 {
-                    writer.WritePropertyName("countryOrRegionForHolidays");
+                    writer.WritePropertyName("countryOrRegionForHolidays"u8);
                     writer.WriteStringValue(CountryOrRegionForHolidays);
                 }
                 else
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (CvStepSize != null)
                 {
-                    writer.WritePropertyName("cvStepSize");
+                    writer.WritePropertyName("cvStepSize"u8);
                     writer.WriteNumberValue(CvStepSize.Value);
                 }
                 else
@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(FeatureLags))
             {
-                writer.WritePropertyName("featureLags");
+                writer.WritePropertyName("featureLags"u8);
                 writer.WriteStringValue(FeatureLags.Value.ToString());
             }
             if (Optional.IsDefined(ForecastHorizon))
             {
-                writer.WritePropertyName("forecastHorizon");
+                writer.WritePropertyName("forecastHorizon"u8);
                 writer.WriteObjectValue(ForecastHorizon);
             }
             if (Optional.IsDefined(Frequency))
             {
                 if (Frequency != null)
                 {
-                    writer.WritePropertyName("frequency");
+                    writer.WritePropertyName("frequency"u8);
                     writer.WriteStringValue(Frequency);
                 }
                 else
@@ -64,24 +64,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Seasonality))
             {
-                writer.WritePropertyName("seasonality");
+                writer.WritePropertyName("seasonality"u8);
                 writer.WriteObjectValue(Seasonality);
             }
             if (Optional.IsDefined(ShortSeriesHandlingConfig))
             {
-                writer.WritePropertyName("shortSeriesHandlingConfig");
+                writer.WritePropertyName("shortSeriesHandlingConfig"u8);
                 writer.WriteStringValue(ShortSeriesHandlingConfig.Value.ToString());
             }
             if (Optional.IsDefined(TargetAggregateFunction))
             {
-                writer.WritePropertyName("targetAggregateFunction");
+                writer.WritePropertyName("targetAggregateFunction"u8);
                 writer.WriteStringValue(TargetAggregateFunction.Value.ToString());
             }
             if (Optional.IsDefined(TargetLags))
             {
                 if (TargetLags != null)
                 {
-                    writer.WritePropertyName("targetLags");
+                    writer.WritePropertyName("targetLags"u8);
                     writer.WriteObjectValue(TargetLags);
                 }
                 else
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (TargetRollingWindowSize != null)
                 {
-                    writer.WritePropertyName("targetRollingWindowSize");
+                    writer.WritePropertyName("targetRollingWindowSize"u8);
                     writer.WriteObjectValue(TargetRollingWindowSize);
                 }
                 else
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (TimeColumnName != null)
                 {
-                    writer.WritePropertyName("timeColumnName");
+                    writer.WritePropertyName("timeColumnName"u8);
                     writer.WriteStringValue(TimeColumnName);
                 }
                 else
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (TimeSeriesIdColumnNames != null)
                 {
-                    writer.WritePropertyName("timeSeriesIdColumnNames");
+                    writer.WritePropertyName("timeSeriesIdColumnNames"u8);
                     writer.WriteStartArray();
                     foreach (var item in TimeSeriesIdColumnNames)
                     {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(UseStl))
             {
-                writer.WritePropertyName("useStl");
+                writer.WritePropertyName("useStl"u8);
                 writer.WriteStringValue(UseStl.Value.ToString());
             }
             writer.WriteEndObject();
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningUseStl> useStl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("countryOrRegionForHolidays"))
+                if (property.NameEquals("countryOrRegionForHolidays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     countryOrRegionForHolidays = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cvStepSize"))
+                if (property.NameEquals("cvStepSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     cvStepSize = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("featureLags"))
+                if (property.NameEquals("featureLags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     featureLags = new MachineLearningFeatureLag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("forecastHorizon"))
+                if (property.NameEquals("forecastHorizon"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     forecastHorizon = ForecastHorizon.DeserializeForecastHorizon(property.Value);
                     continue;
                 }
-                if (property.NameEquals("frequency"))
+                if (property.NameEquals("frequency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     frequency = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("seasonality"))
+                if (property.NameEquals("seasonality"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     seasonality = ForecastingSeasonality.DeserializeForecastingSeasonality(property.Value);
                     continue;
                 }
-                if (property.NameEquals("shortSeriesHandlingConfig"))
+                if (property.NameEquals("shortSeriesHandlingConfig"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     shortSeriesHandlingConfig = new MachineLearningShortSeriesHandlingConfiguration(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetAggregateFunction"))
+                if (property.NameEquals("targetAggregateFunction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     targetAggregateFunction = new TargetAggregationFunction(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetLags"))
+                if (property.NameEquals("targetLags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     targetLags = TargetLags.DeserializeTargetLags(property.Value);
                     continue;
                 }
-                if (property.NameEquals("targetRollingWindowSize"))
+                if (property.NameEquals("targetRollingWindowSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     targetRollingWindowSize = TargetRollingWindowSize.DeserializeTargetRollingWindowSize(property.Value);
                     continue;
                 }
-                if (property.NameEquals("timeColumnName"))
+                if (property.NameEquals("timeColumnName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     timeColumnName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timeSeriesIdColumnNames"))
+                if (property.NameEquals("timeSeriesIdColumnNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     timeSeriesIdColumnNames = array;
                     continue;
                 }
-                if (property.NameEquals("useStl"))
+                if (property.NameEquals("useStl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

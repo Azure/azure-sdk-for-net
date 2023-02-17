@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.Monitor
             Optional<IReadOnlyList<DataContainer>> data = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Monitor
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("resourceId"))
+                        if (property0.NameEquals("resourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Monitor
                             resourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("onboardingStatus"))
+                        if (property0.NameEquals("onboardingStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Monitor
                             onboardingStatus = new OnboardingStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("dataStatus"))
+                        if (property0.NameEquals("dataStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Monitor
                             dataStatus = new DataStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("data"))
+                        if (property0.NameEquals("data"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

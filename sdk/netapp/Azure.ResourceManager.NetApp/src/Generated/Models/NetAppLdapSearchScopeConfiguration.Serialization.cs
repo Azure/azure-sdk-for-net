@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(UserDN))
             {
-                writer.WritePropertyName("userDN");
+                writer.WritePropertyName("userDN"u8);
                 writer.WriteStringValue(UserDN);
             }
             if (Optional.IsDefined(GroupDN))
             {
-                writer.WritePropertyName("groupDN");
+                writer.WritePropertyName("groupDN"u8);
                 writer.WriteStringValue(GroupDN);
             }
             if (Optional.IsDefined(GroupMembershipFilter))
             {
-                writer.WritePropertyName("groupMembershipFilter");
+                writer.WritePropertyName("groupMembershipFilter"u8);
                 writer.WriteStringValue(GroupMembershipFilter);
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<string> groupMembershipFilter = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userDN"))
+                if (property.NameEquals("userDN"u8))
                 {
                     userDN = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("groupDN"))
+                if (property.NameEquals("groupDN"u8))
                 {
                     groupDN = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("groupMembershipFilter"))
+                if (property.NameEquals("groupMembershipFilter"u8))
                 {
                     groupMembershipFilter = property.Value.GetString();
                     continue;
