@@ -320,39 +320,26 @@ namespace Azure.Core.Pipeline
         private static string JoinHeaderValues(HeaderStringValues values)
         {
             var count = values.Count;
-            // Explicitly handle most common cases
-            switch (count) {
-                case 0:
-                    return string.Empty;
-                case 1:
-                    return values.ToString();
-                case 2:
-                    using (var enumerator = values.GetEnumerator())
-                    {
-                        enumerator.MoveNext();
-                        var value1 = enumerator.Current;
-                        enumerator.MoveNext();
-                        var value2 = enumerator.Current;
-                        return string.Concat(value1, ",", value2);
-                    }
-                default:
-                    var valuesArray = ArrayPool<string>.Shared.Rent(count);
-                    try
-                    {
-                        var index = 0;
-                        foreach (var str in values)
-                        {
-                            valuesArray[index] = str;
-                            index++;
-                        }
-
-                        return string.Join(',', valuesArray, 0, index);
-                    }
-                    finally
-                    {
-                        ArrayPool<string>.Shared.Return(valuesArray);
-                    }
+            if (count == 0)
+            {
+                return string.Empty;
             }
+
+            var interpolatedStringHandler = new DefaultInterpolatedStringHandler(count-1, count);
+            var isFirst = true;
+            foreach (var str in values)
+            {
+                if (isFirst)
+                {
+                    isFirst = false;
+                }
+                else
+                {
+                    interpolatedStringHandler.AppendLiteral(",");
+                }
+                interpolatedStringHandler.AppendFormatted(str);
+            }
+            return string.Create(null, ref interpolatedStringHandler);
         }
 #else
         private static string JoinHeaderValues(IEnumerable<string> values)
