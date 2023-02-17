@@ -281,13 +281,17 @@ namespace Azure.Core
             }
         }
 
+#pragma warning disable CA1822
         [Conditional("DEBUG")]
-        public void CheckDisposed()
+        private void CheckDisposed()
         {
+#if DEBUG
             if (_disposed)
             {
                 throw new InvalidOperationException($"{nameof(ArrayBackedPropertyBag<TKey, TValue>)} instance is already disposed");
             }
+#endif
         }
+#pragma warning restore CA1822
     }
 }
