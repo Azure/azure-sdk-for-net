@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<CommunicationIdentifierModel> userCommunicationIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userCommunicationIdentifier"))
+                if (property.NameEquals("userCommunicationIdentifier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

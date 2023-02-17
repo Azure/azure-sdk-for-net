@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<string> statusChangeDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceStatus"))
+                if (property.NameEquals("resourceStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     resourceStatus = new ResourceStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("reason"))
+                if (property.NameEquals("reason"u8))
                 {
                     reason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statusChangeDate"))
+                if (property.NameEquals("statusChangeDate"u8))
                 {
                     statusChangeDate = property.Value.GetString();
                     continue;

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<DevTestLabCostType> costType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("date"))
+                if (property.NameEquals("date"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     date = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("cost"))
+                if (property.NameEquals("cost"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     cost = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("costType"))
+                if (property.NameEquals("costType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

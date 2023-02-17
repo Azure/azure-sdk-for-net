@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<string> reasonType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("reason"))
+                if (property.NameEquals("reason"u8))
                 {
                     reason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reasonType"))
+                if (property.NameEquals("reasonType"u8))
                 {
                     reasonType = property.Value.GetString();
                     continue;

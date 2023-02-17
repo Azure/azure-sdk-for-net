@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<EdgeOrderProductChargingType> chargingType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("billingType"))
+                if (property.NameEquals("billingType"u8))
                 {
                     billingType = new BillingType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("multiplier"))
+                if (property.NameEquals("multiplier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     multiplier = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("chargingType"))
+                if (property.NameEquals("chargingType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

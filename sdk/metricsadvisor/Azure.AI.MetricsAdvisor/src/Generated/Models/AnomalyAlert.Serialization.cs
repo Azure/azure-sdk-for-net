@@ -21,22 +21,22 @@ namespace Azure.AI.MetricsAdvisor.Models
             DateTimeOffset modifiedTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("alertId"))
+                if (property.NameEquals("alertId"u8))
                 {
                     alertId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("createdTime"))
+                if (property.NameEquals("createdTime"u8))
                 {
                     createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("modifiedTime"))
+                if (property.NameEquals("modifiedTime"u8))
                 {
                     modifiedTime = property.Value.GetDateTimeOffset("O");
                     continue;

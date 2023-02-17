@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="evidence"> The evidence supporting the compliance state set in this attestation. </param>
         /// <param name="provisioningState"> The status of the attestation. </param>
         /// <param name="lastComplianceStateChangeOn"> The time the compliance state was last changed in this attestation. </param>
-        /// <param name="assessmentOn"> The time the evidence was assessed. </param>
+        /// <param name="assessOn"> The time the evidence was assessed. </param>
         /// <param name="metadata"> Additional metadata for this attestation. </param>
-        internal PolicyAttestationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier policyAssignmentId, string policyDefinitionReferenceId, PolicyComplianceState? complianceState, DateTimeOffset? expireOn, string owner, string comments, IList<AttestationEvidence> evidence, string provisioningState, DateTimeOffset? lastComplianceStateChangeOn, DateTimeOffset? assessmentOn, BinaryData metadata) : base(id, name, resourceType, systemData)
+        internal PolicyAttestationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier policyAssignmentId, string policyDefinitionReferenceId, PolicyComplianceState? complianceState, DateTimeOffset? expireOn, string owner, string comments, IList<AttestationEvidence> evidence, string provisioningState, DateTimeOffset? lastComplianceStateChangeOn, DateTimeOffset? assessOn, BinaryData metadata) : base(id, name, resourceType, systemData)
         {
             PolicyAssignmentId = policyAssignmentId;
             PolicyDefinitionReferenceId = policyDefinitionReferenceId;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.PolicyInsights
             Evidence = evidence;
             ProvisioningState = provisioningState;
             LastComplianceStateChangeOn = lastComplianceStateChangeOn;
-            AssessmentOn = assessmentOn;
+            AssessOn = assessOn;
             Metadata = metadata;
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> The time the compliance state was last changed in this attestation. </summary>
         public DateTimeOffset? LastComplianceStateChangeOn { get; }
         /// <summary> The time the evidence was assessed. </summary>
-        public DateTimeOffset? AssessmentOn { get; set; }
+        public DateTimeOffset? AssessOn { get; set; }
         /// <summary>
         /// Additional metadata for this attestation
         /// <para>

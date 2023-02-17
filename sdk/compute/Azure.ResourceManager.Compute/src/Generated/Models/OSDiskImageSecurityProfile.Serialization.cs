@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ConfidentialVmEncryptionType))
             {
-                writer.WritePropertyName("confidentialVMEncryptionType");
+                writer.WritePropertyName("confidentialVMEncryptionType"u8);
                 writer.WriteStringValue(ConfidentialVmEncryptionType.Value.ToString());
             }
             if (Optional.IsDefined(SecureVmDiskEncryptionSetId))
             {
-                writer.WritePropertyName("secureVMDiskEncryptionSetId");
+                writer.WritePropertyName("secureVMDiskEncryptionSetId"u8);
                 writer.WriteStringValue(SecureVmDiskEncryptionSetId);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> secureVmDiskEncryptionSetId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("confidentialVMEncryptionType"))
+                if (property.NameEquals("confidentialVMEncryptionType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
                     confidentialVmEncryptionType = new ConfidentialVmEncryptionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("secureVMDiskEncryptionSetId"))
+                if (property.NameEquals("secureVMDiskEncryptionSetId"u8))
                 {
                     secureVmDiskEncryptionSetId = property.Value.GetString();
                     continue;

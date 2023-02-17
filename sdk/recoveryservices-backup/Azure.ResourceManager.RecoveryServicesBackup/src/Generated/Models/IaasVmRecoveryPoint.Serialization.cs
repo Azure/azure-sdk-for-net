@@ -19,42 +19,42 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryPointType))
             {
-                writer.WritePropertyName("recoveryPointType");
+                writer.WritePropertyName("recoveryPointType"u8);
                 writer.WriteStringValue(RecoveryPointType);
             }
             if (Optional.IsDefined(RecoveryPointOn))
             {
-                writer.WritePropertyName("recoveryPointTime");
+                writer.WritePropertyName("recoveryPointTime"u8);
                 writer.WriteStringValue(RecoveryPointOn.Value, "O");
             }
             if (Optional.IsDefined(RecoveryPointAdditionalInfo))
             {
-                writer.WritePropertyName("recoveryPointAdditionalInfo");
+                writer.WritePropertyName("recoveryPointAdditionalInfo"u8);
                 writer.WriteStringValue(RecoveryPointAdditionalInfo);
             }
             if (Optional.IsDefined(SourceVmStorageType))
             {
-                writer.WritePropertyName("sourceVMStorageType");
+                writer.WritePropertyName("sourceVMStorageType"u8);
                 writer.WriteStringValue(SourceVmStorageType);
             }
             if (Optional.IsDefined(IsSourceVmEncrypted))
             {
-                writer.WritePropertyName("isSourceVMEncrypted");
+                writer.WritePropertyName("isSourceVMEncrypted"u8);
                 writer.WriteBooleanValue(IsSourceVmEncrypted.Value);
             }
             if (Optional.IsDefined(KeyAndSecret))
             {
-                writer.WritePropertyName("keyAndSecret");
+                writer.WritePropertyName("keyAndSecret"u8);
                 writer.WriteObjectValue(KeyAndSecret);
             }
             if (Optional.IsDefined(IsInstantIlrSessionActive))
             {
-                writer.WritePropertyName("isInstantIlrSessionActive");
+                writer.WritePropertyName("isInstantIlrSessionActive"u8);
                 writer.WriteBooleanValue(IsInstantIlrSessionActive.Value);
             }
             if (Optional.IsCollectionDefined(RecoveryPointTierDetails))
             {
-                writer.WritePropertyName("recoveryPointTierDetails");
+                writer.WritePropertyName("recoveryPointTierDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in RecoveryPointTierDetails)
                 {
@@ -64,32 +64,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(IsManagedVirtualMachine))
             {
-                writer.WritePropertyName("isManagedVirtualMachine");
+                writer.WritePropertyName("isManagedVirtualMachine"u8);
                 writer.WriteBooleanValue(IsManagedVirtualMachine.Value);
             }
             if (Optional.IsDefined(VirtualMachineSize))
             {
-                writer.WritePropertyName("virtualMachineSize");
+                writer.WritePropertyName("virtualMachineSize"u8);
                 writer.WriteStringValue(VirtualMachineSize);
             }
             if (Optional.IsDefined(OriginalStorageAccountOption))
             {
-                writer.WritePropertyName("originalStorageAccountOption");
+                writer.WritePropertyName("originalStorageAccountOption"u8);
                 writer.WriteBooleanValue(OriginalStorageAccountOption.Value);
             }
             if (Optional.IsDefined(OSType))
             {
-                writer.WritePropertyName("osType");
+                writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
             if (Optional.IsDefined(RecoveryPointDiskConfiguration))
             {
-                writer.WritePropertyName("recoveryPointDiskConfiguration");
+                writer.WritePropertyName("recoveryPointDiskConfiguration"u8);
                 writer.WriteObjectValue(RecoveryPointDiskConfiguration);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
-                writer.WritePropertyName("zones");
+                writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
                 foreach (var item in Zones)
                 {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsCollectionDefined(RecoveryPointMoveReadinessInfo))
             {
-                writer.WritePropertyName("recoveryPointMoveReadinessInfo");
+                writer.WritePropertyName("recoveryPointMoveReadinessInfo"u8);
                 writer.WriteStartObject();
                 foreach (var item in RecoveryPointMoveReadinessInfo)
                 {
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(RecoveryPointProperties))
             {
-                writer.WritePropertyName("recoveryPointProperties");
+                writer.WritePropertyName("recoveryPointProperties"u8);
                 writer.WriteObjectValue(RecoveryPointProperties);
             }
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }
@@ -139,12 +139,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryPointType"))
+                if (property.NameEquals("recoveryPointType"u8))
                 {
                     recoveryPointType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointTime"))
+                if (property.NameEquals("recoveryPointTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,17 +154,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("recoveryPointAdditionalInfo"))
+                if (property.NameEquals("recoveryPointAdditionalInfo"u8))
                 {
                     recoveryPointAdditionalInfo = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceVMStorageType"))
+                if (property.NameEquals("sourceVMStorageType"u8))
                 {
                     sourceVmStorageType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isSourceVMEncrypted"))
+                if (property.NameEquals("isSourceVMEncrypted"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     isSourceVmEncrypted = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("keyAndSecret"))
+                if (property.NameEquals("keyAndSecret"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     keyAndSecret = KeyAndSecretDetails.DeserializeKeyAndSecretDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("isInstantIlrSessionActive"))
+                if (property.NameEquals("isInstantIlrSessionActive"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     isInstantIlrSessionActive = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointTierDetails"))
+                if (property.NameEquals("recoveryPointTierDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointTierDetails = array;
                     continue;
                 }
-                if (property.NameEquals("isManagedVirtualMachine"))
+                if (property.NameEquals("isManagedVirtualMachine"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -219,12 +219,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     isManagedVirtualMachine = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("virtualMachineSize"))
+                if (property.NameEquals("virtualMachineSize"u8))
                 {
                     virtualMachineSize = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("originalStorageAccountOption"))
+                if (property.NameEquals("originalStorageAccountOption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -234,12 +234,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     originalStorageAccountOption = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointDiskConfiguration"))
+                if (property.NameEquals("recoveryPointDiskConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointDiskConfiguration = RecoveryPointDiskConfiguration.DeserializeRecoveryPointDiskConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("zones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     zones = array;
                     continue;
                 }
-                if (property.NameEquals("recoveryPointMoveReadinessInfo"))
+                if (property.NameEquals("recoveryPointMoveReadinessInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointMoveReadinessInfo = dictionary;
                     continue;
                 }
-                if (property.NameEquals("recoveryPointProperties"))
+                if (property.NameEquals("recoveryPointProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     recoveryPointProperties = RecoveryPointProperties.DeserializeRecoveryPointProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;

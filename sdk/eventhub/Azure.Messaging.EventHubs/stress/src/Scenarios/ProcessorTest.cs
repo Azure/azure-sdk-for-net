@@ -17,22 +17,19 @@ namespace Azure.Messaging.EventHubs.Stress;
 ///   The test scenario responsible for running all of the roles needed for the Processor test scenario.
 /// <summary/>
 ///
-public class ProcessorTest
+public class ProcessorTest : TestScenario
 {
-    /// <summary>The <see cref="TestParameters"/> used to configure this test scenario.</summary>
-    private readonly TestParameters _testParameters;
-
-    // <summary>The index used to determine which role should be run if this is a distributed test run.</summary>
-    private readonly string _jobIndex;
-
-    /// <summary> The <see cref="Metrics"/> instance used to send metrics to application insights.</summary>
-    private Metrics _metrics;
+    /// <summary> The name of this test.</summary>
+    public override string Name { get; } = "ConsumerTest";
 
     /// <summary>The identifier of the <see cref="Processor"/> used by this instance.</summary>
     private string _identifier;
 
     /// <summary>The number of current handler calls happening within the same partition.</summary>
     private int[] _partitionHandlerCalls;
+
+    /// <summary>The ids of all of the partitions.</summary>
+    private string[] _partitionIds;
 
     /// <summary>Holds the set of events that have been read by this instance. The key is the unique Id set by the producer.</summary>
     private ConcurrentDictionary<string, byte> _readEvents { get; } = new ConcurrentDictionary<string, byte>();
@@ -41,7 +38,7 @@ public class ProcessorTest
     private ConcurrentDictionary<string, int> _lastReadPartitionSequence { get; } = new ConcurrentDictionary<string, int>();
 
     /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
-    private static Role[] _roles = {Role.PartitionPublisher, Role.Processor, Role.Processor, Role.Processor};
+    public override Role[] Roles { get; } = {Role.PartitionPublisher, Role.Processor, Role.Processor, Role.Processor};
 
     /// <summary>
     ///  Initializes a new <see cref="ProcessorTest"/> instance.
@@ -52,13 +49,8 @@ public class ProcessorTest
     /// <param name="jobIndex">An optional index used to determine which role should be run if this is a distributed run.</param>
     ///
     public ProcessorTest(TestParameters testParameters,
-                         Metrics metrics,
-                         string jobIndex = default)
+                         Metrics metrics) : base(testParameters, metrics, $"net-processor-{Guid.NewGuid().ToString()}")
     {
-        _testParameters = testParameters;
-        _jobIndex = jobIndex;
-        _metrics = metrics;
-        _metrics.Client.Context.GlobalProperties["TestRunID"] = $"net-processor-{Guid.NewGuid().ToString()}";
     }
 
     /// <summary>
@@ -67,25 +59,24 @@ public class ProcessorTest
     ///
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    public async Task RunTestAsync(CancellationToken cancellationToken)
+    public async override Task RunTestAsync(CancellationToken cancellationToken)
     {
-        var partitionIds = await _testParameters.GetEventHubPartitionsAsync().ConfigureAwait(false);
-        var partitionCount = partitionIds.Length;
+        _partitionIds = await TestScenarioParameters.GetEventHubPartitionsAsync().ConfigureAwait(false);
+        var partitionCount = _partitionIds.Length;
         _partitionHandlerCalls = Enumerable.Range(0, partitionCount).Select(index => 0).ToArray();
 
-        var runAllRoles = !int.TryParse(_jobIndex, out var roleIndex);
         var testRunTasks = new List<Task>();
 
-        if (runAllRoles)
+        if (TestScenarioParameters.RunAllRoles)
         {
-            foreach (Role role in _roles)
+            foreach (Role role in Roles)
             {
-                testRunTasks.Add(RunRoleAsync(role, roleIndex, partitionIds, cancellationToken));
+                testRunTasks.Add(RunRoleAsync(role, cancellationToken));
             }
         }
         else
         {
-            testRunTasks.Add(RunRoleAsync(_roles[roleIndex], roleIndex, partitionIds, cancellationToken));
+            testRunTasks.Add(RunRoleAsync(Roles[TestScenarioParameters.JobIndex], cancellationToken));
         }
 
         await Task.WhenAll(testRunTasks).ConfigureAwait(false);
@@ -98,26 +89,24 @@ public class ProcessorTest
     /// <param name="role">The <see cref="Role"/> to run.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
     ///
-    private Task RunRoleAsync(Role role,
-                              int roleIndex,
-                              string[] partitionIds,
+    internal override Task RunRoleAsync(Role role,
                               CancellationToken cancellationToken)
     {
-        var partitionCount = partitionIds.Length;
+        var partitionCount = _partitionIds.Length;
         switch (role)
         {
             case Role.Processor:
                 var processorConfiguration = new ProcessorConfiguration();
-                var processor = new Processor(_testParameters, processorConfiguration, _metrics, partitionCount);
+                var processor = new Processor(TestScenarioParameters, processorConfiguration, MetricsCollection, partitionCount);
                 _identifier = processor.Identifier;
-                _metrics.Client.TrackEvent("Starting to process events");
+                MetricsCollection.Client.TrackEvent("Starting to process events");
                 return Task.Run(() => processor.RunAsync(ProcessEventHandler, ProcessErrorHandler, cancellationToken));
 
             case Role.PartitionPublisher:
                 var partitionPublisherConfiguration = new PartitionPublisherConfiguration();
-                var assignedPartitions = EventTracking.GetAssignedPartitions(partitionCount, roleIndex, partitionIds, _roles);
-                var partitionPublisher = new PartitionPublisher(partitionPublisherConfiguration, _testParameters, _metrics, assignedPartitions);
-                _metrics.Client.TrackEvent("Starting to publish events");
+                var assignedPartitions = EventTracking.GetAssignedPartitions(partitionCount, TestScenarioParameters.JobIndex, _partitionIds, Roles);
+                var partitionPublisher = new PartitionPublisher(partitionPublisherConfiguration, TestScenarioParameters, MetricsCollection, assignedPartitions);
+                MetricsCollection.Client.TrackEvent("Starting to publish events");
                 return Task.Run(() => partitionPublisher.RunAsync(cancellationToken));
 
             default:
@@ -150,26 +139,26 @@ public class ProcessorTest
                     duplicateId = "(unknown)";
                 }
 
-                _metrics.Client.TrackException(new InvalidOperationException($"The handler for processing events was invoked concurrently for processor: `{ _identifier }`,  partition: `{ args.Partition.PartitionId }`, event: `{ duplicateId }`.  Count: `{ activeCalls }`"));
+                MetricsCollection.Client.TrackException(new InvalidOperationException($"The handler for processing events was invoked concurrently for processor: `{ _identifier }`,  partition: `{ args.Partition.PartitionId }`, event: `{ duplicateId }`.  Count: `{ activeCalls }`"));
             }
 
             // Increment total service operations metric
             if (args.HasEvent)
             {
-                _metrics.Client.GetMetric(Metrics.EventsRead).TrackValue(1);
+                MetricsCollection.Client.GetMetric(Metrics.EventsRead).TrackValue(1);
 
-                EventTracking.ProcessEventAsync(args, _testParameters.Sha256Hash, _metrics, _lastReadPartitionSequence, _readEvents);
+                EventTracking.ProcessEventAsync(args, TestScenarioParameters.Sha256Hash, MetricsCollection, _lastReadPartitionSequence, _readEvents);
 
-                _metrics.Client.GetMetric(Metrics.EventsProcessed).TrackValue(1);
+                MetricsCollection.Client.GetMetric(Metrics.EventsProcessed).TrackValue(1);
             }
         }
         catch (Exception ex)
         {
-            _metrics.Client.TrackException(ex);
+            MetricsCollection.Client.TrackException(ex);
         }
         finally
         {
-            _metrics.Client.GetMetric(Metrics.EventHandlerCalls, Metrics.Identifier).TrackValue(1, _identifier);
+            MetricsCollection.Client.GetMetric(Metrics.EventHandlerCalls, Metrics.Identifier).TrackValue(1, _identifier);
             Interlocked.Decrement(ref _partitionHandlerCalls[partitionIndex]);
         }
 
@@ -187,7 +176,7 @@ public class ProcessorTest
     {
         var exceptionProperties = new Dictionary<string, string>();
         exceptionProperties.Add(Metrics.PartitionId, args.PartitionId);
-        _metrics.Client.TrackException(args.Exception, exceptionProperties);
+        MetricsCollection.Client.TrackException(args.Exception, exceptionProperties);
         return Task.CompletedTask;
     }
 }

@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RestoreRequest))
             {
-                writer.WritePropertyName("restoreRequest");
+                writer.WritePropertyName("restoreRequest"u8);
                 writer.WriteObjectValue(RestoreRequest);
             }
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }

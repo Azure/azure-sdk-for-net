@@ -19,61 +19,61 @@ namespace Azure.ResourceManager.TrafficManager
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(ResourceType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(TargetResourceId))
             {
-                writer.WritePropertyName("targetResourceId");
+                writer.WritePropertyName("targetResourceId"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
             if (Optional.IsDefined(Target))
             {
-                writer.WritePropertyName("target");
+                writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
             if (Optional.IsDefined(EndpointStatus))
             {
-                writer.WritePropertyName("endpointStatus");
+                writer.WritePropertyName("endpointStatus"u8);
                 writer.WriteStringValue(EndpointStatus.Value.ToString());
             }
             if (Optional.IsDefined(Weight))
             {
-                writer.WritePropertyName("weight");
+                writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
             if (Optional.IsDefined(Priority))
             {
-                writer.WritePropertyName("priority");
+                writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
             if (Optional.IsDefined(EndpointLocation))
             {
-                writer.WritePropertyName("endpointLocation");
+                writer.WritePropertyName("endpointLocation"u8);
                 writer.WriteStringValue(EndpointLocation);
             }
             if (Optional.IsDefined(EndpointMonitorStatus))
             {
-                writer.WritePropertyName("endpointMonitorStatus");
+                writer.WritePropertyName("endpointMonitorStatus"u8);
                 writer.WriteStringValue(EndpointMonitorStatus.Value.ToString());
             }
             if (Optional.IsDefined(MinChildEndpoints))
             {
                 if (MinChildEndpoints != null)
                 {
-                    writer.WritePropertyName("minChildEndpoints");
+                    writer.WritePropertyName("minChildEndpoints"u8);
                     writer.WriteNumberValue(MinChildEndpoints.Value);
                 }
                 else
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 if (MinChildEndpointsIPv4 != null)
                 {
-                    writer.WritePropertyName("minChildEndpointsIPv4");
+                    writer.WritePropertyName("minChildEndpointsIPv4"u8);
                     writer.WriteNumberValue(MinChildEndpointsIPv4.Value);
                 }
                 else
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 if (MinChildEndpointsIPv6 != null)
                 {
-                    writer.WritePropertyName("minChildEndpointsIPv6");
+                    writer.WritePropertyName("minChildEndpointsIPv6"u8);
                     writer.WriteNumberValue(MinChildEndpointsIPv6.Value);
                 }
                 else
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.TrafficManager
             }
             if (Optional.IsCollectionDefined(GeoMapping))
             {
-                writer.WritePropertyName("geoMapping");
+                writer.WritePropertyName("geoMapping"u8);
                 writer.WriteStartArray();
                 foreach (var item in GeoMapping)
                 {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.TrafficManager
             }
             if (Optional.IsCollectionDefined(Subnets))
             {
-                writer.WritePropertyName("subnets");
+                writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.TrafficManager
             }
             if (Optional.IsCollectionDefined(CustomHeaders))
             {
-                writer.WritePropertyName("customHeaders");
+                writer.WritePropertyName("customHeaders"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomHeaders)
                 {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.TrafficManager
             }
             if (Optional.IsDefined(AlwaysServe))
             {
-                writer.WritePropertyName("alwaysServe");
+                writer.WritePropertyName("alwaysServe"u8);
                 writer.WriteStringValue(AlwaysServe.Value.ToString());
             }
             writer.WriteEndObject();
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.TrafficManager
             Optional<TrafficManagerEndpointAlwaysServeStatus> alwaysServe = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.TrafficManager
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.TrafficManager
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.TrafficManager
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("targetResourceId"))
+                        if (property0.NameEquals("targetResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -209,12 +209,12 @@ namespace Azure.ResourceManager.TrafficManager
                             targetResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("target"))
+                        if (property0.NameEquals("target"u8))
                         {
                             target = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("endpointStatus"))
+                        if (property0.NameEquals("endpointStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.TrafficManager
                             endpointStatus = new TrafficManagerEndpointStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("weight"))
+                        if (property0.NameEquals("weight"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.TrafficManager
                             weight = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("priority"))
+                        if (property0.NameEquals("priority"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -244,12 +244,12 @@ namespace Azure.ResourceManager.TrafficManager
                             priority = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("endpointLocation"))
+                        if (property0.NameEquals("endpointLocation"u8))
                         {
                             endpointLocation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("endpointMonitorStatus"))
+                        if (property0.NameEquals("endpointMonitorStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.TrafficManager
                             endpointMonitorStatus = new TrafficManagerEndpointMonitorStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("minChildEndpoints"))
+                        if (property0.NameEquals("minChildEndpoints"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.TrafficManager
                             minChildEndpoints = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("minChildEndpointsIPv4"))
+                        if (property0.NameEquals("minChildEndpointsIPv4"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.TrafficManager
                             minChildEndpointsIPv4 = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("minChildEndpointsIPv6"))
+                        if (property0.NameEquals("minChildEndpointsIPv6"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.TrafficManager
                             minChildEndpointsIPv6 = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("geoMapping"))
+                        if (property0.NameEquals("geoMapping"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.TrafficManager
                             geoMapping = array;
                             continue;
                         }
-                        if (property0.NameEquals("subnets"))
+                        if (property0.NameEquals("subnets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.TrafficManager
                             subnets = array;
                             continue;
                         }
-                        if (property0.NameEquals("customHeaders"))
+                        if (property0.NameEquals("customHeaders"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.TrafficManager
                             customHeaders = array;
                             continue;
                         }
-                        if (property0.NameEquals("alwaysServe"))
+                        if (property0.NameEquals("alwaysServe"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

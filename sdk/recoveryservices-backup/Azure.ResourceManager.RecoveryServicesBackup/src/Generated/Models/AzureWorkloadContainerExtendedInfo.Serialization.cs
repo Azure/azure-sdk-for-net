@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(HostServerName))
             {
-                writer.WritePropertyName("hostServerName");
+                writer.WritePropertyName("hostServerName"u8);
                 writer.WriteStringValue(HostServerName);
             }
             if (Optional.IsDefined(InquiryInfo))
             {
-                writer.WritePropertyName("inquiryInfo");
+                writer.WritePropertyName("inquiryInfo"u8);
                 writer.WriteObjectValue(InquiryInfo);
             }
             if (Optional.IsCollectionDefined(NodesList))
             {
-                writer.WritePropertyName("nodesList");
+                writer.WritePropertyName("nodesList"u8);
                 writer.WriteStartArray();
                 foreach (var item in NodesList)
                 {
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IList<DistributedNodesInfo>> nodesList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hostServerName"))
+                if (property.NameEquals("hostServerName"u8))
                 {
                     hostServerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inquiryInfo"))
+                if (property.NameEquals("inquiryInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     inquiryInfo = InquiryInfo.DeserializeInquiryInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("nodesList"))
+                if (property.NameEquals("nodesList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

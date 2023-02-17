@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("userPlaneDataInterface");
+            writer.WritePropertyName("userPlaneDataInterface"u8);
             writer.WriteObjectValue(UserPlaneDataInterface);
-            writer.WritePropertyName("dnsAddresses");
+            writer.WritePropertyName("dnsAddresses"u8);
             writer.WriteStartArray();
             foreach (var item in DnsAddresses)
             {
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WriteEndArray();
             if (Optional.IsDefined(NaptConfiguration))
             {
-                writer.WritePropertyName("naptConfiguration");
+                writer.WritePropertyName("naptConfiguration"u8);
                 writer.WriteObjectValue(NaptConfiguration);
             }
             if (Optional.IsCollectionDefined(UserEquipmentAddressPoolPrefix))
             {
-                writer.WritePropertyName("userEquipmentAddressPoolPrefix");
+                writer.WritePropertyName("userEquipmentAddressPoolPrefix"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserEquipmentAddressPoolPrefix)
                 {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
             if (Optional.IsCollectionDefined(UserEquipmentStaticAddressPoolPrefix))
             {
-                writer.WritePropertyName("userEquipmentStaticAddressPoolPrefix");
+                writer.WritePropertyName("userEquipmentStaticAddressPoolPrefix"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserEquipmentStaticAddressPoolPrefix)
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MobileNetwork
             Optional<IList<string>> userEquipmentStaticAddressPoolPrefix = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,27 +102,27 @@ namespace Azure.ResourceManager.MobileNetwork
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.MobileNetwork
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("userPlaneDataInterface"))
+                        if (property0.NameEquals("userPlaneDataInterface"u8))
                         {
                             userPlaneDataInterface = InterfaceProperties.DeserializeInterfaceProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("dnsAddresses"))
+                        if (property0.NameEquals("dnsAddresses"u8))
                         {
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             dnsAddresses = array;
                             continue;
                         }
-                        if (property0.NameEquals("naptConfiguration"))
+                        if (property0.NameEquals("naptConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             naptConfiguration = NaptConfiguration.DeserializeNaptConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("userEquipmentAddressPoolPrefix"))
+                        if (property0.NameEquals("userEquipmentAddressPoolPrefix"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             userEquipmentAddressPoolPrefix = array;
                             continue;
                         }
-                        if (property0.NameEquals("userEquipmentStaticAddressPoolPrefix"))
+                        if (property0.NameEquals("userEquipmentStaticAddressPoolPrefix"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

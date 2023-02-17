@@ -1,14 +1,16 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.0.0-beta.3 (2022-12-13)
 
 ### Other Changes
+
+- Changed event request "Payload" property to "Data"
+- Removed country attribute from AuthenticationEventContextUser
+- Added createdDateTime to AuthenticationEventContextUser
+- Added new request status type for validation failure.
+- Validation Errors raise 500 response.
+- Added CustomAuthenticaionExtensionId to Data.
+- Removed AuthenticationEventsId from Data.
 
 ## 1.0.0-beta.2 (2022-11-08)
 

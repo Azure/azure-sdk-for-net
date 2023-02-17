@@ -17,14 +17,14 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageConnectionString))
             {
-                writer.WritePropertyName("storageConnectionString");
+                writer.WritePropertyName("storageConnectionString"u8);
                 writer.WriteStringValue(StorageConnectionString);
             }
             if (Optional.IsDefined(EnableReprocessing))
             {
                 if (EnableReprocessing != null)
                 {
-                    writer.WritePropertyName("enableReprocessing");
+                    writer.WritePropertyName("enableReprocessing"u8);
                     writer.WriteBooleanValue(EnableReprocessing.Value);
                 }
                 else
@@ -41,12 +41,12 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<bool?> enableReprocessing = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageConnectionString"))
+                if (property.NameEquals("storageConnectionString"u8))
                 {
                     storageConnectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enableReprocessing"))
+                if (property.NameEquals("enableReprocessing"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

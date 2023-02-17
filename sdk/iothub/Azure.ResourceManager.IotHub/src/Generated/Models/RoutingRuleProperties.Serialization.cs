@@ -16,23 +16,23 @@ namespace Azure.ResourceManager.IotHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("source");
+            writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source.ToString());
             if (Optional.IsDefined(Condition))
             {
-                writer.WritePropertyName("condition");
+                writer.WritePropertyName("condition"u8);
                 writer.WriteStringValue(Condition);
             }
-            writer.WritePropertyName("endpointNames");
+            writer.WritePropertyName("endpointNames"u8);
             writer.WriteStartArray();
             foreach (var item in EndpointNames)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("isEnabled");
+            writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             writer.WriteEndObject();
         }
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.IotHub.Models
             bool isEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("source"))
+                if (property.NameEquals("source"u8))
                 {
                     source = new IotHubRoutingSource(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("condition"))
+                if (property.NameEquals("condition"u8))
                 {
                     condition = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpointNames"))
+                if (property.NameEquals("endpointNames"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     endpointNames = array;
                     continue;
                 }
-                if (property.NameEquals("isEnabled"))
+                if (property.NameEquals("isEnabled"u8))
                 {
                     isEnabled = property.Value.GetBoolean();
                     continue;

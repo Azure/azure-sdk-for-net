@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Configurations))
             {
-                writer.WritePropertyName("configurations");
+                writer.WritePropertyName("configurations"u8);
                 writer.WriteObjectValue(Configurations);
             }
-            writer.WritePropertyName("presetName");
+            writer.WritePropertyName("presetName"u8);
             writer.WriteStringValue(PresetName.ToString());
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Media.Models
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("configurations"))
+                if (property.NameEquals("configurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Media.Models
                     configurations = EncoderPresetConfigurations.DeserializeEncoderPresetConfigurations(property.Value);
                     continue;
                 }
-                if (property.NameEquals("presetName"))
+                if (property.NameEquals("presetName"u8))
                 {
                     presetName = new EncoderNamedPreset(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;

@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(UserAssignedIdentity))
             {
-                writer.WritePropertyName("userAssignedIdentity");
+                writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentity);
             }
-            writer.WritePropertyName("useSystemAssignedIdentity");
+            writer.WritePropertyName("useSystemAssignedIdentity"u8);
             writer.WriteBooleanValue(UseSystemAssignedIdentity);
             writer.WriteEndObject();
         }
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Media.Models
             bool useSystemAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userAssignedIdentity"))
+                if (property.NameEquals("userAssignedIdentity"u8))
                 {
                     userAssignedIdentity = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("useSystemAssignedIdentity"))
+                if (property.NameEquals("useSystemAssignedIdentity"u8))
                 {
                     useSystemAssignedIdentity = property.Value.GetBoolean();
                     continue;

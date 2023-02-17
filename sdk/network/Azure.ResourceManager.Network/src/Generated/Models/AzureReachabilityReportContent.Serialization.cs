@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("providerLocation");
+            writer.WritePropertyName("providerLocation"u8);
             writer.WriteObjectValue(ProviderLocation);
             if (Optional.IsCollectionDefined(Providers))
             {
-                writer.WritePropertyName("providers");
+                writer.WritePropertyName("providers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Providers)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(AzureLocations))
             {
-                writer.WritePropertyName("azureLocations");
+                writer.WritePropertyName("azureLocations"u8);
                 writer.WriteStartArray();
                 foreach (var item in AzureLocations)
                 {
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("startTime");
+            writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartOn, "O");
-            writer.WritePropertyName("endTime");
+            writer.WritePropertyName("endTime"u8);
             writer.WriteStringValue(EndOn, "O");
             writer.WriteEndObject();
         }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             Optional<OrchestratorSpecificConnectionDetails> orchestratorSpecificConnectionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("orchestratorSpecificConnectionDetails"))
+                if (property.NameEquals("orchestratorSpecificConnectionDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

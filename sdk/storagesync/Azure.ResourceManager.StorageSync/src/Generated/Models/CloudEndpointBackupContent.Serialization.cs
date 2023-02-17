@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AzureFileShare))
             {
-                writer.WritePropertyName("azureFileShare");
+                writer.WritePropertyName("azureFileShare"u8);
                 writer.WriteStringValue(AzureFileShare);
             }
             writer.WriteEndObject();

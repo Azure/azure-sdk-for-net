@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<ValidateOperationResponse> validateOperationResponse = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("validateOperationResponse"))
+                if (property.NameEquals("validateOperationResponse"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(LastRefreshedOn))
             {
-                writer.WritePropertyName("lastRefreshedAt");
+                writer.WritePropertyName("lastRefreshedAt"u8);
                 writer.WriteStringValue(LastRefreshedOn.Value, "O");
             }
             if (Optional.IsDefined(BackupItemType))
             {
-                writer.WritePropertyName("backupItemType");
+                writer.WritePropertyName("backupItemType"u8);
                 writer.WriteStringValue(BackupItemType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(BackupItems))
             {
-                writer.WritePropertyName("backupItems");
+                writer.WritePropertyName("backupItems"u8);
                 writer.WriteStartArray();
                 foreach (var item in BackupItems)
                 {
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(PolicyName))
             {
-                writer.WritePropertyName("policyName");
+                writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
             if (Optional.IsDefined(LastBackupStatus))
             {
-                writer.WritePropertyName("lastBackupStatus");
+                writer.WritePropertyName("lastBackupStatus"u8);
                 writer.WriteStringValue(LastBackupStatus);
             }
             writer.WriteEndObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> lastBackupStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lastRefreshedAt"))
+                if (property.NameEquals("lastRefreshedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     lastRefreshedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("backupItemType"))
+                if (property.NameEquals("backupItemType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     backupItemType = new BackupItemType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("backupItems"))
+                if (property.NameEquals("backupItems"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     backupItems = array;
                     continue;
                 }
-                if (property.NameEquals("policyName"))
+                if (property.NameEquals("policyName"u8))
                 {
                     policyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastBackupStatus"))
+                if (property.NameEquals("lastBackupStatus"u8))
                 {
                     lastBackupStatus = property.Value.GetString();
                     continue;

@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.Confluent.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("publisherId");
+            writer.WritePropertyName("publisherId"u8);
             writer.WriteStringValue(PublisherId);
-            writer.WritePropertyName("id");
+            writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            writer.WritePropertyName("planId");
+            writer.WritePropertyName("planId"u8);
             writer.WriteStringValue(PlanId);
-            writer.WritePropertyName("planName");
+            writer.WritePropertyName("planName"u8);
             writer.WriteStringValue(PlanName);
-            writer.WritePropertyName("termUnit");
+            writer.WritePropertyName("termUnit"u8);
             writer.WriteStringValue(TermUnit);
             writer.WriteEndObject();
         }
@@ -38,32 +38,32 @@ namespace Azure.ResourceManager.Confluent.Models
             Optional<ConfluentSaaSOfferStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publisherId"))
+                if (property.NameEquals("publisherId"u8))
                 {
                     publisherId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("planId"))
+                if (property.NameEquals("planId"u8))
                 {
                     planId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("planName"))
+                if (property.NameEquals("planName"u8))
                 {
                     planName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("termUnit"))
+                if (property.NameEquals("termUnit"u8))
                 {
                     termUnit = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

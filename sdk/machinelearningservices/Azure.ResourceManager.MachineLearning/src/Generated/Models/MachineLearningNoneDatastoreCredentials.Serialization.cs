@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("credentialsType");
+            writer.WritePropertyName("credentialsType"u8);
             writer.WriteStringValue(CredentialsType.ToString());
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             CredentialsType credentialsType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("credentialsType"))
+                if (property.NameEquals("credentialsType"u8))
                 {
                     credentialsType = new CredentialsType(property.Value.GetString());
                     continue;

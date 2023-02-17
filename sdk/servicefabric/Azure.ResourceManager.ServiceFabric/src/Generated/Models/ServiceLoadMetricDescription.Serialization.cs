@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Weight))
             {
-                writer.WritePropertyName("weight");
+                writer.WritePropertyName("weight"u8);
                 writer.WriteStringValue(Weight.Value.ToString());
             }
             if (Optional.IsDefined(PrimaryDefaultLoad))
             {
-                writer.WritePropertyName("primaryDefaultLoad");
+                writer.WritePropertyName("primaryDefaultLoad"u8);
                 writer.WriteNumberValue(PrimaryDefaultLoad.Value);
             }
             if (Optional.IsDefined(SecondaryDefaultLoad))
             {
-                writer.WritePropertyName("secondaryDefaultLoad");
+                writer.WritePropertyName("secondaryDefaultLoad"u8);
                 writer.WriteNumberValue(SecondaryDefaultLoad.Value);
             }
             if (Optional.IsDefined(DefaultLoad))
             {
-                writer.WritePropertyName("defaultLoad");
+                writer.WritePropertyName("defaultLoad"u8);
                 writer.WriteNumberValue(DefaultLoad.Value);
             }
             writer.WriteEndObject();
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Optional<int> defaultLoad = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("weight"))
+                if (property.NameEquals("weight"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     weight = new ServiceLoadMetricWeight(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("primaryDefaultLoad"))
+                if (property.NameEquals("primaryDefaultLoad"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     primaryDefaultLoad = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("secondaryDefaultLoad"))
+                if (property.NameEquals("secondaryDefaultLoad"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     secondaryDefaultLoad = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("defaultLoad"))
+                if (property.NameEquals("defaultLoad"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<ResourceIdentifier> moveResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("moveResourceId"))
+                if (property.NameEquals("moveResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("lowerLimit");
+            writer.WritePropertyName("lowerLimit"u8);
             writer.WriteNumberValue(LowerLimit);
-            writer.WritePropertyName("upperLimit");
+            writer.WritePropertyName("upperLimit"u8);
             writer.WriteNumberValue(UpperLimit);
-            writer.WritePropertyName("increasingKpi");
+            writer.WritePropertyName("increasingKpi"u8);
             writer.WriteBooleanValue(IncreasingKpi);
             writer.WriteEndObject();
         }
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             bool increasingKpi = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("lowerLimit"))
+                if (property.NameEquals("lowerLimit"u8))
                 {
                     lowerLimit = property.Value.GetDecimal();
                     continue;
                 }
-                if (property.NameEquals("upperLimit"))
+                if (property.NameEquals("upperLimit"u8))
                 {
                     upperLimit = property.Value.GetDecimal();
                     continue;
                 }
-                if (property.NameEquals("increasingKpi"))
+                if (property.NameEquals("increasingKpi"u8))
                 {
                     increasingKpi = property.Value.GetBoolean();
                     continue;

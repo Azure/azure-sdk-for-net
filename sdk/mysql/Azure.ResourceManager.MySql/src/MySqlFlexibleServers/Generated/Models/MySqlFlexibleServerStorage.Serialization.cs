@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageSizeInGB))
             {
-                writer.WritePropertyName("storageSizeGB");
+                writer.WritePropertyName("storageSizeGB"u8);
                 writer.WriteNumberValue(StorageSizeInGB.Value);
             }
             if (Optional.IsDefined(Iops))
             {
-                writer.WritePropertyName("iops");
+                writer.WritePropertyName("iops"u8);
                 writer.WriteNumberValue(Iops.Value);
             }
             if (Optional.IsDefined(AutoGrow))
             {
-                writer.WritePropertyName("autoGrow");
+                writer.WritePropertyName("autoGrow"u8);
                 writer.WriteStringValue(AutoGrow.Value.ToString());
             }
             writer.WriteEndObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Optional<string> storageSku = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageSizeGB"))
+                if (property.NameEquals("storageSizeGB"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     storageSizeGB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("iops"))
+                if (property.NameEquals("iops"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     iops = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("autoGrow"))
+                if (property.NameEquals("autoGrow"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     autoGrow = new MySqlFlexibleServerEnableStatusEnum(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageSku"))
+                if (property.NameEquals("storageSku"u8))
                 {
                     storageSku = property.Value.GetString();
                     continue;

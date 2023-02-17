@@ -15,16 +15,16 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("metricName");
+            writer.WritePropertyName("metricName"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("metricDisplayName");
+                writer.WritePropertyName("metricDisplayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("metricDescription");
+                writer.WritePropertyName("metricDescription"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
@@ -38,22 +38,22 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<string> metricDescription = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metricId"))
+                if (property.NameEquals("metricId"u8))
                 {
                     metricId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricName"))
+                if (property.NameEquals("metricName"u8))
                 {
                     metricName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricDisplayName"))
+                if (property.NameEquals("metricDisplayName"u8))
                 {
                     metricDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricDescription"))
+                if (property.NameEquals("metricDescription"u8))
                 {
                     metricDescription = property.Value.GetString();
                     continue;

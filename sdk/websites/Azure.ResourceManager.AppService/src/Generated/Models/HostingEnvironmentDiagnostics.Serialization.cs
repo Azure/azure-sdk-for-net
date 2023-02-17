@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> diagnosticsOutput = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diagnosticsOutput"))
+                if (property.NameEquals("diagnosticsOutput"u8))
                 {
                     diagnosticsOutput = property.Value.GetString();
                     continue;

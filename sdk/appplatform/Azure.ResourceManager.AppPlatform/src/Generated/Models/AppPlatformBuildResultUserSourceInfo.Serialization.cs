@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BuildResultId))
             {
-                writer.WritePropertyName("buildResultId");
+                writer.WritePropertyName("buildResultId"u8);
                 writer.WriteStringValue(BuildResultId);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UserSourceInfoType);
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
             writer.WriteEndObject();
@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("buildResultId"))
+                if (property.NameEquals("buildResultId"u8))
                 {
                     buildResultId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;

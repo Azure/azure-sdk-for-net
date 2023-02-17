@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("tier");
+            writer.WritePropertyName("tier"u8);
             writer.WriteStringValue(Tier.ToString());
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             MySqlFlexibleServerSkuTier tier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     tier = new MySqlFlexibleServerSkuTier(property.Value.GetString());
                     continue;

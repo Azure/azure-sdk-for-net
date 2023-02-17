@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
-    internal sealed class BlobListener : IListener, IScaleMonitorProvider
+    internal sealed class BlobListener : IListener, IScaleMonitorProvider, ITargetScalerProvider
     {
         private readonly ISharedListener _sharedListener;
         private readonly ILogger<BlobListener> _logger;
@@ -112,6 +112,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             // shared QueueListener. If all BlobTrigger functions are disabled, their listeners won't be created
             // so the shared queue won't be monitored.
             return ((IScaleMonitorProvider)_sharedListener).GetMonitor();
+        }
+
+        public ITargetScaler GetTargetScaler()
+        {
+            return ((ITargetScalerProvider)_sharedListener).GetTargetScaler();
         }
     }
 }

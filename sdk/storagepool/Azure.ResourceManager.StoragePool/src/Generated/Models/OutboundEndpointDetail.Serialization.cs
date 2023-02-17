@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             Optional<bool> isAccessible = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     ipAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     port = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("latency"))
+                if (property.NameEquals("latency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     latency = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("isAccessible"))
+                if (property.NameEquals("isAccessible"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

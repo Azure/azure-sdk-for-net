@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (DefaultLanguageCode != null)
                 {
-                    writer.WritePropertyName("defaultLanguageCode");
+                    writer.WritePropertyName("defaultLanguageCode"u8);
                     writer.WriteStringValue(DefaultLanguageCode);
                 }
                 else
@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (MinimumPrecision != null)
                 {
-                    writer.WritePropertyName("minimumPrecision");
+                    writer.WritePropertyName("minimumPrecision"u8);
                     writer.WriteNumberValue(MinimumPrecision.Value);
                 }
                 else
@@ -42,14 +42,14 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(MaskingMode))
             {
-                writer.WritePropertyName("maskingMode");
+                writer.WritePropertyName("maskingMode"u8);
                 writer.WriteStringValue(MaskingMode.Value.ToString());
             }
             if (Optional.IsDefined(MaskingCharacter))
             {
                 if (MaskingCharacter != null)
                 {
-                    writer.WritePropertyName("maskingCharacter");
+                    writer.WritePropertyName("maskingCharacter"u8);
                     writer.WriteStringValue(MaskingCharacter);
                 }
                 else
@@ -61,7 +61,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (ModelVersion != null)
                 {
-                    writer.WritePropertyName("modelVersion");
+                    writer.WritePropertyName("modelVersion"u8);
                     writer.WriteStringValue(ModelVersion);
                 }
                 else
@@ -71,7 +71,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsCollectionDefined(PiiCategories))
             {
-                writer.WritePropertyName("piiCategories");
+                writer.WritePropertyName("piiCategories"u8);
                 writer.WriteStartArray();
                 foreach (var item in PiiCategories)
                 {
@@ -83,7 +83,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (Domain != null)
                 {
-                    writer.WritePropertyName("domain");
+                    writer.WritePropertyName("domain"u8);
                     writer.WriteStringValue(Domain);
                 }
                 else
@@ -91,31 +91,31 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("domain");
                 }
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Context))
             {
-                writer.WritePropertyName("context");
+                writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
-            writer.WritePropertyName("inputs");
+            writer.WritePropertyName("inputs"u8);
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("outputs");
+            writer.WritePropertyName("outputs"u8);
             writer.WriteStartArray();
             foreach (var item in Outputs)
             {
@@ -142,7 +142,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("defaultLanguageCode"))
+                if (property.NameEquals("defaultLanguageCode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -152,7 +152,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     defaultLanguageCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("minimumPrecision"))
+                if (property.NameEquals("minimumPrecision"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -162,7 +162,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     minimumPrecision = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("maskingMode"))
+                if (property.NameEquals("maskingMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -172,7 +172,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     maskingMode = new PiiDetectionSkillMaskingMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("maskingCharacter"))
+                if (property.NameEquals("maskingCharacter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -182,7 +182,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     maskingCharacter = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("modelVersion"))
+                if (property.NameEquals("modelVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -192,7 +192,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     modelVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("piiCategories"))
+                if (property.NameEquals("piiCategories"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -207,7 +207,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     piiCategories = array;
                     continue;
                 }
-                if (property.NameEquals("domain"))
+                if (property.NameEquals("domain"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -217,27 +217,27 @@ namespace Azure.Search.Documents.Indexes.Models
                     domain = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("context"))
+                if (property.NameEquals("context"u8))
                 {
                     context = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inputs"))
+                if (property.NameEquals("inputs"u8))
                 {
                     List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -247,7 +247,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     inputs = array;
                     continue;
                 }
-                if (property.NameEquals("outputs"))
+                if (property.NameEquals("outputs"u8))
                 {
                     List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())

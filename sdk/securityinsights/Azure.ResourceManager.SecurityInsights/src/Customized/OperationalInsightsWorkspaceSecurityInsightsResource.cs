@@ -71,8 +71,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Gets the alert rule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}
-        /// Operation Id: AlertRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="ruleId"> Alert rule ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -86,8 +94,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Gets the alert rule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}
-        /// Operation Id: AlertRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="ruleId"> Alert rule ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -108,8 +124,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Gets the alert rule template.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates/{alertRuleTemplateId}
-        /// Operation Id: AlertRuleTemplates_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates/{alertRuleTemplateId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertRuleTemplates_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="alertRuleTemplateId"> Alert rule template ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -123,8 +147,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Gets the alert rule template.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates/{alertRuleTemplateId}
-        /// Operation Id: AlertRuleTemplates_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates/{alertRuleTemplateId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AlertRuleTemplates_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="alertRuleTemplateId"> Alert rule template ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -145,8 +177,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Gets the automation rule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/automationRules/{automationRuleId}
-        /// Operation Id: AutomationRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/automationRules/{automationRuleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutomationRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="automationRuleId"> Automation rule ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,8 +200,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Gets the automation rule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/automationRules/{automationRuleId}
-        /// Operation Id: AutomationRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/automationRules/{automationRuleId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutomationRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="automationRuleId"> Automation rule ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -182,8 +230,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Gets a bookmark.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}
-        /// Operation Id: Bookmarks_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bookmarks_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="bookmarkId"> Bookmark ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -197,8 +253,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Gets a bookmark.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}
-        /// Operation Id: Bookmarks_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bookmarks_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="bookmarkId"> Bookmark ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -219,8 +283,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Gets a data connector.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors/{dataConnectorId}
-        /// Operation Id: DataConnectors_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors/{dataConnectorId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataConnectors_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataConnectorId"> Connector ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -234,8 +306,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Gets a data connector.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors/{dataConnectorId}
-        /// Operation Id: DataConnectors_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors/{dataConnectorId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataConnectors_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataConnectorId"> Connector ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -256,8 +336,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Gets a given incident.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}
-        /// Operation Id: Incidents_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Incidents_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="incidentId"> Incident ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -271,8 +359,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Gets a given incident.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}
-        /// Operation Id: Incidents_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Incidents_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="incidentId"> Incident ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -293,8 +389,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Get Sentinel onboarding state
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/onboardingStates/{sentinelOnboardingStateName}
-        /// Operation Id: SentinelOnboardingStates_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/onboardingStates/{sentinelOnboardingStateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SentinelOnboardingStates_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sentinelOnboardingStateName"> The Sentinel onboarding state name. Supports - default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -308,8 +412,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Get Sentinel onboarding state
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/onboardingStates/{sentinelOnboardingStateName}
-        /// Operation Id: SentinelOnboardingStates_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/onboardingStates/{sentinelOnboardingStateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SentinelOnboardingStates_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sentinelOnboardingStateName"> The Sentinel onboarding state name. Supports - default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -330,8 +442,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Gets the Security ML Analytics Settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/securityMLAnalyticsSettings/{settingsResourceName}
-        /// Operation Id: SecurityMLAnalyticsSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/securityMLAnalyticsSettings/{settingsResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityMLAnalyticsSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="settingsResourceName"> Security ML Analytics Settings resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -345,8 +465,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Gets the Security ML Analytics Settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/securityMLAnalyticsSettings/{settingsResourceName}
-        /// Operation Id: SecurityMLAnalyticsSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/securityMLAnalyticsSettings/{settingsResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecurityMLAnalyticsSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="settingsResourceName"> Security ML Analytics Settings resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -367,8 +495,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// View a threat intelligence indicator by name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}
-        /// Operation Id: ThreatIntelligenceIndicators_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ThreatIntelligenceIndicators_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> Threat intelligence indicator name field. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -382,8 +518,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// View a threat intelligence indicator by name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}
-        /// Operation Id: ThreatIntelligenceIndicators_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ThreatIntelligenceIndicators_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="name"> Threat intelligence indicator name field. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -404,8 +548,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Get a watchlist, without its watchlist items.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}
-        /// Operation Id: Watchlists_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Watchlists_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="watchlistAlias"> The watchlist alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -419,8 +571,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Get a watchlist, without its watchlist items.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}
-        /// Operation Id: Watchlists_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Watchlists_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="watchlistAlias"> The watchlist alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -434,8 +594,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Query threat intelligence indicators as per filtering criteria.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/queryIndicators
-        /// Operation Id: ThreatIntelligenceIndicator_QueryIndicators
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/queryIndicators</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ThreatIntelligenceIndicator_QueryIndicators</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="threatIntelligenceFilteringCriteria"> Filtering criteria for querying threat intelligence indicators. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -480,8 +648,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Query threat intelligence indicators as per filtering criteria.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/queryIndicators
-        /// Operation Id: ThreatIntelligenceIndicator_QueryIndicators
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/queryIndicators</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ThreatIntelligenceIndicator_QueryIndicators</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="threatIntelligenceFilteringCriteria"> Filtering criteria for querying threat intelligence indicators. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -526,8 +702,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Get threat intelligence indicators metrics (Indicators counts by Type, Threat Type, Source).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/metrics
-        /// Operation Id: ThreatIntelligenceIndicatorMetrics_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/metrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ThreatIntelligenceIndicatorMetrics_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ThreatIntelligenceMetrics" /> that may take multiple service requests to iterate over. </returns>
@@ -553,8 +737,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Get threat intelligence indicators metrics (Indicators counts by Type, Threat Type, Source).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/metrics
-        /// Operation Id: ThreatIntelligenceIndicatorMetrics_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/metrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ThreatIntelligenceIndicatorMetrics_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ThreatIntelligenceMetrics" /> that may take multiple service requests to iterate over. </returns>

@@ -18,19 +18,19 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(CipherSuites))
             {
-                writer.WritePropertyName("cipherSuites");
+                writer.WritePropertyName("cipherSuites"u8);
                 writer.WriteStartArray();
                 foreach (var item in CipherSuites)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(MinProtocolVersion))
             {
-                writer.WritePropertyName("minProtocolVersion");
+                writer.WritePropertyName("minProtocolVersion"u8);
                 writer.WriteStringValue(MinProtocolVersion.Value.ToString());
             }
             writer.WriteEndObject();

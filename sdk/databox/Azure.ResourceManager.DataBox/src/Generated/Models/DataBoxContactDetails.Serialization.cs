@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.DataBox.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("contactName");
+            writer.WritePropertyName("contactName"u8);
             writer.WriteStringValue(ContactName);
-            writer.WritePropertyName("phone");
+            writer.WritePropertyName("phone"u8);
             writer.WriteStringValue(Phone);
             if (Optional.IsDefined(PhoneExtension))
             {
-                writer.WritePropertyName("phoneExtension");
+                writer.WritePropertyName("phoneExtension"u8);
                 writer.WriteStringValue(PhoneExtension);
             }
             if (Optional.IsDefined(Mobile))
             {
-                writer.WritePropertyName("mobile");
+                writer.WritePropertyName("mobile"u8);
                 writer.WriteStringValue(Mobile);
             }
-            writer.WritePropertyName("emailList");
+            writer.WritePropertyName("emailList"u8);
             writer.WriteStartArray();
             foreach (var item in EmailList)
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(NotificationPreference))
             {
-                writer.WritePropertyName("notificationPreference");
+                writer.WritePropertyName("notificationPreference"u8);
                 writer.WriteStartArray();
                 foreach (var item in NotificationPreference)
                 {
@@ -60,27 +60,27 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<IList<NotificationPreference>> notificationPreference = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("contactName"))
+                if (property.NameEquals("contactName"u8))
                 {
                     contactName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phone"))
+                if (property.NameEquals("phone"u8))
                 {
                     phone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phoneExtension"))
+                if (property.NameEquals("phoneExtension"u8))
                 {
                     phoneExtension = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mobile"))
+                if (property.NameEquals("mobile"u8))
                 {
                     mobile = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("emailList"))
+                if (property.NameEquals("emailList"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     emailList = array;
                     continue;
                 }
-                if (property.NameEquals("notificationPreference"))
+                if (property.NameEquals("notificationPreference"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

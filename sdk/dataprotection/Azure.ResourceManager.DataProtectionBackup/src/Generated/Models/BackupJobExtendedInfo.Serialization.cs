@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<RestoreJobRecoveryPointDetails> targetRecoverPoint = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("additionalDetails"))
+                if (property.NameEquals("additionalDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalDetails = dictionary;
                     continue;
                 }
-                if (property.NameEquals("backupInstanceState"))
+                if (property.NameEquals("backupInstanceState"u8))
                 {
                     backupInstanceState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataTransferredInBytes"))
+                if (property.NameEquals("dataTransferredInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     dataTransferredInBytes = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("recoveryDestination"))
+                if (property.NameEquals("recoveryDestination"u8))
                 {
                     recoveryDestination = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceRecoverPoint"))
+                if (property.NameEquals("sourceRecoverPoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     sourceRecoverPoint = RestoreJobRecoveryPointDetails.DeserializeRestoreJobRecoveryPointDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("subTasks"))
+                if (property.NameEquals("subTasks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     subTasks = array;
                     continue;
                 }
-                if (property.NameEquals("targetRecoverPoint"))
+                if (property.NameEquals("targetRecoverPoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

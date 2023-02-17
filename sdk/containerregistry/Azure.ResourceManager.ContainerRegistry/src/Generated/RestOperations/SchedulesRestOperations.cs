@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary> Schedules a new run based on the request parameters and add it to the run queue. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="registryName"> The name of the container registry. </param>
         /// <param name="content"> The parameters of a run that needs to scheduled. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary> Schedules a new run based on the request parameters and add it to the run queue. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
         /// <param name="registryName"> The name of the container registry. </param>
         /// <param name="content"> The parameters of a run that needs to scheduled. </param>

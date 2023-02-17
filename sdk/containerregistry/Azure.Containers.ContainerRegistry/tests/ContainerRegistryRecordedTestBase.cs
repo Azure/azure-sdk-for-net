@@ -107,11 +107,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 return AzureAuthorityHosts.AzureGovernment;
             }
 
-            if (endpoint.Contains(".azurecr.de"))
-            {
-                return AzureAuthorityHosts.AzureGermany;
-            }
-
             throw new NotSupportedException($"Cloud for endpoint {endpoint} is not supported.");
         }
 
@@ -211,11 +206,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
             if (authorityHost == AzureAuthorityHosts.AzureGovernment)
             {
                 return ContainerRegistryAudience.AzureResourceManagerGovernment;
-            }
-
-            if (authorityHost == AzureAuthorityHosts.AzureGermany)
-            {
-                return ContainerRegistryAudience.AzureResourceManagerGermany;
             }
 
             throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");

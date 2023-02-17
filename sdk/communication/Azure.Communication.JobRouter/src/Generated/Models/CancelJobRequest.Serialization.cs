@@ -17,12 +17,12 @@ namespace Azure.Communication.JobRouter
             writer.WriteStartObject();
             if (Optional.IsDefined(Note))
             {
-                writer.WritePropertyName("note");
+                writer.WritePropertyName("note"u8);
                 writer.WriteStringValue(Note);
             }
             if (Optional.IsDefined(DispositionCode))
             {
-                writer.WritePropertyName("dispositionCode");
+                writer.WritePropertyName("dispositionCode"u8);
                 writer.WriteStringValue(DispositionCode);
             }
             writer.WriteEndObject();

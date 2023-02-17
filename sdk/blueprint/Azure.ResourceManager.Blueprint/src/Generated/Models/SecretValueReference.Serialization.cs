@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Blueprint.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyVault");
-            JsonSerializer.Serialize(writer, KeyVault); writer.WritePropertyName("secretName");
+            writer.WritePropertyName("keyVault"u8);
+            JsonSerializer.Serialize(writer, KeyVault); writer.WritePropertyName("secretName"u8);
             writer.WriteStringValue(SecretName);
             if (Optional.IsDefined(SecretVersion))
             {
-                writer.WritePropertyName("secretVersion");
+                writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);
             }
             writer.WriteEndObject();
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.Blueprint.Models
             Optional<string> secretVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyVault"))
+                if (property.NameEquals("keyVault"u8))
                 {
                     keyVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("secretName"))
+                if (property.NameEquals("secretName"u8))
                 {
                     secretName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secretVersion"))
+                if (property.NameEquals("secretVersion"u8))
                 {
                     secretVersion = property.Value.GetString();
                     continue;

@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<string>> tfoLBBackendAddressPoolIds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isPrimary"))
+                if (property.NameEquals("isPrimary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,22 +47,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     isPrimary = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("subnetName"))
+                if (property.NameEquals("subnetName"u8))
                 {
                     subnetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("staticIPAddress"))
+                if (property.NameEquals("staticIPAddress"u8))
                 {
                     staticIPAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipAddressType"))
+                if (property.NameEquals("ipAddressType"u8))
                 {
                     ipAddressType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isSeletedForFailover"))
+                if (property.NameEquals("isSeletedForFailover"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,27 +72,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     isSeletedForFailover = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("recoverySubnetName"))
+                if (property.NameEquals("recoverySubnetName"u8))
                 {
                     recoverySubnetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryStaticIPAddress"))
+                if (property.NameEquals("recoveryStaticIPAddress"u8))
                 {
                     recoveryStaticIPAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryIPAddressType"))
+                if (property.NameEquals("recoveryIPAddressType"u8))
                 {
                     recoveryIPAddressType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryPublicIPAddressId"))
+                if (property.NameEquals("recoveryPublicIPAddressId"u8))
                 {
                     recoveryPublicIPAddressId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryLBBackendAddressPoolIds"))
+                if (property.NameEquals("recoveryLBBackendAddressPoolIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,22 +107,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     recoveryLBBackendAddressPoolIds = array;
                     continue;
                 }
-                if (property.NameEquals("tfoSubnetName"))
+                if (property.NameEquals("tfoSubnetName"u8))
                 {
                     tfoSubnetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tfoStaticIPAddress"))
+                if (property.NameEquals("tfoStaticIPAddress"u8))
                 {
                     tfoStaticIPAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tfoPublicIPAddressId"))
+                if (property.NameEquals("tfoPublicIPAddressId"u8))
                 {
                     tfoPublicIPAddressId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tfoLBBackendAddressPoolIds"))
+                if (property.NameEquals("tfoLBBackendAddressPoolIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

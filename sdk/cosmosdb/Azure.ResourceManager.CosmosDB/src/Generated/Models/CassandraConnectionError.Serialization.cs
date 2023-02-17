@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> exception = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectionState"))
+                if (property.NameEquals("connectionState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     connectionState = new CassandraConnectionState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("iPFrom"))
+                if (property.NameEquals("iPFrom"u8))
                 {
                     ipFrom = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("iPTo"))
+                if (property.NameEquals("iPTo"u8))
                 {
                     ipTo = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     port = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("exception"))
+                if (property.NameEquals("exception"u8))
                 {
                     exception = property.Value.GetString();
                     continue;

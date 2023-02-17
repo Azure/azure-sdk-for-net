@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Caching))
             {
-                writer.WritePropertyName("caching");
+                writer.WritePropertyName("caching"u8);
                 writer.WriteStringValue(Caching.Value.ToSerialString());
             }
             if (Optional.IsDefined(WriteAcceleratorEnabled))
             {
-                writer.WritePropertyName("writeAcceleratorEnabled");
+                writer.WritePropertyName("writeAcceleratorEnabled"u8);
                 writer.WriteBooleanValue(WriteAcceleratorEnabled.Value);
             }
             if (Optional.IsDefined(DiskSizeGB))
             {
-                writer.WritePropertyName("diskSizeGB");
+                writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
             if (Optional.IsDefined(Image))
             {
-                writer.WritePropertyName("image");
+                writer.WritePropertyName("image"u8);
                 writer.WriteObjectValue(Image);
             }
             if (Optional.IsCollectionDefined(VhdContainers))
             {
-                writer.WritePropertyName("vhdContainers");
+                writer.WritePropertyName("vhdContainers"u8);
                 writer.WriteStartArray();
                 foreach (var item in VhdContainers)
                 {
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(ManagedDisk))
             {
-                writer.WritePropertyName("managedDisk");
+                writer.WritePropertyName("managedDisk"u8);
                 writer.WriteObjectValue(ManagedDisk);
             }
             if (Optional.IsDefined(DeleteOption))
             {
-                writer.WritePropertyName("deleteOption");
+                writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
             }
             writer.WriteEndObject();

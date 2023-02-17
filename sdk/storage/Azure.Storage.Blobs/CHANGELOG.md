@@ -1,14 +1,7 @@
 # Release History
 
 ## 12.15.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added BlobDownloadDetails.CreatedOn property.
 
 ## 12.15.0-beta.1 (2023-02-07)
 - Added support for service version 2021-12-02.
