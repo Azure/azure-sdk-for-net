@@ -1,14 +1,13 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.0.0-beta.2 (2023-02-17)
 
 ### Other Changes
+
+- Upgraded API version to `2022-11-01`.
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
+- Optimized the implementation of methods related to tag operations.
 
 ## 1.0.0-beta.1 (2022-07-12)
 
