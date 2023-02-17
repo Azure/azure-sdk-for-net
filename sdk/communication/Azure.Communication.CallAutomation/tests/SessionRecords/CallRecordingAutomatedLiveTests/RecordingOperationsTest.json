@@ -286,7 +286,13 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
+<<<<<<< HEAD
         "Content-Length": "401",
+=======
+        "Repeatability-Request-ID": "Sanitized",
+        "Repeatability-First-Sent": "Sanitized",
+        "Content-Length": "425",
+>>>>>>> 8a591b3dfe15df546d24e0b532c7660603b22c45
         "Content-Type": "application/json",
         "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20230203.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
         "x-ms-client-request-id": "46c5e29edd4ae8d32aed50b8b0b19909",

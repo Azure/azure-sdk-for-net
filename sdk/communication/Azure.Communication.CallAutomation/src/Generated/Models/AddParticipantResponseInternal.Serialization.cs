@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation
                     participant = CallParticipantInternal.DeserializeCallParticipantInternal(property.Value);
                     continue;
                 }
-                if (property.NameEquals("operationContext"u8))
+                if (property.NameEquals("operationContext"))
                 {
                     operationContext = property.Value.GetString();
                     continue;
