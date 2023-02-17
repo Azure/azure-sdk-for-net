@@ -20,18 +20,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -40,27 +40,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ConsistencyPolicy))
             {
-                writer.WritePropertyName("consistencyPolicy");
+                writer.WritePropertyName("consistencyPolicy"u8);
                 writer.WriteObjectValue(ConsistencyPolicy);
             }
-            writer.WritePropertyName("locations");
+            writer.WritePropertyName("locations"u8);
             writer.WriteStartArray();
             foreach (var item in Locations)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("databaseAccountOfferType");
+            writer.WritePropertyName("databaseAccountOfferType"u8);
             writer.WriteStringValue(DatabaseAccountOfferType.ToString());
             if (Optional.IsCollectionDefined(IPRules))
             {
-                writer.WritePropertyName("ipRules");
+                writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsDefined(IsVirtualNetworkFilterEnabled))
             {
-                writer.WritePropertyName("isVirtualNetworkFilterEnabled");
+                writer.WritePropertyName("isVirtualNetworkFilterEnabled"u8);
                 writer.WriteBooleanValue(IsVirtualNetworkFilterEnabled.Value);
             }
             if (Optional.IsDefined(EnableAutomaticFailover))
             {
-                writer.WritePropertyName("enableAutomaticFailover");
+                writer.WritePropertyName("enableAutomaticFailover"u8);
                 writer.WriteBooleanValue(EnableAutomaticFailover.Value);
             }
             if (Optional.IsCollectionDefined(Capabilities))
             {
-                writer.WritePropertyName("capabilities");
+                writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsCollectionDefined(VirtualNetworkRules))
             {
-                writer.WritePropertyName("virtualNetworkRules");
+                writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
@@ -100,72 +100,72 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsDefined(EnableMultipleWriteLocations))
             {
-                writer.WritePropertyName("enableMultipleWriteLocations");
+                writer.WritePropertyName("enableMultipleWriteLocations"u8);
                 writer.WriteBooleanValue(EnableMultipleWriteLocations.Value);
             }
             if (Optional.IsDefined(EnableCassandraConnector))
             {
-                writer.WritePropertyName("enableCassandraConnector");
+                writer.WritePropertyName("enableCassandraConnector"u8);
                 writer.WriteBooleanValue(EnableCassandraConnector.Value);
             }
             if (Optional.IsDefined(ConnectorOffer))
             {
-                writer.WritePropertyName("connectorOffer");
+                writer.WritePropertyName("connectorOffer"u8);
                 writer.WriteStringValue(ConnectorOffer.Value.ToString());
             }
             if (Optional.IsDefined(DisableKeyBasedMetadataWriteAccess))
             {
-                writer.WritePropertyName("disableKeyBasedMetadataWriteAccess");
+                writer.WritePropertyName("disableKeyBasedMetadataWriteAccess"u8);
                 writer.WriteBooleanValue(DisableKeyBasedMetadataWriteAccess.Value);
             }
             if (Optional.IsDefined(KeyVaultKeyUri))
             {
-                writer.WritePropertyName("keyVaultKeyUri");
+                writer.WritePropertyName("keyVaultKeyUri"u8);
                 writer.WriteStringValue(KeyVaultKeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(DefaultIdentity))
             {
-                writer.WritePropertyName("defaultIdentity");
+                writer.WritePropertyName("defaultIdentity"u8);
                 writer.WriteStringValue(DefaultIdentity);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             if (Optional.IsDefined(IsFreeTierEnabled))
             {
-                writer.WritePropertyName("enableFreeTier");
+                writer.WritePropertyName("enableFreeTier"u8);
                 writer.WriteBooleanValue(IsFreeTierEnabled.Value);
             }
             if (Optional.IsDefined(ApiProperties))
             {
-                writer.WritePropertyName("apiProperties");
+                writer.WritePropertyName("apiProperties"u8);
                 writer.WriteObjectValue(ApiProperties);
             }
             if (Optional.IsDefined(IsAnalyticalStorageEnabled))
             {
-                writer.WritePropertyName("enableAnalyticalStorage");
+                writer.WritePropertyName("enableAnalyticalStorage"u8);
                 writer.WriteBooleanValue(IsAnalyticalStorageEnabled.Value);
             }
             if (Optional.IsDefined(AnalyticalStorageConfiguration))
             {
-                writer.WritePropertyName("analyticalStorageConfiguration");
+                writer.WritePropertyName("analyticalStorageConfiguration"u8);
                 writer.WriteObjectValue(AnalyticalStorageConfiguration);
             }
             if (Optional.IsDefined(CreateMode))
             {
-                writer.WritePropertyName("createMode");
+                writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
             if (Optional.IsDefined(BackupPolicy))
             {
-                writer.WritePropertyName("backupPolicy");
+                writer.WritePropertyName("backupPolicy"u8);
                 writer.WriteObjectValue(BackupPolicy);
             }
             if (Optional.IsCollectionDefined(Cors))
             {
-                writer.WritePropertyName("cors");
+                writer.WritePropertyName("cors"u8);
                 writer.WriteStartArray();
                 foreach (var item in Cors)
                 {
@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsDefined(NetworkAclBypass))
             {
-                writer.WritePropertyName("networkAclBypass");
+                writer.WritePropertyName("networkAclBypass"u8);
                 writer.WriteStringValue(NetworkAclBypass.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(NetworkAclBypassResourceIds))
             {
-                writer.WritePropertyName("networkAclBypassResourceIds");
+                writer.WritePropertyName("networkAclBypassResourceIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in NetworkAclBypassResourceIds)
                 {
@@ -190,22 +190,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsDefined(DisableLocalAuth))
             {
-                writer.WritePropertyName("disableLocalAuth");
+                writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
             if (Optional.IsDefined(RestoreParameters))
             {
-                writer.WritePropertyName("restoreParameters");
+                writer.WritePropertyName("restoreParameters"u8);
                 writer.WriteObjectValue(RestoreParameters);
             }
             if (Optional.IsDefined(Capacity))
             {
-                writer.WritePropertyName("capacity");
+                writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
             if (Optional.IsDefined(EnablePartitionMerge))
             {
-                writer.WritePropertyName("enablePartitionMerge");
+                writer.WritePropertyName("enablePartitionMerge"u8);
                 writer.WriteBooleanValue(EnablePartitionMerge.Value);
             }
             writer.WriteEndObject();
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<bool> enablePartitionMerge = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     kind = new CosmosDBAccountKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -271,10 +271,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString(), serializeOptions);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -289,37 +289,37 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("consistencyPolicy"))
+                        if (property0.NameEquals("consistencyPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             consistencyPolicy = ConsistencyPolicy.DeserializeConsistencyPolicy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("locations"))
+                        if (property0.NameEquals("locations"u8))
                         {
                             List<CosmosDBAccountLocation> array = new List<CosmosDBAccountLocation>();
                             foreach (var item in property0.Value.EnumerateArray())
@@ -348,12 +348,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             locations = array;
                             continue;
                         }
-                        if (property0.NameEquals("databaseAccountOfferType"))
+                        if (property0.NameEquals("databaseAccountOfferType"u8))
                         {
                             databaseAccountOfferType = new CosmosDBAccountOfferType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("ipRules"))
+                        if (property0.NameEquals("ipRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             ipRules = array;
                             continue;
                         }
-                        if (property0.NameEquals("isVirtualNetworkFilterEnabled"))
+                        if (property0.NameEquals("isVirtualNetworkFilterEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             isVirtualNetworkFilterEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("enableAutomaticFailover"))
+                        if (property0.NameEquals("enableAutomaticFailover"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             enableAutomaticFailover = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("capabilities"))
+                        if (property0.NameEquals("capabilities"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             capabilities = array;
                             continue;
                         }
-                        if (property0.NameEquals("virtualNetworkRules"))
+                        if (property0.NameEquals("virtualNetworkRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             virtualNetworkRules = array;
                             continue;
                         }
-                        if (property0.NameEquals("enableMultipleWriteLocations"))
+                        if (property0.NameEquals("enableMultipleWriteLocations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             enableMultipleWriteLocations = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("enableCassandraConnector"))
+                        if (property0.NameEquals("enableCassandraConnector"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             enableCassandraConnector = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("connectorOffer"))
+                        if (property0.NameEquals("connectorOffer"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             connectorOffer = new ConnectorOffer(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("disableKeyBasedMetadataWriteAccess"))
+                        if (property0.NameEquals("disableKeyBasedMetadataWriteAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             disableKeyBasedMetadataWriteAccess = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("keyVaultKeyUri"))
+                        if (property0.NameEquals("keyVaultKeyUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -468,12 +468,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             keyVaultKeyUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("defaultIdentity"))
+                        if (property0.NameEquals("defaultIdentity"u8))
                         {
                             defaultIdentity = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("publicNetworkAccess"))
+                        if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             publicNetworkAccess = new CosmosDBPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("enableFreeTier"))
+                        if (property0.NameEquals("enableFreeTier"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             enableFreeTier = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("apiProperties"))
+                        if (property0.NameEquals("apiProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             apiProperties = ApiProperties.DeserializeApiProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("enableAnalyticalStorage"))
+                        if (property0.NameEquals("enableAnalyticalStorage"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             enableAnalyticalStorage = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("analyticalStorageConfiguration"))
+                        if (property0.NameEquals("analyticalStorageConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             analyticalStorageConfiguration = AnalyticalStorageConfiguration.DeserializeAnalyticalStorageConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("createMode"))
+                        if (property0.NameEquals("createMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             createMode = new CosmosDBAccountCreateMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("backupPolicy"))
+                        if (property0.NameEquals("backupPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             backupPolicy = CosmosDBAccountBackupPolicy.DeserializeCosmosDBAccountBackupPolicy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("cors"))
+                        if (property0.NameEquals("cors"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             cors = array;
                             continue;
                         }
-                        if (property0.NameEquals("networkAclBypass"))
+                        if (property0.NameEquals("networkAclBypass"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             networkAclBypass = property0.Value.GetString().ToNetworkAclBypass();
                             continue;
                         }
-                        if (property0.NameEquals("networkAclBypassResourceIds"))
+                        if (property0.NameEquals("networkAclBypassResourceIds"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             networkAclBypassResourceIds = array;
                             continue;
                         }
-                        if (property0.NameEquals("disableLocalAuth"))
+                        if (property0.NameEquals("disableLocalAuth"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             disableLocalAuth = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("restoreParameters"))
+                        if (property0.NameEquals("restoreParameters"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             restoreParameters = CosmosDBAccountRestoreParameters.DeserializeCosmosDBAccountRestoreParameters(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("capacity"))
+                        if (property0.NameEquals("capacity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             capacity = CosmosDBAccountCapacity.DeserializeCosmosDBAccountCapacity(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("keysMetadata"))
+                        if (property0.NameEquals("keysMetadata"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             keysMetadata = DatabaseAccountKeysMetadata.DeserializeDatabaseAccountKeysMetadata(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("enablePartitionMerge"))
+                        if (property0.NameEquals("enablePartitionMerge"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

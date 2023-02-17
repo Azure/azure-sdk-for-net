@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests.Samples
         private SchemaRegistryClient schemaRegistryClient;
 #pragma warning restore IDE1006 // Naming Styles
 
-        [OneTimeSetUp]
+        [Test]
         public void CreateSchemaRegistryClient()
         {
             string fullyQualifiedNamespace = TestEnvironment.SchemaRegistryEndpoint;

@@ -19,22 +19,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ManagedOutboundIPs))
             {
-                writer.WritePropertyName("managedOutboundIPs");
+                writer.WritePropertyName("managedOutboundIPs"u8);
                 writer.WriteObjectValue(ManagedOutboundIPs);
             }
             if (Optional.IsDefined(OutboundIPPrefixes))
             {
-                writer.WritePropertyName("outboundIPPrefixes");
+                writer.WritePropertyName("outboundIPPrefixes"u8);
                 writer.WriteObjectValue(OutboundIPPrefixes);
             }
             if (Optional.IsDefined(OutboundIPs))
             {
-                writer.WritePropertyName("outboundIPs");
+                writer.WritePropertyName("outboundIPs"u8);
                 writer.WriteObjectValue(OutboundIPs);
             }
             if (Optional.IsCollectionDefined(EffectiveOutboundIPs))
             {
-                writer.WritePropertyName("effectiveOutboundIPs");
+                writer.WritePropertyName("effectiveOutboundIPs"u8);
                 writer.WriteStartArray();
                 foreach (var item in EffectiveOutboundIPs)
                 {
@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             if (Optional.IsDefined(AllocatedOutboundPorts))
             {
-                writer.WritePropertyName("allocatedOutboundPorts");
+                writer.WritePropertyName("allocatedOutboundPorts"u8);
                 writer.WriteNumberValue(AllocatedOutboundPorts.Value);
             }
             if (Optional.IsDefined(IdleTimeoutInMinutes))
             {
-                writer.WritePropertyName("idleTimeoutInMinutes");
+                writer.WritePropertyName("idleTimeoutInMinutes"u8);
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
             }
             if (Optional.IsDefined(EnableMultipleStandardLoadBalancers))
             {
-                writer.WritePropertyName("enableMultipleStandardLoadBalancers");
+                writer.WritePropertyName("enableMultipleStandardLoadBalancers"u8);
                 writer.WriteBooleanValue(EnableMultipleStandardLoadBalancers.Value);
             }
             writer.WriteEndObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<bool> enableMultipleStandardLoadBalancers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("managedOutboundIPs"))
+                if (property.NameEquals("managedOutboundIPs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     managedOutboundIPs = ManagedClusterLoadBalancerProfileManagedOutboundIPs.DeserializeManagedClusterLoadBalancerProfileManagedOutboundIPs(property.Value);
                     continue;
                 }
-                if (property.NameEquals("outboundIPPrefixes"))
+                if (property.NameEquals("outboundIPPrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     outboundIPPrefixes = ManagedClusterLoadBalancerProfileOutboundIPPrefixes.DeserializeManagedClusterLoadBalancerProfileOutboundIPPrefixes(property.Value);
                     continue;
                 }
-                if (property.NameEquals("outboundIPs"))
+                if (property.NameEquals("outboundIPs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     outboundIPs = ManagedClusterLoadBalancerProfileOutboundIPs.DeserializeManagedClusterLoadBalancerProfileOutboundIPs(property.Value);
                     continue;
                 }
-                if (property.NameEquals("effectiveOutboundIPs"))
+                if (property.NameEquals("effectiveOutboundIPs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                     }
                     effectiveOutboundIPs = array;
                     continue;
                 }
-                if (property.NameEquals("allocatedOutboundPorts"))
+                if (property.NameEquals("allocatedOutboundPorts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     allocatedOutboundPorts = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("idleTimeoutInMinutes"))
+                if (property.NameEquals("idleTimeoutInMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     idleTimeoutInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("enableMultipleStandardLoadBalancers"))
+                if (property.NameEquals("enableMultipleStandardLoadBalancers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

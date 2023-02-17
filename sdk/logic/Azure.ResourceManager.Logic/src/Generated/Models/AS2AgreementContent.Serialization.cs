@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Logic.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("receiveAgreement");
+            writer.WritePropertyName("receiveAgreement"u8);
             writer.WriteObjectValue(ReceiveAgreement);
-            writer.WritePropertyName("sendAgreement");
+            writer.WritePropertyName("sendAgreement"u8);
             writer.WriteObjectValue(SendAgreement);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Logic.Models
             AS2OneWayAgreement sendAgreement = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("receiveAgreement"))
+                if (property.NameEquals("receiveAgreement"u8))
                 {
                     receiveAgreement = AS2OneWayAgreement.DeserializeAS2OneWayAgreement(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sendAgreement"))
+                if (property.NameEquals("sendAgreement"u8))
                 {
                     sendAgreement = AS2OneWayAgreement.DeserializeAS2OneWayAgreement(property.Value);
                     continue;

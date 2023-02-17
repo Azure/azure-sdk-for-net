@@ -49,10 +49,10 @@ param(
   [Parameter(Mandatory = $true)]
   [string]$DocRepoLocation,
 
-  [Parameter(Mandatory = $true)]
+  [Parameter(Mandatory = $false)]
   [string]$Language,
 
-  [Parameter(Mandatory = $true)]
+  [Parameter(Mandatory = $false)]
   [string]$RepoId,
 
   [Parameter(Mandatory = $false)]
@@ -81,7 +81,7 @@ function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata
   # The $PackageMetadata could be $null if there is no associated metadata entry
   # based on how the metadata CSV is filtered
   $service = $PackageInfo.ServiceDirectory.ToLower()
-  if ($PackageMetadata -and $PackageMetadata.MSDocService) {
+  if ($PackageMetadata -and $PackageMetadata.MSDocService -and 'placeholder' -ine $PackageMetadata.MSDocService) {
     # Use MSDocService in csv metadata to override the service directory
     # TODO: Use taxonomy for service name -- https://github.com/Azure/azure-sdk-tools/issues/1442
     $service = $PackageMetadata.MSDocService
@@ -192,8 +192,20 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
   }
   $packageMetadataName = Split-Path $packageInfoJsonLocation -Leaf
   $packageInfoLocation = Join-Path $DocRepoLocation "metadata/$metadataMoniker"
+  if (Test-Path "$packageInfoLocation/$packageMetadataName") {
+    Write-Host "The docs metadata json $packageMetadataName exists, updating..."
+    $docsMetadata = Get-Content "$packageInfoLocation/$packageMetadataName" -Raw | ConvertFrom-Json
+    foreach ($property in $docsMetadata.PSObject.Properties) {
+      if ($packageInfo.PSObject.Properties.Name -notcontains $property.Name) {
+        $packageInfo | Add-Member -MemberType $property.MemberType -Name $property.Name -Value $property.Value -Force
+      }
+    }
+  }
+  else {
+    Write-Host "The docs metadata json $packageMetadataName does not exist, creating a new one to docs repo..."
+    New-Item -ItemType Directory -Path $packageInfoLocation -Force
+  }
   $packageInfoJson = ConvertTo-Json $packageInfo
-  New-Item -ItemType Directory -Path $packageInfoLocation -Force
   Set-Content `
     -Path $packageInfoLocation/$packageMetadataName `
     -Value $packageInfoJson

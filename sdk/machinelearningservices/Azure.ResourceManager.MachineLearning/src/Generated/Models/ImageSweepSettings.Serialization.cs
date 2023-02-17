@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (EarlyTermination != null)
                 {
-                    writer.WritePropertyName("earlyTermination");
+                    writer.WritePropertyName("earlyTermination"u8);
                     writer.WriteObjectValue(EarlyTermination);
                 }
                 else
@@ -27,28 +27,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("earlyTermination");
                 }
             }
-            writer.WritePropertyName("samplingAlgorithm");
+            writer.WritePropertyName("samplingAlgorithm"u8);
             writer.WriteStringValue(SamplingAlgorithm.ToString());
             writer.WriteEndObject();
         }
 
         internal static ImageSweepSettings DeserializeImageSweepSettings(JsonElement element)
         {
-            Optional<EarlyTerminationPolicy> earlyTermination = default;
+            Optional<MachineLearningEarlyTerminationPolicy> earlyTermination = default;
             SamplingAlgorithmType samplingAlgorithm = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("earlyTermination"))
+                if (property.NameEquals("earlyTermination"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         earlyTermination = null;
                         continue;
                     }
-                    earlyTermination = EarlyTerminationPolicy.DeserializeEarlyTerminationPolicy(property.Value);
+                    earlyTermination = MachineLearningEarlyTerminationPolicy.DeserializeMachineLearningEarlyTerminationPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("samplingAlgorithm"))
+                if (property.NameEquals("samplingAlgorithm"u8))
                 {
                     samplingAlgorithm = new SamplingAlgorithmType(property.Value.GetString());
                     continue;

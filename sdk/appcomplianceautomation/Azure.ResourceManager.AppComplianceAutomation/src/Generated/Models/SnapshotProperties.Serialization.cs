@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<IReadOnlyList<ComplianceResult>> complianceResults = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("snapshotName"))
+                if (property.NameEquals("snapshotName"u8))
                 {
                     snapshotName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdAt"))
+                if (property.NameEquals("createdAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     createdAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("reportProperties"))
+                if (property.NameEquals("reportProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     reportProperties = ReportProperties.DeserializeReportProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("reportSystemData"))
+                if (property.NameEquals("reportSystemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reportSystemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    reportSystemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("complianceResults"))
+                if (property.NameEquals("complianceResults"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

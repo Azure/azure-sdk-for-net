@@ -18,31 +18,31 @@ namespace Azure.ResourceManager.CosmosDB
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(UserName))
             {
-                writer.WritePropertyName("userName");
+                writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
             if (Optional.IsDefined(DatabaseName))
             {
-                writer.WritePropertyName("databaseName");
+                writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
             if (Optional.IsDefined(CustomData))
             {
-                writer.WritePropertyName("customData");
+                writer.WritePropertyName("customData"u8);
                 writer.WriteStringValue(CustomData);
             }
             if (Optional.IsCollectionDefined(Roles))
             {
-                writer.WritePropertyName("roles");
+                writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();
                 foreach (var item in Roles)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
             if (Optional.IsDefined(Mechanisms))
             {
-                writer.WritePropertyName("mechanisms");
+                writer.WritePropertyName("mechanisms"u8);
                 writer.WriteStringValue(Mechanisms);
             }
             writer.WriteEndObject();
@@ -73,32 +73,32 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<string> mechanisms = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,27 +107,27 @@ namespace Azure.ResourceManager.CosmosDB
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("userName"))
+                        if (property0.NameEquals("userName"u8))
                         {
                             userName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("password"))
+                        if (property0.NameEquals("password"u8))
                         {
                             password = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("databaseName"))
+                        if (property0.NameEquals("databaseName"u8))
                         {
                             databaseName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("customData"))
+                        if (property0.NameEquals("customData"u8))
                         {
                             customData = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("roles"))
+                        if (property0.NameEquals("roles"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CosmosDB
                             roles = array;
                             continue;
                         }
-                        if (property0.NameEquals("mechanisms"))
+                        if (property0.NameEquals("mechanisms"u8))
                         {
                             mechanisms = property0.Value.GetString();
                             continue;

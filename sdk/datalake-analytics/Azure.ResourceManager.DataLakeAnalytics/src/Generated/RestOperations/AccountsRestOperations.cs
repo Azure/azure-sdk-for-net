@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataLakeAnalyticsNameAccountAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, DataLakeAnalyticsAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeAnalyticsAccountNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, DataLakeAnalyticsAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -602,9 +602,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        DataLakeAnalyticsNameAccountAvailabilityResult value = default;
+                        DataLakeAnalyticsAccountNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataLakeAnalyticsNameAccountAvailabilityResult.DeserializeDataLakeAnalyticsNameAccountAvailabilityResult(document.RootElement);
+                        value = DataLakeAnalyticsAccountNameAvailabilityResult.DeserializeDataLakeAnalyticsAccountNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataLakeAnalyticsNameAccountAvailabilityResult> CheckNameAvailability(string subscriptionId, AzureLocation location, DataLakeAnalyticsAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<DataLakeAnalyticsAccountNameAvailabilityResult> CheckNameAvailability(string subscriptionId, AzureLocation location, DataLakeAnalyticsAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -630,9 +630,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        DataLakeAnalyticsNameAccountAvailabilityResult value = default;
+                        DataLakeAnalyticsAccountNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataLakeAnalyticsNameAccountAvailabilityResult.DeserializeDataLakeAnalyticsNameAccountAvailabilityResult(document.RootElement);
+                        value = DataLakeAnalyticsAccountNameAvailabilityResult.DeserializeDataLakeAnalyticsAccountNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

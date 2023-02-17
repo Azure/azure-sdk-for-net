@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Scanning
 {
-    // Data plane generated client. The PurviewScan service client.
+    // Data plane generated client.
     /// <summary> The PurviewScan service client. </summary>
     public partial class PurviewScanClient
     {
@@ -542,24 +539,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetRunsAsync(RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetRunsAsync(RequestContext context = null)
         {
-            return GetRunsImplementationAsync("PurviewScanClient.GetRuns", context);
-        }
-
-        private AsyncPageable<BinaryData> GetRunsImplementationAsync(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetRunsRequest(context)
-                        : CreateGetRunsNextPageRequest(nextLink, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRunsNextPageRequest(nextLink, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanClient.GetRuns", "value", "nextLink", context);
         }
 
         /// <summary> Lists the scan history of a scan. </summary>
@@ -569,24 +551,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// <include file="Docs/PurviewScanClient.xml" path="doc/members/member[@name='GetRuns(RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetRuns(RequestContext context = null)
         {
-            return GetRunsImplementation("PurviewScanClient.GetRuns", context);
-        }
-
-        private Pageable<BinaryData> GetRunsImplementation(string diagnosticsScopeName, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetRunsRequest(context)
-                        : CreateGetRunsNextPageRequest(nextLink, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRunsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRunsNextPageRequest(nextLink, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanClient.GetRuns", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetFilterRequest(RequestContext context)

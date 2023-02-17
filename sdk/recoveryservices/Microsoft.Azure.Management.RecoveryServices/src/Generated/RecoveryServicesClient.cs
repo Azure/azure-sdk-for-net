@@ -59,6 +59,16 @@ namespace Microsoft.Azure.Management.RecoveryServices
         public string ApiVersion { get; private set; }
 
         /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        public string ApiVersion1 { get; set; }
+
+        /// <summary>
+        /// The ID of the target subscription.
+        /// </summary>
+        public string SubscriptionId1 { get; set; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -372,7 +382,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             VaultExtendedInfo = new VaultExtendedInfoOperations(this);
             Usages = new UsagesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2022-04-01";
+            ApiVersion = "2022-10-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -412,8 +422,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Gets the operation status for a resource.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group where the recovery services vault is
-        /// present.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -447,9 +456,27 @@ namespace Microsoft.Azure.Management.RecoveryServices
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
+            if (SubscriptionId != null)
+            {
+                if (SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "SubscriptionId", 1);
+                }
+            }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
             }
             if (vaultName == null)
             {
@@ -462,6 +489,13 @@ namespace Microsoft.Azure.Management.RecoveryServices
             if (ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            if (ApiVersion != null)
+            {
+                if (ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ApiVersion", 1);
+                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -617,8 +651,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Gets the operation result for a resource.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group where the recovery services vault is
-        /// present.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -652,9 +685,27 @@ namespace Microsoft.Azure.Management.RecoveryServices
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
+            if (SubscriptionId != null)
+            {
+                if (SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "SubscriptionId", 1);
+                }
+            }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
             }
             if (vaultName == null)
             {
@@ -667,6 +718,13 @@ namespace Microsoft.Azure.Management.RecoveryServices
             if (ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            if (ApiVersion != null)
+            {
+                if (ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ApiVersion", 1);
+                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

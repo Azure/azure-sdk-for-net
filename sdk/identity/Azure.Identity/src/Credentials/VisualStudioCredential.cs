@@ -23,7 +23,7 @@ namespace Azure.Identity
     /// </summary>
     public class VisualStudioCredential : TokenCredential
     {
-        private const string TokenProviderFilePath = @".IdentityService\AzureServiceAuth\tokenprovider.json";
+        private static readonly string TokenProviderFilePath = Path.Combine(".IdentityService", "AzureServiceAuth", "tokenprovider.json");
         private const string ResourceArgumentName = "--resource";
         private const string TenantArgumentName = "--tenant";
 
@@ -110,12 +110,26 @@ namespace Azure.Identity
 
         private static string GetTokenProviderPath()
         {
+            string baseFolder;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), TokenProviderFilePath);
+                baseFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                if (string.IsNullOrEmpty(baseFolder))
+                {
+                    // There is a known issue that Environment.GetFolderPath does not work on Windows Nano: https://github.com/dotnet/runtime/issues/21430
+                    baseFolder = Environment.GetEnvironmentVariable("LOCALAPPDATA");
+                    if (string.IsNullOrEmpty(baseFolder))
+                    {
+                        throw new CredentialUnavailableException("Can't find the Local Application Data folder. See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/vscredential/troubleshoot");
+                    }
+                }
+            }
+            else
+            {
+                baseFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             }
 
-            throw new CredentialUnavailableException($"Operating system {RuntimeInformation.OSDescription} isn't supported.");
+            return Path.Combine(baseFolder, TokenProviderFilePath);
         }
 
         private async Task<AccessToken> RunProcessesAsync(List<ProcessStartInfo> processStartInfos, bool async, CancellationToken cancellationToken)

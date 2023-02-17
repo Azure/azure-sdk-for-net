@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public OperationalInsightsDataExportData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public System.Guid? DataExportId { get { throw null; } set { } }
-        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportsDestinationType? DestinationType { get { throw null; } }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType? DestinationType { get { throw null; } }
         public string EventHubName { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
@@ -301,17 +301,11 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedServiceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedServiceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedServiceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedServiceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class OperationalInsightsLinkedStorageAccountData : Azure.ResourceManager.Models.ResourceData
-    {
-        public OperationalInsightsLinkedStorageAccountData() { }
-        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceType? DataSourceType { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> StorageAccountIds { get { throw null; } }
-    }
     public partial class OperationalInsightsLinkedStorageAccountsCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsResource>, System.Collections.IEnumerable
     {
         protected OperationalInsightsLinkedStorageAccountsCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceType dataSourceType, Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceType dataSourceType, Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceType dataSourceType, Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceType dataSourceType, Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceType dataSourceType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceType dataSourceType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsResource> Get(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceType dataSourceType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -322,19 +316,25 @@ namespace Azure.ResourceManager.OperationalInsights
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
+    public partial class OperationalInsightsLinkedStorageAccountsData : Azure.ResourceManager.Models.ResourceData
+    {
+        public OperationalInsightsLinkedStorageAccountsData() { }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceType? DataSourceType { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> StorageAccountIds { get { throw null; } }
+    }
     public partial class OperationalInsightsLinkedStorageAccountsResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected OperationalInsightsLinkedStorageAccountsResource() { }
-        public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountData Data { get { throw null; } }
+        public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataSourceType dataSourceType) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class OperationalInsightsSavedSearchCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.OperationalInsights.OperationalInsightsSavedSearchResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.OperationalInsightsSavedSearchResource>, System.Collections.IEnumerable
     {
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public bool? ForceCmkForQuery { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.DateTimeOffset? ModifiedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.OperationalInsights.Models.PrivateLinkScopedResourceInfo> PrivateLinkScopedResources { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPrivateLinkScopedResourceInfo> PrivateLinkScopedResources { get { throw null; } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType? PublicNetworkAccessForIngestion { get { throw null; } set { } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType? PublicNetworkAccessForQuery { get { throw null; } set { } }
@@ -636,10 +636,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public partial class OperationalInsightsClusterAssociatedWorkspace
     {
         public OperationalInsightsClusterAssociatedWorkspace() { }
-        public System.DateTimeOffset? AssociateOn { get { throw null; } }
+        public System.DateTimeOffset? AssociatedOn { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public System.Guid? WorkspaceId { get { throw null; } }
         public string WorkspaceName { get { throw null; } }
+    }
+    public enum OperationalInsightsClusterCapacity
+    {
+        FiveHundred = 0,
+        TenHundred = 1,
+        TwoThousand = 2,
+        FiveThousand = 3,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OperationalInsightsClusterEntityStatus : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterEntityStatus>
@@ -676,7 +683,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public partial class OperationalInsightsClusterSku
     {
         public OperationalInsightsClusterSku() { }
-        public long? Capacity { get { throw null; } set { } }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterCapacity? Capacity { get { throw null; } set { } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterSkuName? Name { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -752,21 +759,21 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OperationalInsightsDataExportsDestinationType : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportsDestinationType>
+    public readonly partial struct OperationalInsightsDataExportDestinationType : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public OperationalInsightsDataExportsDestinationType(string value) { throw null; }
-        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportsDestinationType EventHub { get { throw null; } }
-        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportsDestinationType StorageAccount { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportsDestinationType other) { throw null; }
+        public OperationalInsightsDataExportDestinationType(string value) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType EventHub { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType StorageAccount { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportsDestinationType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportsDestinationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportsDestinationType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportsDestinationType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportsDestinationType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsDataExportDestinationType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -900,6 +907,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         internal OperationalInsightsMetricName() { }
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } }
+    }
+    public partial class OperationalInsightsPrivateLinkScopedResourceInfo
+    {
+        internal OperationalInsightsPrivateLinkScopedResourceInfo() { }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        public string ScopeId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OperationalInsightsPublicNetworkAccessType : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType>
@@ -1110,6 +1123,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public string QuotaPeriod { get { throw null; } }
         public string Unit { get { throw null; } }
     }
+    public enum OperationalInsightsWorkspaceCapacityReservationLevel
+    {
+        OneHundred = 100,
+        TwoHundred = 200,
+        ThreeHundred = 300,
+        FourHundred = 400,
+        FiveHundred = 500,
+        TenHundred = 1000,
+        TwoThousand = 2000,
+        FiveThousand = 5000,
+    }
     public partial class OperationalInsightsWorkspaceCapping
     {
         public OperationalInsightsWorkspaceCapping() { }
@@ -1145,9 +1169,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public OperationalInsightsWorkspaceFeatures() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public Azure.Core.ResourceIdentifier ClusterResourceId { get { throw null; } set { } }
-        public bool? DisableLocalAuth { get { throw null; } set { } }
         public bool? ImmediatePurgeDataOn30Days { get { throw null; } set { } }
         public bool? IsDataExportEnabled { get { throw null; } set { } }
+        public bool? IsLocalAuthDisabled { get { throw null; } set { } }
         public bool? IsLogAccessUsingOnlyResourcePermissionsEnabled { get { throw null; } set { } }
     }
     public partial class OperationalInsightsWorkspacePatch : Azure.ResourceManager.Models.ResourceData
@@ -1161,7 +1185,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public bool? ForceCmkForQuery { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.DateTimeOffset? ModifiedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.OperationalInsights.Models.PrivateLinkScopedResourceInfo> PrivateLinkScopedResources { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPrivateLinkScopedResourceInfo> PrivateLinkScopedResources { get { throw null; } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceEntityStatus? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType? PublicNetworkAccessForIngestion { get { throw null; } set { } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsPublicNetworkAccessType? PublicNetworkAccessForQuery { get { throw null; } set { } }
@@ -1221,7 +1245,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public partial class OperationalInsightsWorkspaceSku
     {
         public OperationalInsightsWorkspaceSku(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSkuName name) { }
-        public int? CapacityReservationLevel { get { throw null; } set { } }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceCapacityReservationLevel? CapacityReservationLevel { get { throw null; } set { } }
         public System.DateTimeOffset? LastSkuUpdatedOn { get { throw null; } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSkuName Name { get { throw null; } set { } }
     }
@@ -1248,12 +1272,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSkuName (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSkuName left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsWorkspaceSkuName right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class PrivateLinkScopedResourceInfo
-    {
-        internal PrivateLinkScopedResourceInfo() { }
-        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
-        public string ScopeId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RetentionInDaysAsDefaultState : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.RetentionInDaysAsDefaultState>

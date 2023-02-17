@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.0.0-beta.3</Version>
     <PackageId>Azure.ResourceManager.MachineLearningCompute</PackageId>
-    <Description>Azure Resource Manager client SDK for Azure resource provider MachineLearningCompute</Description>
+    <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.MachineLearningCompute.</Description>
     <PackageTags>azure;management;arm;resource manager;machinelearningcompute</PackageTags>
   </PropertyGroup>
 </Project>

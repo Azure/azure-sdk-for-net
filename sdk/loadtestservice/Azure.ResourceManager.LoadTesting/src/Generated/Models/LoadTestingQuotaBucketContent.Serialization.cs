@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.LoadTesting.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CurrentUsage))
             {
-                writer.WritePropertyName("currentUsage");
+                writer.WritePropertyName("currentUsage"u8);
                 writer.WriteNumberValue(CurrentUsage.Value);
             }
             if (Optional.IsDefined(CurrentQuota))
             {
-                writer.WritePropertyName("currentQuota");
+                writer.WritePropertyName("currentQuota"u8);
                 writer.WriteNumberValue(CurrentQuota.Value);
             }
             if (Optional.IsDefined(NewQuota))
             {
-                writer.WritePropertyName("newQuota");
+                writer.WritePropertyName("newQuota"u8);
                 writer.WriteNumberValue(NewQuota.Value);
             }
             if (Optional.IsDefined(Dimensions))
             {
-                writer.WritePropertyName("dimensions");
+                writer.WritePropertyName("dimensions"u8);
                 writer.WriteObjectValue(Dimensions);
             }
             writer.WriteEndObject();
@@ -54,32 +54,32 @@ namespace Azure.ResourceManager.LoadTesting.Models
             Optional<LoadTestingQuotaBucketDimensions> dimensions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("currentUsage"))
+                        if (property0.NameEquals("currentUsage"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                             currentUsage = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("currentQuota"))
+                        if (property0.NameEquals("currentQuota"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                             currentQuota = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("newQuota"))
+                        if (property0.NameEquals("newQuota"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                             newQuota = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("dimensions"))
+                        if (property0.NameEquals("dimensions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

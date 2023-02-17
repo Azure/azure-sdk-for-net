@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<double> stdev = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql.Models
                     unit = new QueryMetricUnitType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql.Models
                     value = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("min"))
+                if (property.NameEquals("min"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql.Models
                     min = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("max"))
+                if (property.NameEquals("max"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
                     max = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("avg"))
+                if (property.NameEquals("avg"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Sql.Models
                     avg = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("sum"))
+                if (property.NameEquals("sum"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Sql.Models
                     sum = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("stdev"))
+                if (property.NameEquals("stdev"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

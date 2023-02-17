@@ -161,6 +161,11 @@ namespace Microsoft.Azure.Management.DataFactory
         public virtual IManagedPrivateEndpointsOperations ManagedPrivateEndpoints { get; private set; }
 
         /// <summary>
+        /// Gets the ICredentialOperations.
+        /// </summary>
+        public virtual ICredentialOperations CredentialOperations { get; private set; }
+
+        /// <summary>
         /// Gets the IPrivateEndPointConnectionsOperations.
         /// </summary>
         public virtual IPrivateEndPointConnectionsOperations PrivateEndPointConnections { get; private set; }
@@ -438,6 +443,7 @@ namespace Microsoft.Azure.Management.DataFactory
             DataFlowDebugSession = new DataFlowDebugSessionOperations(this);
             ManagedVirtualNetworks = new ManagedVirtualNetworksOperations(this);
             ManagedPrivateEndpoints = new ManagedPrivateEndpointsOperations(this);
+            CredentialOperations = new CredentialOperations(this);
             PrivateEndPointConnections = new PrivateEndPointConnectionsOperations(this);
             PrivateEndpointConnection = new PrivateEndpointConnectionOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);

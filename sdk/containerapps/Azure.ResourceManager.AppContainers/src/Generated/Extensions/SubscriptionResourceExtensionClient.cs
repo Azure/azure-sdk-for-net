@@ -5,10 +5,7 @@
 
 #nullable disable
 
-using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -20,16 +17,16 @@ namespace Azure.ResourceManager.AppContainers
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _containerAppClientDiagnostics;
-        private ContainerAppsRestOperations _containerAppRestClient;
-        private ClientDiagnostics _managedEnvironmentClientDiagnostics;
-        private ManagedEnvironmentsRestOperations _managedEnvironmentRestClient;
-        private ClientDiagnostics _connectedEnvironmentClientDiagnostics;
-        private ConnectedEnvironmentsRestOperations _connectedEnvironmentRestClient;
         private ClientDiagnostics _availableWorkloadProfilesClientDiagnostics;
         private AvailableWorkloadProfilesRestOperations _availableWorkloadProfilesRestClient;
         private ClientDiagnostics _billingMetersClientDiagnostics;
         private BillingMetersRestOperations _billingMetersRestClient;
+        private ClientDiagnostics _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics;
+        private ConnectedEnvironmentsRestOperations _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient;
+        private ClientDiagnostics _containerAppClientDiagnostics;
+        private ContainerAppsRestOperations _containerAppRestClient;
+        private ClientDiagnostics _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics;
+        private ManagedEnvironmentsRestOperations _containerAppManagedEnvironmentManagedEnvironmentsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -43,16 +40,16 @@ namespace Azure.ResourceManager.AppContainers
         {
         }
 
-        private ClientDiagnostics ContainerAppClientDiagnostics => _containerAppClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppResource.ResourceType.Namespace, Diagnostics);
-        private ContainerAppsRestOperations ContainerAppRestClient => _containerAppRestClient ??= new ContainerAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerAppResource.ResourceType));
-        private ClientDiagnostics ManagedEnvironmentClientDiagnostics => _managedEnvironmentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ManagedEnvironmentResource.ResourceType.Namespace, Diagnostics);
-        private ManagedEnvironmentsRestOperations ManagedEnvironmentRestClient => _managedEnvironmentRestClient ??= new ManagedEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedEnvironmentResource.ResourceType));
-        private ClientDiagnostics ConnectedEnvironmentClientDiagnostics => _connectedEnvironmentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ConnectedEnvironmentResource.ResourceType.Namespace, Diagnostics);
-        private ConnectedEnvironmentsRestOperations ConnectedEnvironmentRestClient => _connectedEnvironmentRestClient ??= new ConnectedEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ConnectedEnvironmentResource.ResourceType));
         private ClientDiagnostics AvailableWorkloadProfilesClientDiagnostics => _availableWorkloadProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private AvailableWorkloadProfilesRestOperations AvailableWorkloadProfilesRestClient => _availableWorkloadProfilesRestClient ??= new AvailableWorkloadProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics BillingMetersClientDiagnostics => _billingMetersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private BillingMetersRestOperations BillingMetersRestClient => _billingMetersRestClient ??= new BillingMetersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ContainerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics => _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppConnectedEnvironmentResource.ResourceType.Namespace, Diagnostics);
+        private ConnectedEnvironmentsRestOperations ContainerAppConnectedEnvironmentConnectedEnvironmentsRestClient => _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient ??= new ConnectedEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerAppConnectedEnvironmentResource.ResourceType));
+        private ClientDiagnostics ContainerAppClientDiagnostics => _containerAppClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppResource.ResourceType.Namespace, Diagnostics);
+        private ContainerAppsRestOperations ContainerAppRestClient => _containerAppRestClient ??= new ContainerAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerAppResource.ResourceType));
+        private ClientDiagnostics ContainerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics => _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppManagedEnvironmentResource.ResourceType.Namespace, Diagnostics);
+        private ManagedEnvironmentsRestOperations ContainerAppManagedEnvironmentManagedEnvironmentsRestClient => _containerAppManagedEnvironmentManagedEnvironmentsRestClient ??= new ManagedEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerAppManagedEnvironmentResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -61,397 +58,225 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
+        /// Get all available workload profiles for a location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/availableManagedEnvironmentsWorkloadProfileTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableWorkloadProfiles_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ContainerAppAvailableWorkloadProfile" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerAppAvailableWorkloadProfile> GetAvailableWorkloadProfilesAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableWorkloadProfilesRestClient.CreateGetRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableWorkloadProfilesRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerAppAvailableWorkloadProfile.DeserializeContainerAppAvailableWorkloadProfile, AvailableWorkloadProfilesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableWorkloadProfiles", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get all available workload profiles for a location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/availableManagedEnvironmentsWorkloadProfileTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableWorkloadProfiles_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContainerAppAvailableWorkloadProfile" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerAppAvailableWorkloadProfile> GetAvailableWorkloadProfiles(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableWorkloadProfilesRestClient.CreateGetRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableWorkloadProfilesRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerAppAvailableWorkloadProfile.DeserializeContainerAppAvailableWorkloadProfile, AvailableWorkloadProfilesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableWorkloadProfiles", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get all billingMeters for a location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/billingMeters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingMeters_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ContainerAppBillingMeter" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerAppBillingMeter> GetBillingMetersAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BillingMetersRestClient.CreateGetRequest(Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ContainerAppBillingMeter.DeserializeContainerAppBillingMeter, BillingMetersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBillingMeters", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get all billingMeters for a location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/billingMeters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingMeters_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContainerAppBillingMeter" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerAppBillingMeter> GetBillingMeters(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BillingMetersRestClient.CreateGetRequest(Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ContainerAppBillingMeter.DeserializeContainerAppBillingMeter, BillingMetersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBillingMeters", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get all connectedEnvironments for a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/connectedEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ContainerAppConnectedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironmentsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppConnectedEnvironmentConnectedEnvironmentsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppConnectedEnvironmentConnectedEnvironmentsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppConnectedEnvironmentResource(Client, ContainerAppConnectedEnvironmentData.DeserializeContainerAppConnectedEnvironmentData(e)), ContainerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerAppConnectedEnvironments", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get all connectedEnvironments for a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/connectedEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContainerAppConnectedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironments(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppConnectedEnvironmentConnectedEnvironmentsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppConnectedEnvironmentConnectedEnvironmentsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppConnectedEnvironmentResource(Client, ContainerAppConnectedEnvironmentData.DeserializeContainerAppConnectedEnvironmentData(e)), ContainerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerAppConnectedEnvironments", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Get the Container Apps in a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/containerApps
-        /// Operation Id: ContainerApps_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/containerApps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContainerAppResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppResource> GetContainerAppsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerAppResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ContainerAppClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerApps");
-                scope.Start();
-                try
-                {
-                    var response = await ContainerAppRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ContainerAppResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ContainerAppClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerApps");
-                scope.Start();
-                try
-                {
-                    var response = await ContainerAppRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppResource(Client, ContainerAppData.DeserializeContainerAppData(e)), ContainerAppClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerApps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get the Container Apps in a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/containerApps
-        /// Operation Id: ContainerApps_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/containerApps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerAppResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppResource> GetContainerApps(CancellationToken cancellationToken = default)
         {
-            Page<ContainerAppResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ContainerAppClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerApps");
-                scope.Start();
-                try
-                {
-                    var response = ContainerAppRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ContainerAppResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ContainerAppClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetContainerApps");
-                scope.Start();
-                try
-                {
-                    var response = ContainerAppRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppResource(Client, ContainerAppData.DeserializeContainerAppData(e)), ContainerAppClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerApps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get all Managed Environments for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/managedEnvironments
-        /// Operation Id: ManagedEnvironments_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/managedEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedEnvironmentResource> GetManagedEnvironmentsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ContainerAppManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironmentsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedEnvironmentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ManagedEnvironmentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = await ManagedEnvironmentRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedEnvironmentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ManagedEnvironmentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = await ManagedEnvironmentRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppManagedEnvironmentResource(Client, ContainerAppManagedEnvironmentData.DeserializeContainerAppManagedEnvironmentData(e)), ContainerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerAppManagedEnvironments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get all Managed Environments for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/managedEnvironments
-        /// Operation Id: ManagedEnvironments_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/managedEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedEnvironmentResource> GetManagedEnvironments(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerAppManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironments(CancellationToken cancellationToken = default)
         {
-            Page<ManagedEnvironmentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ManagedEnvironmentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = ManagedEnvironmentRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedEnvironmentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ManagedEnvironmentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = ManagedEnvironmentRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Get all connectedEnvironments for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/connectedEnvironments
-        /// Operation Id: ConnectedEnvironments_ListBySubscription
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConnectedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConnectedEnvironmentResource> GetConnectedEnvironmentsAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ConnectedEnvironmentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConnectedEnvironmentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConnectedEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = await ConnectedEnvironmentRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConnectedEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ConnectedEnvironmentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ConnectedEnvironmentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConnectedEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = await ConnectedEnvironmentRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConnectedEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Get all connectedEnvironments for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/connectedEnvironments
-        /// Operation Id: ConnectedEnvironments_ListBySubscription
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConnectedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConnectedEnvironmentResource> GetConnectedEnvironments(CancellationToken cancellationToken = default)
-        {
-            Page<ConnectedEnvironmentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConnectedEnvironmentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConnectedEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = ConnectedEnvironmentRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConnectedEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ConnectedEnvironmentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ConnectedEnvironmentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConnectedEnvironments");
-                scope.Start();
-                try
-                {
-                    var response = ConnectedEnvironmentRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConnectedEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Get all available workload profiles for a location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/availableManagedEnvironmentsWorkloadProfileTypes
-        /// Operation Id: AvailableWorkloadProfiles_Get
-        /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailableWorkloadProfile" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AvailableWorkloadProfile> GetAvailableWorkloadProfilesAsync(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<AvailableWorkloadProfile>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AvailableWorkloadProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableWorkloadProfiles");
-                scope.Start();
-                try
-                {
-                    var response = await AvailableWorkloadProfilesRestClient.GetAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AvailableWorkloadProfile>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AvailableWorkloadProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableWorkloadProfiles");
-                scope.Start();
-                try
-                {
-                    var response = await AvailableWorkloadProfilesRestClient.GetNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Get all available workload profiles for a location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/availableManagedEnvironmentsWorkloadProfileTypes
-        /// Operation Id: AvailableWorkloadProfiles_Get
-        /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailableWorkloadProfile" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AvailableWorkloadProfile> GetAvailableWorkloadProfiles(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            Page<AvailableWorkloadProfile> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = AvailableWorkloadProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableWorkloadProfiles");
-                scope.Start();
-                try
-                {
-                    var response = AvailableWorkloadProfilesRestClient.Get(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AvailableWorkloadProfile> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = AvailableWorkloadProfilesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableWorkloadProfiles");
-                scope.Start();
-                try
-                {
-                    var response = AvailableWorkloadProfilesRestClient.GetNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Get all billingMeters for a location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/billingMeters
-        /// Operation Id: BillingMeters_Get
-        /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingMeter" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingMeter> GetBillingMetersAsync(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<BillingMeter>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BillingMetersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBillingMeters");
-                scope.Start();
-                try
-                {
-                    var response = await BillingMetersRestClient.GetAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// Get all billingMeters for a location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/billingMeters
-        /// Operation Id: BillingMeters_Get
-        /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingMeter" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingMeter> GetBillingMeters(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            Page<BillingMeter> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = BillingMetersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBillingMeters");
-                scope.Start();
-                try
-                {
-                    var response = BillingMetersRestClient.Get(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppManagedEnvironmentResource(Client, ContainerAppManagedEnvironmentData.DeserializeContainerAppManagedEnvironmentData(e)), ContainerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerAppManagedEnvironments", "value", "nextLink", cancellationToken);
         }
     }
 }

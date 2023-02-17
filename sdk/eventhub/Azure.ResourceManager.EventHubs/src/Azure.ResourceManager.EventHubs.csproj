@@ -1,13 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.1.0-beta.1</Version>
+    <Version>1.1.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.EventHubs</PackageId>
-    <Description>
-      Azure management client SDK for Azure resource provider Microsoft.EventHub.
-      This is a stable version. This version uses a next-generation code generator that introduces important breaking changes, but also new features (such as intuitive authentication, custom HTTP pipeline, distributed tracing and much more).
-    </Description>
+    <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.EventHub.</Description>
     <PackageTags>azure;management;eventhub</PackageTags>
     <NoWarn>$(NoWarn);CS1591;</NoWarn>
   </PropertyGroup>

@@ -12,6 +12,8 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.WebPubSub.Client.Tests.Protocols
 {
+    [Parallelizable(ParallelScope.Self)]
+    [TestFixture]
     public class JsonProtocolTests
     {
         private class JsonData

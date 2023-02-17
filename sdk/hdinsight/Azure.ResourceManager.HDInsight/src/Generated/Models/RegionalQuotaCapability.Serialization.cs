@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<long> coresAvailable = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("regionName"))
+                if (property.NameEquals("regionName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     regionName = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("coresUsed"))
+                if (property.NameEquals("coresUsed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     coresUsed = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("coresAvailable"))
+                if (property.NameEquals("coresAvailable"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

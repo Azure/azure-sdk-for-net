@@ -5,6 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: DataLakeAnalytics
 namespace: Azure.ResourceManager.DataLakeAnalytics
@@ -40,9 +41,9 @@ rename-mapping:
   UpdateStorageAccountWithAccountParameters: StorageAccountForDataLakeAnalyticsAccountUpdateContent
   UpdateComputePolicyWithAccountParameters: ComputePolicyForDataLakeAnalyticsAccountUpdateContent
   UpdateFirewallRuleWithAccountParameters: FirewallRuleForDataLakeAnalyticsAccountUpdateContent
-  TierType: CommitmentTierType
+  TierType: DataLakeAnalyticsCommitmentTierType
   CheckNameAvailabilityParameters: DataLakeAnalyticsAccountNameAvailabilityContent
-  NameAvailabilityInformation: DataLakeAnalyticsNameAccountAvailabilityResult
+  NameAvailabilityInformation: DataLakeAnalyticsAccountNameAvailabilityResult
   CheckNameAvailabilityParametersType: DataLakeAnalyticsResourceType
   FirewallRule.properties.startIpAddress: -|ip-address
   FirewallRule.properties.endIpAddress: -|ip-address

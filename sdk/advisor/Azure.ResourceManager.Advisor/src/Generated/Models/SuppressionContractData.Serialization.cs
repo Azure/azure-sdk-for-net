@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.Advisor
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(SuppressionId))
             {
-                writer.WritePropertyName("suppressionId");
+                writer.WritePropertyName("suppressionId"u8);
                 writer.WriteStringValue(SuppressionId);
             }
             if (Optional.IsDefined(Ttl))
             {
-                writer.WritePropertyName("ttl");
+                writer.WritePropertyName("ttl"u8);
                 writer.WriteStringValue(Ttl);
             }
             writer.WriteEndObject();
@@ -44,32 +44,32 @@ namespace Azure.ResourceManager.Advisor
             Optional<DateTimeOffset> expirationTimeStamp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.Advisor
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("suppressionId"))
+                        if (property0.NameEquals("suppressionId"u8))
                         {
                             suppressionId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("ttl"))
+                        if (property0.NameEquals("ttl"u8))
                         {
                             ttl = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("expirationTimeStamp"))
+                        if (property0.NameEquals("expirationTimeStamp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

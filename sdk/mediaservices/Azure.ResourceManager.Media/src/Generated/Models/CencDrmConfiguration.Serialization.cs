@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PlayReady))
             {
-                writer.WritePropertyName("playReady");
+                writer.WritePropertyName("playReady"u8);
                 writer.WriteObjectValue(PlayReady);
             }
             if (Optional.IsDefined(Widevine))
             {
-                writer.WritePropertyName("widevine");
+                writer.WritePropertyName("widevine"u8);
                 writer.WriteObjectValue(Widevine);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<StreamingPolicyWidevineConfiguration> widevine = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("playReady"))
+                if (property.NameEquals("playReady"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Media.Models
                     playReady = StreamingPolicyPlayReadyConfiguration.DeserializeStreamingPolicyPlayReadyConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("widevine"))
+                if (property.NameEquals("widevine"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

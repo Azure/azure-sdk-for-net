@@ -4,7 +4,7 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.1.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.Redis</PackageId>
-    <Description>Azure Resource Manager client SDK for Azure resource provider Redis</Description>
+    <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Cache Redis.</Description>
     <PackageTags>azure;management;arm;resource manager;redis</PackageTags>
   </PropertyGroup>
 </Project>

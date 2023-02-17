@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using System;
 using System.Collections.Concurrent;
 using System.Linq;
@@ -13,7 +15,6 @@ using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
-
 using OpenTelemetry;
 using OpenTelemetry.Trace;
 
@@ -28,6 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
         {
         }
 
+#if !NET461
         /// <summary>
         /// This test validates that when an app instrumented with the AzureMonitorExporter receives an HTTP request,
         /// A TelemetryItem is created matching that request.
@@ -44,9 +46,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
                 .WithWebHostBuilder(builder =>
                     builder.ConfigureTestServices(services =>
                     {
-                        services.AddOpenTelemetryTracing((builder) => builder
+                        services.AddOpenTelemetry().WithTracing(builder => builder
                             .AddAspNetCoreInstrumentation()
                             .AddAzureMonitorTraceExporterForTest(out telemetryItems));
+                        ;
                     }))
                 .CreateClient();
 
@@ -68,5 +71,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
                 expectedResponseCode: "200",
                 expectedUrl: request.AbsoluteUri);
         }
+#endif
     }
 }

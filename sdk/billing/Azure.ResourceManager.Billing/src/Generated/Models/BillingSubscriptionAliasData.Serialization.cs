@@ -19,69 +19,69 @@ namespace Azure.ResourceManager.Billing
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AutoRenew))
             {
-                writer.WritePropertyName("autoRenew");
+                writer.WritePropertyName("autoRenew"u8);
                 writer.WriteStringValue(AutoRenew.Value.ToString());
             }
             if (Optional.IsDefined(BeneficiaryTenantId))
             {
-                writer.WritePropertyName("beneficiaryTenantId");
+                writer.WritePropertyName("beneficiaryTenantId"u8);
                 writer.WriteStringValue(BeneficiaryTenantId);
             }
             if (Optional.IsDefined(BillingFrequency))
             {
-                writer.WritePropertyName("billingFrequency");
+                writer.WritePropertyName("billingFrequency"u8);
                 writer.WriteStringValue(BillingFrequency);
             }
             if (Optional.IsDefined(BillingProfileId))
             {
-                writer.WritePropertyName("billingProfileId");
+                writer.WritePropertyName("billingProfileId"u8);
                 writer.WriteStringValue(BillingProfileId);
             }
             if (Optional.IsDefined(ConsumptionCostCenter))
             {
-                writer.WritePropertyName("consumptionCostCenter");
+                writer.WritePropertyName("consumptionCostCenter"u8);
                 writer.WriteStringValue(ConsumptionCostCenter);
             }
             if (Optional.IsDefined(CustomerId))
             {
-                writer.WritePropertyName("customerId");
+                writer.WritePropertyName("customerId"u8);
                 writer.WriteStringValue(CustomerId);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(InvoiceSectionId))
             {
-                writer.WritePropertyName("invoiceSectionId");
+                writer.WritePropertyName("invoiceSectionId"u8);
                 writer.WriteStringValue(InvoiceSectionId);
             }
             if (Optional.IsDefined(ProductTypeId))
             {
-                writer.WritePropertyName("productTypeId");
+                writer.WritePropertyName("productTypeId"u8);
                 writer.WriteStringValue(ProductTypeId);
             }
             if (Optional.IsDefined(Quantity))
             {
-                writer.WritePropertyName("quantity");
+                writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
             if (Optional.IsDefined(SkuId))
             {
-                writer.WritePropertyName("skuId");
+                writer.WritePropertyName("skuId"u8);
                 writer.WriteStringValue(SkuId);
             }
             if (Optional.IsDefined(TermDuration))
             {
-                writer.WritePropertyName("termDuration");
+                writer.WritePropertyName("termDuration"u8);
                 writer.WriteStringValue(TermDuration.Value, "P");
             }
-            writer.WritePropertyName("enrollmentAccountSubscriptionDetails");
+            writer.WritePropertyName("enrollmentAccountSubscriptionDetails"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -134,32 +134,32 @@ namespace Azure.ResourceManager.Billing
             Optional<DateTimeOffset> enrollmentAccountStartDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Billing
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("autoRenew"))
+                        if (property0.NameEquals("autoRenew"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -178,17 +178,17 @@ namespace Azure.ResourceManager.Billing
                             autoRenew = new BillingSubscriptionAutoRenewState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("beneficiaryTenantId"))
+                        if (property0.NameEquals("beneficiaryTenantId"u8))
                         {
                             beneficiaryTenantId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("billingFrequency"))
+                        if (property0.NameEquals("billingFrequency"u8))
                         {
                             billingFrequency = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("billingProfileId"))
+                        if (property0.NameEquals("billingProfileId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Billing
                             billingProfileId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("billingPolicies"))
+                        if (property0.NameEquals("billingPolicies"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -213,47 +213,47 @@ namespace Azure.ResourceManager.Billing
                             billingPolicies = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("billingProfileDisplayName"))
+                        if (property0.NameEquals("billingProfileDisplayName"u8))
                         {
                             billingProfileDisplayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("billingProfileName"))
+                        if (property0.NameEquals("billingProfileName"u8))
                         {
                             billingProfileName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("consumptionCostCenter"))
+                        if (property0.NameEquals("consumptionCostCenter"u8))
                         {
                             consumptionCostCenter = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("customerId"))
+                        if (property0.NameEquals("customerId"u8))
                         {
                             customerId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("customerDisplayName"))
+                        if (property0.NameEquals("customerDisplayName"u8))
                         {
                             customerDisplayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("enrollmentAccountId"))
+                        if (property0.NameEquals("enrollmentAccountId"u8))
                         {
                             enrollmentAccountId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("enrollmentAccountDisplayName"))
+                        if (property0.NameEquals("enrollmentAccountDisplayName"u8))
                         {
                             enrollmentAccountDisplayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("invoiceSectionId"))
+                        if (property0.NameEquals("invoiceSectionId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -263,17 +263,17 @@ namespace Azure.ResourceManager.Billing
                             invoiceSectionId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("invoiceSectionDisplayName"))
+                        if (property0.NameEquals("invoiceSectionDisplayName"u8))
                         {
                             invoiceSectionDisplayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("invoiceSectionName"))
+                        if (property0.NameEquals("invoiceSectionName"u8))
                         {
                             invoiceSectionName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastMonthCharges"))
+                        if (property0.NameEquals("lastMonthCharges"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Billing
                             lastMonthCharges = BillingAmount.DeserializeBillingAmount(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("monthToDateCharges"))
+                        if (property0.NameEquals("monthToDateCharges"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Billing
                             monthToDateCharges = BillingAmount.DeserializeBillingAmount(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("nextBillingCycleDetails"))
+                        if (property0.NameEquals("nextBillingCycleDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -303,27 +303,27 @@ namespace Azure.ResourceManager.Billing
                             nextBillingCycleDetails = NextBillingCycleDetails.DeserializeNextBillingCycleDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("offerId"))
+                        if (property0.NameEquals("offerId"u8))
                         {
                             offerId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("productCategory"))
+                        if (property0.NameEquals("productCategory"u8))
                         {
                             productCategory = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("productType"))
+                        if (property0.NameEquals("productType"u8))
                         {
                             productType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("productTypeId"))
+                        if (property0.NameEquals("productTypeId"u8))
                         {
                             productTypeId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("purchaseDate"))
+                        if (property0.NameEquals("purchaseDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Billing
                             purchaseDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("quantity"))
+                        if (property0.NameEquals("quantity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Billing
                             quantity = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("reseller"))
+                        if (property0.NameEquals("reseller"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Billing
                             reseller = CreatedSubscriptionReseller.DeserializeCreatedSubscriptionReseller(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("renewalTermDetails"))
+                        if (property0.NameEquals("renewalTermDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -363,17 +363,17 @@ namespace Azure.ResourceManager.Billing
                             renewalTermDetails = SubscriptionRenewalTermDetails.DeserializeSubscriptionRenewalTermDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("skuDescription"))
+                        if (property0.NameEquals("skuDescription"u8))
                         {
                             skuDescription = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("skuId"))
+                        if (property0.NameEquals("skuId"u8))
                         {
                             skuId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -383,12 +383,12 @@ namespace Azure.ResourceManager.Billing
                             status = new BillingSubscriptionStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("subscriptionId"))
+                        if (property0.NameEquals("subscriptionId"u8))
                         {
                             subscriptionId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("suspensionReasons"))
+                        if (property0.NameEquals("suspensionReasons"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Billing
                             suspensionReasons = array;
                             continue;
                         }
-                        if (property0.NameEquals("termDuration"))
+                        if (property0.NameEquals("termDuration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Billing
                             termDuration = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("termStartDate"))
+                        if (property0.NameEquals("termStartDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Billing
                             termStartDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("termEndDate"))
+                        if (property0.NameEquals("termEndDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Billing
                             termEndDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("billingSubscriptionId"))
+                        if (property0.NameEquals("billingSubscriptionId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Billing
                             billingSubscriptionId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("enrollmentAccountSubscriptionDetails"))
+                        if (property0.NameEquals("enrollmentAccountSubscriptionDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Billing
                             }
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.NameEquals("subscriptionEnrollmentAccountStatus"))
+                                if (property1.NameEquals("subscriptionEnrollmentAccountStatus"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Billing
                                     subscriptionEnrollmentAccountStatus = new SubscriptionEnrollmentAccountStatus(property1.Value.GetString());
                                     continue;
                                 }
-                                if (property1.NameEquals("enrollmentAccountStartDate"))
+                                if (property1.NameEquals("enrollmentAccountStartDate"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {

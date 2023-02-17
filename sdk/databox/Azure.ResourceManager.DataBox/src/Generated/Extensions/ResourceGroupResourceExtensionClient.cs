@@ -52,8 +52,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This method provides the list of available skus for the given subscription, resource group and location.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/availableSkus
-        /// Operation Id: Service_ListAvailableSkusByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/availableSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ListAvailableSkusByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Filters for showing the available skus. </param>
@@ -61,43 +69,23 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> An async collection of <see cref="DataBoxSkuInformation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxSkuInformation> GetAvailableSkusAsync(AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataBoxSkuInformation>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableSkus");
-                scope.Start();
-                try
-                {
-                    var response = await ServiceRestClient.ListAvailableSkusByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataBoxSkuInformation>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableSkus");
-                scope.Start();
-                try
-                {
-                    var response = await ServiceRestClient.ListAvailableSkusByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceRestClient.CreateListAvailableSkusByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location, content);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceRestClient.CreateListAvailableSkusByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataBoxSkuInformation.DeserializeDataBoxSkuInformation, ServiceClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailableSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// This method provides the list of available skus for the given subscription, resource group and location.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/availableSkus
-        /// Operation Id: Service_ListAvailableSkusByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/availableSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ListAvailableSkusByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Filters for showing the available skus. </param>
@@ -105,43 +93,23 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> A collection of <see cref="DataBoxSkuInformation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxSkuInformation> GetAvailableSkus(AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
-            Page<DataBoxSkuInformation> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableSkus");
-                scope.Start();
-                try
-                {
-                    var response = ServiceRestClient.ListAvailableSkusByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataBoxSkuInformation> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ServiceClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAvailableSkus");
-                scope.Start();
-                try
-                {
-                    var response = ServiceRestClient.ListAvailableSkusByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceRestClient.CreateListAvailableSkusByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location, content);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceRestClient.CreateListAvailableSkusByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataBoxSkuInformation.DeserializeDataBoxSkuInformation, ServiceClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailableSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// This method does all necessary pre-job creation validation under resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/validateInputs
-        /// Operation Id: Service_ValidateInputsByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ValidateInputsByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Inputs of the customer. </param>
@@ -164,8 +132,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This method does all necessary pre-job creation validation under resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/validateInputs
-        /// Operation Id: Service_ValidateInputsByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ValidateInputsByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Inputs of the customer. </param>
@@ -188,8 +164,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This API provides configuration details specific to given region/location at Resource group level.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration
-        /// Operation Id: Service_RegionConfigurationByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_RegionConfigurationByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Request body to get the configuration for the region at resource group level. </param>
@@ -212,8 +196,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This API provides configuration details specific to given region/location at Resource group level.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration
-        /// Operation Id: Service_RegionConfigurationByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_RegionConfigurationByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Request body to get the configuration for the region at resource group level. </param>

@@ -17,37 +17,37 @@ namespace Azure.ResourceManager.Dns.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Host))
             {
-                writer.WritePropertyName("host");
+                writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
             if (Optional.IsDefined(Email))
             {
-                writer.WritePropertyName("email");
+                writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
             if (Optional.IsDefined(SerialNumber))
             {
-                writer.WritePropertyName("serialNumber");
+                writer.WritePropertyName("serialNumber"u8);
                 writer.WriteNumberValue(SerialNumber.Value);
             }
             if (Optional.IsDefined(RefreshTimeInSeconds))
             {
-                writer.WritePropertyName("refreshTime");
+                writer.WritePropertyName("refreshTime"u8);
                 writer.WriteNumberValue(RefreshTimeInSeconds.Value);
             }
             if (Optional.IsDefined(RetryTimeInSeconds))
             {
-                writer.WritePropertyName("retryTime");
+                writer.WritePropertyName("retryTime"u8);
                 writer.WriteNumberValue(RetryTimeInSeconds.Value);
             }
             if (Optional.IsDefined(ExpireTimeInSeconds))
             {
-                writer.WritePropertyName("expireTime");
+                writer.WritePropertyName("expireTime"u8);
                 writer.WriteNumberValue(ExpireTimeInSeconds.Value);
             }
             if (Optional.IsDefined(MinimumTtlInSeconds))
             {
-                writer.WritePropertyName("minimumTTL");
+                writer.WritePropertyName("minimumTTL"u8);
                 writer.WriteNumberValue(MinimumTtlInSeconds.Value);
             }
             writer.WriteEndObject();
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.Dns.Models
             Optional<long> minimumTTL = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("host"))
+                if (property.NameEquals("host"u8))
                 {
                     host = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("email"))
+                if (property.NameEquals("email"u8))
                 {
                     email = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serialNumber"))
+                if (property.NameEquals("serialNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Dns.Models
                     serialNumber = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("refreshTime"))
+                if (property.NameEquals("refreshTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Dns.Models
                     refreshTime = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("retryTime"))
+                if (property.NameEquals("retryTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Dns.Models
                     retryTime = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("expireTime"))
+                if (property.NameEquals("expireTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Dns.Models
                     expireTime = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("minimumTTL"))
+                if (property.NameEquals("minimumTTL"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

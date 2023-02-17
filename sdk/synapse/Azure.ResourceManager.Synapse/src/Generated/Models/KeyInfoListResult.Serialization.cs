@@ -17,25 +17,25 @@ namespace Azure.ResourceManager.Synapse.Models
         internal static KeyInfoListResult DeserializeKeyInfoListResult(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<KeyData>> value = default;
+            Optional<IReadOnlyList<SynapseKeyData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KeyData> array = new List<KeyData>();
+                    List<SynapseKeyData> array = new List<SynapseKeyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyData.DeserializeKeyData(item));
+                        array.Add(SynapseKeyData.DeserializeSynapseKeyData(item));
                     }
                     value = array;
                     continue;

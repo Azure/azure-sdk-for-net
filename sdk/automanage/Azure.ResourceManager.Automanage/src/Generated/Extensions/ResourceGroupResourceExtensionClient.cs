@@ -5,27 +5,14 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Automanage.Models;
 
 namespace Azure.ResourceManager.Automanage
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     internal partial class ResourceGroupResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _reportsClientDiagnostics;
-        private ReportsRestOperations _reportsRestClient;
-        private ClientDiagnostics _hcrpReportsClientDiagnostics;
-        private HcrpReportsRestOperations _hcrpReportsRestClient;
-        private ClientDiagnostics _hciReportsClientDiagnostics;
-        private HCIReportsRestOperations _hciReportsRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class for mocking. </summary>
         protected ResourceGroupResourceExtensionClient()
         {
@@ -38,13 +25,6 @@ namespace Azure.ResourceManager.Automanage
         {
         }
 
-        private ClientDiagnostics reportsClientDiagnostics => _reportsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Automanage", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ReportsRestOperations reportsRestClient => _reportsRestClient ??= new ReportsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics HCRPReportsClientDiagnostics => _hcrpReportsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Automanage", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private HcrpReportsRestOperations HCRPReportsRestClient => _hcrpReportsRestClient ??= new HcrpReportsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics HCIReportsClientDiagnostics => _hciReportsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Automanage", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private HCIReportsRestOperations HCIReportsRestClient => _hciReportsRestClient ??= new HCIReportsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
@@ -56,180 +36,6 @@ namespace Azure.ResourceManager.Automanage
         public virtual ConfigurationProfileCollection GetConfigurationProfiles()
         {
             return GetCachedClient(Client => new ConfigurationProfileCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Retrieve a list of reports within a given configuration profile assignment
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports
-        /// Operation Id: reports_ListByConfigurationProfileAssignments
-        /// </summary>
-        /// <param name="vmName"> The name of the virtual machine. </param>
-        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Report> GetReportsByConfigurationProfileAssignmentsAsync(string vmName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<Report>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = reportsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetReportsByConfigurationProfileAssignments");
-                scope.Start();
-                try
-                {
-                    var response = await reportsRestClient.ListByConfigurationProfileAssignmentsAsync(Id.SubscriptionId, Id.ResourceGroupName, vmName, configurationProfileAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// Retrieve a list of reports within a given configuration profile assignment
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports
-        /// Operation Id: reports_ListByConfigurationProfileAssignments
-        /// </summary>
-        /// <param name="vmName"> The name of the virtual machine. </param>
-        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Report> GetReportsByConfigurationProfileAssignments(string vmName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Page<Report> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = reportsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetReportsByConfigurationProfileAssignments");
-                scope.Start();
-                try
-                {
-                    var response = reportsRestClient.ListByConfigurationProfileAssignments(Id.SubscriptionId, Id.ResourceGroupName, vmName, configurationProfileAssignmentName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// Retrieve a list of reports within a given configuration profile assignment
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports
-        /// Operation Id: HCRPReports_ListByConfigurationProfileAssignments
-        /// </summary>
-        /// <param name="machineName"> The name of the Arc machine. </param>
-        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Report> GetHCRPReportsByConfigurationProfileAssignmentsAsync(string machineName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<Report>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HCRPReportsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetHCRPReportsByConfigurationProfileAssignments");
-                scope.Start();
-                try
-                {
-                    var response = await HCRPReportsRestClient.ListByConfigurationProfileAssignmentsAsync(Id.SubscriptionId, Id.ResourceGroupName, machineName, configurationProfileAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// Retrieve a list of reports within a given configuration profile assignment
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports
-        /// Operation Id: HCRPReports_ListByConfigurationProfileAssignments
-        /// </summary>
-        /// <param name="machineName"> The name of the Arc machine. </param>
-        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Report> GetHCRPReportsByConfigurationProfileAssignments(string machineName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Page<Report> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HCRPReportsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetHCRPReportsByConfigurationProfileAssignments");
-                scope.Start();
-                try
-                {
-                    var response = HCRPReportsRestClient.ListByConfigurationProfileAssignments(Id.SubscriptionId, Id.ResourceGroupName, machineName, configurationProfileAssignmentName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// Retrieve a list of reports within a given configuration profile assignment
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports
-        /// Operation Id: HCIReports_ListByConfigurationProfileAssignments
-        /// </summary>
-        /// <param name="clusterName"> The name of the Arc machine. </param>
-        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Report> GetHCIReportsByConfigurationProfileAssignmentsAsync(string clusterName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<Report>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HCIReportsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetHCIReportsByConfigurationProfileAssignments");
-                scope.Start();
-                try
-                {
-                    var response = await HCIReportsRestClient.ListByConfigurationProfileAssignmentsAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, configurationProfileAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// Retrieve a list of reports within a given configuration profile assignment
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports
-        /// Operation Id: HCIReports_ListByConfigurationProfileAssignments
-        /// </summary>
-        /// <param name="clusterName"> The name of the Arc machine. </param>
-        /// <param name="configurationProfileAssignmentName"> The configuration profile assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Report" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Report> GetHCIReportsByConfigurationProfileAssignments(string clusterName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Page<Report> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HCIReportsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetHCIReportsByConfigurationProfileAssignments");
-                scope.Start();
-                try
-                {
-                    var response = HCIReportsRestClient.ListByConfigurationProfileAssignments(Id.SubscriptionId, Id.ResourceGroupName, clusterName, configurationProfileAssignmentName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Nginx.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PublicIPAddresses))
             {
-                writer.WritePropertyName("publicIPAddresses");
+                writer.WritePropertyName("publicIPAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in PublicIPAddresses)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Nginx.Models
             }
             if (Optional.IsCollectionDefined(PrivateIPAddresses))
             {
-                writer.WritePropertyName("privateIPAddresses");
+                writer.WritePropertyName("privateIPAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateIPAddresses)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Nginx.Models
             Optional<IList<NginxPrivateIPAddress>> privateIPAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publicIPAddresses"))
+                if (property.NameEquals("publicIPAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.Nginx.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                     }
                     publicIPAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("privateIPAddresses"))
+                if (property.NameEquals("privateIPAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

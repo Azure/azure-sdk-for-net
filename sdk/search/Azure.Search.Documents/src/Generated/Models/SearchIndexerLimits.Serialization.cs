@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<long> maxDocumentContentCharactersToExtract = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxRunTime"))
+                if (property.NameEquals("maxRunTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     maxRunTime = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("maxDocumentExtractionSize"))
+                if (property.NameEquals("maxDocumentExtractionSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     maxDocumentExtractionSize = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("maxDocumentContentCharactersToExtract"))
+                if (property.NameEquals("maxDocumentContentCharactersToExtract"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

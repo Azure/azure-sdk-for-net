@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static SentinelOnboardingStatesList DeserializeSentinelOnboardingStatesList(JsonElement element)
         {
-            IReadOnlyList<SentinelOnboardingStateData> value = default;
+            IReadOnlyList<SecurityInsightsSentinelOnboardingStateData> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
-                    List<SentinelOnboardingStateData> array = new List<SentinelOnboardingStateData>();
+                    List<SecurityInsightsSentinelOnboardingStateData> array = new List<SecurityInsightsSentinelOnboardingStateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SentinelOnboardingStateData.DeserializeSentinelOnboardingStateData(item));
+                        array.Add(SecurityInsightsSentinelOnboardingStateData.DeserializeSecurityInsightsSentinelOnboardingStateData(item));
                     }
                     value = array;
                     continue;

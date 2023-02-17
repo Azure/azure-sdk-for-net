@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Automation.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("algorithm");
+            writer.WritePropertyName("algorithm"u8);
             writer.WriteStringValue(Algorithm);
-            writer.WritePropertyName("value");
+            writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Automation.Models
             string value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("algorithm"))
+                if (property.NameEquals("algorithm"u8))
                 {
                     algorithm = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;

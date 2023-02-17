@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.OperationalInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DataExportId))
             {
-                writer.WritePropertyName("dataExportId");
+                writer.WritePropertyName("dataExportId"u8);
                 writer.WriteStringValue(DataExportId.Value);
             }
             if (Optional.IsCollectionDefined(TableNames))
             {
-                writer.WritePropertyName("tableNames");
+                writer.WritePropertyName("tableNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in TableNames)
                 {
@@ -38,31 +38,31 @@ namespace Azure.ResourceManager.OperationalInsights
             }
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enable");
+                writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(CreatedOn))
             {
-                writer.WritePropertyName("createdDate");
+                writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "R");
             }
             if (Optional.IsDefined(LastModifiedOn))
             {
-                writer.WritePropertyName("lastModifiedDate");
+                writer.WritePropertyName("lastModifiedDate"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "R");
             }
-            writer.WritePropertyName("destination");
+            writer.WritePropertyName("destination"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId");
+                writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            writer.WritePropertyName("metaData");
+            writer.WritePropertyName("metaData"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(EventHubName))
             {
-                writer.WritePropertyName("eventHubName");
+                writer.WritePropertyName("eventHubName"u8);
                 writer.WriteStringValue(EventHubName);
             }
             writer.WriteEndObject();
@@ -83,36 +83,36 @@ namespace Azure.ResourceManager.OperationalInsights
             Optional<DateTimeOffset> createdDate = default;
             Optional<DateTimeOffset> lastModifiedDate = default;
             Optional<ResourceIdentifier> resourceId = default;
-            Optional<OperationalInsightsDataExportsDestinationType> type0 = default;
+            Optional<OperationalInsightsDataExportDestinationType> type0 = default;
             Optional<string> eventHubName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("dataExportId"))
+                        if (property0.NameEquals("dataExportId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             dataExportId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("tableNames"))
+                        if (property0.NameEquals("tableNames"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             tableNames = array;
                             continue;
                         }
-                        if (property0.NameEquals("enable"))
+                        if (property0.NameEquals("enable"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             enable = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("createdDate"))
+                        if (property0.NameEquals("createdDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             createdDate = property0.Value.GetDateTimeOffset("R");
                             continue;
                         }
-                        if (property0.NameEquals("lastModifiedDate"))
+                        if (property0.NameEquals("lastModifiedDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             lastModifiedDate = property0.Value.GetDateTimeOffset("R");
                             continue;
                         }
-                        if (property0.NameEquals("destination"))
+                        if (property0.NameEquals("destination"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             }
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                if (property1.NameEquals("resourceId"))
+                                if (property1.NameEquals("resourceId"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
@@ -195,17 +195,17 @@ namespace Azure.ResourceManager.OperationalInsights
                                     resourceId = new ResourceIdentifier(property1.Value.GetString());
                                     continue;
                                 }
-                                if (property1.NameEquals("type"))
+                                if (property1.NameEquals("type"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
                                         property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
-                                    type0 = new OperationalInsightsDataExportsDestinationType(property1.Value.GetString());
+                                    type0 = new OperationalInsightsDataExportDestinationType(property1.Value.GetString());
                                     continue;
                                 }
-                                if (property1.NameEquals("metaData"))
+                                if (property1.NameEquals("metaData"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.OperationalInsights
                                     }
                                     foreach (var property2 in property1.Value.EnumerateObject())
                                     {
-                                        if (property2.NameEquals("eventHubName"))
+                                        if (property2.NameEquals("eventHubName"u8))
                                         {
                                             eventHubName = property2.Value.GetString();
                                             continue;

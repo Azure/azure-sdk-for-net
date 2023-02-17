@@ -17,41 +17,41 @@ namespace Azure.ResourceManager.ApiManagement
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(Terms))
             {
-                writer.WritePropertyName("terms");
+                writer.WritePropertyName("terms"u8);
                 writer.WriteStringValue(Terms);
             }
             if (Optional.IsDefined(IsSubscriptionRequired))
             {
-                writer.WritePropertyName("subscriptionRequired");
+                writer.WritePropertyName("subscriptionRequired"u8);
                 writer.WriteBooleanValue(IsSubscriptionRequired.Value);
             }
             if (Optional.IsDefined(IsApprovalRequired))
             {
-                writer.WritePropertyName("approvalRequired");
+                writer.WritePropertyName("approvalRequired"u8);
                 writer.WriteBooleanValue(IsApprovalRequired.Value);
             }
             if (Optional.IsDefined(SubscriptionsLimit))
             {
-                writer.WritePropertyName("subscriptionsLimit");
+                writer.WritePropertyName("subscriptionsLimit"u8);
                 writer.WriteNumberValue(SubscriptionsLimit.Value);
             }
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             writer.WriteEndObject();
@@ -73,32 +73,32 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,17 +107,17 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("terms"))
+                        if (property0.NameEquals("terms"u8))
                         {
                             terms = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("subscriptionRequired"))
+                        if (property0.NameEquals("subscriptionRequired"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ApiManagement
                             subscriptionRequired = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("approvalRequired"))
+                        if (property0.NameEquals("approvalRequired"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ApiManagement
                             approvalRequired = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("subscriptionsLimit"))
+                        if (property0.NameEquals("subscriptionsLimit"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement
                             subscriptionsLimit = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ApiManagement
                             state = property0.Value.GetString().ToApiManagementProductState();
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;

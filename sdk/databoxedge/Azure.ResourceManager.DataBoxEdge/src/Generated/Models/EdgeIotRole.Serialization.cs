@@ -17,28 +17,28 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(HostPlatform))
             {
-                writer.WritePropertyName("hostPlatform");
+                writer.WritePropertyName("hostPlatform"u8);
                 writer.WriteStringValue(HostPlatform.Value.ToString());
             }
             if (Optional.IsDefined(IotDeviceDetails))
             {
-                writer.WritePropertyName("ioTDeviceDetails");
+                writer.WritePropertyName("ioTDeviceDetails"u8);
                 writer.WriteObjectValue(IotDeviceDetails);
             }
             if (Optional.IsDefined(IotEdgeDeviceDetails))
             {
-                writer.WritePropertyName("ioTEdgeDeviceDetails");
+                writer.WritePropertyName("ioTEdgeDeviceDetails"u8);
                 writer.WriteObjectValue(IotEdgeDeviceDetails);
             }
             if (Optional.IsCollectionDefined(ShareMappings))
             {
-                writer.WritePropertyName("shareMappings");
+                writer.WritePropertyName("shareMappings"u8);
                 writer.WriteStartArray();
                 foreach (var item in ShareMappings)
                 {
@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             if (Optional.IsDefined(IotEdgeAgentInfo))
             {
-                writer.WritePropertyName("ioTEdgeAgentInfo");
+                writer.WritePropertyName("ioTEdgeAgentInfo"u8);
                 writer.WriteObjectValue(IotEdgeAgentInfo);
             }
             if (Optional.IsDefined(ComputeResource))
             {
-                writer.WritePropertyName("computeResource");
+                writer.WritePropertyName("computeResource"u8);
                 writer.WriteObjectValue(ComputeResource);
             }
             if (Optional.IsDefined(RoleStatus))
             {
-                writer.WritePropertyName("roleStatus");
+                writer.WritePropertyName("roleStatus"u8);
                 writer.WriteStringValue(RoleStatus.Value.ToString());
             }
             writer.WriteEndObject();
@@ -82,37 +82,37 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<DataBoxEdgeRoleStatus> roleStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new DataBoxEdgeRoleType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("hostPlatform"))
+                        if (property0.NameEquals("hostPlatform"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             hostPlatform = new DataBoxEdgeOSPlatformType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("ioTDeviceDetails"))
+                        if (property0.NameEquals("ioTDeviceDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             iotDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("ioTEdgeDeviceDetails"))
+                        if (property0.NameEquals("ioTEdgeDeviceDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             iotEdgeDeviceDetails = EdgeIotDeviceInfo.DeserializeEdgeIotDeviceInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("shareMappings"))
+                        if (property0.NameEquals("shareMappings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             shareMappings = array;
                             continue;
                         }
-                        if (property0.NameEquals("ioTEdgeAgentInfo"))
+                        if (property0.NameEquals("ioTEdgeAgentInfo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             iotEdgeAgentInfo = IotEdgeAgentInfo.DeserializeIotEdgeAgentInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("hostPlatformType"))
+                        if (property0.NameEquals("hostPlatformType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             hostPlatformType = new HostPlatformType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("computeResource"))
+                        if (property0.NameEquals("computeResource"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             computeResource = EdgeComputeResourceInfo.DeserializeEdgeComputeResourceInfo(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("roleStatus"))
+                        if (property0.NameEquals("roleStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

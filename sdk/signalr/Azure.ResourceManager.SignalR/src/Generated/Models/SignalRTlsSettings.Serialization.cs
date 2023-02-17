@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.SignalR.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientCertEnabled))
+            if (Optional.IsDefined(IsClientCertEnabled))
             {
-                writer.WritePropertyName("clientCertEnabled");
-                writer.WriteBooleanValue(ClientCertEnabled.Value);
+                writer.WritePropertyName("clientCertEnabled"u8);
+                writer.WriteBooleanValue(IsClientCertEnabled.Value);
             }
             writer.WriteEndObject();
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SignalR.Models
             Optional<bool> clientCertEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientCertEnabled"))
+                if (property.NameEquals("clientCertEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

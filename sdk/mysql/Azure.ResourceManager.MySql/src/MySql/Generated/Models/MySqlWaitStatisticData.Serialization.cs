@@ -17,51 +17,51 @@ namespace Azure.ResourceManager.MySql
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startTime");
+                writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
             if (Optional.IsDefined(EndOn))
             {
-                writer.WritePropertyName("endTime");
+                writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
             if (Optional.IsDefined(EventName))
             {
-                writer.WritePropertyName("eventName");
+                writer.WritePropertyName("eventName"u8);
                 writer.WriteStringValue(EventName);
             }
             if (Optional.IsDefined(EventTypeName))
             {
-                writer.WritePropertyName("eventTypeName");
+                writer.WritePropertyName("eventTypeName"u8);
                 writer.WriteStringValue(EventTypeName);
             }
             if (Optional.IsDefined(QueryId))
             {
-                writer.WritePropertyName("queryId");
+                writer.WritePropertyName("queryId"u8);
                 writer.WriteNumberValue(QueryId.Value);
             }
             if (Optional.IsDefined(DatabaseName))
             {
-                writer.WritePropertyName("databaseName");
+                writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
             if (Optional.IsDefined(UserId))
             {
-                writer.WritePropertyName("userId");
+                writer.WritePropertyName("userId"u8);
                 writer.WriteNumberValue(UserId.Value);
             }
             if (Optional.IsDefined(Count))
             {
-                writer.WritePropertyName("count");
+                writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
             if (Optional.IsDefined(TotalTimeInMinutes))
             {
-                writer.WritePropertyName("totalTimeInMs");
+                writer.WritePropertyName("totalTimeInMs"u8);
                 writer.WriteNumberValue(TotalTimeInMinutes.Value);
             }
             writer.WriteEndObject();
@@ -85,32 +85,32 @@ namespace Azure.ResourceManager.MySql
             Optional<double> totalTimeInMs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MySql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("startTime"))
+                        if (property0.NameEquals("startTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MySql
                             startTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("endTime"))
+                        if (property0.NameEquals("endTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -139,17 +139,17 @@ namespace Azure.ResourceManager.MySql
                             endTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("eventName"))
+                        if (property0.NameEquals("eventName"u8))
                         {
                             eventName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("eventTypeName"))
+                        if (property0.NameEquals("eventTypeName"u8))
                         {
                             eventTypeName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("queryId"))
+                        if (property0.NameEquals("queryId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -159,12 +159,12 @@ namespace Azure.ResourceManager.MySql
                             queryId = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("databaseName"))
+                        if (property0.NameEquals("databaseName"u8))
                         {
                             databaseName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("userId"))
+                        if (property0.NameEquals("userId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MySql
                             userId = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("count"))
+                        if (property0.NameEquals("count"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.MySql
                             count = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("totalTimeInMs"))
+                        if (property0.NameEquals("totalTimeInMs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

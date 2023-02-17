@@ -21,29 +21,29 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(VnetResourceId))
             {
-                writer.WritePropertyName("vnetResourceId");
+                writer.WritePropertyName("vnetResourceId"u8);
                 writer.WriteStringValue(VnetResourceId);
             }
             if (Optional.IsDefined(CertBlob))
             {
-                writer.WritePropertyName("certBlob");
+                writer.WritePropertyName("certBlob"u8);
                 writer.WriteStringValue(CertBlob);
             }
             if (Optional.IsDefined(DnsServers))
             {
-                writer.WritePropertyName("dnsServers");
+                writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStringValue(DnsServers);
             }
             if (Optional.IsDefined(IsSwift))
             {
-                writer.WritePropertyName("isSwift");
+                writer.WritePropertyName("isSwift"u8);
                 writer.WriteBooleanValue(IsSwift.Value);
             }
             writer.WriteEndObject();
@@ -66,37 +66,37 @@ namespace Azure.ResourceManager.AppService
             Optional<bool> isSwift = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("vnetResourceId"))
+                        if (property0.NameEquals("vnetResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService
                             vnetResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("certThumbprint"))
+                        if (property0.NameEquals("certThumbprint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.AppService
                             certThumbprint = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("certBlob"))
+                        if (property0.NameEquals("certBlob"u8))
                         {
                             certBlob = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("routes"))
+                        if (property0.NameEquals("routes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService
                             routes = array;
                             continue;
                         }
-                        if (property0.NameEquals("resyncRequired"))
+                        if (property0.NameEquals("resyncRequired"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -155,12 +155,12 @@ namespace Azure.ResourceManager.AppService
                             resyncRequired = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("dnsServers"))
+                        if (property0.NameEquals("dnsServers"u8))
                         {
                             dnsServers = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("isSwift"))
+                        if (property0.NameEquals("isSwift"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

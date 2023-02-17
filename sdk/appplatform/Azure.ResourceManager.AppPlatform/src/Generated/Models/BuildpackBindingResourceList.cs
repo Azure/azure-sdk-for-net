@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of BuildpackBindingResourceList. </summary>
         internal BuildpackBindingResourceList()
         {
-            Value = new ChangeTrackingList<BuildpackBindingResourceData>();
+            Value = new ChangeTrackingList<AppPlatformBuildpackBindingData>();
         }
 
         /// <summary> Initializes a new instance of BuildpackBindingResourceList. </summary>
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
         /// </param>
-        internal BuildpackBindingResourceList(IReadOnlyList<BuildpackBindingResourceData> value, string nextLink)
+        internal BuildpackBindingResourceList(IReadOnlyList<AppPlatformBuildpackBindingData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of BuildpackBinding resources. </summary>
-        public IReadOnlyList<BuildpackBindingResourceData> Value { get; }
+        public IReadOnlyList<AppPlatformBuildpackBindingData> Value { get; }
         /// <summary>
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.

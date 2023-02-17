@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Uploaded Java source code binary for a deployment. </summary>
-    public partial class SourceUploadedUserSourceInfo : UploadedUserSourceInfo
+    public partial class SourceUploadedUserSourceInfo : AppPlatformUploadedUserSourceInfo
     {
         /// <summary> Initializes a new instance of SourceUploadedUserSourceInfo. </summary>
         public SourceUploadedUserSourceInfo()

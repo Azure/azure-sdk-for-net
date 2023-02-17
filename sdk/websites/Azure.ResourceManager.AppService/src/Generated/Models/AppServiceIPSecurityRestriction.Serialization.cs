@@ -18,57 +18,57 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IPAddressOrCidr))
             {
-                writer.WritePropertyName("ipAddress");
+                writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddressOrCidr);
             }
             if (Optional.IsDefined(SubnetMask))
             {
-                writer.WritePropertyName("subnetMask");
+                writer.WritePropertyName("subnetMask"u8);
                 writer.WriteStringValue(SubnetMask);
             }
             if (Optional.IsDefined(VnetSubnetResourceId))
             {
-                writer.WritePropertyName("vnetSubnetResourceId");
+                writer.WritePropertyName("vnetSubnetResourceId"u8);
                 writer.WriteStringValue(VnetSubnetResourceId);
             }
             if (Optional.IsDefined(VnetTrafficTag))
             {
-                writer.WritePropertyName("vnetTrafficTag");
+                writer.WritePropertyName("vnetTrafficTag"u8);
                 writer.WriteNumberValue(VnetTrafficTag.Value);
             }
             if (Optional.IsDefined(SubnetTrafficTag))
             {
-                writer.WritePropertyName("subnetTrafficTag");
+                writer.WritePropertyName("subnetTrafficTag"u8);
                 writer.WriteNumberValue(SubnetTrafficTag.Value);
             }
             if (Optional.IsDefined(Action))
             {
-                writer.WritePropertyName("action");
+                writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action);
             }
             if (Optional.IsDefined(Tag))
             {
-                writer.WritePropertyName("tag");
+                writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag.Value.ToString());
             }
             if (Optional.IsDefined(Priority))
             {
-                writer.WritePropertyName("priority");
+                writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(Headers))
             {
-                writer.WritePropertyName("headers");
+                writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
                 foreach (var item in Headers)
                 {
@@ -100,17 +100,17 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IDictionary<string, IList<string>>> headers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ipAddress"))
+                if (property.NameEquals("ipAddress"u8))
                 {
                     ipAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subnetMask"))
+                if (property.NameEquals("subnetMask"u8))
                 {
                     subnetMask = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vnetSubnetResourceId"))
+                if (property.NameEquals("vnetSubnetResourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService.Models
                     vnetSubnetResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("vnetTrafficTag"))
+                if (property.NameEquals("vnetTrafficTag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppService.Models
                     vnetTrafficTag = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("subnetTrafficTag"))
+                if (property.NameEquals("subnetTrafficTag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -140,12 +140,12 @@ namespace Azure.ResourceManager.AppService.Models
                     subnetTrafficTag = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     action = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tag"))
+                if (property.NameEquals("tag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppService.Models
                     tag = new AppServiceIPFilterTag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("priority"))
+                if (property.NameEquals("priority"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -165,17 +165,17 @@ namespace Azure.ResourceManager.AppService.Models
                     priority = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("headers"))
+                if (property.NameEquals("headers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

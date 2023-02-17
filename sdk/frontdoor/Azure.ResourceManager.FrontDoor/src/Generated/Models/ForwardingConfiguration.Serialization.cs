@@ -18,19 +18,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomForwardingPath))
             {
-                writer.WritePropertyName("customForwardingPath");
+                writer.WritePropertyName("customForwardingPath"u8);
                 writer.WriteStringValue(CustomForwardingPath);
             }
             if (Optional.IsDefined(ForwardingProtocol))
             {
-                writer.WritePropertyName("forwardingProtocol");
+                writer.WritePropertyName("forwardingProtocol"u8);
                 writer.WriteStringValue(ForwardingProtocol.Value.ToString());
             }
             if (Optional.IsDefined(CacheConfiguration))
             {
                 if (CacheConfiguration != null)
                 {
-                    writer.WritePropertyName("cacheConfiguration");
+                    writer.WritePropertyName("cacheConfiguration"u8);
                     writer.WriteObjectValue(CacheConfiguration);
                 }
                 else
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             if (Optional.IsDefined(BackendPool))
             {
-                writer.WritePropertyName("backendPool");
+                writer.WritePropertyName("backendPool"u8);
                 JsonSerializer.Serialize(writer, BackendPool);
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WriteEndObject();
         }
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("customForwardingPath"))
+                if (property.NameEquals("customForwardingPath"u8))
                 {
                     customForwardingPath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("forwardingProtocol"))
+                if (property.NameEquals("forwardingProtocol"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     forwardingProtocol = new FrontDoorForwardingProtocol(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cacheConfiguration"))
+                if (property.NameEquals("cacheConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,17 +82,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     cacheConfiguration = FrontDoorCacheConfiguration.DeserializeFrontDoorCacheConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("backendPool"))
+                if (property.NameEquals("backendPool"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    backendPool = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    backendPool = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;

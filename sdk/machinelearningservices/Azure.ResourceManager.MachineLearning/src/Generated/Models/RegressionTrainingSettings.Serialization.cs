@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (AllowedTrainingAlgorithms != null)
                 {
-                    writer.WritePropertyName("allowedTrainingAlgorithms");
+                    writer.WritePropertyName("allowedTrainingAlgorithms"u8);
                     writer.WriteStartArray();
                     foreach (var item in AllowedTrainingAlgorithms)
                     {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (BlockedTrainingAlgorithms != null)
                 {
-                    writer.WritePropertyName("blockedTrainingAlgorithms");
+                    writer.WritePropertyName("blockedTrainingAlgorithms"u8);
                     writer.WriteStartArray();
                     foreach (var item in BlockedTrainingAlgorithms)
                     {
@@ -51,41 +51,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("blockedTrainingAlgorithms");
                 }
             }
-            if (Optional.IsDefined(EnableDnnTraining))
+            if (Optional.IsDefined(IsDnnTrainingEnabled))
             {
-                writer.WritePropertyName("enableDnnTraining");
-                writer.WriteBooleanValue(EnableDnnTraining.Value);
+                writer.WritePropertyName("enableDnnTraining"u8);
+                writer.WriteBooleanValue(IsDnnTrainingEnabled.Value);
             }
-            if (Optional.IsDefined(EnableModelExplainability))
+            if (Optional.IsDefined(IsModelExplainabilityEnabled))
             {
-                writer.WritePropertyName("enableModelExplainability");
-                writer.WriteBooleanValue(EnableModelExplainability.Value);
+                writer.WritePropertyName("enableModelExplainability"u8);
+                writer.WriteBooleanValue(IsModelExplainabilityEnabled.Value);
             }
-            if (Optional.IsDefined(EnableOnnxCompatibleModels))
+            if (Optional.IsDefined(IsOnnxCompatibleModelsEnabled))
             {
-                writer.WritePropertyName("enableOnnxCompatibleModels");
-                writer.WriteBooleanValue(EnableOnnxCompatibleModels.Value);
+                writer.WritePropertyName("enableOnnxCompatibleModels"u8);
+                writer.WriteBooleanValue(IsOnnxCompatibleModelsEnabled.Value);
             }
-            if (Optional.IsDefined(EnableStackEnsemble))
+            if (Optional.IsDefined(IsStackEnsembleEnabled))
             {
-                writer.WritePropertyName("enableStackEnsemble");
-                writer.WriteBooleanValue(EnableStackEnsemble.Value);
+                writer.WritePropertyName("enableStackEnsemble"u8);
+                writer.WriteBooleanValue(IsStackEnsembleEnabled.Value);
             }
-            if (Optional.IsDefined(EnableVoteEnsemble))
+            if (Optional.IsDefined(IsVoteEnsembleEnabled))
             {
-                writer.WritePropertyName("enableVoteEnsemble");
-                writer.WriteBooleanValue(EnableVoteEnsemble.Value);
+                writer.WritePropertyName("enableVoteEnsemble"u8);
+                writer.WriteBooleanValue(IsVoteEnsembleEnabled.Value);
             }
             if (Optional.IsDefined(EnsembleModelDownloadTimeout))
             {
-                writer.WritePropertyName("ensembleModelDownloadTimeout");
+                writer.WritePropertyName("ensembleModelDownloadTimeout"u8);
                 writer.WriteStringValue(EnsembleModelDownloadTimeout.Value, "P");
             }
             if (Optional.IsDefined(StackEnsembleSettings))
             {
                 if (StackEnsembleSettings != null)
                 {
-                    writer.WritePropertyName("stackEnsembleSettings");
+                    writer.WritePropertyName("stackEnsembleSettings"u8);
                     writer.WriteObjectValue(StackEnsembleSettings);
                 }
                 else
@@ -98,48 +98,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static RegressionTrainingSettings DeserializeRegressionTrainingSettings(JsonElement element)
         {
-            Optional<IList<RegressionModel>> allowedTrainingAlgorithms = default;
-            Optional<IList<RegressionModel>> blockedTrainingAlgorithms = default;
+            Optional<IList<AutoMLVerticalRegressionModel>> allowedTrainingAlgorithms = default;
+            Optional<IList<AutoMLVerticalRegressionModel>> blockedTrainingAlgorithms = default;
             Optional<bool> enableDnnTraining = default;
             Optional<bool> enableModelExplainability = default;
             Optional<bool> enableOnnxCompatibleModels = default;
             Optional<bool> enableStackEnsemble = default;
             Optional<bool> enableVoteEnsemble = default;
             Optional<TimeSpan> ensembleModelDownloadTimeout = default;
-            Optional<StackEnsembleSettings> stackEnsembleSettings = default;
+            Optional<MachineLearningStackEnsembleSettings> stackEnsembleSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allowedTrainingAlgorithms"))
+                if (property.NameEquals("allowedTrainingAlgorithms"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         allowedTrainingAlgorithms = null;
                         continue;
                     }
-                    List<RegressionModel> array = new List<RegressionModel>();
+                    List<AutoMLVerticalRegressionModel> array = new List<AutoMLVerticalRegressionModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new RegressionModel(item.GetString()));
+                        array.Add(new AutoMLVerticalRegressionModel(item.GetString()));
                     }
                     allowedTrainingAlgorithms = array;
                     continue;
                 }
-                if (property.NameEquals("blockedTrainingAlgorithms"))
+                if (property.NameEquals("blockedTrainingAlgorithms"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         blockedTrainingAlgorithms = null;
                         continue;
                     }
-                    List<RegressionModel> array = new List<RegressionModel>();
+                    List<AutoMLVerticalRegressionModel> array = new List<AutoMLVerticalRegressionModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new RegressionModel(item.GetString()));
+                        array.Add(new AutoMLVerticalRegressionModel(item.GetString()));
                     }
                     blockedTrainingAlgorithms = array;
                     continue;
                 }
-                if (property.NameEquals("enableDnnTraining"))
+                if (property.NameEquals("enableDnnTraining"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     enableDnnTraining = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableModelExplainability"))
+                if (property.NameEquals("enableModelExplainability"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     enableModelExplainability = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableOnnxCompatibleModels"))
+                if (property.NameEquals("enableOnnxCompatibleModels"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     enableOnnxCompatibleModels = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableStackEnsemble"))
+                if (property.NameEquals("enableStackEnsemble"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     enableStackEnsemble = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableVoteEnsemble"))
+                if (property.NameEquals("enableVoteEnsemble"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     enableVoteEnsemble = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("ensembleModelDownloadTimeout"))
+                if (property.NameEquals("ensembleModelDownloadTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     ensembleModelDownloadTimeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("stackEnsembleSettings"))
+                if (property.NameEquals("stackEnsembleSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         stackEnsembleSettings = null;
                         continue;
                     }
-                    stackEnsembleSettings = StackEnsembleSettings.DeserializeStackEnsembleSettings(property.Value);
+                    stackEnsembleSettings = MachineLearningStackEnsembleSettings.DeserializeMachineLearningStackEnsembleSettings(property.Value);
                     continue;
                 }
             }

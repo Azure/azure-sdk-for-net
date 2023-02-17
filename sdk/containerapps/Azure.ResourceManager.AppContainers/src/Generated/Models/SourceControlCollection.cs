@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of SourceControlCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SourceControlCollection(IEnumerable<SourceControlData> value)
+        internal SourceControlCollection(IEnumerable<ContainerAppSourceControlData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of SourceControlCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal SourceControlCollection(IReadOnlyList<SourceControlData> value, string nextLink)
+        internal SourceControlCollection(IReadOnlyList<ContainerAppSourceControlData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<SourceControlData> Value { get; }
+        public IReadOnlyList<ContainerAppSourceControlData> Value { get; }
         /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }

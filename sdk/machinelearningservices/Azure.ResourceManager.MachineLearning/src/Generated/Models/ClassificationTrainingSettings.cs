@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Classification Training related configuration. </summary>
-    public partial class ClassificationTrainingSettings : TrainingSettings
+    public partial class ClassificationTrainingSettings : MachineLearningTrainingSettings
     {
         /// <summary> Initializes a new instance of ClassificationTrainingSettings. </summary>
         public ClassificationTrainingSettings()
@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ClassificationTrainingSettings. </summary>
-        /// <param name="enableDnnTraining"> Enable recommendation of DNN models. </param>
-        /// <param name="enableModelExplainability"> Flag to turn on explainability on best model. </param>
-        /// <param name="enableOnnxCompatibleModels"> Flag for enabling onnx compatible models. </param>
-        /// <param name="enableStackEnsemble"> Enable stack ensemble run. </param>
-        /// <param name="enableVoteEnsemble"> Enable voting ensemble run. </param>
+        /// <param name="isDnnTrainingEnabled"> Enable recommendation of DNN models. </param>
+        /// <param name="isModelExplainabilityEnabled"> Flag to turn on explainability on best model. </param>
+        /// <param name="isOnnxCompatibleModelsEnabled"> Flag for enabling onnx compatible models. </param>
+        /// <param name="isStackEnsembleEnabled"> Enable stack ensemble run. </param>
+        /// <param name="isVoteEnsembleEnabled"> Enable voting ensemble run. </param>
         /// <param name="ensembleModelDownloadTimeout">
         /// During VotingEnsemble and StackEnsemble model generation, multiple fitted models from the previous child runs are downloaded.
         /// Configure this parameter with a higher value than 300 secs, if more time is needed.
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="stackEnsembleSettings"> Stack ensemble settings for stack ensemble run. </param>
         /// <param name="allowedTrainingAlgorithms"> Allowed models for classification task. </param>
         /// <param name="blockedTrainingAlgorithms"> Blocked models for classification task. </param>
-        internal ClassificationTrainingSettings(bool? enableDnnTraining, bool? enableModelExplainability, bool? enableOnnxCompatibleModels, bool? enableStackEnsemble, bool? enableVoteEnsemble, TimeSpan? ensembleModelDownloadTimeout, StackEnsembleSettings stackEnsembleSettings, IList<ClassificationModel> allowedTrainingAlgorithms, IList<ClassificationModel> blockedTrainingAlgorithms) : base(enableDnnTraining, enableModelExplainability, enableOnnxCompatibleModels, enableStackEnsemble, enableVoteEnsemble, ensembleModelDownloadTimeout, stackEnsembleSettings)
+        internal ClassificationTrainingSettings(bool? isDnnTrainingEnabled, bool? isModelExplainabilityEnabled, bool? isOnnxCompatibleModelsEnabled, bool? isStackEnsembleEnabled, bool? isVoteEnsembleEnabled, TimeSpan? ensembleModelDownloadTimeout, MachineLearningStackEnsembleSettings stackEnsembleSettings, IList<ClassificationModel> allowedTrainingAlgorithms, IList<ClassificationModel> blockedTrainingAlgorithms) : base(isDnnTrainingEnabled, isModelExplainabilityEnabled, isOnnxCompatibleModelsEnabled, isStackEnsembleEnabled, isVoteEnsembleEnabled, ensembleModelDownloadTimeout, stackEnsembleSettings)
         {
             AllowedTrainingAlgorithms = allowedTrainingAlgorithms;
             BlockedTrainingAlgorithms = blockedTrainingAlgorithms;

@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static AuthConfigCollection DeserializeAuthConfigCollection(JsonElement element)
         {
-            IReadOnlyList<AuthConfigData> value = default;
+            IReadOnlyList<ContainerAppAuthConfigData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
-                    List<AuthConfigData> array = new List<AuthConfigData>();
+                    List<ContainerAppAuthConfigData> array = new List<ContainerAppAuthConfigData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthConfigData.DeserializeAuthConfigData(item));
+                        array.Add(ContainerAppAuthConfigData.DeserializeContainerAppAuthConfigData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

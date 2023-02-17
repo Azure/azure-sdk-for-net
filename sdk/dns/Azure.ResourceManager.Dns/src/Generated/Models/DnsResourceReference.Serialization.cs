@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Dns.Models
             Optional<WritableSubResource> targetResource = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dnsResources"))
+                if (property.NameEquals("dnsResources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,19 +30,19 @@ namespace Azure.ResourceManager.Dns.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                     }
                     dnsResources = array;
                     continue;
                 }
-                if (property.NameEquals("targetResource"))
+                if (property.NameEquals("targetResource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    targetResource = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    targetResource = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
             }

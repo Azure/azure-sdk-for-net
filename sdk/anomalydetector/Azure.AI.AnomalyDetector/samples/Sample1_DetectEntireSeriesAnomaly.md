@@ -16,10 +16,9 @@ string apiKey = TestEnvironment.ApiKey;
 
 var endpointUri = new Uri(endpoint);
 var credential = new AzureKeyCredential(apiKey);
-String apiVersion = "v1.1";
 
 //create client
-AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
+AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
 ```
 
 ## Load time series and create DetectRequest
@@ -41,7 +40,7 @@ List<TimeSeriesPoint> list = File.ReadAllLines(datapath, Encoding.UTF8)
     .Select(e => new TimeSeriesPoint(float.Parse(e[1])){ Timestamp = DateTime.Parse(e[0])}).ToList();
 
 //create request
-DetectRequest request = new DetectRequest(list)
+UnivariateDetectionOptions request = new UnivariateDetectionOptions(list)
 {
     Granularity = TimeGranularity.Daily
 };
@@ -56,7 +55,7 @@ Console.WriteLine("Detecting anomalies in the entire time series.");
 
 try
 {
-    EntireDetectResponse result = client.DetectUnivariateEntireSeries(request);
+    UnivariateEntireDetectionResult result = client.DetectUnivariateEntireSeries(request);
 
     bool hasAnomaly = false;
     for (int i = 0; i < request.Series.Count; ++i)

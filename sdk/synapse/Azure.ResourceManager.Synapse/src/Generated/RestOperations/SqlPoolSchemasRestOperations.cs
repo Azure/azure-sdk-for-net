@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="schemaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlPoolSchemaData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseSqlPoolSchemaData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -175,13 +175,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        SqlPoolSchemaData value = default;
+                        SynapseSqlPoolSchemaData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SqlPoolSchemaData.DeserializeSqlPoolSchemaData(document.RootElement);
+                        value = SynapseSqlPoolSchemaData.DeserializeSynapseSqlPoolSchemaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SqlPoolSchemaData)null, message.Response);
+                    return Response.FromValue((SynapseSqlPoolSchemaData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="schemaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlPoolSchemaData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, CancellationToken cancellationToken = default)
+        public Response<SynapseSqlPoolSchemaData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -210,13 +210,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        SqlPoolSchemaData value = default;
+                        SynapseSqlPoolSchemaData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SqlPoolSchemaData.DeserializeSqlPoolSchemaData(document.RootElement);
+                        value = SynapseSqlPoolSchemaData.DeserializeSynapseSqlPoolSchemaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SqlPoolSchemaData)null, message.Response);
+                    return Response.FromValue((SynapseSqlPoolSchemaData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

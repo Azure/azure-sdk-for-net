@@ -18,36 +18,36 @@ namespace Azure.ResourceManager.Automation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IP))
             {
-                writer.WritePropertyName("ip");
+                writer.WritePropertyName("ip"u8);
                 writer.WriteStringValue(IP);
             }
             if (Optional.IsDefined(RegisteredOn))
             {
-                writer.WritePropertyName("registeredDateTime");
+                writer.WritePropertyName("registeredDateTime"u8);
                 writer.WriteStringValue(RegisteredOn.Value, "O");
             }
             if (Optional.IsDefined(LastSeenOn))
             {
-                writer.WritePropertyName("lastSeenDateTime");
+                writer.WritePropertyName("lastSeenDateTime"u8);
                 writer.WriteStringValue(LastSeenOn.Value, "O");
             }
             if (Optional.IsDefined(VmResourceId))
             {
-                writer.WritePropertyName("vmResourceId");
+                writer.WritePropertyName("vmResourceId"u8);
                 writer.WriteStringValue(VmResourceId);
             }
             if (Optional.IsDefined(WorkerType))
             {
-                writer.WritePropertyName("workerType");
+                writer.WritePropertyName("workerType"u8);
                 writer.WriteStringValue(WorkerType.Value.ToString());
             }
             if (Optional.IsDefined(WorkerName))
             {
-                writer.WritePropertyName("workerName");
+                writer.WritePropertyName("workerName"u8);
                 writer.WriteStringValue(WorkerName);
             }
             writer.WriteEndObject();
@@ -68,32 +68,32 @@ namespace Azure.ResourceManager.Automation
             Optional<string> workerName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.Automation
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("ip"))
+                        if (property0.NameEquals("ip"u8))
                         {
                             ip = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("registeredDateTime"))
+                        if (property0.NameEquals("registeredDateTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Automation
                             registeredDateTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastSeenDateTime"))
+                        if (property0.NameEquals("lastSeenDateTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Automation
                             lastSeenDateTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("vmResourceId"))
+                        if (property0.NameEquals("vmResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Automation
                             vmResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("workerType"))
+                        if (property0.NameEquals("workerType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Automation
                             workerType = new HybridWorkerType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("workerName"))
+                        if (property0.NameEquals("workerName"u8))
                         {
                             workerName = property0.Value.GetString();
                             continue;

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SqlPoolTableListResult. </summary>
         internal SqlPoolTableListResult()
         {
-            Value = new ChangeTrackingList<SqlPoolTableData>();
+            Value = new ChangeTrackingList<SynapseSqlPoolTableData>();
         }
 
         /// <summary> Initializes a new instance of SqlPoolTableListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal SqlPoolTableListResult(IReadOnlyList<SqlPoolTableData> value, string nextLink)
+        internal SqlPoolTableListResult(IReadOnlyList<SynapseSqlPoolTableData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<SqlPoolTableData> Value { get; }
+        public IReadOnlyList<SynapseSqlPoolTableData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

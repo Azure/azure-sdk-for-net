@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("diskId");
+            writer.WritePropertyName("diskId"u8);
             writer.WriteStringValue(DiskId);
-            writer.WritePropertyName("logStorageAccountId");
+            writer.WritePropertyName("logStorageAccountId"u8);
             writer.WriteStringValue(LogStorageAccountId);
-            writer.WritePropertyName("diskType");
+            writer.WritePropertyName("diskType"u8);
             writer.WriteStringValue(DiskType.ToString());
             if (Optional.IsDefined(DiskEncryptionSetId))
             {
-                writer.WritePropertyName("diskEncryptionSetId");
+                writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
             writer.WriteEndObject();

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
         /// <param name="trainingData"> [Required] Training data input. </param>
-        internal UnknownAutoMLVertical(LogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MLTableJobInput trainingData) : base(logVerbosity, targetColumnName, taskType, trainingData)
+        internal UnknownAutoMLVertical(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData) : base(logVerbosity, targetColumnName, taskType, trainingData)
         {
             TaskType = taskType;
         }

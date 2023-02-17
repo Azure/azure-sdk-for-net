@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("sourceVault");
-            JsonSerializer.Serialize(writer, SourceVault); writer.WritePropertyName("vaultCertificates");
+            writer.WritePropertyName("sourceVault"u8);
+            JsonSerializer.Serialize(writer, SourceVault); writer.WritePropertyName("vaultCertificates"u8);
             writer.WriteStartArray();
             foreach (var item in VaultCertificates)
             {
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             IList<NodeTypeVaultCertificate> vaultCertificates = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceVault"))
+                if (property.NameEquals("sourceVault"u8))
                 {
-                    sourceVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    sourceVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("vaultCertificates"))
+                if (property.NameEquals("vaultCertificates"u8))
                 {
                     List<NodeTypeVaultCertificate> array = new List<NodeTypeVaultCertificate>();
                     foreach (var item in property.Value.EnumerateArray())

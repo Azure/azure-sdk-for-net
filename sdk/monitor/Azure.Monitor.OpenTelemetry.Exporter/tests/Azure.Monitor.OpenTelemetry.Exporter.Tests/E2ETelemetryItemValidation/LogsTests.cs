@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -70,11 +72,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             this.telemetryOutput.Write(telemetryItems);
             var telemetryItem = telemetryItems.Single();
 
-            TelemetryItemValidationHelper.AssertLog_As_MessageTelemetry(
+            TelemetryItemValidationHelper.AssertMessageTelemetry(
                 telemetryItem: telemetryItem,
                 expectedSeverityLevel: expectedSeverityLevel,
                 expectedMessage: "Hello {name}.",
-                expectedMeessageProperties: new Dictionary<string, string> { { "name", "World" }},
+                expectedMessageProperties: new Dictionary<string, string> { { "name", "World" }},
                 expectedSpanId: null,
                 expectedTraceId: null);
         }

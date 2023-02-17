@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServices
     /// A Class representing a RecoveryServicesPrivateLinkResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RecoveryServicesPrivateLinkResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetRecoveryServicesPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VaultResource" /> using the GetRecoveryServicesPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RecoveryServicesVaultResource" /> using the GetRecoveryServicesPrivateLinkResource method.
     /// </summary>
     public partial class RecoveryServicesPrivateLinkResource : ArmResource
     {
@@ -88,8 +88,16 @@ namespace Azure.ResourceManager.RecoveryServices
 
         /// <summary>
         /// Returns a specified private link resource that need to be created for Backup and SiteRecovery
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateLinkResources/{privateLinkResourceName}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RecoveryServicesPrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -112,8 +120,16 @@ namespace Azure.ResourceManager.RecoveryServices
 
         /// <summary>
         /// Returns a specified private link resource that need to be created for Backup and SiteRecovery
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateLinkResources/{privateLinkResourceName}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RecoveryServicesPrivateLinkResource> Get(CancellationToken cancellationToken = default)

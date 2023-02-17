@@ -19,20 +19,25 @@ namespace Azure.ResourceManager.Kusto.Models
         {
             Location = location;
             Zones = new ChangeTrackingList<string>();
+            ZoneDetails = new ChangeTrackingList<KustoResourceSkuZoneDetails>();
         }
 
         /// <summary> Initializes a new instance of KustoSkuLocationInfoItem. </summary>
         /// <param name="location"> The available location of the SKU. </param>
         /// <param name="zones"> The available zone of the SKU. </param>
-        internal KustoSkuLocationInfoItem(AzureLocation location, IReadOnlyList<string> zones)
+        /// <param name="zoneDetails"> Gets details of capabilities available to a SKU in specific zones. </param>
+        internal KustoSkuLocationInfoItem(AzureLocation location, IReadOnlyList<string> zones, IReadOnlyList<KustoResourceSkuZoneDetails> zoneDetails)
         {
             Location = location;
             Zones = zones;
+            ZoneDetails = zoneDetails;
         }
 
         /// <summary> The available location of the SKU. </summary>
         public AzureLocation Location { get; }
         /// <summary> The available zone of the SKU. </summary>
         public IReadOnlyList<string> Zones { get; }
+        /// <summary> Gets details of capabilities available to a SKU in specific zones. </summary>
+        public IReadOnlyList<KustoResourceSkuZoneDetails> ZoneDetails { get; }
     }
 }

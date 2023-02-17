@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(WafPolicy))
             {
-                writer.WritePropertyName("wafPolicy");
+                writer.WritePropertyName("wafPolicy"u8);
                 JsonSerializer.Serialize(writer, WafPolicy);
             }
             if (Optional.IsCollectionDefined(Associations))
             {
-                writer.WritePropertyName("associations");
+                writer.WritePropertyName("associations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Associations)
                 {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(PolicyType.ToString());
             writer.WriteEndObject();
         }
@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.Cdn.Models
             SecurityPolicyType type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("wafPolicy"))
+                if (property.NameEquals("wafPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    wafPolicy = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    wafPolicy = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("associations"))
+                if (property.NameEquals("associations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     associations = array;
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new SecurityPolicyType(property.Value.GetString());
                     continue;

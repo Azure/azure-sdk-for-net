@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Featurization Configuration. </summary>
-    public partial class TableVerticalFeaturizationSettings : FeaturizationSettings
+    public partial class TableVerticalFeaturizationSettings : MachineLearningFeaturizationSettings
     {
         /// <summary> Initializes a new instance of TableVerticalFeaturizationSettings. </summary>
         public TableVerticalFeaturizationSettings()
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// If &apos;Custom&apos; is selected then user can specify additional inputs to customize how featurization is done.
         /// </param>
         /// <param name="transformerParams"> User can specify additional transformers to be used along with the columns to which it would be applied and parameters for the transformer constructor. </param>
-        internal TableVerticalFeaturizationSettings(string datasetLanguage, IList<BlockedTransformer> blockedTransformers, IDictionary<string, string> columnNameAndTypes, bool? enableDnnFeaturization, FeaturizationMode? mode, IDictionary<string, IList<ColumnTransformer>> transformerParams) : base(datasetLanguage)
+        internal TableVerticalFeaturizationSettings(string datasetLanguage, IList<BlockedTransformer> blockedTransformers, IDictionary<string, string> columnNameAndTypes, bool? enableDnnFeaturization, MachineLearningFeaturizationMode? mode, IDictionary<string, IList<ColumnTransformer>> transformerParams) : base(datasetLanguage)
         {
             BlockedTransformers = blockedTransformers;
             ColumnNameAndTypes = columnNameAndTypes;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// If &apos;Off&apos; is selected then no featurization is done.
         /// If &apos;Custom&apos; is selected then user can specify additional inputs to customize how featurization is done.
         /// </summary>
-        public FeaturizationMode? Mode { get; set; }
+        public MachineLearningFeaturizationMode? Mode { get; set; }
         /// <summary> User can specify additional transformers to be used along with the columns to which it would be applied and parameters for the transformer constructor. </summary>
         public IDictionary<string, IList<ColumnTransformer>> TransformerParams { get; set; }
     }

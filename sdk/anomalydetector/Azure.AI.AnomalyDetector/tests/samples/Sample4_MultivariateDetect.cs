@@ -18,7 +18,7 @@ using Azure.Core.TestFramework;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
-using Azure.AI.AnomalyDetector.Models;
+using Azure.AI.AnomalyDetector;
 using Newtonsoft.Json;
 
 namespace Azure.AI.AnomalyDetector.Tests.Samples
@@ -36,10 +36,9 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             Console.WriteLine(endpoint);
             var endpointUri = new Uri(endpoint);
             var credential = new AzureKeyCredential(apiKey);
-            string apiVersion = "V1.1";
 
             //create client
-            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
+            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
             #endregion
 
             // train
@@ -53,7 +52,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
                 // detect
                 end_time = new DateTimeOffset(2021, 1, 2, 1, 0, 0, offset);
-                DetectionResult result = BatchDetect(client, datasource, model_id, start_time, end_time);
+                MultivariateDetectionResult result = BatchDetect(client, datasource, model_id, start_time, end_time);
                 if (result != null)
                 {
                     Console.WriteLine(String.Format("Result ID: {0}", result.ResultId.ToString()));
@@ -62,7 +61,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 }
 
                 //detect last
-                LastDetectionResult last_detection_result = DetectLast(client, model_id);
+                MultivariateLastDetectionResult last_detection_result = DetectLast(client, model_id);
                 Console.WriteLine("Variable States: {0}", last_detection_result.VariableStates);
                 Console.WriteLine("Variable States length: {0}", last_detection_result.VariableStates.Count);
                 Console.WriteLine("Results: {0}", last_detection_result.Results);
@@ -102,7 +101,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 request.SlidingWindow = 200;
 
                 TestContext.Progress.WriteLine("Training new model...(it may take a few minutes)");
-                Model response = client.CreateAndTrainMultivariateModel(request);
+                AnomalyDetectionModel response = client.TrainMultivariateModel(request);
                 String trained_model_id = response.ModelId;
                 Console.WriteLine(String.Format("Training model id is {0}", trained_model_id));
 
@@ -150,23 +149,23 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
         #endregion
 
         #region Snippet:DetectMultivariateAnomaly
-        private DetectionResult BatchDetect(AnomalyDetectorClient client, string datasource, String model_id, DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
+        private MultivariateDetectionResult BatchDetect(AnomalyDetectorClient client, string datasource, String model_id, DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
         {
             try
             {
                 Console.WriteLine("Start batch detect...");
-                DetectionRequest request = new DetectionRequest(datasource, 10, start_time, end_time);
+                MultivariateBatchDetectionOptions request = new MultivariateBatchDetectionOptions(datasource, 10, start_time, end_time);
 
                 TestContext.Progress.WriteLine("Start batch detection, this might take a few minutes...");
-                DetectionResult response = client.DetectMultivariateBatchAnomaly(model_id, request);
+                MultivariateDetectionResult response = client.DetectMultivariateBatchAnomaly(model_id, request);
                 String result_id = response.ResultId;
                 TestContext.Progress.WriteLine(String.Format("result id is: {0}", result_id));
 
                 // get detection result
-                DetectionResult resultResponse = client.GetMultivariateBatchDetectionResultValue(result_id);
-                DetectionStatus result_status = resultResponse.Summary.Status;
+                MultivariateDetectionResult resultResponse = client.GetMultivariateBatchDetectionResultValue(result_id);
+                MultivariateBatchDetectionStatus result_status = resultResponse.Summary.Status;
                 int tryout_count = 0;
-                while (tryout_count < max_tryout & result_status != DetectionStatus.Ready & result_status != DetectionStatus.Failed)
+                while (tryout_count < max_tryout & result_status != MultivariateBatchDetectionStatus.Ready & result_status != MultivariateBatchDetectionStatus.Failed)
                 {
                     System.Threading.Thread.Sleep(1000);
                     resultResponse = client.GetMultivariateBatchDetectionResultValue(result_id);
@@ -175,7 +174,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                     Console.Out.Flush();
                 }
 
-                if (result_status == DetectionStatus.Failed)
+                if (result_status == MultivariateBatchDetectionStatus.Failed)
                 {
                     Console.WriteLine("Detection failed.");
                     Console.WriteLine("Errors:");
@@ -200,7 +199,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
         #endregion
 
         #region Snippet:DetectLastMultivariateAnomaly
-        private LastDetectionResult DetectLast(AnomalyDetectorClient client, String model_id)
+        private MultivariateLastDetectionResult DetectLast(AnomalyDetectorClient client, String model_id)
         {
             Console.WriteLine("Start last detect...");
             try
@@ -215,8 +214,8 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                         variables.Add(new VariableValues(lastDetectVariables[index].GetProperty("variable").ToString(), JsonConvert.DeserializeObject<IEnumerable<String>>(lastDetectVariables[index].GetProperty("timestamps").ToString()), JsonConvert.DeserializeObject<IEnumerable<float>>(lastDetectVariables[index].GetProperty("values").ToString())));
                     }
                 }
-                LastDetectionRequest request = new LastDetectionRequest(variables, 1);
-                LastDetectionResult response = client.DetectMultivariateLastAnomaly(model_id, request);
+                MultivariateLastDetectionOptions request = new MultivariateLastDetectionOptions(variables, 1);
+                MultivariateLastDetectionResult response = client.DetectMultivariateLastAnomaly(model_id, request);
                 return response;
             }
             catch (Exception ex)

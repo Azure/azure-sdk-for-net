@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Get the default account for the scope.
-        /// Request Path: /providers/Microsoft.Purview/getDefaultAccount
-        /// Operation Id: DefaultAccounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Purview/getDefaultAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultAccounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="scopeTenantId"> The tenant ID. </param>
@@ -45,8 +53,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Get the default account for the scope.
-        /// Request Path: /providers/Microsoft.Purview/getDefaultAccount
-        /// Operation Id: DefaultAccounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Purview/getDefaultAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultAccounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="scopeTenantId"> The tenant ID. </param>
@@ -60,8 +76,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Sets the default account for the scope.
-        /// Request Path: /providers/Microsoft.Purview/setDefaultAccount
-        /// Operation Id: DefaultAccounts_Set
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Purview/setDefaultAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultAccounts_Set</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
@@ -76,8 +100,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Sets the default account for the scope.
-        /// Request Path: /providers/Microsoft.Purview/setDefaultAccount
-        /// Operation Id: DefaultAccounts_Set
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Purview/setDefaultAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultAccounts_Set</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
@@ -92,8 +124,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Removes the default account from the scope.
-        /// Request Path: /providers/Microsoft.Purview/removeDefaultAccount
-        /// Operation Id: DefaultAccounts_Remove
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Purview/removeDefaultAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultAccounts_Remove</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="scopeTenantId"> The tenant ID. </param>
@@ -107,8 +147,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Removes the default account from the scope.
-        /// Request Path: /providers/Microsoft.Purview/removeDefaultAccount
-        /// Operation Id: DefaultAccounts_Remove
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Purview/removeDefaultAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultAccounts_Remove</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="scopeTenantId"> The tenant ID. </param>
@@ -131,8 +179,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// List accounts in Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Purview/accounts
-        /// Operation Id: Accounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skipToken"> The skip token. </param>
@@ -145,8 +201,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// List accounts in Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Purview/accounts
-        /// Operation Id: Accounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skipToken"> The skip token. </param>
@@ -159,8 +223,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Checks if account name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Purview/checkNameAvailability
-        /// Operation Id: Accounts_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The check name availability request. </param>
@@ -175,8 +247,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Checks if account name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Purview/checkNameAvailability
-        /// Operation Id: Accounts_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Purview/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The check name availability request. </param>
@@ -208,8 +288,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Get an account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}
-        /// Operation Id: Accounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the account. </param>
@@ -224,8 +312,16 @@ namespace Azure.ResourceManager.Purview
 
         /// <summary>
         /// Get an account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}
-        /// Operation Id: Accounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the account. </param>

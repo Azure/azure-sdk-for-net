@@ -17,36 +17,36 @@ namespace Azure.ResourceManager.Sql
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StepId))
             {
-                writer.WritePropertyName("stepId");
+                writer.WritePropertyName("stepId"u8);
                 writer.WriteNumberValue(StepId.Value);
             }
             if (Optional.IsDefined(TargetGroup))
             {
-                writer.WritePropertyName("targetGroup");
+                writer.WritePropertyName("targetGroup"u8);
                 writer.WriteStringValue(TargetGroup);
             }
             if (Optional.IsDefined(Credential))
             {
-                writer.WritePropertyName("credential");
+                writer.WritePropertyName("credential"u8);
                 writer.WriteStringValue(Credential);
             }
             if (Optional.IsDefined(Action))
             {
-                writer.WritePropertyName("action");
+                writer.WritePropertyName("action"u8);
                 writer.WriteObjectValue(Action);
             }
             if (Optional.IsDefined(Output))
             {
-                writer.WritePropertyName("output");
+                writer.WritePropertyName("output"u8);
                 writer.WriteObjectValue(Output);
             }
             if (Optional.IsDefined(ExecutionOptions))
             {
-                writer.WritePropertyName("executionOptions");
+                writer.WritePropertyName("executionOptions"u8);
                 writer.WriteObjectValue(ExecutionOptions);
             }
             writer.WriteEndObject();
@@ -67,32 +67,32 @@ namespace Azure.ResourceManager.Sql
             Optional<JobStepExecutionOptions> executionOptions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("stepId"))
+                        if (property0.NameEquals("stepId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -111,17 +111,17 @@ namespace Azure.ResourceManager.Sql
                             stepId = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("targetGroup"))
+                        if (property0.NameEquals("targetGroup"u8))
                         {
                             targetGroup = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("credential"))
+                        if (property0.NameEquals("credential"u8))
                         {
                             credential = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("action"))
+                        if (property0.NameEquals("action"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Sql
                             action = JobStepAction.DeserializeJobStepAction(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("output"))
+                        if (property0.NameEquals("output"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Sql
                             output = JobStepOutput.DeserializeJobStepOutput(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("executionOptions"))
+                        if (property0.NameEquals("executionOptions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

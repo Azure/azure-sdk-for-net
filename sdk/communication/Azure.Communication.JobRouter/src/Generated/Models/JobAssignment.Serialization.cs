@@ -22,22 +22,22 @@ namespace Azure.Communication.JobRouter.Models
             Optional<DateTimeOffset> closeTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("workerId"))
+                if (property.NameEquals("workerId"u8))
                 {
                     workerId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("assignTime"))
+                if (property.NameEquals("assignTime"u8))
                 {
                     assignTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("completeTime"))
+                if (property.NameEquals("completeTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +47,7 @@ namespace Azure.Communication.JobRouter.Models
                     completeTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("closeTime"))
+                if (property.NameEquals("closeTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

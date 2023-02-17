@@ -5,11 +5,12 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: CognitiveServices
 namespace: Azure.ResourceManager.CognitiveServices
-require: https://github.com/Azure/azure-rest-api-specs/blob/7a6ec0f1e66aac22421f9338c00cbb2d1c97547d/specification/cognitiveservices/resource-manager/readme.md
-tag: package-2022-10
+require: https://github.com/Azure/azure-rest-api-specs/blob/fd296f4cbe90e46098824e020e4a02517d56fc35/specification/cognitiveservices/resource-manager/readme.md
+tag: package-2022-12
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -22,6 +23,8 @@ list-exception:
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}: CognitiveServicesDeletedAccount
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}: CognitiveServicesAccount
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/commitmentPlans/{commitmentPlanName}: CommitmentPlan
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}: CognitiveServicesCommitmentPlan
 
 rename-mapping:
   CheckSkuAvailabilityParameter.type: ResourceType
@@ -68,6 +71,12 @@ rename-mapping:
   Usage: ServiceAccountUsage
   UsageListResult: ServiceAccountUsageListResult
   UserOwnedStorage: ServiceAccountUserOwnedStorage
+  RegionSetting: CognitiveServicesRegionSetting
+  RoutingMethods: CognitiveServicesRoutingMethod
+  PatchResourceTags: CognitiveServicesPatchResourceTags
+  MultiRegionSettings: CognitiveServicesMultiRegionSettings
+  CommitmentPlanProperties.commitmentPlanGuid: -|uuid
+  CommitmentPlanAssociation.commitmentPlanId: -|arm-id
 
 prepend-rp-prefix:
   - Account

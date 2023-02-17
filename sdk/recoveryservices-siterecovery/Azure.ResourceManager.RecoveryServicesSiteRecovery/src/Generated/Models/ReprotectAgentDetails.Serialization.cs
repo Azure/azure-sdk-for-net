@@ -31,37 +31,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<DateTimeOffset> lastDiscoveryInUtc = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("biosId"))
+                if (property.NameEquals("biosId"u8))
                 {
                     biosId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fabricObjectId"))
+                if (property.NameEquals("fabricObjectId"u8))
                 {
                     fabricObjectId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fqdn"))
+                if (property.NameEquals("fqdn"u8))
                 {
                     fqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastHeartbeatUtc"))
+                if (property.NameEquals("lastHeartbeatUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     lastHeartbeatUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("health"))
+                if (property.NameEquals("health"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     health = new ProtectionHealth(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("healthErrors"))
+                if (property.NameEquals("healthErrors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     healthErrors = array;
                     continue;
                 }
-                if (property.NameEquals("protectedItemCount"))
+                if (property.NameEquals("protectedItemCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     protectedItemCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("accessibleDatastores"))
+                if (property.NameEquals("accessibleDatastores"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -121,12 +121,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     accessibleDatastores = array;
                     continue;
                 }
-                if (property.NameEquals("vcenterId"))
+                if (property.NameEquals("vcenterId"u8))
                 {
                     vCenterId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastDiscoveryInUtc"))
+                if (property.NameEquals("lastDiscoveryInUtc"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

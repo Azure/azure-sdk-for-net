@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -35,18 +35,18 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
             if (Optional.IsCollectionDefined(HostNames))
             {
-                writer.WritePropertyName("hostNames");
+                writer.WritePropertyName("hostNames"u8);
                 writer.WriteStartArray();
                 foreach (var item in HostNames)
                 {
@@ -56,32 +56,32 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsDefined(PfxBlob))
             {
-                writer.WritePropertyName("pfxBlob");
+                writer.WritePropertyName("pfxBlob"u8);
                 writer.WriteBase64StringValue(PfxBlob, "D");
             }
             if (Optional.IsDefined(KeyVaultId))
             {
-                writer.WritePropertyName("keyVaultId");
+                writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
             }
             if (Optional.IsDefined(KeyVaultSecretName))
             {
-                writer.WritePropertyName("keyVaultSecretName");
+                writer.WritePropertyName("keyVaultSecretName"u8);
                 writer.WriteStringValue(KeyVaultSecretName);
             }
             if (Optional.IsDefined(ServerFarmId))
             {
-                writer.WritePropertyName("serverFarmId");
+                writer.WritePropertyName("serverFarmId"u8);
                 writer.WriteStringValue(ServerFarmId);
             }
             if (Optional.IsDefined(CanonicalName))
             {
-                writer.WritePropertyName("canonicalName");
+                writer.WritePropertyName("canonicalName"u8);
                 writer.WriteStringValue(CanonicalName);
             }
             if (Optional.IsDefined(DomainValidationMethod))
             {
-                writer.WritePropertyName("domainValidationMethod");
+                writer.WritePropertyName("domainValidationMethod"u8);
                 writer.WriteStringValue(DomainValidationMethod);
             }
             writer.WriteEndObject();
@@ -120,12 +120,12 @@ namespace Azure.ResourceManager.AppService
             Optional<string> domainValidationMethod = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -140,37 +140,37 @@ namespace Azure.ResourceManager.AppService
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -179,22 +179,22 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("password"))
+                        if (property0.NameEquals("password"u8))
                         {
                             password = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("friendlyName"))
+                        if (property0.NameEquals("friendlyName"u8))
                         {
                             friendlyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("subjectName"))
+                        if (property0.NameEquals("subjectName"u8))
                         {
                             subjectName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("hostNames"))
+                        if (property0.NameEquals("hostNames"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppService
                             hostNames = array;
                             continue;
                         }
-                        if (property0.NameEquals("pfxBlob"))
+                        if (property0.NameEquals("pfxBlob"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -219,22 +219,22 @@ namespace Azure.ResourceManager.AppService
                             pfxBlob = property0.Value.GetBytesFromBase64("D");
                             continue;
                         }
-                        if (property0.NameEquals("siteName"))
+                        if (property0.NameEquals("siteName"u8))
                         {
                             siteName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("selfLink"))
+                        if (property0.NameEquals("selfLink"u8))
                         {
                             selfLink = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("issuer"))
+                        if (property0.NameEquals("issuer"u8))
                         {
                             issuer = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("issueDate"))
+                        if (property0.NameEquals("issueDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.AppService
                             issueDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("expirationDate"))
+                        if (property0.NameEquals("expirationDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.AppService
                             expirationDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("thumbprint"))
+                        if (property0.NameEquals("thumbprint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.AppService
                             thumbprint = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("valid"))
+                        if (property0.NameEquals("valid"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.AppService
                             valid = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("cerBlob"))
+                        if (property0.NameEquals("cerBlob"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -284,12 +284,12 @@ namespace Azure.ResourceManager.AppService
                             cerBlob = property0.Value.GetBytesFromBase64("D");
                             continue;
                         }
-                        if (property0.NameEquals("publicKeyHash"))
+                        if (property0.NameEquals("publicKeyHash"u8))
                         {
                             publicKeyHash = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("hostingEnvironmentProfile"))
+                        if (property0.NameEquals("hostingEnvironmentProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.AppService
                             hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("keyVaultId"))
+                        if (property0.NameEquals("keyVaultId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -309,12 +309,12 @@ namespace Azure.ResourceManager.AppService
                             keyVaultId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("keyVaultSecretName"))
+                        if (property0.NameEquals("keyVaultSecretName"u8))
                         {
                             keyVaultSecretName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("keyVaultSecretStatus"))
+                        if (property0.NameEquals("keyVaultSecretStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.AppService
                             keyVaultSecretStatus = property0.Value.GetString().ToKeyVaultSecretStatus();
                             continue;
                         }
-                        if (property0.NameEquals("serverFarmId"))
+                        if (property0.NameEquals("serverFarmId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -334,12 +334,12 @@ namespace Azure.ResourceManager.AppService
                             serverFarmId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("canonicalName"))
+                        if (property0.NameEquals("canonicalName"u8))
                         {
                             canonicalName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("domainValidationMethod"))
+                        if (property0.NameEquals("domainValidationMethod"u8))
                         {
                             domainValidationMethod = property0.Value.GetString();
                             continue;

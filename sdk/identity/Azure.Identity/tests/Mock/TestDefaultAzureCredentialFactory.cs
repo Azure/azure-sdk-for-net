@@ -25,7 +25,7 @@ namespace Azure.Identity.Tests.Mock
             => new EnvironmentCredential(Pipeline, Options);
 
         public override TokenCredential CreateManagedIdentityCredential()
-            => new ManagedIdentityCredential(new ManagedIdentityClient(Pipeline, Options.ManagedIdentityClientId));
+            => new ManagedIdentityCredential(Options.ManagedIdentityClientId, Pipeline, Options);
 
         public override TokenCredential CreateSharedTokenCacheCredential()
             => new SharedTokenCacheCredential(Options.SharedTokenCacheTenantId, Options.SharedTokenCacheUsername, Options, Pipeline);
@@ -43,6 +43,18 @@ namespace Azure.Identity.Tests.Mock
             };
 
             return new AzureCliCredential(Pipeline, _processService, options);
+        }
+
+        public override TokenCredential CreateAzureDeveloperCliCredential()
+        {
+            var options = new AzureDeveloperCliCredentialOptions
+            {
+                TenantId = Options.TenantId,
+                AdditionallyAllowedTenantsCore = Options.AdditionallyAllowedTenants.ToList(),
+				AzdCliProcessTimeout = Options.DeveloperCredentialTimeout
+            };
+
+            return new AzureDeveloperCliCredential(Pipeline, _processService, options);
         }
 
         public override TokenCredential CreateVisualStudioCredential()

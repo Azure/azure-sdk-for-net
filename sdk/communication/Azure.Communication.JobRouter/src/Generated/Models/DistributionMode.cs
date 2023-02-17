@@ -17,7 +17,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of DistributionMode. </summary>
         /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
         /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
-        public DistributionMode(int minConcurrentOffers, int maxConcurrentOffers)
+        protected DistributionMode(int minConcurrentOffers, int maxConcurrentOffers)
         {
             MinConcurrentOffers = minConcurrentOffers;
             MaxConcurrentOffers = maxConcurrentOffers;

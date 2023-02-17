@@ -138,9 +138,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 }
             }
 
-            // Check that the FHIR bundle is not null, but empty.
-            Assert.IsNotNull(result1.FhirBundle);
-            Assert.AreEqual(0, result1.FhirBundle.Count);
+            Assert.IsNull(result1.FhirBundle);
         }
 
         [RecordedTest]
@@ -480,7 +478,6 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Check the FHIR bundle.
             Assert.IsNotNull(resultCollection[0].FhirBundle);
-            Assert.Greater(resultCollection[0].FhirBundle.Count, 0);
         }
 
         [RecordedTest]
@@ -517,6 +514,30 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task AnalyzeHealthcareEntitiesBatchConvenienceWithAutoDetectedLanguageTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            AnalyzeHealthcareEntitiesOptions options = new()
+            {
+                AutoDetectionDefaultLanguage = "en"
+            };
+
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(
+                s_batchConvenienceDocuments,
+                "auto",
+                options);
+
+            await operation.WaitForCompletionAsync();
+
+            ValidateOperationProperties(operation);
+
+            // Take the first page.
+            AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            ValidateBatchDocumentsResult(resultCollection, s_expectedBatchOutput, isLanguageAutoDetected: true);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task AnalyzeOperationAnalyzeHealthcareEntitiesWithAutoDetectedLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -538,6 +559,27 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeHealthcareEntitiesResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
             ValidateBatchDocumentsResult(results, expectedOutput, isLanguageAutoDetected: true);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public void AnalyzeHealthcareEntitiesBatchWithDefaultLanguageThrows()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+            AnalyzeHealthcareEntitiesOptions options = new()
+            {
+                AutoDetectionDefaultLanguage = "en"
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(
+                async () => await client.StartAnalyzeHealthcareEntitiesAsync(
+                s_batchConvenienceDocuments,
+                "auto",
+                options));
+
+            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
         }
 
         private void ValidateInDocumenResult(IReadOnlyCollection<HealthcareEntity> entities, List<string> minimumExpectedOutput)

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="hostName"> Api endpoint to work with DigitalTwinsInstance. </param>
         /// <param name="privateEndpointConnections"> The private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> Public network access for the DigitalTwinsInstance. </param>
-        /// <param name="identity"> The managed identity for the DigitalTwinsInstance. Current supported identity types: None, SystemAssigned. </param>
+        /// <param name="identity"> The managed identity for the DigitalTwinsInstance. </param>
         internal DigitalTwinsDescriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, DigitalTwinsProvisioningState? provisioningState, string hostName, IList<DigitalTwinsPrivateEndpointConnectionData> privateEndpointConnections, DigitalTwinsPublicNetworkAccess? publicNetworkAccess, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             CreatedOn = createdOn;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DigitalTwins
         public IList<DigitalTwinsPrivateEndpointConnectionData> PrivateEndpointConnections { get; set; }
         /// <summary> Public network access for the DigitalTwinsInstance. </summary>
         public DigitalTwinsPublicNetworkAccess? PublicNetworkAccess { get; set; }
-        /// <summary> The managed identity for the DigitalTwinsInstance. Current supported identity types: None, SystemAssigned. </summary>
+        /// <summary> The managed identity for the DigitalTwinsInstance. </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

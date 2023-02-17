@@ -128,7 +128,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [Test]
         public async Task ReceiveValidatesMaxWaitTimePrefetchMode()
         {
+            int prefetchCount = 0;
             var mockTransportReceiver = new Mock<TransportReceiver>();
+            mockTransportReceiver.Setup(receiver => receiver.PrefetchCount).Returns(() => prefetchCount);
             var mockConnection = ServiceBusTestUtilities.CreateMockConnection();
             mockConnection.Setup(
                     connection => connection.CreateTransportReceiver(
@@ -141,6 +143,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         It.IsAny<bool>(),
                         It.IsAny<bool>(),
                         It.IsAny<CancellationToken>()))
+                .Callback<string, ServiceBusRetryPolicy, ServiceBusReceiveMode, uint, string, string, bool, bool, CancellationToken>(
+                    (_, _, _, count, _, _, _, _, _) =>
+                    {
+                        prefetchCount = (int) count;
+                    })
                 .Returns(mockTransportReceiver.Object);
             IReadOnlyList<ServiceBusReceivedMessage> receivedMessages = new[]
             {
@@ -152,7 +159,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 .Returns(Task.FromResult(receivedMessages));
 
             var receiver = new ServiceBusReceiver(mockConnection.Object, "queue", default,
-                new ServiceBusReceiverOptions {PrefetchCount = 10});
+                new ServiceBusReceiverOptions { PrefetchCount = 10 });
 
             Assert.That(
                 async () => await receiver.ReceiveMessagesAsync(10, TimeSpan.FromSeconds(-1)),

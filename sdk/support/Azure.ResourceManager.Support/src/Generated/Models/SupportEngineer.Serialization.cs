@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Support.Models
             Optional<string> emailAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("emailAddress"))
+                if (property.NameEquals("emailAddress"u8))
                 {
                     emailAddress = property.Value.GetString();
                     continue;

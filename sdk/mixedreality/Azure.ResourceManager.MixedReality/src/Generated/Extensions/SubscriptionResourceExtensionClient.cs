@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -26,8 +25,6 @@ namespace Azure.ResourceManager.MixedReality
         private SpatialAnchorsAccountsRestOperations _spatialAnchorsAccountRestClient;
         private ClientDiagnostics _remoteRenderingAccountClientDiagnostics;
         private RemoteRenderingAccountsRestOperations _remoteRenderingAccountRestClient;
-        private ClientDiagnostics _objectAnchorsAccountClientDiagnostics;
-        private ObjectAnchorsAccountsRestOperations _objectAnchorsAccountRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -47,8 +44,6 @@ namespace Azure.ResourceManager.MixedReality
         private SpatialAnchorsAccountsRestOperations SpatialAnchorsAccountRestClient => _spatialAnchorsAccountRestClient ??= new SpatialAnchorsAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SpatialAnchorsAccountResource.ResourceType));
         private ClientDiagnostics RemoteRenderingAccountClientDiagnostics => _remoteRenderingAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MixedReality", RemoteRenderingAccountResource.ResourceType.Namespace, Diagnostics);
         private RemoteRenderingAccountsRestOperations RemoteRenderingAccountRestClient => _remoteRenderingAccountRestClient ??= new RemoteRenderingAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RemoteRenderingAccountResource.ResourceType));
-        private ClientDiagnostics ObjectAnchorsAccountClientDiagnostics => _objectAnchorsAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MixedReality", ObjectAnchorsAccountResource.ResourceType.Namespace, Diagnostics);
-        private ObjectAnchorsAccountsRestOperations ObjectAnchorsAccountRestClient => _objectAnchorsAccountRestClient ??= new ObjectAnchorsAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ObjectAnchorsAccountResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -58,15 +53,23 @@ namespace Azure.ResourceManager.MixedReality
 
         /// <summary>
         /// Check Name Availability for local uniqueness
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/locations/{location}/checkNameAvailability
-        /// Operation Id: CheckNameAvailabilityLocal
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailabilityLocal</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="content"> Check Name Availability Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityLocalAsync(AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MixedRealityNameAvailabilityResult>> CheckMixedRealityNameAvailabilityAsync(AzureLocation location, MixedRealityNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityLocal");
+            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckMixedRealityNameAvailability");
             scope.Start();
             try
             {
@@ -82,15 +85,23 @@ namespace Azure.ResourceManager.MixedReality
 
         /// <summary>
         /// Check Name Availability for local uniqueness
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/locations/{location}/checkNameAvailability
-        /// Operation Id: CheckNameAvailabilityLocal
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailabilityLocal</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The location in which uniqueness will be verified. </param>
         /// <param name="content"> Check Name Availability Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResponse> CheckNameAvailabilityLocal(AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<MixedRealityNameAvailabilityResult> CheckMixedRealityNameAvailability(AzureLocation location, MixedRealityNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityLocal");
+            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckMixedRealityNameAvailability");
             scope.Start();
             try
             {
@@ -106,254 +117,90 @@ namespace Azure.ResourceManager.MixedReality
 
         /// <summary>
         /// List Spatial Anchors Accounts by Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/spatialAnchorsAccounts
-        /// Operation Id: SpatialAnchorsAccounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/spatialAnchorsAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SpatialAnchorsAccounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SpatialAnchorsAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SpatialAnchorsAccountResource> GetSpatialAnchorsAccountsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SpatialAnchorsAccountResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SpatialAnchorsAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSpatialAnchorsAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await SpatialAnchorsAccountRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SpatialAnchorsAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SpatialAnchorsAccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SpatialAnchorsAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSpatialAnchorsAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await SpatialAnchorsAccountRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SpatialAnchorsAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SpatialAnchorsAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SpatialAnchorsAccountRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SpatialAnchorsAccountResource(Client, SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(e)), SpatialAnchorsAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSpatialAnchorsAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List Spatial Anchors Accounts by Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/spatialAnchorsAccounts
-        /// Operation Id: SpatialAnchorsAccounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/spatialAnchorsAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SpatialAnchorsAccounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SpatialAnchorsAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SpatialAnchorsAccountResource> GetSpatialAnchorsAccounts(CancellationToken cancellationToken = default)
         {
-            Page<SpatialAnchorsAccountResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SpatialAnchorsAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSpatialAnchorsAccounts");
-                scope.Start();
-                try
-                {
-                    var response = SpatialAnchorsAccountRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SpatialAnchorsAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SpatialAnchorsAccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SpatialAnchorsAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSpatialAnchorsAccounts");
-                scope.Start();
-                try
-                {
-                    var response = SpatialAnchorsAccountRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SpatialAnchorsAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SpatialAnchorsAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SpatialAnchorsAccountRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SpatialAnchorsAccountResource(Client, SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(e)), SpatialAnchorsAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSpatialAnchorsAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List Remote Rendering Accounts by Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/remoteRenderingAccounts
-        /// Operation Id: RemoteRenderingAccounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/remoteRenderingAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RemoteRenderingAccounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RemoteRenderingAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RemoteRenderingAccountResource> GetRemoteRenderingAccountsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RemoteRenderingAccountResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RemoteRenderingAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRemoteRenderingAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await RemoteRenderingAccountRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RemoteRenderingAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RemoteRenderingAccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = RemoteRenderingAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRemoteRenderingAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await RemoteRenderingAccountRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RemoteRenderingAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RemoteRenderingAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RemoteRenderingAccountRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RemoteRenderingAccountResource(Client, RemoteRenderingAccountData.DeserializeRemoteRenderingAccountData(e)), RemoteRenderingAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRemoteRenderingAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List Remote Rendering Accounts by Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/remoteRenderingAccounts
-        /// Operation Id: RemoteRenderingAccounts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/remoteRenderingAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RemoteRenderingAccounts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RemoteRenderingAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RemoteRenderingAccountResource> GetRemoteRenderingAccounts(CancellationToken cancellationToken = default)
         {
-            Page<RemoteRenderingAccountResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = RemoteRenderingAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRemoteRenderingAccounts");
-                scope.Start();
-                try
-                {
-                    var response = RemoteRenderingAccountRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RemoteRenderingAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RemoteRenderingAccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = RemoteRenderingAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRemoteRenderingAccounts");
-                scope.Start();
-                try
-                {
-                    var response = RemoteRenderingAccountRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RemoteRenderingAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// List Object Anchors Accounts by Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/objectAnchorsAccounts
-        /// Operation Id: ObjectAnchorsAccounts_ListBySubscription
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ObjectAnchorsAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ObjectAnchorsAccountResource> GetObjectAnchorsAccountsAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ObjectAnchorsAccountResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ObjectAnchorsAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetObjectAnchorsAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await ObjectAnchorsAccountRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ObjectAnchorsAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ObjectAnchorsAccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ObjectAnchorsAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetObjectAnchorsAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await ObjectAnchorsAccountRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ObjectAnchorsAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// List Object Anchors Accounts by Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/objectAnchorsAccounts
-        /// Operation Id: ObjectAnchorsAccounts_ListBySubscription
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ObjectAnchorsAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ObjectAnchorsAccountResource> GetObjectAnchorsAccounts(CancellationToken cancellationToken = default)
-        {
-            Page<ObjectAnchorsAccountResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ObjectAnchorsAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetObjectAnchorsAccounts");
-                scope.Start();
-                try
-                {
-                    var response = ObjectAnchorsAccountRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ObjectAnchorsAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ObjectAnchorsAccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ObjectAnchorsAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetObjectAnchorsAccounts");
-                scope.Start();
-                try
-                {
-                    var response = ObjectAnchorsAccountRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ObjectAnchorsAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RemoteRenderingAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RemoteRenderingAccountRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RemoteRenderingAccountResource(Client, RemoteRenderingAccountData.DeserializeRemoteRenderingAccountData(e)), RemoteRenderingAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRemoteRenderingAccounts", "value", "nextLink", cancellationToken);
         }
     }
 }

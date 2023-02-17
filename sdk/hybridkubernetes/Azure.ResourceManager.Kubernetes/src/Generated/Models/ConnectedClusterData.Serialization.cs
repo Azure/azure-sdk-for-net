@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Kubernetes
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("identity");
+            writer.WritePropertyName("identity"u8);
             JsonSerializer.Serialize(writer, Identity); if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Kubernetes
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("agentPublicKeyCertificate");
+            writer.WritePropertyName("agentPublicKeyCertificate"u8);
             writer.WriteStringValue(AgentPublicKeyCertificate);
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(Distribution))
             {
-                writer.WritePropertyName("distribution");
+                writer.WritePropertyName("distribution"u8);
                 writer.WriteStringValue(Distribution);
             }
             if (Optional.IsDefined(Infrastructure))
             {
-                writer.WritePropertyName("infrastructure");
+                writer.WritePropertyName("infrastructure"u8);
                 writer.WriteStringValue(Infrastructure);
             }
             if (Optional.IsDefined(PrivateLinkState))
             {
-                writer.WritePropertyName("privateLinkState");
+                writer.WritePropertyName("privateLinkState"u8);
                 writer.WriteStringValue(PrivateLinkState.Value.ToString());
             }
             if (Optional.IsDefined(PrivateLinkScopeResourceId))
             {
-                writer.WritePropertyName("privateLinkScopeResourceId");
+                writer.WritePropertyName("privateLinkScopeResourceId"u8);
                 writer.WriteStringValue(PrivateLinkScopeResourceId);
             }
             writer.WriteEndObject();
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.Kubernetes
             Optional<string> privateLinkScopeResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -111,37 +111,37 @@ namespace Azure.ResourceManager.Kubernetes
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -150,17 +150,17 @@ namespace Azure.ResourceManager.Kubernetes
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("agentPublicKeyCertificate"))
+                        if (property0.NameEquals("agentPublicKeyCertificate"u8))
                         {
                             agentPublicKeyCertificate = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("kubernetesVersion"))
+                        if (property0.NameEquals("kubernetesVersion"u8))
                         {
                             kubernetesVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("totalNodeCount"))
+                        if (property0.NameEquals("totalNodeCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Kubernetes
                             totalNodeCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("totalCoreCount"))
+                        if (property0.NameEquals("totalCoreCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -180,12 +180,12 @@ namespace Azure.ResourceManager.Kubernetes
                             totalCoreCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("agentVersion"))
+                        if (property0.NameEquals("agentVersion"u8))
                         {
                             agentVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -195,22 +195,22 @@ namespace Azure.ResourceManager.Kubernetes
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("distribution"))
+                        if (property0.NameEquals("distribution"u8))
                         {
                             distribution = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("infrastructure"))
+                        if (property0.NameEquals("infrastructure"u8))
                         {
                             infrastructure = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("offering"))
+                        if (property0.NameEquals("offering"u8))
                         {
                             offering = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("managedIdentityCertificateExpirationTime"))
+                        if (property0.NameEquals("managedIdentityCertificateExpirationTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Kubernetes
                             managedIdentityCertificateExpirationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastConnectivityTime"))
+                        if (property0.NameEquals("lastConnectivityTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Kubernetes
                             lastConnectivityTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("connectivityStatus"))
+                        if (property0.NameEquals("connectivityStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Kubernetes
                             connectivityStatus = new ConnectivityStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("privateLinkState"))
+                        if (property0.NameEquals("privateLinkState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Kubernetes
                             privateLinkState = new PrivateLinkState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("privateLinkScopeResourceId"))
+                        if (property0.NameEquals("privateLinkScopeResourceId"u8))
                         {
                             privateLinkScopeResourceId = property0.Value.GetString();
                             continue;

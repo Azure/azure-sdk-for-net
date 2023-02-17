@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("conditionType");
+            writer.WritePropertyName("conditionType"u8);
             writer.WriteStringValue(ConditionType.ToString());
             writer.WriteEndObject();
         }
 
         internal static UnknownAutomationRuleCondition DeserializeUnknownAutomationRuleCondition(JsonElement element)
         {
-            ConditionType conditionType = default;
+            ConditionType conditionType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("conditionType"))
+                if (property.NameEquals("conditionType"u8))
                 {
                     conditionType = new ConditionType(property.Value.GetString());
                     continue;

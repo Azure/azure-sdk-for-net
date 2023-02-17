@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     {
         internal static DataLakeStoreAccountListResult DeserializeDataLakeStoreAccountListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DataLakeStoreAccountBasic>> value = default;
+            Optional<IReadOnlyList<DataLakeStoreAccountBasicData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DataLakeStoreAccountBasic> array = new List<DataLakeStoreAccountBasic>();
+                    List<DataLakeStoreAccountBasicData> array = new List<DataLakeStoreAccountBasicData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataLakeStoreAccountBasic.DeserializeDataLakeStoreAccountBasic(item));
+                        array.Add(DataLakeStoreAccountBasicData.DeserializeDataLakeStoreAccountBasicData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

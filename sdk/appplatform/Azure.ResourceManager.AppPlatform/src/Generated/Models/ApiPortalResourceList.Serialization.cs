@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static ApiPortalResourceList DeserializeApiPortalResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<ApiPortalResourceData>> value = default;
+            Optional<IReadOnlyList<AppPlatformApiPortalData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ApiPortalResourceData> array = new List<ApiPortalResourceData>();
+                    List<AppPlatformApiPortalData> array = new List<AppPlatformApiPortalData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiPortalResourceData.DeserializeApiPortalResourceData(item));
+                        array.Add(AppPlatformApiPortalData.DeserializeAppPlatformApiPortalData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

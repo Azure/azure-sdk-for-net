@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> scriptNameSuffix = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("scriptContent"))
+                if (property.NameEquals("scriptContent"u8))
                 {
                     scriptContent = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scriptExtension"))
+                if (property.NameEquals("scriptExtension"u8))
                 {
                     scriptExtension = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     url = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scriptNameSuffix"))
+                if (property.NameEquals("scriptNameSuffix"u8))
                 {
                     scriptNameSuffix = property.Value.GetString();
                     continue;

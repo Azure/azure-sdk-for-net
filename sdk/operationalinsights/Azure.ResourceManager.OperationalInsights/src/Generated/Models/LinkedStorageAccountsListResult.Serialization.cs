@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static LinkedStorageAccountsListResult DeserializeLinkedStorageAccountsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<OperationalInsightsLinkedStorageAccountData>> value = default;
+            Optional<IReadOnlyList<OperationalInsightsLinkedStorageAccountsData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OperationalInsightsLinkedStorageAccountData> array = new List<OperationalInsightsLinkedStorageAccountData>();
+                    List<OperationalInsightsLinkedStorageAccountsData> array = new List<OperationalInsightsLinkedStorageAccountsData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsLinkedStorageAccountData.DeserializeOperationalInsightsLinkedStorageAccountData(item));
+                        array.Add(OperationalInsightsLinkedStorageAccountsData.DeserializeOperationalInsightsLinkedStorageAccountsData(item));
                     }
                     value = array;
                     continue;

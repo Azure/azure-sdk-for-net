@@ -1,18 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#region Snippet:Changelog_New
-            using Azure.Identity;
-            using Azure.ResourceManager.Compute.Models;
-            using Azure.ResourceManager.Network;
-            using Azure.ResourceManager.Network.Models;
-            using Azure.ResourceManager.Resources;
-            using Azure.ResourceManager.Resources.Models;
-            using Azure.Core;
-            using System;
-            using System.Linq;
-
-#if !SNIPPET
+#region Snippet:Changelog_NewUsing
+using Azure.Identity;
+using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using Azure.Core;
+using System;
+using System.Linq;
+#endregion
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
         [Ignore("Only verifying that the sample builds")]
         public async Task NewCode()
         {
-#endif
+            #region Snippet:Changelog_New
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 
             AzureLocation location = AzureLocation.WestUS;

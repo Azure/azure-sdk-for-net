@@ -152,3 +152,16 @@ directive:
       "AES256"
     ];
 ```
+
+### Rename LeaseAction
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.LeaseAction["x-ms-enum"];
+    $.LeaseAction["x-ms-enum"] = {
+        "name": "DataLakeLeaseAction",
+        "modelAsString": false
+    };
+```

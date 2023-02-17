@@ -19,33 +19,33 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("etag");
+                writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WritePropertyName("enabled"u8);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsCollectionDefined(RequiredDataConnectors))
             {
-                writer.WritePropertyName("requiredDataConnectors");
+                writer.WritePropertyName("requiredDataConnectors"u8);
                 writer.WriteStartArray();
                 foreach (var item in RequiredDataConnectors)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             if (Optional.IsCollectionDefined(Tactics))
             {
-                writer.WritePropertyName("tactics");
+                writer.WritePropertyName("tactics"u8);
                 writer.WriteStartArray();
                 foreach (var item in Tactics)
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             if (Optional.IsCollectionDefined(Techniques))
             {
-                writer.WritePropertyName("techniques");
+                writer.WritePropertyName("techniques"u8);
                 writer.WriteStartArray();
                 foreach (var item in Techniques)
                 {
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             if (Optional.IsDefined(AnomalyVersion))
             {
-                writer.WritePropertyName("anomalyVersion");
+                writer.WritePropertyName("anomalyVersion"u8);
                 writer.WriteStringValue(AnomalyVersion);
             }
             if (Optional.IsDefined(CustomizableObservations))
             {
-                writer.WritePropertyName("customizableObservations");
+                writer.WritePropertyName("customizableObservations"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(CustomizableObservations);
 #else
@@ -89,27 +89,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             if (Optional.IsDefined(Frequency))
             {
-                writer.WritePropertyName("frequency");
+                writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value, "P");
             }
             if (Optional.IsDefined(SettingsStatus))
             {
-                writer.WritePropertyName("settingsStatus");
+                writer.WritePropertyName("settingsStatus"u8);
                 writer.WriteStringValue(SettingsStatus.Value.ToString());
             }
             if (Optional.IsDefined(IsDefaultSettings))
             {
-                writer.WritePropertyName("isDefaultSettings");
+                writer.WritePropertyName("isDefaultSettings"u8);
                 writer.WriteBooleanValue(IsDefaultSettings.Value);
             }
             if (Optional.IsDefined(AnomalySettingsVersion))
             {
-                writer.WritePropertyName("anomalySettingsVersion");
+                writer.WritePropertyName("anomalySettingsVersion"u8);
                 writer.WriteNumberValue(AnomalySettingsVersion.Value);
             }
             if (Optional.IsDefined(SettingsDefinitionId))
             {
-                writer.WritePropertyName("settingsDefinitionId");
+                writer.WritePropertyName("settingsDefinitionId"u8);
                 writer.WriteStringValue(SettingsDefinitionId.Value);
             }
             writer.WriteEndObject();
@@ -129,23 +129,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<bool> enabled = default;
             Optional<DateTimeOffset> lastModifiedUtc = default;
             Optional<IList<SecurityMLAnalyticsSettingsDataSource>> requiredDataConnectors = default;
-            Optional<IList<AttackTactic>> tactics = default;
+            Optional<IList<SecurityInsightsAttackTactic>> tactics = default;
             Optional<IList<string>> techniques = default;
             Optional<string> anomalyVersion = default;
             Optional<BinaryData> customizableObservations = default;
             Optional<TimeSpan> frequency = default;
-            Optional<SettingsStatus> settingsStatus = default;
+            Optional<AnomalySecurityMLAnalyticsSettingsStatus> settingsStatus = default;
             Optional<bool> isDefaultSettings = default;
             Optional<int> anomalySettingsVersion = default;
             Optional<Guid> settingsDefinitionId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new SecurityMLAnalyticsSettingsKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -155,32 +155,32 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -189,17 +189,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("enabled"))
+                        if (property0.NameEquals("enabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             enabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("lastModifiedUtc"))
+                        if (property0.NameEquals("lastModifiedUtc"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             lastModifiedUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("requiredDataConnectors"))
+                        if (property0.NameEquals("requiredDataConnectors"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -234,22 +234,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             requiredDataConnectors = array;
                             continue;
                         }
-                        if (property0.NameEquals("tactics"))
+                        if (property0.NameEquals("tactics"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AttackTactic> array = new List<AttackTactic>();
+                            List<SecurityInsightsAttackTactic> array = new List<SecurityInsightsAttackTactic>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new AttackTactic(item.GetString()));
+                                array.Add(new SecurityInsightsAttackTactic(item.GetString()));
                             }
                             tactics = array;
                             continue;
                         }
-                        if (property0.NameEquals("techniques"))
+                        if (property0.NameEquals("techniques"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -264,12 +264,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             techniques = array;
                             continue;
                         }
-                        if (property0.NameEquals("anomalyVersion"))
+                        if (property0.NameEquals("anomalyVersion"u8))
                         {
                             anomalyVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("customizableObservations"))
+                        if (property0.NameEquals("customizableObservations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             customizableObservations = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("frequency"))
+                        if (property0.NameEquals("frequency"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -289,17 +289,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             frequency = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("settingsStatus"))
+                        if (property0.NameEquals("settingsStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            settingsStatus = new SettingsStatus(property0.Value.GetString());
+                            settingsStatus = new AnomalySecurityMLAnalyticsSettingsStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("isDefaultSettings"))
+                        if (property0.NameEquals("isDefaultSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             isDefaultSettings = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("anomalySettingsVersion"))
+                        if (property0.NameEquals("anomalySettingsVersion"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             anomalySettingsVersion = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("settingsDefinitionId"))
+                        if (property0.NameEquals("settingsDefinitionId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

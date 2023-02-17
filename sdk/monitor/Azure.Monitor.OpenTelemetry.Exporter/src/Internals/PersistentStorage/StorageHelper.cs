@@ -10,9 +10,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
 {
     internal static class StorageHelper
     {
-        private static string s_defaultStorageDirectory;
+        private static string? s_defaultStorageDirectory;
 
-        internal static string GetDefaultStorageDirectory()
+        internal static string? GetDefaultStorageDirectory()
         {
             if (s_defaultStorageDirectory != null)
             {
@@ -20,7 +20,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
             }
             else
             {
-                string dirPath;
+                string? dirPath;
                 IDictionary environmentVars = Environment.GetEnvironmentVariables();
 
                 if (IsWindowsOS())
@@ -53,7 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
         /// <param name="path">Base directory.</param>
         /// <param name="createdDirectoryPath">Full directory.</param>
         /// <returns><see langword= "true"/> if directory is created.</returns>
-        private static bool TryCreateTelemetryDirectory(string path, out string createdDirectoryPath)
+        private static bool TryCreateTelemetryDirectory(string? path, [System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out string? createdDirectoryPath)
         {
             createdDirectoryPath = null;
             if (path == null)

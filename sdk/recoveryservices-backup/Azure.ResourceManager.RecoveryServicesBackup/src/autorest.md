@@ -5,11 +5,12 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: RecoveryServicesBackup
 namespace: Azure.ResourceManager.RecoveryServicesBackup
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/34ba022add0034e30462b76e1548ce5a7e053e33/specification/recoveryservicesbackup/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/2d9846d81852452cf10270b18329ac382a881bf7/specification/recoveryservicesbackup/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -22,6 +23,7 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'SubscriptionIdParameter': 'object'
 
 rename-rules:
   CPU: Cpu
@@ -56,6 +58,7 @@ rename-rules:
 
 override-operation-name:
   BackupStatus_Get: GetBackupStatus
+  DeletedProtectionContainers_List: GetSoftDeletedProtectionContainers
 
 list-exception:
   - /Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig
@@ -155,4 +158,9 @@ directive:
               '$ref': '#/definitions/BackupResourceConfigResource'
             }
           };
+  # Here the format date-time isn't specified in swagger, hence adding it explicitly 
+  - from: bms.json
+    where: $.definitions.RecoveryPointProperties.properties.expiryTime
+    transform: >
+      $["format"] = "date-time";
 ```

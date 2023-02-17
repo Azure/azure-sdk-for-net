@@ -11,7 +11,7 @@
         }
       },
       "ArmTemplateParameters": "@{ enableHsm = $true }",
-      "TestTargetFramework": [ "netcoreapp3.1" ]
+      "TestTargetFramework": [ "net6.0" ]
     }
   ]
 }

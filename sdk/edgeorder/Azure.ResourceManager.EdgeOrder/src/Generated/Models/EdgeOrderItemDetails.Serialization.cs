@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("productDetails");
+            writer.WritePropertyName("productDetails"u8);
             writer.WriteObjectValue(ProductDetails);
-            writer.WritePropertyName("orderItemType");
+            writer.WritePropertyName("orderItemType"u8);
             writer.WriteStringValue(OrderItemType.ToString());
             if (Optional.IsDefined(Preferences))
             {
-                writer.WritePropertyName("preferences");
+                writer.WritePropertyName("preferences"u8);
                 writer.WriteObjectValue(Preferences);
             }
             if (Optional.IsCollectionDefined(NotificationEmailList))
             {
-                writer.WritePropertyName("notificationEmailList");
+                writer.WritePropertyName("notificationEmailList"u8);
                 writer.WriteStartArray();
                 foreach (var item in NotificationEmailList)
                 {
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("productDetails"))
+                if (property.NameEquals("productDetails"u8))
                 {
                     productDetails = ProductDetails.DeserializeProductDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("orderItemType"))
+                if (property.NameEquals("orderItemType"u8))
                 {
                     orderItemType = new OrderItemType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("currentStage"))
+                if (property.NameEquals("currentStage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     currentStage = EdgeOrderStageDetails.DeserializeEdgeOrderStageDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("orderItemStageHistory"))
+                if (property.NameEquals("orderItemStageHistory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     orderItemStageHistory = array;
                     continue;
                 }
-                if (property.NameEquals("preferences"))
+                if (property.NameEquals("preferences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     preferences = OrderItemPreferences.DeserializeOrderItemPreferences(property.Value);
                     continue;
                 }
-                if (property.NameEquals("forwardShippingDetails"))
+                if (property.NameEquals("forwardShippingDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     forwardShippingDetails = ForwardShippingDetails.DeserializeForwardShippingDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("reverseShippingDetails"))
+                if (property.NameEquals("reverseShippingDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     reverseShippingDetails = ReverseShippingDetails.DeserializeReverseShippingDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("notificationEmailList"))
+                if (property.NameEquals("notificationEmailList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,12 +139,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     notificationEmailList = array;
                     continue;
                 }
-                if (property.NameEquals("cancellationReason"))
+                if (property.NameEquals("cancellationReason"u8))
                 {
                     cancellationReason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cancellationStatus"))
+                if (property.NameEquals("cancellationStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     cancellationStatus = new OrderItemCancellationStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("deletionStatus"))
+                if (property.NameEquals("deletionStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -164,12 +164,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     deletionStatus = new EdgeOrderActionStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("returnReason"))
+                if (property.NameEquals("returnReason"u8))
                 {
                     returnReason = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("returnStatus"))
+                if (property.NameEquals("returnStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     returnStatus = new OrderItemReturnStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("managementRpDetails"))
+                if (property.NameEquals("managementRpDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     managementRPDetails = ResourceProviderDetails.DeserializeResourceProviderDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("managementRpDetailsList"))
+                if (property.NameEquals("managementRpDetailsList"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -204,14 +204,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     managementRPDetailsList = array;
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
             }

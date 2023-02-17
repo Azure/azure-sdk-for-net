@@ -31,8 +31,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// and their time of deletion be more than 24 Hours Ago
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group where the recovery services vault is
-        /// present.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='location'>
         /// Location of the resource
@@ -56,5 +55,32 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<CheckNameAvailabilityResult>> CheckNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string location, CheckNameAvailabilityParameters input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// API to get details about capabilities provided by
+        /// Microsoft.RecoveryServices RP
+        /// </summary>
+        /// <param name='location'>
+        /// Location of the resource
+        /// </param>
+        /// <param name='input'>
+        /// Contains information about Resource type and properties to get
+        /// capabilities
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<CapabilitiesResponse>> CapabilitiesWithHttpMessagesAsync(string location, ResourceCapabilities input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

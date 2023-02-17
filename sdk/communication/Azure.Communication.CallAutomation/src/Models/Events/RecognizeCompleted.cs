@@ -1,15 +1,33 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Text.Json.Serialization;
 using System.Text.Json;
 using Azure.Core;
+using System.Text.Json.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
-    [CodeGenModel("RecognizeCompleted", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    public partial class RecognizeCompleted : CallAutomationEventWithReasonCodeName
+    /// <summary>
+    /// The Recognize Canceled event.
+    /// </summary>
+    public partial class RecognizeCompleted : CallAutomationEventBase
     {
+        /// <summary> The recognize Dtmf result. </summary>
+        public RecognizeResult RecognizeResult { get; }
+
+        /// <summary> Get the recognize Tone result. </summary>
+        private CollectTonesResult CollectTonesResult { get; }
+
+        /// <summary> The recognize choice result. </summary>
+        private ChoiceResult ChoiceResult { get; }
+
+        /// <summary>
+        /// The recognition type.
+        /// </summary>
+        [CodeGenMember("RecognitionType")]
+        [JsonConverter(typeof(EquatableEnumJsonConverter<CallMediaRecognitionType>))]
+        private CallMediaRecognitionType RecognitionType { get; set; }
+
         /// <summary> Initializes a new instance of RecognizeCompleted. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
@@ -21,7 +39,8 @@ namespace Azure.Communication.CallAutomation
         /// In case of cancel operation the this field is not set and is returned empty
         /// </param>
         /// <param name="collectTonesResult"> Defines the result for RecognitionType = Dtmf. </param>
-        internal RecognizeCompleted(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, CollectTonesResult collectTonesResult)
+        /// <param name="choiceResult"> Defines the result for RecognitionType = Choices. </param>
+        internal RecognizeCompleted(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, CollectTonesResult collectTonesResult, ChoiceResult choiceResult)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -30,15 +49,37 @@ namespace Azure.Communication.CallAutomation
             ResultInformation = resultInformation;
             RecognitionType = recognitionType;
             CollectTonesResult = collectTonesResult;
-            ReasonCode = new ReasonCode(resultInformation.SubCode.ToString());
+            ChoiceResult = choiceResult;
+            if (RecognitionType == CallMediaRecognitionType.Dtmf)
+            {
+                RecognizeResult = CollectTonesResult;
+            }
+            else if (RecognitionType == CallMediaRecognitionType.Choices)
+            {
+                RecognizeResult = ChoiceResult;
+            }
         }
 
-        /// <summary>
-        /// The recognition type.
-        /// </summary>
-        [CodeGenMember("RecognitionType")]
-        [JsonConverter(typeof(EquatableEnumJsonConverter<CallMediaRecognitionType>))]
-        public CallMediaRecognitionType RecognitionType { get; set; }
+        /// <summary> Initializes a new instance of RecognizeCompletedEvent. </summary>
+        /// <param name="internalEvent"> Internal Representation of the RecognizeCompletedEvent. </param>
+        internal RecognizeCompleted(RecognizeCompletedInternal internalEvent)
+        {
+            CallConnectionId = internalEvent.CallConnectionId;
+            ServerCallId = internalEvent.ServerCallId;
+            CorrelationId = internalEvent.CorrelationId;
+            OperationContext = internalEvent.OperationContext;
+            ResultInformation = internalEvent.ResultInformation;
+            if (internalEvent.RecognitionType == CallMediaRecognitionType.Dtmf)
+            {
+                RecognizeResult = internalEvent.CollectTonesResult;
+                CollectTonesResult = internalEvent.CollectTonesResult;
+            }
+            else if (internalEvent.RecognitionType == CallMediaRecognitionType.Choices)
+            {
+                RecognizeResult = internalEvent.ChoiceResult;
+                ChoiceResult = internalEvent.ChoiceResult;
+            }
+        }
 
         /// <summary>
         /// Deserialize <see cref="RecognizeCompleted"/> event.
@@ -50,7 +91,9 @@ namespace Azure.Communication.CallAutomation
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
 
-            return DeserializeRecognizeCompleted(element);
+            RecognizeCompletedInternal parsedRecognizeCompleted = RecognizeCompletedInternal.DeserializeRecognizeCompletedInternal(element);
+
+            return new RecognizeCompleted(parsedRecognizeCompleted);
         }
     }
 }

@@ -8,7 +8,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         public virtual Azure.Response<bool> Exists(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountResource> Get(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountBasic> GetAll(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountBasic> GetAll(string filter = null, int? top = default(int?), int? skip = default(int?), string select = null, string orderby = null, bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountBasic> GetAllAsync(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountBasic> GetAllAsync(string filter = null, int? top = default(int?), int? skip = default(int?), string select = null, string orderby = null, bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountResource>> GetAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountBasic> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountBasic>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         public System.Guid? AccountId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsComputePolicyData> ComputePolicies { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public Azure.ResourceManager.DataLakeAnalytics.Models.CommitmentTierType? CurrentTier { get { throw null; } }
+        public Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsCommitmentTierType? CurrentTier { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationData> DataLakeStoreAccounts { get { throw null; } }
         public Azure.ResourceManager.DataLakeAnalytics.Models.DebugDataAccessLevel? DebugDataAccessLevel { get { throw null; } }
         public string DefaultDataLakeStoreAccount { get { throw null; } }
@@ -39,7 +41,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         public int? MaxJobRunningTimeInMin { get { throw null; } }
         public int? MaxQueuedJobCountPerUser { get { throw null; } }
         public int? MinPriorityPerJob { get { throw null; } }
-        public Azure.ResourceManager.DataLakeAnalytics.Models.CommitmentTierType? NewTier { get { throw null; } }
+        public Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsCommitmentTierType? NewTier { get { throw null; } }
         public Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountStatus? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationData> PublicDataLakeStoreAccounts { get { throw null; } }
         public int? QueryStoreRetention { get { throw null; } }
@@ -115,9 +117,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
     }
     public static partial class DataLakeAnalyticsExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsNameAccountAvailabilityResult> CheckDataLakeAnalyticsAccountNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsNameAccountAvailabilityResult>> CheckDataLakeAnalyticsAccountNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityResult> CheckDataLakeAnalyticsAccountNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityResult>> CheckDataLakeAnalyticsAccountNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountBasic> GetAccounts(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.DataLakeAnalytics.Models.SubscriptionResourceGetAccountsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountBasic> GetAccounts(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, int? top = default(int?), int? skip = default(int?), string select = null, string orderby = null, bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountBasic> GetAccountsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.DataLakeAnalytics.Models.SubscriptionResourceGetAccountsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountBasic> GetAccountsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, int? top = default(int?), int? skip = default(int?), string select = null, string orderby = null, bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsCapabilityInformation> GetCapabilityLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsCapabilityInformation>> GetCapabilityLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -174,7 +178,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         public virtual Azure.Response<bool> Exists(string storageAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string storageAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationResource> Get(string storageAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationResource> GetAll(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsStorageAccountInformationCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationResource> GetAll(string filter = null, int? top = default(int?), int? skip = default(int?), string select = null, string orderby = null, bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationResource> GetAllAsync(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsStorageAccountInformationCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationResource> GetAllAsync(string filter = null, int? top = default(int?), int? skip = default(int?), string select = null, string orderby = null, bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationResource>> GetAsync(string storageAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageAccountInformationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -241,7 +247,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         public virtual Azure.Response<bool> Exists(string dataLakeStoreAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string dataLakeStoreAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationResource> Get(string dataLakeStoreAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationResource> GetAll(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreAccountInformationCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationResource> GetAll(string filter = null, int? top = default(int?), int? skip = default(int?), string select = null, string orderby = null, bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationResource> GetAllAsync(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreAccountInformationCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationResource> GetAllAsync(string filter = null, int? top = default(int?), int? skip = default(int?), string select = null, string orderby = null, bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationResource>> GetAsync(string dataLakeStoreAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -289,18 +297,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public static bool operator !=(Azure.ResourceManager.DataLakeAnalytics.Models.AadObjectIdentifierType left, Azure.ResourceManager.DataLakeAnalytics.Models.AadObjectIdentifierType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public enum CommitmentTierType
-    {
-        Consumption = 0,
-        Commitment100AUHours = 1,
-        Commitment500AUHours = 2,
-        Commitment1000AUHours = 3,
-        Commitment5000AUHours = 4,
-        Commitment10000AUHours = 5,
-        Commitment50000AUHours = 6,
-        Commitment100000AUHours = 7,
-        Commitment500000AUHours = 8,
-    }
     public partial class ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent
     {
         public ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent(string name, System.Guid objectId, Azure.ResourceManager.DataLakeAnalytics.Models.AadObjectIdentifierType objectType) { }
@@ -331,6 +327,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountState? State { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
     }
+    public partial class DataLakeAnalyticsAccountCollectionGetAllOptions
+    {
+        public DataLakeAnalyticsAccountCollectionGetAllOptions() { }
+        public bool? Count { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public string Orderby { get { throw null; } set { } }
+        public string Select { get { throw null; } set { } }
+        public int? Skip { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
+    }
     public partial class DataLakeAnalyticsAccountCreateOrUpdateContent
     {
         public DataLakeAnalyticsAccountCreateOrUpdateContent(Azure.Core.AzureLocation location, string defaultDataLakeStoreAccount, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent> dataLakeStoreAccounts) { }
@@ -345,7 +351,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public int? MaxDegreeOfParallelismPerJob { get { throw null; } set { } }
         public int? MaxJobCount { get { throw null; } set { } }
         public int? MinPriorityPerJob { get { throw null; } set { } }
-        public Azure.ResourceManager.DataLakeAnalytics.Models.CommitmentTierType? NewTier { get { throw null; } set { } }
+        public Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsCommitmentTierType? NewTier { get { throw null; } set { } }
         public int? QueryStoreRetention { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeAnalytics.Models.StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent> StorageAccounts { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -355,6 +361,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public DataLakeAnalyticsAccountNameAvailabilityContent(string name, Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsResourceType resourceType) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsResourceType ResourceType { get { throw null; } }
+    }
+    public partial class DataLakeAnalyticsAccountNameAvailabilityResult
+    {
+        internal DataLakeAnalyticsAccountNameAvailabilityResult() { }
+        public bool? IsNameAvailable { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string Reason { get { throw null; } }
     }
     public partial class DataLakeAnalyticsAccountPatch
     {
@@ -368,7 +381,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public int? MaxDegreeOfParallelismPerJob { get { throw null; } set { } }
         public int? MaxJobCount { get { throw null; } set { } }
         public int? MinPriorityPerJob { get { throw null; } set { } }
-        public Azure.ResourceManager.DataLakeAnalytics.Models.CommitmentTierType? NewTier { get { throw null; } set { } }
+        public Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsCommitmentTierType? NewTier { get { throw null; } set { } }
         public int? QueryStoreRetention { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataLakeAnalytics.Models.StorageAccountForDataLakeAnalyticsAccountUpdateContent> StorageAccounts { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -400,6 +413,18 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public int? MaxAccountCount { get { throw null; } }
         public Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsSubscriptionState? State { get { throw null; } }
         public System.Guid? SubscriptionId { get { throw null; } }
+    }
+    public enum DataLakeAnalyticsCommitmentTierType
+    {
+        Consumption = 0,
+        Commitment100AUHours = 1,
+        Commitment500AUHours = 2,
+        Commitment1000AUHours = 3,
+        Commitment5000AUHours = 4,
+        Commitment10000AUHours = 5,
+        Commitment50000AUHours = 6,
+        Commitment100000AUHours = 7,
+        Commitment500000AUHours = 8,
     }
     public partial class DataLakeAnalyticsComputePolicyCreateOrUpdateContent
     {
@@ -449,13 +474,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public System.Uri ServerUri { get { throw null; } }
         public string UserName { get { throw null; } }
     }
-    public partial class DataLakeAnalyticsNameAccountAvailabilityResult
-    {
-        internal DataLakeAnalyticsNameAccountAvailabilityResult() { }
-        public bool? IsNameAvailable { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string Reason { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataLakeAnalyticsResourceType : System.IEquatable<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsResourceType>
     {
@@ -477,6 +495,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     {
         internal DataLakeAnalyticsSasTokenInformation() { }
         public string AccessToken { get { throw null; } }
+    }
+    public partial class DataLakeAnalyticsStorageAccountInformationCollectionGetAllOptions
+    {
+        public DataLakeAnalyticsStorageAccountInformationCollectionGetAllOptions() { }
+        public bool? Count { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public string Orderby { get { throw null; } set { } }
+        public string Select { get { throw null; } set { } }
+        public int? Skip { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
     }
     public partial class DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent
     {
@@ -522,6 +550,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         Active = 0,
         NetworkSourceDeleted = 1,
         Failed = 2,
+    }
+    public partial class DataLakeStoreAccountInformationCollectionGetAllOptions
+    {
+        public DataLakeStoreAccountInformationCollectionGetAllOptions() { }
+        public bool? Count { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public string Orderby { get { throw null; } set { } }
+        public string Select { get { throw null; } set { } }
+        public int? Skip { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
     }
     public partial class DataLakeStoreAccountInformationCreateOrUpdateContent
     {
@@ -579,5 +617,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public string AccessKey { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public string Suffix { get { throw null; } set { } }
+    }
+    public partial class SubscriptionResourceGetAccountsOptions
+    {
+        public SubscriptionResourceGetAccountsOptions() { }
+        public bool? Count { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public string Orderby { get { throw null; } set { } }
+        public string Select { get { throw null; } set { } }
+        public int? Skip { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
     }
 }

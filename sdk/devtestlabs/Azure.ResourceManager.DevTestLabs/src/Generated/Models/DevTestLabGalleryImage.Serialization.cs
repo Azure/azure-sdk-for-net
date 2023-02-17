@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,43 +29,43 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Author))
             {
-                writer.WritePropertyName("author");
+                writer.WritePropertyName("author"u8);
                 writer.WriteStringValue(Author);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(ImageReference))
             {
-                writer.WritePropertyName("imageReference");
+                writer.WritePropertyName("imageReference"u8);
                 writer.WriteObjectValue(ImageReference);
             }
             if (Optional.IsDefined(Icon))
             {
-                writer.WritePropertyName("icon");
+                writer.WritePropertyName("icon"u8);
                 writer.WriteStringValue(Icon);
             }
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(PlanId))
             {
-                writer.WritePropertyName("planId");
+                writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
             if (Optional.IsDefined(IsPlanAuthorized))
             {
-                writer.WritePropertyName("isPlanAuthorized");
+                writer.WritePropertyName("isPlanAuthorized"u8);
                 writer.WriteBooleanValue(IsPlanAuthorized.Value);
             }
             writer.WriteEndObject();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<bool> isPlanAuthorized = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,37 +105,37 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("author"))
+                        if (property0.NameEquals("author"u8))
                         {
                             author = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("createdDate"))
+                        if (property0.NameEquals("createdDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -159,12 +159,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             createdDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("imageReference"))
+                        if (property0.NameEquals("imageReference"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             imageReference = DevTestLabGalleryImageReference.DeserializeDevTestLabGalleryImageReference(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("icon"))
+                        if (property0.NameEquals("icon"u8))
                         {
                             icon = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("enabled"))
+                        if (property0.NameEquals("enabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -189,12 +189,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             enabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("planId"))
+                        if (property0.NameEquals("planId"u8))
                         {
                             planId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("isPlanAuthorized"))
+                        if (property0.NameEquals("isPlanAuthorized"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

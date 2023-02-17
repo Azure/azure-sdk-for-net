@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -11,32 +12,22 @@ namespace Azure.ResourceManager.Media.Tests
 {
     public class MediaAssetFilterTests : MediaManagementTestBase
     {
-        private ResourceIdentifier _mediaAssetIdentifier;
-        private MediaAssetResource _mediaAssetResource;
+        private MediaAssetResource _mediaAsset;
 
-        private MediaAssetFilterCollection assetFilterCollection => _mediaAssetResource.GetMediaAssetFilters();
+        private MediaAssetFilterCollection assetFilterCollection => _mediaAsset.GetMediaAssetFilters();
 
         public MediaAssetFilterTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetup()
-        {
-            var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, SessionRecording.GenerateAssetName(ResourceGroupNamePrefix), new ResourceGroupData(AzureLocation.WestUS2));
-            var storage = await CreateStorageAccount(rgLro.Value, SessionRecording.GenerateAssetName(StorageAccountNamePrefix));
-            var mediaService = await CreateMediaService(rgLro.Value, SessionRecording.GenerateAssetName("mediaforasset"), storage.Id);
-            var mediaAsset = await mediaService.GetMediaAssets().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("asset"), new MediaAssetData());
-            _mediaAssetIdentifier = mediaAsset.Value.Id;
-
-            await StopSessionRecordingAsync();
-        }
-
         [SetUp]
         public async Task SetUp()
         {
-            _mediaAssetResource = await Client.GetMediaAssetResource(_mediaAssetIdentifier).GetAsync();
+            var mediaServiceName = Recording.GenerateAssetName("dotnetsdkmediatests");
+            var mediaAssetName = Recording.GenerateAssetName("asset");
+            var mediaService = await CreateMediaService(ResourceGroup, mediaServiceName);
+            _mediaAsset = await CreateMediaAsset(mediaService, mediaAssetName);
         }
 
         private async Task<MediaAssetFilterResource> CreateDefaultAssetFilter(string filterName)
@@ -51,7 +42,7 @@ namespace Azure.ResourceManager.Media.Tests
         public async Task MediaAssetFilterBasicTests()
         {
             // Create
-            string filterName = SessionRecording.GenerateAssetName("filterCreateOrUpdate");
+            string filterName = Recording.GenerateAssetName("mediaAssetFilter");
             var filter =await CreateDefaultAssetFilter(filterName);
             Assert.IsNotNull(filter);
             Assert.AreEqual(filterName, filter.Data.Name);

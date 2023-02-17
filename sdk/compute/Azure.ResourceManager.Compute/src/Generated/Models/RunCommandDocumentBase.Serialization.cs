@@ -21,27 +21,27 @@ namespace Azure.ResourceManager.Compute.Models
             string description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("$schema"))
+                if (property.NameEquals("$schema"u8))
                 {
                     schema = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osType"))
+                if (property.NameEquals("osType"u8))
                 {
                     osType = property.Value.GetString().ToSupportedOperatingSystemType();
                     continue;
                 }
-                if (property.NameEquals("label"))
+                if (property.NameEquals("label"u8))
                 {
                     label = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

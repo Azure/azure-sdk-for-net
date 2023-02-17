@@ -5,6 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: ProviderHub
 namespace: Azure.ResourceManager.ProviderHub
@@ -49,6 +50,12 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/skus/{sku}: ResourceTypeSku
+  /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/skus/{sku}: NestedResourceTypeFirstSku
+  /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/skus/{sku}: NestedResourceTypeSecondSku
+  /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}: NestedResourceTypeThirdSku
+
 directive:
   # The operation methods here is no defined correctly, removed
   - from: providerhub.json
@@ -71,5 +78,6 @@ directive:
       $.DefaultRollout.properties.properties['$ref'] = '#/definitions/DefaultRolloutProperties';
       delete $.NotificationRegistration.properties.properties['allOf'];
       $.NotificationRegistration.properties.properties['$ref'] = '#/definitions/NotificationRegistrationProperties';
+      $.ResourceTypeSku["x-ms-client-name"] = "ResourceTypeSkuInfo";
 
 ```

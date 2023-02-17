@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<bool> required = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("required"))
+                if (property.NameEquals("required"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

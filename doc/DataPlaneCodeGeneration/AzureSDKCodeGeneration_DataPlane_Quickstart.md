@@ -10,14 +10,11 @@ This tutorial has following sections:
 
 - [Azure SDK Code Generation Quickstart Tutorial (Data Plane)](#azure-sdk-code-generation-quickstart-tutorial-data-plane)
   - [Prerequisites](#prerequisites)
-  - [Setup your repo](#setup-your-repo)
+  - [Setup your repository](#setup-your-repository)
   - [Create starter package](#create-starter-package)
     - [Use Cadl as Input](#use-cadl-as-input)
       - [Create Cadl project](#create-cadl-project)
-      - [Create a sdk project folder](#create-a-sdk-project-folder)
-      - [Generate the library source code](#generate-the-library-source-code)
-      - [Build the library project](#build-the-library-project)
-      - [Export the library's public API](#export-the-librarys-public-api)
+      - [Create sdk starter package](#create-sdk-starter-package)
     - [Use swagger as Input](#use-swagger-as-input)
   - [Add package ship requirements](#add-package-ship-requirements)
     - [Tests](#tests)
@@ -32,18 +29,17 @@ This tutorial has following sections:
 
 ## Prerequisites
 
-- Install VS 2020 (Community or higher) and make sure you have the [latest updates](https://www.visualstudio.com/).
+- Install Visual Studio 2022 (Community or higher) and make sure you have the [latest updates](https://www.visualstudio.com/).
   - Need at least .NET Framework 4.6.1 and 4.7 development tools
-  - Install the **.NET Core cross-platform development** workloads in VisualStudio
+  - Install the **.NET Core cross-platform development** workloads in Visual Studio
 - Install **.NET 6.0 SDK** for your specific platform. (or a higher version)
-- Install **.NET core 3.1** for your specific platform.
 - Install the latest version of [git](https://git-scm.com/downloads)
 - Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 7 or higher.
 - Install [NodeJS](https://nodejs.org/) (16.x.x or above).
 
-## Setup your repo
+## Setup your repository
 
-- Fork and clone an [azure-sdk-for-net](https://github.com/Azure/azure-sdk-for-net) repo. Follow the instructions in the [.NET CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/issues/12903) to fork and clone the `azure-sdk-for-net` repo.
+- Fork and clone the [azure-sdk-for-net](https://github.com/Azure/azure-sdk-for-net) repository. Instructions for doing so can be found in the [.NET CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md).
 - Create a branch to work in.
 
 ## Create starter package  
@@ -83,16 +79,16 @@ sdk\<service name>\<package name>\<package name>.sln
 
 ```diff
         "dependencies": {
-          "@cadl-lang/compiler": "^0.36.0",
-          "@cadl-lang/rest": "^0.18.0",
-          "@azure-tools/cadl-azure-core": "^0.8.0",
-+         "@azure-tools/cadl-csharp": "0.1.6"
+          "@cadl-lang/compiler": "^0.37.0",
+          "@cadl-lang/rest": "^0.19.0",
+          "@azure-tools/cadl-azure-core": "^0.9.0",
++         "@azure-tools/cadl-csharp": "0.1.8"
         },
 ```
 
         Run `npm install` again to install @azure-tools/cadl-csharp.
 
-  **Notes**: @azure-tools/cadl-csharp: "0.1.6" only works with @cadl-lang/compiler: "0.36.0" and @cadl-lang/rest: "0.18.0"
+  **Notes**: @azure-tools/cadl-csharp: "0.1.8" only works with @cadl-lang/compiler: "0.37.0" and @cadl-lang/rest: "0.19.0"
   
 
   ***Modify (or create) cadl-project.yaml, add one line under emitters:***
@@ -118,50 +114,55 @@ emitters:
   @azure-tools/cadl-csharp emitter options:  
 
 - `namespace` define the client library namespace. e.g. Azure.IoT.DeviceUpdate.
-- `new-project` indicate it is a new sdk project, a project file (.csproj) will be generated.
+- `new-project` indicate if it is a new sdk project and need to generate a project file (.csproj).
+- `model-namespace` Indicate if we want to put the models in their own namespace which is a sub namespace of the client library namespace plus ".Models". if it is set `false`, the models will be put in the same namespace of the client. The default value is `true`.
 - `clear-output-folder` indicate if you want to clear up the output folder.
 
 
-#### Create a sdk project folder
+#### Create sdk starter package
   
-You can manually create the project folder. Please refer to [Azure.Template](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template) as an example.
+We will use the Azure SDK template [Azure.Template](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template) to create the initial project skeleton.
 
-**Note**: 
-
-- Please refer to [sdk-directory-layout](https://github.com/Azure/azure-sdk/blob/main/docs/policies/repostructure.md#sdk-directory-layout) for detail information.
-- remove `autorest.md` from sdk\<service name>\<package name>\src
-
-
-#### Generate the library source code
-
-Generate the library source code files to the directory `<sdkPath>/sdk/<service>/<namespace>/src/Generated`
-
-  Enter `Cadl Project Folder`, run
-
-  ```shell
-  npm install
-  npx cadl compile --emit @azure-tools/cadl-csharp --output-path <Path-to-source-code-folder> <path-to-cadl-file>
-  ```
-
-  e.g.
-
-  ```shell
-  npx cadl compile --emit @azure-tools/cadl-csharp --output-path /home/azure-sdk-for-net/sdk/deviceupdate/Azure.IoT.DeviceUpdate/src .
-  ```
-
-#### Build the library project
-
-Run `dotnet build` under project folder ``<sdkPath>/sdk/<service>/<namespace>` to build the project to create the starter package binary.
-
-#### Export the library's public API
-
-You will need to run the `eng\scripts\Export-API.ps1` script to update the public API listing. This will generate a file in the library's directory `<sdkPath>/sdk/<service>/<namespace>/api` similar to the example found in [sdk\template\Azure.Template\api\Azure.Template.netstandard2.0.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/api/Azure.Template.netstandard2.0.cs).
-
-e.g. Running the script for a project in `sdk\deviceupdate` would look like this:
+You can run `eng\scripts\automation\Invoke-CadlDataPlaneGenerateSDKPackage.ps1` to generate the starting SDK client library package directly as following:
 
 ```powershell
-eng\scripts\Export-API.ps1 deviceupdate
+eng/scripts/automation/Invoke-CadlDataPlaneGenerateSDKPackage.ps1 -service <servicename> -namespace Azure.<group>.<service> -sdkPath <sdkrepoRootPath> -cadlRelativeFolder <relativeCadlProjectFolderPath> [-commit <commitId>] [-repo <specRepo>] [-specRoot <specRepoRootPath>] [-additionalSubDirectories <relativeFolders>]
 ```
+
+e.g. 
+Use git url
+
+```powershell
+pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-CadlDataPlaneGenerateSDKPackage.ps1 -service anomalydetector -namespace Azure.AI.AnomalyDetector -sdkPath /home/azure-sdk-for-net -cadlRelativeFolder specification/cognitiveservices/AnomalyDetector -commit ac8e06a2ed0fc1c54663c98f12c8a073f8026b90 -repo Azure/azure-rest-api-specs
+```
+or 
+Use local Cadl project
+
+```powershell
+pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-CadlDataPlaneGenerateSDKPackage.ps1 -service anomalydetector -namespace Azure.AI.AnomalyDetector -sdkPath /home/azure-sdk-for-net -cadlRelativeFolder specification/cognitiveservices/AnomalyDetector -specRoot /home/azure-rest-api-specs
+```
+**Note**:
+
+- `-service` takes Azure client service directory name. ie. purview. It equals to the name of the directory in the specification folder of the azure-rest-api-specs repo that contains the REST API definition file.
+- For `- namespace`, please use one of the pre-approved namespace groups on the [.NET Azure SDK Guidelines Approved Namespaces list](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-namespaces-approved-list). This value will also provide the name for the shipped package, and should be of the form `Azure.<group>.<service>`.
+- `-sdkPath` takes the address of the root directory of sdk repo. e.g. /home/azure-sdk-for-net
+- `cadlRelativeFolder` takes the relative path of the cadl project folder in spec repo. e.g. specification/cognitiveservices/AnomalyDetector
+- `-additionalSubDirectories` takes the relative paths of the additional directories needed by the cadl project, such as share library folder, separated by semicolon if there is more than one folder.
+- `-commit` takes the git commit hash  (e.g. ac8e06a2ed0fc1c54663c98f12c8a073f8026b90)
+- `-repo` takes the `<owner>/<repo>` of the REST API specification repository. (e.g. Azure/azure-rest-api-specs)
+- `-specRoot` takes the file system path of the spec repo. e.g. /home/azure-rest-api-specs
+- You need to provide one of (`-commit`, `-repo`) pair to refer to an URL path of the cadl project and `-specRoot` parameters. If you provide both, `-specRoot` will be ignored.
+
+When you run `eng\scripts\automation\Invoke-CadlDataPlaneGenerateSDKPackage.ps1`, it will:
+
+- Create a project folder, install template files from `sdk/template/Azure.Template`, and create `.csproj` and `.sln` files for your new library.
+
+    These files are created following the guidance for the [Azure SDK Repository Structure](https://github.com/Azure/azure-sdk/blob/master/docs/policies/repostructure.md).
+
+- Generate the library source code files to the directory `<sdkPath>/sdk/<service>/<namespace>/src/Generated`
+- Build the library project to create the starter package binary.
+- Export the library's public API to the directory `<sdkPath>/sdk/<service>/<namespace>/api`
+
 
 ### Use swagger as Input
 
@@ -222,7 +223,8 @@ Adding convenience APIs is not required for Azure SDK data plane generated libra
 
 You can add convienice APIs by adding a customization layer on top of the generated code.  Please see the [autorest.csharp README](https://github.com/Azure/autorest.csharp#setup) for the details of adding the customization layer.  This is the preferred method for adding convenience APIs to your generated client.
 
-If other modifications are needed to the generated API, you can consider making them directly to the Open API specification, which will have the benefit of making the changes to the library in all languages you generate the library in.  As a last resort, you can add modifications with swagger transforms in the `autorest.md` file.  [AnomalyDetector autorest.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/src/autorest.md) shows and example of how this can be accomplished.
+
+If other modifications are needed to the generated API, you can consider making them directly to the Open API specification, which will have the benefit of making the changes to the library in all languages you generate the library in.  As a last resort, you can add modifications with swagger transforms in the `autorest.md` file.  Details for various transforms can be found in [Customizing the generated code](https://github.com/Azure/autorest.csharp#customizing-the-generated-code).
 
 Once you've made changes to the public API, you will need to run the `eng\scripts\Export-API.ps1` script to update the public API listing. This will generate a file in the library's directory similar to the example found in [sdk\template\Azure.Template\api\Azure.Template.netstandard2.0.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/api/Azure.Template.netstandard2.0.cs).
 

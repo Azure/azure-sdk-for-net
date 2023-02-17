@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.StorageCache
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -40,48 +40,48 @@ namespace Azure.ResourceManager.StorageCache
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CacheSizeGB))
             {
-                writer.WritePropertyName("cacheSizeGB");
+                writer.WritePropertyName("cacheSizeGB"u8);
                 writer.WriteNumberValue(CacheSizeGB.Value);
             }
             if (Optional.IsDefined(Subnet))
             {
-                writer.WritePropertyName("subnet");
+                writer.WritePropertyName("subnet"u8);
                 writer.WriteStringValue(Subnet);
             }
             if (Optional.IsDefined(UpgradeSettings))
             {
-                writer.WritePropertyName("upgradeSettings");
+                writer.WritePropertyName("upgradeSettings"u8);
                 writer.WriteObjectValue(UpgradeSettings);
             }
             if (Optional.IsDefined(NetworkSettings))
             {
-                writer.WritePropertyName("networkSettings");
+                writer.WritePropertyName("networkSettings"u8);
                 writer.WriteObjectValue(NetworkSettings);
             }
             if (Optional.IsDefined(EncryptionSettings))
             {
-                writer.WritePropertyName("encryptionSettings");
+                writer.WritePropertyName("encryptionSettings"u8);
                 writer.WriteObjectValue(EncryptionSettings);
             }
             if (Optional.IsDefined(SecuritySettings))
             {
-                writer.WritePropertyName("securitySettings");
+                writer.WritePropertyName("securitySettings"u8);
                 writer.WriteObjectValue(SecuritySettings);
             }
             if (Optional.IsDefined(DirectoryServicesSettings))
             {
-                writer.WritePropertyName("directoryServicesSettings");
+                writer.WritePropertyName("directoryServicesSettings"u8);
                 writer.WriteObjectValue(DirectoryServicesSettings);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
-                writer.WritePropertyName("zones");
+                writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
                 foreach (var item in Zones)
                 {
@@ -119,17 +119,17 @@ namespace Azure.ResourceManager.StorageCache
             Optional<IReadOnlyList<StorageTargetSpaceAllocation>> spaceAllocation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StorageCache
                     sku = StorageCacheSkuInfo.DeserializeStorageCacheSkuInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,37 +154,37 @@ namespace Azure.ResourceManager.StorageCache
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.StorageCache
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("cacheSizeGB"))
+                        if (property0.NameEquals("cacheSizeGB"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.StorageCache
                             cacheSizeGB = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("health"))
+                        if (property0.NameEquals("health"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.StorageCache
                             health = StorageCacheHealth.DeserializeStorageCacheHealth(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("mountAddresses"))
+                        if (property0.NameEquals("mountAddresses"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.StorageCache
                             mountAddresses = array;
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.StorageCache
                             provisioningState = new StorageCacheProvisioningStateType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("subnet"))
+                        if (property0.NameEquals("subnet"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.StorageCache
                             subnet = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("upgradeStatus"))
+                        if (property0.NameEquals("upgradeStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.StorageCache
                             upgradeStatus = StorageCacheUpgradeStatus.DeserializeStorageCacheUpgradeStatus(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("upgradeSettings"))
+                        if (property0.NameEquals("upgradeSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.StorageCache
                             upgradeSettings = StorageCacheUpgradeSettings.DeserializeStorageCacheUpgradeSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("networkSettings"))
+                        if (property0.NameEquals("networkSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.StorageCache
                             networkSettings = StorageCacheNetworkSettings.DeserializeStorageCacheNetworkSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("encryptionSettings"))
+                        if (property0.NameEquals("encryptionSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.StorageCache
                             encryptionSettings = StorageCacheEncryptionSettings.DeserializeStorageCacheEncryptionSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("securitySettings"))
+                        if (property0.NameEquals("securitySettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.StorageCache
                             securitySettings = StorageCacheSecuritySettings.DeserializeStorageCacheSecuritySettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("directoryServicesSettings"))
+                        if (property0.NameEquals("directoryServicesSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.StorageCache
                             directoryServicesSettings = StorageCacheDirectorySettings.DeserializeStorageCacheDirectorySettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("zones"))
+                        if (property0.NameEquals("zones"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.StorageCache
                             zones = array;
                             continue;
                         }
-                        if (property0.NameEquals("primingJobs"))
+                        if (property0.NameEquals("primingJobs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.StorageCache
                             primingJobs = array;
                             continue;
                         }
-                        if (property0.NameEquals("spaceAllocation"))
+                        if (property0.NameEquals("spaceAllocation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

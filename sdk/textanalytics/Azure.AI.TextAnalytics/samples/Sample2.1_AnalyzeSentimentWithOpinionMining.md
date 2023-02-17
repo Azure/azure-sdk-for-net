@@ -16,7 +16,7 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 ```C# Snippet:CreateTextAnalyticsClient
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
-var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
 ## Identify complaints
@@ -38,7 +38,7 @@ string reviewB = @"The rooms were beautiful. The AC was good and quiet, which wa
                 Once we notified the staff, they came and cleaned it and left candles.";
 
 string reviewC = @"Nice rooms! I had a great unobstructed view of the Microsoft campus
-                but bathrooms were old and the toilet was dirty when we arrived.
+                but bathrooms were old and the toilet was dirty when we arrived. 
                 It was close to bus stops and groceries stores. If you want to be close to
                 campus I will recommend it, otherwise, might be better to stay in a cleaner one.";
 

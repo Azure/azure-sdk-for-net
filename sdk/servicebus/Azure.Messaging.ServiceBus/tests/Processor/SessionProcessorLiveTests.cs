@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1715,6 +1716,62 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        public async Task AdditionalCallsPerSessionDoesNotWaitForOtherSessionsToBeAccepted()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: true))
+            {
+                await using var client = CreateClient();
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                int totalMessages = 128;
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(totalMessages, "sessionId"));
+
+                TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                int messageCt = 0;
+
+                var options = new ServiceBusSessionProcessorOptions
+                {
+                    // configuring so that MaxConcurrentCallsPerSession * MaxConcurrentSessions = total messages
+                    // this ensures that we are testing the concurrentAcceptSession logic
+                    MaxConcurrentSessions = 16,
+                    MaxConcurrentCallsPerSession = 8
+                };
+
+                await using var processor = client.CreateSessionProcessor(
+                    scope.QueueName,
+                    options);
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += SessionErrorHandler;
+
+                var stopWatch = new Stopwatch();
+                stopWatch.Start();
+                await processor.StartProcessingAsync();
+
+                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    var ct = Interlocked.Increment(ref messageCt);
+                    if (ct == totalMessages)
+                    {
+                        tcs.SetResult(true);
+                    }
+
+                    // add a delay to simulate processing
+                    await Task.Delay(100);
+                }
+
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+                stopWatch.Stop();
+
+                Assert.AreEqual(totalMessages, messageCt);
+                Assert.Less(stopWatch.Elapsed, TimeSpan.FromSeconds(10));
+            }
+        }
+
+        [Test]
         public async Task StopProcessingDoesNotCloseLink()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
@@ -2157,6 +2214,80 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await processor.StartProcessingAsync();
                 await tcs.Task;
 
+                await processor.StopProcessingAsync();
+            }
+        }
+
+        [Test]
+        public async Task CanUpdateSessionPrefetchCount()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 100;
+
+                for (int i = 0; i < messageCount / 2; i++)
+                {
+                    await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(2, $"session{i}"));
+                }
+
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
+                {
+                    MaxConcurrentSessions = 1,
+                    MaxConcurrentCallsPerSession = 1,
+                    SessionIdleTimeout = TimeSpan.FromSeconds(3)
+                });
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+
+                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    if (args.CancellationToken.IsCancellationRequested)
+                    {
+                        await args.AbandonMessageAsync(args.Message);
+                    }
+
+                    var count = Interlocked.Increment(ref receivedCount);
+                    if (count == messageCount)
+                    {
+                        tcs.SetResult(true);
+                    }
+
+                    if (count == 5)
+                    {
+                        processor.UpdatePrefetchCount(2);
+                        Assert.AreEqual(2, processor.PrefetchCount);
+                        Assert.AreEqual(1, processor.MaxConcurrentSessions);
+                        Assert.AreEqual(1, processor.MaxConcurrentCallsPerSession);
+
+                        // add a small delay to allow prefetch to update
+                        await Task.Delay(TimeSpan.FromSeconds(5));
+                    }
+
+                    if (count == 60)
+                    {
+                        Assert.GreaterOrEqual(processor.InnerProcessor.TaskTuples.Count, 1);
+                    }
+                    if (count == 75)
+                    {
+                        processor.UpdatePrefetchCount(1);
+                        Assert.AreEqual(1, processor.PrefetchCount);
+                        Assert.AreEqual(1, processor.MaxConcurrentSessions);
+                        Assert.AreEqual(1, processor.MaxConcurrentCallsPerSession);
+                    }
+                    if (count == 95)
+                    {
+                        Assert.LessOrEqual(processor.InnerProcessor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 1);
+                    }
+                }
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += SessionErrorHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
                 await processor.StopProcessingAsync();
             }
         }

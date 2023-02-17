@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("operatingSystem");
+            writer.WritePropertyName("operatingSystem"u8);
             writer.WriteStringValue(OperatingSystem.ToSerialString());
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
             SupportedOperatingSystemType operatingSystem = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operatingSystem"))
+                if (property.NameEquals("operatingSystem"u8))
                 {
                     operatingSystem = property.Value.GetString().ToSupportedOperatingSystemType();
                     continue;

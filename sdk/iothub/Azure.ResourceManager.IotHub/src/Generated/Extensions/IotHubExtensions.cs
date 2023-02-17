@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary>
         /// Get all the IoT hubs in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/IotHubs
-        /// Operation Id: IotHubResource_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Devices/IotHubs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotHubResource_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -43,8 +51,16 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary>
         /// Get all the IoT hubs in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/IotHubs
-        /// Operation Id: IotHubResource_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Devices/IotHubs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotHubResource_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -56,8 +72,16 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary>
         /// Check if an IoT hub name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkNameAvailability
-        /// Operation Id: IotHubResource_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotHubResource_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
@@ -72,8 +96,16 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary>
         /// Check if an IoT hub name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkNameAvailability
-        /// Operation Id: IotHubResource_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Devices/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotHubResource_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT hub to check. </param>
@@ -88,8 +120,16 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary>
         /// Get the number of free and paid iot hubs in the subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/usages
-        /// Operation Id: ResourceProviderCommon_GetSubscriptionQuota
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Devices/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceProviderCommon_GetSubscriptionQuota</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -101,8 +141,16 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary>
         /// Get the number of free and paid iot hubs in the subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Devices/usages
-        /// Operation Id: ResourceProviderCommon_GetSubscriptionQuota
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Devices/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceProviderCommon_GetSubscriptionQuota</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,8 +179,16 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary>
         /// Get the non-security related metadata of an IoT hub.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
-        /// Operation Id: IotHubResource_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotHubResource_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
@@ -147,8 +203,16 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary>
         /// Get the non-security related metadata of an IoT hub.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}
-        /// Operation Id: IotHubResource_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IotHubResource_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>

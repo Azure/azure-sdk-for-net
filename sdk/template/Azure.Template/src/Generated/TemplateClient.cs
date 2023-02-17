@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Template
 {
-    // Data plane generated client. The Template service client.
+    // Data plane generated client.
     /// <summary> The Template service client. </summary>
     public partial class TemplateClient
     {

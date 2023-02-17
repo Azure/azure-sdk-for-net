@@ -11,7 +11,7 @@ pr:
   paths:
     include:
     - sdk/analysisservices/ci.mgmt.yml
-    - sdk/analysisservices/Azure.ResourceManager.AnalysisServices/
+    - sdk/analysisservices/Azure.ResourceManager.Analysis/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -19,5 +19,5 @@ extends:
     ServiceDirectory: analysisservices
     LimitForPullRequest: true
     Artifacts:
-    - name: Azure.ResourceManager.AnalysisServices
-      safeName: AzureResourceManagerAnalysisServices
+    - name: Azure.ResourceManager.Analysis
+      safeName: AzureResourceManagerAnalysis

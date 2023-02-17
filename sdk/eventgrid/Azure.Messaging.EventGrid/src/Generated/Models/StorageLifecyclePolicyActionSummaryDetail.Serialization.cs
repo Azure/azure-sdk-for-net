@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> errorList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("totalObjectsCount"))
+                if (property.NameEquals("totalObjectsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     totalObjectsCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("successCount"))
+                if (property.NameEquals("successCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     successCount = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("errorList"))
+                if (property.NameEquals("errorList"u8))
                 {
                     errorList = property.Value.GetString();
                     continue;

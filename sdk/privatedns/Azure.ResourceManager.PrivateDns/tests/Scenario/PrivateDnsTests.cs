@@ -4,10 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.PrivateDns.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -16,7 +18,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
     internal class PrivateDnsTests : PrivateDnsManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
-        private PrivateZoneCollection _privateZoneResource;
+        private PrivateDnsZoneCollection _privateZoneResource;
 
         public PrivateDnsTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -26,7 +28,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
         public async Task TestSetUp()
         {
             _resourceGroup = await CreateResourceGroup();
-            _privateZoneResource = _resourceGroup.GetPrivateZones();
+            _privateZoneResource = _resourceGroup.GetPrivateDnsZones();
         }
 
         [RecordedTest]
@@ -83,10 +85,62 @@ namespace Azure.ResourceManager.PrivateDns.Tests
         {
             string privateZoneName = $"{Recording.GenerateAssetName("sample")}.com";
             var privateZone = await CreatePrivateZone(_resourceGroup, privateZoneName);
+            // Add some aaaaRecord
+            var aaaaRecord1 = await privateZone.GetPrivateDnsAaaaRecords().CreateOrUpdateAsync(WaitUntil.Completed, "aaaa100", new PrivateDnsAaaaRecordData()
+            {
+                TtlInSeconds = 3600,
+                PrivateDnsAaaaRecords =
+                {
+                    new PrivateDnsAaaaRecordInfo()
+                    {
+                        IPv6Address = IPAddress.Parse("3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d55")
+                    },
+                    new PrivateDnsAaaaRecordInfo()
+                    {
+                        IPv6Address = IPAddress.Parse("3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d56")
+                    },
+                }
+            });
+            var aaaaRecord2 = await privateZone.GetPrivateDnsAaaaRecords().CreateOrUpdateAsync(WaitUntil.Completed, "aaaa200", new PrivateDnsAaaaRecordData()
+            {
+                TtlInSeconds = 3600,
+                PrivateDnsAaaaRecords =
+                {
+                    new PrivateDnsAaaaRecordInfo()
+                    {
+                        IPv6Address = IPAddress.Parse("3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d57")
+                    }
+                }
+            });
 
-            var records = await privateZone.GetRecordsAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(records);
-            Assert.IsNotNull(records.First().PrivateDnsSoaRecordInfo);
+            // Add some MXRecord
+            var mxRecord = await privateZone.GetPrivateDnsMXRecords().CreateOrUpdateAsync(WaitUntil.Completed, "mx100", new PrivateDnsMXRecordData()
+            {
+                TtlInSeconds = 3600,
+                PrivateDnsMXRecords =
+                {
+                    new PrivateDnsMXRecordInfo()
+                    {
+                        Preference = 10,
+                        Exchange = "mymail1.contoso.com"
+                    }
+                }
+            });
+            if (TestEnvironment.Mode == RecordedTestMode.Record)
+            {
+                Thread.Sleep(10000);
+            }
+
+            var recordSets = await privateZone.GetRecordsAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(recordSets);
+            Assert.IsNotNull(recordSets[0].PrivateDnsSoaRecordInfo);
+
+            Assert.AreEqual(2, recordSets[1].AaaaRecords.Count);
+            Assert.AreEqual("3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d55", recordSets[1].AaaaRecords.First().IPv6Address.ToString());
+            Assert.AreEqual(1, recordSets[2].AaaaRecords.Count);
+            Assert.AreEqual("3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d57", recordSets[2].AaaaRecords.First().IPv6Address.ToString());
+
+            Assert.AreEqual("mymail1.contoso.com", recordSets[3].MXRecords.First().Exchange.ToString());
         }
 
         [TestCase(null)]
@@ -120,7 +174,7 @@ namespace Azure.ResourceManager.PrivateDns.Tests
             Assert.AreEqual(0, privateZone.Data.Tags.Count);
         }
 
-        private void ValidatePrivateZone(PrivateZoneResource privateZone, string privateZoneName)
+        private void ValidatePrivateZone(PrivateDnsZoneResource privateZone, string privateZoneName)
         {
             Assert.IsNotNull(privateZone);
             Assert.IsNotNull(privateZone.Data.Id);

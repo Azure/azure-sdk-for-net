@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-07-01";
+            _apiVersion = apiVersion ?? "2022-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="sourceControlConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="sourceControlConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SourceControlConfigurationData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, CancellationToken cancellationToken = default)
+        public async Task<Response<KubernetesSourceControlConfigurationData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -88,13 +88,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             {
                 case 200:
                     {
-                        SourceControlConfigurationData value = default;
+                        KubernetesSourceControlConfigurationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SourceControlConfigurationData.DeserializeSourceControlConfigurationData(document.RootElement);
+                        value = KubernetesSourceControlConfigurationData.DeserializeKubernetesSourceControlConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SourceControlConfigurationData)null, message.Response);
+                    return Response.FromValue((KubernetesSourceControlConfigurationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="sourceControlConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="sourceControlConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SourceControlConfigurationData> Get(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, CancellationToken cancellationToken = default)
+        public Response<KubernetesSourceControlConfigurationData> Get(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -125,19 +125,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             {
                 case 200:
                     {
-                        SourceControlConfigurationData value = default;
+                        KubernetesSourceControlConfigurationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SourceControlConfigurationData.DeserializeSourceControlConfigurationData(document.RootElement);
+                        value = KubernetesSourceControlConfigurationData.DeserializeKubernetesSourceControlConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SourceControlConfigurationData)null, message.Response);
+                    return Response.FromValue((KubernetesSourceControlConfigurationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, SourceControlConfigurationData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, KubernetesSourceControlConfigurationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/>, <paramref name="sourceControlConfigurationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="sourceControlConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SourceControlConfigurationData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, SourceControlConfigurationData data, CancellationToken cancellationToken = default)
+        public async Task<Response<KubernetesSourceControlConfigurationData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, KubernetesSourceControlConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -195,9 +195,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 case 200:
                 case 201:
                     {
-                        SourceControlConfigurationData value = default;
+                        KubernetesSourceControlConfigurationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SourceControlConfigurationData.DeserializeSourceControlConfigurationData(document.RootElement);
+                        value = KubernetesSourceControlConfigurationData.DeserializeKubernetesSourceControlConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/>, <paramref name="sourceControlConfigurationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="sourceControlConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SourceControlConfigurationData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, SourceControlConfigurationData data, CancellationToken cancellationToken = default)
+        public Response<KubernetesSourceControlConfigurationData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, KubernetesSourceControlConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -233,9 +233,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 case 200:
                 case 201:
                     {
-                        SourceControlConfigurationData value = default;
+                        KubernetesSourceControlConfigurationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SourceControlConfigurationData.DeserializeSourceControlConfigurationData(document.RootElement);
+                        value = KubernetesSourceControlConfigurationData.DeserializeKubernetesSourceControlConfigurationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

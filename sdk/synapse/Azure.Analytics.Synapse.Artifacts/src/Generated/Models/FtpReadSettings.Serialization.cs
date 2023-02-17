@@ -21,54 +21,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Recursive))
             {
-                writer.WritePropertyName("recursive");
+                writer.WritePropertyName("recursive"u8);
                 writer.WriteObjectValue(Recursive);
             }
             if (Optional.IsDefined(WildcardFolderPath))
             {
-                writer.WritePropertyName("wildcardFolderPath");
+                writer.WritePropertyName("wildcardFolderPath"u8);
                 writer.WriteObjectValue(WildcardFolderPath);
             }
             if (Optional.IsDefined(WildcardFileName))
             {
-                writer.WritePropertyName("wildcardFileName");
+                writer.WritePropertyName("wildcardFileName"u8);
                 writer.WriteObjectValue(WildcardFileName);
             }
             if (Optional.IsDefined(EnablePartitionDiscovery))
             {
-                writer.WritePropertyName("enablePartitionDiscovery");
+                writer.WritePropertyName("enablePartitionDiscovery"u8);
                 writer.WriteBooleanValue(EnablePartitionDiscovery.Value);
             }
             if (Optional.IsDefined(PartitionRootPath))
             {
-                writer.WritePropertyName("partitionRootPath");
+                writer.WritePropertyName("partitionRootPath"u8);
                 writer.WriteObjectValue(PartitionRootPath);
             }
             if (Optional.IsDefined(DeleteFilesAfterCompletion))
             {
-                writer.WritePropertyName("deleteFilesAfterCompletion");
+                writer.WritePropertyName("deleteFilesAfterCompletion"u8);
                 writer.WriteObjectValue(DeleteFilesAfterCompletion);
             }
             if (Optional.IsDefined(FileListPath))
             {
-                writer.WritePropertyName("fileListPath");
+                writer.WritePropertyName("fileListPath"u8);
                 writer.WriteObjectValue(FileListPath);
             }
             if (Optional.IsDefined(UseBinaryTransfer))
             {
-                writer.WritePropertyName("useBinaryTransfer");
+                writer.WritePropertyName("useBinaryTransfer"u8);
                 writer.WriteBooleanValue(UseBinaryTransfer.Value);
             }
             if (Optional.IsDefined(DisableChunking))
             {
-                writer.WritePropertyName("disableChunking");
+                writer.WritePropertyName("disableChunking"u8);
                 writer.WriteObjectValue(DisableChunking);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
-                writer.WritePropertyName("maxConcurrentConnections");
+                writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
@@ -96,7 +96,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recursive"))
+                if (property.NameEquals("recursive"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,7 +106,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     recursive = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("wildcardFolderPath"))
+                if (property.NameEquals("wildcardFolderPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -116,7 +116,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     wildcardFolderPath = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("wildcardFileName"))
+                if (property.NameEquals("wildcardFileName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -126,7 +126,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     wildcardFileName = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("enablePartitionDiscovery"))
+                if (property.NameEquals("enablePartitionDiscovery"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,7 +136,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     enablePartitionDiscovery = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("partitionRootPath"))
+                if (property.NameEquals("partitionRootPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -146,7 +146,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     partitionRootPath = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("deleteFilesAfterCompletion"))
+                if (property.NameEquals("deleteFilesAfterCompletion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -156,7 +156,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     deleteFilesAfterCompletion = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("fileListPath"))
+                if (property.NameEquals("fileListPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -166,7 +166,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     fileListPath = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("useBinaryTransfer"))
+                if (property.NameEquals("useBinaryTransfer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -176,7 +176,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     useBinaryTransfer = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("disableChunking"))
+                if (property.NameEquals("disableChunking"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -186,12 +186,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     disableChunking = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentConnections"))
+                if (property.NameEquals("maxConcurrentConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

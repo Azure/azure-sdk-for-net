@@ -52,8 +52,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the container registry. </param>
         /// <param name="networkRuleBypassOptions"> Whether to allow trusted Azure services to access a network restricted registry. </param>
         /// <param name="zoneRedundancy"> Whether or not zone redundancy is enabled for this container registry. </param>
-        /// <param name="isAnonymousPullEnabled"> Enables registry-wide pull from unauthenticated clients. </param>
-        internal ContainerRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerRegistrySku sku, ManagedServiceIdentity identity, string loginServer, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, ContainerRegistryResourceStatus status, bool? isAdminUserEnabled, ContainerRegistryNetworkRuleSet networkRuleSet, ContainerRegistryPolicies policies, ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, IReadOnlyList<string> dataEndpointHostNames, IReadOnlyList<ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections, ContainerRegistryPublicNetworkAccess? publicNetworkAccess, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, ContainerRegistryZoneRedundancy? zoneRedundancy, bool? isAnonymousPullEnabled) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerRegistrySku sku, ManagedServiceIdentity identity, string loginServer, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, ContainerRegistryResourceStatus status, bool? isAdminUserEnabled, ContainerRegistryNetworkRuleSet networkRuleSet, ContainerRegistryPolicies policies, ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, IReadOnlyList<string> dataEndpointHostNames, IReadOnlyList<ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections, ContainerRegistryPublicNetworkAccess? publicNetworkAccess, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, ContainerRegistryZoneRedundancy? zoneRedundancy) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -71,7 +70,6 @@ namespace Azure.ResourceManager.ContainerRegistry
             PublicNetworkAccess = publicNetworkAccess;
             NetworkRuleBypassOptions = networkRuleBypassOptions;
             ZoneRedundancy = zoneRedundancy;
-            IsAnonymousPullEnabled = isAnonymousPullEnabled;
         }
 
         /// <summary> The SKU of the container registry. </summary>
@@ -106,7 +104,5 @@ namespace Azure.ResourceManager.ContainerRegistry
         public ContainerRegistryNetworkRuleBypassOption? NetworkRuleBypassOptions { get; set; }
         /// <summary> Whether or not zone redundancy is enabled for this container registry. </summary>
         public ContainerRegistryZoneRedundancy? ZoneRedundancy { get; set; }
-        /// <summary> Enables registry-wide pull from unauthenticated clients. </summary>
-        public bool? IsAnonymousPullEnabled { get; set; }
     }
 }

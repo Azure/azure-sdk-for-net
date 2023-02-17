@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownWorkspaceConnectionPropertiesV2. </summary>
-    internal partial class UnknownWorkspaceConnectionPropertiesV2 : WorkspaceConnectionPropertiesV2
+    internal partial class UnknownWorkspaceConnectionPropertiesV2 : MachineLearningWorkspaceConnectionProperties
     {
         /// <summary> Initializes a new instance of UnknownWorkspaceConnectionPropertiesV2. </summary>
         /// <param name="authType"> Authentication type of the connection target. </param>
@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="target"></param>
         /// <param name="value"> Value details of the workspace connection. </param>
         /// <param name="valueFormat"> format for the workspace connection value. </param>
-        internal UnknownWorkspaceConnectionPropertiesV2(ConnectionAuthType authType, ConnectionCategory? category, string target, string value, ValueFormat? valueFormat) : base(authType, category, target, value, valueFormat)
+        internal UnknownWorkspaceConnectionPropertiesV2(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, MachineLearningValueFormat? valueFormat) : base(authType, category, target, value, valueFormat)
         {
             AuthType = authType;
         }

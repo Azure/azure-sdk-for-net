@@ -1,0 +1,342 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-6bdbd5d270583ae149db2fda30299418-154e86f5f913bcb8-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "3de15a264d439b21ef0f521209d74c92",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "405",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 07 Dec 2022 00:09:38 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c07a3554-6594-4afa-a8c7-0125d9536a46",
+        "x-ms-ratelimit-remaining-subscription-reads": "11947",
+        "x-ms-request-id": "c07a3554-6594-4afa-a8c7-0125d9536a46",
+        "x-ms-routing-request-id": "WESTUS2:20221207T000938Z:c07a3554-6594-4afa-a8c7-0125d9536a46"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14",
+        "authorizationSource": "Bypassed",
+        "managedByTenants": [],
+        "subscriptionId": "fb74b135-894b-4c1d-9b2e-8a3c231abc14",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "ChaosRP-Test-MSFT-Manual-1",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourcegroups/rg-chaos-sdk-test-recording?api-version=**",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9e877f9b532269ff8cffd9a744206cd2-f4b1fba79beb2a42-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "8884c01db438f6e5a043b6797ba9c92a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "352",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 07 Dec 2022 00:09:38 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "543e5545-1534-4bea-9663-b154ae2c1916",
+        "x-ms-ratelimit-remaining-subscription-reads": "11946",
+        "x-ms-request-id": "543e5545-1534-4bea-9663-b154ae2c1916",
+        "x-ms-routing-request-id": "WESTUS2:20221207T000938Z:543e5545-1534-4bea-9663-b154ae2c1916"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/resourceGroups/rg-chaos-sdk-test-recording",
+        "name": "rg-chaos-sdk-test-recording",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "tags": {
+          "ServiceDirectory": "chaos",
+          "DeleteAfter": "2022-12-11T06:39:47.2089768Z",
+          "Owners": "brrusino"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/providers/Microsoft.Chaos/locations/eastus/targetTypes?api-version=2022-10-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-50ff768c84f6f0142ecacd087326ab64-1e80e8ff4ce8d7a0-00",
+        "User-Agent": "azsdk-net-ResourceManager.Chaos/1.0.0-alpha.20221206.1 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "ae67d2515fbcf9aa4d90e0a09974ee21",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-09-15-preview, 2022-07-01-preview, 2022-10-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "6794",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 07 Dec 2022 00:09:38 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "92c9d3ea-f89c-4236-a215-834545ed8a08",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "2994",
+        "x-ms-request-id": "92c9d3ea-f89c-4236-a215-834545ed8a08",
+        "x-ms-routing-request-id": "WESTUS2:20221207T000938Z:92c9d3ea-f89c-4236-a215-834545ed8a08"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "type": "Microsoft.Chaos/locations/targetTypes",
+            "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/providers/Microsoft.Chaos/locations/eastus/targetTypes/Microsoft-KeyVault",
+            "name": "Microsoft-KeyVault",
+            "systemData": {
+              "createdAt": "1970-01-01T00:00:00\u002B00:00",
+              "lastModifiedAt": "1970-01-01T00:00:00\u002B00:00",
+              "createdByType": "Application"
+            },
+            "location": "eastus",
+            "properties": {
+              "displayName": "",
+              "description": "",
+              "propertiesSchema": "https://schema-tc.eastus.chaos-prod.azure.com/targetTypes/Microsoft-KeyVault/propertiesSchema.json",
+              "resourceTypes": [
+                "Microsoft.KeyVault/vaults"
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.Chaos/locations/targetTypes",
+            "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/providers/Microsoft.Chaos/locations/eastus/targetTypes/Microsoft-VirtualMachineScaleSet",
+            "name": "Microsoft-VirtualMachineScaleSet",
+            "systemData": {
+              "createdAt": "1970-01-01T00:00:00\u002B00:00",
+              "lastModifiedAt": "1970-01-01T00:00:00\u002B00:00",
+              "createdByType": "Application"
+            },
+            "location": "eastus",
+            "properties": {
+              "displayName": "",
+              "description": "",
+              "propertiesSchema": "https://schema-tc.eastus.chaos-prod.azure.com/targetTypes/Microsoft-VirtualMachineScaleSet/propertiesSchema.json",
+              "resourceTypes": [
+                "Microsoft.Compute/virtualMachineScaleSets"
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.Chaos/locations/targetTypes",
+            "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/providers/Microsoft.Chaos/locations/eastus/targetTypes/Microsoft-AzureClusteredCacheForRedis",
+            "name": "Microsoft-AzureClusteredCacheForRedis",
+            "systemData": {
+              "createdAt": "1970-01-01T00:00:00\u002B00:00",
+              "lastModifiedAt": "1970-01-01T00:00:00\u002B00:00",
+              "createdByType": "Application"
+            },
+            "location": "eastus",
+            "properties": {
+              "displayName": "",
+              "description": "",
+              "propertiesSchema": "https://schema-tc.eastus.chaos-prod.azure.com/targetTypes/Microsoft-AzureClusteredCacheForRedis/propertiesSchema.json",
+              "resourceTypes": [
+                "Microsoft.Cache/Redis"
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.Chaos/locations/targetTypes",
+            "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/providers/Microsoft.Chaos/locations/eastus/targetTypes/Microsoft-AutoscaleSettings",
+            "name": "Microsoft-AutoscaleSettings",
+            "systemData": {
+              "createdAt": "1970-01-01T00:00:00\u002B00:00",
+              "lastModifiedAt": "1970-01-01T00:00:00\u002B00:00",
+              "createdByType": "Application"
+            },
+            "location": "eastus",
+            "properties": {
+              "displayName": "",
+              "description": "",
+              "propertiesSchema": "https://schema-tc.eastus.chaos-prod.azure.com/targetTypes/Microsoft-AutoscaleSettings/propertiesSchema.json",
+              "resourceTypes": [
+                "Microsoft.Insights/autoscalesettings"
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.Chaos/locations/targetTypes",
+            "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/providers/Microsoft.Chaos/locations/eastus/targetTypes/Microsoft-Agent",
+            "name": "Microsoft-Agent",
+            "systemData": {
+              "createdAt": "1970-01-01T00:00:00\u002B00:00",
+              "lastModifiedAt": "1970-01-01T00:00:00\u002B00:00",
+              "createdByType": "Application"
+            },
+            "location": "eastus",
+            "properties": {
+              "displayName": "",
+              "description": "",
+              "propertiesSchema": "https://schema-tc.eastus.chaos-prod.azure.com/targetTypes/Microsoft-Agent/propertiesSchema.json",
+              "resourceTypes": [
+                "Microsoft.Compute/virtualMachines",
+                "Microsoft.Compute/virtualMachineScaleSets"
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.Chaos/locations/targetTypes",
+            "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/providers/Microsoft.Chaos/locations/eastus/targetTypes/Microsoft-LegacyAgent",
+            "name": "Microsoft-LegacyAgent",
+            "systemData": {
+              "createdAt": "1970-01-01T00:00:00\u002B00:00",
+              "lastModifiedAt": "1970-01-01T00:00:00\u002B00:00",
+              "createdByType": "Application"
+            },
+            "location": "eastus",
+            "properties": {
+              "displayName": "",
+              "description": "",
+              "propertiesSchema": "https://schema-tc.eastus.chaos-prod.azure.com/targetTypes/Microsoft-LegacyAgent/propertiesSchema.json",
+              "resourceTypes": [
+                "Microsoft.Compute/virtualMachines",
+                "Microsoft.Compute/virtualMachineScaleSets"
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.Chaos/locations/targetTypes",
+            "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/providers/Microsoft.Chaos/locations/eastus/targetTypes/Microsoft-domainName",
+            "name": "Microsoft-domainName",
+            "systemData": {
+              "createdAt": "1970-01-01T00:00:00\u002B00:00",
+              "lastModifiedAt": "1970-01-01T00:00:00\u002B00:00",
+              "createdByType": "Application"
+            },
+            "location": "eastus",
+            "properties": {
+              "displayName": "",
+              "description": "",
+              "propertiesSchema": "https://schema-tc.eastus.chaos-prod.azure.com/targetTypes/Microsoft-domainName/propertiesSchema.json",
+              "resourceTypes": [
+                "Microsoft.ClassicCompute/domainNames"
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.Chaos/locations/targetTypes",
+            "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/providers/Microsoft.Chaos/locations/eastus/targetTypes/Microsoft-VirtualMachine",
+            "name": "Microsoft-VirtualMachine",
+            "systemData": {
+              "createdAt": "1970-01-01T00:00:00\u002B00:00",
+              "lastModifiedAt": "1970-01-01T00:00:00\u002B00:00",
+              "createdByType": "Application"
+            },
+            "location": "eastus",
+            "properties": {
+              "displayName": "",
+              "description": "",
+              "propertiesSchema": "https://schema-tc.eastus.chaos-prod.azure.com/targetTypes/Microsoft-VirtualMachine/propertiesSchema.json",
+              "resourceTypes": [
+                "Microsoft.Compute/virtualMachines"
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.Chaos/locations/targetTypes",
+            "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/providers/Microsoft.Chaos/locations/eastus/targetTypes/Microsoft-NetworkSecurityGroup",
+            "name": "Microsoft-NetworkSecurityGroup",
+            "systemData": {
+              "createdAt": "1970-01-01T00:00:00\u002B00:00",
+              "lastModifiedAt": "1970-01-01T00:00:00\u002B00:00",
+              "createdByType": "Application"
+            },
+            "location": "eastus",
+            "properties": {
+              "displayName": "",
+              "description": "",
+              "propertiesSchema": "https://schema-tc.eastus.chaos-prod.azure.com/targetTypes/Microsoft-NetworkSecurityGroup/propertiesSchema.json",
+              "resourceTypes": [
+                "Microsoft.Network/NetworkSecurityGroups"
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.Chaos/locations/targetTypes",
+            "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/providers/Microsoft.Chaos/locations/eastus/targetTypes/Microsoft-CosmosDB",
+            "name": "Microsoft-CosmosDB",
+            "systemData": {
+              "createdAt": "1970-01-01T00:00:00\u002B00:00",
+              "lastModifiedAt": "1970-01-01T00:00:00\u002B00:00",
+              "createdByType": "Application"
+            },
+            "location": "eastus",
+            "properties": {
+              "displayName": "",
+              "description": "",
+              "propertiesSchema": "https://schema-tc.eastus.chaos-prod.azure.com/targetTypes/Microsoft-CosmosDB/propertiesSchema.json",
+              "resourceTypes": [
+                "Microsoft.DocumentDB/databaseAccounts"
+              ]
+            }
+          },
+          {
+            "type": "Microsoft.Chaos/locations/targetTypes",
+            "id": "/subscriptions/fb74b135-894b-4c1d-9b2e-8a3c231abc14/providers/Microsoft.Chaos/locations/eastus/targetTypes/Microsoft-AzureKubernetesServiceChaosMesh",
+            "name": "Microsoft-AzureKubernetesServiceChaosMesh",
+            "systemData": {
+              "createdAt": "1970-01-01T00:00:00\u002B00:00",
+              "lastModifiedAt": "1970-01-01T00:00:00\u002B00:00",
+              "createdByType": "Application"
+            },
+            "location": "eastus",
+            "properties": {
+              "displayName": "",
+              "description": "",
+              "propertiesSchema": "https://schema-tc.eastus.chaos-prod.azure.com/targetTypes/Microsoft-AzureKubernetesServiceChaosMesh/propertiesSchema.json",
+              "resourceTypes": [
+                "Microsoft.ContainerService/managedClusters"
+              ]
+            }
+          }
+        ],
+        "nextLink": ""
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "LOCATION": "eastus",
+    "RandomSeed": "1767870285",
+    "RESOURCE_GROUP": "rg-chaos-sdk-test-recording",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "SUBSCRIPTION_ID": "fb74b135-894b-4c1d-9b2e-8a3c231abc14"
+  }
+}

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Db))
+            if (Optional.IsDefined(DBName))
             {
-                writer.WritePropertyName("db");
-                writer.WriteStringValue(Db);
+                writer.WritePropertyName("db"u8);
+                writer.WriteStringValue(DBName);
             }
             if (Optional.IsDefined(Role))
             {
-                writer.WritePropertyName("role");
+                writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> role = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("db"))
+                if (property.NameEquals("db"u8))
                 {
                     db = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("role"))
+                if (property.NameEquals("role"u8))
                 {
                     role = property.Value.GetString();
                     continue;

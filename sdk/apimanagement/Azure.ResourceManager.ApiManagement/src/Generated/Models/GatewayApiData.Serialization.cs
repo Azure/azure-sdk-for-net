@@ -18,101 +18,101 @@ namespace Azure.ResourceManager.ApiManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(AuthenticationSettings))
             {
-                writer.WritePropertyName("authenticationSettings");
+                writer.WritePropertyName("authenticationSettings"u8);
                 writer.WriteObjectValue(AuthenticationSettings);
             }
             if (Optional.IsDefined(SubscriptionKeyParameterNames))
             {
-                writer.WritePropertyName("subscriptionKeyParameterNames");
+                writer.WritePropertyName("subscriptionKeyParameterNames"u8);
                 writer.WriteObjectValue(SubscriptionKeyParameterNames);
             }
             if (Optional.IsDefined(ApiType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ApiType.Value.ToString());
             }
             if (Optional.IsDefined(ApiRevision))
             {
-                writer.WritePropertyName("apiRevision");
+                writer.WritePropertyName("apiRevision"u8);
                 writer.WriteStringValue(ApiRevision);
             }
             if (Optional.IsDefined(ApiVersion))
             {
-                writer.WritePropertyName("apiVersion");
+                writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
             if (Optional.IsDefined(IsCurrent))
             {
-                writer.WritePropertyName("isCurrent");
+                writer.WritePropertyName("isCurrent"u8);
                 writer.WriteBooleanValue(IsCurrent.Value);
             }
             if (Optional.IsDefined(ApiRevisionDescription))
             {
-                writer.WritePropertyName("apiRevisionDescription");
+                writer.WritePropertyName("apiRevisionDescription"u8);
                 writer.WriteStringValue(ApiRevisionDescription);
             }
             if (Optional.IsDefined(ApiVersionDescription))
             {
-                writer.WritePropertyName("apiVersionDescription");
+                writer.WritePropertyName("apiVersionDescription"u8);
                 writer.WriteStringValue(ApiVersionDescription);
             }
             if (Optional.IsDefined(ApiVersionSetId))
             {
-                writer.WritePropertyName("apiVersionSetId");
+                writer.WritePropertyName("apiVersionSetId"u8);
                 writer.WriteStringValue(ApiVersionSetId);
             }
             if (Optional.IsDefined(IsSubscriptionRequired))
             {
-                writer.WritePropertyName("subscriptionRequired");
+                writer.WritePropertyName("subscriptionRequired"u8);
                 writer.WriteBooleanValue(IsSubscriptionRequired.Value);
             }
             if (Optional.IsDefined(TermsOfServiceUri))
             {
-                writer.WritePropertyName("termsOfServiceUrl");
+                writer.WritePropertyName("termsOfServiceUrl"u8);
                 writer.WriteStringValue(TermsOfServiceUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Contact))
             {
-                writer.WritePropertyName("contact");
+                writer.WritePropertyName("contact"u8);
                 writer.WriteObjectValue(Contact);
             }
             if (Optional.IsDefined(License))
             {
-                writer.WritePropertyName("license");
+                writer.WritePropertyName("license"u8);
                 writer.WriteObjectValue(License);
             }
             if (Optional.IsDefined(SourceApiId))
             {
-                writer.WritePropertyName("sourceApiId");
+                writer.WritePropertyName("sourceApiId"u8);
                 writer.WriteStringValue(SourceApiId);
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(ServiceUri))
             {
-                writer.WritePropertyName("serviceUrl");
+                writer.WritePropertyName("serviceUrl"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             if (Optional.IsCollectionDefined(Protocols))
             {
-                writer.WritePropertyName("protocols");
+                writer.WritePropertyName("protocols"u8);
                 writer.WriteStartArray();
                 foreach (var item in Protocols)
                 {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsDefined(ApiVersionSet))
             {
-                writer.WritePropertyName("apiVersionSet");
+                writer.WritePropertyName("apiVersionSet"u8);
                 writer.WriteObjectValue(ApiVersionSet);
             }
             writer.WriteEndObject();
@@ -158,32 +158,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<ApiVersionSetContractDetails> apiVersionSet = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -192,12 +192,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("authenticationSettings"))
+                        if (property0.NameEquals("authenticationSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             authenticationSettings = AuthenticationSettingsContract.DeserializeAuthenticationSettingsContract(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("subscriptionKeyParameterNames"))
+                        if (property0.NameEquals("subscriptionKeyParameterNames"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             subscriptionKeyParameterNames = SubscriptionKeyParameterNamesContract.DeserializeSubscriptionKeyParameterNamesContract(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("type"))
+                        if (property0.NameEquals("type"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -227,17 +227,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             type0 = new ApiType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("apiRevision"))
+                        if (property0.NameEquals("apiRevision"u8))
                         {
                             apiRevision = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("apiVersion"))
+                        if (property0.NameEquals("apiVersion"u8))
                         {
                             apiVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("isCurrent"))
+                        if (property0.NameEquals("isCurrent"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             isCurrent = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("isOnline"))
+                        if (property0.NameEquals("isOnline"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -257,17 +257,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             isOnline = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("apiRevisionDescription"))
+                        if (property0.NameEquals("apiRevisionDescription"u8))
                         {
                             apiRevisionDescription = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("apiVersionDescription"))
+                        if (property0.NameEquals("apiVersionDescription"u8))
                         {
                             apiVersionDescription = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("apiVersionSetId"))
+                        if (property0.NameEquals("apiVersionSetId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             apiVersionSetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("subscriptionRequired"))
+                        if (property0.NameEquals("subscriptionRequired"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             subscriptionRequired = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("termsOfServiceUrl"))
+                        if (property0.NameEquals("termsOfServiceUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             termsOfServiceUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("contact"))
+                        if (property0.NameEquals("contact"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             contact = ApiContactInformation.DeserializeApiContactInformation(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("license"))
+                        if (property0.NameEquals("license"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             license = ApiLicenseInformation.DeserializeApiLicenseInformation(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("sourceApiId"))
+                        if (property0.NameEquals("sourceApiId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -327,12 +327,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             sourceApiId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("serviceUrl"))
+                        if (property0.NameEquals("serviceUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -342,12 +342,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             serviceUri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("path"))
+                        if (property0.NameEquals("path"u8))
                         {
                             path = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("protocols"))
+                        if (property0.NameEquals("protocols"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             protocols = array;
                             continue;
                         }
-                        if (property0.NameEquals("apiVersionSet"))
+                        if (property0.NameEquals("apiVersionSet"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

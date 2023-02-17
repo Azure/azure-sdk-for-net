@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryManagedInstanceId))
             {
-                writer.WritePropertyName("primaryManagedInstanceId");
+                writer.WritePropertyName("primaryManagedInstanceId"u8);
                 writer.WriteStringValue(PrimaryManagedInstanceId);
             }
             if (Optional.IsDefined(PartnerManagedInstanceId))
             {
-                writer.WritePropertyName("partnerManagedInstanceId");
+                writer.WritePropertyName("partnerManagedInstanceId"u8);
                 writer.WriteStringValue(PartnerManagedInstanceId);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<ResourceIdentifier> partnerManagedInstanceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryManagedInstanceId"))
+                if (property.NameEquals("primaryManagedInstanceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
                     primaryManagedInstanceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("partnerManagedInstanceId"))
+                if (property.NameEquals("partnerManagedInstanceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

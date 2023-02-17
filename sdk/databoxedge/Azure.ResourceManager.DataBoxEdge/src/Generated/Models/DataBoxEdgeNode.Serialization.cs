@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -38,32 +38,32 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<Guid> nodeInstanceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("nodeStatus"))
+                        if (property0.NameEquals("nodeStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -82,32 +82,32 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             nodeStatus = new DataBoxEdgeNodeStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("nodeChassisSerialNumber"))
+                        if (property0.NameEquals("nodeChassisSerialNumber"u8))
                         {
                             nodeChassisSerialNumber = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("nodeSerialNumber"))
+                        if (property0.NameEquals("nodeSerialNumber"u8))
                         {
                             nodeSerialNumber = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("nodeDisplayName"))
+                        if (property0.NameEquals("nodeDisplayName"u8))
                         {
                             nodeDisplayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("nodeFriendlySoftwareVersion"))
+                        if (property0.NameEquals("nodeFriendlySoftwareVersion"u8))
                         {
                             nodeFriendlySoftwareVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("nodeHcsVersion"))
+                        if (property0.NameEquals("nodeHcsVersion"u8))
                         {
                             nodeHcsVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("nodeInstanceId"))
+                        if (property0.NameEquals("nodeInstanceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

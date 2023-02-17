@@ -8,9 +8,14 @@
 
 ## Usage
 
-The `.\setup.ps1` has two purposes:
-1. Create all the resources that the tests require
-2. Output environment variables which the tests can consume using `GetRecordedVariable` function as explained [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md#test-environment-and-live-test-resources)
+We have created several scripts to make testing process easier
+All scripts should be triggered from this path `azure-sdk-for-net\sdk\kusto\Azure.ResourceManager.Kusto`
+For example `.\tests\Prerequisites\Scripts\CreateTestResources.ps1`
+
+- CreateTestResources: create all the required resource for testing, EventHub, Storage and so on
+- RunTestsInRecordMode: run the test in record mode and create recording for all kusto calls
+- RunTestsInPlaybackMode: run the test in playback mode instead of "real" calls reuse the calls from the recording
+- CleanupTestResources: clean up all the resource created in "CreateTestResources" step
 
 ## Maintenance
 

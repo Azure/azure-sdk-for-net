@@ -15,9 +15,9 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("thresholdSeconds");
+            writer.WritePropertyName("thresholdSeconds"u8);
             writer.WriteNumberValue(_thresholdSeconds);
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.Communication.JobRouter
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("thresholdSeconds"))
+                if (property.NameEquals("thresholdSeconds"u8))
                 {
                     thresholdSeconds = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;

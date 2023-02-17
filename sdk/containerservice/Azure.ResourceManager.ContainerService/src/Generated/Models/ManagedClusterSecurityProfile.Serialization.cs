@@ -10,36 +10,52 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    internal partial class ManagedClusterSecurityProfile : IUtf8JsonSerializable
+    public partial class ManagedClusterSecurityProfile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureDefender))
+            if (Optional.IsDefined(Defender))
             {
-                writer.WritePropertyName("azureDefender");
-                writer.WriteObjectValue(AzureDefender);
+                writer.WritePropertyName("defender"u8);
+                writer.WriteObjectValue(Defender);
+            }
+            if (Optional.IsDefined(AzureKeyVaultKms))
+            {
+                writer.WritePropertyName("azureKeyVaultKms"u8);
+                writer.WriteObjectValue(AzureKeyVaultKms);
             }
             writer.WriteEndObject();
         }
 
         internal static ManagedClusterSecurityProfile DeserializeManagedClusterSecurityProfile(JsonElement element)
         {
-            Optional<ManagedClusterSecurityProfileAzureDefender> azureDefender = default;
+            Optional<ManagedClusterSecurityProfileDefender> defender = default;
+            Optional<ManagedClusterSecurityProfileKeyVaultKms> azureKeyVaultKms = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("azureDefender"))
+                if (property.NameEquals("defender"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    azureDefender = ManagedClusterSecurityProfileAzureDefender.DeserializeManagedClusterSecurityProfileAzureDefender(property.Value);
+                    defender = ManagedClusterSecurityProfileDefender.DeserializeManagedClusterSecurityProfileDefender(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("azureKeyVaultKms"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    azureKeyVaultKms = ManagedClusterSecurityProfileKeyVaultKms.DeserializeManagedClusterSecurityProfileKeyVaultKms(property.Value);
                     continue;
                 }
             }
-            return new ManagedClusterSecurityProfile(azureDefender.Value);
+            return new ManagedClusterSecurityProfile(defender.Value, azureKeyVaultKms.Value);
         }
     }
 }

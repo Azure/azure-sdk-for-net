@@ -47,8 +47,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Retrieve a list of Vaults.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group where the recovery services vault is
-        /// present.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -70,8 +69,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Get the Vault details.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group where the recovery services vault is
-        /// present.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -96,8 +94,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Creates or updates a Recovery Services vault.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group where the recovery services vault is
-        /// present.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -125,8 +122,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Deletes a vault.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group where the recovery services vault is
-        /// present.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -148,8 +144,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Updates the vault.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group where the recovery services vault is
-        /// present.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -177,8 +172,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Creates or updates a Recovery Services vault.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group where the recovery services vault is
-        /// present.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -206,8 +200,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// Updates the vault.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group where the recovery services vault is
-        /// present.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.

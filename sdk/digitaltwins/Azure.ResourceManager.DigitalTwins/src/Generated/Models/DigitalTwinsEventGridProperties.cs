@@ -33,10 +33,11 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="authenticationType"> Specifies the authentication type being used for connecting to the endpoint. Defaults to &apos;KeyBased&apos;. If &apos;KeyBased&apos; is selected, a connection string must be specified (at least the primary connection string). If &apos;IdentityBased&apos; is select, the endpointUri and entityPath properties must be specified. </param>
         /// <param name="deadLetterSecret"> Dead letter storage secret for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="deadLetterUri"> Dead letter storage URL for identity-based authentication. </param>
+        /// <param name="identity"> Managed identity properties for the endpoint. </param>
         /// <param name="topicEndpoint"> EventGrid Topic Endpoint. </param>
         /// <param name="accessKey1"> EventGrid secondary accesskey. Will be obfuscated during read. </param>
         /// <param name="accessKey2"> EventGrid secondary accesskey. Will be obfuscated during read. </param>
-        internal DigitalTwinsEventGridProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, string topicEndpoint, string accessKey1, string accessKey2) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri)
+        internal DigitalTwinsEventGridProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, DigitalTwinsManagedIdentityReference identity, string topicEndpoint, string accessKey1, string accessKey2) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity)
         {
             TopicEndpoint = topicEndpoint;
             AccessKey1 = accessKey1;

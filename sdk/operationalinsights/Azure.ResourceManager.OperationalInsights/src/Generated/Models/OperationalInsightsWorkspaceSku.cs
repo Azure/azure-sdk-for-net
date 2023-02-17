@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="capacityReservationLevel"> The capacity reservation level in GB for this workspace, when CapacityReservation sku is selected. </param>
         /// <param name="lastSkuUpdatedOn"> The last time when the sku was updated. </param>
-        internal OperationalInsightsWorkspaceSku(OperationalInsightsWorkspaceSkuName name, int? capacityReservationLevel, DateTimeOffset? lastSkuUpdatedOn)
+        internal OperationalInsightsWorkspaceSku(OperationalInsightsWorkspaceSkuName name, OperationalInsightsWorkspaceCapacityReservationLevel? capacityReservationLevel, DateTimeOffset? lastSkuUpdatedOn)
         {
             Name = name;
             CapacityReservationLevel = capacityReservationLevel;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> The name of the SKU. </summary>
         public OperationalInsightsWorkspaceSkuName Name { get; set; }
         /// <summary> The capacity reservation level in GB for this workspace, when CapacityReservation sku is selected. </summary>
-        public int? CapacityReservationLevel { get; set; }
+        public OperationalInsightsWorkspaceCapacityReservationLevel? CapacityReservationLevel { get; set; }
         /// <summary> The last time when the sku was updated. </summary>
         public DateTimeOffset? LastSkuUpdatedOn { get; }
     }

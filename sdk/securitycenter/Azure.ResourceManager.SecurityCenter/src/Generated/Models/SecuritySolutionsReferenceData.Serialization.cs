@@ -17,21 +17,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("securityFamily");
+            writer.WritePropertyName("securityFamily"u8);
             writer.WriteStringValue(SecurityFamily.ToString());
-            writer.WritePropertyName("alertVendorName");
+            writer.WritePropertyName("alertVendorName"u8);
             writer.WriteStringValue(AlertVendorName);
-            writer.WritePropertyName("packageInfoUrl");
+            writer.WritePropertyName("packageInfoUrl"u8);
             writer.WriteStringValue(PackageInfoUri.AbsoluteUri);
-            writer.WritePropertyName("productName");
+            writer.WritePropertyName("productName"u8);
             writer.WriteStringValue(ProductName);
-            writer.WritePropertyName("publisher");
+            writer.WritePropertyName("publisher"u8);
             writer.WriteStringValue(Publisher);
-            writer.WritePropertyName("publisherDisplayName");
+            writer.WritePropertyName("publisherDisplayName"u8);
             writer.WriteStringValue(PublisherDisplayName);
-            writer.WritePropertyName("template");
+            writer.WritePropertyName("template"u8);
             writer.WriteStringValue(Template);
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string template = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -63,32 +63,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,37 +97,37 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("securityFamily"))
+                        if (property0.NameEquals("securityFamily"u8))
                         {
                             securityFamily = new SecurityFamily(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("alertVendorName"))
+                        if (property0.NameEquals("alertVendorName"u8))
                         {
                             alertVendorName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("packageInfoUrl"))
+                        if (property0.NameEquals("packageInfoUrl"u8))
                         {
                             packageInfoUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("productName"))
+                        if (property0.NameEquals("productName"u8))
                         {
                             productName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("publisher"))
+                        if (property0.NameEquals("publisher"u8))
                         {
                             publisher = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("publisherDisplayName"))
+                        if (property0.NameEquals("publisherDisplayName"u8))
                         {
                             publisherDisplayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("template"))
+                        if (property0.NameEquals("template"u8))
                         {
                             template = property0.Value.GetString();
                             continue;

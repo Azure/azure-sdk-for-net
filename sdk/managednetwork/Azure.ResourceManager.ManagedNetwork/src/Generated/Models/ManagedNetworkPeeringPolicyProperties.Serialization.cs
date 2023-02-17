@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConnectivityType.ToString());
             if (Optional.IsDefined(Hub))
             {
-                writer.WritePropertyName("hub");
+                writer.WritePropertyName("hub"u8);
                 JsonSerializer.Serialize(writer, Hub);
             }
             if (Optional.IsCollectionDefined(Spokes))
             {
-                writer.WritePropertyName("spokes");
+                writer.WritePropertyName("spokes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Spokes)
                 {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             }
             if (Optional.IsCollectionDefined(Mesh))
             {
-                writer.WritePropertyName("mesh");
+                writer.WritePropertyName("mesh"u8);
                 writer.WriteStartArray();
                 foreach (var item in Mesh)
                 {
@@ -58,22 +58,22 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             Optional<ETag> etag = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ConnectivityType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hub"))
+                if (property.NameEquals("hub"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    hub = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    hub = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("spokes"))
+                if (property.NameEquals("spokes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                     }
                     spokes = array;
                     continue;
                 }
-                if (property.NameEquals("mesh"))
+                if (property.NameEquals("mesh"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                     }
                     mesh = array;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

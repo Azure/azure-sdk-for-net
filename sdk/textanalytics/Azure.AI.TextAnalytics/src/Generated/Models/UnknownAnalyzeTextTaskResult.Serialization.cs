@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Models
             AnalyzeTextTaskResultsKind kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new AnalyzeTextTaskResultsKind(property.Value.GetString());
                     continue;

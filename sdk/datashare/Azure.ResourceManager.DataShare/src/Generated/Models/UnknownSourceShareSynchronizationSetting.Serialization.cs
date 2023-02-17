@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataShare.Models
             SourceShareSynchronizationSettingKind kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new SourceShareSynchronizationSettingKind(property.Value.GetString());
                     continue;

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -289,6 +290,30 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+        public async Task SingleLabelClassifyBatchConvenienceWithAutoDetectedLanguageTest()
+        {
+            TextAnalyticsClient client = GetClient(useStaticResource: true);
+            SingleLabelClassifyOptions options = new()
+            {
+                AutoDetectionDefaultLanguage = "en"
+            };
+
+            ClassifyDocumentOperation operation = await client.StartSingleLabelClassifyAsync(
+                s_singleLabelClassifyBatchConvenienceDocuments,
+                TestEnvironment.SingleClassificationProjectName,
+                TestEnvironment.SingleClassificationDeploymentName,
+                "auto",
+                options);
+
+            await operation.WaitForCompletionAsync();
+
+            // Take the first page.
+            ClassifyDocumentResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            ValidateSummaryBatchResult(resultCollection, isLanguageAutoDetected: true);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
         public async Task AnalyzeOperationSingleLabelClassifyWithAutoDetectedLanguageTest()
         {
             TextAnalyticsClient client = GetClient(useStaticResource: true);
@@ -312,6 +337,29 @@ namespace Azure.AI.TextAnalytics.Tests
 
             ClassifyDocumentResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
             ValidateSummaryBatchResult(results, isLanguageAutoDetected: true);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public void SingleLabelClassifyBatchWithDefaultLanguageThrows()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+            SingleLabelClassifyOptions options = new()
+            {
+                AutoDetectionDefaultLanguage = "en"
+            };
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(
+                async () => await client.StartSingleLabelClassifyAsync(
+                s_singleLabelClassifyBatchConvenienceDocuments,
+                TestEnvironment.SingleClassificationProjectName,
+                TestEnvironment.SingleClassificationDeploymentName,
+                "auto",
+                options));
+
+            Assert.That(ex.Message.EndsWith("Use service API version 2022-10-01-preview or newer."));
         }
 
         private void ValidateSummaryDocumentResult(ClassificationCategory? classification)

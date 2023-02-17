@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BaseModel))
             {
-                writer.WritePropertyName("baseModel");
+                writer.WritePropertyName("baseModel"u8);
                 writer.WriteObjectValue(BaseModel);
             }
             if (Optional.IsDefined(MaxCapacity))
             {
-                writer.WritePropertyName("maxCapacity");
+                writer.WritePropertyName("maxCapacity"u8);
                 writer.WriteNumberValue(MaxCapacity.Value);
             }
             if (Optional.IsCollectionDefined(Capabilities))
             {
-                writer.WritePropertyName("capabilities");
+                writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartObject();
                 foreach (var item in Capabilities)
                 {
@@ -38,24 +38,40 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsCollectionDefined(FinetuneCapabilities))
+            {
+                writer.WritePropertyName("finetuneCapabilities"u8);
+                writer.WriteStartObject();
+                foreach (var item in FinetuneCapabilities)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (Optional.IsDefined(Deprecation))
             {
-                writer.WritePropertyName("deprecation");
+                writer.WritePropertyName("deprecation"u8);
                 writer.WriteObjectValue(Deprecation);
+            }
+            if (Optional.IsDefined(LifecycleStatus))
+            {
+                writer.WritePropertyName("lifecycleStatus"u8);
+                writer.WriteStringValue(LifecycleStatus.Value.ToString());
             }
             if (Optional.IsDefined(Format))
             {
-                writer.WritePropertyName("format");
+                writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format);
             }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
             writer.WriteEndObject();
@@ -66,7 +82,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<CognitiveServicesAccountDeploymentModel> baseModel = default;
             Optional<int> maxCapacity = default;
             Optional<IDictionary<string, string>> capabilities = default;
+            Optional<IDictionary<string, string>> finetuneCapabilities = default;
             Optional<ServiceAccountModelDeprecationInfo> deprecation = default;
+            Optional<ModelLifecycleStatus> lifecycleStatus = default;
             Optional<SystemData> systemData = default;
             Optional<string> format = default;
             Optional<string> name = default;
@@ -74,7 +92,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<ServiceAccountCallRateLimit> callRateLimit = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("baseModel"))
+                if (property.NameEquals("baseModel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -84,7 +102,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     baseModel = DeserializeCognitiveServicesAccountDeploymentModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("maxCapacity"))
+                if (property.NameEquals("maxCapacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +112,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     maxCapacity = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,7 +127,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     capabilities = dictionary;
                     continue;
                 }
-                if (property.NameEquals("deprecation"))
+                if (property.NameEquals("finetuneCapabilities"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    finetuneCapabilities = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("deprecation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,32 +152,42 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     deprecation = ServiceAccountModelDeprecationInfo.DeserializeServiceAccountModelDeprecationInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("lifecycleStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    lifecycleStatus = new ModelLifecycleStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("format"))
+                if (property.NameEquals("systemData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("format"u8))
                 {
                     format = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("callRateLimit"))
+                if (property.NameEquals("callRateLimit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -155,7 +198,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CognitiveServicesAccountModel(format.Value, name.Value, version.Value, callRateLimit.Value, baseModel.Value, Optional.ToNullable(maxCapacity), Optional.ToDictionary(capabilities), deprecation.Value, systemData);
+            return new CognitiveServicesAccountModel(format.Value, name.Value, version.Value, callRateLimit.Value, baseModel.Value, Optional.ToNullable(maxCapacity), Optional.ToDictionary(capabilities), Optional.ToDictionary(finetuneCapabilities), deprecation.Value, Optional.ToNullable(lifecycleStatus), systemData);
         }
     }
 }

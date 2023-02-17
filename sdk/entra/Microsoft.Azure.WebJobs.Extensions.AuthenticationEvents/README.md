@@ -119,7 +119,7 @@ If you would like to _not_ authenticate the token while in local development, se
 
 ### .NET SDK
 
-Key concepts of the Azure .NET SDK can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html)
+Key concepts of the Azure .NET SDK can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
 ### Azure AD custom extensions
 

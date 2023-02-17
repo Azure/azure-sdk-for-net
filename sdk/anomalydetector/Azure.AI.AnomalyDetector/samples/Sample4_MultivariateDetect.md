@@ -17,10 +17,9 @@ string datasource = TestEnvironment.DataSource;
 Console.WriteLine(endpoint);
 var endpointUri = new Uri(endpoint);
 var credential = new AzureKeyCredential(apiKey);
-string apiVersion = "V1.1";
 
 //create client
-AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
+AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
 ```
 
 ## Train the model
@@ -44,7 +43,7 @@ private String TrainModel(AnomalyDetectorClient client, string datasource, DateT
         request.SlidingWindow = 200;
 
         TestContext.Progress.WriteLine("Training new model...(it may take a few minutes)");
-        Model response = client.CreateAndTrainMultivariateModel(request);
+        AnomalyDetectionModel response = client.TrainMultivariateModel(request);
         String trained_model_id = response.ModelId;
         Console.WriteLine(String.Format("Training model id is {0}", trained_model_id));
 
@@ -96,23 +95,23 @@ private String TrainModel(AnomalyDetectorClient client, string datasource, DateT
 To detect anomalies using your newly trained model, create a private async Task named `BatchDetect`. You will create a new `DetectionRequest`, pass that as a parameter to `DetectMultivariateBatchAnomaly` and get a `DetectionResult` and extract result ID from it. With the result ID, you could get the detection content and detection status by `GetMultivariateBatchDetectionResultValue`. Return the detection content when the detection status is ready.
 
 ```C# Snippet:DetectMultivariateAnomaly
-private DetectionResult BatchDetect(AnomalyDetectorClient client, string datasource, String model_id, DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
+private MultivariateDetectionResult BatchDetect(AnomalyDetectorClient client, string datasource, String model_id, DateTimeOffset start_time, DateTimeOffset end_time, int max_tryout = 500)
 {
     try
     {
         Console.WriteLine("Start batch detect...");
-        DetectionRequest request = new DetectionRequest(datasource, 10, start_time, end_time);
+        MultivariateBatchDetectionOptions request = new MultivariateBatchDetectionOptions(datasource, 10, start_time, end_time);
 
         TestContext.Progress.WriteLine("Start batch detection, this might take a few minutes...");
-        DetectionResult response = client.DetectMultivariateBatchAnomaly(model_id, request);
+        MultivariateDetectionResult response = client.DetectMultivariateBatchAnomaly(model_id, request);
         String result_id = response.ResultId;
         TestContext.Progress.WriteLine(String.Format("result id is: {0}", result_id));
 
         // get detection result
-        DetectionResult resultResponse = client.GetMultivariateBatchDetectionResultValue(result_id);
-        DetectionStatus result_status = resultResponse.Summary.Status;
+        MultivariateDetectionResult resultResponse = client.GetMultivariateBatchDetectionResultValue(result_id);
+        MultivariateBatchDetectionStatus result_status = resultResponse.Summary.Status;
         int tryout_count = 0;
-        while (tryout_count < max_tryout & result_status != DetectionStatus.Ready & result_status != DetectionStatus.Failed)
+        while (tryout_count < max_tryout & result_status != MultivariateBatchDetectionStatus.Ready & result_status != MultivariateBatchDetectionStatus.Failed)
         {
             System.Threading.Thread.Sleep(1000);
             resultResponse = client.GetMultivariateBatchDetectionResultValue(result_id);
@@ -121,7 +120,7 @@ private DetectionResult BatchDetect(AnomalyDetectorClient client, string datasou
             Console.Out.Flush();
         }
 
-        if (result_status == DetectionStatus.Failed)
+        if (result_status == MultivariateBatchDetectionStatus.Failed)
         {
             Console.WriteLine("Detection failed.");
             Console.WriteLine("Errors:");
@@ -150,7 +149,7 @@ private DetectionResult BatchDetect(AnomalyDetectorClient client, string datasou
 To detect anomalies using your newly trained model, create a private async Task named `DetectLast`. You will create a new `LastDetectionRequest`, you could assign how many last points you want to detect in the request. Pass `LastDetectionRequest` as a parameter to `LastDetectionRequest` and get the response. Return the detection content when the detection status is ready.
 
 ```C# Snippet:DetectLastMultivariateAnomaly
-private LastDetectionResult DetectLast(AnomalyDetectorClient client, String model_id)
+private MultivariateLastDetectionResult DetectLast(AnomalyDetectorClient client, String model_id)
 {
     Console.WriteLine("Start last detect...");
     try
@@ -165,8 +164,8 @@ private LastDetectionResult DetectLast(AnomalyDetectorClient client, String mode
                 variables.Add(new VariableValues(lastDetectVariables[index].GetProperty("variable").ToString(), JsonConvert.DeserializeObject<IEnumerable<String>>(lastDetectVariables[index].GetProperty("timestamps").ToString()), JsonConvert.DeserializeObject<IEnumerable<float>>(lastDetectVariables[index].GetProperty("values").ToString())));
             }
         }
-        LastDetectionRequest request = new LastDetectionRequest(variables, 1);
-        LastDetectionResult response = client.DetectMultivariateLastAnomaly(model_id, request);
+        MultivariateLastDetectionOptions request = new MultivariateLastDetectionOptions(variables, 1);
+        MultivariateLastDetectionResult response = client.DetectMultivariateLastAnomaly(model_id, request);
         return response;
     }
     catch (Exception ex)

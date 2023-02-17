@@ -17,10 +17,9 @@ string datasource = TestEnvironment.DataSource;
 Console.WriteLine(endpoint);
 var endpointUri = new Uri(endpoint);
 var credential = new AzureKeyCredential(apiKey);
-string apiVersion = "V1.1";
 
 //create client
-AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
+AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
 ```
 
 ## Load time series and create DetectRequest
@@ -42,7 +41,7 @@ List<TimeSeriesPoint> list = File.ReadAllLines(datapath, Encoding.UTF8)
     .Select(e => new TimeSeriesPoint(float.Parse(e[1])){ Timestamp = DateTime.Parse(e[0])}).ToList();
 
 //create request
-DetectRequest request = new DetectRequest(list)
+UnivariateDetectionOptions request = new UnivariateDetectionOptions(list)
 {
     Granularity = TimeGranularity.Daily
 };
@@ -57,7 +56,7 @@ Console.WriteLine("Detecting the anomaly status of the latest point in the serie
 
 try
 {
-    LastDetectResponse result = client.DetectUnivariateLastPoint(request);
+    UnivariateLastDetectionResult result = client.DetectUnivariateLastPoint(request);
 
     if (result.IsAnomaly)
     {

@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var version = await versionCollection.GetAsync("1");
 
             // create vm & assignment
-            var vm = await CreateVirtualMachineFromTemplate(vmName, rg);
-            var assignment = await CreateAssignment(vm, version.Value.Id);
+            var vmId = await CreateVirtualMachineFromTemplate(vmName, rg);
+            var assignment = await CreateAssignment(vmId, version.Value.Id);
 
             // assert
             Assert.True(assignment.HasData);
             Assert.NotNull(assignment.Data.Name);
             Assert.NotNull(assignment.Data.Id);
-            Assert.AreEqual(vm.Id, assignment.Data.Properties.TargetId);
+            Assert.AreEqual(vmId, assignment.Data.Properties.TargetId);
         }
 
         [TestCase]

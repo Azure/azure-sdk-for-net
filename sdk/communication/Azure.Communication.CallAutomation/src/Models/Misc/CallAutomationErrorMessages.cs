@@ -14,9 +14,14 @@ namespace Azure.Communication.CallAutomation
         public const string InvalidRepeatabilityHeadersMessage = "Invalid RepeatabilityHeaders. RepeatabilityHeaders is only valid when RepeatabilityRequestId and RepeatabilityFirstSent are set to non-default value.";
 
         /// <summary>
-        /// Invalid Https Uri message.
+        /// Invalid Callback Https Uri message.
         /// </summary>
         public const string InvalidHttpsUriMessage = "Callback Uri has to be in well-formed, valid https format.";
+
+        /// <summary>
+        /// Invalid Custom Cognitive service Https Uri message.
+        /// </summary>
+        public const string InvalidCognitiveServiceHttpsUriMessage = "Cognitive Service Uri has to be in well-formed, valid https format.";
 
         /// <summary>
         /// Invalid InvitationTimeoutInSeconds message.

@@ -15,66 +15,66 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("protectedItemType");
+            writer.WritePropertyName("protectedItemType"u8);
             writer.WriteStringValue(ProtectedItemType);
             if (Optional.IsDefined(ContainerName))
             {
-                writer.WritePropertyName("containerName");
+                writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
             if (Optional.IsDefined(SourceResourceId))
             {
-                writer.WritePropertyName("sourceResourceId");
+                writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
             if (Optional.IsDefined(PolicyId))
             {
-                writer.WritePropertyName("policyId");
+                writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
             if (Optional.IsDefined(LastRecoveryPoint))
             {
-                writer.WritePropertyName("lastRecoveryPoint");
+                writer.WritePropertyName("lastRecoveryPoint"u8);
                 writer.WriteStringValue(LastRecoveryPoint.Value, "O");
             }
             if (Optional.IsDefined(BackupSetName))
             {
-                writer.WritePropertyName("backupSetName");
+                writer.WritePropertyName("backupSetName"u8);
                 writer.WriteStringValue(BackupSetName);
             }
             if (Optional.IsDefined(CreateMode))
             {
-                writer.WritePropertyName("createMode");
+                writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
             if (Optional.IsDefined(DeferredDeleteTimeInUTC))
             {
-                writer.WritePropertyName("deferredDeleteTimeInUTC");
+                writer.WritePropertyName("deferredDeleteTimeInUTC"u8);
                 writer.WriteStringValue(DeferredDeleteTimeInUTC.Value, "O");
             }
             if (Optional.IsDefined(IsScheduledForDeferredDelete))
             {
-                writer.WritePropertyName("isScheduledForDeferredDelete");
+                writer.WritePropertyName("isScheduledForDeferredDelete"u8);
                 writer.WriteBooleanValue(IsScheduledForDeferredDelete.Value);
             }
             if (Optional.IsDefined(DeferredDeleteTimeRemaining))
             {
-                writer.WritePropertyName("deferredDeleteTimeRemaining");
+                writer.WritePropertyName("deferredDeleteTimeRemaining"u8);
                 writer.WriteStringValue(DeferredDeleteTimeRemaining);
             }
             if (Optional.IsDefined(IsDeferredDeleteScheduleUpcoming))
             {
-                writer.WritePropertyName("isDeferredDeleteScheduleUpcoming");
+                writer.WritePropertyName("isDeferredDeleteScheduleUpcoming"u8);
                 writer.WriteBooleanValue(IsDeferredDeleteScheduleUpcoming.Value);
             }
             if (Optional.IsDefined(IsRehydrate))
             {
-                writer.WritePropertyName("isRehydrate");
+                writer.WritePropertyName("isRehydrate"u8);
                 writer.WriteBooleanValue(IsRehydrate.Value);
             }
             if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
-                writer.WritePropertyName("resourceGuardOperationRequests");
+                writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceGuardOperationRequests)
                 {
@@ -84,13 +84,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             if (Optional.IsDefined(IsArchiveEnabled))
             {
-                writer.WritePropertyName("isArchiveEnabled");
+                writer.WritePropertyName("isArchiveEnabled"u8);
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
             }
             if (Optional.IsDefined(PolicyName))
             {
-                writer.WritePropertyName("policyName");
+                writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
+            }
+            if (Optional.IsDefined(SoftDeleteRetentionPeriod))
+            {
+                writer.WritePropertyName("softDeleteRetentionPeriod"u8);
+                writer.WriteNumberValue(SoftDeleteRetentionPeriod.Value);
             }
             writer.WriteEndObject();
         }

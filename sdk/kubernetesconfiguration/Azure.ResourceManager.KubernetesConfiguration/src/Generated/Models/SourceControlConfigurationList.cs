@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Initializes a new instance of SourceControlConfigurationList. </summary>
         internal SourceControlConfigurationList()
         {
-            Value = new ChangeTrackingList<SourceControlConfigurationData>();
+            Value = new ChangeTrackingList<KubernetesSourceControlConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of SourceControlConfigurationList. </summary>
         /// <param name="value"> List of Source Control Configurations within a Kubernetes cluster. </param>
         /// <param name="nextLink"> URL to get the next set of configuration objects, if any. </param>
-        internal SourceControlConfigurationList(IReadOnlyList<SourceControlConfigurationData> value, string nextLink)
+        internal SourceControlConfigurationList(IReadOnlyList<KubernetesSourceControlConfigurationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Source Control Configurations within a Kubernetes cluster. </summary>
-        public IReadOnlyList<SourceControlConfigurationData> Value { get; }
+        public IReadOnlyList<KubernetesSourceControlConfigurationData> Value { get; }
         /// <summary> URL to get the next set of configuration objects, if any. </summary>
         public string NextLink { get; }
     }

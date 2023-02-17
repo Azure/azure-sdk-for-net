@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             MongoDBPrivilege privilege = new MongoDBPrivilege
             {
-                Resource = new PrivilegeResource
+                Resource = new MongoDBPrivilegeResourceInfo
                 {
-                    Db = databaseName,
+                    DBName = databaseName,
                     Collection = "test"
                 },
             };
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             MongoDBPrivilege privilege = new MongoDBPrivilege
             {
-                Resource = new PrivilegeResource
+                Resource = new MongoDBPrivilegeResourceInfo
                 {
-                    Db = databaseName,
+                    DBName = databaseName,
                     Collection = "test"
                 },
             };
@@ -204,9 +204,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        private void VerifyPrivilegeResource(PrivilegeResource expected, PrivilegeResource actualValue)
+        private void VerifyPrivilegeResource(MongoDBPrivilegeResourceInfo expected, MongoDBPrivilegeResourceInfo actualValue)
         {
-            Assert.AreEqual(expected.Db, actualValue.Db);
+            Assert.AreEqual(expected.DBName, actualValue.DBName);
             Assert.AreEqual(expected.Collection, actualValue.Collection);
         }
     }

@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -33,8 +34,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="userData"> UserData for the virtual machines in the scale set, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </param>
         /// <param name="capacityReservation"> Specifies the capacity reservation related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-04-01. </param>
         /// <param name="applicationProfile"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
-        /// <param name="hardwareProfile"> Specifies the hardware profile related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2022-03-01. </param>
-        internal VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile, VirtualMachineScaleSetStorageProfile storageProfile, VirtualMachineScaleSetNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, ScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, VirtualMachineScaleSetHardwareProfile hardwareProfile)
+        /// <param name="hardwareProfile"> Specifies the hardware profile related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-11-01. </param>
+        /// <param name="serviceArtifactReference"> Specifies the service artifact reference id used to set same image version for all virtual machines in the scale set when using &apos;latest&apos; image version. Minimum api-version: 2022-11-01. </param>
+        internal VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile, VirtualMachineScaleSetStorageProfile storageProfile, VirtualMachineScaleSetNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, VirtualMachineScaleSetHardwareProfile hardwareProfile, WritableSubResource serviceArtifactReference)
         {
             OSProfile = osProfile;
             StorageProfile = storageProfile;
@@ -51,6 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
             CapacityReservation = capacityReservation;
             ApplicationProfile = applicationProfile;
             HardwareProfile = hardwareProfile;
+            ServiceArtifactReference = serviceArtifactReference;
         }
 
         /// <summary> Specifies the operating system settings for the virtual machines in the scale set. </summary>
@@ -98,19 +101,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies Scheduled Event related configurations. </summary>
-        internal ScheduledEventsProfile ScheduledEventsProfile { get; set; }
-        /// <summary> Specifies Terminate Scheduled Event related configurations. </summary>
-        public TerminateNotificationProfile ScheduledEventsTerminateNotificationProfile
-        {
-            get => ScheduledEventsProfile is null ? default : ScheduledEventsProfile.TerminateNotificationProfile;
-            set
-            {
-                if (ScheduledEventsProfile is null)
-                    ScheduledEventsProfile = new ScheduledEventsProfile();
-                ScheduledEventsProfile.TerminateNotificationProfile = value;
-            }
-        }
-
+        public ComputeScheduledEventsProfile ScheduledEventsProfile { get; set; }
         /// <summary> UserData for the virtual machines in the scale set, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </summary>
         public string UserData { get; set; }
         /// <summary> Specifies the capacity reservation related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-04-01. </summary>
@@ -140,9 +131,9 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        /// <summary> Specifies the hardware profile related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2022-03-01. </summary>
+        /// <summary> Specifies the hardware profile related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-11-01. </summary>
         internal VirtualMachineScaleSetHardwareProfile HardwareProfile { get; set; }
-        /// <summary> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2022-03-01. &lt;br&gt;&lt;br&gt; Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </summary>
+        /// <summary> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2021-11-01. &lt;br&gt;&lt;br&gt; Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </summary>
         public VirtualMachineSizeProperties HardwareVmSizeProperties
         {
             get => HardwareProfile is null ? default : HardwareProfile.VmSizeProperties;
@@ -151,6 +142,20 @@ namespace Azure.ResourceManager.Compute.Models
                 if (HardwareProfile is null)
                     HardwareProfile = new VirtualMachineScaleSetHardwareProfile();
                 HardwareProfile.VmSizeProperties = value;
+            }
+        }
+
+        /// <summary> Specifies the service artifact reference id used to set same image version for all virtual machines in the scale set when using &apos;latest&apos; image version. Minimum api-version: 2022-11-01. </summary>
+        internal WritableSubResource ServiceArtifactReference { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier ServiceArtifactReferenceId
+        {
+            get => ServiceArtifactReference is null ? default : ServiceArtifactReference.Id;
+            set
+            {
+                if (ServiceArtifactReference is null)
+                    ServiceArtifactReference = new WritableSubResource();
+                ServiceArtifactReference.Id = value;
             }
         }
     }

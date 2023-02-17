@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FileSystem))
             {
-                writer.WritePropertyName("fileSystem");
+                writer.WritePropertyName("fileSystem"u8);
                 writer.WriteObjectValue(FileSystem);
             }
             if (Optional.IsDefined(AzureBlobStorage))
             {
-                writer.WritePropertyName("azureBlobStorage");
+                writer.WritePropertyName("azureBlobStorage"u8);
                 writer.WriteObjectValue(AzureBlobStorage);
             }
             writer.WriteEndObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<AppServiceBlobStorageHttpLogsConfig> azureBlobStorage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fileSystem"))
+                if (property.NameEquals("fileSystem"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
                     fileSystem = FileSystemHttpLogsConfig.DeserializeFileSystemHttpLogsConfig(property.Value);
                     continue;
                 }
-                if (property.NameEquals("azureBlobStorage"))
+                if (property.NameEquals("azureBlobStorage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

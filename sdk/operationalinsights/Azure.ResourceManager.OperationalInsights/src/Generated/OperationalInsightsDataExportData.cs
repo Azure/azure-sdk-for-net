@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="resourceId"> The destination resource ID. This can be copied from the Properties entry of the destination resource in Azure. </param>
         /// <param name="destinationType"> The type of the destination resource. </param>
         /// <param name="eventHubName"> Optional. Allows to define an Event Hub name. Not applicable when destination is Storage Account. </param>
-        internal OperationalInsightsDataExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? dataExportId, IList<string> tableNames, bool? isEnabled, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, ResourceIdentifier resourceId, OperationalInsightsDataExportsDestinationType? destinationType, string eventHubName) : base(id, name, resourceType, systemData)
+        internal OperationalInsightsDataExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? dataExportId, IList<string> tableNames, bool? isEnabled, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, ResourceIdentifier resourceId, OperationalInsightsDataExportDestinationType? destinationType, string eventHubName) : base(id, name, resourceType, systemData)
         {
             DataExportId = dataExportId;
             TableNames = tableNames;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <summary> The destination resource ID. This can be copied from the Properties entry of the destination resource in Azure. </summary>
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The type of the destination resource. </summary>
-        public OperationalInsightsDataExportsDestinationType? DestinationType { get; }
+        public OperationalInsightsDataExportDestinationType? DestinationType { get; }
         /// <summary> Optional. Allows to define an Event Hub name. Not applicable when destination is Storage Account. </summary>
         public string EventHubName { get; set; }
     }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("stepType");
+            writer.WritePropertyName("stepType"u8);
             writer.WriteStringValue(StepType.ToSerialString());
             writer.WriteEndObject();
         }

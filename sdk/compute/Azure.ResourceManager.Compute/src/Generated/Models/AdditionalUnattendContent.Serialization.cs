@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PassName))
             {
-                writer.WritePropertyName("passName");
+                writer.WritePropertyName("passName"u8);
                 writer.WriteStringValue(PassName.Value.ToString());
             }
             if (Optional.IsDefined(ComponentName))
             {
-                writer.WritePropertyName("componentName");
+                writer.WritePropertyName("componentName"u8);
                 writer.WriteStringValue(ComponentName.Value.ToString());
             }
             if (Optional.IsDefined(SettingName))
             {
-                writer.WritePropertyName("settingName");
+                writer.WritePropertyName("settingName"u8);
                 writer.WriteStringValue(SettingName.Value.ToSerialString());
             }
             if (Optional.IsDefined(Content))
             {
-                writer.WritePropertyName("content");
+                writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
             writer.WriteEndObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> content = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("passName"))
+                if (property.NameEquals("passName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
                     passName = new PassName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("componentName"))
+                if (property.NameEquals("componentName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
                     componentName = new ComponentName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("settingName"))
+                if (property.NameEquals("settingName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Models
                     settingName = property.Value.GetString().ToSettingName();
                     continue;
                 }
-                if (property.NameEquals("content"))
+                if (property.NameEquals("content"u8))
                 {
                     content = property.Value.GetString();
                     continue;

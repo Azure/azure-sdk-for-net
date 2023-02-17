@@ -25,47 +25,47 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<NetworkMappingFabricSpecificSettings> fabricSpecificSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     state = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primaryNetworkFriendlyName"))
+                if (property.NameEquals("primaryNetworkFriendlyName"u8))
                 {
                     primaryNetworkFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primaryNetworkId"))
+                if (property.NameEquals("primaryNetworkId"u8))
                 {
                     primaryNetworkId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primaryFabricFriendlyName"))
+                if (property.NameEquals("primaryFabricFriendlyName"u8))
                 {
                     primaryFabricFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryNetworkFriendlyName"))
+                if (property.NameEquals("recoveryNetworkFriendlyName"u8))
                 {
                     recoveryNetworkFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryNetworkId"))
+                if (property.NameEquals("recoveryNetworkId"u8))
                 {
                     recoveryNetworkId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryFabricArmId"))
+                if (property.NameEquals("recoveryFabricArmId"u8))
                 {
                     recoveryFabricArmId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryFabricFriendlyName"))
+                if (property.NameEquals("recoveryFabricFriendlyName"u8))
                 {
                     recoveryFabricFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fabricSpecificSettings"))
+                if (property.NameEquals("fabricSpecificSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

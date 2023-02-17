@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         {
         }
 
-        /// <summary> The keyType to regenerate. Must be either &apos;primary&apos; or &apos;secondary&apos;(case-insensitive). </summary>
+        /// <summary> The type of access key. </summary>
         public WebPubSubKeyType? KeyType { get; set; }
     }
 }

@@ -11,6 +11,14 @@ input-file:
 generation1-convenience-client: true
 ```
 
+### Suppress Abstract Base Class
+
+``` yaml
+suppress-abstract-base-class:
+- AnalyzeTextTask
+- AnalyzeTextTaskResult
+```
+
 ### Modify operationId names
 
 ``` yaml

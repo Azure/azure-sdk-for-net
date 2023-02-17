@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// The commitment tier to use for next month.
         /// Serialized Name: UpdateDataLakeAnalyticsAccountParameters.properties.newTier
         /// </summary>
-        public CommitmentTierType? NewTier { get; set; }
+        public DataLakeAnalyticsCommitmentTierType? NewTier { get; set; }
         /// <summary>
         /// The maximum supported jobs running under the account at the same time.
         /// Serialized Name: UpdateDataLakeAnalyticsAccountParameters.properties.maxJobCount

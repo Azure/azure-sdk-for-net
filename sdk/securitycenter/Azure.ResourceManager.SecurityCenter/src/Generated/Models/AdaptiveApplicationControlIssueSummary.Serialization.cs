@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<float> numberOfVms = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("issue"))
+                if (property.NameEquals("issue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     issue = new AdaptiveApplicationControlIssue(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("numberOfVms"))
+                if (property.NameEquals("numberOfVms"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

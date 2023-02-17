@@ -99,6 +99,11 @@ namespace Azure.Containers.ContainerRegistry
         /// </summary>
         public virtual Uri Endpoint => _endpoint;
 
+        /// <summary>
+        /// The HttpPipeline.
+        /// </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
+
         /// <summary> List the names of the repositories in this registry. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>

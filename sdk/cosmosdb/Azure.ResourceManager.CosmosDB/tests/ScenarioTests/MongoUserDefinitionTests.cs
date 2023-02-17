@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             MongoDBRole role = new MongoDBRole
             {
-                Db = databaseName,
+                DBName = databaseName,
                 Role = "readWrite"
             };
             updateParameters.Roles.Add(role);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             MongoDBRole role = new MongoDBRole
             {
-                Db = databaseName,
+                DBName = databaseName,
                 Role = "read"
             };
             parameters.Roles.Add(role);
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expected.Count, actualValue.Count);
             for (int i = 0; i < expected.Count; i++)
             {
-                Assert.AreEqual(expected[i].Db, actualValue[i].Db);
+                Assert.AreEqual(expected[i].DBName, actualValue[i].DBName);
                 Assert.AreEqual(expected[i].Role, actualValue[i].Role);
             }
         }

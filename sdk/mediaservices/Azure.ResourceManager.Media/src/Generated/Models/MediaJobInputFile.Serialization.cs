@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Filename))
             {
-                writer.WritePropertyName("filename");
+                writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             if (Optional.IsCollectionDefined(IncludedTracks))
             {
-                writer.WritePropertyName("includedTracks");
+                writer.WritePropertyName("includedTracks"u8);
                 writer.WriteStartArray();
                 foreach (var item in IncludedTracks)
                 {
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.Media.Models
             Optional<IList<TrackDescriptor>> includedTracks = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("filename"))
+                if (property.NameEquals("filename"u8))
                 {
                     filename = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("includedTracks"))
+                if (property.NameEquals("includedTracks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

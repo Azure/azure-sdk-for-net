@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    /// <summary> Describes an available Azure Spring Cloud SKU. </summary>
+    /// <summary> Describes an available Azure Spring Apps SKU. </summary>
     public partial class AvailableAppPlatformSku
     {
         /// <summary> Initializes a new instance of AvailableAppPlatformSku. </summary>
         internal AvailableAppPlatformSku()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
-            LocationInfo = new ChangeTrackingList<ResourceSkuLocationInfo>();
-            Restrictions = new ChangeTrackingList<ResourceSkuRestrictions>();
+            LocationInfo = new ChangeTrackingList<AppPlatformSkuLocationInfo>();
+            Restrictions = new ChangeTrackingList<AppPlatformSkuRestrictions>();
         }
 
         /// <summary> Initializes a new instance of AvailableAppPlatformSku. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// Gets the restrictions because of which SKU cannot be used. This is
         /// empty if there are no restrictions.
         /// </param>
-        internal AvailableAppPlatformSku(ResourceType? resourceType, string name, string tier, SkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<ResourceSkuLocationInfo> locationInfo, IReadOnlyList<ResourceSkuRestrictions> restrictions)
+        internal AvailableAppPlatformSku(ResourceType? resourceType, string name, string tier, AppPlatformSkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<AppPlatformSkuLocationInfo> locationInfo, IReadOnlyList<AppPlatformSkuRestrictions> restrictions)
         {
             ResourceType = resourceType;
             Name = name;
@@ -50,15 +50,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Gets the tier of SKU. </summary>
         public string Tier { get; }
         /// <summary> Gets the capacity of SKU. </summary>
-        public SkuCapacity Capacity { get; }
+        public AppPlatformSkuCapacity Capacity { get; }
         /// <summary> Gets the set of locations that the SKU is available. </summary>
         public IReadOnlyList<AzureLocation> Locations { get; }
         /// <summary> Gets a list of locations and availability zones in those locations where the SKU is available. </summary>
-        public IReadOnlyList<ResourceSkuLocationInfo> LocationInfo { get; }
+        public IReadOnlyList<AppPlatformSkuLocationInfo> LocationInfo { get; }
         /// <summary>
         /// Gets the restrictions because of which SKU cannot be used. This is
         /// empty if there are no restrictions.
         /// </summary>
-        public IReadOnlyList<ResourceSkuRestrictions> Restrictions { get; }
+        public IReadOnlyList<AppPlatformSkuRestrictions> Restrictions { get; }
     }
 }

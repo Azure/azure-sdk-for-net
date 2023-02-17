@@ -17,51 +17,51 @@ namespace Azure.ResourceManager.Storage
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Cors))
             {
-                writer.WritePropertyName("cors");
+                writer.WritePropertyName("cors"u8);
                 writer.WriteObjectValue(Cors);
             }
             if (Optional.IsDefined(DefaultServiceVersion))
             {
-                writer.WritePropertyName("defaultServiceVersion");
+                writer.WritePropertyName("defaultServiceVersion"u8);
                 writer.WriteStringValue(DefaultServiceVersion);
             }
             if (Optional.IsDefined(DeleteRetentionPolicy))
             {
-                writer.WritePropertyName("deleteRetentionPolicy");
+                writer.WritePropertyName("deleteRetentionPolicy"u8);
                 writer.WriteObjectValue(DeleteRetentionPolicy);
             }
             if (Optional.IsDefined(IsVersioningEnabled))
             {
-                writer.WritePropertyName("isVersioningEnabled");
+                writer.WritePropertyName("isVersioningEnabled"u8);
                 writer.WriteBooleanValue(IsVersioningEnabled.Value);
             }
             if (Optional.IsDefined(IsAutomaticSnapshotPolicyEnabled))
             {
-                writer.WritePropertyName("automaticSnapshotPolicyEnabled");
+                writer.WritePropertyName("automaticSnapshotPolicyEnabled"u8);
                 writer.WriteBooleanValue(IsAutomaticSnapshotPolicyEnabled.Value);
             }
             if (Optional.IsDefined(ChangeFeed))
             {
-                writer.WritePropertyName("changeFeed");
+                writer.WritePropertyName("changeFeed"u8);
                 writer.WriteObjectValue(ChangeFeed);
             }
             if (Optional.IsDefined(RestorePolicy))
             {
-                writer.WritePropertyName("restorePolicy");
+                writer.WritePropertyName("restorePolicy"u8);
                 writer.WriteObjectValue(RestorePolicy);
             }
             if (Optional.IsDefined(ContainerDeleteRetentionPolicy))
             {
-                writer.WritePropertyName("containerDeleteRetentionPolicy");
+                writer.WritePropertyName("containerDeleteRetentionPolicy"u8);
                 writer.WriteObjectValue(ContainerDeleteRetentionPolicy);
             }
             if (Optional.IsDefined(LastAccessTimeTrackingPolicy))
             {
-                writer.WritePropertyName("lastAccessTimeTrackingPolicy");
+                writer.WritePropertyName("lastAccessTimeTrackingPolicy"u8);
                 writer.WriteObjectValue(LastAccessTimeTrackingPolicy);
             }
             writer.WriteEndObject();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Storage
             Optional<LastAccessTimeTrackingPolicy> lastAccessTimeTrackingPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,32 +96,32 @@ namespace Azure.ResourceManager.Storage
                     sku = StorageSku.DeserializeStorageSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Storage
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("cors"))
+                        if (property0.NameEquals("cors"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -140,12 +140,12 @@ namespace Azure.ResourceManager.Storage
                             cors = StorageCorsRules.DeserializeStorageCorsRules(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("defaultServiceVersion"))
+                        if (property0.NameEquals("defaultServiceVersion"u8))
                         {
                             defaultServiceVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("deleteRetentionPolicy"))
+                        if (property0.NameEquals("deleteRetentionPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Storage
                             deleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("isVersioningEnabled"))
+                        if (property0.NameEquals("isVersioningEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Storage
                             isVersioningEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("automaticSnapshotPolicyEnabled"))
+                        if (property0.NameEquals("automaticSnapshotPolicyEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Storage
                             automaticSnapshotPolicyEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("changeFeed"))
+                        if (property0.NameEquals("changeFeed"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Storage
                             changeFeed = BlobServiceChangeFeed.DeserializeBlobServiceChangeFeed(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("restorePolicy"))
+                        if (property0.NameEquals("restorePolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Storage
                             restorePolicy = RestorePolicy.DeserializeRestorePolicy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("containerDeleteRetentionPolicy"))
+                        if (property0.NameEquals("containerDeleteRetentionPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Storage
                             containerDeleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("lastAccessTimeTrackingPolicy"))
+                        if (property0.NameEquals("lastAccessTimeTrackingPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

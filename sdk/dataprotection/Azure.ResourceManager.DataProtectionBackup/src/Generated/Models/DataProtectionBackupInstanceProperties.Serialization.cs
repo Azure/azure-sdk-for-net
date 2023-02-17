@@ -18,29 +18,29 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            writer.WritePropertyName("dataSourceInfo");
+            writer.WritePropertyName("dataSourceInfo"u8);
             writer.WriteObjectValue(DataSourceInfo);
             if (Optional.IsDefined(DataSourceSetInfo))
             {
-                writer.WritePropertyName("dataSourceSetInfo");
+                writer.WritePropertyName("dataSourceSetInfo"u8);
                 writer.WriteObjectValue(DataSourceSetInfo);
             }
-            writer.WritePropertyName("policyInfo");
+            writer.WritePropertyName("policyInfo"u8);
             writer.WriteObjectValue(PolicyInfo);
             if (Optional.IsDefined(DataSourceAuthCredentials))
             {
-                writer.WritePropertyName("datasourceAuthCredentials");
+                writer.WritePropertyName("datasourceAuthCredentials"u8);
                 writer.WriteObjectValue(DataSourceAuthCredentials);
             }
             if (Optional.IsDefined(ValidationType))
             {
-                writer.WritePropertyName("validationType");
+                writer.WritePropertyName("validationType"u8);
                 writer.WriteStringValue(ValidationType.Value.ToString());
             }
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }
@@ -60,17 +60,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataSourceInfo"))
+                if (property.NameEquals("dataSourceInfo"u8))
                 {
                     dataSourceInfo = DataSourceInfo.DeserializeDataSourceInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataSourceSetInfo"))
+                if (property.NameEquals("dataSourceSetInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     dataSourceSetInfo = DataSourceSetInfo.DeserializeDataSourceSetInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("policyInfo"))
+                if (property.NameEquals("policyInfo"u8))
                 {
                     policyInfo = BackupInstancePolicyInfo.DeserializeBackupInstancePolicyInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("protectionStatus"))
+                if (property.NameEquals("protectionStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     protectionStatus = BackupInstanceProtectionStatusDetails.DeserializeBackupInstanceProtectionStatusDetails(property.Value);
                     continue;
                 }
-                if (property.NameEquals("currentProtectionState"))
+                if (property.NameEquals("currentProtectionState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -105,22 +105,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     currentProtectionState = new CurrentProtectionState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("protectionErrorDetails"))
+                if (property.NameEquals("protectionErrorDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    protectionErrorDetails = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
+                    protectionErrorDetails = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     provisioningState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("datasourceAuthCredentials"))
+                if (property.NameEquals("datasourceAuthCredentials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     datasourceAuthCredentials = DataProtectionBackupAuthCredentials.DeserializeDataProtectionBackupAuthCredentials(property.Value);
                     continue;
                 }
-                if (property.NameEquals("validationType"))
+                if (property.NameEquals("validationType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     validationType = new BackupValidationType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;

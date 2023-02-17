@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<Uri> vmUri = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vmUri"))
+                if (property.NameEquals("vmUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

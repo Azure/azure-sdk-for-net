@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<DateTimeOffset> startDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceInfo"))
+                if (property.NameEquals("sourceInfo"u8))
                 {
                     sourceInfo = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dependsOn"))
+                if (property.NameEquals("dependsOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -53,32 +53,32 @@ namespace Azure.ResourceManager.Automation.Models
                     dependsOn = array;
                     continue;
                 }
-                if (property.NameEquals("moduleName"))
+                if (property.NameEquals("moduleName"u8))
                 {
                     moduleName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("moduleVersion"))
+                if (property.NameEquals("moduleVersion"u8))
                 {
                     moduleVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceName"))
+                if (property.NameEquals("resourceName"u8))
                 {
                     resourceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     error = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("durationInSeconds"))
+                if (property.NameEquals("durationInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Models
                     durationInSeconds = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("startDate"))
+                if (property.NameEquals("startDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
@@ -13,32 +12,33 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void RecognizeEntitiesBatch()
         {
+            // Create a text analytics client.
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-
-            // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
 
             #region Snippet:TextAnalyticsSample4RecognizeEntitiesBatch
-            string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
-                                worth the hike! Yesterday was foggy though, so we missed the spectacular views.
-                                We tried again today and it was amazing. Everyone in my family liked the trail although
-                                it was too challenging for the less athletic among us.
-                                Not necessarily recommended for small children.
-                                A hotel close to the trail offers services for childcare in case you want that.";
+            string documentA =
+                "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
+                + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
+                + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
+                + " athletic among us. Not necessarily recommended for small children. A hotel close to the trail"
+                + " offers services for childcare in case you want that.";
 
-            string documentB = @"Nos hospedamos en el Hotel Foo la semana pasada por nuestro aniversario. La gerencia
-                                sabía de nuestra celebración y me ayudaron a tenerle una sorpresa a mi pareja.
-                                La habitación estaba limpia y decorada como yo había pedido. Una gran experiencia.
-                                El próximo año volveremos.";
+            string documentB =
+                "Nos hospedamos en el Hotel Foo la semana pasada por nuestro aniversario. La gerencia sabía de nuestra"
+                + " celebración y me ayudaron a tenerle una sorpresa a mi pareja. La habitación estaba limpia y"
+                + " decorada como yo había pedido. Una gran experiencia. El próximo año volveremos.";
 
-            string documentC = @"That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo.
-                                They had great amenities that included an indoor pool, a spa, and a bar.
-                                The spa offered couples massages which were really good. 
-                                The spa was clean and felt very peaceful. Overall the whole experience was great.
-                                We will definitely come back.";
+            string documentC =
+                "That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo. They had"
+                + " great amenities that included an indoor pool, a spa, and a bar. The spa offered couples massages"
+                + " which were really good. The spa was clean and felt very peaceful. Overall the whole experience was"
+                + " great. We will definitely come back.";
 
-            var documents = new List<TextDocumentInput>
+            string documentD = string.Empty;
+
+            List<TextDocumentInput> documents = new()
             {
                 new TextDocumentInput("1", documentA)
                 {
@@ -52,16 +52,16 @@ namespace Azure.AI.TextAnalytics.Samples
                 {
                      Language = "en",
                 },
-                new TextDocumentInput("4", string.Empty)
+                new TextDocumentInput("4", documentD)
             };
 
-            var options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
+            TextAnalyticsRequestOptions options = new() { IncludeStatistics = true };
             Response<RecognizeEntitiesResultCollection> response = client.RecognizeEntitiesBatch(documents, options);
             RecognizeEntitiesResultCollection entitiesInDocuments = response.Value;
 
             int i = 0;
             Console.WriteLine($"Results of \"Named Entity Recognition\" Model, version: \"{entitiesInDocuments.ModelVersion}\"");
-            Console.WriteLine("");
+            Console.WriteLine();
 
             foreach (RecognizeEntitiesResult entitiesInDocument in entitiesInDocuments)
             {
@@ -77,7 +77,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
                 else
                 {
-                    Console.WriteLine($"  Recognized the following {entitiesInDocument.Entities.Count()} entities:");
+                    Console.WriteLine($"  Recognized the following {entitiesInDocument.Entities.Count} entities:");
 
                     foreach (CategorizedEntity entity in entitiesInDocument.Entities)
                     {
@@ -88,14 +88,47 @@ namespace Azure.AI.TextAnalytics.Samples
                         if (!string.IsNullOrEmpty(entity.SubCategory))
                             Console.WriteLine($"    SubCategory: {entity.SubCategory}");
                         Console.WriteLine($"    Confidence score: {entity.ConfidenceScore}");
-                        Console.WriteLine("");
+                        if (entity.Resolutions.Count > 0)
+                        {
+                            Console.WriteLine($"    Resolutions:");
+                            foreach (BaseResolution resolution in entity.Resolutions)
+                            {
+                                // There are several different kinds of resolutions. In this particular sample, we are
+                                // interested in viewing those of type DateTimeResolution and TemporalSpanResolution.
+
+                                if (resolution is DateTimeResolution dateTime)
+                                {
+                                    Console.WriteLine($"      Value: {dateTime.Value} ");
+                                    Console.WriteLine($"      DateTimeSubKind: {dateTime.DateTimeSubKind} ");
+                                    if (!string.IsNullOrEmpty(dateTime.Timex))
+                                        Console.WriteLine($"      Timex: {dateTime.Timex}");
+                                    if (dateTime.Modifier is not null)
+                                        Console.WriteLine($"      Modifier: {dateTime.Modifier}");
+                                }
+
+                                if (resolution is TemporalSpanResolution temporalSpan)
+                                {
+                                    if (!string.IsNullOrEmpty(temporalSpan.Begin))
+                                        Console.WriteLine($"      Begin: {temporalSpan.Begin}");
+                                    if (!string.IsNullOrEmpty(temporalSpan.End))
+                                        Console.WriteLine($"      End: {temporalSpan.End}");
+                                    if (!string.IsNullOrEmpty(temporalSpan.Duration))
+                                        Console.WriteLine($"      Duration: {temporalSpan.Duration}");
+                                    if (!string.IsNullOrEmpty(temporalSpan.End))
+                                        Console.WriteLine($"      Timex: {temporalSpan.Timex}");
+                                    if (temporalSpan.Modifier is not null)
+                                        Console.WriteLine($"      Modifier: {temporalSpan.Modifier}");
+                                }
+                            }
+                        }
+                        Console.WriteLine();
                     }
 
                     Console.WriteLine($"  Document statistics:");
                     Console.WriteLine($"    Character count: {entitiesInDocument.Statistics.CharacterCount}");
                     Console.WriteLine($"    Transaction count: {entitiesInDocument.Statistics.TransactionCount}");
                 }
-                Console.WriteLine("");
+                Console.WriteLine();
             }
 
             Console.WriteLine($"Batch operation statistics:");
@@ -103,7 +136,7 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine($"  Valid document count: {entitiesInDocuments.Statistics.ValidDocumentCount}");
             Console.WriteLine($"  Invalid document count: {entitiesInDocuments.Statistics.InvalidDocumentCount}");
             Console.WriteLine($"  Transaction count: {entitiesInDocuments.Statistics.TransactionCount}");
-            Console.WriteLine("");
+            Console.WriteLine();
             #endregion
         }
     }

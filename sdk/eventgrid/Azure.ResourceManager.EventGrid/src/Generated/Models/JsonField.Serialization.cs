@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceField))
             {
-                writer.WritePropertyName("sourceField");
+                writer.WritePropertyName("sourceField"u8);
                 writer.WriteStringValue(SourceField);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<string> sourceField = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceField"))
+                if (property.NameEquals("sourceField"u8))
                 {
                     sourceField = property.Value.GetString();
                     continue;

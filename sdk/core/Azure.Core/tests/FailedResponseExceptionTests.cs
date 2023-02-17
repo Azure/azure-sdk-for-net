@@ -36,6 +36,7 @@ namespace Azure.Core.Tests
             var response = new MockResponse(210, "Reason");
             response.AddHeader(new HttpHeader("Custom-Header", "Value"));
             response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
+            response.Sanitizer = Sanitizer;
 
             RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
             Assert.AreEqual(formattedResponse, exception.Message);
@@ -136,6 +137,7 @@ namespace Azure.Core.Tests
             response.AddHeader(new HttpHeader("Content-Type", "text/json"));
             response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
             response.SetContent("{\"errorCode\": 1}");
+            response.Sanitizer = Sanitizer;
 
             RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
             Assert.AreEqual(formattedResponse, exception.Message);
@@ -154,6 +156,7 @@ namespace Azure.Core.Tests
             var response = new MockResponse(210, "Reason");
             response.AddHeader(new HttpHeader("Content-Type", "binary"));
             response.SetContent("{\"errorCode\": 1}");
+            response.Sanitizer = Sanitizer;
 
             RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
             Assert.AreEqual(formattedResponse, exception.Message);
@@ -223,6 +226,7 @@ namespace Azure.Core.Tests
             var response = new MockResponse(210, "Reason");
             response.AddHeader(new HttpHeader("Custom-Header", "Value"));
             response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
+            response.Sanitizer = Sanitizer;
 
             var innerException = new Exception();
             RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response, innerException: innerException);
@@ -263,6 +267,7 @@ namespace Azure.Core.Tests
             var response = new MockResponse(210, "Reason");
             response.SetContent("{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}");
             response.AddHeader(new HttpHeader("Content-Type", "text/json"));
+            response.Sanitizer = Sanitizer;
 
             RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
             Assert.AreEqual(formattedResponse, exception.Message);
@@ -358,6 +363,7 @@ namespace Azure.Core.Tests
             var response = new MockResponse(210, "Reason");
             response.SetContent("{ \"error\": { \"code\":\"StatusCode\"");
             response.AddHeader(new HttpHeader("Content-Type", "text/json"));
+            response.Sanitizer = Sanitizer;
 
             RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
             Assert.AreEqual(formattedResponse, exception.Message);
@@ -379,6 +385,7 @@ namespace Azure.Core.Tests
             var response = new MockResponse(210, "Reason");
             response.SetContent("{ \"code\":\"StatusCode\" }");
             response.AddHeader(new HttpHeader("Content-Type", "text/json"));
+            response.Sanitizer = Sanitizer;
 
             RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
             Assert.AreEqual(formattedResponse, exception.Message);

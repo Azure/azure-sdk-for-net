@@ -17,10 +17,9 @@ string datasource = TestEnvironment.DataSource;
 Console.WriteLine(endpoint);
 var endpointUri = new Uri(endpoint);
 var credential = new AzureKeyCredential(apiKey);
-string apiVersion = "V1.1";
 
 //create client
-AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
+AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
 ```
 
 ## Load time series and create ChangePointDetectRequest
@@ -42,7 +41,7 @@ List<TimeSeriesPoint> list = File.ReadAllLines(datapath, Encoding.UTF8)
     .Select(e => new TimeSeriesPoint(float.Parse(e[1])){ Timestamp = DateTime.Parse(e[0])}).ToList();
 
 //create request
-ChangePointDetectRequest request = new ChangePointDetectRequest(list, TimeGranularity.Daily);
+UnivariateChangePointDetectionOptions request = new UnivariateChangePointDetectionOptions(list, TimeGranularity.Daily);
 ```
 
 ## Detect change point
@@ -52,7 +51,7 @@ Call the client's `DetectUnivariateChangePoint` method with the `ChangePointDete
 //detect
 Console.WriteLine("Detecting the change point in the series.");
 
-ChangePointDetectResponse result = client.DetectUnivariateChangePoint(request);
+UnivariateChangePointDetectionResult result = client.DetectUnivariateChangePoint(request);
 
 if (result.IsChangePoint.Contains(true))
 {

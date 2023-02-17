@@ -17,21 +17,21 @@ namespace Azure.ResourceManager.Advisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Exclude))
             {
-                writer.WritePropertyName("exclude");
+                writer.WritePropertyName("exclude"u8);
                 writer.WriteBooleanValue(Exclude.Value);
             }
             if (Optional.IsDefined(LowCpuThreshold))
             {
-                writer.WritePropertyName("lowCpuThreshold");
+                writer.WritePropertyName("lowCpuThreshold"u8);
                 writer.WriteStringValue(LowCpuThreshold.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Digests))
             {
-                writer.WritePropertyName("digests");
+                writer.WritePropertyName("digests"u8);
                 writer.WriteStartArray();
                 foreach (var item in Digests)
                 {
@@ -54,32 +54,32 @@ namespace Azure.ResourceManager.Advisor.Models
             Optional<IList<DigestConfig>> digests = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Advisor.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("exclude"))
+                        if (property0.NameEquals("exclude"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Advisor.Models
                             exclude = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("lowCpuThreshold"))
+                        if (property0.NameEquals("lowCpuThreshold"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Advisor.Models
                             lowCpuThreshold = new CpuThreshold(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("digests"))
+                        if (property0.NameEquals("digests"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Peering
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -34,33 +34,33 @@ namespace Azure.ResourceManager.Peering
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PeeringServiceLocation))
             {
-                writer.WritePropertyName("peeringServiceLocation");
+                writer.WritePropertyName("peeringServiceLocation"u8);
                 writer.WriteStringValue(PeeringServiceLocation);
             }
             if (Optional.IsDefined(PeeringServiceProvider))
             {
-                writer.WritePropertyName("peeringServiceProvider");
+                writer.WritePropertyName("peeringServiceProvider"u8);
                 writer.WriteStringValue(PeeringServiceProvider);
             }
             if (Optional.IsDefined(ProviderPrimaryPeeringLocation))
             {
-                writer.WritePropertyName("providerPrimaryPeeringLocation");
+                writer.WritePropertyName("providerPrimaryPeeringLocation"u8);
                 writer.WriteStringValue(ProviderPrimaryPeeringLocation);
             }
             if (Optional.IsDefined(ProviderBackupPeeringLocation))
             {
-                writer.WritePropertyName("providerBackupPeeringLocation");
+                writer.WritePropertyName("providerBackupPeeringLocation"u8);
                 writer.WriteStringValue(ProviderBackupPeeringLocation);
             }
             if (Optional.IsDefined(LogAnalyticsWorkspaceProperties))
             {
-                writer.WritePropertyName("logAnalyticsWorkspaceProperties");
+                writer.WritePropertyName("logAnalyticsWorkspaceProperties"u8);
                 writer.WriteObjectValue(LogAnalyticsWorkspaceProperties);
             }
             writer.WriteEndObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Peering
             Optional<PeeringLogAnalyticsWorkspaceProperties> logAnalyticsWorkspaceProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Peering
                     sku = PeeringServiceSku.DeserializePeeringServiceSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -109,37 +109,37 @@ namespace Azure.ResourceManager.Peering
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -148,17 +148,17 @@ namespace Azure.ResourceManager.Peering
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("peeringServiceLocation"))
+                        if (property0.NameEquals("peeringServiceLocation"u8))
                         {
                             peeringServiceLocation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("peeringServiceProvider"))
+                        if (property0.NameEquals("peeringServiceProvider"u8))
                         {
                             peeringServiceProvider = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -168,17 +168,17 @@ namespace Azure.ResourceManager.Peering
                             provisioningState = new PeeringProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("providerPrimaryPeeringLocation"))
+                        if (property0.NameEquals("providerPrimaryPeeringLocation"u8))
                         {
                             providerPrimaryPeeringLocation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("providerBackupPeeringLocation"))
+                        if (property0.NameEquals("providerBackupPeeringLocation"u8))
                         {
                             providerBackupPeeringLocation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("logAnalyticsWorkspaceProperties"))
+                        if (property0.NameEquals("logAnalyticsWorkspaceProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

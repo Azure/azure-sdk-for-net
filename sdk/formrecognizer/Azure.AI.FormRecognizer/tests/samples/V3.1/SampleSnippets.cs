@@ -4,17 +4,16 @@
 using System;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
-using Azure.AI.FormRecognizer.Tests;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    [LiveOnly]
-    public partial class Snippets : SamplesBase<FormRecognizerTestEnvironment>
+    public partial class FormRecognizerSamples
     {
         [RecordedTest]
         public void CreateFormRecognizerClient()
@@ -33,19 +32,6 @@ namespace Azure.AI.FormRecognizer.Samples
         }
 
         [RecordedTest]
-        public void CreateFormRecognizerClientTokenCredential()
-        {
-            #region Snippet:CreateFormRecognizerClientTokenCredential
-#if SNIPPET
-            string endpoint = "<endpoint>";
-#else
-            string endpoint = TestEnvironment.Endpoint;
-#endif
-            var client = new FormRecognizerClient(new Uri(endpoint), new DefaultAzureCredential());
-            #endregion
-        }
-
-        [RecordedTest]
         public void CreateFormTrainingClient()
         {
             #region Snippet:CreateFormTrainingClient
@@ -58,27 +44,6 @@ namespace Azure.AI.FormRecognizer.Samples
 #endif
             var credential = new AzureKeyCredential(apiKey);
             var client = new FormTrainingClient(new Uri(endpoint), credential);
-            #endregion
-        }
-
-        [RecordedTest]
-        public async Task BadRequestSnippet()
-        {
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-
-            var credential = new AzureKeyCredential(apiKey);
-            var client = new FormRecognizerClient(new Uri(endpoint), credential);
-
-            #region Snippet:FormRecognizerBadRequest
-            try
-            {
-                RecognizedFormCollection receipts = await client.StartRecognizeReceiptsFromUri(new Uri("http://invalid.uri")).WaitForCompletionAsync();
-            }
-            catch (RequestFailedException e)
-            {
-                Console.WriteLine(e.ToString());
-            }
             #endregion
         }
 

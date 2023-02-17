@@ -14,7 +14,7 @@ trigger:
     - sdk/advisor/Azure.ResourceManager.Advisor
     - sdk/agrifood/Azure.ResourceManager.AgFoodPlatform
     - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement
-    - sdk/analysisservices/Azure.ResourceManager.AnalysisServices
+    - sdk/analysisservices/Azure.ResourceManager.Analysis
     - sdk/apimanagement/Azure.ResourceManager.ApiManagement
     - sdk/appcomplianceautomation/Azure.ResourceManager.AppComplianceAutomation
     - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration
@@ -29,6 +29,7 @@ trigger:
     - sdk/azurestackhci/Azure.ResourceManager.Hci
     - sdk/batch/Azure.ResourceManager.Batch
     - sdk/billing/Azure.ResourceManager.Billing
+    - sdk/billingbenefits/Azure.ResourceManager.BillingBenefits
     - sdk/blueprint/Azure.ResourceManager.Blueprint
     - sdk/botservice/Azure.ResourceManager.BotService
     - sdk/cdn/Azure.ResourceManager.Cdn
@@ -105,6 +106,7 @@ trigger:
     - sdk/marketplaceordering/Azure.ResourceManager.MarketplaceOrdering
     - sdk/mediaservices/Azure.ResourceManager.Media
     - sdk/mixedreality/Azure.ResourceManager.MixedReality
+    - sdk/mobilenetwork/Azure.ResourceManager.MobileNetwork
     - sdk/monitor/Azure.ResourceManager.Monitor
     - sdk/mysql/Azure.ResourceManager.MySql
     - sdk/netapp/Azure.ResourceManager.NetApp
@@ -142,11 +144,13 @@ trigger:
     - sdk/servicefabric/Azure.ResourceManager.ServiceFabric
     - sdk/servicefabricmanagedclusters/Azure.ResourceManager.ServiceFabricManagedClusters
     - sdk/servicelinker/Azure.ResourceManager.ServiceLinker
+    - sdk/servicenetworking/Azure.ResourceManager.ServiceNetworking
     - sdk/signalr/Azure.ResourceManager.SignalR
     - sdk/sqlmanagement/Azure.ResourceManager.Sql
     - sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine
     - sdk/storage/Azure.ResourceManager.Storage
     - sdk/storagecache/Azure.ResourceManager.StorageCache
+    - sdk/storagemover/Azure.ResourceManager.StorageMover
     - sdk/storagepool/Azure.ResourceManager.StoragePool
     - sdk/storagesync/Azure.ResourceManager.StorageSync
     - sdk/streamanalytics/Azure.ResourceManager.StreamAnalytics
@@ -158,6 +162,7 @@ trigger:
     - sdk/websites/Azure.ResourceManager.AppService
     - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
     - sdk/workloads/Azure.ResourceManager.Workloads
+    - sdk/impact/Azure.ResourceManager.Impact
 
 pr:
   branches:
@@ -174,7 +179,7 @@ pr:
     - sdk/advisor/Azure.ResourceManager.Advisor
     - sdk/agrifood/Azure.ResourceManager.AgFoodPlatform
     - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement
-    - sdk/analysisservices/Azure.ResourceManager.AnalysisServices
+    - sdk/analysisservices/Azure.ResourceManager.Analysis
     - sdk/apimanagement/Azure.ResourceManager.ApiManagement
     - sdk/appcomplianceautomation/Azure.ResourceManager.AppComplianceAutomation
     - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration
@@ -189,6 +194,7 @@ pr:
     - sdk/azurestackhci/Azure.ResourceManager.Hci
     - sdk/batch/Azure.ResourceManager.Batch
     - sdk/billing/Azure.ResourceManager.Billing
+    - sdk/billingbenefits/Azure.ResourceManager.BillingBenefits
     - sdk/blueprint/Azure.ResourceManager.Blueprint
     - sdk/botservice/Azure.ResourceManager.BotService
     - sdk/cdn/Azure.ResourceManager.Cdn
@@ -265,6 +271,7 @@ pr:
     - sdk/marketplaceordering/Azure.ResourceManager.MarketplaceOrdering
     - sdk/mediaservices/Azure.ResourceManager.Media
     - sdk/mixedreality/Azure.ResourceManager.MixedReality
+    - sdk/mobilenetwork/Azure.ResourceManager.MobileNetwork
     - sdk/monitor/Azure.ResourceManager.Monitor
     - sdk/mysql/Azure.ResourceManager.MySql
     - sdk/netapp/Azure.ResourceManager.NetApp
@@ -302,11 +309,13 @@ pr:
     - sdk/servicefabric/Azure.ResourceManager.ServiceFabric
     - sdk/servicefabricmanagedclusters/Azure.ResourceManager.ServiceFabricManagedClusters
     - sdk/servicelinker/Azure.ResourceManager.ServiceLinker
+    - sdk/servicenetworking/Azure.ResourceManager.ServiceNetworking
     - sdk/signalr/Azure.ResourceManager.SignalR
     - sdk/sqlmanagement/Azure.ResourceManager.Sql
     - sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine
     - sdk/storage/Azure.ResourceManager.Storage
     - sdk/storagecache/Azure.ResourceManager.StorageCache
+    - sdk/storagemover/Azure.ResourceManager.StorageMover
     - sdk/storagepool/Azure.ResourceManager.StoragePool
     - sdk/storagesync/Azure.ResourceManager.StorageSync
     - sdk/streamanalytics/Azure.ResourceManager.StreamAnalytics
@@ -318,11 +327,13 @@ pr:
     - sdk/websites/Azure.ResourceManager.AppService
     - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
     - sdk/workloads/Azure.ResourceManager.Workloads
+    - sdk/impact/Azure.ResourceManager.Impact
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: resourcemanager
+    BuildSnippets: false
     ArtifactName: packages
     Artifacts:
     - name: Azure.ResourceManager

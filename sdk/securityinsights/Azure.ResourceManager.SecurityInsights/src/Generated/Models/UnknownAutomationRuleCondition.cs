@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The UnknownAutomationRuleCondition. </summary>
-    internal partial class UnknownAutomationRuleCondition : AutomationRuleCondition
+    internal partial class UnknownAutomationRuleCondition : SecurityInsightsAutomationRuleCondition
     {
         /// <summary> Initializes a new instance of UnknownAutomationRuleCondition. </summary>
         /// <param name="conditionType"></param>

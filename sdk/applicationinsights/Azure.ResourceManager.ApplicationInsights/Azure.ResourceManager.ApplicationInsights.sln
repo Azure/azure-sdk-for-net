@@ -7,6 +7,8 @@ Project("{CC2251C1-B552-4C6E-88DA-91AC17643DB4}") = "Azure.ResourceManager.Appli
 EndProject
 Project("{CC2251C1-B552-4C6E-88DA-91AC17643DB4}") = "Azure.ResourceManager.ApplicationInsights.Tests", "tests\Azure.ResourceManager.ApplicationInsights.Tests.csproj", "{954CE9EA-36B4-4CD0-ABEF-0FFCBA12B97C}"
 EndProject
+Project("{CC2251C1-B552-4C6E-88DA-91AC17643DB4}") = "Azure.ResourceManager.ApplicationInsights.Samples", "samples\Azure.ResourceManager.ApplicationInsights.Samples.csproj", "{BF224368-A419-4A9A-AE39-D2649E28978D}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

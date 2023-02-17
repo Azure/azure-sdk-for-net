@@ -4,7 +4,7 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.NotificationHubs</PackageId>
-    <Description>Azure Resource Manager client SDK for Azure resource provider NotificationHubs</Description>
+    <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.NotificationHubs.</Description>
     <PackageTags>azure;management;arm;resource manager;notificationhubs</PackageTags>
   </PropertyGroup>
 </Project>

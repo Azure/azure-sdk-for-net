@@ -18,21 +18,21 @@ namespace Azure.ResourceManager.CustomerInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Definition))
             {
-                writer.WritePropertyName("definition");
+                writer.WritePropertyName("definition"u8);
                 writer.WriteStringValue(Definition);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsCollectionDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
                 foreach (var item in DisplayName)
                 {
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.CustomerInsights
             }
             if (Optional.IsDefined(ImageUri))
             {
-                writer.WritePropertyName("imageUrl");
+                writer.WritePropertyName("imageUrl"u8);
                 writer.WriteStringValue(ImageUri.AbsoluteUri);
             }
             if (Optional.IsDefined(WidgetVersion))
             {
-                writer.WritePropertyName("widgetVersion");
+                writer.WritePropertyName("widgetVersion"u8);
                 writer.WriteStringValue(WidgetVersion);
             }
             writer.WriteEndObject();
@@ -72,32 +72,32 @@ namespace Azure.ResourceManager.CustomerInsights
             Optional<DateTimeOffset> created = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,22 +106,22 @@ namespace Azure.ResourceManager.CustomerInsights
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("widgetTypeName"))
+                        if (property0.NameEquals("widgetTypeName"u8))
                         {
                             widgetTypeName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("definition"))
+                        if (property0.NameEquals("definition"u8))
                         {
                             definition = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             displayName = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("imageUrl"))
+                        if (property0.NameEquals("imageUrl"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             imageUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("tenantId"))
+                        if (property0.NameEquals("tenantId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -156,12 +156,12 @@ namespace Azure.ResourceManager.CustomerInsights
                             tenantId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("widgetVersion"))
+                        if (property0.NameEquals("widgetVersion"u8))
                         {
                             widgetVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("changed"))
+                        if (property0.NameEquals("changed"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             changed = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("created"))
+                        if (property0.NameEquals("created"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

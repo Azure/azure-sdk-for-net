@@ -15,7 +15,7 @@ namespace Azure.Communication.AlphaIds.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("enabled");
+            writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.Communication.AlphaIds.Models
             bool enabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     enabled = property.Value.GetBoolean();
                     continue;

@@ -16,31 +16,36 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("presenterId");
+            writer.WritePropertyName("presenterId"u8);
             writer.WriteStringValue(PresenterId);
-            writer.WritePropertyName("supportId");
+            writer.WritePropertyName("supportId"u8);
             writer.WriteStringValue(SupportId);
             if (Optional.IsDefined(SupportPosition))
             {
-                writer.WritePropertyName("supportPosition");
+                writer.WritePropertyName("supportPosition"u8);
                 writer.WriteStringValue(SupportPosition.Value.ToString());
             }
             if (Optional.IsDefined(SupportAspectRatio))
             {
-                writer.WritePropertyName("supportAspectRatio");
+                writer.WritePropertyName("supportAspectRatio"u8);
                 writer.WriteNumberValue(SupportAspectRatio.Value);
             }
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(Resolution))
             {
-                writer.WritePropertyName("resolution");
+                writer.WritePropertyName("resolution"u8);
                 writer.WriteObjectValue(Resolution);
             }
             if (Optional.IsDefined(PlaceholderImageUri))
             {
-                writer.WritePropertyName("placeholderImageUri");
+                writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
+            }
+            if (Optional.IsDefined(ScalingMode))
+            {
+                writer.WritePropertyName("scalingMode"u8);
+                writer.WriteStringValue(ScalingMode.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -54,19 +59,20 @@ namespace Azure.Communication.MediaComposition
             LayoutType kind = default;
             Optional<LayoutResolution> resolution = default;
             Optional<string> placeholderImageUri = default;
+            Optional<ScalingMode> scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("presenterId"))
+                if (property.NameEquals("presenterId"u8))
                 {
                     presenterId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportId"))
+                if (property.NameEquals("supportId"u8))
                 {
                     supportId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportPosition"))
+                if (property.NameEquals("supportPosition"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +82,7 @@ namespace Azure.Communication.MediaComposition
                     supportPosition = new SupportPosition(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("supportAspectRatio"))
+                if (property.NameEquals("supportAspectRatio"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,12 +92,12 @@ namespace Azure.Communication.MediaComposition
                     supportAspectRatio = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = new LayoutType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resolution"))
+                if (property.NameEquals("resolution"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -101,13 +107,23 @@ namespace Azure.Communication.MediaComposition
                     resolution = LayoutResolution.DeserializeLayoutResolution(property.Value);
                     continue;
                 }
-                if (property.NameEquals("placeholderImageUri"))
+                if (property.NameEquals("placeholderImageUri"u8))
                 {
                     placeholderImageUri = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("scalingMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    scalingMode = new ScalingMode(property.Value.GetString());
+                    continue;
+                }
             }
-            return new PresenterLayout(kind, resolution.Value, placeholderImageUri.Value, presenterId, supportId, Optional.ToNullable(supportPosition), Optional.ToNullable(supportAspectRatio));
+            return new PresenterLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode), presenterId, supportId, Optional.ToNullable(supportPosition), Optional.ToNullable(supportAspectRatio));
         }
     }
 }

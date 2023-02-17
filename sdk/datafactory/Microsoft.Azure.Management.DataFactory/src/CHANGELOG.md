@@ -1,5 +1,17 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 9.1.0
+###  Feature Additions
+- Added AzureBlobStorage containerUri and authenticationType properties in ADF
+- Added support copyComputeScale And pipelineExternalComputeScale in IntegrationRuntime
+
+## Version 9.0.0
+###  Feature Additions
+### Breaking Changes
+- Added support for credential operations in DataFactory
+- Added exportsettings required in Snowflake source
+- Added scan folder and spark config support in Sparkjob activity
+
 ## Version 8.0.0
 ###  Feature Additions
 ### Breaking Changes

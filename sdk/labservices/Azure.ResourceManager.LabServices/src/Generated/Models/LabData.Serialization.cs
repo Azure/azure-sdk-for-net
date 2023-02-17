@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.LabServices
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,53 +29,53 @@ namespace Azure.ResourceManager.LabServices
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AutoShutdownProfile))
             {
-                writer.WritePropertyName("autoShutdownProfile");
+                writer.WritePropertyName("autoShutdownProfile"u8);
                 writer.WriteObjectValue(AutoShutdownProfile);
             }
             if (Optional.IsDefined(ConnectionProfile))
             {
-                writer.WritePropertyName("connectionProfile");
+                writer.WritePropertyName("connectionProfile"u8);
                 writer.WriteObjectValue(ConnectionProfile);
             }
             if (Optional.IsDefined(VirtualMachineProfile))
             {
-                writer.WritePropertyName("virtualMachineProfile");
+                writer.WritePropertyName("virtualMachineProfile"u8);
                 writer.WriteObjectValue(VirtualMachineProfile);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
-                writer.WritePropertyName("securityProfile");
+                writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
             }
             if (Optional.IsDefined(RosterProfile))
             {
-                writer.WritePropertyName("rosterProfile");
+                writer.WritePropertyName("rosterProfile"u8);
                 writer.WriteObjectValue(RosterProfile);
             }
             if (Optional.IsDefined(LabPlanId))
             {
-                writer.WritePropertyName("labPlanId");
+                writer.WritePropertyName("labPlanId"u8);
                 writer.WriteStringValue(LabPlanId);
             }
             if (Optional.IsDefined(Title))
             {
-                writer.WritePropertyName("title");
+                writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
-                writer.WritePropertyName("networkProfile");
+                writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
             writer.WriteEndObject();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.LabServices
             Optional<LabState> state = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -118,37 +118,37 @@ namespace Azure.ResourceManager.LabServices
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.LabServices
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("autoShutdownProfile"))
+                        if (property0.NameEquals("autoShutdownProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.LabServices
                             autoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("connectionProfile"))
+                        if (property0.NameEquals("connectionProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.LabServices
                             connectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("virtualMachineProfile"))
+                        if (property0.NameEquals("virtualMachineProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.LabServices
                             virtualMachineProfile = LabVirtualMachineProfile.DeserializeLabVirtualMachineProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("securityProfile"))
+                        if (property0.NameEquals("securityProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.LabServices
                             securityProfile = LabSecurityProfile.DeserializeLabSecurityProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("rosterProfile"))
+                        if (property0.NameEquals("rosterProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.LabServices
                             rosterProfile = LabRosterProfile.DeserializeLabRosterProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("labPlanId"))
+                        if (property0.NameEquals("labPlanId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -217,17 +217,17 @@ namespace Azure.ResourceManager.LabServices
                             labPlanId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("title"))
+                        if (property0.NameEquals("title"u8))
                         {
                             title = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.LabServices
                             provisioningState = property0.Value.GetString().ToLabServicesProvisioningState();
                             continue;
                         }
-                        if (property0.NameEquals("networkProfile"))
+                        if (property0.NameEquals("networkProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.LabServices
                             networkProfile = LabNetworkProfile.DeserializeLabNetworkProfile(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {

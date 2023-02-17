@@ -15,12 +15,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// Please note <see cref="EndpointBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="TlsEndpoint"/> and <see cref="UnsecuredEndpoint"/>.
     /// </summary>
-    public partial class EndpointBase
+    public abstract partial class EndpointBase
     {
         /// <summary> Initializes a new instance of EndpointBase. </summary>
         /// <param name="url"> The endpoint URL for Video Analyzer to connect to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public EndpointBase(string url)
+        protected EndpointBase(string url)
         {
             Argument.AssertNotNull(url, nameof(url));
 

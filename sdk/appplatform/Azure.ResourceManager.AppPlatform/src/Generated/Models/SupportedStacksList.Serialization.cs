@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static SupportedStacksList DeserializeSupportedStacksList(JsonElement element)
         {
-            Optional<IReadOnlyList<SupportedStackResourceData>> value = default;
+            Optional<IReadOnlyList<AppPlatformSupportedStackData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SupportedStackResourceData> array = new List<SupportedStackResourceData>();
+                    List<AppPlatformSupportedStackData> array = new List<AppPlatformSupportedStackData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportedStackResourceData.DeserializeSupportedStackResourceData(item));
+                        array.Add(AppPlatformSupportedStackData.DeserializeAppPlatformSupportedStackData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;
