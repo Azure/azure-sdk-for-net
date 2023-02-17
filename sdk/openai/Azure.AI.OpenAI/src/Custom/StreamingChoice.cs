@@ -7,7 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
-namespace Azure.AI.OpenAI.Custom
+namespace Azure.AI.OpenAI
 {
     public class StreamingChoice
     {

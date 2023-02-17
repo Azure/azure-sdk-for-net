@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Sse;
 
-namespace Azure.AI.OpenAI.Custom
+namespace Azure.AI.OpenAI
 {
     public class StreamingCompletions : IDisposable
     {
