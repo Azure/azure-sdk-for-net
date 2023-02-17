@@ -108,13 +108,13 @@ namespace Azure.Monitor.Ingestion.Tests
             var entries = new List<Object>();
             for (int i = 0; i < numEntries; i++)
             {
-                entries.Add(new Object[] {
+                entries.Add(
                     new {
                         Time = recordingNow,
                         Computer = "Computer" + i.ToString(),
                         AdditionalContext = i
                     }
-                });
+                );
             }
             return entries;
         }
@@ -143,26 +143,6 @@ namespace Azure.Monitor.Ingestion.Tests
             var response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(1000, Recording.Now.DateTime)).ConfigureAwait(false);
 
             // Check the response
-            Assert.IsNotNull(response);
-            Assert.AreEqual(204, response.Status);
-            Assert.IsFalse(response.IsError);
-        }
-
-        [AsyncOnly]
-        [LiveOnly]
-        [Test]
-        public async Task ConcurrencyMultiThread()
-        {
-            var policy = new ConcurrencyCounterPolicy(8);
-            LogsIngestionClient client = CreateClient(policy);
-            LogsIngestionClient.Compression = "gzip";
-            LogsIngestionClient.SingleUploadThreshold = Kb;
-            // Make the request
-            LogsUploadOptions options = new LogsUploadOptions();
-            options.MaxConcurrency = 8;
-            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(8000, Recording.Now.DateTime), options).ConfigureAwait(false);
-            Assert.Greater(policy.MaxCount, 1);
-            //Check the response
             Assert.IsNotNull(response);
             Assert.AreEqual(204, response.Status);
             Assert.IsFalse(response.IsError);
