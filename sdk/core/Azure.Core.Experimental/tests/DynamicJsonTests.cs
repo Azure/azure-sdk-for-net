@@ -556,6 +556,7 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(3, (int)dynamicJson.bar);
             Assert.AreEqual(3, (int)dynamicJson.Bar);
 
+            // PascalCase getters find camelCase properties and sets them.
             dynamicJson.Foo = 4;
             dynamicJson.Bar = 5;
 
@@ -588,6 +589,7 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(3, (int)dynamicJson.bar);
             Assert.AreEqual(3, (int)dynamicJson.Bar);
 
+            // PascalCase getters find camelCase properties and sets them.
             dynamicJson.Foo = 4;
             dynamicJson.Bar = 5;
 
@@ -613,7 +615,7 @@ namespace Azure.Core.Experimental.Tests
             };
             dynamic dynamicJson = new BinaryData(json).ToDynamic(options);
 
-            // Existing property access
+            // This adds a new property, since it doesn't find `Foo`.
             dynamicJson.foo = 2;
 
             // New property access
@@ -624,7 +626,10 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(3, (int)dynamicJson.bar);
             Assert.AreEqual(null, dynamicJson.Bar);
 
+            // This updates the PascalCase property and not the camelCase one.
             dynamicJson.Foo = 4;
+
+            // This creates a new PascalCase property.
             dynamicJson.Bar = 5;
 
             Assert.AreEqual(2, (int)dynamicJson.foo);
@@ -655,9 +660,10 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(3, (int)dynamicJson.bar);
             Assert.AreEqual(3, (int)dynamicJson.Bar);
 
+            // This updates the PascalCase property and not the camelCase one.
             dynamicJson.Foo = 4;
 
-            // This property exists now as `bar`, so it updates the camelCase property.
+            // The PascalCase getter finds `bar`, so it updates the camelCase property.
             dynamicJson.Bar = 5;
 
             // New property is created as PascalCase
@@ -678,7 +684,7 @@ namespace Azure.Core.Experimental.Tests
 
             dynamic dynamicJson = new BinaryData(json).ToDynamic();
 
-            // Existing property access
+            // Existing property access does not add a camelCase property.
             dynamicJson.Foo = 2;
 
             // New property is created as camelCase
