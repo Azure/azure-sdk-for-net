@@ -99,7 +99,7 @@ namespace Azure.Core
         /// </summary>
         public override string ToString() => _userAgent;
 
-        private static string ValidateAndFixMismatchedParenthesis(string userAgent)
+        private static string EnsureProperParenthesisMatching(string userAgent)
         {
             var stack = new Stack<char>();
             bool needsFix = false;
