@@ -8,7 +8,7 @@ To create a new `TextAnalyticsClient`, you will need the service endpoint and cr
 
 ```C# Snippet:CreateTextAnalyticsClient
 Uri endpoint = new("<endpoint>");
-AzureKeyCredential apiKey = new("<apiKey>");
+AzureKeyCredential credential = new("<apiKey>");
 TextAnalyticsClient client = new(endpoint, credential);
 ```
 
