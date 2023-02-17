@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.IO.MemoryMappedFiles;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -20,10 +21,11 @@ namespace Azure.Storage.DataMovement
         public static Stream ToStream(this JobPartPlanHeader header)
         {
             // Convert the header to a struct
-            int structSize = Marshal.SizeOf(typeof(JobPartPlanHeader));
+            int structSize = Unsafe.SizeOf<JobPartPlanHeader>();
             byte[] buffer = new byte[structSize];
             GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
             Marshal.StructureToPtr(header, handle.AddrOfPinnedObject(), false);
+            Marshal.Copy(handle.AddrOfPinnedObject(), buffer, 0, structSize);
             handle.Free();
 
             // Convert byte array to stream
@@ -34,7 +36,7 @@ namespace Azure.Storage.DataMovement
         public static JobPartPlanHeader ToJobStruct(this Stream stream)
         {
             BinaryReader reader = new BinaryReader(stream);
-            byte[] bytes = reader.ReadBytes(Marshal.SizeOf(typeof(JobPartPlanHeader)));
+            byte[] bytes = reader.ReadBytes(Unsafe.SizeOf<JobPartPlanHeader>());
 
             GCHandle handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
             JobPartPlanHeader header = (JobPartPlanHeader)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(JobPartPlanHeader));
@@ -231,22 +233,19 @@ namespace Azure.Storage.DataMovement
 
         internal static JobPartPlanHeader GetJobPartPlanHeader(this JobPartPlanFileName fileName)
         {
-            JobPartPlanHeader result = new JobPartPlanHeader();
-            int bufferSize = Marshal.SizeOf(result);
+            JobPartPlanHeader result;
+            int bufferSize = Unsafe.SizeOf<JobPartPlanHeader>();
             byte[] buffer = new byte[bufferSize];
 
             using MemoryMappedFile memoryMappedFile = MemoryMappedFile.CreateFromFile(fileName.ToString());
             using (MemoryMappedViewStream stream = memoryMappedFile.CreateViewStream(0, bufferSize, MemoryMappedFileAccess.Read))
             {
-                if (stream.CanRead)
-                {
-                    stream.Read(buffer, 0, bufferSize);
-                    result = stream.ToJobStruct();
-                }
-                else
+                if (!stream.CanRead)
                 {
                     throw Errors.CannotReadMmfStream(fileName.ToString());
                 }
+                stream.Read(buffer, 0, bufferSize);
+                result = stream.ToJobStruct();
             }
             return result;
         }

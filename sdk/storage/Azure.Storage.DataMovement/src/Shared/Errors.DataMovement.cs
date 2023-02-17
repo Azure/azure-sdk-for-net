@@ -91,9 +91,6 @@ namespace Azure.Storage
         public static ArgumentException InvalidJobPartNumberFileName(string fileName)
             => new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Part Number, could not convert to a integer: {fileName}");
 
-        public static ArgumentException InvalidSchemaLengthFileName(string fileName)
-            => new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Plan Schema Version: {fileName}");
-
         public static ArgumentException InvalidSchemaVersionFileName(string schemaVersion)
             => new ArgumentException($"Invalid Job Part Plan File: Job Part Schema version: {schemaVersion} does not match the Schema Version supported by the package: {DataMovementConstants.PlanFile.SchemaVersion}. Please consider altering the package version that supports the respective version.");
     }

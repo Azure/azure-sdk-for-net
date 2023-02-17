@@ -27,8 +27,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Adds a new transfer to the checkpointer and returns the associated
-        /// DataTransfer object to go with it.
+        /// Adds a new transfer to the checkpointer.
         /// </summary>
         /// <param name="transferId"></param>
         /// <param name="cancellationToken">
@@ -67,14 +66,10 @@ namespace Azure.Storage.DataMovement
         /// mismatch information from the information to resume from.
         /// </summary>
         /// <param name="transferId"></param>
-        /// <param name="sourcePath"></param>
-        /// <param name="destinationPath"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public abstract Task AddExistingJobAsync(
             string transferId,
-            string sourcePath,
-            string destinationPath,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -167,8 +162,6 @@ namespace Azure.Storage.DataMovement
         /// ensure the source and destination are the same, or else throw.
         /// </summary>
         internal static void CheckInputWithHeader(
-            string sourcePath,
-            string destinationPath,
             string transferId,
             JobPartPlanHeader header)
         {
@@ -181,17 +174,6 @@ namespace Azure.Storage.DataMovement
             if (!header.TransferId.Equals(transferId))
             {
                 throw Errors.MismatchTransferId(transferId, header.TransferId);
-            }
-
-            string sourcePathHeader = Encoding.UTF8.GetString(header.SourceRoot);
-            if (!sourcePathHeader.Equals(sourcePath))
-            {
-                throw Errors.MismatchStorageResource(nameof(sourcePath), sourcePath, sourcePathHeader);
-            }
-            string destinationPathHeader = Encoding.UTF8.GetString(header.DestinationRoot);
-            if (!destinationPathHeader.Equals(destinationPath))
-            {
-                throw Errors.MismatchStorageResource(nameof(destinationPath), destinationPath, destinationPathHeader);
             }
         }
     }

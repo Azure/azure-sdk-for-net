@@ -52,8 +52,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Adds a new transfer to the checkpointer and returns the associated
-        /// DataTransfer object to go with it.
+        /// Adds a new transfer to the checkpointer.
         /// </summary>
         /// <param name="transferId"></param>
         /// <param name="cancellationToken">
@@ -121,14 +120,10 @@ namespace Azure.Storage.DataMovement
         /// mismatch information from the information to resume from.
         /// </summary>
         /// <param name="transferId"></param>
-        /// <param name="sourcePath"></param>
-        /// <param name="destinationPath"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override Task AddExistingJobAsync(
             string transferId,
-            string sourcePath,
-            string destinationPath,
             CancellationToken cancellationToken = default)
         {
             // Check if the transfer id already exists, if it does, then we don't
@@ -139,9 +134,9 @@ namespace Azure.Storage.DataMovement
                 List<JobPartPlanFileName> fileNames = new List<JobPartPlanFileName>();
 
                 // Search for existing plan files with the correlating transfer id
-                string searchPattern = string.Join(transferId, "*");
+                string searchPattern = string.Concat(transferId, '*');
                 foreach (string path in Directory.EnumerateFiles(_pathToCheckpointer, searchPattern, SearchOption.TopDirectoryOnly)
-                    .Where( f => Path.HasExtension(string.Join(
+                    .Where( f => Path.HasExtension(string.Concat(
                         DataMovementConstants.PlanFile.FileExtension,
                         DataMovementConstants.PlanFile.SchemaVersion))))
                 {
@@ -173,7 +168,7 @@ namespace Azure.Storage.DataMovement
                     JobPartPlanHeader header = partFileName.GetJobPartPlanHeader();
 
                     // Verify the job part plan header
-                    CheckInputWithHeader(sourcePath, destinationPath, transferId, header);
+                    CheckInputWithHeader(transferId, header);
 
                     // Add to list of job parts
                     JobPartPlanFile jobFile = new JobPartPlanFile(partFileName);
@@ -310,7 +305,7 @@ namespace Azure.Storage.DataMovement
             Argument.AssertNotNullOrWhiteSpace(id, nameof(id));
             if (!_transferStates.TryGetValue(id, out List<JobPartPlanFile> jobPartFiles))
             {
-                throw new ArgumentException($"Checkpointer information from Transfer id \"{id}\" was not found. Call TryAddTransferAsync before attempting to add transfer information");
+                return Task.FromResult(false);
             }
             foreach (JobPartPlanFile jobPartPair in jobPartFiles)
             {
@@ -332,6 +327,7 @@ namespace Azure.Storage.DataMovement
                     result = false;
                 }
             }
+            _transferStates.Remove(id);
             return Task.FromResult(result);
         }
 

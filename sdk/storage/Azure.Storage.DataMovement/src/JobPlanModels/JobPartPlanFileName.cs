@@ -78,8 +78,8 @@ namespace Azure.Storage.DataMovement
             JobPartNumber = jobPartNumber;
             SchemaVersion = schemaVersion;
 
-            string fileName = $"{Id}--{JobPartNumber.ToString("D5", NumberFormatInfo.CurrentInfo)}.{DataMovementConstants.PlanFile.FileExtension}{SchemaVersion}";
-            FullPath = string.Join(PrefixPath, fileName);
+            string fileName = $"{Id}--{JobPartNumber.ToString("D5", NumberFormatInfo.CurrentInfo)}{DataMovementConstants.PlanFile.FileExtension}{SchemaVersion}";
+            FullPath = Path.Combine(PrefixPath, fileName);
         }
 
         public JobPartPlanFileName(string fullPath)
@@ -88,7 +88,12 @@ namespace Azure.Storage.DataMovement
             Argument.CheckNotNullOrEmpty(fullPath, nameof(fullPath));
 
             PrefixPath = Path.GetDirectoryName(fullPath);
-            string fileName = Path.GetFileName(fullPath);
+            if (!Path.HasExtension(fullPath))
+            {
+                throw Errors.InvalidTransferIdFileName(fullPath);
+            }
+            string fileName = Path.GetFileNameWithoutExtension(fullPath);
+            string extension = Path.GetExtension(fullPath);
 
             // Format of the job plan file name
             // {transferid}--{jobpartNumber}.steV{schemaVersion}
@@ -103,7 +108,7 @@ namespace Azure.Storage.DataMovement
 
             // Check for valid transfer part number
             int partStartIndex = endTransferIdIndex + DataMovementConstants.PlanFile.JobPlanFileNameDelimiter.Length;
-            int endPartIndex = fileName.IndexOf(DataMovementConstants.PlanFile.FileExtension, StringComparison.InvariantCultureIgnoreCase);
+            int endPartIndex = fileName.Length;
 
             if (endPartIndex - partStartIndex != DataMovementConstants.PlanFile.JobPartLength)
             {
@@ -119,17 +124,12 @@ namespace Azure.Storage.DataMovement
             }
             JobPartNumber = jobPartNumber;
 
-            int schemaStartIndex = endPartIndex + DataMovementConstants.PlanFile.FileExtension.Length;
-
-            if (schemaStartIndex + 1 >= fileName.Length)
+            string fullExtension = string.Concat(DataMovementConstants.PlanFile.FileExtension, DataMovementConstants.PlanFile.SchemaVersion);
+            if (!fullExtension.Equals(extension))
             {
-                throw Errors.InvalidSchemaLengthFileName(fullPath);
+                throw Errors.InvalidSchemaVersionFileName(extension);
             }
-            SchemaVersion = fileName.Substring(schemaStartIndex);
-            if (!DataMovementConstants.PlanFile.SchemaVersion.Equals(SchemaVersion))
-            {
-                throw Errors.InvalidSchemaVersionFileName(SchemaVersion);
-            }
+            SchemaVersion = DataMovementConstants.PlanFile.SchemaVersion;
 
             FullPath = fullPath;
         }

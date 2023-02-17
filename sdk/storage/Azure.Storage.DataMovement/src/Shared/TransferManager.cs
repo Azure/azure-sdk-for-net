@@ -289,8 +289,6 @@ namespace Azure.Storage.DataMovement
                 // Attempt to add existing job to the checkpointer.
                 await _checkpointer.AddExistingJobAsync(
                     transferId: resumeId,
-                    sourcePath: sourceResource.Path,
-                    destinationPath: destinationResource.Path,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 // Check if it's a single part transfer.
@@ -457,8 +455,6 @@ namespace Azure.Storage.DataMovement
                 // Attempt to add existing job to the checkpointer.
                 await _checkpointer.AddExistingJobAsync(
                     transferId: resumeId,
-                    sourcePath: sourceResource.Path,
-                    destinationPath: destinationResource.Path,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 // Check if it's a single part transfer.
