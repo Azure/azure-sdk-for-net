@@ -16,7 +16,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         public static TransmitterFactory Instance = new();
 
-        internal readonly Dictionary<string?, AzureMonitorTransmitter> _transmitters = new();
+        internal readonly Dictionary<string, AzureMonitorTransmitter> _transmitters = new();
         private readonly object _lockObj = new();
 
         public AzureMonitorTransmitter Get(AzureMonitorExporterOptions azureMonitorExporterOptions, TokenCredential? tokenCredential = null)
