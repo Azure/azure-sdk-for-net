@@ -1,0 +1,19 @@
+MSBuild version 17.4.1+9a89d02ff for .NET
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Ran ApiCompat against C:\Users\v-cruan\.nuget\packages\\azure.resourcemanager.machinelearning\1.1.0\lib\netstandard2.0\Azure.ResourceManager.MachineLearning.dll using assemblies from C:\\azure-sdk-for-net\artifacts\obj\Azure.ResourceManager.MachineLearning\Debug\netstandard2.0\
+  InheritDocTask replaced 551 of 551 inheritdoc tags and removed 4 private member docs in C:\\azure-sdk-for-net\artifacts\obj\Azure.ResourceManager.MachineLearning\Debug\netstandard2.0\Azure.ResourceManager.MachineLearning.xml
+  Azure.ResourceManager.MachineLearning -> C:\\azure-sdk-for-net\artifacts\bin\Azure.ResourceManager.MachineLearning\Debug\netstandard2.0\Azure.ResourceManager.MachineLearning.dll
+C:\\azure-sdk-for-net\sdk\machinelearningservices\Azure.ResourceManager.MachineLearning\samples\Generated\Samples\Sample_MachineLearningDatastoreCollection.cs(50,17): error CS0200: Property or indexer 'MachineLearningDatastoreCollectionGetAllOptions.Names' cannot be assigned to -- it is read only [C:\\azure-sdk-for-net\sdk\machinelearningservices\Azure.ResourceManager.MachineLearning\samples\Azure.ResourceManager.MachineLearning.Samples.csproj::TargetFramework=net6.0]
+C:\\azure-sdk-for-net\sdk\machinelearningservices\Azure.ResourceManager.MachineLearning\samples\Generated\Samples\Sample_MachineLearningDatastoreCollection.cs(50,17): error CS0200: Property or indexer 'MachineLearningDatastoreCollectionGetAllOptions.Names' cannot be assigned to -- it is read only [C:\\azure-sdk-for-net\sdk\machinelearningservices\Azure.ResourceManager.MachineLearning\samples\Azure.ResourceManager.MachineLearning.Samples.csproj::TargetFramework=net461]
+C:\\azure-sdk-for-net\sdk\machinelearningservices\Azure.ResourceManager.MachineLearning\samples\Generated\Samples\Sample_MachineLearningDatastoreCollection.cs(50,17): error CS0200: Property or indexer 'MachineLearningDatastoreCollectionGetAllOptions.Names' cannot be assigned to -- it is read only [C:\\azure-sdk-for-net\sdk\machinelearningservices\Azure.ResourceManager.MachineLearning\samples\Azure.ResourceManager.MachineLearning.Samples.csproj::TargetFramework=net7.0]
+
+Build FAILED.
+
+C:\\azure-sdk-for-net\sdk\machinelearningservices\Azure.ResourceManager.MachineLearning\samples\Generated\Samples\Sample_MachineLearningDatastoreCollection.cs(50,17): error CS0200: Property or indexer 'MachineLearningDatastoreCollectionGetAllOptions.Names' cannot be assigned to -- it is read only [C:\\azure-sdk-for-net\sdk\machinelearningservices\Azure.ResourceManager.MachineLearning\samples\Azure.ResourceManager.MachineLearning.Samples.csproj::TargetFramework=net6.0]
+C:\\azure-sdk-for-net\sdk\machinelearningservices\Azure.ResourceManager.MachineLearning\samples\Generated\Samples\Sample_MachineLearningDatastoreCollection.cs(50,17): error CS0200: Property or indexer 'MachineLearningDatastoreCollectionGetAllOptions.Names' cannot be assigned to -- it is read only [C:\\azure-sdk-for-net\sdk\machinelearningservices\Azure.ResourceManager.MachineLearning\samples\Azure.ResourceManager.MachineLearning.Samples.csproj::TargetFramework=net461]
+C:\\azure-sdk-for-net\sdk\machinelearningservices\Azure.ResourceManager.MachineLearning\samples\Generated\Samples\Sample_MachineLearningDatastoreCollection.cs(50,17): error CS0200: Property or indexer 'MachineLearningDatastoreCollectionGetAllOptions.Names' cannot be assigned to -- it is read only [C:\\azure-sdk-for-net\sdk\machinelearningservices\Azure.ResourceManager.MachineLearning\samples\Azure.ResourceManager.MachineLearning.Samples.csproj::TargetFramework=net7.0]
+    0 Warning(s)
+    3 Error(s)
+
+Time Elapsed 00:00:09.01

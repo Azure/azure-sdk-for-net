@@ -1,0 +1,19 @@
+MSBuild version 17.4.1+9a89d02ff for .NET
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Ran ApiCompat against C:\Users\v-cruan\.nuget\packages\\azure.resourcemanager.databox\1.0.1\lib\netstandard2.0\Azure.ResourceManager.DataBox.dll using assemblies from C:\\azure-sdk-for-net\artifacts\obj\Azure.ResourceManager.DataBox\Debug\netstandard2.0\
+  InheritDocTask replaced 59 of 59 inheritdoc tags and removed 4 private member docs in C:\\azure-sdk-for-net\artifacts\obj\Azure.ResourceManager.DataBox\Debug\netstandard2.0\Azure.ResourceManager.DataBox.xml
+  Azure.ResourceManager.DataBox -> C:\\azure-sdk-for-net\artifacts\bin\Azure.ResourceManager.DataBox\Debug\netstandard2.0\Azure.ResourceManager.DataBox.dll
+C:\\azure-sdk-for-net\sdk\databox\Azure.ResourceManager.DataBox\samples\Generated\Samples\Sample_DataBoxJobResource.cs(408,29): error CS0117: 'DataBoxManagedIdentity' does not contain a definition for 'UserAssignedResourceId' [C:\\azure-sdk-for-net\sdk\databox\Azure.ResourceManager.DataBox\samples\Azure.ResourceManager.DataBox.Samples.csproj::TargetFramework=net6.0]
+C:\\azure-sdk-for-net\sdk\databox\Azure.ResourceManager.DataBox\samples\Generated\Samples\Sample_DataBoxJobResource.cs(408,29): error CS0117: 'DataBoxManagedIdentity' does not contain a definition for 'UserAssignedResourceId' [C:\\azure-sdk-for-net\sdk\databox\Azure.ResourceManager.DataBox\samples\Azure.ResourceManager.DataBox.Samples.csproj::TargetFramework=net461]
+C:\\azure-sdk-for-net\sdk\databox\Azure.ResourceManager.DataBox\samples\Generated\Samples\Sample_DataBoxJobResource.cs(408,29): error CS0117: 'DataBoxManagedIdentity' does not contain a definition for 'UserAssignedResourceId' [C:\\azure-sdk-for-net\sdk\databox\Azure.ResourceManager.DataBox\samples\Azure.ResourceManager.DataBox.Samples.csproj::TargetFramework=net7.0]
+
+Build FAILED.
+
+C:\\azure-sdk-for-net\sdk\databox\Azure.ResourceManager.DataBox\samples\Generated\Samples\Sample_DataBoxJobResource.cs(408,29): error CS0117: 'DataBoxManagedIdentity' does not contain a definition for 'UserAssignedResourceId' [C:\\azure-sdk-for-net\sdk\databox\Azure.ResourceManager.DataBox\samples\Azure.ResourceManager.DataBox.Samples.csproj::TargetFramework=net6.0]
+C:\\azure-sdk-for-net\sdk\databox\Azure.ResourceManager.DataBox\samples\Generated\Samples\Sample_DataBoxJobResource.cs(408,29): error CS0117: 'DataBoxManagedIdentity' does not contain a definition for 'UserAssignedResourceId' [C:\\azure-sdk-for-net\sdk\databox\Azure.ResourceManager.DataBox\samples\Azure.ResourceManager.DataBox.Samples.csproj::TargetFramework=net461]
+C:\\azure-sdk-for-net\sdk\databox\Azure.ResourceManager.DataBox\samples\Generated\Samples\Sample_DataBoxJobResource.cs(408,29): error CS0117: 'DataBoxManagedIdentity' does not contain a definition for 'UserAssignedResourceId' [C:\\azure-sdk-for-net\sdk\databox\Azure.ResourceManager.DataBox\samples\Azure.ResourceManager.DataBox.Samples.csproj::TargetFramework=net7.0]
+    0 Warning(s)
+    3 Error(s)
+
+Time Elapsed 00:00:03.85

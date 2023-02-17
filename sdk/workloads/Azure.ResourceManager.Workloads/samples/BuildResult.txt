@@ -1,0 +1,18 @@
+MSBuild version 17.4.1+9a89d02ff for .NET
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  InheritDocTask replaced 217 of 217 inheritdoc tags and removed 4 private member docs in C:\\azure-sdk-for-net\artifacts\obj\Azure.ResourceManager.Workloads\Debug\netstandard2.0\Azure.ResourceManager.Workloads.xml
+  Azure.ResourceManager.Workloads -> C:\\azure-sdk-for-net\artifacts\bin\Azure.ResourceManager.Workloads\Debug\netstandard2.0\Azure.ResourceManager.Workloads.dll
+C:\\azure-sdk-for-net\sdk\workloads\Azure.ResourceManager.Workloads\samples\Generated\Samples\Sample_SapVirtualInstanceResource.cs(82,60): error CS0104: 'ManagedServiceIdentityType' is an ambiguous reference between 'Azure.ResourceManager.Models.ManagedServiceIdentityType' and 'Azure.ResourceManager.Workloads.Models.ManagedServiceIdentityType' [C:\\azure-sdk-for-net\sdk\workloads\Azure.ResourceManager.Workloads\samples\Azure.ResourceManager.Workloads.Samples.csproj::TargetFramework=net6.0]
+C:\\azure-sdk-for-net\sdk\workloads\Azure.ResourceManager.Workloads\samples\Generated\Samples\Sample_SapVirtualInstanceResource.cs(82,60): error CS0104: 'ManagedServiceIdentityType' is an ambiguous reference between 'Azure.ResourceManager.Models.ManagedServiceIdentityType' and 'Azure.ResourceManager.Workloads.Models.ManagedServiceIdentityType' [C:\\azure-sdk-for-net\sdk\workloads\Azure.ResourceManager.Workloads\samples\Azure.ResourceManager.Workloads.Samples.csproj::TargetFramework=net461]
+C:\\azure-sdk-for-net\sdk\workloads\Azure.ResourceManager.Workloads\samples\Generated\Samples\Sample_SapVirtualInstanceResource.cs(82,60): error CS0104: 'ManagedServiceIdentityType' is an ambiguous reference between 'Azure.ResourceManager.Models.ManagedServiceIdentityType' and 'Azure.ResourceManager.Workloads.Models.ManagedServiceIdentityType' [C:\\azure-sdk-for-net\sdk\workloads\Azure.ResourceManager.Workloads\samples\Azure.ResourceManager.Workloads.Samples.csproj::TargetFramework=net7.0]
+
+Build FAILED.
+
+C:\\azure-sdk-for-net\sdk\workloads\Azure.ResourceManager.Workloads\samples\Generated\Samples\Sample_SapVirtualInstanceResource.cs(82,60): error CS0104: 'ManagedServiceIdentityType' is an ambiguous reference between 'Azure.ResourceManager.Models.ManagedServiceIdentityType' and 'Azure.ResourceManager.Workloads.Models.ManagedServiceIdentityType' [C:\\azure-sdk-for-net\sdk\workloads\Azure.ResourceManager.Workloads\samples\Azure.ResourceManager.Workloads.Samples.csproj::TargetFramework=net6.0]
+C:\\azure-sdk-for-net\sdk\workloads\Azure.ResourceManager.Workloads\samples\Generated\Samples\Sample_SapVirtualInstanceResource.cs(82,60): error CS0104: 'ManagedServiceIdentityType' is an ambiguous reference between 'Azure.ResourceManager.Models.ManagedServiceIdentityType' and 'Azure.ResourceManager.Workloads.Models.ManagedServiceIdentityType' [C:\\azure-sdk-for-net\sdk\workloads\Azure.ResourceManager.Workloads\samples\Azure.ResourceManager.Workloads.Samples.csproj::TargetFramework=net461]
+C:\\azure-sdk-for-net\sdk\workloads\Azure.ResourceManager.Workloads\samples\Generated\Samples\Sample_SapVirtualInstanceResource.cs(82,60): error CS0104: 'ManagedServiceIdentityType' is an ambiguous reference between 'Azure.ResourceManager.Models.ManagedServiceIdentityType' and 'Azure.ResourceManager.Workloads.Models.ManagedServiceIdentityType' [C:\\azure-sdk-for-net\sdk\workloads\Azure.ResourceManager.Workloads\samples\Azure.ResourceManager.Workloads.Samples.csproj::TargetFramework=net7.0]
+    0 Warning(s)
+    3 Error(s)
+
+Time Elapsed 00:00:02.98
