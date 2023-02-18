@@ -87,7 +87,8 @@ namespace Azure.Core
                 version = version.Substring(0, hashSeparator);
             }
             runtimeInformation ??= new RuntimeInformationWrapper();
-            var platformInformation = $"({runtimeInformation.FrameworkDescription}; {runtimeInformation.OSDescription})";
+            var runtimeInfoString = EnsureProperParenthesisMatching($"{runtimeInformation.FrameworkDescription}; {runtimeInformation.OSDescription}");
+            var platformInformation = $"({runtimeInfoString})";
 
             return applicationId != null
                 ? $"{applicationId} azsdk-net-{assemblyName}/{version} {platformInformation}"
@@ -124,7 +125,7 @@ namespace Azure.Core
                                 needsFix = true;
                                 // We need to fix the string, so we need to copy it into a StringBuilder, excluding the invalid closing parenthesis
                                 fixedUserAgent = new(userAgent.Length);
-                                fixedUserAgent.Append(userAgent, 0, i - 1);
+                                fixedUserAgent.Append(userAgent, 0, i);
                             }
                         }
                         else if (needsFix)
@@ -146,6 +147,7 @@ namespace Azure.Core
             {
                 if (!needsFix)
                 {
+                    needsFix = true;
                     // We need to fix the string, so we need to copy it into a StringBuilder, excluding the invalid closing parenthesis
                     fixedUserAgent = new(userAgent.Length + stack.Count);
                     fixedUserAgent.Append(userAgent);

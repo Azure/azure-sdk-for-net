@@ -68,12 +68,12 @@ namespace Azure.Core.Tests
         [Test]
         [TestCase("MyOSDescription (2023-", "MyOSDescription (2023-)")]
         [TestCase("MyOSDescription (2023-)", "MyOSDescription (2023-)")]
-        [TestCase("MyOSDescription (()", "MyOSDescription ()")]
+        [TestCase("MyOSDescription (()", "MyOSDescription (())")]
         [TestCase("MyOSDescription (", "MyOSDescription ()")]
         [TestCase("MyOSDescription ())", "MyOSDescription ()")]
         [TestCase("MyOSDescription )", "MyOSDescription ")]
         [TestCase("MyO)SDescription ", "MyOSDescription ")]
-        [TestCase("MyO(SDescription ", "MyOSDescription ")]
+        [TestCase("MyO(SDescription ", "MyO(SDescription )")]
         public void ValidatesProperParenthesisMatching(string input, string output)
         {
             var mockRuntimeInformation = new MockRuntimeInformation { OSDescriptionMock = input, FrameworkDescriptionMock = RuntimeInformation.FrameworkDescription };
@@ -89,7 +89,7 @@ namespace Azure.Core.Tests
             var target = new TelemetryDetails(typeof(TelemetryDetailsTests).Assembly, default, mockRuntimeInformation);
 
             Assert.AreEqual(
-                    $"azsdk-net-Core.Tests/{version} ({mockRuntimeInformation.FrameworkDescription}; {mockRuntimeInformation.OSDescription})",
+                    $"azsdk-net-Core.Tests/{version} ({mockRuntimeInformation.FrameworkDescription}; {output})",
                     target.ToString());
         }
 
