@@ -48,7 +48,7 @@ namespace Azure.Communication.Email.Tests.Samples
                 emailContent,
                 emailRecipients);
 
-            EmailSendOperation emailSendOperation = client.StartSend(emailMessage, Guid.NewGuid());
+            EmailSendOperation emailSendOperation = client.Send(WaitUntil.Started, emailMessage);
             Response<EmailSendResult> response = emailSendOperation.WaitForCompletion();
             var operationId = response.Value.Id;
 
@@ -123,7 +123,7 @@ namespace Azure.Communication.Email.Tests.Samples
                 emailContent,
                 emailRecipients);
 
-            EmailSendOperation emailSendOperation = client.StartSend(emailMessage, Guid.NewGuid());
+            EmailSendOperation emailSendOperation = client.Send(WaitUntil.Started, emailMessage);
             Response<EmailSendResult> response = emailSendOperation.WaitForCompletion();
             var operationId = response.Value.Id;
 
@@ -180,7 +180,7 @@ namespace Azure.Communication.Email.Tests.Samples
 
             emailMessage.Attachments.Add(emailAttachment);
 
-            EmailSendOperation emailSendOperation = client.StartSend(emailMessage, Guid.NewGuid());
+            EmailSendOperation emailSendOperation = client.Send(WaitUntil.Started, emailMessage);
             Response<EmailSendResult> response = emailSendOperation.WaitForCompletion();
             var operationId = response.Value.Id;
 
@@ -217,7 +217,7 @@ namespace Azure.Communication.Email.Tests.Samples
                 emailRecipients);
 
 #region Snippet:Azure_Communication_Email_GetSendStatus
-            EmailSendOperation emailSendOperation = client.StartSend(emailMessage, Guid.NewGuid());
+            EmailSendOperation emailSendOperation = client.Send(WaitUntil.Started, emailMessage);
             Response<EmailSendResult> response = emailSendOperation.WaitForCompletion();
             var operationId = response.Value.Id;
 

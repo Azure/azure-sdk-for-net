@@ -38,11 +38,11 @@ namespace Azure.Communication.Email.Tests
 
             if (IsAsync)
             {
-                Assert.ThrowsAsync<ArgumentNullException>(async () => await emailClient.StartSendAsync(null, Guid.NewGuid()));
+                Assert.ThrowsAsync<ArgumentNullException>(async () => await emailClient.SendAsync(WaitUntil.Started, null));
             }
             else
             {
-                Assert.Throws<ArgumentNullException>(() => emailClient.StartSend(null, Guid.NewGuid()));
+                Assert.Throws<ArgumentNullException>(() => emailClient.Send(WaitUntil.Started, null));
             }
         }
 
@@ -52,13 +52,15 @@ namespace Azure.Communication.Email.Tests
         {
             EmailClient emailClient = CreateEmailClient();
             EmailMessage emailMessage = DefaultEmailMessage();
-            AsyncTestDelegate asyncCode = async () => await emailClient.StartSendAsync(
+            AsyncTestDelegate asyncCode = async () => await emailClient.SendAsync(
+                    WaitUntil.Started,
                     invalidStringValue,
                     emailMessage.Recipients.To.First().Address,
                     emailMessage.Content.Subject,
                     emailMessage.Content.Html,
                     emailMessage.Content.PlainText);
-            TestDelegate code = () => emailClient.StartSend(
+            TestDelegate code = () => emailClient.Send(
+                    WaitUntil.Started,
                     invalidStringValue,
                     emailMessage.Recipients.To.First().Address,
                     emailMessage.Content.Subject,
@@ -100,13 +102,15 @@ namespace Azure.Communication.Email.Tests
         {
             EmailClient emailClient = CreateEmailClient();
             EmailMessage emailMessage = DefaultEmailMessage();
-            AsyncTestDelegate asyncCode = async () => await emailClient.StartSendAsync(
+            AsyncTestDelegate asyncCode = async () => await emailClient.SendAsync(
+                        WaitUntil.Started,
                         emailMessage.SenderAddress,
                         invalidStringValue,
                         emailMessage.Content.Subject,
                         emailMessage.Content.Html,
                         emailMessage.Content.PlainText);
-            TestDelegate code = () => emailClient.StartSend(
+            TestDelegate code = () => emailClient.Send(
+                        WaitUntil.Started,
                         emailMessage.SenderAddress,
                         invalidStringValue,
                         emailMessage.Content.Subject,
@@ -122,13 +126,15 @@ namespace Azure.Communication.Email.Tests
         {
             EmailClient emailClient = CreateEmailClient();
             EmailMessage emailMessage = DefaultEmailMessage();
-            AsyncTestDelegate asyncCode = async () => await emailClient.StartSendAsync(
+            AsyncTestDelegate asyncCode = async () => await emailClient.SendAsync(
+                    WaitUntil.Started,
                     emailMessage.SenderAddress,
                     emailMessage.Recipients.To.First().Address,
                     invalidStringValue,
                     emailMessage.Content.Html,
                     emailMessage.Content.PlainText);
-            TestDelegate code = () => emailClient.StartSend(
+            TestDelegate code = () => emailClient.Send(
+                    WaitUntil.Started,
                     emailMessage.SenderAddress,
                     emailMessage.Recipients.To.First().Address,
                     invalidStringValue,
@@ -147,7 +153,8 @@ namespace Azure.Communication.Email.Tests
 
             if (IsAsync)
             {
-                Assert.ThrowsAsync<ArgumentException>(async () => await emailClient.StartSendAsync(
+                Assert.ThrowsAsync<ArgumentException>(async () => await emailClient.SendAsync(
+                    WaitUntil.Started,
                     emailMessage.SenderAddress,
                     emailMessage.Recipients.To.First().Address,
                     emailMessage.Content.Subject,
@@ -156,7 +163,8 @@ namespace Azure.Communication.Email.Tests
             }
             else
             {
-                Assert.Throws<ArgumentException>(() => emailClient.StartSend(
+                Assert.Throws<ArgumentException>(() => emailClient.Send(
+                    WaitUntil.Started,
                     emailMessage.SenderAddress,
                     emailMessage.Recipients.To.First().Address,
                     emailMessage.Content.Subject,
@@ -175,11 +183,11 @@ namespace Azure.Communication.Email.Tests
             RequestFailedException? exception = null;
             if (IsAsync)
             {
-                exception = Assert.ThrowsAsync<RequestFailedException>(async () => await emailClient.StartSendAsync(emailMessage, Guid.NewGuid()));
+                exception = Assert.ThrowsAsync<RequestFailedException>(async () => await emailClient.SendAsync(WaitUntil.Started, emailMessage));
             }
             else
             {
-                exception = Assert.Throws<RequestFailedException>(() => emailClient.StartSend(emailMessage, Guid.NewGuid()));
+                exception = Assert.Throws<RequestFailedException>(() => emailClient.Send(WaitUntil.Started, emailMessage));
             }
             Assert.AreEqual((int)HttpStatusCode.BadRequest, exception?.Status);
         }
@@ -193,11 +201,11 @@ namespace Azure.Communication.Email.Tests
             ArgumentException? exception = null;
             if (IsAsync)
             {
-                exception = Assert.ThrowsAsync<ArgumentException>(async () => await emailClient.StartSendAsync(emailMessage, Guid.NewGuid()));
+                exception = Assert.ThrowsAsync<ArgumentException>(async () => await emailClient.SendAsync(WaitUntil.Started, emailMessage));
             }
             else
             {
-                exception = Assert.Throws<ArgumentException>(() => emailClient.StartSend(emailMessage, Guid.NewGuid()));
+                exception = Assert.Throws<ArgumentException>(() => emailClient.Send(WaitUntil.Started, emailMessage));
             }
             Assert.IsTrue(exception?.Message.Contains(errorMessage));
         }

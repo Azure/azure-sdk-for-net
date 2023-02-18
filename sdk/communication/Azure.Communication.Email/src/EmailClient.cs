@@ -81,7 +81,6 @@ namespace Azure.Communication.Email
         private EmailClient(Uri endpoint, HttpPipeline httpPipeline, EmailClientOptions options)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = httpPipeline;
             RestClient = new EmailRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
         }
 
@@ -95,19 +94,22 @@ namespace Azure.Communication.Email
         { }
 
         /// <summary> Queues an email message to be sent to one or more recipients. </summary>
+        /// <param name="wait"> <see cref="WaitUntil.Completed"/>
+        /// if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="message"> Message payload for sending an email. </param>
-        /// <param name="operationId"> ID of the send email operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<EmailSendOperation> StartSendAsync(
+        public virtual async Task<EmailSendOperation> SendAsync(
+            WaitUntil wait,
             EmailMessage message,
-            Guid? operationId = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.StartSend");
             scope.Start();
             try
             {
-                return await SendEmailInternalAsync(message, operationId, cancellationToken).ConfigureAwait(false);
+                return await SendEmailInternalAsync(wait, message, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -117,13 +119,18 @@ namespace Azure.Communication.Email
         }
 
         /// <summary> Queues an email message to be sent to a single recipient. </summary>
+        /// <param name="wait"> <see cref="WaitUntil.Completed"/>
+        /// if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="from"> From address of the email. </param>
         /// <param name="to"> Email address of the TO recipient. </param>
         /// <param name="subject"> Subject for the email. </param>
         /// <param name="htmlContent"> Email body in HTML format. </param>
         /// <param name="plainTextContent"> Email body in plain text format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<EmailSendOperation> StartSendAsync(
+        public virtual async Task<EmailSendOperation> SendAsync(
+            WaitUntil wait,
             string from,
             string to,
             string subject,
@@ -146,7 +153,7 @@ namespace Azure.Communication.Email
                     {
                         new EmailAddress(to)
                     }));
-                return await SendEmailInternalAsync(message, null, cancellationToken).ConfigureAwait(false);
+                return await SendEmailInternalAsync(wait, message, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -156,19 +163,22 @@ namespace Azure.Communication.Email
         }
 
         /// <summary> Queues an email message to be sent to one or more recipients. </summary>
+        /// <param name="wait"> <see cref="WaitUntil.Completed"/>
+        /// if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="message"> Message payload for sending an email. </param>
-        /// <param name="operationId"> ID of the send email operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual EmailSendOperation StartSend(
+        public virtual EmailSendOperation Send(
+            WaitUntil wait,
             EmailMessage message,
-            Guid? operationId = null,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.Send");
             scope.Start();
             try
             {
-                return SendEmailInternal(message, operationId, cancellationToken);
+                return SendEmailInternal(wait, message, cancellationToken);
             }
             catch (Exception e)
             {
@@ -178,13 +188,18 @@ namespace Azure.Communication.Email
         }
 
         /// <summary> Queues an email message to be sent to a single recipient. </summary>
+        /// <param name="wait"> <see cref="WaitUntil.Completed"/>
+        /// if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="from"> From address of the email. </param>
         /// <param name="to"> Email address of the TO recipient. </param>
         /// <param name="subject"> Subject for the email. </param>
         /// <param name="htmlContent"> Email body in HTML format. </param>
         /// <param name="plainTextContent"> Email body in plain text format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual EmailSendOperation StartSend(
+        public virtual EmailSendOperation Send(
+            WaitUntil wait,
             string from,
             string to,
             string subject,
@@ -207,7 +222,57 @@ namespace Azure.Communication.Email
                     {
                         new EmailAddress(to)
                     }));
-                return SendEmailInternal(message, null, cancellationToken);
+                return SendEmailInternal(wait, message, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the status result of an existing email send operation.
+        /// </summary>
+        /// <param name="id">ID of the existing email send operation.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate
+        /// notification that the operation should be cancelled.</param>
+        /// <returns></returns>
+        public virtual async Task<Response<EmailSendResult>> GetSendResultAsync(
+            string id,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.GetSendResult");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.GetSendResultAsync(id, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(originalResponse.Value, originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the status result of an existing email send operation.
+        /// </summary>
+        /// <param name="id">ID of the existing email send operation.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate
+        /// notification that the operation should be cancelled.</param>
+        /// <returns></returns>
+        public virtual Response<EmailSendResult> GetSendResult(
+            string id,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.GetSendResult");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.GetSendResult(id, cancellationToken);
+                return Response.FromValue(originalResponse.Value, originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -217,27 +282,39 @@ namespace Azure.Communication.Email
         }
 
         private async Task<EmailSendOperation> SendEmailInternalAsync(
+            WaitUntil wait,
             EmailMessage message,
-            Guid? operationId,
             CancellationToken cancellationToken)
         {
             ValidateEmailMessage(message);
 
-            operationId ??= Guid.NewGuid();
+            var operationId = Guid.NewGuid();
             var originalResponse = await RestClient.SendAsync(message, operationId, cancellationToken).ConfigureAwait(false);
-            return new EmailSendOperation(_clientDiagnostics, _pipeline, RestClient.CreateSendRequest(message, operationId).Request, originalResponse);
+            var operation = new EmailSendOperation(this, operationId.ToString(), originalResponse.GetRawResponse(), cancellationToken);
+            if (wait == WaitUntil.Completed)
+            {
+                await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+            }
+
+            return operation;
         }
 
         private EmailSendOperation SendEmailInternal(
+            WaitUntil wait,
             EmailMessage message,
-            Guid? operationId,
             CancellationToken cancellationToken)
         {
             ValidateEmailMessage(message);
 
-            operationId ??= Guid.NewGuid();
+            var operationId = Guid.NewGuid();
             var originalResponse = RestClient.Send(message, operationId, cancellationToken);
-            return new EmailSendOperation(_clientDiagnostics, _pipeline, RestClient.CreateSendRequest(message, operationId).Request, originalResponse);
+            var operation = new EmailSendOperation(this, operationId.ToString(), originalResponse.GetRawResponse(), cancellationToken);
+            if (wait == WaitUntil.Completed)
+            {
+                operation.WaitForCompletion(cancellationToken);
+            }
+
+            return operation;
         }
 
         private static void ValidateEmailMessage(EmailMessage emailMessage)

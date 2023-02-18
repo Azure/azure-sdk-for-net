@@ -60,7 +60,7 @@ namespace Azure.Communication.Email.Tests
                 emailContent,
                 emailRecipients);
 
-            EmailSendOperation emailSendOperation = emailClient.StartSend(emailMessage, Guid.NewGuid());
+            EmailSendOperation emailSendOperation = emailClient.Send(WaitUntil.Started, emailMessage);
             Response<EmailSendResult>? statusMonitor = emailSendOperation.WaitForCompletion();
 
             return statusMonitor;
@@ -76,7 +76,7 @@ namespace Azure.Communication.Email.Tests
                 emailContent,
                 emailRecipients);
 
-            EmailSendOperation emailSendOperation = await emailClient.StartSendAsync(emailMessage, Guid.NewGuid());
+            EmailSendOperation emailSendOperation = await emailClient.SendAsync(WaitUntil.Started, emailMessage);
             Response<EmailSendResult>? statusMonitor = await emailSendOperation.WaitForCompletionAsync();
 
             return statusMonitor;

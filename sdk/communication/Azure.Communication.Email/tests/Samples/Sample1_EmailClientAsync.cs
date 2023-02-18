@@ -46,7 +46,7 @@ namespace Azure.Communication.Email.Tests.Samples
                 emailContent,
                 emailRecipients);
 
-            EmailSendOperation emailSendOperation = await client.StartSendAsync(emailMessage, Guid.NewGuid());
+            EmailSendOperation emailSendOperation = await client.SendAsync(WaitUntil.Started, emailMessage);
             Response<EmailSendResult> response = await emailSendOperation.WaitForCompletionAsync();
             var operationId = response.Value.Id;
 
@@ -121,7 +121,7 @@ namespace Azure.Communication.Email.Tests.Samples
                 emailContent,
                 emailRecipients);
 
-            EmailSendOperation emailSendOperation = await client.StartSendAsync(emailMessage, Guid.NewGuid());
+            EmailSendOperation emailSendOperation = await client.SendAsync(WaitUntil.Started, emailMessage);
             Response<EmailSendResult> response = await emailSendOperation.WaitForCompletionAsync();
             var operationId = response.Value.Id;
 
@@ -178,7 +178,7 @@ namespace Azure.Communication.Email.Tests.Samples
 
             emailMessage.Attachments.Add(emailAttachment);
 
-            EmailSendOperation emailSendOperation = await client.StartSendAsync(emailMessage, Guid.NewGuid());
+            EmailSendOperation emailSendOperation = await client.SendAsync(WaitUntil.Started, emailMessage);
             Response<EmailSendResult> response = await emailSendOperation.WaitForCompletionAsync();
             var operationId = response.Value.Id;
 
@@ -215,7 +215,7 @@ namespace Azure.Communication.Email.Tests.Samples
                 emailRecipients);
 
             #region Snippet:Azure_Communication_Email_GetSendStatusAsync
-            EmailSendOperation emailSendOperation = await client.StartSendAsync(emailMessage, Guid.NewGuid());
+            EmailSendOperation emailSendOperation = await client.SendAsync(WaitUntil.Started, emailMessage);
             Response<EmailSendResult> response = await emailSendOperation.WaitForCompletionAsync();
             var operationId = response.Value.Id;
 
