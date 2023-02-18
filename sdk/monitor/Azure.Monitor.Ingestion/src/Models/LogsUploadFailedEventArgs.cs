@@ -13,29 +13,29 @@ namespace Azure.Monitor.Ingestion
     /// <summary>
     /// The event argument models configured with the EventHandler to upload logs to Azure Monitor.
     /// </summary>
-    public class UploadFailedEventArgs : SyncAsyncEventArgs
+    public class LogsUploadFailedEventArgs : SyncAsyncEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UploadFailedEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="LogsUploadFailedEventArgs"/> class.
         /// </summary>
         /// <param name="failedLogs"></param>
         /// <param name="exception"></param>
         /// <param name="isRunningSynchronously"></param>
         /// <param name="clientDiagnostics"></param>
         /// <param name="cancellationToken"></param>
-        internal UploadFailedEventArgs(IEnumerable<object> failedLogs, Exception exception, bool isRunningSynchronously, ClientDiagnostics clientDiagnostics, CancellationToken cancellationToken) : this (failedLogs, exception, isRunningSynchronously, cancellationToken)
+        internal LogsUploadFailedEventArgs(IEnumerable<object> failedLogs, Exception exception, bool isRunningSynchronously, ClientDiagnostics clientDiagnostics, CancellationToken cancellationToken) : this (failedLogs, exception, isRunningSynchronously, cancellationToken)
         {
             ClientDiagnostics = clientDiagnostics;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UploadFailedEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="LogsUploadFailedEventArgs"/> class.
         /// </summary>
         /// <param name="failedLogs"></param>
         /// <param name="exception"></param>
         /// <param name="isRunningSynchronously"></param>
         /// <param name="cancellationToken"></param>
-        public UploadFailedEventArgs(IEnumerable<object> failedLogs, Exception exception, bool isRunningSynchronously, CancellationToken cancellationToken) : base(isRunningSynchronously, cancellationToken)
+        public LogsUploadFailedEventArgs(IEnumerable<object> failedLogs, Exception exception, bool isRunningSynchronously, CancellationToken cancellationToken) : base(isRunningSynchronously, cancellationToken)
         {
             FailedLogs = failedLogs.ToList();
             Exception = exception;
