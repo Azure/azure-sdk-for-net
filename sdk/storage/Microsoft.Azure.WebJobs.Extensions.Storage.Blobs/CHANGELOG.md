@@ -1,6 +1,7 @@
 # Release History
 
-## 5.1.0-beta.2 (Unreleased)
+## 5.1.0 (2023-02-21)
+- Includes all features from 5.1.0-beta.1.
 - Added Target Based Scaling support for Storage Queues and Blobs
 
 ## 5.1.0-beta.1 (2023-02-07)
