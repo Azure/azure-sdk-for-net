@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DigitalTwins.Tests
         [RecordedTest]
         public async Task CreateDigitalTwinWithIdentity()
         {
-            var location = AzureLocation.WestUS2;
+            var location = AzureLocation.WestCentralUS;
             var subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "digitaltwinsrg", location).ConfigureAwait(false);
             string digitaltwinsName = Recording.GenerateAssetName("digitalTwinsResource");
