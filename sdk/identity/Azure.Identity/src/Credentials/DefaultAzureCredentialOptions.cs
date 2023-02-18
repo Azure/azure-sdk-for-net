@@ -279,6 +279,7 @@ namespace Azure.Identity
                 dacClone._visualStudioCodeTenantId = _visualStudioCodeTenantId;
                 dacClone.SharedTokenCacheUsername = SharedTokenCacheUsername;
                 dacClone.InteractiveBrowserCredentialClientId = InteractiveBrowserCredentialClientId;
+                dacClone.WorkloadIdentityClientId = WorkloadIdentityClientId;
                 dacClone.ManagedIdentityClientId = ManagedIdentityClientId;
                 dacClone.ManagedIdentityResourceId = ManagedIdentityResourceId;
                 dacClone.DeveloperCredentialTimeout = DeveloperCredentialTimeout;

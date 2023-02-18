@@ -37,5 +37,9 @@ namespace Azure.Identity
         /// Defaults to the value of the environment variable AZURE_ADDITIONALLY_ALLOWED_TENANTS.
         /// </summary>
         public IList<string> AdditionallyAllowedTenants { get; internal set; } = EnvironmentVariables.AdditionallyAllowedTenants;
+
+        internal CredentialPipeline Pipeline { get; set; }
+
+        internal MsalConfidentialClient MsalClient { get; set; }
     }
 }

@@ -22,6 +22,8 @@ namespace Azure.Identity
         private readonly FileContentsCache _tokenFileCache;
         private readonly ClientAssertionCredential _clientAssertionCredential;
         private readonly CredentialPipeline _pipeline;
+        internal MsalConfidentialClient Client => _clientAssertionCredential?.Client;
+        internal string[] AdditionallyAllowedTenantIds => _clientAssertionCredential?.AdditionallyAllowedTenantIds;
 
         /// <summary>
         /// Creates a new instance of the <see cref="WorkloadIdentityCredential"/> with the default options.
@@ -43,25 +45,27 @@ namespace Azure.Identity
 
                 ClientAssertionCredentialOptions clientAssertionCredentialOptions = options.Clone<ClientAssertionCredentialOptions>();
 
+                clientAssertionCredentialOptions.Pipeline = options.Pipeline;
+                clientAssertionCredentialOptions.MsalClient = options.MsalClient;
+
                 _clientAssertionCredential = new ClientAssertionCredential(options.TenantId, options.ClientId, _tokenFileCache.GetTokenFileContentsAsync, clientAssertionCredentialOptions);
             }
-
             _pipeline = _clientAssertionCredential?.Pipeline ?? CredentialPipeline.GetInstance(default);
         }
 
         /// <inheritdoc />
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
+            return GetTokenCoreAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
 
         /// <inheritdoc />
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
+            return await GetTokenCoreAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
 
-        private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async ValueTask<AccessToken> GetTokenCoreAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("WorkloadIdentityCredential.GetToken", requestContext);
 

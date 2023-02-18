@@ -110,6 +110,7 @@ namespace Azure.Identity
 
             options.ClientId = Options.WorkloadIdentityClientId;
             options.TenantId = Options.TenantId;
+            options.Pipeline = Pipeline;
 
             return new WorkloadIdentityCredential(options);
         }

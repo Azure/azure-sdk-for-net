@@ -389,7 +389,7 @@ namespace Azure.Identity.Tests
             public bool DisableInstanceDiscovery { get; set; }
             public TokenRequestContext RequestContext { get; set; }
             public string TenantId { get; set; }
-            public IList<string> AdditionallyAllowedTenants { get; set; }
+            public IList<string> AdditionallyAllowedTenants { get; set; } = new List<string>();
         }
     }
 }
