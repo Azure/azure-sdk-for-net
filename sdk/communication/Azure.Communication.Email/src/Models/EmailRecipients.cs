@@ -9,7 +9,7 @@ using System.Linq;
 using Azure.Communication.Email.Extensions;
 using Azure.Core;
 
-namespace Azure.Communication.Email.Models
+namespace Azure.Communication.Email
 {
     [CodeGenModel("EmailRecipients")]
     public partial class EmailRecipients

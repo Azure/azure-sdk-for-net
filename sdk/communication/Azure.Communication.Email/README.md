@@ -23,7 +23,6 @@ To create these resource, you can use the [Azure Portal][communication_resource_
 ### Using statements
 ```C# Snippet:Azure_Communication_Email_UsingStatements
 using Azure.Communication.Email;
-using Azure.Communication.Email.Models;
 ```
 
 ### Authenticate the client

@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Communication.Email.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 

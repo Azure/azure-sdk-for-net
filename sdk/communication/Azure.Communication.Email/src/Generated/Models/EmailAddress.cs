@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Communication.Email.Models
+namespace Azure.Communication.Email
 {
     /// <summary> An object representing the email address and its display name. </summary>
     public partial class EmailAddress

@@ -6,7 +6,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Communication.Email.Models
+namespace Azure.Communication.Email
 {
     [CodeGenModel("EmailMessage")]
     public partial class EmailMessage

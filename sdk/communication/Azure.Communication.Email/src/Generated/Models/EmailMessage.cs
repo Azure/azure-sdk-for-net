@@ -7,10 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Communication.Email;
 using Azure.Core;
 
-namespace Azure.Communication.Email.Models
+namespace Azure.Communication.Email
 {
     /// <summary> Message payload for sending an email. </summary>
     public partial class EmailMessage

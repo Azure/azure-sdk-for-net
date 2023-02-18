@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -11,7 +10,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.Email
 {
     /// <summary> An <see cref="Operation{EmailSendResult}"/> for tracking the status of a
-    /// <see cref="EmailClient.SendAsync(WaitUntil, Models.EmailMessage, CancellationToken)"/> request.
+    /// <see cref="EmailClient.SendAsync(WaitUntil, EmailMessage, CancellationToken)"/> request.
     /// Its <see cref="Operation{EmailSendResult}.Value"/> upon successful completion will
     /// be an object which contains the OperationId = <see cref="EmailSendResult.Id"/>, operation status
     /// = <see cref="EmailSendResult.Status"/> and error if any for terminal failed status.

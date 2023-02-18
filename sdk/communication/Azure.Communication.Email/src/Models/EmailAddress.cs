@@ -7,7 +7,7 @@ using System;
 using System.Net.Mail;
 using Azure.Core;
 
-namespace Azure.Communication.Email.Models
+namespace Azure.Communication.Email
 {
     [CodeGenModel("EmailAddress")]
     public partial class EmailAddress

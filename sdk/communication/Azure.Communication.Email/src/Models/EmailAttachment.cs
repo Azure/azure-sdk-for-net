@@ -6,7 +6,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Communication.Email.Models
+namespace Azure.Communication.Email
 {
     [CodeGenModel("EmailAttachment")]
     [CodeGenSuppress("EmailAttachment", typeof(string), typeof(string), typeof(string))]

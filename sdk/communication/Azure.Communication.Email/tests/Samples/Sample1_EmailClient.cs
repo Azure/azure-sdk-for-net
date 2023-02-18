@@ -3,10 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 #region Snippet:Azure_Communication_Email_UsingStatements
 //@@ using Azure.Communication.Email;
-using Azure.Communication.Email.Models;
 #endregion Snippet:Azure_Communication_Email_UsingStatements
 using Azure.Core.TestFramework;
 using NUnit.Framework;

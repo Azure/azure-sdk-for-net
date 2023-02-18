@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Communication.Email.Models
+namespace Azure.Communication.Email
 {
     /// <summary> Attachment to the email. </summary>
     public partial class EmailAttachment

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.Communication.Email.Models;
 
 namespace Azure.Communication.Email.Extensions
 {
