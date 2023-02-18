@@ -46,7 +46,7 @@ namespace Azure.Communication.Email.Tests.Samples
 
             EmailSendOperation emailSendOperation = await client.SendAsync(WaitUntil.Started, emailMessage);
             Response<EmailSendResult> response = await emailSendOperation.WaitForCompletionAsync();
-            var operationId = response.Value.Id;
+            var operationId = emailSendOperation.Id;
 
             Console.WriteLine($"Email id: {operationId}");
             #endregion Snippet:Azure_Communication_Email_SendAsync
@@ -121,7 +121,7 @@ namespace Azure.Communication.Email.Tests.Samples
 
             EmailSendOperation emailSendOperation = await client.SendAsync(WaitUntil.Started, emailMessage);
             Response<EmailSendResult> response = await emailSendOperation.WaitForCompletionAsync();
-            var operationId = response.Value.Id;
+            var operationId = emailSendOperation.Id;
 
             Console.WriteLine($"Email id: {operationId}");
             #endregion Snippet:Azure_Communication_Email_Send_Multiple_RecipientsAsync
@@ -178,7 +178,7 @@ namespace Azure.Communication.Email.Tests.Samples
 
             EmailSendOperation emailSendOperation = await client.SendAsync(WaitUntil.Started, emailMessage);
             Response<EmailSendResult> response = await emailSendOperation.WaitForCompletionAsync();
-            var operationId = response.Value.Id;
+            var operationId = emailSendOperation.Id;
 
             Console.WriteLine($"Email id: {operationId}");
             #endregion Snippet:Azure_Communication_Email_Send_With_AttachmentsAsync
@@ -215,7 +215,7 @@ namespace Azure.Communication.Email.Tests.Samples
             #region Snippet:Azure_Communication_Email_GetSendStatusAsync
             EmailSendOperation emailSendOperation = await client.SendAsync(WaitUntil.Started, emailMessage);
             Response<EmailSendResult> response = await emailSendOperation.WaitForCompletionAsync();
-            var operationId = response.Value.Id;
+            var operationId = emailSendOperation.Id;
 
             Console.WriteLine($"Email id: {operationId}");
             #endregion Snippet:Azure_Communication_Email_GetSendStatusAsync

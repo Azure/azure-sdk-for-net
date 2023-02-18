@@ -35,9 +35,6 @@ namespace Azure.Communication.Email
             Status = status;
             Error = error;
         }
-
-        /// <summary> The unique id of the operation. Use a UUID. </summary>
-        public string Id { get; }
         /// <summary> Status of operation. </summary>
         public EmailSendStatus Status { get; }
         /// <summary> Error details when status is a non-success terminal state. </summary>

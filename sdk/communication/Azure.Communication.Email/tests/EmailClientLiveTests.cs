@@ -26,10 +26,11 @@ namespace Azure.Communication.Email.Tests
             EmailClient emailClient = CreateEmailClient();
             EmailRecipients emailRecipients = GetRecipients(setTo, setCc, setBcc);
 
-            EmailSendResult statusMonitor = await SendEmailAndWaitForStatusAsync(emailClient, emailRecipients);
+            EmailSendOperation emailSendOperation = await SendEmailAndWaitForStatusAsync(emailClient, emailRecipients);
+            EmailSendResult statusMonitor = emailSendOperation.Value;
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(statusMonitor.Id));
-            Console.WriteLine($"OperationId={statusMonitor.Id}");
+            Assert.IsFalse(string.IsNullOrWhiteSpace(emailSendOperation.Id));
+            Console.WriteLine($"OperationId={emailSendOperation.Id}");
             Console.WriteLine(statusMonitor.Status);
         }
 
@@ -42,14 +43,15 @@ namespace Azure.Communication.Email.Tests
             EmailClient emailClient = CreateEmailClient();
             EmailRecipients emailRecipients = GetRecipients(setTo, setCc, setBcc);
 
-            EmailSendResult statusMonitor = SendEmailAndWaitForStatus(emailClient, emailRecipients);
+            EmailSendOperation emailSendOperation = SendEmailAndWaitForStatus(emailClient, emailRecipients);
+            EmailSendResult statusMonitor = emailSendOperation.Value;
 
-            Assert.IsFalse(string.IsNullOrWhiteSpace(statusMonitor.Id));
-            Console.WriteLine($"OperationId={statusMonitor.Id}");
+            Assert.IsFalse(string.IsNullOrWhiteSpace(emailSendOperation.Id));
+            Console.WriteLine($"OperationId={emailSendOperation.Id}");
             Console.WriteLine(statusMonitor.Status);
         }
 
-        private EmailSendResult SendEmailAndWaitForStatus(EmailClient emailClient, EmailRecipients emailRecipients)
+        private EmailSendOperation SendEmailAndWaitForStatus(EmailClient emailClient, EmailRecipients emailRecipients)
         {
             var emailContent = new EmailContent("subject");
             emailContent.PlainText = "Test";
@@ -60,12 +62,12 @@ namespace Azure.Communication.Email.Tests
                 emailRecipients);
 
             EmailSendOperation emailSendOperation = emailClient.Send(WaitUntil.Started, emailMessage);
-            Response<EmailSendResult>? statusMonitor = emailSendOperation.WaitForCompletion();
+            _ = emailSendOperation.WaitForCompletion();
 
-            return statusMonitor;
+            return emailSendOperation;
         }
 
-        private async Task<EmailSendResult> SendEmailAndWaitForStatusAsync(EmailClient emailClient, EmailRecipients emailRecipients)
+        private async Task<EmailSendOperation> SendEmailAndWaitForStatusAsync(EmailClient emailClient, EmailRecipients emailRecipients)
         {
             var emailContent = new EmailContent("subject");
             emailContent.PlainText = "Test";
@@ -76,9 +78,9 @@ namespace Azure.Communication.Email.Tests
                 emailRecipients);
 
             EmailSendOperation emailSendOperation = await emailClient.SendAsync(WaitUntil.Started, emailMessage);
-            Response<EmailSendResult>? statusMonitor = await emailSendOperation.WaitForCompletionAsync();
+            _ = await emailSendOperation.WaitForCompletionAsync();
 
-            return statusMonitor;
+            return emailSendOperation;
         }
 
         private static IEnumerable<TestCaseData> SetRecipientAddressState()

@@ -13,16 +13,6 @@ namespace Azure.Communication.Email
     /// <summary> Model factory for read-only models. </summary>
     public static partial class EmailModelFactory
     {
-        /// <summary> Initializes a new instance of EmailSendResult. </summary>
-        /// <param name="id"> The unique id of the operation. Use a UUID. </param>
-        /// <param name="status"> Status of operation. </param>
-        /// <param name="error"> Error details when status is a non-success terminal state. </param>
-        /// <returns> A new <see cref="Email.EmailSendResult"/> instance for mocking. </returns>
-        public static EmailSendResult EmailSendResult(string id = null, EmailSendStatus status = default, ErrorDetail error = null)
-        {
-            return new EmailSendResult(id, status, error);
-        }
-
         /// <summary> Initializes a new instance of ErrorDetail. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>

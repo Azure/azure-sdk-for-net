@@ -48,7 +48,7 @@ namespace Azure.Communication.Email.Tests.Samples
 
             EmailSendOperation emailSendOperation = client.Send(WaitUntil.Started, emailMessage);
             Response<EmailSendResult> response = emailSendOperation.WaitForCompletion();
-            var operationId = response.Value.Id;
+            var operationId = emailSendOperation.Id;
 
             Console.WriteLine($"Email id: {operationId}");
             #endregion Snippet:Azure_Communication_Email_Send
@@ -123,7 +123,7 @@ namespace Azure.Communication.Email.Tests.Samples
 
             EmailSendOperation emailSendOperation = client.Send(WaitUntil.Started, emailMessage);
             Response<EmailSendResult> response = emailSendOperation.WaitForCompletion();
-            var operationId = response.Value.Id;
+            var operationId = emailSendOperation.Id;
 
             Console.WriteLine($"Email id: {operationId}");
             #endregion Snippet:Azure_Communication_Email_Send_Multiple_Recipients
@@ -180,7 +180,7 @@ namespace Azure.Communication.Email.Tests.Samples
 
             EmailSendOperation emailSendOperation = client.Send(WaitUntil.Started, emailMessage);
             Response<EmailSendResult> response = emailSendOperation.WaitForCompletion();
-            var operationId = response.Value.Id;
+            var operationId = emailSendOperation.Id;
 
             Console.WriteLine($"Email id: {operationId}");
 #endregion Snippet:Azure_Communication_Email_Send_With_Attachments
@@ -217,7 +217,7 @@ namespace Azure.Communication.Email.Tests.Samples
 #region Snippet:Azure_Communication_Email_GetSendStatus
             EmailSendOperation emailSendOperation = client.Send(WaitUntil.Started, emailMessage);
             Response<EmailSendResult> response = emailSendOperation.WaitForCompletion();
-            var operationId = response.Value.Id;
+            var operationId = emailSendOperation.Id;
 
             Console.WriteLine($"Email id: {operationId}");
 #endregion Snippet:Azure_Communication_Email_GetSendStatus
