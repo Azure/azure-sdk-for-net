@@ -14,11 +14,23 @@ using NUnit.Framework;
 namespace Azure.Monitor.Ingestion.Tests
 {
     [LiveOnly]
-    public class ErrorTest : RecordedTestBase<MonitorIngestionTestEnvironment>
+    public class MonitorIngestionLargeUploadTests : RecordedTestBase<MonitorIngestionTestEnvironment>
     {
         private const int Mb = 1024 * 1024;
-        public ErrorTest(bool isAsync) : base(isAsync)
+        public MonitorIngestionLargeUploadTests(bool isAsync) : base(isAsync)
         {
+        }
+
+        [OneTimeSetUp]
+        public void SetUp()
+        {
+            LogsIngestionClient.Compression = "gzip";
+        }
+
+        [OneTimeTearDown]
+        public void CleanUp()
+        {
+            LogsIngestionClient.Compression = null;
         }
 
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
@@ -39,13 +51,13 @@ namespace Azure.Monitor.Ingestion.Tests
             var entries = new List<Object>();
             for (int i = 0; i < numEntries; i++)
             {
-                entries.Add(new Object[] {
+                entries.Add(
                     new {
                         Time = recordingNow,
                         Computer = "Computer" + i.ToString(),
                         AdditionalContext = i
                     }
-                });
+                );
             }
             return entries;
         }
@@ -54,16 +66,14 @@ namespace Azure.Monitor.Ingestion.Tests
         public void OneFailure()
         {
             LogsIngestionClient client = CreateClient();
-            // set compression to gzip so SDK does not gzip data (assumes already gzipped)
-            LogsIngestionClient.Compression = "gzip";
             var entries = GenerateEntries(800, Recording.Now.DateTime);
-            entries.Add(new object[] {
+            entries.Add(
                     new {
                         Time = Recording.Now.DateTime,
                         Computer = "Computer" + new string('*', Mb),
                         AdditionalContext = 1
                     }
-                });
+                );
 
             // Make the request
             var exceptions = Assert.ThrowsAsync<AggregateException>(async () => { await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false); });
@@ -81,24 +91,22 @@ namespace Azure.Monitor.Ingestion.Tests
         public void TwoFailures()
         {
             LogsIngestionClient client = CreateClient();
-            // set compression to gzip so SDK does not gzip data (assumes already gzipped)
-            LogsIngestionClient.Compression = "gzip";
             var entries = GenerateEntries(800, Recording.Now.DateTime);
             // Add 2 entries that are going to fail in 2 batches
-            entries.Add(new object[] {
+            entries.Add(
                     new {
                         Time = Recording.Now.DateTime,
                         Computer = "Computer" + new string('*', Mb),
                         AdditionalContext = 1
                     }
-                });
-            entries.Add(new object[] {
+                );
+            entries.Add(
                     new {
                         Time = Recording.Now.DateTime,
                         Computer = "Computer" + new string('!', Mb),
                         AdditionalContext = 1
                     }
-                });
+                );
 
             // Make the request
             var exceptions = Assert.ThrowsAsync<AggregateException>(async () => { await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries).ConfigureAwait(false); });
@@ -116,16 +124,14 @@ namespace Azure.Monitor.Ingestion.Tests
         public async Task OneFailureWithEventHandler()
         {
             LogsIngestionClient client = CreateClient();
-            // set compression to gzip so SDK does not gzip data (assumes already gzipped)
-            LogsIngestionClient.Compression = "gzip";
             var entries = GenerateEntries(800, Recording.Now.DateTime);
-            entries.Add(new object[] {
+            entries.Add(
                     new {
                         Time = Recording.Now.DateTime,
                         Computer = "Computer" + new string('*', Mb),
                         AdditionalContext = 1
                     }
-                });
+                );
 
             // Make the request
             LogsUploadOptions options = new LogsUploadOptions();
@@ -134,7 +140,7 @@ namespace Azure.Monitor.Ingestion.Tests
             options.UploadFailed += Options_UploadFailed;
             await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options).ConfigureAwait(false);
             Assert.IsTrue(isTriggered);
-            Task Options_UploadFailed(UploadFailedEventArgs e)
+            Task Options_UploadFailed(LogsUploadFailedEventArgs e)
             {
                 isTriggered = true;
                 Assert.IsInstanceOf<RequestFailedException>(e.Exception);
@@ -149,23 +155,21 @@ namespace Azure.Monitor.Ingestion.Tests
         public async Task TwoFailuresWithEventHandler()
         {
             LogsIngestionClient client = CreateClient();
-            // set compression to gzip so SDK does not gzip data (assumes already gzipped)
-            LogsIngestionClient.Compression = "gzip";
             var entries = GenerateEntries(800, Recording.Now.DateTime);
-            entries.Add(new object[] {
+            entries.Add(
                     new {
                         Time = Recording.Now.DateTime,
                         Computer = "Computer" + new string('*', Mb),
                         AdditionalContext = 1
                     }
-                });
-            entries.Add(new object[] {
+                );
+            entries.Add(
                     new {
                         Time = Recording.Now.DateTime,
                         Computer = "Computer" + new string('!', Mb),
                         AdditionalContext = 1
                     }
-                });
+                );
 
             // Make the request
             LogsUploadOptions options = new LogsUploadOptions();
@@ -173,7 +177,7 @@ namespace Azure.Monitor.Ingestion.Tests
             options.UploadFailed += Options_UploadFailed;
             await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options).ConfigureAwait(false);
             Assert.IsTrue(isTriggered);
-            Task Options_UploadFailed(UploadFailedEventArgs e)
+            Task Options_UploadFailed(LogsUploadFailedEventArgs e)
             {
                 isTriggered = true;
                 Assert.IsInstanceOf<RequestFailedException>(e.Exception);
@@ -188,30 +192,28 @@ namespace Azure.Monitor.Ingestion.Tests
         public void TwoFailuresWithEventHandlerCancellationToken()
         {
             LogsIngestionClient client = CreateClient();
-            // set compression to gzip so SDK does not gzip data (assumes already gzipped)
-            LogsIngestionClient.Compression = "gzip";
             var entries = GenerateEntries(800, Recording.Now.DateTime);
-            entries.Add(new object[] {
+            entries.Add(
                     new {
                         Time = Recording.Now.DateTime,
                         Computer = "Computer" + new string('*', Mb),
                         AdditionalContext = 1
                     }
-                });
-            entries.Add(new object[] {
+                );
+            entries.Add(
                     new {
                         Time = Recording.Now.DateTime,
                         Computer = "Computer" + new string('!', Mb),
                         AdditionalContext = 1
                     }
-                });
-            entries.Add(new object[] {
+                );
+            entries.Add(
                     new {
                         Time = Recording.Now.DateTime,
-                        Computer = "Computer" + new string(';', Mb),
+                        Computer = "Computer" + new string(';', Mb*5),
                         AdditionalContext = 1
                     }
-                });
+                );
 
             // Make the request
             LogsUploadOptions options = new LogsUploadOptions();
@@ -225,7 +227,7 @@ namespace Azure.Monitor.Ingestion.Tests
             // check if OperationCanceledException is in the Exception list
             // may not be first one in async case
             Assert.IsTrue(exceptions.InnerExceptions.Any(exception => exception is OperationCanceledException));
-            Task Options_UploadFailed(UploadFailedEventArgs e)
+            Task Options_UploadFailed(LogsUploadFailedEventArgs e)
             {
                 cts.Cancel();
                 isTriggered = true;
@@ -241,22 +243,20 @@ namespace Azure.Monitor.Ingestion.Tests
         public void OneFailureWithEventHandlerThrowException()
         {
             LogsIngestionClient client = CreateClient();
-            // set compression to gzip so SDK does not gzip data (assumes already gzipped)
-            LogsIngestionClient.Compression = "gzip";
             var entries = GenerateEntries(800, Recording.Now.DateTime);
-            entries.Add(new object[] {
+            entries.Add(
                     new {
                         Time = Recording.Now.DateTime,
                         Computer = "Computer" + new string('*', Mb),
                         AdditionalContext = 1
                     }
-                });
+                );
 
             // Make the request
             LogsUploadOptions options = new LogsUploadOptions();
             options.UploadFailed += Options_UploadFailed;
             var exceptions = Assert.ThrowsAsync<AggregateException>(async () => { await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options).ConfigureAwait(false); });
-            Task Options_UploadFailed(UploadFailedEventArgs e)
+            Task Options_UploadFailed(LogsUploadFailedEventArgs e)
             {
                 Assert.IsInstanceOf<RequestFailedException>(e.Exception);
                 Assert.AreEqual("ContentLengthLimitExceeded", ((RequestFailedException)(e.Exception)).ErrorCode);
@@ -264,6 +264,24 @@ namespace Azure.Monitor.Ingestion.Tests
                 Assert.AreEqual(413, ((RequestFailedException)(e.Exception)).Status);
                 throw e.Exception;
             }
+        }
+
+        [AsyncOnly]
+        [Test]
+        public async Task ConcurrencyMultiThread()
+        {
+            var policy = new ConcurrencyCounterPolicy(8);
+            LogsIngestionClient client = CreateClient(policy);
+            // Make the request
+            LogsUploadOptions options = new LogsUploadOptions();
+            options.MaxConcurrency = 8;
+            var entries = GenerateEntries(80000, Recording.Now.DateTime);
+            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, entries, options).ConfigureAwait(false);
+            Assert.Greater(policy.MaxCount, 1);
+            //Check the response
+            Assert.IsNotNull(response);
+            Assert.AreEqual(204, response.Status);
+            Assert.IsFalse(response.IsError);
         }
     }
 }

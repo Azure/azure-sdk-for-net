@@ -80,18 +80,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// Converts Activity Links to custom property with key as _MS.links.
         /// Value will be a JSON string formatted as [{"operation_Id":"{TraceId}","id":"{SpanId}"}].
         /// </summary>
-        internal static void AddActivityLinksToProperties(IEnumerable<ActivityLink> links, ref AzMonList UnMappedTags)
+        internal static void AddActivityLinksToProperties(Activity activity, ref AzMonList UnMappedTags)
         {
             string msLinks = "_MS.links";
             // max number of links that can fit in this json formatted string is 107. it is based on assumption that traceid and spanid will be of fixed length.
             // Keeping max at 100 for now.
             int maxLinks = MaxlinksAllowed;
 
-            if (links != null && links.Any())
+            if (activity.Links != null && activity.Links.Any())
             {
                 var linksJson = new StringBuilder();
                 linksJson.Append('[');
-                foreach (var link in links)
+                foreach (var link in activity.EnumerateLinks())
                 {
                     linksJson
                         .Append('{')
@@ -110,7 +110,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     maxLinks--;
                     if (maxLinks == 0)
                     {
-                        if (MaxlinksAllowed < links.Count())
+                        if (MaxlinksAllowed < activity.Links.Count())
                         {
                             AzureMonitorExporterEventSource.Log.WriteInformational("ActivityLinksIgnored", $"Max count of {MaxlinksAllowed} has reached.");
                         }
@@ -179,13 +179,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private static void AddTelemetryFromActivityEvents(Activity activity, TelemetryItem telemetryItem, List<TelemetryItem> telemetryItems)
         {
-            foreach (var evnt in activity.Events)
+            foreach (var evnt in activity.EnumerateEvents())
             {
                 try
                 {
                     if (evnt.Name == SemanticConventions.AttributeExceptionEventName)
                     {
-                        var exceptionData = GetExceptionDataDetailsOnTelemetryItem(evnt.Tags);
+                        var exceptionData = GetExceptionDataDetailsOnTelemetryItem(evnt);
                         if (exceptionData != null)
                         {
                             var exceptionTelemetryItem = new TelemetryItem("Exception", telemetryItem, activity.SpanId, activity.Kind, evnt.Timestamp);
@@ -220,7 +220,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             var messageData = new MessageData(Version, activityEvent.Name);
 
-            foreach (var tag in activityEvent.Tags)
+            foreach (var tag in activityEvent.EnumerateTagObjects())
             {
                 if (tag.Value is Array arrayValue)
                 {
@@ -239,14 +239,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             };
         }
 
-        private static MonitorBase? GetExceptionDataDetailsOnTelemetryItem(IEnumerable<KeyValuePair<string, object?>> activityEventTags)
+        private static MonitorBase? GetExceptionDataDetailsOnTelemetryItem(ActivityEvent activityEvent)
         {
             string? exceptionType = null;
             string? exceptionStackTrace = null;
             string? exceptionMessage = null;
 
-            // TODO: update to use perf improvements in .NET7.0
-            foreach (var tag in activityEventTags)
+            foreach (var tag in activityEvent.EnumerateTagObjects())
             {
                 // TODO: see if these can be cached
                 if (tag.Key == SemanticConventions.AttributeExceptionType)

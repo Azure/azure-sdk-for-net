@@ -24,8 +24,6 @@
     <None Update="TestData\JsonFormattedString.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Compile Condition="'$(AzureCoreVersion)' != ''" Include="../src/Shared/AzureEventSource.cs " />
-    <Compile Condition="'$(AzureCoreVersion)' != ''" Include="../src/Shared/HttpMessageSanitizer.cs " />
   </ItemGroup>
 
 </Project>
