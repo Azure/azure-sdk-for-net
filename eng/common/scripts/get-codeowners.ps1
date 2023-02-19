@@ -168,7 +168,7 @@ if ($Test) {
   $azSdkToolsCodeowners = (Resolve-Path "$PSScriptRoot/../../../.github/CODEOWNERS")
   TestGetCodeowners -targetPath "eng/common/scripts/get-codeowners.ps1" -codeownersFileLocation $azSdkToolsCodeowners -includeNonUserAliases $true -expectReturn @("konrad-jamrozik", "weshaggard", "benbp")
   
-  $testCodeowners = (Resolve-Path "$PSScriptRoot/../../../tools/code-owners-parser/Azure.Sdk.Tools.RetrieveCodeOwners.Tests/TestData/glob_path_CODEOWNERS")
+  $testCodeowners = (Resolve-Path "$PSScriptRoot/../../../tools/code-owners-parser/Azure.Sdk.Tools.RetrieveCodeOwners.Tests/TestData/test_CODEOWNERS")
   TestGetCodeowners -targetPath "tools/code-owners-parser/Azure.Sdk.Tools.RetrieveCodeOwners.Tests/TestData/InputDir/a.txt" -codeownersFileLocation $testCodeowners -includeNonUserAliases $true -expectReturn @("2star")
   exit 0
 }
