@@ -381,26 +381,26 @@ Schema for <c>TenantEmailRegistration</c>:
 
 </remarks>
     </member>
-    <member name="GetAttachedsAsync(String,String,String,String,RequestContext)">
+    <member name="GetAllAttachedReceivedSharesAsync(String,String,String,String,RequestContext)">
 <example>
-This sample shows how to call GetAttachedsAsync with required parameters and parse the result.
+This sample shows how to call GetAllAttachedReceivedSharesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-await foreach (var data in client.GetAttachedsAsync("<referenceName>"))
+await foreach (var data in client.GetAllAttachedReceivedSharesAsync("<referenceName>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetAttachedsAsync with all parameters, and how to parse the result.
+This sample shows how to call GetAllAttachedReceivedSharesAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-await foreach (var data in client.GetAttachedsAsync("<referenceName>", "<skipToken>", "<filter>", "<orderby>"))
+await foreach (var data in client.GetAllAttachedReceivedSharesAsync("<referenceName>", "<skipToken>", "<filter>", "<orderby>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -426,26 +426,26 @@ Schema for <c>ReceivedShareListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetAttacheds(String,String,String,String,RequestContext)">
+    <member name="GetAllAttachedReceivedShares(String,String,String,String,RequestContext)">
 <example>
-This sample shows how to call GetAttacheds with required parameters and parse the result.
+This sample shows how to call GetAllAttachedReceivedShares with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetAttacheds("<referenceName>"))
+foreach (var data in client.GetAllAttachedReceivedShares("<referenceName>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetAttacheds with all parameters, and how to parse the result.
+This sample shows how to call GetAllAttachedReceivedShares with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetAttacheds("<referenceName>", "<skipToken>", "<filter>", "<orderby>"))
+foreach (var data in client.GetAllAttachedReceivedShares("<referenceName>", "<skipToken>", "<filter>", "<orderby>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());

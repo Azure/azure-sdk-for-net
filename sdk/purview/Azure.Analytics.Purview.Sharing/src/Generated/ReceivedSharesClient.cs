@@ -217,14 +217,14 @@ namespace Azure.Analytics.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAttachedsAsync(String,String,String,String,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetAttachedsAsync(string referenceName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllAttachedReceivedSharesAsync(String,String,String,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetAllAttachedReceivedSharesAsync(string referenceName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAttachedsRequest(referenceName, skipToken, filter, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAttachedsNextPageRequest(nextLink, referenceName, skipToken, filter, orderby, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAttacheds", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllAttachedReceivedSharesRequest(referenceName, skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllAttachedReceivedSharesNextPageRequest(nextLink, referenceName, skipToken, filter, orderby, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllAttachedReceivedShares", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of attached received shares. </summary>
@@ -236,14 +236,14 @@ namespace Azure.Analytics.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAttacheds(String,String,String,String,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetAttacheds(string referenceName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllAttachedReceivedShares(String,String,String,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetAllAttachedReceivedShares(string referenceName, string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAttachedsRequest(referenceName, skipToken, filter, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAttachedsNextPageRequest(nextLink, referenceName, skipToken, filter, orderby, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAttacheds", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllAttachedReceivedSharesRequest(referenceName, skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllAttachedReceivedSharesNextPageRequest(nextLink, referenceName, skipToken, filter, orderby, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllAttachedReceivedShares", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of detached received shares. </summary>
@@ -435,7 +435,7 @@ namespace Azure.Analytics.Purview
             return message;
         }
 
-        internal HttpMessage CreateGetAttachedsRequest(string referenceName, string skipToken, string filter, string orderby, RequestContext context)
+        internal HttpMessage CreateGetAllAttachedReceivedSharesRequest(string referenceName, string skipToken, string filter, string orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -526,7 +526,7 @@ namespace Azure.Analytics.Purview
             return message;
         }
 
-        internal HttpMessage CreateGetAttachedsNextPageRequest(string nextLink, string referenceName, string skipToken, string filter, string orderby, RequestContext context)
+        internal HttpMessage CreateGetAllAttachedReceivedSharesNextPageRequest(string nextLink, string referenceName, string skipToken, string filter, string orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
