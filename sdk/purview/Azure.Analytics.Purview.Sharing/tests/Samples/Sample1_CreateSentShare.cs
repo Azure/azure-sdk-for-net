@@ -1,9 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#region Snippet:SentSharesClientSample_ImportNamespaces
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
+#endregion
 using Azure.Core.TestFramework;
 
 namespace Azure.Analytics.Purview.Share.Tests.Samples
