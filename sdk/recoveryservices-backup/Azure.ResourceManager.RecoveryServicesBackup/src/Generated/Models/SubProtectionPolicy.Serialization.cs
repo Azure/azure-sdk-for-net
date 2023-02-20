@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static SubProtectionPolicy DeserializeSubProtectionPolicy(JsonElement element)
         {
-            Optional<PolicyType> policyType = default;
-            Optional<SchedulePolicy> schedulePolicy = default;
-            Optional<RetentionPolicy> retentionPolicy = default;
-            Optional<IDictionary<string, TieringPolicy>> tieringPolicy = default;
+            Optional<SubProtectionPolicyType> policyType = default;
+            Optional<BackupSchedulePolicy> schedulePolicy = default;
+            Optional<BackupRetentionPolicy> retentionPolicy = default;
+            Optional<IDictionary<string, BackupTieringPolicy>> tieringPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyType"u8))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    policyType = new PolicyType(property.Value.GetString());
+                    policyType = new SubProtectionPolicyType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("schedulePolicy"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    schedulePolicy = SchedulePolicy.DeserializeSchedulePolicy(property.Value);
+                    schedulePolicy = BackupSchedulePolicy.DeserializeBackupSchedulePolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("retentionPolicy"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(property.Value);
+                    retentionPolicy = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tieringPolicy"u8))
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, TieringPolicy> dictionary = new Dictionary<string, TieringPolicy>();
+                    Dictionary<string, BackupTieringPolicy> dictionary = new Dictionary<string, BackupTieringPolicy>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, Models.TieringPolicy.DeserializeTieringPolicy(property0.Value));
+                        dictionary.Add(property0.Name, BackupTieringPolicy.DeserializeBackupTieringPolicy(property0.Value));
                     }
                     tieringPolicy = dictionary;
                     continue;

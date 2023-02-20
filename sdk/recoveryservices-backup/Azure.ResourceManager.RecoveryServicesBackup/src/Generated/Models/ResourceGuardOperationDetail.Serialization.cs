@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("vaultCriticalOperation"u8);
                 writer.WriteStringValue(VaultCriticalOperation);
             }
-            if (Optional.IsDefined(DefaultResourceRequest))
+            if (Optional.IsDefined(DefaultResourceId))
             {
                 writer.WritePropertyName("defaultResourceRequest"u8);
-                writer.WriteStringValue(DefaultResourceRequest);
+                writer.WriteStringValue(DefaultResourceId);
             }
             writer.WriteEndObject();
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         internal static ResourceGuardOperationDetail DeserializeResourceGuardOperationDetail(JsonElement element)
         {
             Optional<string> vaultCriticalOperation = default;
-            Optional<string> defaultResourceRequest = default;
+            Optional<ResourceIdentifier> defaultResourceRequest = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vaultCriticalOperation"u8))
@@ -41,7 +41,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("defaultResourceRequest"u8))
                 {
-                    defaultResourceRequest = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    defaultResourceRequest = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

@@ -1,13 +1,15 @@
 # Release History
 
-## 1.0.0 (2023-02-13)
+## 1.0.0 (2023-02-20)
 
 This release is the first stable release of the Azure Recovery Services Backup Management client library.
 
 ### Features Added
+
 Added support for Immutable vaults.
 
 ### Bugs Fixed
+
 Polishing since last public beta release:
 - Prepended `RecoveryServices` prefix to all single / simple model names.
 - Corrected the format of all `Guid` type properties / parameters.
@@ -23,7 +25,10 @@ Polishing since last public beta release:
 - Optimized the name of some models and functions.
 
 ### Other Changes
-Changed API verison to 2023-01-01.
+
+- Changed API verison to 2023-01-01.
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
 ## 1.0.0-beta.1 (2022-09-25)
 
