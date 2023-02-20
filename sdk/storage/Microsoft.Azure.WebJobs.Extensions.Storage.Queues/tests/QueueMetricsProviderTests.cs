@@ -16,11 +16,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
-using Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners;
-using Microsoft.Azure.WebJobs.Host.Protocols;
-using Microsoft.Azure.WebJobs.Host.Scale;
-using Microsoft.Azure.WebJobs.Host.Timers;
-using Microsoft.Azure.WebJobs.Host;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
 {
@@ -108,7 +103,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
 
         public class TestFixture : IDisposable
         {
-            private const string TestQueuePrefix = "metricsprovidertests";
+            private const string TestQueuePrefix = "metrictests";
 
             public TestFixture()
             {
