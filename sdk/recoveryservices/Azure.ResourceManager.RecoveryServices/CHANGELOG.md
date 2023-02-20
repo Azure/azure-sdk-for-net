@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (2023-02-17)
+## 1.0.0 (2023-02-20)
 
 This release is the first stable release of the Azure Recovery Services Backup Management client library.
 
