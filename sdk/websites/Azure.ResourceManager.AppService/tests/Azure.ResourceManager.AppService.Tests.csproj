@@ -5,5 +5,6 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Azure.Security.KeyVault.Certificates" />
   </ItemGroup>
 </Project>
