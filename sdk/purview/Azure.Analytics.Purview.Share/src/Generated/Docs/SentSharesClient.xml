@@ -8,11 +8,12 @@ This sample shows how to call GetSentShareAsync with required parameters and par
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.GetSentShareAsync("<sentShareId>");
+Response response = await client.GetSentShareAsync("<sentShareName>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
@@ -26,24 +27,20 @@ Response Body:
 <details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
 <code>{
   properties: {
-    artifact: {
-      storeKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
-      storeReference: {
-        referenceName: string, # Optional. Reference name for resource associated with the sink or artifact.
-        type: &quot;ArmResourceReference&quot;, # Optional. Defines the type of resource being shared
-      }, # Required. A Store Reference for an artifact or sink.
-    }, # Required. A class for sent share artifact.
-    createdAt: string (ISO 8601 Format), # Optional. Time at which the sent share was created.
-    dependsOn: [Guid], # Optional. List of shares on which the sent share depends.
-    description: string, # Optional. Sent share description.
-    displayName: string, # Required. The name of the sent share
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. Provisioning status of the resource
+    collection: {
+      referenceName: string, # Required. Gets or sets the reference name.
+      type: string, # Required. Gets or sets the reference type property.
+    }, # Required. Reference to a Collection.
+    createdAt: string (ISO 8601 Format), # Optional. Time at which the share was created.
+    description: string, # Optional. Share description.
+    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
     senderEmail: string, # Optional. Email of the sender who created the sent share.
     senderName: string, # Optional. Name of the sender who created the sent share.
     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
-  }, # Required. Properties for InPlace sent share.
+  }, # Required. Properties of in place sent share.
   shareKind: InPlace, # Required. Defines the supported types for share.
-  id: string, # Optional. The unique id of the resource.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
   type: string, # Optional. Type of the resource.
 }
 </code>
@@ -58,11 +55,12 @@ This sample shows how to call GetSentShare with required parameters and parse th
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-Response response = client.GetSentShare("<sentShareId>");
+Response response = client.GetSentShare("<sentShareName>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
@@ -76,24 +74,20 @@ Response Body:
 <details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
 <code>{
   properties: {
-    artifact: {
-      storeKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
-      storeReference: {
-        referenceName: string, # Optional. Reference name for resource associated with the sink or artifact.
-        type: &quot;ArmResourceReference&quot;, # Optional. Defines the type of resource being shared
-      }, # Required. A Store Reference for an artifact or sink.
-    }, # Required. A class for sent share artifact.
-    createdAt: string (ISO 8601 Format), # Optional. Time at which the sent share was created.
-    dependsOn: [Guid], # Optional. List of shares on which the sent share depends.
-    description: string, # Optional. Sent share description.
-    displayName: string, # Required. The name of the sent share
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. Provisioning status of the resource
+    collection: {
+      referenceName: string, # Required. Gets or sets the reference name.
+      type: string, # Required. Gets or sets the reference type property.
+    }, # Required. Reference to a Collection.
+    createdAt: string (ISO 8601 Format), # Optional. Time at which the share was created.
+    description: string, # Optional. Share description.
+    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
     senderEmail: string, # Optional. Email of the sender who created the sent share.
     senderName: string, # Optional. Name of the sender who created the sent share.
     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
-  }, # Required. Properties for InPlace sent share.
+  }, # Required. Properties of in place sent share.
   shareKind: InPlace, # Required. Defines the supported types for share.
-  id: string, # Optional. The unique id of the resource.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
   type: string, # Optional. Type of the resource.
 }
 </code>
@@ -101,570 +95,220 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="GetInvitationAsync(String,String,RequestContext)">
+    <member name="CreateOrUpdateAsync(String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call GetInvitationAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-
-Response response = await client.GetInvitationAsync("<sentShareId>", "<sentShareInvitationId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("invitationKind").ToString());
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("type").ToString());
-]]></code>
-</example>
-<remarks>
-Get recipient for a given sent share
-
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>ServiceInvitation</summary>Schema for <c>ServiceInvitation</c>:
-<code>{
-  properties: {
-    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. Provisioning status of the resource
-    senderEmail: string, # Optional. Email address of the sender.
-    senderName: string, # Optional. Name of the sender
-    senderTenantName: string, # Optional. Tenant name of the sender
-    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
-    targetActiveDirectoryId: Guid, # Required. The target azure active directory id the invitation is sent to.
-    targetObjectId: Guid, # Required. The target object id in the azure active directory the invitation is sent to.
-  }, # Required. Properties of the service invitation type.
-  invitationKind: Service, # Required. The types of invitations.
-  id: string, # Optional. The unique id of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>UserInvitation</summary>Schema for <c>UserInvitation</c>:
-<code>{
-  properties: {
-    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire.
-    notify: boolean, # Optional. Whether or not the recipient was notified via email.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. Provisioning status of the resource
-    senderEmail: string, # Optional. Email address of the sender.
-    senderName: string, # Optional. Name of the sender
-    senderTenantName: string, # Optional. Tenant name of the sender
-    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
-    targetEmail: string, # Required. The receiver email for the invitation is being sent.
-  }, # Required. Properties of the user invitation type.
-  invitationKind: User, # Required. The types of invitations.
-  id: string, # Optional. The unique id of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-</details>
-
-</remarks>
-    </member>
-    <member name="GetInvitation(String,String,RequestContext)">
-<example>
-This sample shows how to call GetInvitation with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-
-Response response = client.GetInvitation("<sentShareId>", "<sentShareInvitationId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("invitationKind").ToString());
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("type").ToString());
-]]></code>
-</example>
-<remarks>
-Get recipient for a given sent share
-
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>ServiceInvitation</summary>Schema for <c>ServiceInvitation</c>:
-<code>{
-  properties: {
-    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. Provisioning status of the resource
-    senderEmail: string, # Optional. Email address of the sender.
-    senderName: string, # Optional. Name of the sender
-    senderTenantName: string, # Optional. Tenant name of the sender
-    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
-    targetActiveDirectoryId: Guid, # Required. The target azure active directory id the invitation is sent to.
-    targetObjectId: Guid, # Required. The target object id in the azure active directory the invitation is sent to.
-  }, # Required. Properties of the service invitation type.
-  invitationKind: Service, # Required. The types of invitations.
-  id: string, # Optional. The unique id of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>UserInvitation</summary>Schema for <c>UserInvitation</c>:
-<code>{
-  properties: {
-    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire.
-    notify: boolean, # Optional. Whether or not the recipient was notified via email.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. Provisioning status of the resource
-    senderEmail: string, # Optional. Email address of the sender.
-    senderName: string, # Optional. Name of the sender
-    senderTenantName: string, # Optional. Tenant name of the sender
-    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
-    targetEmail: string, # Required. The receiver email for the invitation is being sent.
-  }, # Required. Properties of the user invitation type.
-  invitationKind: User, # Required. The types of invitations.
-  id: string, # Optional. The unique id of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-</details>
-
-</remarks>
-    </member>
-    <member name="CreateInvitationAsync(String,String,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateInvitationAsync with required parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrUpdateAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
 var data = new {
     properties = new {
-        targetActiveDirectoryId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
-        targetObjectId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        collection = new {
+            referenceName = "<referenceName>",
+            type = "<type>",
+        },
     },
-    invitationKind = "Service",
+    shareKind = "InPlace",
 };
 
-Response response = await client.CreateInvitationAsync("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<sentShareName>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateInvitationAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
 var data = new {
     properties = new {
-        expirationDate = "2022-05-10T18:57:31.2311892Z",
-        shareStatus = "Detached",
-        targetActiveDirectoryId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
-        targetObjectId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        collection = new {
+            referenceName = "<referenceName>",
+            type = "<type>",
+        },
+        description = "<description>",
     },
-    invitationKind = "Service",
+    shareKind = "InPlace",
 };
 
-Response response = await client.CreateInvitationAsync("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
+Response response = await client.CreateOrUpdateAsync("<sentShareName>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
 <remarks>
-Create a recipient for a given sent share
+Create a sent share
 
 Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>ServiceInvitation</summary>Schema for <c>ServiceInvitation</c>:
+<details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
 <code>{
   properties: {
-    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. Provisioning status of the resource
-    senderEmail: string, # Optional. Email address of the sender.
-    senderName: string, # Optional. Name of the sender
-    senderTenantName: string, # Optional. Tenant name of the sender
-    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
-    targetActiveDirectoryId: Guid, # Required. The target azure active directory id the invitation is sent to.
-    targetObjectId: Guid, # Required. The target object id in the azure active directory the invitation is sent to.
-  }, # Required. Properties of the service invitation type.
-  invitationKind: Service, # Required. The types of invitations.
-  id: string, # Optional. The unique id of the resource.
+    collection: {
+      referenceName: string, # Required. Gets or sets the reference name.
+      type: string, # Required. Gets or sets the reference type property.
+    }, # Required. Reference to a Collection.
+    createdAt: string (ISO 8601 Format), # Optional. Time at which the share was created.
+    description: string, # Optional. Share description.
+    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
+    senderEmail: string, # Optional. Email of the sender who created the sent share.
+    senderName: string, # Optional. Name of the sender who created the sent share.
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
+  }, # Required. Properties of in place sent share.
+  shareKind: InPlace, # Required. Defines the supported types for share.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
   type: string, # Optional. Type of the resource.
 }
 </code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>UserInvitation</summary>Schema for <c>UserInvitation</c>:
-<code>{
-  properties: {
-    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire.
-    notify: boolean, # Optional. Whether or not the recipient was notified via email.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. Provisioning status of the resource
-    senderEmail: string, # Optional. Email address of the sender.
-    senderName: string, # Optional. Name of the sender
-    senderTenantName: string, # Optional. Tenant name of the sender
-    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
-    targetEmail: string, # Required. The receiver email for the invitation is being sent.
-  }, # Required. Properties of the user invitation type.
-  invitationKind: User, # Required. The types of invitations.
-  id: string, # Optional. The unique id of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
 </details>
 
 Response Body:
 
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>ServiceInvitation</summary>Schema for <c>ServiceInvitation</c>:
+<details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
 <code>{
   properties: {
-    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. Provisioning status of the resource
-    senderEmail: string, # Optional. Email address of the sender.
-    senderName: string, # Optional. Name of the sender
-    senderTenantName: string, # Optional. Tenant name of the sender
-    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
-    targetActiveDirectoryId: Guid, # Required. The target azure active directory id the invitation is sent to.
-    targetObjectId: Guid, # Required. The target object id in the azure active directory the invitation is sent to.
-  }, # Required. Properties of the service invitation type.
-  invitationKind: Service, # Required. The types of invitations.
-  id: string, # Optional. The unique id of the resource.
+    collection: {
+      referenceName: string, # Required. Gets or sets the reference name.
+      type: string, # Required. Gets or sets the reference type property.
+    }, # Required. Reference to a Collection.
+    createdAt: string (ISO 8601 Format), # Optional. Time at which the share was created.
+    description: string, # Optional. Share description.
+    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
+    senderEmail: string, # Optional. Email of the sender who created the sent share.
+    senderName: string, # Optional. Name of the sender who created the sent share.
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
+  }, # Required. Properties of in place sent share.
+  shareKind: InPlace, # Required. Defines the supported types for share.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
   type: string, # Optional. Type of the resource.
 }
 </code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>UserInvitation</summary>Schema for <c>UserInvitation</c>:
-<code>{
-  properties: {
-    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire.
-    notify: boolean, # Optional. Whether or not the recipient was notified via email.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. Provisioning status of the resource
-    senderEmail: string, # Optional. Email address of the sender.
-    senderName: string, # Optional. Name of the sender
-    senderTenantName: string, # Optional. Tenant name of the sender
-    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
-    targetEmail: string, # Required. The receiver email for the invitation is being sent.
-  }, # Required. Properties of the user invitation type.
-  invitationKind: User, # Required. The types of invitations.
-  id: string, # Optional. The unique id of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
 </details>
 
 </remarks>
     </member>
-    <member name="CreateInvitation(String,String,RequestContent,RequestContext)">
+    <member name="CreateOrUpdate(String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call CreateInvitation with required parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrUpdate with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
 var data = new {
     properties = new {
-        targetActiveDirectoryId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
-        targetObjectId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        collection = new {
+            referenceName = "<referenceName>",
+            type = "<type>",
+        },
     },
-    invitationKind = "Service",
+    shareKind = "InPlace",
 };
 
-Response response = client.CreateInvitation("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<sentShareName>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateInvitation with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
 var data = new {
     properties = new {
-        expirationDate = "2022-05-10T18:57:31.2311892Z",
-        shareStatus = "Detached",
-        targetActiveDirectoryId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
-        targetObjectId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        collection = new {
+            referenceName = "<referenceName>",
+            type = "<type>",
+        },
+        description = "<description>",
     },
-    invitationKind = "Service",
+    shareKind = "InPlace",
 };
 
-Response response = client.CreateInvitation("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
+Response response = client.CreateOrUpdate("<sentShareName>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("type").ToString());
 ]]></code>
 </example>
 <remarks>
-Create a recipient for a given sent share
+Create a sent share
 
 Below is the JSON schema for the request and response payloads.
 
 Request Body:
 
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>ServiceInvitation</summary>Schema for <c>ServiceInvitation</c>:
+<details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
 <code>{
   properties: {
-    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. Provisioning status of the resource
-    senderEmail: string, # Optional. Email address of the sender.
-    senderName: string, # Optional. Name of the sender
-    senderTenantName: string, # Optional. Tenant name of the sender
-    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
-    targetActiveDirectoryId: Guid, # Required. The target azure active directory id the invitation is sent to.
-    targetObjectId: Guid, # Required. The target object id in the azure active directory the invitation is sent to.
-  }, # Required. Properties of the service invitation type.
-  invitationKind: Service, # Required. The types of invitations.
-  id: string, # Optional. The unique id of the resource.
+    collection: {
+      referenceName: string, # Required. Gets or sets the reference name.
+      type: string, # Required. Gets or sets the reference type property.
+    }, # Required. Reference to a Collection.
+    createdAt: string (ISO 8601 Format), # Optional. Time at which the share was created.
+    description: string, # Optional. Share description.
+    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
+    senderEmail: string, # Optional. Email of the sender who created the sent share.
+    senderName: string, # Optional. Name of the sender who created the sent share.
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
+  }, # Required. Properties of in place sent share.
+  shareKind: InPlace, # Required. Defines the supported types for share.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
   type: string, # Optional. Type of the resource.
 }
 </code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>UserInvitation</summary>Schema for <c>UserInvitation</c>:
-<code>{
-  properties: {
-    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire.
-    notify: boolean, # Optional. Whether or not the recipient was notified via email.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. Provisioning status of the resource
-    senderEmail: string, # Optional. Email address of the sender.
-    senderName: string, # Optional. Name of the sender
-    senderTenantName: string, # Optional. Tenant name of the sender
-    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
-    targetEmail: string, # Required. The receiver email for the invitation is being sent.
-  }, # Required. Properties of the user invitation type.
-  invitationKind: User, # Required. The types of invitations.
-  id: string, # Optional. The unique id of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
 </details>
 
 Response Body:
 
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>ServiceInvitation</summary>Schema for <c>ServiceInvitation</c>:
+<details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
 <code>{
   properties: {
-    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. Provisioning status of the resource
-    senderEmail: string, # Optional. Email address of the sender.
-    senderName: string, # Optional. Name of the sender
-    senderTenantName: string, # Optional. Tenant name of the sender
-    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
-    targetActiveDirectoryId: Guid, # Required. The target azure active directory id the invitation is sent to.
-    targetObjectId: Guid, # Required. The target object id in the azure active directory the invitation is sent to.
-  }, # Required. Properties of the service invitation type.
-  invitationKind: Service, # Required. The types of invitations.
-  id: string, # Optional. The unique id of the resource.
+    collection: {
+      referenceName: string, # Required. Gets or sets the reference name.
+      type: string, # Required. Gets or sets the reference type property.
+    }, # Required. Reference to a Collection.
+    createdAt: string (ISO 8601 Format), # Optional. Time at which the share was created.
+    description: string, # Optional. Share description.
+    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;SourceMoved&quot; | &quot;SourceDeleted&quot; | &quot;TargetMoved&quot; | &quot;TargetDeleted&quot;, # Optional. Provisioning status of the resource
+    senderEmail: string, # Optional. Email of the sender who created the sent share.
+    senderName: string, # Optional. Name of the sender who created the sent share.
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
+  }, # Required. Properties of in place sent share.
+  shareKind: InPlace, # Required. Defines the supported types for share.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
   type: string, # Optional. Type of the resource.
 }
 </code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>UserInvitation</summary>Schema for <c>UserInvitation</c>:
-<code>{
-  properties: {
-    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire.
-    notify: boolean, # Optional. Whether or not the recipient was notified via email.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. Provisioning status of the resource
-    senderEmail: string, # Optional. Email address of the sender.
-    senderName: string, # Optional. Name of the sender
-    senderTenantName: string, # Optional. Tenant name of the sender
-    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
-    targetEmail: string, # Required. The receiver email for the invitation is being sent.
-  }, # Required. Properties of the user invitation type.
-  invitationKind: User, # Required. The types of invitations.
-  id: string, # Optional. The unique id of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
 </details>
 
 </remarks>
     </member>
-    <member name="NotifyUserInvitationAsync(String,String,String,RequestContext)">
+    <member name="GetSentSharesAsync(String,String,String,RequestContext)">
 <example>
-This sample shows how to call NotifyUserInvitationAsync with required parameters and parse the result.
+This sample shows how to call GetSentSharesAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.NotifyUserInvitationAsync("<sentShareId>", "<sentShareInvitationId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("invitationKind").ToString());
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call NotifyUserInvitationAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-
-Response response = await client.NotifyUserInvitationAsync("<sentShareId>", "<sentShareInvitationId>", "<repeatabilityRequestId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("invitationKind").ToString());
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("type").ToString());
-]]></code>
-</example>
-<remarks>
-Notifies the user recipient of the sent share invitation, does not apply to service invitations.
-
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>ServiceInvitation</summary>Schema for <c>ServiceInvitation</c>:
-<code>{
-  properties: {
-    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. Provisioning status of the resource
-    senderEmail: string, # Optional. Email address of the sender.
-    senderName: string, # Optional. Name of the sender
-    senderTenantName: string, # Optional. Tenant name of the sender
-    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
-    targetActiveDirectoryId: Guid, # Required. The target azure active directory id the invitation is sent to.
-    targetObjectId: Guid, # Required. The target object id in the azure active directory the invitation is sent to.
-  }, # Required. Properties of the service invitation type.
-  invitationKind: Service, # Required. The types of invitations.
-  id: string, # Optional. The unique id of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>UserInvitation</summary>Schema for <c>UserInvitation</c>:
-<code>{
-  properties: {
-    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire.
-    notify: boolean, # Optional. Whether or not the recipient was notified via email.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. Provisioning status of the resource
-    senderEmail: string, # Optional. Email address of the sender.
-    senderName: string, # Optional. Name of the sender
-    senderTenantName: string, # Optional. Tenant name of the sender
-    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
-    targetEmail: string, # Required. The receiver email for the invitation is being sent.
-  }, # Required. Properties of the user invitation type.
-  invitationKind: User, # Required. The types of invitations.
-  id: string, # Optional. The unique id of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-</details>
-
-</remarks>
-    </member>
-    <member name="NotifyUserInvitation(String,String,String,RequestContext)">
-<example>
-This sample shows how to call NotifyUserInvitation with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-
-Response response = client.NotifyUserInvitation("<sentShareId>", "<sentShareInvitationId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("invitationKind").ToString());
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call NotifyUserInvitation with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-
-Response response = client.NotifyUserInvitation("<sentShareId>", "<sentShareInvitationId>", "<repeatabilityRequestId>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("invitationKind").ToString());
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("type").ToString());
-]]></code>
-</example>
-<remarks>
-Notifies the user recipient of the sent share invitation, does not apply to service invitations.
-
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
-<details><summary>ServiceInvitation</summary>Schema for <c>ServiceInvitation</c>:
-<code>{
-  properties: {
-    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. Provisioning status of the resource
-    senderEmail: string, # Optional. Email address of the sender.
-    senderName: string, # Optional. Name of the sender
-    senderTenantName: string, # Optional. Tenant name of the sender
-    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
-    targetActiveDirectoryId: Guid, # Required. The target azure active directory id the invitation is sent to.
-    targetObjectId: Guid, # Required. The target object id in the azure active directory the invitation is sent to.
-  }, # Required. Properties of the service invitation type.
-  invitationKind: Service, # Required. The types of invitations.
-  id: string, # Optional. The unique id of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-<details><summary>~+ 1 more JSON objects</summary><details><summary>UserInvitation</summary>Schema for <c>UserInvitation</c>:
-<code>{
-  properties: {
-    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire.
-    notify: boolean, # Optional. Whether or not the recipient was notified via email.
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. Provisioning status of the resource
-    senderEmail: string, # Optional. Email address of the sender.
-    senderName: string, # Optional. Name of the sender
-    senderTenantName: string, # Optional. Tenant name of the sender
-    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent.
-    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
-    targetEmail: string, # Required. The receiver email for the invitation is being sent.
-  }, # Required. Properties of the user invitation type.
-  invitationKind: User, # Required. The types of invitations.
-  id: string, # Optional. The unique id of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-</details>
-
-</remarks>
-    </member>
-    <member name="GetSentSharesAsync(String,String,String,String,RequestContext)">
-<example>
-This sample shows how to call GetSentSharesAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-
-await foreach (var data in client.GetSentSharesAsync("<referenceName>"))
+await foreach (var data in client.GetSentSharesAsync())
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -676,17 +320,18 @@ This sample shows how to call GetSentSharesAsync with all parameters, and how to
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-await foreach (var data in client.GetSentSharesAsync("<referenceName>", "<skipToken>", "<filter>", "<orderby>"))
+await foreach (var data in client.GetSentSharesAsync("<skipToken>", "<filter>", "<orderby>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
 }
 ]]></code>
 </example>
 <remarks>
-List sent shares
+Get list of sent shares
 
 Below is the JSON schema for one item in the pageable response.
 
@@ -695,21 +340,22 @@ Response Body:
 Schema for <c>SentShareListValue</c>:
 <code>{
   shareKind: &quot;InPlace&quot;, # Required. Defines the supported types for share.
-  id: string, # Optional. The unique id of the resource.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
   type: string, # Optional. Type of the resource.
 }
 </code>
 
 </remarks>
     </member>
-    <member name="GetSentShares(String,String,String,String,RequestContext)">
+    <member name="GetSentShares(String,String,String,RequestContext)">
 <example>
-This sample shows how to call GetSentShares with required parameters and parse the result.
+This sample shows how to call GetSentShares and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetSentShares("<referenceName>"))
+foreach (var data in client.GetSentShares())
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -721,17 +367,18 @@ This sample shows how to call GetSentShares with all parameters, and how to pars
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetSentShares("<referenceName>", "<skipToken>", "<filter>", "<orderby>"))
+foreach (var data in client.GetSentShares("<skipToken>", "<filter>", "<orderby>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
     Console.WriteLine(result.GetProperty("type").ToString());
 }
 ]]></code>
 </example>
 <remarks>
-List sent shares
+Get list of sent shares
 
 Below is the JSON schema for one item in the pageable response.
 
@@ -740,366 +387,11 @@ Response Body:
 Schema for <c>SentShareListValue</c>:
 <code>{
   shareKind: &quot;InPlace&quot;, # Required. Defines the supported types for share.
-  id: string, # Optional. The unique id of the resource.
+  id: string, # Optional. The resource id of the resource.
+  name: string, # Optional. Name of the resource.
   type: string, # Optional. Type of the resource.
 }
 </code>
-
-</remarks>
-    </member>
-    <member name="GetInvitationsAsync(String,String,String,String,RequestContext)">
-<example>
-This sample shows how to call GetInvitationsAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-
-await foreach (var data in client.GetInvitationsAsync("<sentShareId>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("invitationKind").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetInvitationsAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-
-await foreach (var data in client.GetInvitationsAsync("<sentShareId>", "<skipToken>", "<filter>", "<orderby>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("invitationKind").ToString());
-    Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("type").ToString());
-}
-]]></code>
-</example>
-<remarks>
-List sent share recipients
-
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>SentShareInvitationListValue</c>:
-<code>{
-  invitationKind: &quot;User&quot; | &quot;Service&quot;, # Required. The types of invitations.
-  id: string, # Optional. The unique id of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-
-</remarks>
-    </member>
-    <member name="GetInvitations(String,String,String,String,RequestContext)">
-<example>
-This sample shows how to call GetInvitations with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-
-foreach (var data in client.GetInvitations("<sentShareId>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("invitationKind").ToString());
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetInvitations with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-
-foreach (var data in client.GetInvitations("<sentShareId>", "<skipToken>", "<filter>", "<orderby>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("invitationKind").ToString());
-    Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("type").ToString());
-}
-]]></code>
-</example>
-<remarks>
-List sent share recipients
-
-Below is the JSON schema for one item in the pageable response.
-
-Response Body:
-
-Schema for <c>SentShareInvitationListValue</c>:
-<code>{
-  invitationKind: &quot;User&quot; | &quot;Service&quot;, # Required. The types of invitations.
-  id: string, # Optional. The unique id of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-
-</remarks>
-    </member>
-    <member name="CreateAsync(WaitUntil,String,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateAsync with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-
-var data = new {
-    properties = new {
-        artifact = new {
-            properties = new {
-                paths = new[] {
-                    new {
-                        containerName = "<containerName>",
-                    }
-                },
-            },
-            storeKind = "AdlsGen2Account",
-            storeReference = new {},
-        },
-        displayName = "<displayName>",
-    },
-    shareKind = "InPlace",
-};
-
-var operation = await client.CreateAsync(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
-
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("shareKind").ToString());
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call CreateAsync with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-
-var data = new {
-    properties = new {
-        artifact = new {
-            properties = new {
-                paths = new[] {
-                    new {
-                        containerName = "<containerName>",
-                        receiverPath = "<receiverPath>",
-                        senderPath = "<senderPath>",
-                    }
-                },
-            },
-            storeKind = "AdlsGen2Account",
-            storeReference = new {
-                referenceName = "<referenceName>",
-                type = "ArmResourceReference",
-            },
-        },
-        description = "<description>",
-        displayName = "<displayName>",
-    },
-    shareKind = "InPlace",
-};
-
-var operation = await client.CreateAsync(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
-
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("shareKind").ToString());
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("type").ToString());
-]]></code>
-</example>
-<remarks>
-Create a sent share
-
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-<details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
-<code>{
-  properties: {
-    artifact: {
-      storeKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
-      storeReference: {
-        referenceName: string, # Optional. Reference name for resource associated with the sink or artifact.
-        type: &quot;ArmResourceReference&quot;, # Optional. Defines the type of resource being shared
-      }, # Required. A Store Reference for an artifact or sink.
-    }, # Required. A class for sent share artifact.
-    createdAt: string (ISO 8601 Format), # Optional. Time at which the sent share was created.
-    dependsOn: [Guid], # Optional. List of shares on which the sent share depends.
-    description: string, # Optional. Sent share description.
-    displayName: string, # Required. The name of the sent share
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. Provisioning status of the resource
-    senderEmail: string, # Optional. Email of the sender who created the sent share.
-    senderName: string, # Optional. Name of the sender who created the sent share.
-    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
-  }, # Required. Properties for InPlace sent share.
-  shareKind: InPlace, # Required. Defines the supported types for share.
-  id: string, # Optional. The unique id of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-
-Response Body:
-
-<details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
-<code>{
-  properties: {
-    artifact: {
-      storeKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
-      storeReference: {
-        referenceName: string, # Optional. Reference name for resource associated with the sink or artifact.
-        type: &quot;ArmResourceReference&quot;, # Optional. Defines the type of resource being shared
-      }, # Required. A Store Reference for an artifact or sink.
-    }, # Required. A class for sent share artifact.
-    createdAt: string (ISO 8601 Format), # Optional. Time at which the sent share was created.
-    dependsOn: [Guid], # Optional. List of shares on which the sent share depends.
-    description: string, # Optional. Sent share description.
-    displayName: string, # Required. The name of the sent share
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. Provisioning status of the resource
-    senderEmail: string, # Optional. Email of the sender who created the sent share.
-    senderName: string, # Optional. Name of the sender who created the sent share.
-    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
-  }, # Required. Properties for InPlace sent share.
-  shareKind: InPlace, # Required. Defines the supported types for share.
-  id: string, # Optional. The unique id of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-
-</remarks>
-    </member>
-    <member name="Create(WaitUntil,String,RequestContent,RequestContext)">
-<example>
-This sample shows how to call Create with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-
-var data = new {
-    properties = new {
-        artifact = new {
-            properties = new {
-                paths = new[] {
-                    new {
-                        containerName = "<containerName>",
-                    }
-                },
-            },
-            storeKind = "AdlsGen2Account",
-            storeReference = new {},
-        },
-        displayName = "<displayName>",
-    },
-    shareKind = "InPlace",
-};
-
-var operation = client.Create(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
-
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("shareKind").ToString());
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call Create with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-
-var data = new {
-    properties = new {
-        artifact = new {
-            properties = new {
-                paths = new[] {
-                    new {
-                        containerName = "<containerName>",
-                        receiverPath = "<receiverPath>",
-                        senderPath = "<senderPath>",
-                    }
-                },
-            },
-            storeKind = "AdlsGen2Account",
-            storeReference = new {
-                referenceName = "<referenceName>",
-                type = "ArmResourceReference",
-            },
-        },
-        description = "<description>",
-        displayName = "<displayName>",
-    },
-    shareKind = "InPlace",
-};
-
-var operation = client.Create(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
-
-BinaryData data = operation.Value;
-JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("shareKind").ToString());
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("type").ToString());
-]]></code>
-</example>
-<remarks>
-Create a sent share
-
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-<details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
-<code>{
-  properties: {
-    artifact: {
-      storeKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
-      storeReference: {
-        referenceName: string, # Optional. Reference name for resource associated with the sink or artifact.
-        type: &quot;ArmResourceReference&quot;, # Optional. Defines the type of resource being shared
-      }, # Required. A Store Reference for an artifact or sink.
-    }, # Required. A class for sent share artifact.
-    createdAt: string (ISO 8601 Format), # Optional. Time at which the sent share was created.
-    dependsOn: [Guid], # Optional. List of shares on which the sent share depends.
-    description: string, # Optional. Sent share description.
-    displayName: string, # Required. The name of the sent share
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. Provisioning status of the resource
-    senderEmail: string, # Optional. Email of the sender who created the sent share.
-    senderName: string, # Optional. Name of the sender who created the sent share.
-    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
-  }, # Required. Properties for InPlace sent share.
-  shareKind: InPlace, # Required. Defines the supported types for share.
-  id: string, # Optional. The unique id of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
-
-Response Body:
-
-<details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
-<code>{
-  properties: {
-    artifact: {
-      storeKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
-      storeReference: {
-        referenceName: string, # Optional. Reference name for resource associated with the sink or artifact.
-        type: &quot;ArmResourceReference&quot;, # Optional. Defines the type of resource being shared
-      }, # Required. A Store Reference for an artifact or sink.
-    }, # Required. A class for sent share artifact.
-    createdAt: string (ISO 8601 Format), # Optional. Time at which the sent share was created.
-    dependsOn: [Guid], # Optional. List of shares on which the sent share depends.
-    description: string, # Optional. Sent share description.
-    displayName: string, # Required. The name of the sent share
-    provisioningState: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. Provisioning status of the resource
-    senderEmail: string, # Optional. Email of the sender who created the sent share.
-    senderName: string, # Optional. Name of the sender who created the sent share.
-    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
-  }, # Required. Properties for InPlace sent share.
-  shareKind: InPlace, # Required. Defines the supported types for share.
-  id: string, # Optional. The unique id of the resource.
-  type: string, # Optional. Type of the resource.
-}
-</code>
-</details>
 
 </remarks>
     </member>
@@ -1110,7 +402,7 @@ This sample shows how to call DeleteAsync with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = await client.DeleteAsync(WaitUntil.Completed, "<sentShareId>");
+var operation = await client.DeleteAsync(WaitUntil.Completed, "<sentShareName>");
 
 Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
@@ -1126,45 +418,13 @@ This sample shows how to call Delete with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = client.Delete(WaitUntil.Completed, "<sentShareId>");
+var operation = client.Delete(WaitUntil.Completed, "<sentShareName>");
 
 Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>
 Delete a sent share
-</remarks>
-    </member>
-    <member name="DeleteInvitationAsync(WaitUntil,String,String,RequestContext)">
-<example>
-This sample shows how to call DeleteInvitationAsync with required parameters.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-
-var operation = await client.DeleteInvitationAsync(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>");
-
-Console.WriteLine(operation.GetRawResponse().Status)
-]]></code>
-</example>
-<remarks>
-Delete a sent share invitation
-</remarks>
-    </member>
-    <member name="DeleteInvitation(WaitUntil,String,String,RequestContext)">
-<example>
-This sample shows how to call DeleteInvitation with required parameters.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new SentSharesClient("<https://my-service.azure.com>", credential);
-
-var operation = client.DeleteInvitation(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>");
-
-Console.WriteLine(operation.GetRawResponse().Status)
-]]></code>
-</example>
-<remarks>
-Delete a sent share invitation
 </remarks>
     </member>
   </members>
