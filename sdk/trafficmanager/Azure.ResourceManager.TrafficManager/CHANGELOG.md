@@ -2,13 +2,10 @@
 
 ## 1.1.0-beta.2 (Unreleased)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
 ## 1.1.0-beta.1 (2022-11-18)
 
