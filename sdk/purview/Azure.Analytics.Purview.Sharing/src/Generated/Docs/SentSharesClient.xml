@@ -837,9 +837,9 @@ Schema for <c>SentShareInvitationListValue</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrReplaceAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateOrReplaceSentShareAsync(WaitUntil,String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call CreateOrReplaceAsync with required parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrReplaceSentShareAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
@@ -862,14 +862,14 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = await client.CreateOrReplaceAsync(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
+var operation = await client.CreateOrReplaceSentShareAsync(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
 
 BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrReplaceAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrReplaceSentShareAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
@@ -898,7 +898,7 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = await client.CreateOrReplaceAsync(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
+var operation = await client.CreateOrReplaceSentShareAsync(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
 
 BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -970,9 +970,9 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="CreateOrReplace(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateOrReplaceSentShare(WaitUntil,String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call CreateOrReplace with required parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrReplaceSentShare with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
@@ -995,14 +995,14 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = client.CreateOrReplace(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
+var operation = client.CreateOrReplaceSentShare(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
 
 BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrReplace with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrReplaceSentShare with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
@@ -1031,7 +1031,7 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = client.CreateOrReplace(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
+var operation = client.CreateOrReplaceSentShare(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
 
 BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;

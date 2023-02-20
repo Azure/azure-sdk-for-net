@@ -373,18 +373,18 @@ namespace Azure.Analytics.Purview
         /// <exception cref="ArgumentException"> <paramref name="sentShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='CreateOrReplaceAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> CreateOrReplaceAsync(WaitUntil waitUntil, string sentShareId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='CreateOrReplaceSentShareAsync(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Operation<BinaryData>> CreateOrReplaceSentShareAsync(WaitUntil waitUntil, string sentShareId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.CreateOrReplace");
+            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.CreateOrReplaceSentShare");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrReplaceRequest(sentShareId, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "SentSharesClient.CreateOrReplace", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateCreateOrReplaceSentShareRequest(sentShareId, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "SentSharesClient.CreateOrReplaceSentShare", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -402,18 +402,18 @@ namespace Azure.Analytics.Purview
         /// <exception cref="ArgumentException"> <paramref name="sentShareId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='CreateOrReplace(WaitUntil,String,RequestContent,RequestContext)']/*" />
-        public virtual Operation<BinaryData> CreateOrReplace(WaitUntil waitUntil, string sentShareId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='CreateOrReplaceSentShare(WaitUntil,String,RequestContent,RequestContext)']/*" />
+        public virtual Operation<BinaryData> CreateOrReplaceSentShare(WaitUntil waitUntil, string sentShareId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.CreateOrReplace");
+            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.CreateOrReplaceSentShare");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrReplaceRequest(sentShareId, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "SentSharesClient.CreateOrReplace", OperationFinalStateVia.Location, context, waitUntil);
+                using HttpMessage message = CreateCreateOrReplaceSentShareRequest(sentShareId, content, context);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "SentSharesClient.CreateOrReplaceSentShare", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -576,7 +576,7 @@ namespace Azure.Analytics.Purview
             return message;
         }
 
-        internal HttpMessage CreateCreateOrReplaceRequest(string sentShareId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrReplaceSentShareRequest(string sentShareId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
