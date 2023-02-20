@@ -2,6 +2,10 @@
 
 ## 1.0.1 (2023-02-20)
 
+### Features Added
+
+- Introduced property bag for the methods with more than 5 parameters.
+
 ### Other Changes
 
 - Upgraded dependent `Azure.Core` to `1.28.0`.
