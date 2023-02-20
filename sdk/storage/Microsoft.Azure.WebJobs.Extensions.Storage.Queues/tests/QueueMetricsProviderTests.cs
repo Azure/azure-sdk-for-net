@@ -108,7 +108,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
 
         public class TestFixture : IDisposable
         {
-            private const string TestQueuePrefix = "queuelistenertests";
+            private const string TestQueuePrefix = "metricsprovidertests";
 
             public TestFixture()
             {
