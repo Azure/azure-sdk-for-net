@@ -824,14 +824,14 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="DeleteAsync(WaitUntil,String,RequestContext)">
+    <member name="DeleteReceivedShareAsync(WaitUntil,String,RequestContext)">
 <example>
-This sample shows how to call DeleteAsync with required parameters and parse the result.
+This sample shows how to call DeleteReceivedShareAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = await client.DeleteAsync(WaitUntil.Completed, "<receivedShareId>");
+var operation = await client.DeleteReceivedShareAsync(WaitUntil.Completed, "<receivedShareId>");
 
 BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -868,14 +868,14 @@ Schema for <c>OperationResponse</c>:
 
 </remarks>
     </member>
-    <member name="Delete(WaitUntil,String,RequestContext)">
+    <member name="DeleteReceivedShare(WaitUntil,String,RequestContext)">
 <example>
-This sample shows how to call Delete with required parameters and parse the result.
+This sample shows how to call DeleteReceivedShare with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = client.Delete(WaitUntil.Completed, "<receivedShareId>");
+var operation = client.DeleteReceivedShare(WaitUntil.Completed, "<receivedShareId>");
 
 BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
