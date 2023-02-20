@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-3421e2efd9a04a06f7b350cefb9f19cf-3ff3dfe749d6881b-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "0d8bcd617f6bfcc138170786826f7fdb",
+        "traceparent": "00-61ac77a9ec315232150cfdbafef480ff-bcf47184df75ba5f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4eb4cc043f1fef2fcf56a96b03214abe",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "418",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Jan 2023 17:34:04 GMT",
+        "Date": "Mon, 20 Feb 2023 13:59:47 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "6bfed22f-6bf8-41b3-aece-6914428b4651",
-        "x-ms-ratelimit-remaining-subscription-reads": "11997",
-        "x-ms-request-id": "6bfed22f-6bf8-41b3-aece-6914428b4651",
-        "x-ms-routing-request-id": "UKSOUTH:20230125T173404Z:6bfed22f-6bf8-41b3-aece-6914428b4651"
+        "x-ms-correlation-request-id": "e3f60d0f-db0d-4c5f-a448-d3da4b11d22d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "e3f60d0f-db0d-4c5f-a448-d3da4b11d22d",
+        "x-ms-routing-request-id": "UKSOUTH:20230220T135948Z:e3f60d0f-db0d-4c5f-a448-d3da4b11d22d"
       },
       "ResponseBody": {
         "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a",
@@ -43,16 +43,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourcegroups/SDKTest2466?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourcegroups/SDKTest7027?api-version=**",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "28",
         "Content-Type": "application/json",
-        "traceparent": "00-d26437006d72cbafc027d3ecf8170d78-c5df812a7fcb5f52-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "16c130d6758472ad915faeaf7c6cabf0",
+        "traceparent": "00-d25f3cbe6e49a144473d40307d7bf284-f0c2762a5eee0022-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "838a9122cf2ee376527a8ad2a6995da4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -63,19 +63,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "226",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Jan 2023 17:34:06 GMT",
+        "Date": "Mon, 20 Feb 2023 13:59:48 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "5be23d6a-1062-4963-9b29-59231ddbbac3",
+        "x-ms-correlation-request-id": "dcc140d3-29bb-4fe2-9418-34e181ee4c71",
         "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "5be23d6a-1062-4963-9b29-59231ddbbac3",
-        "x-ms-routing-request-id": "UKSOUTH:20230125T173406Z:5be23d6a-1062-4963-9b29-59231ddbbac3"
+        "x-ms-request-id": "dcc140d3-29bb-4fe2-9418-34e181ee4c71",
+        "x-ms-routing-request-id": "UKSOUTH:20230220T135949Z:dcc140d3-29bb-4fe2-9418-34e181ee4c71"
       },
       "ResponseBody": {
-        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466",
-        "name": "SDKTest2466",
+        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027",
+        "name": "SDKTest7027",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "centraluseuap",
         "properties": {
@@ -84,16 +84,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378?api-version=2023-01-31",
+      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634?api-version=2023-01-31",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "333",
         "Content-Type": "application/json",
-        "traceparent": "00-3f360637dd0e0e2617914af0d0a31b6e-7c5ff24fbec5cbfd-00",
-        "User-Agent": "azsdk-net-ResourceManager.VoiceServices/1.0.0-alpha.20230125.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "e56f66f75a52a2123763846748c0a067",
+        "traceparent": "00-5b48f2611f18e4b5493c81bbc244893c-a96cbb9466b3e65a-00",
+        "User-Agent": "azsdk-net-ResourceManager.VoiceServices/1.0.0-alpha.20230220.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4da212931f6582e71920bfee0beb7955",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -130,38 +130,38 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/35c112c7-2aa4-4cd6-8a7f-a71a5d094b00*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997?api-version=2023-01-31",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9bcf2c49-00f4-4ff2-be06-1279cf26dd42*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89?api-version=2023-01-31",
         "Cache-Control": "no-cache",
         "Content-Length": "874",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Jan 2023 17:34:11 GMT",
-        "ETag": "\u00227e08a2ec-0000-3300-0000-63d168130000\u0022",
+        "Date": "Mon, 20 Feb 2023 13:59:53 GMT",
+        "ETag": "\u002201000bcd-0000-3400-0000-63f37cd90000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Request-Context": "appId=cid-v1:ee9ea8e7-bc71-4c0f-83ad-dc11c5b30732",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "e56f66f75a52a2123763846748c0a067",
-        "x-ms-correlation-request-id": "af46faa8-fb1e-4611-ac1c-b1d780240cd5",
+        "x-ms-client-request-id": "4da212931f6582e71920bfee0beb7955",
+        "x-ms-correlation-request-id": "d6902026-38d6-44a3-87a3-b3b991cbcd7a",
         "x-ms-providerhub-traffic": "True",
         "x-ms-ratelimit-remaining-subscription-writes": "1198",
-        "x-ms-request-id": "35c112c7-2aa4-4cd6-8a7f-a71a5d094b00",
-        "x-ms-routing-request-id": "UKSOUTH:20230125T173411Z:af46faa8-fb1e-4611-ac1c-b1d780240cd5"
+        "x-ms-request-id": "9bcf2c49-00f4-4ff2-be06-1279cf26dd42",
+        "x-ms-routing-request-id": "UKSOUTH:20230220T135953Z:d6902026-38d6-44a3-87a3-b3b991cbcd7a"
       },
       "ResponseBody": {
-        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378",
-        "name": "SDKTest5378",
+        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634",
+        "name": "SDKTest7634",
         "type": "microsoft.voiceservices/communicationsgateways",
         "location": "centraluseuap",
         "tags": {},
         "systemData": {
           "createdBy": "b3fd61be-0e34-4d9e-90c3-0a5abd40a26a",
           "createdByType": "Application",
-          "createdAt": "2023-01-25T17:34:10.6458718Z",
+          "createdAt": "2023-02-20T13:59:51.7738167Z",
           "lastModifiedBy": "b3fd61be-0e34-4d9e-90c3-0a5abd40a26a",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-01-25T17:34:10.6458718Z"
+          "lastModifiedAt": "2023-02-20T13:59:51.7738167Z"
         },
         "properties": {
           "serviceLocations": [
@@ -195,230 +195,230 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/35c112c7-2aa4-4cd6-8a7f-a71a5d094b00*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997?api-version=2023-01-31",
+      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9bcf2c49-00f4-4ff2-be06-1279cf26dd42*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89?api-version=2023-01-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-3f360637dd0e0e2617914af0d0a31b6e-110fd70f694e3e13-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "19789f96496cd584af744c11290a489e",
+        "traceparent": "00-5b48f2611f18e4b5493c81bbc244893c-6933bfa2ceaecd64-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "388e15c76c1c71bda30115aeb7f4468e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "575",
+        "Content-Length": "574",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Jan 2023 17:34:11 GMT",
-        "ETag": "\u00220000c505-0000-3300-0000-63d168130000\u0022",
+        "Date": "Mon, 20 Feb 2023 13:59:53 GMT",
+        "ETag": "\u00224100c1e0-0000-3400-0000-63f37cd90000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "19789f96496cd584af744c11290a489e",
-        "x-ms-correlation-request-id": "f24b4e4d-9e1b-45bc-8e65-d5ceb5d5e682",
+        "x-ms-client-request-id": "388e15c76c1c71bda30115aeb7f4468e",
+        "x-ms-correlation-request-id": "3a87f31c-a36f-4f62-9402-83001021a2c7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "2926d8dd-79fb-4c8e-8a39-f37739ab7442",
+        "x-ms-routing-request-id": "UKSOUTH:20230220T135954Z:3a87f31c-a36f-4f62-9402-83001021a2c7"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9bcf2c49-00f4-4ff2-be06-1279cf26dd42*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "name": "9bcf2c49-00f4-4ff2-be06-1279cf26dd42*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634",
+        "status": "Accepted",
+        "startTime": "2023-02-20T13:59:52.870874Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9bcf2c49-00f4-4ff2-be06-1279cf26dd42*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89?api-version=2023-01-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5b48f2611f18e4b5493c81bbc244893c-23c9982174147113-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "76577d10373bbeca1464e397594165f0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "574",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 20 Feb 2023 13:59:54 GMT",
+        "ETag": "\u00224100c1e0-0000-3400-0000-63f37cd90000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "76577d10373bbeca1464e397594165f0",
+        "x-ms-correlation-request-id": "73a0a2b3-9a02-4383-9f0c-57736e10b191",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "9b9a8982-fa16-4243-a2a9-4e4ac1e706a0",
+        "x-ms-routing-request-id": "UKSOUTH:20230220T135955Z:73a0a2b3-9a02-4383-9f0c-57736e10b191"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9bcf2c49-00f4-4ff2-be06-1279cf26dd42*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "name": "9bcf2c49-00f4-4ff2-be06-1279cf26dd42*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634",
+        "status": "Accepted",
+        "startTime": "2023-02-20T13:59:52.870874Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9bcf2c49-00f4-4ff2-be06-1279cf26dd42*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89?api-version=2023-01-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5b48f2611f18e4b5493c81bbc244893c-f49b1ef1c19f466a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f6277263415de13865afc922c04e8675",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "574",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 20 Feb 2023 13:59:55 GMT",
+        "ETag": "\u00224100c1e0-0000-3400-0000-63f37cd90000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "f6277263415de13865afc922c04e8675",
+        "x-ms-correlation-request-id": "2f9483c1-0569-4495-b175-5dde5782625b",
         "x-ms-ratelimit-remaining-subscription-reads": "11996",
-        "x-ms-request-id": "e2002095-6787-449f-9eba-fa0adec3b5f9",
-        "x-ms-routing-request-id": "UKSOUTH:20230125T173412Z:f24b4e4d-9e1b-45bc-8e65-d5ceb5d5e682"
+        "x-ms-request-id": "e8ed5d8f-2fc1-407e-aedc-0cb98893d4ae",
+        "x-ms-routing-request-id": "UKSOUTH:20230220T135956Z:2f9483c1-0569-4495-b175-5dde5782625b"
       },
       "ResponseBody": {
-        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/35c112c7-2aa4-4cd6-8a7f-a71a5d094b00*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "name": "35c112c7-2aa4-4cd6-8a7f-a71a5d094b00*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378",
+        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9bcf2c49-00f4-4ff2-be06-1279cf26dd42*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "name": "9bcf2c49-00f4-4ff2-be06-1279cf26dd42*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634",
         "status": "Accepted",
-        "startTime": "2023-01-25T17:34:11.0654928Z"
+        "startTime": "2023-02-20T13:59:52.870874Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/35c112c7-2aa4-4cd6-8a7f-a71a5d094b00*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997?api-version=2023-01-31",
+      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9bcf2c49-00f4-4ff2-be06-1279cf26dd42*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89?api-version=2023-01-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-3f360637dd0e0e2617914af0d0a31b6e-45ff8208545b1425-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "059c480ef3601acb0d914a783afe567c",
+        "traceparent": "00-5b48f2611f18e4b5493c81bbc244893c-0fa2970d7f44b7cf-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9f94368746d190104acf23b789251861",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "575",
+        "Content-Length": "574",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Jan 2023 17:34:13 GMT",
-        "ETag": "\u00220000c505-0000-3300-0000-63d168130000\u0022",
+        "Date": "Mon, 20 Feb 2023 13:59:57 GMT",
+        "ETag": "\u00224100c1e0-0000-3400-0000-63f37cd90000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "059c480ef3601acb0d914a783afe567c",
-        "x-ms-correlation-request-id": "eb53d974-2da7-4c34-99cd-cee16208f34d",
+        "x-ms-client-request-id": "9f94368746d190104acf23b789251861",
+        "x-ms-correlation-request-id": "911c44c1-0d48-44bc-b3b6-26528f9cd96d",
         "x-ms-ratelimit-remaining-subscription-reads": "11995",
-        "x-ms-request-id": "4ab3b9af-902f-4233-ac47-63fd59b3eca0",
-        "x-ms-routing-request-id": "UKSOUTH:20230125T173413Z:eb53d974-2da7-4c34-99cd-cee16208f34d"
+        "x-ms-request-id": "0d7e9b3f-9852-45ef-ac04-afb53e8a3009",
+        "x-ms-routing-request-id": "UKSOUTH:20230220T135957Z:911c44c1-0d48-44bc-b3b6-26528f9cd96d"
       },
       "ResponseBody": {
-        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/35c112c7-2aa4-4cd6-8a7f-a71a5d094b00*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "name": "35c112c7-2aa4-4cd6-8a7f-a71a5d094b00*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378",
+        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9bcf2c49-00f4-4ff2-be06-1279cf26dd42*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "name": "9bcf2c49-00f4-4ff2-be06-1279cf26dd42*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634",
         "status": "Accepted",
-        "startTime": "2023-01-25T17:34:11.0654928Z"
+        "startTime": "2023-02-20T13:59:52.870874Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/35c112c7-2aa4-4cd6-8a7f-a71a5d094b00*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997?api-version=2023-01-31",
+      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9bcf2c49-00f4-4ff2-be06-1279cf26dd42*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89?api-version=2023-01-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-3f360637dd0e0e2617914af0d0a31b6e-a4a28ed97c2c4699-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "a9d128b9874796fbe2744da38f47b590",
+        "traceparent": "00-5b48f2611f18e4b5493c81bbc244893c-06599404ea6bb9c1-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "444a249c4fcdcf314475118b6da8fdc6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "575",
+        "Content-Length": "574",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Jan 2023 17:34:14 GMT",
-        "ETag": "\u00220000c505-0000-3300-0000-63d168130000\u0022",
+        "Date": "Mon, 20 Feb 2023 13:59:59 GMT",
+        "ETag": "\u00224100c1e0-0000-3400-0000-63f37cd90000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "a9d128b9874796fbe2744da38f47b590",
-        "x-ms-correlation-request-id": "42f8cf88-d3b5-48a1-b54f-863c5af37d49",
+        "x-ms-client-request-id": "444a249c4fcdcf314475118b6da8fdc6",
+        "x-ms-correlation-request-id": "eb03cf7f-046f-4653-8301-aec3ed093d3a",
         "x-ms-ratelimit-remaining-subscription-reads": "11994",
-        "x-ms-request-id": "c450d01c-763b-4423-9c22-992b4ce09086",
-        "x-ms-routing-request-id": "UKSOUTH:20230125T173414Z:42f8cf88-d3b5-48a1-b54f-863c5af37d49"
+        "x-ms-request-id": "230d8a64-1cc3-49d1-b7c6-3b1af0137533",
+        "x-ms-routing-request-id": "UKSOUTH:20230220T140000Z:eb03cf7f-046f-4653-8301-aec3ed093d3a"
       },
       "ResponseBody": {
-        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/35c112c7-2aa4-4cd6-8a7f-a71a5d094b00*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "name": "35c112c7-2aa4-4cd6-8a7f-a71a5d094b00*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378",
+        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9bcf2c49-00f4-4ff2-be06-1279cf26dd42*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "name": "9bcf2c49-00f4-4ff2-be06-1279cf26dd42*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634",
         "status": "Accepted",
-        "startTime": "2023-01-25T17:34:11.0654928Z"
+        "startTime": "2023-02-20T13:59:52.870874Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/35c112c7-2aa4-4cd6-8a7f-a71a5d094b00*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997?api-version=2023-01-31",
+      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9bcf2c49-00f4-4ff2-be06-1279cf26dd42*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89?api-version=2023-01-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-3f360637dd0e0e2617914af0d0a31b6e-eda18ab5434b8c80-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "04058191a41ea2fbd35e0bdbff0c9bb0",
+        "traceparent": "00-5b48f2611f18e4b5493c81bbc244893c-e9bfb95a358173d4-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "22106ddec5ac1d1f6196ac8d1d81583f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "575",
+        "Content-Length": "593",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Jan 2023 17:34:15 GMT",
-        "ETag": "\u00220000c505-0000-3300-0000-63d168130000\u0022",
+        "Date": "Mon, 20 Feb 2023 14:00:03 GMT",
+        "ETag": "\u00224100f0e0-0000-3400-0000-63f37ce00000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "04058191a41ea2fbd35e0bdbff0c9bb0",
-        "x-ms-correlation-request-id": "3c970e8d-5812-4ba9-913f-6e6ebb39e816",
+        "x-ms-client-request-id": "22106ddec5ac1d1f6196ac8d1d81583f",
+        "x-ms-correlation-request-id": "975752c4-49e3-4c7e-9f72-e2602ceda758",
         "x-ms-ratelimit-remaining-subscription-reads": "11993",
-        "x-ms-request-id": "46fb39b3-2b04-4901-8ed6-d8bd417ec722",
-        "x-ms-routing-request-id": "UKSOUTH:20230125T173415Z:3c970e8d-5812-4ba9-913f-6e6ebb39e816"
+        "x-ms-request-id": "a82400a3-1889-47af-85b7-dedf426753ff",
+        "x-ms-routing-request-id": "UKSOUTH:20230220T140004Z:975752c4-49e3-4c7e-9f72-e2602ceda758"
       },
       "ResponseBody": {
-        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/35c112c7-2aa4-4cd6-8a7f-a71a5d094b00*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "name": "35c112c7-2aa4-4cd6-8a7f-a71a5d094b00*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378",
-        "status": "Accepted",
-        "startTime": "2023-01-25T17:34:11.0654928Z"
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/35c112c7-2aa4-4cd6-8a7f-a71a5d094b00*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997?api-version=2023-01-31",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-3f360637dd0e0e2617914af0d0a31b6e-7aaedf946e97351a-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "0057d01d9e3986574d0623eba6278ac6",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "575",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Jan 2023 17:34:17 GMT",
-        "ETag": "\u00220000c505-0000-3300-0000-63d168130000\u0022",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "0057d01d9e3986574d0623eba6278ac6",
-        "x-ms-correlation-request-id": "b7b90aa9-d98c-4bd4-aaf7-757eaaba30d8",
-        "x-ms-ratelimit-remaining-subscription-reads": "11992",
-        "x-ms-request-id": "9f6bb75c-a452-43e3-a838-9ab3b62db54b",
-        "x-ms-routing-request-id": "UKSOUTH:20230125T173418Z:b7b90aa9-d98c-4bd4-aaf7-757eaaba30d8"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/35c112c7-2aa4-4cd6-8a7f-a71a5d094b00*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "name": "35c112c7-2aa4-4cd6-8a7f-a71a5d094b00*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378",
-        "status": "Accepted",
-        "startTime": "2023-01-25T17:34:11.0654928Z"
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/35c112c7-2aa4-4cd6-8a7f-a71a5d094b00*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997?api-version=2023-01-31",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-3f360637dd0e0e2617914af0d0a31b6e-5982e8db5a2ced5b-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "b8e6b9dc52f9145e2c2fd5e87b1f97d5",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "594",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Jan 2023 17:34:21 GMT",
-        "ETag": "\u00220000c805-0000-3300-0000-63d1681a0000\u0022",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "b8e6b9dc52f9145e2c2fd5e87b1f97d5",
-        "x-ms-correlation-request-id": "d1c5e931-13a3-4cb2-9a15-518a2e11bf88",
-        "x-ms-ratelimit-remaining-subscription-reads": "11991",
-        "x-ms-request-id": "e9e32dc0-e302-4c06-84e1-3ae6108c555a",
-        "x-ms-routing-request-id": "UKSOUTH:20230125T173422Z:d1c5e931-13a3-4cb2-9a15-518a2e11bf88"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/35c112c7-2aa4-4cd6-8a7f-a71a5d094b00*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "name": "35c112c7-2aa4-4cd6-8a7f-a71a5d094b00*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378",
+        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9bcf2c49-00f4-4ff2-be06-1279cf26dd42*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "name": "9bcf2c49-00f4-4ff2-be06-1279cf26dd42*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634",
         "status": "Succeeded",
-        "startTime": "2023-01-25T17:34:11.0654928Z",
+        "startTime": "2023-02-20T13:59:52.870874Z",
         "properties": null
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378?api-version=2023-01-31",
+      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634?api-version=2023-01-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-3f360637dd0e0e2617914af0d0a31b6e-7d8e5a976a588a9a-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "bf859dd8b4eff357297eb717810ffbac",
+        "traceparent": "00-5b48f2611f18e4b5493c81bbc244893c-9a7a104332d7eca2-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9b866897410337a805c55a5b348522a2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -427,39 +427,39 @@
         "Cache-Control": "no-cache",
         "Content-Length": "979",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Jan 2023 17:34:22 GMT",
-        "ETag": "\u00227e0894ee-0000-3300-0000-63d1681a0000\u0022",
+        "Date": "Mon, 20 Feb 2023 14:00:03 GMT",
+        "ETag": "\u002201000dcd-0000-3400-0000-63f37ce00000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Request-Context": "appId=cid-v1:ee9ea8e7-bc71-4c0f-83ad-dc11c5b30732",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "bf859dd8b4eff357297eb717810ffbac",
-        "x-ms-correlation-request-id": "3b949402-7c31-4ac4-9b70-4f10d57e827c",
+        "x-ms-client-request-id": "9b866897410337a805c55a5b348522a2",
+        "x-ms-correlation-request-id": "bf59d9b7-e657-4763-9ef9-a9accf3f5aef",
         "x-ms-providerhub-traffic": "True",
-        "x-ms-ratelimit-remaining-subscription-reads": "11990",
-        "x-ms-request-id": "fd7b0d0e-e466-41e8-9edf-4bcf425464c4",
-        "x-ms-routing-request-id": "UKSOUTH:20230125T173422Z:3b949402-7c31-4ac4-9b70-4f10d57e827c"
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "eeeffa25-09c7-453e-8c22-a34f3f4d9457",
+        "x-ms-routing-request-id": "UKSOUTH:20230220T140004Z:bf59d9b7-e657-4763-9ef9-a9accf3f5aef"
       },
       "ResponseBody": {
-        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378",
-        "name": "SDKTest5378",
+        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634",
+        "name": "SDKTest7634",
         "type": "microsoft.voiceservices/communicationsgateways",
         "location": "centraluseuap",
         "tags": {},
         "systemData": {
           "createdBy": "b3fd61be-0e34-4d9e-90c3-0a5abd40a26a",
           "createdByType": "Application",
-          "createdAt": "2023-01-25T17:34:10.6458718Z",
+          "createdAt": "2023-02-20T13:59:51.7738167Z",
           "lastModifiedBy": "b3fd61be-0e34-4d9e-90c3-0a5abd40a26a",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-01-25T17:34:10.6458718Z"
+          "lastModifiedAt": "2023-02-20T13:59:51.7738167Z"
         },
         "properties": {
           "status": "ChangePending",
           "apiBridge": null,
-          "autoGeneratedDomainNameLabel": "SDKTest5378.gxfff2ecbsa2hjfu",
+          "autoGeneratedDomainNameLabel": "SDKTest7634.arcahydkh6ckbdax",
           "serviceLocations": [
             {
               "name": "eastus",
@@ -491,14 +491,14 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378?api-version=2023-01-31",
+      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634?api-version=2023-01-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-bb682241a0e9ab76243c7830ec0d22dc-e0286ea9a6fb38c8-00",
-        "User-Agent": "azsdk-net-ResourceManager.VoiceServices/1.0.0-alpha.20230125.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "45ff44d4e226cbb77243d30ac86e0a2d",
+        "traceparent": "00-949a3da8146a485cb6c1408e800e87cd-92439c2422fa5bc7-00",
+        "User-Agent": "azsdk-net-ResourceManager.VoiceServices/1.0.0-alpha.20230220.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1cd95dd2f615d6b5052de336a3a3b1c3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -507,39 +507,39 @@
         "Cache-Control": "no-cache",
         "Content-Length": "979",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Jan 2023 17:34:22 GMT",
-        "ETag": "\u00227e0894ee-0000-3300-0000-63d1681a0000\u0022",
+        "Date": "Mon, 20 Feb 2023 14:00:04 GMT",
+        "ETag": "\u002201000dcd-0000-3400-0000-63f37ce00000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Request-Context": "appId=cid-v1:ee9ea8e7-bc71-4c0f-83ad-dc11c5b30732",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "45ff44d4e226cbb77243d30ac86e0a2d",
-        "x-ms-correlation-request-id": "cf360e18-5992-4a5b-a896-7479aec985ff",
+        "x-ms-client-request-id": "1cd95dd2f615d6b5052de336a3a3b1c3",
+        "x-ms-correlation-request-id": "606ccbbb-96cc-4538-a778-61ada02e2e8f",
         "x-ms-providerhub-traffic": "True",
-        "x-ms-ratelimit-remaining-subscription-reads": "11989",
-        "x-ms-request-id": "5107e429-b809-4439-a649-29fc6b6b0fc3",
-        "x-ms-routing-request-id": "UKSOUTH:20230125T173423Z:cf360e18-5992-4a5b-a896-7479aec985ff"
+        "x-ms-ratelimit-remaining-subscription-reads": "11991",
+        "x-ms-request-id": "1788cead-6e85-4a6d-a867-91769c086f64",
+        "x-ms-routing-request-id": "UKSOUTH:20230220T140005Z:606ccbbb-96cc-4538-a778-61ada02e2e8f"
       },
       "ResponseBody": {
-        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378",
-        "name": "SDKTest5378",
+        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634",
+        "name": "SDKTest7634",
         "type": "microsoft.voiceservices/communicationsgateways",
         "location": "centraluseuap",
         "tags": {},
         "systemData": {
           "createdBy": "b3fd61be-0e34-4d9e-90c3-0a5abd40a26a",
           "createdByType": "Application",
-          "createdAt": "2023-01-25T17:34:10.6458718Z",
+          "createdAt": "2023-02-20T13:59:51.7738167Z",
           "lastModifiedBy": "b3fd61be-0e34-4d9e-90c3-0a5abd40a26a",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-01-25T17:34:10.6458718Z"
+          "lastModifiedAt": "2023-02-20T13:59:51.7738167Z"
         },
         "properties": {
           "status": "ChangePending",
           "apiBridge": null,
-          "autoGeneratedDomainNameLabel": "SDKTest5378.gxfff2ecbsa2hjfu",
+          "autoGeneratedDomainNameLabel": "SDKTest7634.arcahydkh6ckbdax",
           "serviceLocations": [
             {
               "name": "eastus",
@@ -571,16 +571,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378?api-version=2023-01-31",
+      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634?api-version=2023-01-31",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "340",
         "Content-Type": "application/json",
-        "traceparent": "00-58673b47cdd0987b811e8fd62abc11d6-786c1432a0ddbcda-00",
-        "User-Agent": "azsdk-net-ResourceManager.VoiceServices/1.0.0-alpha.20230125.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "09134d6ecaa127d762f28f7a9b46921d",
+        "traceparent": "00-c7a4995fb6a4ad9b00ca9fdbb95d7dd2-a8dd5688b3ec076f-00",
+        "User-Agent": "azsdk-net-ResourceManager.VoiceServices/1.0.0-alpha.20230220.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "05f4d21d61219cc2c5d91ce76ac3e9dc",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -618,41 +618,41 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9772294b-bb9b-4567-ac54-a7849c9db638*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997?api-version=2023-01-31",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/b64b6f48-f019-4a92-8b7c-7300c4c85662*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89?api-version=2023-01-31",
         "Cache-Control": "no-cache",
         "Content-Length": "943",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Jan 2023 17:34:23 GMT",
-        "ETag": "\u00227e081ef0-0000-3300-0000-63d1681f0000\u0022",
+        "Date": "Mon, 20 Feb 2023 14:00:04 GMT",
+        "ETag": "\u002201000ecd-0000-3400-0000-63f37ce50000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Request-Context": "appId=cid-v1:ee9ea8e7-bc71-4c0f-83ad-dc11c5b30732",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "09134d6ecaa127d762f28f7a9b46921d",
-        "x-ms-correlation-request-id": "bc6498b6-6e2b-4171-bb15-96ad2a4e78ad",
+        "x-ms-client-request-id": "05f4d21d61219cc2c5d91ce76ac3e9dc",
+        "x-ms-correlation-request-id": "1226790e-624e-4267-a715-5d0060500c79",
         "x-ms-providerhub-traffic": "True",
         "x-ms-ratelimit-remaining-subscription-writes": "1197",
-        "x-ms-request-id": "9772294b-bb9b-4567-ac54-a7849c9db638",
-        "x-ms-routing-request-id": "UKSOUTH:20230125T173423Z:bc6498b6-6e2b-4171-bb15-96ad2a4e78ad"
+        "x-ms-request-id": "b64b6f48-f019-4a92-8b7c-7300c4c85662",
+        "x-ms-routing-request-id": "UKSOUTH:20230220T140005Z:1226790e-624e-4267-a715-5d0060500c79"
       },
       "ResponseBody": {
-        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378",
-        "name": "SDKTest5378",
+        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634",
+        "name": "SDKTest7634",
         "type": "microsoft.voiceservices/communicationsgateways",
         "location": "centraluseuap",
         "tags": {},
         "systemData": {
           "createdBy": "b3fd61be-0e34-4d9e-90c3-0a5abd40a26a",
           "createdByType": "Application",
-          "createdAt": "2023-01-25T17:34:10.6458718Z",
+          "createdAt": "2023-02-20T13:59:51.7738167Z",
           "lastModifiedBy": "b3fd61be-0e34-4d9e-90c3-0a5abd40a26a",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-01-25T17:34:23.5833949Z"
+          "lastModifiedAt": "2023-02-20T14:00:05.2415252Z"
         },
         "properties": {
-          "autoGeneratedDomainNameLabel": "SDKTest5378.gxfff2ecbsa2hjfu",
+          "autoGeneratedDomainNameLabel": "SDKTest7634.arcahydkh6ckbdax",
           "serviceLocations": [
             {
               "name": "eastus",
@@ -685,13 +685,13 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9772294b-bb9b-4567-ac54-a7849c9db638*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997?api-version=2023-01-31",
+      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/b64b6f48-f019-4a92-8b7c-7300c4c85662*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89?api-version=2023-01-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-58673b47cdd0987b811e8fd62abc11d6-7b0097dd30f98eca-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "34a88a73f2fc090a6dd7e233533d302b",
+        "traceparent": "00-c7a4995fb6a4ad9b00ca9fdbb95d7dd2-51e82b8d953ee58d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "623d97131c9070809b3d563bd9ce6b41",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -700,34 +700,106 @@
         "Cache-Control": "no-cache",
         "Content-Length": "575",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Jan 2023 17:34:23 GMT",
-        "ETag": "\u00220000c905-0000-3300-0000-63d1681f0000\u0022",
+        "Date": "Mon, 20 Feb 2023 14:00:04 GMT",
+        "ETag": "\u00224100a0e1-0000-3400-0000-63f37ce50000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "34a88a73f2fc090a6dd7e233533d302b",
-        "x-ms-correlation-request-id": "590c818f-014a-4b08-bf01-e8d9739d1881",
+        "x-ms-client-request-id": "623d97131c9070809b3d563bd9ce6b41",
+        "x-ms-correlation-request-id": "ec43a5e7-d7b0-4533-b81d-03b9d277b963",
+        "x-ms-ratelimit-remaining-subscription-reads": "11990",
+        "x-ms-request-id": "e9ea973c-1c51-4e03-864b-38486db83402",
+        "x-ms-routing-request-id": "UKSOUTH:20230220T140005Z:ec43a5e7-d7b0-4533-b81d-03b9d277b963"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/b64b6f48-f019-4a92-8b7c-7300c4c85662*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "name": "b64b6f48-f019-4a92-8b7c-7300c4c85662*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634",
+        "status": "Accepted",
+        "startTime": "2023-02-20T14:00:05.3908789Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/b64b6f48-f019-4a92-8b7c-7300c4c85662*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89?api-version=2023-01-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c7a4995fb6a4ad9b00ca9fdbb95d7dd2-8e14fbb455b8c253-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "99c20644f1e8e11ba7535271cbeb3d54",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "575",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 20 Feb 2023 14:00:05 GMT",
+        "ETag": "\u00224100a0e1-0000-3400-0000-63f37ce50000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "99c20644f1e8e11ba7535271cbeb3d54",
+        "x-ms-correlation-request-id": "62f7be3b-aed3-47f0-8aa7-cdb08c9c24a8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11989",
+        "x-ms-request-id": "eb15fa13-db3e-499a-bd08-de3a54f4d09b",
+        "x-ms-routing-request-id": "UKSOUTH:20230220T140006Z:62f7be3b-aed3-47f0-8aa7-cdb08c9c24a8"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/b64b6f48-f019-4a92-8b7c-7300c4c85662*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "name": "b64b6f48-f019-4a92-8b7c-7300c4c85662*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634",
+        "status": "Accepted",
+        "startTime": "2023-02-20T14:00:05.3908789Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/b64b6f48-f019-4a92-8b7c-7300c4c85662*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89?api-version=2023-01-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c7a4995fb6a4ad9b00ca9fdbb95d7dd2-3958755d0583dfc2-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d3d3bb458685574c894b246ae5eec7e4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "575",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 20 Feb 2023 14:00:06 GMT",
+        "ETag": "\u00224100a0e1-0000-3400-0000-63f37ce50000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "d3d3bb458685574c894b246ae5eec7e4",
+        "x-ms-correlation-request-id": "65290518-1eab-499d-a508-4a2e7757cc8f",
         "x-ms-ratelimit-remaining-subscription-reads": "11988",
-        "x-ms-request-id": "8b042c10-1a8d-4f99-aaec-5cce1fb63459",
-        "x-ms-routing-request-id": "UKSOUTH:20230125T173424Z:590c818f-014a-4b08-bf01-e8d9739d1881"
+        "x-ms-request-id": "8625b00e-5d6a-4042-bc73-4f9940346a38",
+        "x-ms-routing-request-id": "UKSOUTH:20230220T140007Z:65290518-1eab-499d-a508-4a2e7757cc8f"
       },
       "ResponseBody": {
-        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9772294b-bb9b-4567-ac54-a7849c9db638*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "name": "9772294b-bb9b-4567-ac54-a7849c9db638*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378",
+        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/b64b6f48-f019-4a92-8b7c-7300c4c85662*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "name": "b64b6f48-f019-4a92-8b7c-7300c4c85662*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634",
         "status": "Accepted",
-        "startTime": "2023-01-25T17:34:23.7673355Z"
+        "startTime": "2023-02-20T14:00:05.3908789Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9772294b-bb9b-4567-ac54-a7849c9db638*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997?api-version=2023-01-31",
+      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/b64b6f48-f019-4a92-8b7c-7300c4c85662*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89?api-version=2023-01-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-58673b47cdd0987b811e8fd62abc11d6-3bf370b035a56624-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "9fd7b6b0d3591c0c9e1c23e77d2b4716",
+        "traceparent": "00-c7a4995fb6a4ad9b00ca9fdbb95d7dd2-c78edc9a1e0e4381-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "58925444faae22797b5cba3cca0fa4af",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -736,34 +808,34 @@
         "Cache-Control": "no-cache",
         "Content-Length": "575",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Jan 2023 17:34:24 GMT",
-        "ETag": "\u00220000c905-0000-3300-0000-63d1681f0000\u0022",
+        "Date": "Mon, 20 Feb 2023 14:00:09 GMT",
+        "ETag": "\u00224100a0e1-0000-3400-0000-63f37ce50000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "9fd7b6b0d3591c0c9e1c23e77d2b4716",
-        "x-ms-correlation-request-id": "1759419a-f89d-407e-837e-5ab7d63ad116",
+        "x-ms-client-request-id": "58925444faae22797b5cba3cca0fa4af",
+        "x-ms-correlation-request-id": "a31a4e14-9f84-48f4-9fe2-c5296d54a200",
         "x-ms-ratelimit-remaining-subscription-reads": "11987",
-        "x-ms-request-id": "402fa89d-7c0e-47ea-9349-1297abfb578a",
-        "x-ms-routing-request-id": "UKSOUTH:20230125T173425Z:1759419a-f89d-407e-837e-5ab7d63ad116"
+        "x-ms-request-id": "d58003f9-b2f4-470d-87dd-7975b2f2cfef",
+        "x-ms-routing-request-id": "UKSOUTH:20230220T140009Z:a31a4e14-9f84-48f4-9fe2-c5296d54a200"
       },
       "ResponseBody": {
-        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9772294b-bb9b-4567-ac54-a7849c9db638*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "name": "9772294b-bb9b-4567-ac54-a7849c9db638*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378",
+        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/b64b6f48-f019-4a92-8b7c-7300c4c85662*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "name": "b64b6f48-f019-4a92-8b7c-7300c4c85662*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634",
         "status": "Accepted",
-        "startTime": "2023-01-25T17:34:23.7673355Z"
+        "startTime": "2023-02-20T14:00:05.3908789Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9772294b-bb9b-4567-ac54-a7849c9db638*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997?api-version=2023-01-31",
+      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/b64b6f48-f019-4a92-8b7c-7300c4c85662*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89?api-version=2023-01-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-58673b47cdd0987b811e8fd62abc11d6-822d1d81dfaef926-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "1106d3c85e9d40201e0aca496f7ba2a8",
+        "traceparent": "00-c7a4995fb6a4ad9b00ca9fdbb95d7dd2-4e37ade8a5c4106e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1ef602ff98fabdbbba6b109dccb1fcb8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -772,106 +844,34 @@
         "Cache-Control": "no-cache",
         "Content-Length": "575",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Jan 2023 17:34:25 GMT",
-        "ETag": "\u00220000c905-0000-3300-0000-63d1681f0000\u0022",
+        "Date": "Mon, 20 Feb 2023 14:00:11 GMT",
+        "ETag": "\u00224100a0e1-0000-3400-0000-63f37ce50000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "1106d3c85e9d40201e0aca496f7ba2a8",
-        "x-ms-correlation-request-id": "ded1af96-d8ef-4ee1-ae41-44df5ffa9305",
+        "x-ms-client-request-id": "1ef602ff98fabdbbba6b109dccb1fcb8",
+        "x-ms-correlation-request-id": "74e6a4e7-3028-47c8-bc39-e1246450046d",
         "x-ms-ratelimit-remaining-subscription-reads": "11986",
-        "x-ms-request-id": "3d284adf-4eb5-49da-b1ee-82ed086299c9",
-        "x-ms-routing-request-id": "UKSOUTH:20230125T173426Z:ded1af96-d8ef-4ee1-ae41-44df5ffa9305"
+        "x-ms-request-id": "bdba2f84-8856-428a-87d1-2c630e06e3b6",
+        "x-ms-routing-request-id": "UKSOUTH:20230220T140011Z:74e6a4e7-3028-47c8-bc39-e1246450046d"
       },
       "ResponseBody": {
-        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9772294b-bb9b-4567-ac54-a7849c9db638*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "name": "9772294b-bb9b-4567-ac54-a7849c9db638*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378",
+        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/b64b6f48-f019-4a92-8b7c-7300c4c85662*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "name": "b64b6f48-f019-4a92-8b7c-7300c4c85662*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634",
         "status": "Accepted",
-        "startTime": "2023-01-25T17:34:23.7673355Z"
+        "startTime": "2023-02-20T14:00:05.3908789Z"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9772294b-bb9b-4567-ac54-a7849c9db638*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997?api-version=2023-01-31",
+      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/b64b6f48-f019-4a92-8b7c-7300c4c85662*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89?api-version=2023-01-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-58673b47cdd0987b811e8fd62abc11d6-6109ee76cb11214e-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "29fa21898b75a0627d8c96dfce238c41",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "575",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Jan 2023 17:34:27 GMT",
-        "ETag": "\u00220000c905-0000-3300-0000-63d1681f0000\u0022",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "29fa21898b75a0627d8c96dfce238c41",
-        "x-ms-correlation-request-id": "7403fc39-913d-4353-8a63-332dd37461bd",
-        "x-ms-ratelimit-remaining-subscription-reads": "11985",
-        "x-ms-request-id": "286f6ce3-9ea3-4b9e-bb6a-776398386b5a",
-        "x-ms-routing-request-id": "UKSOUTH:20230125T173427Z:7403fc39-913d-4353-8a63-332dd37461bd"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9772294b-bb9b-4567-ac54-a7849c9db638*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "name": "9772294b-bb9b-4567-ac54-a7849c9db638*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378",
-        "status": "Accepted",
-        "startTime": "2023-01-25T17:34:23.7673355Z"
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9772294b-bb9b-4567-ac54-a7849c9db638*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997?api-version=2023-01-31",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-58673b47cdd0987b811e8fd62abc11d6-333985d502540119-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "806bcc8f1f36518e9596804e09c2ad22",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "575",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Jan 2023 17:34:29 GMT",
-        "ETag": "\u00220000c905-0000-3300-0000-63d1681f0000\u0022",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "806bcc8f1f36518e9596804e09c2ad22",
-        "x-ms-correlation-request-id": "bed38d0c-a4a5-40f0-8e4f-3b122f0057de",
-        "x-ms-ratelimit-remaining-subscription-reads": "11984",
-        "x-ms-request-id": "e869395a-070a-4f28-b9fd-8d06858b883c",
-        "x-ms-routing-request-id": "UKSOUTH:20230125T173430Z:bed38d0c-a4a5-40f0-8e4f-3b122f0057de"
-      },
-      "ResponseBody": {
-        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9772294b-bb9b-4567-ac54-a7849c9db638*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "name": "9772294b-bb9b-4567-ac54-a7849c9db638*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378",
-        "status": "Accepted",
-        "startTime": "2023-01-25T17:34:23.7673355Z"
-      }
-    },
-    {
-      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9772294b-bb9b-4567-ac54-a7849c9db638*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997?api-version=2023-01-31",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-58673b47cdd0987b811e8fd62abc11d6-775925b0919a273c-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "5c5e7b7a1e303da071669311c84172fb",
+        "traceparent": "00-c7a4995fb6a4ad9b00ca9fdbb95d7dd2-e099e5fa70078f3e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "762c6d8be5594aa541b05729cc0f8d79",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -880,35 +880,35 @@
         "Cache-Control": "no-cache",
         "Content-Length": "594",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Jan 2023 17:34:33 GMT",
-        "ETag": "\u00220000cc05-0000-3300-0000-63d168260000\u0022",
+        "Date": "Mon, 20 Feb 2023 14:00:15 GMT",
+        "ETag": "\u00224100bbe1-0000-3400-0000-63f37ceb0000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "5c5e7b7a1e303da071669311c84172fb",
-        "x-ms-correlation-request-id": "53c75a1e-6e8e-467b-a3e5-459e2c519dd2",
-        "x-ms-ratelimit-remaining-subscription-reads": "11983",
-        "x-ms-request-id": "3ab20e83-f56d-46ad-9c90-0fda773e2980",
-        "x-ms-routing-request-id": "UKSOUTH:20230125T173434Z:53c75a1e-6e8e-467b-a3e5-459e2c519dd2"
+        "x-ms-client-request-id": "762c6d8be5594aa541b05729cc0f8d79",
+        "x-ms-correlation-request-id": "ea3b760e-ca4a-4248-91b1-29ed3c932cdd",
+        "x-ms-ratelimit-remaining-subscription-reads": "11985",
+        "x-ms-request-id": "519bb7d7-545b-4843-8ab5-858edacdfd52",
+        "x-ms-routing-request-id": "UKSOUTH:20230220T140015Z:ea3b760e-ca4a-4248-91b1-29ed3c932cdd"
       },
       "ResponseBody": {
-        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/9772294b-bb9b-4567-ac54-a7849c9db638*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "name": "9772294b-bb9b-4567-ac54-a7849c9db638*9A1D25CE76FFD6701EFA103634594902E4BBD39431BC66BFA9BB547C56251997",
-        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378",
+        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/providers/Microsoft.VoiceServices/locations/CENTRALUSEUAP/operationStatuses/b64b6f48-f019-4a92-8b7c-7300c4c85662*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "name": "b64b6f48-f019-4a92-8b7c-7300c4c85662*1460767FBCDFE77AADB53C0A8CCEB213284637308EC68C9C779B8E27633A5D89",
+        "resourceId": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634",
         "status": "Succeeded",
-        "startTime": "2023-01-25T17:34:23.7673355Z",
+        "startTime": "2023-02-20T14:00:05.3908789Z",
         "properties": null
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378?api-version=2023-01-31",
+      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634?api-version=2023-01-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-58673b47cdd0987b811e8fd62abc11d6-1d30fa040ba9e7a4-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "a3ba897e2110697192a993de0a1397bb",
+        "traceparent": "00-c7a4995fb6a4ad9b00ca9fdbb95d7dd2-90fe78aa34ae7844-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e26a74a6a9f8abea99d59d43eadc55ca",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -917,39 +917,39 @@
         "Cache-Control": "no-cache",
         "Content-Length": "986",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Jan 2023 17:34:33 GMT",
-        "ETag": "\u00227e08def1-0000-3300-0000-63d168260000\u0022",
+        "Date": "Mon, 20 Feb 2023 14:00:15 GMT",
+        "ETag": "\u002201000fcd-0000-3400-0000-63f37ceb0000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Request-Context": "appId=cid-v1:ee9ea8e7-bc71-4c0f-83ad-dc11c5b30732",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "a3ba897e2110697192a993de0a1397bb",
-        "x-ms-correlation-request-id": "34b8556d-1dad-423c-9437-8482ed02f07a",
+        "x-ms-client-request-id": "e26a74a6a9f8abea99d59d43eadc55ca",
+        "x-ms-correlation-request-id": "c191ffba-6dbd-48ef-a73a-b33c6a76ad71",
         "x-ms-providerhub-traffic": "True",
-        "x-ms-ratelimit-remaining-subscription-reads": "11982",
-        "x-ms-request-id": "ba101ee6-f294-4035-9126-17342568d373",
-        "x-ms-routing-request-id": "UKSOUTH:20230125T173434Z:34b8556d-1dad-423c-9437-8482ed02f07a"
+        "x-ms-ratelimit-remaining-subscription-reads": "11984",
+        "x-ms-request-id": "1cbcd466-33b5-4e0f-a5b8-871db85786ff",
+        "x-ms-routing-request-id": "UKSOUTH:20230220T140015Z:c191ffba-6dbd-48ef-a73a-b33c6a76ad71"
       },
       "ResponseBody": {
-        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378",
-        "name": "SDKTest5378",
+        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634",
+        "name": "SDKTest7634",
         "type": "microsoft.voiceservices/communicationsgateways",
         "location": "centraluseuap",
         "tags": {},
         "systemData": {
           "createdBy": "b3fd61be-0e34-4d9e-90c3-0a5abd40a26a",
           "createdByType": "Application",
-          "createdAt": "2023-01-25T17:34:10.6458718Z",
+          "createdAt": "2023-02-20T13:59:51.7738167Z",
           "lastModifiedBy": "b3fd61be-0e34-4d9e-90c3-0a5abd40a26a",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-01-25T17:34:23.5833949Z"
+          "lastModifiedAt": "2023-02-20T14:00:05.2415252Z"
         },
         "properties": {
           "status": "ChangePending",
           "apiBridge": null,
-          "autoGeneratedDomainNameLabel": "SDKTest5378.gxfff2ecbsa2hjfu",
+          "autoGeneratedDomainNameLabel": "SDKTest7634.arcahydkh6ckbdax",
           "serviceLocations": [
             {
               "name": "eastus",
@@ -982,14 +982,14 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378?api-version=2023-01-31",
+      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634?api-version=2023-01-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-b47a45e4893eb2471494693698efacf3-9605724b5e9118be-00",
-        "User-Agent": "azsdk-net-ResourceManager.VoiceServices/1.0.0-alpha.20230125.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "536473df2fc571102b2d0fd08c7d8954",
+        "traceparent": "00-d437d45afac31f30d22819b1aa7fb6fe-191f2dfb46da94f2-00",
+        "User-Agent": "azsdk-net-ResourceManager.VoiceServices/1.0.0-alpha.20230220.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5cb001602de31a565dabdc494192f0ab",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -998,39 +998,39 @@
         "Cache-Control": "no-cache",
         "Content-Length": "986",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Jan 2023 17:34:34 GMT",
-        "ETag": "\u00227e08def1-0000-3300-0000-63d168260000\u0022",
+        "Date": "Mon, 20 Feb 2023 14:00:15 GMT",
+        "ETag": "\u002201000fcd-0000-3400-0000-63f37ceb0000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Request-Context": "appId=cid-v1:ee9ea8e7-bc71-4c0f-83ad-dc11c5b30732",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "536473df2fc571102b2d0fd08c7d8954",
-        "x-ms-correlation-request-id": "0d46d5c0-4886-4cea-8739-911723886e53",
+        "x-ms-client-request-id": "5cb001602de31a565dabdc494192f0ab",
+        "x-ms-correlation-request-id": "f92e08ea-b71b-40b8-bb18-0f34539ae64c",
         "x-ms-providerhub-traffic": "True",
-        "x-ms-ratelimit-remaining-subscription-reads": "11981",
-        "x-ms-request-id": "5f855db6-0671-4262-bf9c-cc61840c2a53",
-        "x-ms-routing-request-id": "UKSOUTH:20230125T173435Z:0d46d5c0-4886-4cea-8739-911723886e53"
+        "x-ms-ratelimit-remaining-subscription-reads": "11983",
+        "x-ms-request-id": "b1e2ab6c-e1bc-48f7-9f8a-cd0591100e4f",
+        "x-ms-routing-request-id": "UKSOUTH:20230220T140015Z:f92e08ea-b71b-40b8-bb18-0f34539ae64c"
       },
       "ResponseBody": {
-        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378",
-        "name": "SDKTest5378",
+        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634",
+        "name": "SDKTest7634",
         "type": "microsoft.voiceservices/communicationsgateways",
         "location": "centraluseuap",
         "tags": {},
         "systemData": {
           "createdBy": "b3fd61be-0e34-4d9e-90c3-0a5abd40a26a",
           "createdByType": "Application",
-          "createdAt": "2023-01-25T17:34:10.6458718Z",
+          "createdAt": "2023-02-20T13:59:51.7738167Z",
           "lastModifiedBy": "b3fd61be-0e34-4d9e-90c3-0a5abd40a26a",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-01-25T17:34:23.5833949Z"
+          "lastModifiedAt": "2023-02-20T14:00:05.2415252Z"
         },
         "properties": {
           "status": "ChangePending",
           "apiBridge": null,
-          "autoGeneratedDomainNameLabel": "SDKTest5378.gxfff2ecbsa2hjfu",
+          "autoGeneratedDomainNameLabel": "SDKTest7634.arcahydkh6ckbdax",
           "serviceLocations": [
             {
               "name": "eastus",
@@ -1063,16 +1063,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378?api-version=2023-01-31",
+      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634?api-version=2023-01-31",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "30",
         "Content-Type": "application/json",
-        "traceparent": "00-769992475ee025fe86cba240cba90e7d-58b93124fae88b83-00",
-        "User-Agent": "azsdk-net-ResourceManager.VoiceServices/1.0.0-alpha.20230125.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "7fcf84240907581209f4c9878ac1325d",
+        "traceparent": "00-1ddbeafcae906faed8678a3ddd100dad-c0cfce79ae5e76fe-00",
+        "User-Agent": "azsdk-net-ResourceManager.VoiceServices/1.0.0-alpha.20230220.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "57f797dd1947e2c08380dd8347626065",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -1085,22 +1085,22 @@
         "Cache-Control": "no-cache",
         "Content-Length": "988",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Jan 2023 17:34:35 GMT",
-        "ETag": "\u00227e0834f3-0000-3300-0000-63d1682b0000\u0022",
+        "Date": "Mon, 20 Feb 2023 14:00:17 GMT",
+        "ETag": "\u0022010010cd-0000-3400-0000-63f37cf00000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "7fcf84240907581209f4c9878ac1325d",
-        "x-ms-correlation-request-id": "68740361-bd5f-4198-b0d0-8d2c29f66508",
+        "x-ms-client-request-id": "57f797dd1947e2c08380dd8347626065",
+        "x-ms-correlation-request-id": "2e50a58d-b25e-4339-bfcf-fae7a27448b3",
         "x-ms-providerhub-traffic": "True",
         "x-ms-ratelimit-remaining-subscription-writes": "1196",
-        "x-ms-request-id": "364135b4-3129-4170-aba2-834da13ac438",
-        "x-ms-routing-request-id": "UKSOUTH:20230125T173436Z:68740361-bd5f-4198-b0d0-8d2c29f66508"
+        "x-ms-request-id": "9a8c8809-47d4-4603-87c0-018f3aab89be",
+        "x-ms-routing-request-id": "UKSOUTH:20230220T140017Z:2e50a58d-b25e-4339-bfcf-fae7a27448b3"
       },
       "ResponseBody": {
-        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378",
-        "name": "SDKTest5378",
+        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634",
+        "name": "SDKTest7634",
         "type": "microsoft.voiceservices/communicationsgateways",
         "location": "centraluseuap",
         "tags": {
@@ -1109,14 +1109,14 @@
         "systemData": {
           "createdBy": "b3fd61be-0e34-4d9e-90c3-0a5abd40a26a",
           "createdByType": "Application",
-          "createdAt": "2023-01-25T17:34:10.6458718Z",
+          "createdAt": "2023-02-20T13:59:51.7738167Z",
           "lastModifiedBy": "b3fd61be-0e34-4d9e-90c3-0a5abd40a26a",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-01-25T17:34:35.1928245Z"
+          "lastModifiedAt": "2023-02-20T14:00:16.0836733Z"
         },
         "properties": {
           "status": "ChangePending",
-          "autoGeneratedDomainNameLabel": "SDKTest5378.gxfff2ecbsa2hjfu",
+          "autoGeneratedDomainNameLabel": "SDKTest7634.arcahydkh6ckbdax",
           "serviceLocations": [
             {
               "name": "eastus",
@@ -1149,14 +1149,14 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378?api-version=2023-01-31",
+      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634?api-version=2023-01-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c9c0e411a6bd06214b0c43bcea5c887a-7575ac2e15a00d90-00",
-        "User-Agent": "azsdk-net-ResourceManager.VoiceServices/1.0.0-alpha.20230125.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "5532d7ce1edc4f36784977e212a1dd15",
+        "traceparent": "00-e1edf1892565f0c706e7fda7de4d1a55-2f0501a4ba31f62f-00",
+        "User-Agent": "azsdk-net-ResourceManager.VoiceServices/1.0.0-alpha.20230220.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "cac98d5b305e78951e4f854ccda06a07",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1165,24 +1165,24 @@
         "Cache-Control": "no-cache",
         "Content-Length": "1005",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 25 Jan 2023 17:34:35 GMT",
-        "ETag": "\u00227e0834f3-0000-3300-0000-63d1682b0000\u0022",
+        "Date": "Mon, 20 Feb 2023 14:00:17 GMT",
+        "ETag": "\u0022010010cd-0000-3400-0000-63f37cf00000\u0022",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Request-Context": "appId=cid-v1:ee9ea8e7-bc71-4c0f-83ad-dc11c5b30732",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "5532d7ce1edc4f36784977e212a1dd15",
-        "x-ms-correlation-request-id": "c32a5099-050e-4fad-86ab-d051bc7cae5b",
+        "x-ms-client-request-id": "cac98d5b305e78951e4f854ccda06a07",
+        "x-ms-correlation-request-id": "9c9b58d7-2c77-4057-b53e-c7ca56d3d09e",
         "x-ms-providerhub-traffic": "True",
-        "x-ms-ratelimit-remaining-subscription-reads": "11980",
-        "x-ms-request-id": "7fe44b30-ba70-42bd-acb2-1892df6cad8b",
-        "x-ms-routing-request-id": "UKSOUTH:20230125T173436Z:c32a5099-050e-4fad-86ab-d051bc7cae5b"
+        "x-ms-ratelimit-remaining-subscription-reads": "11982",
+        "x-ms-request-id": "0b8de901-5810-41d7-82ab-b52fceb81f2b",
+        "x-ms-routing-request-id": "UKSOUTH:20230220T140017Z:9c9b58d7-2c77-4057-b53e-c7ca56d3d09e"
       },
       "ResponseBody": {
-        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378",
-        "name": "SDKTest5378",
+        "id": "/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634",
+        "name": "SDKTest7634",
         "type": "microsoft.voiceservices/communicationsgateways",
         "location": "centraluseuap",
         "tags": {
@@ -1191,15 +1191,15 @@
         "systemData": {
           "createdBy": "b3fd61be-0e34-4d9e-90c3-0a5abd40a26a",
           "createdByType": "Application",
-          "createdAt": "2023-01-25T17:34:10.6458718Z",
+          "createdAt": "2023-02-20T13:59:51.7738167Z",
           "lastModifiedBy": "b3fd61be-0e34-4d9e-90c3-0a5abd40a26a",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2023-01-25T17:34:35.1928245Z"
+          "lastModifiedAt": "2023-02-20T14:00:16.0836733Z"
         },
         "properties": {
           "status": "ChangePending",
           "apiBridge": null,
-          "autoGeneratedDomainNameLabel": "SDKTest5378.gxfff2ecbsa2hjfu",
+          "autoGeneratedDomainNameLabel": "SDKTest7634.arcahydkh6ckbdax",
           "serviceLocations": [
             {
               "name": "eastus",
@@ -1232,14 +1232,14 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest2466/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest5378?api-version=2023-01-31",
+      "RequestUri": "https://management.azure.com/subscriptions/d2b80745-3b5d-4357-84cc-ede5c5886c5a/resourceGroups/SDKTest7027/providers/Microsoft.VoiceServices/communicationsGateways/SDKTest7634?api-version=2023-01-31",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-e0c48b495f910adb697d250b3da7f8cb-b5a3b6f943c33095-00",
-        "User-Agent": "azsdk-net-ResourceManager.VoiceServices/1.0.0-alpha.20230125.1 (.NET 7.0.2; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "85ba3f1f1743d5b3610b49d06588e669",
+        "traceparent": "00-4943ffee24a6504ccb815b68fc2ff611-afa3f27254a5940f-00",
+        "User-Agent": "azsdk-net-ResourceManager.VoiceServices/1.0.0-alpha.20230220.1 (.NET 7.0.3; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5365f2e4fde4468241ced86250d3d3fb",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1247,26 +1247,26 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Wed, 25 Jan 2023 17:34:37 GMT",
+        "Date": "Mon, 20 Feb 2023 14:00:19 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Request-Context": "appId=cid-v1:ee9ea8e7-bc71-4c0f-83ad-dc11c5b30732",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "85ba3f1f1743d5b3610b49d06588e669",
-        "x-ms-correlation-request-id": "a9b8fb09-8940-46f1-8442-a930d93a7eed",
+        "x-ms-client-request-id": "5365f2e4fde4468241ced86250d3d3fb",
+        "x-ms-correlation-request-id": "ce662cc1-70b5-4461-8da3-ec71754b05bf",
         "x-ms-providerhub-traffic": "True",
         "x-ms-ratelimit-remaining-subscription-deletes": "14999",
         "x-ms-request-id": "00000000-0000-0000-0000-000000000000",
-        "x-ms-routing-request-id": "UKSOUTH:20230125T173438Z:a9b8fb09-8940-46f1-8442-a930d93a7eed"
+        "x-ms-routing-request-id": "UKSOUTH:20230220T140019Z:ce662cc1-70b5-4461-8da3-ec71754b05bf"
       },
       "ResponseBody": null
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "390771795",
+    "RandomSeed": "26289405",
     "RESOURCE_MANAGER_URL": "https://management.azure.com/",
     "SUBSCRIPTION_ID": "d2b80745-3b5d-4357-84cc-ede5c5886c5a"
   }
