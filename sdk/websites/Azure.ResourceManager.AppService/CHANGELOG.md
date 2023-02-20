@@ -4,7 +4,7 @@
 
 ### Bugs Fixed
 
-- Fixed serialization issue when service returns empty string for `KeyVaultId` in `AppCertificateData`.
+- Fixed serialization issue when service returns empty string for `KeyVaultId` in `AppCertificateData` and `AppCertificatePatch`.
 
 ### Other Changes
 
