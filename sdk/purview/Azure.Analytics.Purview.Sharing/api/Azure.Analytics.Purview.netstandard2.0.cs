@@ -16,14 +16,14 @@ namespace Azure.Analytics.Purview
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response ActivateTenantEmailRegistration(Azure.Core.RequestContent content, string repeatabilityRequestId = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ActivateTenantEmailRegistrationAsync(Azure.Core.RequestContent content, string repeatabilityRequestId = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> CreateOrReplace(Azure.WaitUntil waitUntil, string receivedShareId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateOrReplaceAsync(Azure.WaitUntil waitUntil, string receivedShareId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> Delete(Azure.WaitUntil waitUntil, string receivedShareId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> DeleteAsync(Azure.WaitUntil waitUntil, string receivedShareId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetAttacheds(string referenceName, string skipToken = null, string filter = null, string orderby = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetAttachedsAsync(string referenceName, string skipToken = null, string filter = null, string orderby = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetDetacheds(string skipToken = null, string filter = null, string orderby = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetDetachedsAsync(string skipToken = null, string filter = null, string orderby = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> CreateOrReplaceReceivedShare(Azure.WaitUntil waitUntil, string receivedShareId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateOrReplaceReceivedShareAsync(Azure.WaitUntil waitUntil, string receivedShareId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> DeleteReceivedShare(Azure.WaitUntil waitUntil, string receivedShareId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> DeleteReceivedShareAsync(Azure.WaitUntil waitUntil, string receivedShareId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetAllAttachedReceivedShares(string referenceName, string skipToken = null, string filter = null, string orderby = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetAllAttachedReceivedSharesAsync(string referenceName, string skipToken = null, string filter = null, string orderby = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetAllDetachedReceivedShares(string skipToken = null, string filter = null, string orderby = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetAllDetachedReceivedSharesAsync(string skipToken = null, string filter = null, string orderby = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetReceivedShare(string receivedShareId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetReceivedShareAsync(string receivedShareId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response RegisterTenantEmailRegistration(string repeatabilityRequestId = null, Azure.RequestContext context = null) { throw null; }
@@ -35,23 +35,23 @@ namespace Azure.Analytics.Purview
         public SentSharesClient(string endpoint, Azure.Core.TokenCredential credential) { }
         public SentSharesClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.PurviewShareClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response CreateInvitation(string sentShareId, string sentShareInvitationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateInvitationAsync(string sentShareId, string sentShareInvitationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> CreateOrReplace(Azure.WaitUntil waitUntil, string sentShareId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateOrReplaceAsync(Azure.WaitUntil waitUntil, string sentShareId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> Delete(Azure.WaitUntil waitUntil, string sentShareId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> DeleteAsync(Azure.WaitUntil waitUntil, string sentShareId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<System.BinaryData> DeleteInvitation(Azure.WaitUntil waitUntil, string sentShareId, string sentShareInvitationId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> DeleteInvitationAsync(Azure.WaitUntil waitUntil, string sentShareId, string sentShareInvitationId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetInvitation(string sentShareId, string sentShareInvitationId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetInvitationAsync(string sentShareId, string sentShareInvitationId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetInvitations(string sentShareId, string skipToken = null, string filter = null, string orderby = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetInvitationsAsync(string sentShareId, string skipToken = null, string filter = null, string orderby = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response CreateSentShareInvitation(string sentShareId, string sentShareInvitationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateSentShareInvitationAsync(string sentShareId, string sentShareInvitationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> CreateOrReplaceSentShare(Azure.WaitUntil waitUntil, string sentShareId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateOrReplaceSentShareAsync(Azure.WaitUntil waitUntil, string sentShareId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> DeleteSentShare(Azure.WaitUntil waitUntil, string sentShareId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> DeleteSentShareAsync(Azure.WaitUntil waitUntil, string sentShareId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> DeleteSentShareInvitation(Azure.WaitUntil waitUntil, string sentShareId, string sentShareInvitationId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> DeleteSentShareInvitationAsync(Azure.WaitUntil waitUntil, string sentShareId, string sentShareInvitationId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetSentShareInvitation(string sentShareId, string sentShareInvitationId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetSentShareInvitationAsync(string sentShareId, string sentShareInvitationId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetSentShareInvitations(string sentShareId, string skipToken = null, string filter = null, string orderby = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetSentShareInvitationsAsync(string sentShareId, string skipToken = null, string filter = null, string orderby = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetSentShare(string sentShareId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSentShareAsync(string sentShareId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetSentShares(string referenceName, string skipToken = null, string filter = null, string orderby = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetSentSharesAsync(string referenceName, string skipToken = null, string filter = null, string orderby = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response NotifyUserInvitation(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> NotifyUserInvitationAsync(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response NotifyUserSentShareInvitation(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> NotifyUserSentShareInvitationAsync(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId = null, Azure.RequestContext context = null) { throw null; }
     }
 }
