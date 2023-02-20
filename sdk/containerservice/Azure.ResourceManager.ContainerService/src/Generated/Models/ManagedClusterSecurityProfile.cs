@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Security profile for the container service cluster. </summary>
@@ -13,20 +17,61 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ManagedClusterSecurityProfile. </summary>
         public ManagedClusterSecurityProfile()
         {
+            CustomCATrustCertificates = new ChangeTrackingList<byte[]>();
         }
 
         /// <summary> Initializes a new instance of ManagedClusterSecurityProfile. </summary>
         /// <param name="defender"> Microsoft Defender settings for the security profile. </param>
         /// <param name="azureKeyVaultKms"> Azure Key Vault [key management service](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/) settings for the security profile. </param>
-        internal ManagedClusterSecurityProfile(ManagedClusterSecurityProfileDefender defender, ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms)
+        /// <param name="workloadIdentity"> [Workload Identity](https://azure.github.io/azure-workload-identity/docs/) settings for the security profile. </param>
+        /// <param name="imageCleaner"> ImageCleaner settings for the security profile. </param>
+        /// <param name="nodeRestriction"> [Node Restriction](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#noderestriction) settings for the security profile. </param>
+        /// <param name="customCATrustCertificates"> A list of up to 10 base64 encoded CAs that will be added to the trust store on nodes with the Custom CA Trust feature enabled. For more information see [Custom CA Trust Certificates](https://learn.microsoft.com/en-us/azure/aks/custom-certificate-authority). </param>
+        internal ManagedClusterSecurityProfile(ManagedClusterSecurityProfileDefender defender, ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms, ManagedClusterSecurityProfileWorkloadIdentity workloadIdentity, ManagedClusterSecurityProfileImageCleaner imageCleaner, ManagedClusterSecurityProfileNodeRestriction nodeRestriction, IList<byte[]> customCATrustCertificates)
         {
             Defender = defender;
             AzureKeyVaultKms = azureKeyVaultKms;
+            WorkloadIdentity = workloadIdentity;
+            ImageCleaner = imageCleaner;
+            NodeRestriction = nodeRestriction;
+            CustomCATrustCertificates = customCATrustCertificates;
         }
 
         /// <summary> Microsoft Defender settings for the security profile. </summary>
         public ManagedClusterSecurityProfileDefender Defender { get; set; }
         /// <summary> Azure Key Vault [key management service](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/) settings for the security profile. </summary>
         public ManagedClusterSecurityProfileKeyVaultKms AzureKeyVaultKms { get; set; }
+        /// <summary> [Workload Identity](https://azure.github.io/azure-workload-identity/docs/) settings for the security profile. </summary>
+        internal ManagedClusterSecurityProfileWorkloadIdentity WorkloadIdentity { get; set; }
+        /// <summary> Whether to enable Workload Identity. </summary>
+        public bool? WorkloadIdentityEnabled
+        {
+            get => WorkloadIdentity is null ? default : WorkloadIdentity.Enabled;
+            set
+            {
+                if (WorkloadIdentity is null)
+                    WorkloadIdentity = new ManagedClusterSecurityProfileWorkloadIdentity();
+                WorkloadIdentity.Enabled = value;
+            }
+        }
+
+        /// <summary> ImageCleaner settings for the security profile. </summary>
+        public ManagedClusterSecurityProfileImageCleaner ImageCleaner { get; set; }
+        /// <summary> [Node Restriction](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#noderestriction) settings for the security profile. </summary>
+        internal ManagedClusterSecurityProfileNodeRestriction NodeRestriction { get; set; }
+        /// <summary> Whether to enable Node Restriction. </summary>
+        public bool? NodeRestrictionEnabled
+        {
+            get => NodeRestriction is null ? default : NodeRestriction.Enabled;
+            set
+            {
+                if (NodeRestriction is null)
+                    NodeRestriction = new ManagedClusterSecurityProfileNodeRestriction();
+                NodeRestriction.Enabled = value;
+            }
+        }
+
+        /// <summary> A list of up to 10 base64 encoded CAs that will be added to the trust store on nodes with the Custom CA Trust feature enabled. For more information see [Custom CA Trust Certificates](https://learn.microsoft.com/en-us/azure/aks/custom-certificate-authority). </summary>
+        public IList<byte[]> CustomCATrustCertificates { get; }
     }
 }

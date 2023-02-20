@@ -9,8 +9,8 @@ generate-model-factory: false
 csharp: true
 library-name: ContainerService
 namespace: Azure.ResourceManager.ContainerService
-require: https://github.com/Azure/azure-rest-api-specs/blob/495363bc011ce917f579adc1a5209073565d37f4/specification/containerservice/resource-manager/readme.md
-tag: package-2022-09
+require: https://github.com/Azure/azure-rest-api-specs/blob/3b4a2c4af20e4aea66871c9ed067d0641ea2ac80/specification/containerservice/resource-manager/Microsoft.ContainerService/aks/readme.md
+tag: package-preview-2022-11
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -64,6 +64,29 @@ rename-mapping:
   KeyVaultNetworkAccessTypes: ManagedClusterKeyVaultNetworkAccessType
   ManagedClusterOidcIssuerProfile.enabled: IsEnabled
   ManagedClusterOidcIssuerProfile.issuerURL: IssuerUriInfo
+  AbsoluteMonthlySchedule: ContainerServiceMaintenanceAbsoluteMonthlySchedule
+  RelativeMonthlySchedule: ContainerServiceMaintenanceRelativeMonthlySchedule
+  Type: ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex
+  Schedule: ContainerServiceMaintenanceSchedule
+  WeeklySchedule: ContainerServiceMaintenanceWeeklySchedule
+  BackendPoolType: ManagedClusterLoadBalancerBackendPoolType
+  ContainerServiceNetworkProfileKubeProxyConfigIpvsConfig: ContainerServiceNetworkProfileKubeProxyIpvsConfig
+  IpvsScheduler: ContainerServiceNetworkProfileKubeProxyIpvsScheduler
+  Mode: ContainerServiceNetworkProfileKubeProxyMode
+  ControlledValues: ManagedClusterWorkloadAutoScalerControlledValue
+  GuardrailsProfile: ManagedClusterGuardrailsProfile
+  Level: ManagedClusterGuardrailsProfileLevel
+  ManagedClusterAzureMonitorProfileKubeStateMetrics: ManagedClusterMonitorProfileKubeStateMetrics
+  ManagedClusterAzureMonitorProfileMetrics: ManagedClusterMonitorProfileMetrics
+  ManagedClusterSecurityProfile.nodeRestrictionEnabled: IsNodeRestrictionEnabled
+  ManagedClusterSecurityProfile.workloadIdentityEnabled: IsWorkloadIdentityEnabled
+  ManagedClusterSecurityProfileImageCleaner.enabled: IsEnabled
+  ManagedClusterWorkloadAutoScalerProfileVerticalPodAutoscaler: ManagedClusterVerticalPodAutoscaler
+  UpdateMode: ManagedClusterVerticalPodAutoscalerUpdateMode
+  NodeOSUpgradeChannel: ManagedClusterNodeOSUpgradeChannel
+  PortRange: AgentPoolNetworkPortRange
+  Protocol: AgentPoolNetworkPortProtocol
+  RestrictionLevel: ManagedClusterNodeResourceGroupRestrictionLevel
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -101,6 +124,7 @@ rename-rules:
   Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  URL: Url
   Etag: ETag|etag
   SSD: Ssd
   GPU: Gpu
@@ -117,6 +141,8 @@ rename-rules:
   MIG4G: Mig4G
   MIG7G: Mig7G
   Tcpkeepalive: TcpKeepalive
+  TCP: Tcp
+  UDP: Udp
 
 override-operation-name:
   ResolvePrivateLinkServiceId_POST: ResolvePrivateLinkServiceId
@@ -149,6 +175,23 @@ prepend-rp-prefix:
   - PrivateLinkResourcesListResult
   - TagsObject
   - PowerState
+  - Fleet
+  - FleetMember
+  - DateSpan
+  - FleetCredentialResult
+  - FleetCredentialResults
+  - FleetHubProfile
+  - FleetMemberProvisioningState
+  - FleetPatch
+  - FleetProvisioningState
+  - IPTag
+  - MaintenanceWindow
+  - NetworkPluginMode
+  - NetworkProfileForSnapshot
+  - TrustedAccessRole
+  - TrustedAccessRoleBinding
+  - TrustedAccessRoleRule
+  - TrustedAccessRoleBindingProvisioningState
 
 directive:
   - from: managedClusters.json
