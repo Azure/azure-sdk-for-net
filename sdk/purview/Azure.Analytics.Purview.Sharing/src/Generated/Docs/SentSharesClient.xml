@@ -1,0 +1,1283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetSentShareAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetSentShareAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+Response response = await client.GetSentShareAsync("<sentShareId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("shareKind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+</example>
+<remarks>
+Get a sent share
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+<details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
+<code>{
+  properties: {
+    artifact: {
+      storeKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
+      storeReference: {
+        referenceName: string, # Optional. Reference name for resource associated with the sink or artifact.
+        type: &quot;ArmResourceReference&quot;, # Optional. Defines the type of resource being shared
+      }, # Required. A Store Reference for an artifact or sink.
+    }, # Required. A class for sent share artifact.
+    createdAt: string (ISO 8601 Format), # Optional. Time at which the sent share was created. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    dependsOn: [Guid], # Optional. List of shares on which the sent share depends.
+    description: string, # Optional. Sent share description.
+    displayName: string, # Required. The name of the sent share
+    senderEmail: string, # Optional. Email of the sender who created the sent share.
+    senderName: string, # Optional. Name of the sender who created the sent share.
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+  }, # Required. Properties for InPlace sent share.
+  shareKind: InPlace, # Required. Defines the supported types for share.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+
+</remarks>
+    </member>
+    <member name="GetSentShare(String,RequestContext)">
+<example>
+This sample shows how to call GetSentShare with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+Response response = client.GetSentShare("<sentShareId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("shareKind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+</example>
+<remarks>
+Get a sent share
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+<details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
+<code>{
+  properties: {
+    artifact: {
+      storeKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
+      storeReference: {
+        referenceName: string, # Optional. Reference name for resource associated with the sink or artifact.
+        type: &quot;ArmResourceReference&quot;, # Optional. Defines the type of resource being shared
+      }, # Required. A Store Reference for an artifact or sink.
+    }, # Required. A class for sent share artifact.
+    createdAt: string (ISO 8601 Format), # Optional. Time at which the sent share was created. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    dependsOn: [Guid], # Optional. List of shares on which the sent share depends.
+    description: string, # Optional. Sent share description.
+    displayName: string, # Required. The name of the sent share
+    senderEmail: string, # Optional. Email of the sender who created the sent share.
+    senderName: string, # Optional. Name of the sender who created the sent share.
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+  }, # Required. Properties for InPlace sent share.
+  shareKind: InPlace, # Required. Defines the supported types for share.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+
+</remarks>
+    </member>
+    <member name="GetInvitationAsync(String,String,RequestContext)">
+<example>
+This sample shows how to call GetInvitationAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+Response response = await client.GetInvitationAsync("<sentShareId>", "<sentShareInvitationId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+</example>
+<remarks>
+Get recipient for a given sent share
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+<details><summary>ServiceInvitation</summary>Schema for <c>ServiceInvitation</c>:
+<code>{
+  properties: {
+    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    senderEmail: string, # Optional. Email address of the sender.
+    senderName: string, # Optional. Name of the sender
+    senderTenantName: string, # Optional. Tenant name of the sender
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+    targetActiveDirectoryId: Guid, # Required. The target azure active directory id the invitation is sent to.
+    targetObjectId: Guid, # Required. The target object id in the azure active directory the invitation is sent to.
+  }, # Required. Properties of the service invitation type.
+  invitationKind: Service, # Required. The types of invitations.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+<details><summary>~+ 1 more JSON objects</summary><details><summary>UserInvitation</summary>Schema for <c>UserInvitation</c>:
+<code>{
+  properties: {
+    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    notify: boolean, # Optional. Whether or not the recipient was notified via email.
+    senderEmail: string, # Optional. Email address of the sender.
+    senderName: string, # Optional. Name of the sender
+    senderTenantName: string, # Optional. Tenant name of the sender
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+    targetEmail: string, # Required. The receiver email for the invitation is being sent.
+  }, # Required. Properties of the user invitation type.
+  invitationKind: User, # Required. The types of invitations.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+</details>
+
+</remarks>
+    </member>
+    <member name="GetInvitation(String,String,RequestContext)">
+<example>
+This sample shows how to call GetInvitation with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+Response response = client.GetInvitation("<sentShareId>", "<sentShareInvitationId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+</example>
+<remarks>
+Get recipient for a given sent share
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+<details><summary>ServiceInvitation</summary>Schema for <c>ServiceInvitation</c>:
+<code>{
+  properties: {
+    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    senderEmail: string, # Optional. Email address of the sender.
+    senderName: string, # Optional. Name of the sender
+    senderTenantName: string, # Optional. Tenant name of the sender
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+    targetActiveDirectoryId: Guid, # Required. The target azure active directory id the invitation is sent to.
+    targetObjectId: Guid, # Required. The target object id in the azure active directory the invitation is sent to.
+  }, # Required. Properties of the service invitation type.
+  invitationKind: Service, # Required. The types of invitations.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+<details><summary>~+ 1 more JSON objects</summary><details><summary>UserInvitation</summary>Schema for <c>UserInvitation</c>:
+<code>{
+  properties: {
+    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    notify: boolean, # Optional. Whether or not the recipient was notified via email.
+    senderEmail: string, # Optional. Email address of the sender.
+    senderName: string, # Optional. Name of the sender
+    senderTenantName: string, # Optional. Tenant name of the sender
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+    targetEmail: string, # Required. The receiver email for the invitation is being sent.
+  }, # Required. Properties of the user invitation type.
+  invitationKind: User, # Required. The types of invitations.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+</details>
+
+</remarks>
+    </member>
+    <member name="CreateInvitationAsync(String,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateInvitationAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+var data = new {
+    properties = new {
+        targetActiveDirectoryId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        targetObjectId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    },
+    invitationKind = "Service",
+};
+
+Response response = await client.CreateInvitationAsync("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateInvitationAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+var data = new {
+    properties = new {
+        expirationDate = "2022-05-10T18:57:31.2311892Z",
+        shareStatus = "Detached",
+        targetActiveDirectoryId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        targetObjectId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    },
+    invitationKind = "Service",
+};
+
+Response response = await client.CreateInvitationAsync("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+</example>
+<remarks>
+Create a recipient for a given sent share
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+<details><summary>ServiceInvitation</summary>Schema for <c>ServiceInvitation</c>:
+<code>{
+  properties: {
+    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    senderEmail: string, # Optional. Email address of the sender.
+    senderName: string, # Optional. Name of the sender
+    senderTenantName: string, # Optional. Tenant name of the sender
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+    targetActiveDirectoryId: Guid, # Required. The target azure active directory id the invitation is sent to.
+    targetObjectId: Guid, # Required. The target object id in the azure active directory the invitation is sent to.
+  }, # Required. Properties of the service invitation type.
+  invitationKind: Service, # Required. The types of invitations.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+<details><summary>~+ 1 more JSON objects</summary><details><summary>UserInvitation</summary>Schema for <c>UserInvitation</c>:
+<code>{
+  properties: {
+    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    notify: boolean, # Optional. Whether or not the recipient was notified via email.
+    senderEmail: string, # Optional. Email address of the sender.
+    senderName: string, # Optional. Name of the sender
+    senderTenantName: string, # Optional. Tenant name of the sender
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+    targetEmail: string, # Required. The receiver email for the invitation is being sent.
+  }, # Required. Properties of the user invitation type.
+  invitationKind: User, # Required. The types of invitations.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+</details>
+
+Response Body:
+
+This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+<details><summary>ServiceInvitation</summary>Schema for <c>ServiceInvitation</c>:
+<code>{
+  properties: {
+    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    senderEmail: string, # Optional. Email address of the sender.
+    senderName: string, # Optional. Name of the sender
+    senderTenantName: string, # Optional. Tenant name of the sender
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+    targetActiveDirectoryId: Guid, # Required. The target azure active directory id the invitation is sent to.
+    targetObjectId: Guid, # Required. The target object id in the azure active directory the invitation is sent to.
+  }, # Required. Properties of the service invitation type.
+  invitationKind: Service, # Required. The types of invitations.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+<details><summary>~+ 1 more JSON objects</summary><details><summary>UserInvitation</summary>Schema for <c>UserInvitation</c>:
+<code>{
+  properties: {
+    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    notify: boolean, # Optional. Whether or not the recipient was notified via email.
+    senderEmail: string, # Optional. Email address of the sender.
+    senderName: string, # Optional. Name of the sender
+    senderTenantName: string, # Optional. Tenant name of the sender
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+    targetEmail: string, # Required. The receiver email for the invitation is being sent.
+  }, # Required. Properties of the user invitation type.
+  invitationKind: User, # Required. The types of invitations.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+</details>
+
+</remarks>
+    </member>
+    <member name="CreateInvitation(String,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateInvitation with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+var data = new {
+    properties = new {
+        targetActiveDirectoryId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        targetObjectId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    },
+    invitationKind = "Service",
+};
+
+Response response = client.CreateInvitation("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateInvitation with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+var data = new {
+    properties = new {
+        expirationDate = "2022-05-10T18:57:31.2311892Z",
+        shareStatus = "Detached",
+        targetActiveDirectoryId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+        targetObjectId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    },
+    invitationKind = "Service",
+};
+
+Response response = client.CreateInvitation("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+</example>
+<remarks>
+Create a recipient for a given sent share
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+<details><summary>ServiceInvitation</summary>Schema for <c>ServiceInvitation</c>:
+<code>{
+  properties: {
+    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    senderEmail: string, # Optional. Email address of the sender.
+    senderName: string, # Optional. Name of the sender
+    senderTenantName: string, # Optional. Tenant name of the sender
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+    targetActiveDirectoryId: Guid, # Required. The target azure active directory id the invitation is sent to.
+    targetObjectId: Guid, # Required. The target object id in the azure active directory the invitation is sent to.
+  }, # Required. Properties of the service invitation type.
+  invitationKind: Service, # Required. The types of invitations.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+<details><summary>~+ 1 more JSON objects</summary><details><summary>UserInvitation</summary>Schema for <c>UserInvitation</c>:
+<code>{
+  properties: {
+    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    notify: boolean, # Optional. Whether or not the recipient was notified via email.
+    senderEmail: string, # Optional. Email address of the sender.
+    senderName: string, # Optional. Name of the sender
+    senderTenantName: string, # Optional. Tenant name of the sender
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+    targetEmail: string, # Required. The receiver email for the invitation is being sent.
+  }, # Required. Properties of the user invitation type.
+  invitationKind: User, # Required. The types of invitations.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+</details>
+
+Response Body:
+
+This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+<details><summary>ServiceInvitation</summary>Schema for <c>ServiceInvitation</c>:
+<code>{
+  properties: {
+    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    senderEmail: string, # Optional. Email address of the sender.
+    senderName: string, # Optional. Name of the sender
+    senderTenantName: string, # Optional. Tenant name of the sender
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+    targetActiveDirectoryId: Guid, # Required. The target azure active directory id the invitation is sent to.
+    targetObjectId: Guid, # Required. The target object id in the azure active directory the invitation is sent to.
+  }, # Required. Properties of the service invitation type.
+  invitationKind: Service, # Required. The types of invitations.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+<details><summary>~+ 1 more JSON objects</summary><details><summary>UserInvitation</summary>Schema for <c>UserInvitation</c>:
+<code>{
+  properties: {
+    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    notify: boolean, # Optional. Whether or not the recipient was notified via email.
+    senderEmail: string, # Optional. Email address of the sender.
+    senderName: string, # Optional. Name of the sender
+    senderTenantName: string, # Optional. Tenant name of the sender
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+    targetEmail: string, # Required. The receiver email for the invitation is being sent.
+  }, # Required. Properties of the user invitation type.
+  invitationKind: User, # Required. The types of invitations.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+</details>
+
+</remarks>
+    </member>
+    <member name="NotifyUserInvitationAsync(String,String,String,RequestContext)">
+<example>
+This sample shows how to call NotifyUserInvitationAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+Response response = await client.NotifyUserInvitationAsync("<sentShareId>", "<sentShareInvitationId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call NotifyUserInvitationAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+Response response = await client.NotifyUserInvitationAsync("<sentShareId>", "<sentShareInvitationId>", "<repeatabilityRequestId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+</example>
+<remarks>
+Notifies the user recipient of the sent share invitation, does not apply to service invitations.
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+<details><summary>ServiceInvitation</summary>Schema for <c>ServiceInvitation</c>:
+<code>{
+  properties: {
+    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    senderEmail: string, # Optional. Email address of the sender.
+    senderName: string, # Optional. Name of the sender
+    senderTenantName: string, # Optional. Tenant name of the sender
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+    targetActiveDirectoryId: Guid, # Required. The target azure active directory id the invitation is sent to.
+    targetObjectId: Guid, # Required. The target object id in the azure active directory the invitation is sent to.
+  }, # Required. Properties of the service invitation type.
+  invitationKind: Service, # Required. The types of invitations.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+<details><summary>~+ 1 more JSON objects</summary><details><summary>UserInvitation</summary>Schema for <c>UserInvitation</c>:
+<code>{
+  properties: {
+    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    notify: boolean, # Optional. Whether or not the recipient was notified via email.
+    senderEmail: string, # Optional. Email address of the sender.
+    senderName: string, # Optional. Name of the sender
+    senderTenantName: string, # Optional. Tenant name of the sender
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+    targetEmail: string, # Required. The receiver email for the invitation is being sent.
+  }, # Required. Properties of the user invitation type.
+  invitationKind: User, # Required. The types of invitations.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+</details>
+
+</remarks>
+    </member>
+    <member name="NotifyUserInvitation(String,String,String,RequestContext)">
+<example>
+This sample shows how to call NotifyUserInvitation with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+Response response = client.NotifyUserInvitation("<sentShareId>", "<sentShareInvitationId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call NotifyUserInvitation with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+Response response = client.NotifyUserInvitation("<sentShareId>", "<sentShareInvitationId>", "<repeatabilityRequestId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("invitationKind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+</example>
+<remarks>
+Notifies the user recipient of the sent share invitation, does not apply to service invitations.
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
+<details><summary>ServiceInvitation</summary>Schema for <c>ServiceInvitation</c>:
+<code>{
+  properties: {
+    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    senderEmail: string, # Optional. Email address of the sender.
+    senderName: string, # Optional. Name of the sender
+    senderTenantName: string, # Optional. Tenant name of the sender
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+    targetActiveDirectoryId: Guid, # Required. The target azure active directory id the invitation is sent to.
+    targetObjectId: Guid, # Required. The target object id in the azure active directory the invitation is sent to.
+  }, # Required. Properties of the service invitation type.
+  invitationKind: Service, # Required. The types of invitations.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+<details><summary>~+ 1 more JSON objects</summary><details><summary>UserInvitation</summary>Schema for <c>UserInvitation</c>:
+<code>{
+  properties: {
+    expirationDate: string (ISO 8601 Format), # Optional. The time at which the invitation will expire. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    notify: boolean, # Optional. Whether or not the recipient was notified via email.
+    senderEmail: string, # Optional. Email address of the sender.
+    senderName: string, # Optional. Name of the sender
+    senderTenantName: string, # Optional. Tenant name of the sender
+    sentAt: string (ISO 8601 Format), # Optional. Gets the time at which the invitation was sent. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    shareStatus: &quot;Detached&quot; | &quot;Attached&quot;, # Optional. Share status.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+    targetEmail: string, # Required. The receiver email for the invitation is being sent.
+  }, # Required. Properties of the user invitation type.
+  invitationKind: User, # Required. The types of invitations.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+</details>
+
+</remarks>
+    </member>
+    <member name="GetSentSharesAsync(String,String,String,String,RequestContext)">
+<example>
+This sample shows how to call GetSentSharesAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+await foreach (var data in client.GetSentSharesAsync("<referenceName>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("shareKind").ToString());
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetSentSharesAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+await foreach (var data in client.GetSentSharesAsync("<referenceName>", "<skipToken>", "<filter>", "<orderby>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("shareKind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code>
+</example>
+<remarks>
+List sent shares
+
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>SentShareListValue</c>:
+<code>{
+  shareKind: &quot;InPlace&quot;, # Required. Defines the supported types for share.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetSentShares(String,String,String,String,RequestContext)">
+<example>
+This sample shows how to call GetSentShares with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+foreach (var data in client.GetSentShares("<referenceName>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("shareKind").ToString());
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetSentShares with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+foreach (var data in client.GetSentShares("<referenceName>", "<skipToken>", "<filter>", "<orderby>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("shareKind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code>
+</example>
+<remarks>
+List sent shares
+
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>SentShareListValue</c>:
+<code>{
+  shareKind: &quot;InPlace&quot;, # Required. Defines the supported types for share.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetInvitationsAsync(String,String,String,String,RequestContext)">
+<example>
+This sample shows how to call GetInvitationsAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+await foreach (var data in client.GetInvitationsAsync("<sentShareId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("invitationKind").ToString());
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetInvitationsAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+await foreach (var data in client.GetInvitationsAsync("<sentShareId>", "<skipToken>", "<filter>", "<orderby>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("invitationKind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code>
+</example>
+<remarks>
+List sent share recipients
+
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>SentShareInvitationListValue</c>:
+<code>{
+  invitationKind: &quot;User&quot; | &quot;Service&quot;, # Required. The types of invitations.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetInvitations(String,String,String,String,RequestContext)">
+<example>
+This sample shows how to call GetInvitations with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+foreach (var data in client.GetInvitations("<sentShareId>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("invitationKind").ToString());
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetInvitations with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+foreach (var data in client.GetInvitations("<sentShareId>", "<skipToken>", "<filter>", "<orderby>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("invitationKind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code>
+</example>
+<remarks>
+List sent share recipients
+
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>SentShareInvitationListValue</c>:
+<code>{
+  invitationKind: &quot;User&quot; | &quot;Service&quot;, # Required. The types of invitations.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="CreateOrReplaceAsync(WaitUntil,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrReplaceAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+var data = new {
+    properties = new {
+        artifact = new {
+            properties = new {
+                paths = new[] {
+                    new {
+                        containerName = "<containerName>",
+                    }
+                },
+            },
+            storeKind = "AdlsGen2Account",
+            storeReference = new {},
+        },
+        displayName = "<displayName>",
+    },
+    shareKind = "InPlace",
+};
+
+var operation = await client.CreateOrReplaceAsync(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("shareKind").ToString());
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrReplaceAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+var data = new {
+    properties = new {
+        artifact = new {
+            properties = new {
+                paths = new[] {
+                    new {
+                        containerName = "<containerName>",
+                        receiverPath = "<receiverPath>",
+                        senderPath = "<senderPath>",
+                    }
+                },
+            },
+            storeKind = "AdlsGen2Account",
+            storeReference = new {
+                referenceName = "<referenceName>",
+                type = "ArmResourceReference",
+            },
+        },
+        description = "<description>",
+        displayName = "<displayName>",
+    },
+    shareKind = "InPlace",
+};
+
+var operation = await client.CreateOrReplaceAsync(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("shareKind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+</example>
+<remarks>
+Create or replace a sent share
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+<details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
+<code>{
+  properties: {
+    artifact: {
+      storeKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
+      storeReference: {
+        referenceName: string, # Optional. Reference name for resource associated with the sink or artifact.
+        type: &quot;ArmResourceReference&quot;, # Optional. Defines the type of resource being shared
+      }, # Required. A Store Reference for an artifact or sink.
+    }, # Required. A class for sent share artifact.
+    createdAt: string (ISO 8601 Format), # Optional. Time at which the sent share was created. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    dependsOn: [Guid], # Optional. List of shares on which the sent share depends.
+    description: string, # Optional. Sent share description.
+    displayName: string, # Required. The name of the sent share
+    senderEmail: string, # Optional. Email of the sender who created the sent share.
+    senderName: string, # Optional. Name of the sender who created the sent share.
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+  }, # Required. Properties for InPlace sent share.
+  shareKind: InPlace, # Required. Defines the supported types for share.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+
+Response Body:
+
+<details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
+<code>{
+  properties: {
+    artifact: {
+      storeKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
+      storeReference: {
+        referenceName: string, # Optional. Reference name for resource associated with the sink or artifact.
+        type: &quot;ArmResourceReference&quot;, # Optional. Defines the type of resource being shared
+      }, # Required. A Store Reference for an artifact or sink.
+    }, # Required. A class for sent share artifact.
+    createdAt: string (ISO 8601 Format), # Optional. Time at which the sent share was created. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    dependsOn: [Guid], # Optional. List of shares on which the sent share depends.
+    description: string, # Optional. Sent share description.
+    displayName: string, # Required. The name of the sent share
+    senderEmail: string, # Optional. Email of the sender who created the sent share.
+    senderName: string, # Optional. Name of the sender who created the sent share.
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+  }, # Required. Properties for InPlace sent share.
+  shareKind: InPlace, # Required. Defines the supported types for share.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+
+</remarks>
+    </member>
+    <member name="CreateOrReplace(WaitUntil,String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrReplace with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+var data = new {
+    properties = new {
+        artifact = new {
+            properties = new {
+                paths = new[] {
+                    new {
+                        containerName = "<containerName>",
+                    }
+                },
+            },
+            storeKind = "AdlsGen2Account",
+            storeReference = new {},
+        },
+        displayName = "<displayName>",
+    },
+    shareKind = "InPlace",
+};
+
+var operation = client.CreateOrReplace(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("shareKind").ToString());
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrReplace with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+var data = new {
+    properties = new {
+        artifact = new {
+            properties = new {
+                paths = new[] {
+                    new {
+                        containerName = "<containerName>",
+                        receiverPath = "<receiverPath>",
+                        senderPath = "<senderPath>",
+                    }
+                },
+            },
+            storeKind = "AdlsGen2Account",
+            storeReference = new {
+                referenceName = "<referenceName>",
+                type = "ArmResourceReference",
+            },
+        },
+        description = "<description>",
+        displayName = "<displayName>",
+    },
+    shareKind = "InPlace",
+};
+
+var operation = client.CreateOrReplace(WaitUntil.Completed, "<sentShareId>", RequestContent.Create(data));
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("shareKind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code>
+</example>
+<remarks>
+Create or replace a sent share
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+<details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
+<code>{
+  properties: {
+    artifact: {
+      storeKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
+      storeReference: {
+        referenceName: string, # Optional. Reference name for resource associated with the sink or artifact.
+        type: &quot;ArmResourceReference&quot;, # Optional. Defines the type of resource being shared
+      }, # Required. A Store Reference for an artifact or sink.
+    }, # Required. A class for sent share artifact.
+    createdAt: string (ISO 8601 Format), # Optional. Time at which the sent share was created. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    dependsOn: [Guid], # Optional. List of shares on which the sent share depends.
+    description: string, # Optional. Sent share description.
+    displayName: string, # Required. The name of the sent share
+    senderEmail: string, # Optional. Email of the sender who created the sent share.
+    senderName: string, # Optional. Name of the sender who created the sent share.
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+  }, # Required. Properties for InPlace sent share.
+  shareKind: InPlace, # Required. Defines the supported types for share.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+
+Response Body:
+
+<details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
+<code>{
+  properties: {
+    artifact: {
+      storeKind: &quot;AdlsGen2Account&quot; | &quot;BlobAccount&quot;, # Required. The types of asset.
+      storeReference: {
+        referenceName: string, # Optional. Reference name for resource associated with the sink or artifact.
+        type: &quot;ArmResourceReference&quot;, # Optional. Defines the type of resource being shared
+      }, # Required. A Store Reference for an artifact or sink.
+    }, # Required. A class for sent share artifact.
+    createdAt: string (ISO 8601 Format), # Optional. Time at which the sent share was created. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+    dependsOn: [Guid], # Optional. List of shares on which the sent share depends.
+    description: string, # Optional. Sent share description.
+    displayName: string, # Required. The name of the sent share
+    senderEmail: string, # Optional. Email of the sender who created the sent share.
+    senderName: string, # Optional. Name of the sender who created the sent share.
+    senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
+    state: &quot;Unknown&quot; | &quot;Succeeded&quot; | &quot;Creating&quot; | &quot;Deleting&quot; | &quot;Moving&quot; | &quot;Failed&quot;, # Optional. State of the resource
+  }, # Required. Properties for InPlace sent share.
+  shareKind: InPlace, # Required. Defines the supported types for share.
+  id: string, # Optional. The unique id of the resource.
+  type: string, # Optional. Type of the resource.
+}
+</code>
+</details>
+
+</remarks>
+    </member>
+    <member name="DeleteAsync(WaitUntil,String,RequestContext)">
+<example>
+This sample shows how to call DeleteAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+var operation = await client.DeleteAsync(WaitUntil.Completed, "<sentShareId>");
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+</example>
+<remarks>
+Delete a sent share
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>OperationResponse</c>:
+<code>{
+  endTime: string (ISO 8601 Format), # Optional. End time of the long running operation. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+  error: {
+    code: string, # Required. Code of the error
+    details: [PurviewShareErrorInfo], # Optional. Nested details of the error model
+    message: string, # Required. Message of the error
+    target: string, # Optional. Target of the error
+  }, # Optional. The purview share error body model.
+  id: string, # Optional. Job id of the long running operation
+  startTime: string (ISO 8601 Format), # Optional. Start time of the long running operation. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+  status: &quot;Running&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;NotStarted&quot;, # Required. States for long running operations.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="Delete(WaitUntil,String,RequestContext)">
+<example>
+This sample shows how to call Delete with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+var operation = client.Delete(WaitUntil.Completed, "<sentShareId>");
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+</example>
+<remarks>
+Delete a sent share
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>OperationResponse</c>:
+<code>{
+  endTime: string (ISO 8601 Format), # Optional. End time of the long running operation. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+  error: {
+    code: string, # Required. Code of the error
+    details: [PurviewShareErrorInfo], # Optional. Nested details of the error model
+    message: string, # Required. Message of the error
+    target: string, # Optional. Target of the error
+  }, # Optional. The purview share error body model.
+  id: string, # Optional. Job id of the long running operation
+  startTime: string (ISO 8601 Format), # Optional. Start time of the long running operation. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+  status: &quot;Running&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;NotStarted&quot;, # Required. States for long running operations.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DeleteInvitationAsync(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call DeleteInvitationAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+var operation = await client.DeleteInvitationAsync(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>");
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+</example>
+<remarks>
+Delete a sent share invitation
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>OperationResponse</c>:
+<code>{
+  endTime: string (ISO 8601 Format), # Optional. End time of the long running operation. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+  error: {
+    code: string, # Required. Code of the error
+    details: [PurviewShareErrorInfo], # Optional. Nested details of the error model
+    message: string, # Required. Message of the error
+    target: string, # Optional. Target of the error
+  }, # Optional. The purview share error body model.
+  id: string, # Optional. Job id of the long running operation
+  startTime: string (ISO 8601 Format), # Optional. Start time of the long running operation. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+  status: &quot;Running&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;NotStarted&quot;, # Required. States for long running operations.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DeleteInvitation(WaitUntil,String,String,RequestContext)">
+<example>
+This sample shows how to call DeleteInvitation with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+
+var operation = client.DeleteInvitation(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>");
+
+BinaryData data = operation.Value;
+JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+</example>
+<remarks>
+Delete a sent share invitation
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>OperationResponse</c>:
+<code>{
+  endTime: string (ISO 8601 Format), # Optional. End time of the long running operation. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+  error: {
+    code: string, # Required. Code of the error
+    details: [PurviewShareErrorInfo], # Optional. Nested details of the error model
+    message: string, # Required. Message of the error
+    target: string, # Optional. Target of the error
+  }, # Optional. The purview share error body model.
+  id: string, # Optional. Job id of the long running operation
+  startTime: string (ISO 8601 Format), # Optional. Start time of the long running operation. Represented in the standard date-time format as defined by [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339)
+  status: &quot;Running&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;NotStarted&quot;, # Required. States for long running operations.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>
