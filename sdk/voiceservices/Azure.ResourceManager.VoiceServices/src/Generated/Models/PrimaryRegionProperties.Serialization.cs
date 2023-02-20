@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("operatorAddresses");
+            writer.WritePropertyName("operatorAddresses"u8);
             writer.WriteStartArray();
             foreach (var item in OperatorAddresses)
             {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(EsrpAddresses))
             {
-                writer.WritePropertyName("esrpAddresses");
+                writer.WritePropertyName("esrpAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in EsrpAddresses)
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
             }
             if (Optional.IsCollectionDefined(AllowedSignalingSourceAddressPrefixes))
             {
-                writer.WritePropertyName("allowedSignalingSourceAddressPrefixes");
+                writer.WritePropertyName("allowedSignalingSourceAddressPrefixes"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedSignalingSourceAddressPrefixes)
                 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
             }
             if (Optional.IsCollectionDefined(AllowedMediaSourceAddressPrefixes))
             {
-                writer.WritePropertyName("allowedMediaSourceAddressPrefixes");
+                writer.WritePropertyName("allowedMediaSourceAddressPrefixes"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowedMediaSourceAddressPrefixes)
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
             Optional<IList<string>> allowedMediaSourceAddressPrefixes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operatorAddresses"))
+                if (property.NameEquals("operatorAddresses"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                     operatorAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("esrpAddresses"))
+                if (property.NameEquals("esrpAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                     esrpAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("allowedSignalingSourceAddressPrefixes"))
+                if (property.NameEquals("allowedSignalingSourceAddressPrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                     allowedSignalingSourceAddressPrefixes = array;
                     continue;
                 }
-                if (property.NameEquals("allowedMediaSourceAddressPrefixes"))
+                if (property.NameEquals("allowedMediaSourceAddressPrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

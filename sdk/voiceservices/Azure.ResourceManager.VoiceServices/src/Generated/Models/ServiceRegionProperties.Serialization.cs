@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.VoiceServices.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("primaryRegionProperties");
+            writer.WritePropertyName("primaryRegionProperties"u8);
             writer.WriteObjectValue(PrimaryRegionProperties);
             writer.WriteEndObject();
         }
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.VoiceServices.Models
             PrimaryRegionProperties primaryRegionProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primaryRegionProperties"))
+                if (property.NameEquals("primaryRegionProperties"u8))
                 {
                     primaryRegionProperties = PrimaryRegionProperties.DeserializePrimaryRegionProperties(property.Value);
                     continue;
