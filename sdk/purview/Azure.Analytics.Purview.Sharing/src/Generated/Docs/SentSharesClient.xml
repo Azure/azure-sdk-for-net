@@ -505,25 +505,25 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="NotifyUserInvitationAsync(String,String,String,RequestContext)">
+    <member name="NotifyUserSentShareInvitationAsync(String,String,String,RequestContext)">
 <example>
-This sample shows how to call NotifyUserInvitationAsync with required parameters and parse the result.
+This sample shows how to call NotifyUserSentShareInvitationAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.NotifyUserInvitationAsync("<sentShareId>", "<sentShareInvitationId>");
+Response response = await client.NotifyUserSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call NotifyUserInvitationAsync with all parameters, and how to parse the result.
+This sample shows how to call NotifyUserSentShareInvitationAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.NotifyUserInvitationAsync("<sentShareId>", "<sentShareInvitationId>", "<repeatabilityRequestId>");
+Response response = await client.NotifyUserSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", "<repeatabilityRequestId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -581,25 +581,25 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="NotifyUserInvitation(String,String,String,RequestContext)">
+    <member name="NotifyUserSentShareInvitation(String,String,String,RequestContext)">
 <example>
-This sample shows how to call NotifyUserInvitation with required parameters and parse the result.
+This sample shows how to call NotifyUserSentShareInvitation with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-Response response = client.NotifyUserInvitation("<sentShareId>", "<sentShareInvitationId>");
+Response response = client.NotifyUserSentShareInvitation("<sentShareId>", "<sentShareInvitationId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call NotifyUserInvitation with all parameters, and how to parse the result.
+This sample shows how to call NotifyUserSentShareInvitation with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-Response response = client.NotifyUserInvitation("<sentShareId>", "<sentShareInvitationId>", "<repeatabilityRequestId>");
+Response response = client.NotifyUserSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", "<repeatabilityRequestId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());

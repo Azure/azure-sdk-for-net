@@ -237,17 +237,17 @@ namespace Azure.Analytics.Purview
         /// <exception cref="ArgumentException"> <paramref name="sentShareId"/> or <paramref name="sentShareInvitationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='NotifyUserInvitationAsync(String,String,String,RequestContext)']/*" />
-        public virtual async Task<Response> NotifyUserInvitationAsync(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId = null, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='NotifyUserSentShareInvitationAsync(String,String,String,RequestContext)']/*" />
+        public virtual async Task<Response> NotifyUserSentShareInvitationAsync(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
 
-            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.NotifyUserInvitation");
+            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.NotifyUserSentShareInvitation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateNotifyUserInvitationRequest(sentShareId, sentShareInvitationId, repeatabilityRequestId, context);
+                using HttpMessage message = CreateNotifyUserSentShareInvitationRequest(sentShareId, sentShareInvitationId, repeatabilityRequestId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -266,17 +266,17 @@ namespace Azure.Analytics.Purview
         /// <exception cref="ArgumentException"> <paramref name="sentShareId"/> or <paramref name="sentShareInvitationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='NotifyUserInvitation(String,String,String,RequestContext)']/*" />
-        public virtual Response NotifyUserInvitation(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId = null, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='NotifyUserSentShareInvitation(String,String,String,RequestContext)']/*" />
+        public virtual Response NotifyUserSentShareInvitation(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
 
-            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.NotifyUserInvitation");
+            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.NotifyUserSentShareInvitation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateNotifyUserInvitationRequest(sentShareId, sentShareInvitationId, repeatabilityRequestId, context);
+                using HttpMessage message = CreateNotifyUserSentShareInvitationRequest(sentShareId, sentShareInvitationId, repeatabilityRequestId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -689,7 +689,7 @@ namespace Azure.Analytics.Purview
             return message;
         }
 
-        internal HttpMessage CreateNotifyUserInvitationRequest(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId, RequestContext context)
+        internal HttpMessage CreateNotifyUserSentShareInvitationRequest(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
