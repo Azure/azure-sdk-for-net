@@ -103,7 +103,7 @@ namespace Azure.Communication.Email
             EmailMessage message,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.StartSend");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.Send");
             scope.Start();
             try
             {
@@ -136,7 +136,7 @@ namespace Azure.Communication.Email
             string plainTextContent = default,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.StartSend");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.Send");
             scope.Start();
             try
             {
@@ -172,7 +172,7 @@ namespace Azure.Communication.Email
             EmailMessage message,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.Send");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EmailClient)}.{nameof(Send)}");
             scope.Start();
             try
             {
@@ -205,7 +205,7 @@ namespace Azure.Communication.Email
             string plainTextContent = default,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.Send");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EmailClient)}.{nameof(Send)}");
             scope.Start();
             try
             {
@@ -240,7 +240,7 @@ namespace Azure.Communication.Email
             string id,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.GetSendResult");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EmailClient)}.{nameof(GetSendResult)}");
             scope.Start();
             try
             {
@@ -265,7 +265,7 @@ namespace Azure.Communication.Email
             string id,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.GetSendResult");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(EmailClient)}.{nameof(GetSendResult)}");
             scope.Start();
             try
             {

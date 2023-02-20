@@ -35,7 +35,7 @@ namespace Azure.Communication.Email.Tests.Samples
                     new EmailAddress(
                         //@@ email: "<recipient email address>"
                         //@@ displayName: "<recipient displayname>"
-                        /*@@*/ email: TestEnvironment.RecipientAddress,
+                        /*@@*/ address: TestEnvironment.RecipientAddress,
                         /*@@*/ displayName: "Customer Name")
                 });
 
@@ -73,12 +73,12 @@ namespace Azure.Communication.Email.Tests.Samples
                 new EmailAddress(
                     //@@ email: "<recipient email address>"
                     //@@ displayName: "<recipient displayname>"
-                    /*@@*/ email: TestEnvironment.RecipientAddress,
+                    /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name"),
                 new EmailAddress(
                     //@@ email: "<recipient email address>"
                     //@@ displayName: "<recipient displayname>"
-                    /*@@*/ email: TestEnvironment.RecipientAddress,
+                    /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name")
             };
 
@@ -88,12 +88,12 @@ namespace Azure.Communication.Email.Tests.Samples
                 new EmailAddress(
                     //@@ email: "<recipient email address>"
                     //@@ displayName: "<recipient displayname>"
-                    /*@@*/ email: TestEnvironment.RecipientAddress,
+                    /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name"),
                 new EmailAddress(
                     //@@ email: "<recipient email address>"
                     //@@ displayName: "<recipient displayname>"
-                    /*@@*/ email: TestEnvironment.RecipientAddress,
+                    /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name")
             };
 
@@ -103,12 +103,12 @@ namespace Azure.Communication.Email.Tests.Samples
                 new EmailAddress(
                     //@@ email: "<recipient email address>"
                     //@@ displayName: "<recipient displayname>"
-                    /*@@*/ email: TestEnvironment.RecipientAddress,
+                    /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name"),
                 new EmailAddress(
                     //@@ email: "<recipient email address>"
                     //@@ displayName: "<recipient displayname>"
-                    /*@@*/ email: TestEnvironment.RecipientAddress,
+                    /*@@*/ address: TestEnvironment.RecipientAddress,
                     /*@@*/ displayName: "Customer Name")
             };
 
@@ -147,7 +147,7 @@ namespace Azure.Communication.Email.Tests.Samples
                         new EmailAddress(
                             //@@ email: "<recipient email address>"
                             //@@ displayName: "<recipient displayname>"
-                            /*@@*/ email: TestEnvironment.RecipientAddress,
+                            /*@@*/ address: TestEnvironment.RecipientAddress,
                             /*@@*/ displayName: "Customer Name")
                   });
 
@@ -203,7 +203,7 @@ namespace Azure.Communication.Email.Tests.Samples
                     new EmailAddress(
                         //@@ email: "<recipient email address>"
                         //@@ displayName: "<recipient displayname>"
-                        /*@@*/ email: TestEnvironment.RecipientAddress,
+                        /*@@*/ address: TestEnvironment.RecipientAddress,
                         /*@@*/ displayName: "Customer Name")
                 });
 

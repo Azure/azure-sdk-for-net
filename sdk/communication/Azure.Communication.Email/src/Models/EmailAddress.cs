@@ -13,11 +13,11 @@ namespace Azure.Communication.Email
     public partial class EmailAddress
     {
         /// <summary> Initializes a new instance of EmailAddress. </summary>
-        /// <param name="email"> Email address of the receipient</param>
+        /// <param name="address"> Email address of the receipient</param>
         /// <param name="displayName">The display name of the recepient</param>
-        /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
-        public EmailAddress(string email, string displayName)
-            :this(email)
+        /// <exception cref="ArgumentNullException"> <paramref name="address"/> is null. </exception>
+        public EmailAddress(string address, string displayName)
+            :this(address)
         {
             DisplayName = displayName;
         }
