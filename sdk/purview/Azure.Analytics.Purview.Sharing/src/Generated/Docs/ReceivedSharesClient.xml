@@ -471,26 +471,26 @@ Schema for <c>ReceivedShareListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetDetachedsAsync(String,String,String,RequestContext)">
+    <member name="GetAllDetachedReceivedSharesAsync(String,String,String,RequestContext)">
 <example>
-This sample shows how to call GetDetachedsAsync and parse the result.
+This sample shows how to call GetAllDetachedReceivedSharesAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-await foreach (var data in client.GetDetachedsAsync())
+await foreach (var data in client.GetAllDetachedReceivedSharesAsync())
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetDetachedsAsync with all parameters, and how to parse the result.
+This sample shows how to call GetAllDetachedReceivedSharesAsync with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-await foreach (var data in client.GetDetachedsAsync("<skipToken>", "<filter>", "<orderby>"))
+await foreach (var data in client.GetAllDetachedReceivedSharesAsync("<skipToken>", "<filter>", "<orderby>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
@@ -516,26 +516,26 @@ Schema for <c>ReceivedShareListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetDetacheds(String,String,String,RequestContext)">
+    <member name="GetAllDetachedReceivedShares(String,String,String,RequestContext)">
 <example>
-This sample shows how to call GetDetacheds and parse the result.
+This sample shows how to call GetAllDetachedReceivedShares and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetDetacheds())
+foreach (var data in client.GetAllDetachedReceivedShares())
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetDetacheds with all parameters, and how to parse the result.
+This sample shows how to call GetAllDetachedReceivedShares with all parameters, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
-foreach (var data in client.GetDetacheds("<skipToken>", "<filter>", "<orderby>"))
+foreach (var data in client.GetAllDetachedReceivedShares("<skipToken>", "<filter>", "<orderby>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("shareKind").ToString());

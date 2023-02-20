@@ -253,12 +253,12 @@ namespace Azure.Analytics.Purview
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetDetachedsAsync(String,String,String,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetDetachedsAsync(string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllDetachedReceivedSharesAsync(String,String,String,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetAllDetachedReceivedSharesAsync(string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDetachedsRequest(skipToken, filter, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDetachedsNextPageRequest(nextLink, skipToken, filter, orderby, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetDetacheds", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDetachedReceivedSharesRequest(skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDetachedReceivedSharesNextPageRequest(nextLink, skipToken, filter, orderby, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllDetachedReceivedShares", "value", "nextLink", context);
         }
 
         /// <summary> Get a list of detached received shares. </summary>
@@ -268,12 +268,12 @@ namespace Azure.Analytics.Purview
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetDetacheds(String,String,String,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetDetacheds(string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
+        /// <include file="Docs/ReceivedSharesClient.xml" path="doc/members/member[@name='GetAllDetachedReceivedShares(String,String,String,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetAllDetachedReceivedShares(string skipToken = null, string filter = null, string orderby = null, RequestContext context = null)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDetachedsRequest(skipToken, filter, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDetachedsNextPageRequest(nextLink, skipToken, filter, orderby, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetDetacheds", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDetachedReceivedSharesRequest(skipToken, filter, orderby, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDetachedReceivedSharesNextPageRequest(nextLink, skipToken, filter, orderby, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ReceivedSharesClient.GetAllDetachedReceivedShares", "value", "nextLink", context);
         }
 
         /// <summary> Create or replace a received share. </summary>
@@ -462,7 +462,7 @@ namespace Azure.Analytics.Purview
             return message;
         }
 
-        internal HttpMessage CreateGetDetachedsRequest(string skipToken, string filter, string orderby, RequestContext context)
+        internal HttpMessage CreateGetAllDetachedReceivedSharesRequest(string skipToken, string filter, string orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -539,7 +539,7 @@ namespace Azure.Analytics.Purview
             return message;
         }
 
-        internal HttpMessage CreateGetDetachedsNextPageRequest(string nextLink, string skipToken, string filter, string orderby, RequestContext context)
+        internal HttpMessage CreateGetAllDetachedReceivedSharesNextPageRequest(string nextLink, string skipToken, string filter, string orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
