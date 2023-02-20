@@ -1,0 +1,213 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://ads-perf-westeurope-pv.purview.azure.com/share/sentShares/e802f487-92bf-4dc3-bf1d-86afe0d757a3?api-version=2023-02-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ce39969c78311eea2fb4aa8cf1017fea-dbc4470659a1874b-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20230213.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d2ec0c7f1a3e007bb9e1e6908e66c577",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "698",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Feb 2023 00:53:59 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "08f0c0c4-8303-485f-9bd4-a4187512e75d"
+      },
+      "ResponseBody": {
+        "properties": {
+          "displayName": "testDisplayName1",
+          "description": "updatedDescription",
+          "artifact": {
+            "properties": {
+              "paths": [
+                {
+                  "containerName": "container1",
+                  "senderPath": "testfolder1",
+                  "receiverPath": "testfolder1"
+                }
+              ],
+              "location": "southafricanorth"
+            },
+            "storeKind": "AdlsGen2Account",
+            "storeReference": {
+              "referenceName": "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/faisalaltell/providers/Microsoft.Storage/storageAccounts/ftsharersan",
+              "type": "ArmResourceReference"
+            }
+          },
+          "provisioningState": "Succeeded",
+          "createdAt": "2023-02-14T00:53:38.4822003Z",
+          "dependsOn": [],
+          "senderName": "SyMS",
+          "senderTenantName": "Microsoft"
+        },
+        "shareKind": "InPlace",
+        "id": "e802f487-92bf-4dc3-bf1d-86afe0d757a3",
+        "type": "SentShare"
+      }
+    },
+    {
+      "RequestUri": "https://ads-perf-westeurope-pv.purview.azure.com/share/sentShares?referenceName=%2Fsubscriptions%2F0f3dcfc3-18f8-4099-b381-8353e19d43a7%2FresourceGroups%2Ffaisalaltell%2Fproviders%2FMicrosoft.Storage%2FstorageAccounts%2Fftsharersan\u0026api-version=2023-02-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20230213.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7ff488102c8fec8f4f56ab80c4c695eb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "2915",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Feb 2023 00:54:00 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "252aaa28-2637-4010-85ec-929f0f2db057"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "displayName": "sentShare1Updated",
+              "description": "descriptionUpdated",
+              "artifact": {
+                "properties": {
+                  "paths": [
+                    {
+                      "containerName": "container1",
+                      "senderPath": "testfolder2",
+                      "receiverPath": "testfolder2"
+                    }
+                  ],
+                  "location": "southafricanorth"
+                },
+                "storeKind": "AdlsGen2Account",
+                "storeReference": {
+                  "referenceName": "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/faisalaltell/providers/Microsoft.Storage/storageAccounts/ftsharersan",
+                  "type": "ArmResourceReference"
+                }
+              },
+              "provisioningState": "Succeeded",
+              "createdAt": "2023-02-07T21:26:43.0145035Z",
+              "dependsOn": [],
+              "senderName": "Faisal Al Tell",
+              "senderEmail": "faisalaltell@microsoft.com",
+              "senderTenantName": "Microsoft"
+            },
+            "shareKind": "InPlace",
+            "id": "240fc958-13e1-4044-ac26-7b7b7c93efeb",
+            "type": "SentShare"
+          },
+          {
+            "properties": {
+              "displayName": "sentShare1Updated",
+              "description": "descriptionUpdated",
+              "artifact": {
+                "properties": {
+                  "paths": [
+                    {
+                      "containerName": "container1",
+                      "senderPath": "testfolder2",
+                      "receiverPath": "testfolder2"
+                    }
+                  ],
+                  "location": "southafricanorth"
+                },
+                "storeKind": "AdlsGen2Account",
+                "storeReference": {
+                  "referenceName": "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/faisalaltell/providers/Microsoft.Storage/storageAccounts/ftsharersan",
+                  "type": "ArmResourceReference"
+                }
+              },
+              "provisioningState": "Succeeded",
+              "createdAt": "2023-02-07T21:26:59.5259707Z",
+              "dependsOn": [],
+              "senderName": "Faisal Al Tell",
+              "senderEmail": "faisalaltell@microsoft.com",
+              "senderTenantName": "Microsoft"
+            },
+            "shareKind": "InPlace",
+            "id": "f31ef052-e32c-4e86-affb-a93b29b46cb5",
+            "type": "SentShare"
+          },
+          {
+            "properties": {
+              "displayName": "testDisplayName1",
+              "description": "updatedDescription",
+              "artifact": {
+                "properties": {
+                  "paths": [
+                    {
+                      "containerName": "container1",
+                      "senderPath": "testfolder1",
+                      "receiverPath": "testfolder1"
+                    }
+                  ],
+                  "location": "southafricanorth"
+                },
+                "storeKind": "AdlsGen2Account",
+                "storeReference": {
+                  "referenceName": "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/faisalaltell/providers/Microsoft.Storage/storageAccounts/ftsharersan",
+                  "type": "ArmResourceReference"
+                }
+              },
+              "provisioningState": "Succeeded",
+              "createdAt": "2023-02-07T22:15:21.6733953Z",
+              "dependsOn": [],
+              "senderName": "SyMS",
+              "senderTenantName": "Microsoft"
+            },
+            "shareKind": "InPlace",
+            "id": "4edefae9-4c1b-43cb-98fe-b5bba39b8a62",
+            "type": "SentShare"
+          },
+          {
+            "properties": {
+              "displayName": "testDisplayName1",
+              "description": "updatedDescription",
+              "artifact": {
+                "properties": {
+                  "paths": [
+                    {
+                      "containerName": "container1",
+                      "senderPath": "testfolder1",
+                      "receiverPath": "testfolder1"
+                    }
+                  ],
+                  "location": "southafricanorth"
+                },
+                "storeKind": "AdlsGen2Account",
+                "storeReference": {
+                  "referenceName": "/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/faisalaltell/providers/Microsoft.Storage/storageAccounts/ftsharersan",
+                  "type": "ArmResourceReference"
+                }
+              },
+              "provisioningState": "Succeeded",
+              "createdAt": "2023-02-14T00:53:38.4822003Z",
+              "dependsOn": [],
+              "senderName": "SyMS",
+              "senderTenantName": "Microsoft"
+            },
+            "shareKind": "InPlace",
+            "id": "e802f487-92bf-4dc3-bf1d-86afe0d757a3",
+            "type": "SentShare"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "PURVIEW_SHARE_URL": "https://ads-perf-westeurope-pv.purview.azure.com/share",
+    "RandomSeed": "1851246570"
+  }
+}

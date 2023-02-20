@@ -1,0 +1,61 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://ads-perf-westeurope-pv.purview.azure.com/share/sentShares/e802f487-92bf-4dc3-bf1d-86afe0d757a3/sentShareInvitations/e322785e-8fb0-4d7b-b7b3-521e0d602fae?api-version=2023-02-15-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-79c0b85e0bdcb2dae579728d76247b61-25596256094f6dfc-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20230213.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ebaf23dfc10715e15903e8511c1ddaf5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://ads-perf-westeurope-pv.purview.azure.com/share/operationResults/00000000-0000-0000-0000-000000000000?api-version=2023-02-15-preview",
+        "Content-Length": "0",
+        "Date": "Tue, 14 Feb 2023 00:55:33 GMT",
+        "Operation-Id": "https://ads-perf-westeurope-pv.purview.azure.com/share/operationResults/00000000-0000-0000-0000-000000000000?api-version=2023-02-15-preview",
+        "Operation-Location": "https://ads-perf-westeurope-pv.purview.azure.com/share/operationResults/00000000-0000-0000-0000-000000000000?api-version=2023-02-15-preview",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "205f9b0b-2ccc-46e3-a94d-3b18fbee0cdc"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://ads-perf-westeurope-pv.purview.azure.com/share/operationResults/00000000-0000-0000-0000-000000000000?api-version=2023-02-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-79c0b85e0bdcb2dae579728d76247b61-6de2d28686f6caf8-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20230213.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "666e478ea64f6c31a03f2d66ea492548",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "119",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Feb 2023 00:55:34 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "d2ed74f1-8f62-4e12-8a9a-112f8be6febf"
+      },
+      "ResponseBody": {
+        "startTime": "2023-02-14T00:55:34.9324696Z",
+        "endTime": "2023-02-14T00:55:34.9324696Z",
+        "status": "Succeeded",
+        "error": null
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "PURVIEW_SHARE_URL": "https://ads-perf-westeurope-pv.purview.azure.com/share",
+    "RandomSeed": "759118441"
+  }
+}

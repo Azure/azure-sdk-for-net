@@ -34,4 +34,7 @@ Global
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A97F4B90-2591-4689-B1F8-5F21FE6D6CAE}
 	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\Azure.Analytics.Purview.Shared\tests\Azure.Analytics.Purview.Shared.Tests.projitems*{1f1cd1d4-9932-4b73-99d8-c252a67d4b46}*SharedItemsImports = 5
+	EndGlobalSection
 EndGlobal

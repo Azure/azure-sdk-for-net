@@ -1,0 +1,54 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://ads-perf-westeurope-pv.purview.azure.com/share/sentShares/e802f487-92bf-4dc3-bf1d-86afe0d757a3/sentShareInvitations/e322785e-8fb0-4d7b-b7b3-521e0d602fae?api-version=2023-02-15-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "164",
+        "Content-Type": "application/json",
+        "traceparent": "00-0364457e7e7190f12e5b40517900be16-f404ceb31bd5bcd8-00",
+        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20230213.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8712d18bd01e7e9d2e3467ac5d834892",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "invitationKind": "Service",
+        "properties": {
+          "TargetActiveDirectoryId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+          "TargetObjectId": "fc010728-94f6-4e9c-be3c-c08687414bd4"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "397",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 14 Feb 2023 00:53:50 GMT",
+        "Location": "/sentShares/e802f487-92bf-4dc3-bf1d-86afe0d757a3/sentShareInvitations/e322785e-8fb0-4d7b-b7b3-521e0d602fae/e322785e-8fb0-4d7b-b7b3-521e0d602fae",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "12306599-2600-4e4f-8764-0c1d2c39cd1f"
+      },
+      "ResponseBody": {
+        "properties": {
+          "targetActiveDirectoryId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+          "targetObjectId": "fc010728-94f6-4e9c-be3c-c08687414bd4",
+          "shareStatus": "Detached",
+          "sentAt": "2023-02-14T00:53:50.7611361Z",
+          "senderName": "SyMS",
+          "senderTenantName": "Microsoft",
+          "provisioningState": "Succeeded"
+        },
+        "invitationKind": "Service",
+        "id": "e322785e-8fb0-4d7b-b7b3-521e0d602fae",
+        "type": "sentShares/sentShareInvitations"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "PURVIEW_SHARE_URL": "https://ads-perf-westeurope-pv.purview.azure.com/share",
+    "RandomSeed": "1488529137"
+  }
+}

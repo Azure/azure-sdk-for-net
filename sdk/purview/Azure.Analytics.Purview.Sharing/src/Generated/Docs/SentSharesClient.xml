@@ -231,9 +231,9 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="CreateInvitationAsync(String,String,RequestContent,RequestContext)">
+    <member name="CreateSentShareInvitationAsync(String,String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call CreateInvitationAsync with required parameters and request content, and how to parse the result.
+This sample shows how to call CreateSentShareInvitationAsync with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
@@ -246,13 +246,13 @@ var data = new {
     invitationKind = "Service",
 };
 
-Response response = await client.CreateInvitationAsync("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
+Response response = await client.CreateSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateInvitationAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateSentShareInvitationAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
@@ -267,7 +267,7 @@ var data = new {
     invitationKind = "Service",
 };
 
-Response response = await client.CreateInvitationAsync("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
+Response response = await client.CreateSentShareInvitationAsync("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
@@ -368,9 +368,9 @@ This method takes one of the JSON objects below as a payload. Please select a JS
 
 </remarks>
     </member>
-    <member name="CreateInvitation(String,String,RequestContent,RequestContext)">
+    <member name="CreateSentShareInvitation(String,String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call CreateInvitation with required parameters and request content, and how to parse the result.
+This sample shows how to call CreateSentShareInvitation with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
@@ -383,13 +383,13 @@ var data = new {
     invitationKind = "Service",
 };
 
-Response response = client.CreateInvitation("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
+Response response = client.CreateSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateInvitation with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateSentShareInvitation with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
@@ -404,7 +404,7 @@ var data = new {
     invitationKind = "Service",
 };
 
-Response response = client.CreateInvitation("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
+Response response = client.CreateSentShareInvitation("<sentShareId>", "<sentShareInvitationId>", RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("invitationKind").ToString());
