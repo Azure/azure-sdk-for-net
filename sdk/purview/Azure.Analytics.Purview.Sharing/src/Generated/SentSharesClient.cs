@@ -485,18 +485,18 @@ namespace Azure.Analytics.Purview
         /// <exception cref="ArgumentException"> <paramref name="sentShareId"/> or <paramref name="sentShareInvitationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteInvitationAsync(WaitUntil,String,String,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> DeleteInvitationAsync(WaitUntil waitUntil, string sentShareId, string sentShareInvitationId, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteSentShareInvitationAsync(WaitUntil,String,String,RequestContext)']/*" />
+        public virtual async Task<Operation<BinaryData>> DeleteSentShareInvitationAsync(WaitUntil waitUntil, string sentShareId, string sentShareInvitationId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
 
-            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.DeleteInvitation");
+            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.DeleteSentShareInvitation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteInvitationRequest(sentShareId, sentShareInvitationId, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "SentSharesClient.DeleteInvitation", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateDeleteSentShareInvitationRequest(sentShareId, sentShareInvitationId, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "SentSharesClient.DeleteSentShareInvitation", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -514,18 +514,18 @@ namespace Azure.Analytics.Purview
         /// <exception cref="ArgumentException"> <paramref name="sentShareId"/> or <paramref name="sentShareInvitationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteInvitation(WaitUntil,String,String,RequestContext)']/*" />
-        public virtual Operation<BinaryData> DeleteInvitation(WaitUntil waitUntil, string sentShareId, string sentShareInvitationId, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteSentShareInvitation(WaitUntil,String,String,RequestContext)']/*" />
+        public virtual Operation<BinaryData> DeleteSentShareInvitation(WaitUntil waitUntil, string sentShareId, string sentShareInvitationId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
 
-            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.DeleteInvitation");
+            using var scope = ClientDiagnostics.CreateScope("SentSharesClient.DeleteSentShareInvitation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteInvitationRequest(sentShareId, sentShareInvitationId, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "SentSharesClient.DeleteInvitation", OperationFinalStateVia.Location, context, waitUntil);
+                using HttpMessage message = CreateDeleteSentShareInvitationRequest(sentShareId, sentShareInvitationId, context);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "SentSharesClient.DeleteSentShareInvitation", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -672,7 +672,7 @@ namespace Azure.Analytics.Purview
             return message;
         }
 
-        internal HttpMessage CreateDeleteInvitationRequest(string sentShareId, string sentShareInvitationId, RequestContext context)
+        internal HttpMessage CreateDeleteSentShareInvitationRequest(string sentShareId, string sentShareInvitationId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;

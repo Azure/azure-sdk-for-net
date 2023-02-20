@@ -1191,14 +1191,14 @@ Schema for <c>OperationResponse</c>:
 
 </remarks>
     </member>
-    <member name="DeleteInvitationAsync(WaitUntil,String,String,RequestContext)">
+    <member name="DeleteSentShareInvitationAsync(WaitUntil,String,String,RequestContext)">
 <example>
-This sample shows how to call DeleteInvitationAsync with required parameters and parse the result.
+This sample shows how to call DeleteSentShareInvitationAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = await client.DeleteInvitationAsync(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>");
+var operation = await client.DeleteSentShareInvitationAsync(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>");
 
 BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1235,14 +1235,14 @@ Schema for <c>OperationResponse</c>:
 
 </remarks>
     </member>
-    <member name="DeleteInvitation(WaitUntil,String,String,RequestContext)">
+    <member name="DeleteSentShareInvitation(WaitUntil,String,String,RequestContext)">
 <example>
-This sample shows how to call DeleteInvitation with required parameters and parse the result.
+This sample shows how to call DeleteSentShareInvitation with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = client.DeleteInvitation(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>");
+var operation = client.DeleteSentShareInvitation(WaitUntil.Completed, "<sentShareId>", "<sentShareInvitationId>");
 
 BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
