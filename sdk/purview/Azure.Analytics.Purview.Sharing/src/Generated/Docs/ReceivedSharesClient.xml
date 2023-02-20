@@ -561,10 +561,11 @@ Schema for <c>ReceivedShareListValue</c>:
 
 </remarks>
     </member>
-    <member name="CreateOrReplaceAsync(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateOrReplaceReceivedShareAsync(WaitUntil,String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call CreateOrReplaceAsync with required parameters and request content, and how to parse the result.
-<code><![CDATA[
+This sample shows how to call CreateOrReplaceReceivedShareAsync with required parameters and request content, and how to parse the result.
+<code>
+  <![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
 
@@ -573,14 +574,14 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = await client.CreateOrReplaceAsync(WaitUntil.Completed, "<receivedShareId>", RequestContent.Create(data));
+var operation = await client.CreateOrReplaceReceivedShareAsync(WaitUntil.Completed, "<receivedShareId>", RequestContent.Create(data));
 
 BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrReplaceAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrReplaceReceivedShareAsync with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
@@ -606,7 +607,7 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = await client.CreateOrReplaceAsync(WaitUntil.Completed, "<receivedShareId>", RequestContent.Create(data));
+var operation = await client.CreateOrReplaceReceivedShareAsync(WaitUntil.Completed, "<receivedShareId>", RequestContent.Create(data));
 
 BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -692,9 +693,9 @@ Response Body:
 
 </remarks>
     </member>
-    <member name="CreateOrReplace(WaitUntil,String,RequestContent,RequestContext)">
+    <member name="CreateOrReplaceReceivedShare(WaitUntil,String,RequestContent,RequestContext)">
 <example>
-This sample shows how to call CreateOrReplace with required parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrReplaceReceivedShare with required parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
@@ -704,14 +705,14 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = client.CreateOrReplace(WaitUntil.Completed, "<receivedShareId>", RequestContent.Create(data));
+var operation = client.CreateOrReplaceReceivedShare(WaitUntil.Completed, "<receivedShareId>", RequestContent.Create(data));
 
 BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("shareKind").ToString());
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrReplace with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrReplaceReceivedShare with all parameters and request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
@@ -737,7 +738,7 @@ var data = new {
     shareKind = "InPlace",
 };
 
-var operation = client.CreateOrReplace(WaitUntil.Completed, "<receivedShareId>", RequestContent.Create(data));
+var operation = client.CreateOrReplaceReceivedShare(WaitUntil.Completed, "<receivedShareId>", RequestContent.Create(data));
 
 BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
