@@ -348,7 +348,7 @@ namespace Azure.Identity.Tests
                     {"AZURE_USERNAME", "mockusername" },
                     { "AZURE_PASSWORD", "mockpassword" },
                     { "AZURE_CLIENT_CERTIFICATE_PATH", null },
-                    { "AZURE_FEDERATED_TOKEN_FILE", "c:/temp/token" } }))
+                    { "AZURE_FEDERATED_TOKEN_FILE", "/temp/token" } }))
             {
                 DefaultAzureCredentialOptions options = GetDacOptions(availableCredential, true);
 

@@ -19,6 +19,7 @@ namespace Azure.Identity
         private string _tokenFileContents;
         private DateTimeOffset _refreshOn = DateTimeOffset.MinValue;
         private readonly TimeSpan _refreshInterval;
+
         public FileContentsCache(string tokenFilePath, TimeSpan? refreshInterval = default)
         {
             _refreshInterval = refreshInterval ?? TimeSpan.FromMinutes(5);
