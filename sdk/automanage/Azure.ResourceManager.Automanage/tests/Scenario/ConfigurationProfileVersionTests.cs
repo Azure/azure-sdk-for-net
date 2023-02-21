@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var rg = await CreateResourceGroup("SDKAutomanage-", DefaultLocation);
 
             // create configuration profile
-            var profileCollection = rg.GetConfigurationProfiles();
+            var profileCollection = rg.GetAutomanageConfigurationProfiles();
             var profile = await CreateConfigurationProfile(profileCollection, profileName);
 
             // create configuration profile versions
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var rg = await CreateResourceGroup("SDKAutomanage-", DefaultLocation);
 
             // create configuration profile
-            var profileCollection = rg.GetConfigurationProfiles();
+            var profileCollection = rg.GetAutomanageConfigurationProfiles();
             var profile = await CreateConfigurationProfile(profileCollection, profileName);
 
             // create configuration profile version
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var rg = await CreateResourceGroup("SDKAutomanage-", DefaultLocation);
 
             // create configuration profile
-            var profileCollection = rg.GetConfigurationProfiles();
+            var profileCollection = rg.GetAutomanageConfigurationProfiles();
             var profile = await CreateConfigurationProfile(profileCollection, profileName);
 
             // create configuration profile version
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var rg = await CreateResourceGroup("SDKAutomanage-", DefaultLocation);
 
             // create configuration profile
-            var profileCollection = rg.GetConfigurationProfiles();
+            var profileCollection = rg.GetAutomanageConfigurationProfiles();
             var profile = await CreateConfigurationProfile(profileCollection, profileName);
 
             // create configuration profile version
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
             var rg = await CreateResourceGroup("SDKAutomanage-", DefaultLocation);
 
             // create configuration profile
-            var profileCollection = rg.GetConfigurationProfiles();
+            var profileCollection = rg.GetAutomanageConfigurationProfiles();
             var profile = await CreateConfigurationProfile(profileCollection, profileName);
 
             // create configuration profile version

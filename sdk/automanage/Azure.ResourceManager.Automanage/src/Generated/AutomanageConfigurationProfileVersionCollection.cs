@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
     /// A class representing a collection of <see cref="AutomanageConfigurationProfileVersionResource" /> and their operations.
-    /// Each <see cref="AutomanageConfigurationProfileVersionResource" /> in the collection will belong to the same instance of <see cref="ConfigurationProfileResource" />.
-    /// To get an <see cref="AutomanageConfigurationProfileVersionCollection" /> instance call the GetAutomanageConfigurationProfileVersions method from an instance of <see cref="ConfigurationProfileResource" />.
+    /// Each <see cref="AutomanageConfigurationProfileVersionResource" /> in the collection will belong to the same instance of <see cref="AutomanageConfigurationProfileResource" />.
+    /// To get an <see cref="AutomanageConfigurationProfileVersionCollection" /> instance call the GetAutomanageConfigurationProfileVersions method from an instance of <see cref="AutomanageConfigurationProfileResource" />.
     /// </summary>
     public partial class AutomanageConfigurationProfileVersionCollection : ArmCollection, IEnumerable<AutomanageConfigurationProfileVersionResource>, IAsyncEnumerable<AutomanageConfigurationProfileVersionResource>
     {
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.Automanage
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ConfigurationProfileResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ConfigurationProfileResource.ResourceType), nameof(id));
+            if (id.ResourceType != AutomanageConfigurationProfileResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AutomanageConfigurationProfileResource.ResourceType), nameof(id));
         }
 
         /// <summary>

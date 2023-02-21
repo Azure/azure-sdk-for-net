@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Automanage
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string configurationProfileName, ConfigurationProfilePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string configurationProfileName, AutomanageConfigurationProfilePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configurationProfileName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="configurationProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AutomanageConfigurationProfileData>> UpdateAsync(string subscriptionId, string resourceGroupName, string configurationProfileName, ConfigurationProfilePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<AutomanageConfigurationProfileData>> UpdateAsync(string subscriptionId, string resourceGroupName, string configurationProfileName, AutomanageConfigurationProfilePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="configurationProfileName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="configurationProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AutomanageConfigurationProfileData> Update(string subscriptionId, string resourceGroupName, string configurationProfileName, ConfigurationProfilePatch patch, CancellationToken cancellationToken = default)
+        public Response<AutomanageConfigurationProfileData> Update(string subscriptionId, string resourceGroupName, string configurationProfileName, AutomanageConfigurationProfilePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

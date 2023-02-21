@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.Automanage
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ConfigurationProfileResource> GetConfigurationProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AutomanageConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetConfigurationProfilesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAutomanageConfigurationProfilesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.Automanage
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ConfigurationProfileResource> GetConfigurationProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AutomanageConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetConfigurationProfiles(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAutomanageConfigurationProfiles(cancellationToken);
         }
 
         /// <summary>
@@ -226,12 +226,12 @@ namespace Azure.ResourceManager.Automanage
             );
         }
 
-        /// <summary> Gets a collection of ConfigurationProfileResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of AutomanageConfigurationProfileResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ConfigurationProfileResources and their operations over a ConfigurationProfileResource. </returns>
-        public static ConfigurationProfileCollection GetConfigurationProfiles(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of AutomanageConfigurationProfileResources and their operations over a AutomanageConfigurationProfileResource. </returns>
+        public static AutomanageConfigurationProfileCollection GetAutomanageConfigurationProfiles(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetConfigurationProfiles();
+            return GetExtensionClient(resourceGroupResource).GetAutomanageConfigurationProfiles();
         }
 
         /// <summary>
@@ -253,9 +253,9 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="configurationProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ConfigurationProfileResource>> GetConfigurationProfileAsync(this ResourceGroupResource resourceGroupResource, string configurationProfileName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AutomanageConfigurationProfileResource>> GetAutomanageConfigurationProfileAsync(this ResourceGroupResource resourceGroupResource, string configurationProfileName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetConfigurationProfiles().GetAsync(configurationProfileName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetAutomanageConfigurationProfiles().GetAsync(configurationProfileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -277,9 +277,9 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="configurationProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationProfileName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ConfigurationProfileResource> GetConfigurationProfile(this ResourceGroupResource resourceGroupResource, string configurationProfileName, CancellationToken cancellationToken = default)
+        public static Response<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfile(this ResourceGroupResource resourceGroupResource, string configurationProfileName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetConfigurationProfiles().Get(configurationProfileName, cancellationToken);
+            return resourceGroupResource.GetAutomanageConfigurationProfiles().Get(configurationProfileName, cancellationToken);
         }
 
         private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
@@ -532,20 +532,20 @@ namespace Azure.ResourceManager.Automanage
         }
         #endregion
 
-        #region ConfigurationProfileResource
+        #region AutomanageConfigurationProfileResource
         /// <summary>
-        /// Gets an object representing a <see cref="ConfigurationProfileResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfigurationProfileResource.CreateResourceIdentifier" /> to create a <see cref="ConfigurationProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AutomanageConfigurationProfileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageConfigurationProfileResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageConfigurationProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigurationProfileResource" /> object. </returns>
-        public static ConfigurationProfileResource GetConfigurationProfileResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AutomanageConfigurationProfileResource" /> object. </returns>
+        public static AutomanageConfigurationProfileResource GetAutomanageConfigurationProfileResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ConfigurationProfileResource.ValidateResourceId(id);
-                return new ConfigurationProfileResource(client, id);
+                AutomanageConfigurationProfileResource.ValidateResourceId(id);
+                return new AutomanageConfigurationProfileResource(client, id);
             }
             );
         }

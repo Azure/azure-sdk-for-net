@@ -17,7 +17,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Automanage.Samples
 {
-    public partial class Sample_ConfigurationProfileCollection
+    public partial class Sample_AutomanageConfigurationProfileCollection
     {
         // Create or update configuration profile
         [NUnit.Framework.Test]
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Automanage.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ConfigurationProfileResource
-            ConfigurationProfileCollection collection = resourceGroupResource.GetConfigurationProfiles();
+            // get the collection of this AutomanageConfigurationProfileResource
+            AutomanageConfigurationProfileCollection collection = resourceGroupResource.GetAutomanageConfigurationProfiles();
 
             // invoke the operation
             string configurationProfileName = "customConfigurationProfile";
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Automanage.Samples
 ["Organization"] = "Administration",
 },
             };
-            ArmOperation<ConfigurationProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationProfileName, data);
-            ConfigurationProfileResource result = lro.Value;
+            ArmOperation<AutomanageConfigurationProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationProfileName, data);
+            AutomanageConfigurationProfileResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.Automanage.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ConfigurationProfileResource
-            ConfigurationProfileCollection collection = resourceGroupResource.GetConfigurationProfiles();
+            // get the collection of this AutomanageConfigurationProfileResource
+            AutomanageConfigurationProfileCollection collection = resourceGroupResource.GetAutomanageConfigurationProfiles();
 
             // invoke the operation
             string configurationProfileName = "customConfigurationProfile";
-            ConfigurationProfileResource result = await collection.GetAsync(configurationProfileName);
+            AutomanageConfigurationProfileResource result = await collection.GetAsync(configurationProfileName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -127,8 +127,8 @@ namespace Azure.ResourceManager.Automanage.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ConfigurationProfileResource
-            ConfigurationProfileCollection collection = resourceGroupResource.GetConfigurationProfiles();
+            // get the collection of this AutomanageConfigurationProfileResource
+            AutomanageConfigurationProfileCollection collection = resourceGroupResource.GetAutomanageConfigurationProfiles();
 
             // invoke the operation
             string configurationProfileName = "customConfigurationProfile";
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.Automanage.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ConfigurationProfileResource
-            ConfigurationProfileCollection collection = resourceGroupResource.GetConfigurationProfiles();
+            // get the collection of this AutomanageConfigurationProfileResource
+            AutomanageConfigurationProfileCollection collection = resourceGroupResource.GetAutomanageConfigurationProfiles();
 
             // invoke the operation and iterate over the result
-            await foreach (ConfigurationProfileResource item in collection.GetAllAsync())
+            await foreach (AutomanageConfigurationProfileResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

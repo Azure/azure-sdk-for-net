@@ -31,16 +31,16 @@ namespace Azure.ResourceManager.Automanage.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ConfigurationProfileResource created on azure
-            // for more information of creating ConfigurationProfileResource, please refer to the document of ConfigurationProfileResource
+            // this example assumes you already have this AutomanageConfigurationProfileResource created on azure
+            // for more information of creating AutomanageConfigurationProfileResource, please refer to the document of AutomanageConfigurationProfileResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string configurationProfileName = "customConfigurationProfile";
-            ResourceIdentifier configurationProfileResourceId = ConfigurationProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName);
-            ConfigurationProfileResource configurationProfile = client.GetConfigurationProfileResource(configurationProfileResourceId);
+            ResourceIdentifier automanageConfigurationProfileResourceId = AutomanageConfigurationProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName);
+            AutomanageConfigurationProfileResource automanageConfigurationProfile = client.GetAutomanageConfigurationProfileResource(automanageConfigurationProfileResourceId);
 
             // get the collection of this AutomanageConfigurationProfileVersionResource
-            AutomanageConfigurationProfileVersionCollection collection = configurationProfile.GetAutomanageConfigurationProfileVersions();
+            AutomanageConfigurationProfileVersionCollection collection = automanageConfigurationProfile.GetAutomanageConfigurationProfileVersions();
 
             // invoke the operation
             string versionName = "version1";
@@ -86,16 +86,16 @@ namespace Azure.ResourceManager.Automanage.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ConfigurationProfileResource created on azure
-            // for more information of creating ConfigurationProfileResource, please refer to the document of ConfigurationProfileResource
+            // this example assumes you already have this AutomanageConfigurationProfileResource created on azure
+            // for more information of creating AutomanageConfigurationProfileResource, please refer to the document of AutomanageConfigurationProfileResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string configurationProfileName = "customConfigurationProfile";
-            ResourceIdentifier configurationProfileResourceId = ConfigurationProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName);
-            ConfigurationProfileResource configurationProfile = client.GetConfigurationProfileResource(configurationProfileResourceId);
+            ResourceIdentifier automanageConfigurationProfileResourceId = AutomanageConfigurationProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName);
+            AutomanageConfigurationProfileResource automanageConfigurationProfile = client.GetAutomanageConfigurationProfileResource(automanageConfigurationProfileResourceId);
 
             // get the collection of this AutomanageConfigurationProfileVersionResource
-            AutomanageConfigurationProfileVersionCollection collection = configurationProfile.GetAutomanageConfigurationProfileVersions();
+            AutomanageConfigurationProfileVersionCollection collection = automanageConfigurationProfile.GetAutomanageConfigurationProfileVersions();
 
             // invoke the operation
             string versionName = "version1";
@@ -121,16 +121,16 @@ namespace Azure.ResourceManager.Automanage.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ConfigurationProfileResource created on azure
-            // for more information of creating ConfigurationProfileResource, please refer to the document of ConfigurationProfileResource
+            // this example assumes you already have this AutomanageConfigurationProfileResource created on azure
+            // for more information of creating AutomanageConfigurationProfileResource, please refer to the document of AutomanageConfigurationProfileResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string configurationProfileName = "customConfigurationProfile";
-            ResourceIdentifier configurationProfileResourceId = ConfigurationProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName);
-            ConfigurationProfileResource configurationProfile = client.GetConfigurationProfileResource(configurationProfileResourceId);
+            ResourceIdentifier automanageConfigurationProfileResourceId = AutomanageConfigurationProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName);
+            AutomanageConfigurationProfileResource automanageConfigurationProfile = client.GetAutomanageConfigurationProfileResource(automanageConfigurationProfileResourceId);
 
             // get the collection of this AutomanageConfigurationProfileVersionResource
-            AutomanageConfigurationProfileVersionCollection collection = configurationProfile.GetAutomanageConfigurationProfileVersions();
+            AutomanageConfigurationProfileVersionCollection collection = automanageConfigurationProfile.GetAutomanageConfigurationProfileVersions();
 
             // invoke the operation
             string versionName = "version1";
@@ -152,16 +152,16 @@ namespace Azure.ResourceManager.Automanage.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ConfigurationProfileResource created on azure
-            // for more information of creating ConfigurationProfileResource, please refer to the document of ConfigurationProfileResource
+            // this example assumes you already have this AutomanageConfigurationProfileResource created on azure
+            // for more information of creating AutomanageConfigurationProfileResource, please refer to the document of AutomanageConfigurationProfileResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string configurationProfileName = "customConfigurationProfile";
-            ResourceIdentifier configurationProfileResourceId = ConfigurationProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName);
-            ConfigurationProfileResource configurationProfile = client.GetConfigurationProfileResource(configurationProfileResourceId);
+            ResourceIdentifier automanageConfigurationProfileResourceId = AutomanageConfigurationProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName);
+            AutomanageConfigurationProfileResource automanageConfigurationProfile = client.GetAutomanageConfigurationProfileResource(automanageConfigurationProfileResourceId);
 
             // get the collection of this AutomanageConfigurationProfileVersionResource
-            AutomanageConfigurationProfileVersionCollection collection = configurationProfile.GetAutomanageConfigurationProfileVersions();
+            AutomanageConfigurationProfileVersionCollection collection = automanageConfigurationProfile.GetAutomanageConfigurationProfileVersions();
 
             // invoke the operation and iterate over the result
             await foreach (AutomanageConfigurationProfileVersionResource item in collection.GetAllAsync())

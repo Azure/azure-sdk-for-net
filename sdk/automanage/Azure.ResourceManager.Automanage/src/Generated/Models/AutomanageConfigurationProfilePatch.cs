@@ -10,10 +10,10 @@ using System;
 namespace Azure.ResourceManager.Automanage.Models
 {
     /// <summary> Definition of the configuration profile. </summary>
-    public partial class ConfigurationProfilePatch : AutomanageResourceUpdateDetails
+    public partial class AutomanageConfigurationProfilePatch : AutomanageResourceUpdateDetails
     {
-        /// <summary> Initializes a new instance of ConfigurationProfilePatch. </summary>
-        public ConfigurationProfilePatch()
+        /// <summary> Initializes a new instance of AutomanageConfigurationProfilePatch. </summary>
+        public AutomanageConfigurationProfilePatch()
         {
         }
 

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Automanage
     /// A Class representing an AutomanageConfigurationProfileVersion along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomanageConfigurationProfileVersionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetAutomanageConfigurationProfileVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ConfigurationProfileResource" /> using the GetAutomanageConfigurationProfileVersion method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomanageConfigurationProfileResource" /> using the GetAutomanageConfigurationProfileVersion method.
     /// </summary>
     public partial class AutomanageConfigurationProfileVersionResource : ArmResource
     {
