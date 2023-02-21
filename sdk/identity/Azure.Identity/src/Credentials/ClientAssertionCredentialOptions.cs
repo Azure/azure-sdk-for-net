@@ -8,7 +8,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options used to configure the <see cref="ClientAssertionCredential"/>.
     /// </summary>
-    public class ClientAssertionCredentialOptions : TokenCredentialOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants
+    public class ClientAssertionCredentialOptions : TokenCredentialOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants, ISupportsTokenCachePersistenceOptions
     {
         internal CredentialPipeline Pipeline { get; set; }
 

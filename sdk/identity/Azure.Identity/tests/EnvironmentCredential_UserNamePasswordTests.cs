@@ -47,6 +47,7 @@ namespace Azure.Identity.Tests
                 {
                     Transport = config.Transport,
                     DisableInstanceDiscovery = config.DisableInstanceDiscovery,
+                    TokenCachePersistenceOptions = config.TokenCachePersistenceOptions,
                 };
 
                 return InstrumentClient(new EnvironmentCredential(options));

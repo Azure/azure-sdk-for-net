@@ -8,7 +8,7 @@ namespace Azure.Identity
     /// <summary>
     /// Options used to configure the <see cref="EnvironmentCredential"/>.
     /// </summary>
-    public class EnvironmentCredentialOptions : TokenCredentialOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants
+    public class EnvironmentCredentialOptions : TokenCredentialOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants, ISupportsTokenCachePersistenceOptions
     {
         /// <summary>
         /// The ID of the tenant to which the credential will authenticate by default. This value defaults to the value of the environment variable AZURE_TENANT_ID.

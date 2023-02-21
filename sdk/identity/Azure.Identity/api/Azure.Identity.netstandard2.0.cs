@@ -268,6 +268,7 @@ namespace Azure.Identity
         public string Password { get { throw null; } set { } }
         public bool SendCertificateChain { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
+        public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
     }
     public static partial class IdentityModelFactory
