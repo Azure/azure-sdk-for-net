@@ -18,9 +18,11 @@ namespace Azure.Identity
         private readonly string _tokenFilePath;
         private string _tokenFileContents;
         private DateTimeOffset _refreshOn = DateTimeOffset.MinValue;
-
-        public FileContentsCache(string tokenFilePath)
+        private readonly TimeSpan _refreshInterval;
+        public FileContentsCache(string tokenFilePath, TimeSpan? refreshInterval = default)
         {
+            _refreshInterval = refreshInterval ?? TimeSpan.FromMinutes(5);
+
             _tokenFilePath = tokenFilePath;
         }
 
@@ -38,7 +40,7 @@ namespace Azure.Identity
                         {
                             _tokenFileContents = await reader.ReadToEndAsync().ConfigureAwait(false);
 
-                            _refreshOn = DateTimeOffset.UtcNow.AddMinutes(5);
+                            _refreshOn = DateTimeOffset.UtcNow + _refreshInterval;
                         }
                     }
                 }
