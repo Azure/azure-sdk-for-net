@@ -28,11 +28,12 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: purview
-    BuildSnippets: true
     ArtifactName: packages
     Artifacts:
     - name: Azure.Analytics.Purview.Sharing
       safeName: AzureAnalyticsPurviewSharing
+    - name: Azure.Analytics.Purview.Workflows
+      safeName: AzureAnalyticsPurviewWorkflows
     - name: Azure.Analytics.Purview.Share
       safeName: AzureAnalyticsPurviewShare
     - name: Azure.Analytics.Purview.Account
