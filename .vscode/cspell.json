@@ -981,6 +981,14 @@
       ]
     },
     {
+      "filename": "**/sdk/voiceservices/**/*.cs",
+      "words": [
+        "Esrp",
+        "Pcma",
+        "Pcmu"
+      ]
+    },
+    {
       "filename": "**/sdk/webpubsub/**/*.cs",
       "words": [
         "protobuf",
