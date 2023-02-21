@@ -8,7 +8,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
 {
     internal class ServicePrincipalTests : AutomanageTestBase
     {
-        public ServicePrincipalTests(bool async) : base(async, Core.TestFramework.RecordedTestMode.Record)
+        public ServicePrincipalTests(bool async) : base(async)
         {
             JsonPathSanitizers.Add("$..servicePrincipalId");
         }
