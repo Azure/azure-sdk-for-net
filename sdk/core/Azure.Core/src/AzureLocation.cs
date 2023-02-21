@@ -57,7 +57,7 @@ namespace Azure.Core
         /// <summary>
         /// Public cloud location for West US 3.
         /// </summary>
-        public static AzureLocation WestUS2 { get; } = CreateStaticReference("westus3", "West US 3");
+        public static AzureLocation WestUS3 { get; } = CreateStaticReference("westus3", "West US 3");
 
         /// <summary>
         /// Public cloud location for North Central US.
