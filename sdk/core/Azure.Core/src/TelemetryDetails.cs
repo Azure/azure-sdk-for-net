@@ -102,7 +102,7 @@ namespace Azure.Core
 
         private static string EnsureProperParenthesisMatching(string userAgent)
         {
-            var stack = new Stack<char>();
+            int openParenthesisCount = 0;
             bool needsFix = false;
             StringBuilder? fixedUserAgent = null;
             for (int i = 0; i < userAgent.Length; i++)
@@ -110,7 +110,7 @@ namespace Azure.Core
                 switch (userAgent[i])
                 {
                     case '(':
-                        stack.Push('(');
+                        openParenthesisCount++;
                         if (needsFix)
                         {
                             // Since we're fixing the string, we need to copy the current char
@@ -118,7 +118,7 @@ namespace Azure.Core
                         }
                         break;
                     case ')':
-                        if (stack.Count == 0 || stack.Pop() != '(')
+                        if (openParenthesisCount-- <= 0)
                         {
                             if (!needsFix)
                             {
@@ -143,26 +143,19 @@ namespace Azure.Core
                         break;
                 }
             }
-            if (stack.Count > 0)
+            if (openParenthesisCount > 0)
             {
                 if (!needsFix)
                 {
                     needsFix = true;
                     // We need to fix the string, so we need to copy it into a StringBuilder, excluding the invalid closing parenthesis
-                    fixedUserAgent = new(userAgent.Length + stack.Count);
+                    fixedUserAgent = new(userAgent.Length + openParenthesisCount);
                     fixedUserAgent.Append(userAgent);
                 }
-                while (stack.Count > 0)
+
+                while (openParenthesisCount-- > 0)
                 {
-                    var paren = stack.Pop();
-                    if (paren == '(')
-                    {
-                        fixedUserAgent!.Append(')');
-                    }
-                    else
-                    {
-                        fixedUserAgent!.Append('(');
-                    }
+                    fixedUserAgent!.Append(')');
                 }
             }
             return needsFix ? fixedUserAgent!.ToString() : userAgent;
