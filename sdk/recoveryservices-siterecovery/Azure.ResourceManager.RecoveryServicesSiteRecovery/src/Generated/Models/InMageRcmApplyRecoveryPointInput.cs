@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// ApplyRecoveryPoint input specific to InMageRcm provider.
     /// Serialized Name: InMageRcmApplyRecoveryPointInput
     /// </summary>
-    public partial class InMageRcmApplyRecoveryPointInput : ApplySiteRecoveryPointProviderSpecificInput
+    public partial class InMageRcmApplyRecoveryPointInput : ApplySiteRecoveryPointProviderSpecificContent
     {
         /// <summary> Initializes a new instance of InMageRcmApplyRecoveryPointInput. </summary>
         /// <param name="recoveryPointId">

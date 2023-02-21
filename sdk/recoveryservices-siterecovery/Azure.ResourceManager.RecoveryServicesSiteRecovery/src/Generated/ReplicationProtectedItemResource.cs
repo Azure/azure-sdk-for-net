@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> Add disks input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ReplicationProtectedItemResource>> AddDisksAsync(WaitUntil waitUntil, AddDisksInputContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ReplicationProtectedItemResource>> AddDisksAsync(WaitUntil waitUntil, AddDisksContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> Add disks input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ReplicationProtectedItemResource> AddDisks(WaitUntil waitUntil, AddDisksInputContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ReplicationProtectedItemResource> AddDisks(WaitUntil waitUntil, AddDisksContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> The ApplyRecoveryPointInput. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ReplicationProtectedItemResource>> ApplyRecoveryPointAsync(WaitUntil waitUntil, ApplySiteRecoveryPointInputContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ReplicationProtectedItemResource>> ApplyRecoveryPointAsync(WaitUntil waitUntil, ApplySiteRecoveryPointContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> The ApplyRecoveryPointInput. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ReplicationProtectedItemResource> ApplyRecoveryPoint(WaitUntil waitUntil, ApplySiteRecoveryPointInputContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ReplicationProtectedItemResource> ApplyRecoveryPoint(WaitUntil waitUntil, ApplySiteRecoveryPointContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

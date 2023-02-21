@@ -14,15 +14,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Input to apply recovery point.
     /// Serialized Name: ApplyRecoveryPointInput
     /// </summary>
-    public partial class ApplySiteRecoveryPointInputContent
+    public partial class ApplySiteRecoveryPointContent
     {
-        /// <summary> Initializes a new instance of ApplySiteRecoveryPointInputContent. </summary>
+        /// <summary> Initializes a new instance of ApplySiteRecoveryPointContent. </summary>
         /// <param name="properties">
         /// The input properties to apply recovery point.
         /// Serialized Name: ApplyRecoveryPointInput.properties
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public ApplySiteRecoveryPointInputContent(ApplySiteRecoveryPointInputProperties properties)
+        public ApplySiteRecoveryPointContent(ApplySiteRecoveryPointProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The input properties to apply recovery point.
         /// Serialized Name: ApplyRecoveryPointInput.properties
         /// </summary>
-        public ApplySiteRecoveryPointInputProperties Properties { get; }
+        public ApplySiteRecoveryPointProperties Properties { get; }
     }
 }

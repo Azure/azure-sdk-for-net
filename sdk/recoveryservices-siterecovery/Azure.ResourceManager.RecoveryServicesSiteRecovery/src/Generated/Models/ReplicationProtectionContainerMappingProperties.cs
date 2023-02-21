@@ -11,10 +11,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Configure pairing input properties.
     /// Serialized Name: CreateProtectionContainerMappingInputProperties
     /// </summary>
-    public partial class CreateProtectionContainerMappingInputProperties
+    public partial class ReplicationProtectionContainerMappingProperties
     {
-        /// <summary> Initializes a new instance of CreateProtectionContainerMappingInputProperties. </summary>
-        public CreateProtectionContainerMappingInputProperties()
+        /// <summary> Initializes a new instance of ReplicationProtectionContainerMappingProperties. </summary>
+        public ReplicationProtectionContainerMappingProperties()
         {
         }
 

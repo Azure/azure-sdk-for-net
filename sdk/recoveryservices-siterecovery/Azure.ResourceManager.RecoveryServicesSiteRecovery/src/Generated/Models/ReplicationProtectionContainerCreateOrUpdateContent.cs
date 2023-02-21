@@ -24,19 +24,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Create protection container input properties.
         /// Serialized Name: CreateProtectionContainerInput.properties
         /// </summary>
-        internal CreateProtectionContainerInputProperties Properties { get; set; }
+        internal ReplicationProtectionContainerCreationProperties Properties { get; set; }
         /// <summary>
         /// Provider specific inputs for container creation.
         /// Serialized Name: CreateProtectionContainerInputProperties.providerSpecificInput
-        /// Please note <see cref="ReplicationProviderSpecificContainerCreationInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ReplicationProviderSpecificContainerCreationContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AContainerCreationInput"/>, <see cref="A2ACrossClusterMigrationContainerCreationInput"/> and <see cref="VMwareCbtContainerCreationInput"/>.
         /// </summary>
-        public IList<ReplicationProviderSpecificContainerCreationInput> ProviderSpecificInput
+        public IList<ReplicationProviderSpecificContainerCreationContent> ReplicationProtectionContainerCreationProviderSpecificInput
         {
             get
             {
                 if (Properties is null)
-                    Properties = new CreateProtectionContainerInputProperties();
+                    Properties = new ReplicationProtectionContainerCreationProperties();
                 return Properties.ProviderSpecificInput;
             }
         }

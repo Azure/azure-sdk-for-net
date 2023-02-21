@@ -11,10 +11,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Input for add disk(s) operation.
     /// Serialized Name: AddDisksInput
     /// </summary>
-    public partial class AddDisksInputContent
+    public partial class AddDisksContent
     {
-        /// <summary> Initializes a new instance of AddDisksInputContent. </summary>
-        public AddDisksInputContent()
+        /// <summary> Initializes a new instance of AddDisksContent. </summary>
+        public AddDisksContent()
         {
         }
 

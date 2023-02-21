@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class AddSiteRecoveryServicesProviderInputProperties : IUtf8JsonSerializable
+    public partial class AddSiteRecoveryServicesProviderProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Serialized Name: AddRecoveryServicesProviderInput.properties
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public SiteRecoveryServicesProviderCreateOrUpdateContent(AddSiteRecoveryServicesProviderInputProperties properties)
+        public SiteRecoveryServicesProviderCreateOrUpdateContent(AddSiteRecoveryServicesProviderProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The properties of an add provider request.
         /// Serialized Name: AddRecoveryServicesProviderInput.properties
         /// </summary>
-        public AddSiteRecoveryServicesProviderInputProperties Properties { get; }
+        public AddSiteRecoveryServicesProviderProperties Properties { get; }
     }
 }

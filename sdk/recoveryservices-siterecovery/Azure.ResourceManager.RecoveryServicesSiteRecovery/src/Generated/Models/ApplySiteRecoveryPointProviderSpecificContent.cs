@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary>
     /// Provider specific input for apply recovery point.
     /// Serialized Name: ApplyRecoveryPointProviderSpecificInput
-    /// Please note <see cref="ApplySiteRecoveryPointProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="ApplySiteRecoveryPointProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="A2AApplyRecoveryPointInput"/>, <see cref="A2ACrossClusterMigrationApplyRecoveryPointInput"/>, <see cref="HyperVReplicaAzureApplyRecoveryPointInput"/>, <see cref="InMageAzureV2ApplyRecoveryPointInput"/> and <see cref="InMageRcmApplyRecoveryPointInput"/>.
     /// </summary>
-    public abstract partial class ApplySiteRecoveryPointProviderSpecificInput
+    public abstract partial class ApplySiteRecoveryPointProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of ApplySiteRecoveryPointProviderSpecificInput. </summary>
-        protected ApplySiteRecoveryPointProviderSpecificInput()
+        /// <summary> Initializes a new instance of ApplySiteRecoveryPointProviderSpecificContent. </summary>
+        protected ApplySiteRecoveryPointProviderSpecificContent()
         {
         }
 

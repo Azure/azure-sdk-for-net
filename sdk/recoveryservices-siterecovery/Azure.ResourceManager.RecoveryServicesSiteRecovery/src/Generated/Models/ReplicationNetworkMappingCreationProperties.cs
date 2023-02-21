@@ -14,15 +14,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Common input details for network mapping operation.
     /// Serialized Name: CreateNetworkMappingInputProperties
     /// </summary>
-    public partial class CreateNetworkMappingInputProperties
+    public partial class ReplicationNetworkMappingCreationProperties
     {
-        /// <summary> Initializes a new instance of CreateNetworkMappingInputProperties. </summary>
+        /// <summary> Initializes a new instance of ReplicationNetworkMappingCreationProperties. </summary>
         /// <param name="recoveryNetworkId">
         /// Recovery network Id.
         /// Serialized Name: CreateNetworkMappingInputProperties.recoveryNetworkId
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryNetworkId"/> is null. </exception>
-        public CreateNetworkMappingInputProperties(string recoveryNetworkId)
+        public ReplicationNetworkMappingCreationProperties(string recoveryNetworkId)
         {
             Argument.AssertNotNull(recoveryNetworkId, nameof(recoveryNetworkId));
 

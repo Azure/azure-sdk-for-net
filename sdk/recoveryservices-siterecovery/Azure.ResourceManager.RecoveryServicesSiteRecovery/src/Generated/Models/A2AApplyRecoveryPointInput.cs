@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// ApplyRecoveryPoint input specific to A2A provider.
     /// Serialized Name: A2AApplyRecoveryPointInput
     /// </summary>
-    public partial class A2AApplyRecoveryPointInput : ApplySiteRecoveryPointProviderSpecificInput
+    public partial class A2AApplyRecoveryPointInput : ApplySiteRecoveryPointProviderSpecificContent
     {
         /// <summary> Initializes a new instance of A2AApplyRecoveryPointInput. </summary>
         public A2AApplyRecoveryPointInput()

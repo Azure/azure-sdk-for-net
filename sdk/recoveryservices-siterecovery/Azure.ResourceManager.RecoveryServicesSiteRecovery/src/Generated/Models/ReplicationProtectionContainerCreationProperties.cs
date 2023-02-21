@@ -14,20 +14,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Create protection container input properties.
     /// Serialized Name: CreateProtectionContainerInputProperties
     /// </summary>
-    internal partial class CreateProtectionContainerInputProperties
+    internal partial class ReplicationProtectionContainerCreationProperties
     {
-        /// <summary> Initializes a new instance of CreateProtectionContainerInputProperties. </summary>
-        public CreateProtectionContainerInputProperties()
+        /// <summary> Initializes a new instance of ReplicationProtectionContainerCreationProperties. </summary>
+        public ReplicationProtectionContainerCreationProperties()
         {
-            ProviderSpecificInput = new ChangeTrackingList<ReplicationProviderSpecificContainerCreationInput>();
+            ProviderSpecificInput = new ChangeTrackingList<ReplicationProviderSpecificContainerCreationContent>();
         }
 
         /// <summary>
         /// Provider specific inputs for container creation.
         /// Serialized Name: CreateProtectionContainerInputProperties.providerSpecificInput
-        /// Please note <see cref="ReplicationProviderSpecificContainerCreationInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ReplicationProviderSpecificContainerCreationContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AContainerCreationInput"/>, <see cref="A2ACrossClusterMigrationContainerCreationInput"/> and <see cref="VMwareCbtContainerCreationInput"/>.
         /// </summary>
-        public IList<ReplicationProviderSpecificContainerCreationInput> ProviderSpecificInput { get; }
+        public IList<ReplicationProviderSpecificContainerCreationContent> ProviderSpecificInput { get; }
     }
 }
