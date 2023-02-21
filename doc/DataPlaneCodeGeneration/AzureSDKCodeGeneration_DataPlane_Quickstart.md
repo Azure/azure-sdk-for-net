@@ -70,7 +70,7 @@ sdk\<service name>\<package name>\<package name>.sln
 
   ***Initialize Cadl Project***
 
-  Follow [Cadl Getting Start](https://github.com/microsoft/cadl/#using-node--npm) to initialize your Cadl project.
+  Follow [Cadl Getting Start](https://github.com/microsoft/typespec/#using-node--npm) to initialize your Cadl project.
 
   Make sure `npx cadl compile .` runs correctly.
 
