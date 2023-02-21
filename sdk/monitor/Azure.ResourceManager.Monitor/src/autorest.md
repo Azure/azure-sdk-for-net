@@ -8,7 +8,7 @@ azure-arm: true
 generate-model-factory: false
 library-name: Monitor
 namespace: Azure.ResourceManager.Monitor
-require: https://github.com/Azure/azure-rest-api-specs/blob/ec4eca7eb6e4c1ce2bda56a6831d03d47490202f/specification/monitor/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/519850b125f5b5257c6d73512ac0705dd6f26131/specification/monitor/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -16,12 +16,12 @@ modelerfour:
   flatten-payloads: false
 
 format-by-name-rules:
-  'tenantId': 'uuid'
-  'ETag': 'etag'
-  'location': 'azure-location'
-  'locations': 'azure-location'
-  '*Uri': 'Uri'
-  '*Uris': 'Uri'
+  "tenantId": "uuid"
+  "ETag": "etag"
+  "location": "azure-location"
+  "locations": "azure-location"
+  "*Uri": "Uri"
+  "*Uris": "Uri"
 
 rename-rules:
   CPU: Cpu
@@ -245,85 +245,109 @@ rename-mapping:
   ConditionOperator: MonitorConditionOperator
 
 directive:
+  # remove operations because they are covered in resourcemanager we no longer need to generate them here, and they are causing duplicate schemas
+  - remove-operation: Operations_List
+  - remove-operation: MonitorOperations_List
   # fixing the format since rename-mapping has bugs on this
   - from: swagger-document
     where: $.definitions.ActionDetail.properties.SendTime
-    transform: $['format'] = 'date-time';
+    transform: $["format"] = "date-time";
   # nullable issue resolution
   - from: swagger-document
     where: $.definitions.ActivityLogAlert.properties.actions
-    transform: $['x-nullable'] = true;
+    transform: $["x-nullable"] = true;
   - from: swagger-document
     where: $.definitions.MetricAlertProperties.properties.criteria
-    transform: $['x-nullable'] = true;
+    transform: $["x-nullable"] = true;
   - from: swagger-document
     where: $.definitions.MetricTrigger.properties.dimensions
-    transform: $['x-nullable'] = true;
+    transform: $["x-nullable"] = true;
   - from: swagger-document
     where: $.definitions.AutoscaleSetting.properties.notifications
-    transform: $['x-nullable'] = true;
+    transform: $["x-nullable"] = true;
   - from: swagger-document
     where: $.definitions.LogProfileProperties.properties.storageAccountId
-    transform: $['x-nullable'] = true;
+    transform: $["x-nullable"] = true;
   - from: swagger-document
     where: $.definitions.LogProfileProperties.properties.serviceBusRuleId
-    transform: $['x-nullable'] = true;
+    transform: $["x-nullable"] = true;
   - from: swagger-document
     where: $.definitions.AutoscaleSetting.properties.predictiveAutoscalePolicy
-    transform: $['x-nullable'] = true;
+    transform: $["x-nullable"] = true;
   # duplicate schema resolution
   - from: activityLogAlerts_API.json
     where: $.definitions.AzureResource
-    transform: $['x-ms-client-name'] = 'ActivityLogAlertsResource'
+    transform: $["x-ms-client-name"] = "ActivityLogAlertsResource"
   - from: activityLogAlerts_API.json
     where: $.definitions.ActionGroup
-    transform: $['x-ms-client-name'] = 'ActivityLogAlertActionGroup'
+    transform: $["x-ms-client-name"] = "ActivityLogAlertActionGroup"
   - from: activityLogAlerts_API.json
     where: $.definitions.ErrorResponse
-    transform: $['x-ms-client-name'] = 'ActivityLogAlertErrorResponse'
+    transform: $["x-ms-client-name"] = "ActivityLogAlertErrorResponse"
   - from: scheduledQueryRule_API.json
     where: $.definitions.Resource
-    transform: $['x-ms-client-name'] = 'ScheduledQueryRuleResource'
+    transform: $["x-ms-client-name"] = "ScheduledQueryRuleResource"
   - from: autoscale_API.json
     where: $.definitions.Resource
-    transform: $['x-ms-client-name'] = 'AutoScaleResource'
-  - from: types.json
+    transform: $["x-ms-client-name"] = "AutoScaleResource"
+  - from: v2/types.json
     where: $.definitions.Resource
-    transform: $['x-ms-client-name'] = 'CommonResource'
-  - from: types.json
+    transform: $["x-ms-client-name"] = "CommonResource"
+  - from: v3/types.json
+    where: $.definitions.Resource
+    transform: $["x-ms-client-name"] = "CommonResourceV3"
+  - from: v2/types.json
     where: $.definitions.ProxyResource
-    transform: $['x-ms-client-name'] = 'CommonProxyResource'
+    transform: $["x-ms-client-name"] = "CommonProxyResource"
+  - from: v2/types.json
+    where: $.definitions.ErrorResponse
+    transform: $["x-ms-client-name"] = "CommonErrorResponse"
+  - from: v3/types.json
+    where: $.definitions.ErrorResponse
+    transform: $["x-ms-client-name"] = "CommonErrorResponseV3"
+  - from: v2/types.json
+    where: $.definitions.ErrorDetail
+    transform: $["x-ms-client-name"] = "CommonErrorDetail"
+  - from: v3/types.json
+    where: $.definitions.ErrorDetail
+    transform: $["x-ms-client-name"] = "CommonErrorDetailV3"
+  - from: v2/types.json
+    where: $.definitions.TrackedResource
+    transform: $["x-ms-client-name"] = "CommonTrackedResource"
+  - from: v3/types.json
+    where: $.definitions.TrackedResource
+    transform: $["x-ms-client-name"] = "CommonTrackedResourceV3"
   # in order to let the ResponseError replace the ErrorResponseCommon in monitor, we need to add a target property to it
   - from: swagger-document
     where: $.definitions.ErrorResponseCommon.properties
     transform: >
-      $['target'] = {
-        'readOnly': true,
-        'type': 'string'
+      $["target"] = {
+        "readOnly": true,
+        "type": "string"
       }
   # remove unnecessary property for resources in action groups
   - from: scheduledQueryRule_API.json
     where: $.definitions.Resource.properties
     transform: >
-      $['kind'] = undefined;
+      $["kind"] = undefined;
   # The value of days are DayOfWeek
   - from: autoscale_API.json
     where: $.definitions
     transform: >
       $.RecurrentSchedule.properties.days.items = {
-              'type': 'string',
-              'enum': [
-                  'Sunday',
-                  'Monday',
-                  'Tuesday',
-                  'Wednesday',
-                  'Thursday',
-                  'Friday',
-                  'Saturday'
+              "type": "string",
+              "enum": [
+                  "Sunday",
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday"
                 ],
-              'x-ms-enum': {
-                  'name': 'MonitorDayOfWeek',
-                  'modelAsString': true
+              "x-ms-enum": {
+                  "name": "MonitorDayOfWeek",
+                  "modelAsString": true
                 }
             };
 ```

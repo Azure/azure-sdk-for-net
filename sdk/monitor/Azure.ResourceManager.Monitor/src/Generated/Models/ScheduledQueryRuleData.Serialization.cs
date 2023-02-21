@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Monitor
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
+            }
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -59,6 +64,11 @@ namespace Azure.ResourceManager.Monitor
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
+            }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Scopes))
             {
@@ -125,12 +135,18 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("autoMitigate"u8);
                 writer.WriteBooleanValue(AutoMitigate.Value);
             }
+            if (Optional.IsDefined(RuleResolveConfiguration))
+            {
+                writer.WritePropertyName("ruleResolveConfiguration"u8);
+                writer.WriteObjectValue(RuleResolveConfiguration);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static ScheduledQueryRuleData DeserializeScheduledQueryRuleData(JsonElement element)
         {
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<ScheduledQueryRuleKind> kind = default;
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -145,6 +161,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<string> displayName = default;
             Optional<AlertSeverity> severity = default;
             Optional<bool> enabled = default;
+            Optional<PublicNetworkAccess> publicNetworkAccess = default;
             Optional<IList<string>> scopes = default;
             Optional<TimeSpan> evaluationFrequency = default;
             Optional<TimeSpan> windowSize = default;
@@ -157,8 +174,19 @@ namespace Azure.ResourceManager.Monitor
             Optional<bool> checkWorkspaceAlertsStorageConfigured = default;
             Optional<bool> skipQueryValidation = default;
             Optional<bool> autoMitigate = default;
+            Optional<RuleResolveConfiguration> ruleResolveConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    continue;
+                }
                 if (property.NameEquals("kind"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -276,6 +304,16 @@ namespace Azure.ResourceManager.Monitor
                                 continue;
                             }
                             enabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("publicNetworkAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("scopes"u8))
@@ -408,11 +446,21 @@ namespace Azure.ResourceManager.Monitor
                             autoMitigate = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("ruleResolveConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            ruleResolveConfiguration = RuleResolveConfiguration.DeserializeRuleResolveConfiguration(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ScheduledQueryRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), Optional.ToNullable(etag), createdWithApiVersion.Value, Optional.ToNullable(isLegacyLogAnalyticsRule), description.Value, displayName.Value, Optional.ToNullable(severity), Optional.ToNullable(enabled), Optional.ToList(scopes), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(windowSize), Optional.ToNullable(overrideQueryTimeRange), Optional.ToList(targetResourceTypes), criteria.Value, Optional.ToNullable(muteActionsDuration), actions.Value, Optional.ToNullable(isWorkspaceAlertsStorageConfigured), Optional.ToNullable(checkWorkspaceAlertsStorageConfigured), Optional.ToNullable(skipQueryValidation), Optional.ToNullable(autoMitigate));
+            return new ScheduledQueryRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(kind), Optional.ToNullable(etag), createdWithApiVersion.Value, Optional.ToNullable(isLegacyLogAnalyticsRule), description.Value, displayName.Value, Optional.ToNullable(severity), Optional.ToNullable(enabled), Optional.ToNullable(publicNetworkAccess), Optional.ToList(scopes), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(windowSize), Optional.ToNullable(overrideQueryTimeRange), Optional.ToList(targetResourceTypes), criteria.Value, Optional.ToNullable(muteActionsDuration), actions.Value, Optional.ToNullable(isWorkspaceAlertsStorageConfigured), Optional.ToNullable(checkWorkspaceAlertsStorageConfigured), Optional.ToNullable(skipQueryValidation), Optional.ToNullable(autoMitigate), ruleResolveConfiguration.Value);
         }
     }
 }

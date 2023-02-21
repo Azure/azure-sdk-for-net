@@ -16,92 +16,25 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    internal partial class ScheduledQueryRulesRestOperations
+    internal partial class AzureMonitorWorkspacesRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ScheduledQueryRulesRestOperations. </summary>
+        /// <summary> Initializes a new instance of AzureMonitorWorkspacesRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ScheduledQueryRulesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public AzureMonitorWorkspacesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-01-preview";
+            _apiVersion = apiVersion ?? "2021-06-03-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
-        }
-
-        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.Insights/scheduledQueryRules", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Retrieve a scheduled query rule definitions in a subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScheduledQueryRuleResourceCollection>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListBySubscriptionRequest(subscriptionId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledQueryRuleResourceCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ScheduledQueryRuleResourceCollection.DeserializeScheduledQueryRuleResourceCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Retrieve a scheduled query rule definitions in a subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScheduledQueryRuleResourceCollection> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListBySubscriptionRequest(subscriptionId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledQueryRuleResourceCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ScheduledQueryRuleResourceCollection.DeserializeScheduledQueryRuleResourceCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -115,7 +48,7 @@ namespace Azure.ResourceManager.Monitor
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Insights/scheduledQueryRules", false);
+            uri.AppendPath("/providers/Microsoft.Monitor/accounts", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -123,13 +56,13 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        /// <summary> Retrieve scheduled query rule definitions in a resource group. </summary>
+        /// <summary> Lists all workspaces in the specified resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScheduledQueryRuleResourceCollection>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<AzureMonitorWorkspaceResourceListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -140,9 +73,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        ScheduledQueryRuleResourceCollection value = default;
+                        AzureMonitorWorkspaceResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ScheduledQueryRuleResourceCollection.DeserializeScheduledQueryRuleResourceCollection(document.RootElement);
+                        value = AzureMonitorWorkspaceResourceListResult.DeserializeAzureMonitorWorkspaceResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -150,13 +83,13 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Retrieve scheduled query rule definitions in a resource group. </summary>
+        /// <summary> Lists all workspaces in the specified resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScheduledQueryRuleResourceCollection> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<AzureMonitorWorkspaceResourceListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -167,9 +100,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        ScheduledQueryRuleResourceCollection value = default;
+                        AzureMonitorWorkspaceResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ScheduledQueryRuleResourceCollection.DeserializeScheduledQueryRuleResourceCollection(document.RootElement);
+                        value = AzureMonitorWorkspaceResourceListResult.DeserializeAzureMonitorWorkspaceResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -177,7 +110,74 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string ruleName)
+        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Monitor/accounts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists all workspaces in the specified subscription. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AzureMonitorWorkspaceResourceListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListBySubscriptionRequest(subscriptionId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AzureMonitorWorkspaceResourceListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = AzureMonitorWorkspaceResourceListResult.DeserializeAzureMonitorWorkspaceResourceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists all workspaces in the specified subscription. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AzureMonitorWorkspaceResourceListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListBySubscriptionRequest(subscriptionId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AzureMonitorWorkspaceResourceListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = AzureMonitorWorkspaceResourceListResult.DeserializeAzureMonitorWorkspaceResourceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -188,8 +188,8 @@ namespace Azure.ResourceManager.Monitor
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Insights/scheduledQueryRules/", false);
-            uri.AppendPath(ruleName, true);
+            uri.AppendPath("/providers/Microsoft.Monitor/accounts/", false);
+            uri.AppendPath(azureMonitorWorkspaceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -197,69 +197,69 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        /// <summary> Retrieve an scheduled query rule definition. </summary>
+        /// <summary> Returns the specific Azure Monitor workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="azureMonitorWorkspaceName"> The name of the Azure Monitor workspace.  The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScheduledQueryRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string ruleName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AzureMonitorWorkspaceResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, ruleName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, azureMonitorWorkspaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ScheduledQueryRuleData value = default;
+                        AzureMonitorWorkspaceResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ScheduledQueryRuleData.DeserializeScheduledQueryRuleData(document.RootElement);
+                        value = AzureMonitorWorkspaceResourceData.DeserializeAzureMonitorWorkspaceResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ScheduledQueryRuleData)null, message.Response);
+                    return Response.FromValue((AzureMonitorWorkspaceResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Retrieve an scheduled query rule definition. </summary>
+        /// <summary> Returns the specific Azure Monitor workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="azureMonitorWorkspaceName"> The name of the Azure Monitor workspace.  The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScheduledQueryRuleData> Get(string subscriptionId, string resourceGroupName, string ruleName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AzureMonitorWorkspaceResourceData> Get(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, ruleName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, azureMonitorWorkspaceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ScheduledQueryRuleData value = default;
+                        AzureMonitorWorkspaceResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ScheduledQueryRuleData.DeserializeScheduledQueryRuleData(document.RootElement);
+                        value = AzureMonitorWorkspaceResourceData.DeserializeAzureMonitorWorkspaceResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ScheduledQueryRuleData)null, message.Response);
+                    return Response.FromValue((AzureMonitorWorkspaceResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string ruleName, ScheduledQueryRuleData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, AzureMonitorWorkspaceResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -270,8 +270,8 @@ namespace Azure.ResourceManager.Monitor
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Insights/scheduledQueryRules/", false);
-            uri.AppendPath(ruleName, true);
+            uri.AppendPath("/providers/Microsoft.Monitor/accounts/", false);
+            uri.AppendPath(azureMonitorWorkspaceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -283,31 +283,31 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        /// <summary> Creates or updates a scheduled query rule. </summary>
+        /// <summary> Create or update a workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="ruleName"> The name of the rule. </param>
-        /// <param name="data"> The parameters of the rule to create or update. </param>
+        /// <param name="azureMonitorWorkspaceName"> The name of the Azure Monitor workspace.  The name is case insensitive. </param>
+        /// <param name="data"> Properties that need to be specified to create a new workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScheduledQueryRuleData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string ruleName, ScheduledQueryRuleData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="azureMonitorWorkspaceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AzureMonitorWorkspaceResourceData>> CreateAsync(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, AzureMonitorWorkspaceResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, ruleName, data);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, azureMonitorWorkspaceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
                     {
-                        ScheduledQueryRuleData value = default;
+                        AzureMonitorWorkspaceResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ScheduledQueryRuleData.DeserializeScheduledQueryRuleData(document.RootElement);
+                        value = AzureMonitorWorkspaceResourceData.DeserializeAzureMonitorWorkspaceResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -315,31 +315,31 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Creates or updates a scheduled query rule. </summary>
+        /// <summary> Create or update a workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="ruleName"> The name of the rule. </param>
-        /// <param name="data"> The parameters of the rule to create or update. </param>
+        /// <param name="azureMonitorWorkspaceName"> The name of the Azure Monitor workspace.  The name is case insensitive. </param>
+        /// <param name="data"> Properties that need to be specified to create a new workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScheduledQueryRuleData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string ruleName, ScheduledQueryRuleData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="azureMonitorWorkspaceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AzureMonitorWorkspaceResourceData> Create(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, AzureMonitorWorkspaceResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, ruleName, data);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, azureMonitorWorkspaceName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
                     {
-                        ScheduledQueryRuleData value = default;
+                        AzureMonitorWorkspaceResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ScheduledQueryRuleData.DeserializeScheduledQueryRuleData(document.RootElement);
+                        value = AzureMonitorWorkspaceResourceData.DeserializeAzureMonitorWorkspaceResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string ruleName, ScheduledQueryRulePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, AzureMonitorWorkspaceResourcePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -358,8 +358,8 @@ namespace Azure.ResourceManager.Monitor
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Insights/scheduledQueryRules/", false);
-            uri.AppendPath(ruleName, true);
+            uri.AppendPath("/providers/Microsoft.Monitor/accounts/", false);
+            uri.AppendPath(azureMonitorWorkspaceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -371,30 +371,30 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        /// <summary> Update a scheduled query rule. </summary>
+        /// <summary> Updates part of a workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="ruleName"> The name of the rule. </param>
-        /// <param name="patch"> The parameters of the rule to update. </param>
+        /// <param name="azureMonitorWorkspaceName"> The name of the Azure Monitor workspace.  The name is case insensitive. </param>
+        /// <param name="patch"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ruleName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScheduledQueryRuleData>> UpdateAsync(string subscriptionId, string resourceGroupName, string ruleName, ScheduledQueryRulePatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="azureMonitorWorkspaceName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AzureMonitorWorkspaceResourceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, AzureMonitorWorkspaceResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, ruleName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, azureMonitorWorkspaceName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ScheduledQueryRuleData value = default;
+                        AzureMonitorWorkspaceResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ScheduledQueryRuleData.DeserializeScheduledQueryRuleData(document.RootElement);
+                        value = AzureMonitorWorkspaceResourceData.DeserializeAzureMonitorWorkspaceResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -402,30 +402,30 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Update a scheduled query rule. </summary>
+        /// <summary> Updates part of a workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="ruleName"> The name of the rule. </param>
-        /// <param name="patch"> The parameters of the rule to update. </param>
+        /// <param name="azureMonitorWorkspaceName"> The name of the Azure Monitor workspace.  The name is case insensitive. </param>
+        /// <param name="patch"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="ruleName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScheduledQueryRuleData> Update(string subscriptionId, string resourceGroupName, string ruleName, ScheduledQueryRulePatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="azureMonitorWorkspaceName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AzureMonitorWorkspaceResourceData> Update(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, AzureMonitorWorkspaceResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, ruleName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, azureMonitorWorkspaceName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ScheduledQueryRuleData value = default;
+                        AzureMonitorWorkspaceResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ScheduledQueryRuleData.DeserializeScheduledQueryRuleData(document.RootElement);
+                        value = AzureMonitorWorkspaceResourceData.DeserializeAzureMonitorWorkspaceResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string ruleName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -444,8 +444,8 @@ namespace Azure.ResourceManager.Monitor
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Insights/scheduledQueryRules/", false);
-            uri.AppendPath(ruleName, true);
+            uri.AppendPath("/providers/Microsoft.Monitor/accounts/", false);
+            uri.AppendPath(azureMonitorWorkspaceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -453,20 +453,20 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        /// <summary> Deletes a scheduled query rule. </summary>
+        /// <summary> Delete a workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="azureMonitorWorkspaceName"> The name of the Azure Monitor workspace.  The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string ruleName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, ruleName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, azureMonitorWorkspaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -478,94 +478,26 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Deletes a scheduled query rule. </summary>
+        /// <summary> Delete a workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="azureMonitorWorkspaceName"> The name of the Azure Monitor workspace.  The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string ruleName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, ruleName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, azureMonitorWorkspaceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                 case 204:
                     return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Retrieve a scheduled query rule definitions in a subscription. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScheduledQueryRuleResourceCollection>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledQueryRuleResourceCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ScheduledQueryRuleResourceCollection.DeserializeScheduledQueryRuleResourceCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Retrieve a scheduled query rule definitions in a subscription. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScheduledQueryRuleResourceCollection> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScheduledQueryRuleResourceCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ScheduledQueryRuleResourceCollection.DeserializeScheduledQueryRuleResourceCollection(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -585,14 +517,14 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        /// <summary> Retrieve scheduled query rule definitions in a resource group. </summary>
+        /// <summary> Lists all workspaces in the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScheduledQueryRuleResourceCollection>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<AzureMonitorWorkspaceResourceListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -604,9 +536,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        ScheduledQueryRuleResourceCollection value = default;
+                        AzureMonitorWorkspaceResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ScheduledQueryRuleResourceCollection.DeserializeScheduledQueryRuleResourceCollection(document.RootElement);
+                        value = AzureMonitorWorkspaceResourceListResult.DeserializeAzureMonitorWorkspaceResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -614,14 +546,14 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Retrieve scheduled query rule definitions in a resource group. </summary>
+        /// <summary> Lists all workspaces in the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScheduledQueryRuleResourceCollection> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<AzureMonitorWorkspaceResourceListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -633,9 +565,77 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        ScheduledQueryRuleResourceCollection value = default;
+                        AzureMonitorWorkspaceResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ScheduledQueryRuleResourceCollection.DeserializeScheduledQueryRuleResourceCollection(document.RootElement);
+                        value = AzureMonitorWorkspaceResourceListResult.DeserializeAzureMonitorWorkspaceResourceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists all workspaces in the specified subscription. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AzureMonitorWorkspaceResourceListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AzureMonitorWorkspaceResourceListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = AzureMonitorWorkspaceResourceListResult.DeserializeAzureMonitorWorkspaceResourceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists all workspaces in the specified subscription. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AzureMonitorWorkspaceResourceListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AzureMonitorWorkspaceResourceListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = AzureMonitorWorkspaceResourceListResult.DeserializeAzureMonitorWorkspaceResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
