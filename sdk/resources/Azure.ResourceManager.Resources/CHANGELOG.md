@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added a `ArmResourcesModelFactory` class to include static factory methods for those models that contains at least one read-only property.
+
 ### Breaking Changes
 
 ### Bugs Fixed
