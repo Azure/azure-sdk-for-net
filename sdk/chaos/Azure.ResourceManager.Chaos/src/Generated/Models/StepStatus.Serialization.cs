@@ -21,22 +21,22 @@ namespace Azure.ResourceManager.Chaos.Models
             Optional<IReadOnlyList<BranchStatus>> branches = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("stepName"))
+                if (property.NameEquals("stepName"u8))
                 {
                     stepName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stepId"))
+                if (property.NameEquals("stepId"u8))
                 {
                     stepId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("branches"))
+                if (property.NameEquals("branches"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

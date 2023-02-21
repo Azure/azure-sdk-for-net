@@ -151,6 +151,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
                 // Act
                 await artifact.DeleteAsync();
+                await Delay(5000);
+
+                await Delay(5000);
 
                 // Assert
                 Assert.ThrowsAsync<RequestFailedException>(async () => { await artifact.GetManifestPropertiesAsync(); });

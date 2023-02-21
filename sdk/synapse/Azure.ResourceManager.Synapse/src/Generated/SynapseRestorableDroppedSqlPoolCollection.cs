@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a deleted sql pool that can be restored
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/restorableDroppedSqlPools/{restorableDroppedSqlPoolId}
-        /// Operation Id: RestorableDroppedSqlPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/restorableDroppedSqlPools/{restorableDroppedSqlPoolId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDroppedSqlPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="restorableDroppedSqlPoolId"> The id of the deleted Sql Pool in the form of sqlPoolName,deletionTimeInFileTimeFormat. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a deleted sql pool that can be restored
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/restorableDroppedSqlPools/{restorableDroppedSqlPoolId}
-        /// Operation Id: RestorableDroppedSqlPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/restorableDroppedSqlPools/{restorableDroppedSqlPoolId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDroppedSqlPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="restorableDroppedSqlPoolId"> The id of the deleted Sql Pool in the form of sqlPoolName,deletionTimeInFileTimeFormat. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,62 +128,58 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a list of deleted Sql pools that can be restored
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/restorableDroppedSqlPools
-        /// Operation Id: RestorableDroppedSqlPools_ListByWorkspace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/restorableDroppedSqlPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDroppedSqlPools_ListByWorkspace</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SynapseRestorableDroppedSqlPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseRestorableDroppedSqlPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapseRestorableDroppedSqlPoolResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsClientDiagnostics.CreateScope("SynapseRestorableDroppedSqlPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsRestClient.ListByWorkspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseRestorableDroppedSqlPoolResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseRestorableDroppedSqlPoolResource(Client, SynapseRestorableDroppedSqlPoolData.DeserializeSynapseRestorableDroppedSqlPoolData(e)), _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsClientDiagnostics, Pipeline, "SynapseRestorableDroppedSqlPoolCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of deleted Sql pools that can be restored
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/restorableDroppedSqlPools
-        /// Operation Id: RestorableDroppedSqlPools_ListByWorkspace
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/restorableDroppedSqlPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDroppedSqlPools_ListByWorkspace</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SynapseRestorableDroppedSqlPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseRestorableDroppedSqlPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SynapseRestorableDroppedSqlPoolResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsClientDiagnostics.CreateScope("SynapseRestorableDroppedSqlPoolCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsRestClient.ListByWorkspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseRestorableDroppedSqlPoolResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseRestorableDroppedSqlPoolResource(Client, SynapseRestorableDroppedSqlPoolData.DeserializeSynapseRestorableDroppedSqlPoolData(e)), _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsClientDiagnostics, Pipeline, "SynapseRestorableDroppedSqlPoolCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/restorableDroppedSqlPools/{restorableDroppedSqlPoolId}
-        /// Operation Id: RestorableDroppedSqlPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/restorableDroppedSqlPools/{restorableDroppedSqlPoolId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDroppedSqlPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="restorableDroppedSqlPoolId"> The id of the deleted Sql Pool in the form of sqlPoolName,deletionTimeInFileTimeFormat. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -194,8 +205,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/restorableDroppedSqlPools/{restorableDroppedSqlPoolId}
-        /// Operation Id: RestorableDroppedSqlPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/restorableDroppedSqlPools/{restorableDroppedSqlPoolId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDroppedSqlPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="restorableDroppedSqlPoolId"> The id of the deleted Sql Pool in the form of sqlPoolName,deletionTimeInFileTimeFormat. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

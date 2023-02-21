@@ -8,11 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "62",
         "Content-Type": "application/json",
-        "traceparent": "00-ec9064ccf9409d469ff47b9825adcd06-b810b5e6669c264a-00",
-        "User-Agent": "azsdk-net-Communication.Identity/1.2.0-alpha.20220905.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "cad38c6c7b4bef8469c90a61a1260940",
+        "traceparent": "00-b68cb6d3c304890163923ebd7c04445b-cc2de8f124ec9eb0-00",
+        "User-Agent": "azsdk-net-Communication.Identity/1.3.0-alpha.20230112.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5b05fc1f3501a631516555c5d54a04e9",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 05 Sep 2022 10:40:04 GMT",
+        "x-ms-date": "Thu, 12 Jan 2023 11:02:43 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -23,15 +23,15 @@
       "StatusCode": 401,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Mon, 05 Sep 2022 10:40:04 GMT",
-        "MS-CV": "UQi3fOiSgUGpZir0pfyrLA.0",
+        "Date": "Thu, 12 Jan 2023 11:02:42 GMT",
+        "MS-CV": "n5lnR9APLEmwsF9G1Rhsow.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0BNIVYwAAAABpkPbQQJ8kQaZFuhkbwKJnUFJHMDFFREdFMDkxNwBmMDlhNGMxMy0yMWYxLTQ4ZWMtOWNmNy02NjU0NTY4NGI2NDI=",
+        "X-Azure-Ref": "00\u002Bi/YwAAAADnpXZ4prApSY56TCe\u002BfYfHSEVMMDFFREdFMjAxMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "cad38c6c7b4bef8469c90a61a1260940",
-        "X-Processing-Time": "27ms"
+        "x-ms-client-request-id": "5b05fc1f3501a631516555c5d54a04e9",
+        "X-Processing-Time": "126ms"
       },
       "ResponseBody": {
         "error": {
@@ -43,6 +43,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1221421863"
+    "RandomSeed": "645392992"
   }
 }

@@ -18,18 +18,18 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("nodeSku");
+            writer.WritePropertyName("nodeSku"u8);
             writer.WriteStringValue(NodeSku);
-            writer.WritePropertyName("osImage");
+            writer.WritePropertyName("osImage"u8);
             writer.WriteObjectValue(OSImage);
-            writer.WritePropertyName("osDisk");
+            writer.WritePropertyName("osDisk"u8);
             writer.WriteObjectValue(OSDisk);
             if (Optional.IsCollectionDefined(DataDisks))
             {
-                writer.WritePropertyName("dataDisks");
+                writer.WritePropertyName("dataDisks"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataDisks)
                 {
@@ -50,27 +50,27 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<IReadOnlyList<ResourceIdentifier>> nodeResourceIds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nodeSku"))
+                if (property.NameEquals("nodeSku"u8))
                 {
                     nodeSku = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osImage"))
+                if (property.NameEquals("osImage"u8))
                 {
                     osImage = OSImageProfile.DeserializeOSImageProfile(property.Value);
                     continue;
                 }
-                if (property.NameEquals("osDisk"))
+                if (property.NameEquals("osDisk"u8))
                 {
                     osDisk = DiskInfo.DeserializeDiskInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataDisks"))
+                if (property.NameEquals("dataDisks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     dataDisks = array;
                     continue;
                 }
-                if (property.NameEquals("nodeResourceIds"))
+                if (property.NameEquals("nodeResourceIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

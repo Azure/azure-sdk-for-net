@@ -44,8 +44,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Checks that the Azure Cosmos DB account name already exists. A valid account name may contain only lowercase letters, numbers, and the &apos;-&apos; character, and must be between 3 and 50 characters.
-        /// Request Path: /providers/Microsoft.DocumentDB/databaseAccountNames/{accountName}
-        /// Operation Id: DatabaseAccounts_CheckNameExists
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DocumentDB/databaseAccountNames/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseAccounts_CheckNameExists</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -67,8 +75,16 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary>
         /// Checks that the Azure Cosmos DB account name already exists. A valid account name may contain only lowercase letters, numbers, and the &apos;-&apos; character, and must be between 3 and 50 characters.
-        /// Request Path: /providers/Microsoft.DocumentDB/databaseAccountNames/{accountName}
-        /// Operation Id: DatabaseAccounts_CheckNameExists
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DocumentDB/databaseAccountNames/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseAccounts_CheckNameExists</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

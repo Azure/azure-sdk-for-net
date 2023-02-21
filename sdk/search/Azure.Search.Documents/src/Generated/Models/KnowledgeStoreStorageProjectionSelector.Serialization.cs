@@ -16,31 +16,31 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("storageContainer");
+            writer.WritePropertyName("storageContainer"u8);
             writer.WriteStringValue(StorageContainer);
             if (Optional.IsDefined(ReferenceKeyName))
             {
-                writer.WritePropertyName("referenceKeyName");
+                writer.WritePropertyName("referenceKeyName"u8);
                 writer.WriteStringValue(ReferenceKeyName);
             }
             if (Optional.IsDefined(GeneratedKeyName))
             {
-                writer.WritePropertyName("generatedKeyName");
+                writer.WritePropertyName("generatedKeyName"u8);
                 writer.WriteStringValue(GeneratedKeyName);
             }
             if (Optional.IsDefined(Source))
             {
-                writer.WritePropertyName("source");
+                writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
             if (Optional.IsDefined(SourceContext))
             {
-                writer.WritePropertyName("sourceContext");
+                writer.WritePropertyName("sourceContext"u8);
                 writer.WriteStringValue(SourceContext);
             }
             if (Optional.IsCollectionDefined(Inputs))
             {
-                writer.WritePropertyName("inputs");
+                writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {

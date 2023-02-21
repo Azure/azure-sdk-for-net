@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<BinaryData> content = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("title"))
+                if (property.NameEquals("title"u8))
                 {
                     title = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("content"))
+                if (property.NameEquals("content"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

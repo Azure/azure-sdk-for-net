@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(SecretStoreResource))
             {
-                writer.WritePropertyName("secretStoreResource");
+                writer.WritePropertyName("secretStoreResource"u8);
                 writer.WriteObjectValue(SecretStoreResource);
             }
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("secretStoreResource"))
+                if (property.NameEquals("secretStoreResource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     secretStoreResource = SecretStoreResourceInfo.DeserializeSecretStoreResourceInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;

@@ -37,8 +37,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         /// <summary>
         /// Get the AppComplianceAutomation report and its properties.
-        /// Request Path: /providers/Microsoft.AppComplianceAutomation/reports/{reportName}
-        /// Operation Id: Report_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Report_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="reportName"> Report Name. </param>
@@ -53,8 +61,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         /// <summary>
         /// Get the AppComplianceAutomation report and its properties.
-        /// Request Path: /providers/Microsoft.AppComplianceAutomation/reports/{reportName}
-        /// Operation Id: Report_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Report_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="reportName"> Report Name. </param>

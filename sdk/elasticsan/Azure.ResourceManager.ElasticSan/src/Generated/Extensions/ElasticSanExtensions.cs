@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.ElasticSan
 
         /// <summary>
         /// List all the available Skus in the region and information related to them
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ElasticSan/skus
-        /// Operation Id: Skus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ElasticSan/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> Specify $filter=&apos;location eq &lt;location&gt;&apos; to filter on location. </param>
@@ -44,8 +52,16 @@ namespace Azure.ResourceManager.ElasticSan
 
         /// <summary>
         /// List all the available Skus in the region and information related to them
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ElasticSan/skus
-        /// Operation Id: Skus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ElasticSan/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> Specify $filter=&apos;location eq &lt;location&gt;&apos; to filter on location. </param>
@@ -58,8 +74,16 @@ namespace Azure.ResourceManager.ElasticSan
 
         /// <summary>
         /// Gets a list of ElasticSans in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ElasticSan/elasticSans
-        /// Operation Id: ElasticSans_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ElasticSan/elasticSans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ElasticSans_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -71,8 +95,16 @@ namespace Azure.ResourceManager.ElasticSan
 
         /// <summary>
         /// Gets a list of ElasticSans in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ElasticSan/elasticSans
-        /// Operation Id: ElasticSans_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ElasticSan/elasticSans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ElasticSans_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -101,8 +133,16 @@ namespace Azure.ResourceManager.ElasticSan
 
         /// <summary>
         /// Get a ElasticSan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}
-        /// Operation Id: ElasticSans_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ElasticSans_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
@@ -117,8 +157,16 @@ namespace Azure.ResourceManager.ElasticSan
 
         /// <summary>
         /// Get a ElasticSan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}
-        /// Operation Id: ElasticSans_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ElasticSans_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>

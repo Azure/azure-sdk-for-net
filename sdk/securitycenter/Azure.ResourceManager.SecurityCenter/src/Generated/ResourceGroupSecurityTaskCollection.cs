@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -59,8 +58,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Recommended tasks that will help improve the security of the subscription proactively
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}
-        /// Operation Id: Tasks_GetResourceGroupLevelTask
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tasks_GetResourceGroupLevelTask</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -88,8 +95,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Recommended tasks that will help improve the security of the subscription proactively
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}
-        /// Operation Id: Tasks_GetResourceGroupLevelTask
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tasks_GetResourceGroupLevelTask</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -117,94 +132,62 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Recommended tasks that will help improve the security of the subscription proactively
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks
-        /// Operation Id: Tasks_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tasks_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceGroupSecurityTaskResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceGroupSecurityTaskResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceGroupSecurityTaskResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceGroupSecurityTaskTasksClientDiagnostics.CreateScope("ResourceGroupSecurityTaskCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceGroupSecurityTaskTasksRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupSecurityTaskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ResourceGroupSecurityTaskResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceGroupSecurityTaskTasksClientDiagnostics.CreateScope("ResourceGroupSecurityTaskCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceGroupSecurityTaskTasksRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupSecurityTaskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGroupSecurityTaskTasksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGroupSecurityTaskTasksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceGroupSecurityTaskResource(Client, SecurityTaskData.DeserializeSecurityTaskData(e)), _resourceGroupSecurityTaskTasksClientDiagnostics, Pipeline, "ResourceGroupSecurityTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Recommended tasks that will help improve the security of the subscription proactively
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks
-        /// Operation Id: Tasks_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tasks_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGroupSecurityTaskResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceGroupSecurityTaskResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ResourceGroupSecurityTaskResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceGroupSecurityTaskTasksClientDiagnostics.CreateScope("ResourceGroupSecurityTaskCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _resourceGroupSecurityTaskTasksRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupSecurityTaskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ResourceGroupSecurityTaskResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceGroupSecurityTaskTasksClientDiagnostics.CreateScope("ResourceGroupSecurityTaskCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _resourceGroupSecurityTaskTasksRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupSecurityTaskResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGroupSecurityTaskTasksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGroupSecurityTaskTasksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceGroupSecurityTaskResource(Client, SecurityTaskData.DeserializeSecurityTaskData(e)), _resourceGroupSecurityTaskTasksClientDiagnostics, Pipeline, "ResourceGroupSecurityTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}
-        /// Operation Id: Tasks_GetResourceGroupLevelTask
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tasks_GetResourceGroupLevelTask</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -230,8 +213,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}
-        /// Operation Id: Tasks_GetResourceGroupLevelTask
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tasks_GetResourceGroupLevelTask</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

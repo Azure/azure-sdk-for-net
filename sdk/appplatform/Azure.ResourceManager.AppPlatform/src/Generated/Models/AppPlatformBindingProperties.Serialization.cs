@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId");
+                writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(Key))
             {
-                writer.WritePropertyName("key");
+                writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
             if (Optional.IsCollectionDefined(BindingParameters))
             {
-                writer.WritePropertyName("bindingParameters");
+                writer.WritePropertyName("bindingParameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in BindingParameters)
                 {
@@ -57,17 +57,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<DateTimeOffset> updatedAt = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceName"))
+                if (property.NameEquals("resourceName"u8))
                 {
                     resourceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     resourceType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("key"))
+                if (property.NameEquals("key"u8))
                 {
                     key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bindingParameters"))
+                if (property.NameEquals("bindingParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     bindingParameters = dictionary;
                     continue;
                 }
-                if (property.NameEquals("generatedProperties"))
+                if (property.NameEquals("generatedProperties"u8))
                 {
                     generatedProperties = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdAt"))
+                if (property.NameEquals("createdAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     createdAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("updatedAt"))
+                if (property.NameEquals("updatedAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

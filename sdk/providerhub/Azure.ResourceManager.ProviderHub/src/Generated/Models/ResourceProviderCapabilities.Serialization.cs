@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("quotaId");
+            writer.WritePropertyName("quotaId"u8);
             writer.WriteStringValue(QuotaId);
-            writer.WritePropertyName("effect");
+            writer.WritePropertyName("effect"u8);
             writer.WriteStringValue(Effect.ToString());
             if (Optional.IsCollectionDefined(RequiredFeatures))
             {
-                writer.WritePropertyName("requiredFeatures");
+                writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();
                 foreach (var item in RequiredFeatures)
                 {
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<IList<string>> requiredFeatures = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("quotaId"))
+                if (property.NameEquals("quotaId"u8))
                 {
                     quotaId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("effect"))
+                if (property.NameEquals("effect"u8))
                 {
                     effect = new ResourceProviderCapabilitiesEffect(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("requiredFeatures"))
+                if (property.NameEquals("requiredFeatures"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Gets an attached NetworkConnection.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/attachednetworks/{attachedNetworkConnectionName}
-        /// Operation Id: AttachedNetworks_GetByProject
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/attachednetworks/{attachedNetworkConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttachedNetworks_GetByProject</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="attachedNetworkConnectionName"> The name of the attached NetworkConnection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Gets an attached NetworkConnection.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/attachednetworks/{attachedNetworkConnectionName}
-        /// Operation Id: AttachedNetworks_GetByProject
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/attachednetworks/{attachedNetworkConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttachedNetworks_GetByProject</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="attachedNetworkConnectionName"> The name of the attached NetworkConnection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,94 +128,62 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Lists the attached NetworkConnections for a Project.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/attachednetworks
-        /// Operation Id: AttachedNetworks_ListByProject
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/attachednetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttachedNetworks_ListByProject</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProjectAttachedNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProjectAttachedNetworkConnectionResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProjectAttachedNetworkConnectionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachedNetworkConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _projectAttachedNetworkConnectionAttachedNetworksRestClient.ListByProjectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProjectAttachedNetworkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProjectAttachedNetworkConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachedNetworkConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _projectAttachedNetworkConnectionAttachedNetworksRestClient.ListByProjectNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProjectAttachedNetworkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _projectAttachedNetworkConnectionAttachedNetworksRestClient.CreateListByProjectRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _projectAttachedNetworkConnectionAttachedNetworksRestClient.CreateListByProjectNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProjectAttachedNetworkConnectionResource(Client, AttachedNetworkConnectionData.DeserializeAttachedNetworkConnectionData(e)), _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics, Pipeline, "ProjectAttachedNetworkConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists the attached NetworkConnections for a Project.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/attachednetworks
-        /// Operation Id: AttachedNetworks_ListByProject
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/attachednetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttachedNetworks_ListByProject</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProjectAttachedNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProjectAttachedNetworkConnectionResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<ProjectAttachedNetworkConnectionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachedNetworkConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _projectAttachedNetworkConnectionAttachedNetworksRestClient.ListByProject(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProjectAttachedNetworkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProjectAttachedNetworkConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("ProjectAttachedNetworkConnectionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _projectAttachedNetworkConnectionAttachedNetworksRestClient.ListByProjectNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProjectAttachedNetworkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _projectAttachedNetworkConnectionAttachedNetworksRestClient.CreateListByProjectRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _projectAttachedNetworkConnectionAttachedNetworksRestClient.CreateListByProjectNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProjectAttachedNetworkConnectionResource(Client, AttachedNetworkConnectionData.DeserializeAttachedNetworkConnectionData(e)), _projectAttachedNetworkConnectionAttachedNetworksClientDiagnostics, Pipeline, "ProjectAttachedNetworkConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/attachednetworks/{attachedNetworkConnectionName}
-        /// Operation Id: AttachedNetworks_GetByProject
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/attachednetworks/{attachedNetworkConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttachedNetworks_GetByProject</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="attachedNetworkConnectionName"> The name of the attached NetworkConnection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -226,8 +209,16 @@ namespace Azure.ResourceManager.DevCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/attachednetworks/{attachedNetworkConnectionName}
-        /// Operation Id: AttachedNetworks_GetByProject
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/attachednetworks/{attachedNetworkConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AttachedNetworks_GetByProject</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="attachedNetworkConnectionName"> The name of the attached NetworkConnection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

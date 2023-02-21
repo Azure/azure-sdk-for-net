@@ -34,7 +34,7 @@ namespace Azure.Communication.Email
             writer.WriteObjectValue(Recipients);
             if (Optional.IsCollectionDefined(Attachments))
             {
-                writer.WritePropertyName("attachments");
+                writer.WritePropertyName("attachments"u8);
                 writer.WriteStartArray();
                 foreach (var item in Attachments)
                 {
@@ -44,7 +44,7 @@ namespace Azure.Communication.Email
             }
             if (Optional.IsCollectionDefined(ReplyTo))
             {
-                writer.WritePropertyName("replyTo");
+                writer.WritePropertyName("replyTo"u8);
                 writer.WriteStartArray();
                 foreach (var item in ReplyTo)
                 {
@@ -54,7 +54,7 @@ namespace Azure.Communication.Email
             }
             if (Optional.IsDefined(DisableUserEngagementTracking))
             {
-                writer.WritePropertyName("disableUserEngagementTracking");
+                writer.WritePropertyName("disableUserEngagementTracking"u8);
                 writer.WriteBooleanValue(DisableUserEngagementTracking.Value);
             }
             writer.WriteEndObject();

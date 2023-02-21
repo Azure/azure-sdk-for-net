@@ -15,7 +15,7 @@ namespace Azure.Communication.Email
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("to");
+            writer.WritePropertyName("to"u8);
             writer.WriteStartArray();
             foreach (var item in To)
             {

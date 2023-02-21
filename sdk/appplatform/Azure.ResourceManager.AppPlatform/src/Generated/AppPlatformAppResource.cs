@@ -96,8 +96,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get a Binding and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/bindings/{bindingName}
-        /// Operation Id: Bindings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/bindings/{bindingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bindings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="bindingName"> The name of the Binding resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -111,8 +119,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get a Binding and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/bindings/{bindingName}
-        /// Operation Id: Bindings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/bindings/{bindingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bindings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="bindingName"> The name of the Binding resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,8 +149,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get the custom domain of one lifecycle application.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/domains/{domainName}
-        /// Operation Id: CustomDomains_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomDomains_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="domainName"> The name of the custom domain resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -148,8 +172,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get the custom domain of one lifecycle application.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/domains/{domainName}
-        /// Operation Id: CustomDomains_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomDomains_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="domainName"> The name of the custom domain resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -170,8 +202,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get a Deployment and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}
-        /// Operation Id: Deployments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="deploymentName"> The name of the Deployment resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -185,8 +225,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get a Deployment and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}
-        /// Operation Id: Deployments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/deployments/{deploymentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="deploymentName"> The name of the Deployment resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -200,8 +248,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get an App and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}
-        /// Operation Id: Apps_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="syncStatus"> Indicates whether sync status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -225,8 +281,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get an App and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}
-        /// Operation Id: Apps_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="syncStatus"> Indicates whether sync status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -250,8 +314,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Operation to delete an App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}
-        /// Operation Id: Apps_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -276,8 +348,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Operation to delete an App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}
-        /// Operation Id: Apps_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -302,8 +382,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Operation to update an exiting App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}
-        /// Operation Id: Apps_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Parameters for the update operation. </param>
@@ -332,8 +420,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Operation to update an exiting App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}
-        /// Operation Id: Apps_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Parameters for the update operation. </param>
@@ -362,8 +458,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get an resource upload URL for an App, which may be artifacts or source archive.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/getResourceUploadUrl
-        /// Operation Id: Apps_GetResourceUploadUrl
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/getResourceUploadUrl</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_GetResourceUploadUrl</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AppPlatformResourceUploadResult>> GetResourceUploadUriAsync(CancellationToken cancellationToken = default)
@@ -384,8 +488,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Get an resource upload URL for an App, which may be artifacts or source archive.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/getResourceUploadUrl
-        /// Operation Id: Apps_GetResourceUploadUrl
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/getResourceUploadUrl</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_GetResourceUploadUrl</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppPlatformResourceUploadResult> GetResourceUploadUri(CancellationToken cancellationToken = default)
@@ -406,8 +518,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Set existing Deployment under the app as active
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/setActiveDeployments
-        /// Operation Id: Apps_SetActiveDeployments
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/setActiveDeployments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_SetActiveDeployments</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> A list of Deployment name to be active. </param>
@@ -436,8 +556,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Set existing Deployment under the app as active
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/setActiveDeployments
-        /// Operation Id: Apps_SetActiveDeployments
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/setActiveDeployments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_SetActiveDeployments</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> A list of Deployment name to be active. </param>
@@ -466,8 +594,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Check the resource name is valid as well as not in use.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/validateDomain
-        /// Operation Id: Apps_ValidateDomain
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/validateDomain</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_ValidateDomain</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Custom domain payload to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -492,8 +628,16 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary>
         /// Check the resource name is valid as well as not in use.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/validateDomain
-        /// Operation Id: Apps_ValidateDomain
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/validateDomain</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Apps_ValidateDomain</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> Custom domain payload to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

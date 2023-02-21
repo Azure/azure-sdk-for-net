@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vmAgentVersion"))
+                if (property.NameEquals("vmAgentVersion"u8))
                 {
                     vmAgentVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("extensionHandlers"))
+                if (property.NameEquals("extensionHandlers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
                     extensionHandlers = array;
                     continue;
                 }
-                if (property.NameEquals("statuses"))
+                if (property.NameEquals("statuses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

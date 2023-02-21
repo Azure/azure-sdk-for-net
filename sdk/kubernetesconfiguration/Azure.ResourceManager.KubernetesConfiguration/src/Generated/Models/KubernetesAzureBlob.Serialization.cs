@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (Uri != null)
                 {
-                    writer.WritePropertyName("url");
+                    writer.WritePropertyName("url"u8);
                     writer.WriteStringValue(Uri.AbsoluteUri);
                 }
                 else
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (ContainerName != null)
                 {
-                    writer.WritePropertyName("containerName");
+                    writer.WritePropertyName("containerName"u8);
                     writer.WriteStringValue(ContainerName);
                 }
                 else
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (TimeoutInSeconds != null)
                 {
-                    writer.WritePropertyName("timeoutInSeconds");
+                    writer.WritePropertyName("timeoutInSeconds"u8);
                     writer.WriteNumberValue(TimeoutInSeconds.Value);
                 }
                 else
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (SyncIntervalInSeconds != null)
                 {
-                    writer.WritePropertyName("syncIntervalInSeconds");
+                    writer.WritePropertyName("syncIntervalInSeconds"u8);
                     writer.WriteNumberValue(SyncIntervalInSeconds.Value);
                 }
                 else
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (ServicePrincipal != null)
                 {
-                    writer.WritePropertyName("servicePrincipal");
+                    writer.WritePropertyName("servicePrincipal"u8);
                     writer.WriteObjectValue(ServicePrincipal);
                 }
                 else
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (AccountKey != null)
                 {
-                    writer.WritePropertyName("accountKey");
+                    writer.WritePropertyName("accountKey"u8);
                     writer.WriteStringValue(AccountKey);
                 }
                 else
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (SasToken != null)
                 {
-                    writer.WritePropertyName("sasToken");
+                    writer.WritePropertyName("sasToken"u8);
                     writer.WriteStringValue(SasToken);
                 }
                 else
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (ManagedIdentity != null)
                 {
-                    writer.WritePropertyName("managedIdentity");
+                    writer.WritePropertyName("managedIdentity"u8);
                     writer.WriteObjectValue(ManagedIdentity);
                 }
                 else
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 if (LocalAuthRef != null)
                 {
-                    writer.WritePropertyName("localAuthRef");
+                    writer.WritePropertyName("localAuthRef"u8);
                     writer.WriteStringValue(LocalAuthRef);
                 }
                 else
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<string> localAuthRef = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("url"))
+                if (property.NameEquals("url"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     url = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("containerName"))
+                if (property.NameEquals("containerName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     containerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timeoutInSeconds"))
+                if (property.NameEquals("timeoutInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     timeoutInSeconds = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("syncIntervalInSeconds"))
+                if (property.NameEquals("syncIntervalInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     syncIntervalInSeconds = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("servicePrincipal"))
+                if (property.NameEquals("servicePrincipal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     servicePrincipal = KubernetesServicePrincipal.DeserializeKubernetesServicePrincipal(property.Value);
                     continue;
                 }
-                if (property.NameEquals("accountKey"))
+                if (property.NameEquals("accountKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     accountKey = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sasToken"))
+                if (property.NameEquals("sasToken"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     sasToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managedIdentity"))
+                if (property.NameEquals("managedIdentity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     managedIdentity = KubernetesAzureBlobManagedIdentity.DeserializeKubernetesAzureBlobManagedIdentity(property.Value);
                     continue;
                 }
-                if (property.NameEquals("localAuthRef"))
+                if (property.NameEquals("localAuthRef"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

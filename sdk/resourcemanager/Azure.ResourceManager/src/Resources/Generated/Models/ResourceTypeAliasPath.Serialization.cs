@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<ResourceTypeAliasPathMetadata> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("apiVersions"))
+                if (property.NameEquals("apiVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
                     apiVersions = array;
                     continue;
                 }
-                if (property.NameEquals("pattern"))
+                if (property.NameEquals("pattern"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources.Models
                     pattern = ResourceTypeAliasPattern.DeserializeResourceTypeAliasPattern(property.Value);
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

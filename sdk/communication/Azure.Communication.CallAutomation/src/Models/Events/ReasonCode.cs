@@ -26,6 +26,7 @@ namespace Azure.Communication.CallAutomation
         private const string RecognizePlayPromptFailedValue = "8511";
 
         private const string RecognizeMaxDigitsReceivedValue = "8531";
+        private const string RecognizeIncorrectToneDetectedValue = "8534";
         private const string RecognizeStopToneDetectedValue = "8514";
         private const string RecognizeSpeechOptionMatchedValue = "8545";
         private const string RecognizeSpeechOptionNotMatchedValue = "8547";
@@ -54,6 +55,8 @@ namespace Azure.Communication.CallAutomation
         public static ReasonCode RecognizeSpeechOptionMatched { get; } = new ReasonCode(RecognizeSpeechOptionMatchedValue);
         /// <summary> Speeach option  not matched. </summary>
         public static ReasonCode RecognizeSpeechOptionNotMatched { get; } = new ReasonCode(RecognizeSpeechOptionNotMatchedValue);
+        /// <summary> Recognize with Choice that incorrect tone detected. </summary>
+        public static ReasonCode RecognizeIncorrectToneDetected { get; } = new ReasonCode(RecognizeIncorrectToneDetectedValue);
 
         /// <summary> Action failed, file could not be downloaded. </summary>
         public static ReasonCode PlayDownloadFailed { get; } = new ReasonCode(PlayDownloadFailedValue);

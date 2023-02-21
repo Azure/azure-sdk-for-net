@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("primingJobId");
+            writer.WritePropertyName("primingJobId"u8);
             writer.WriteStringValue(PrimingJobId);
             writer.WriteEndObject();
         }

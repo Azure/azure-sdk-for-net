@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -45,8 +44,16 @@ namespace Azure.ResourceManager.ChangeAnalysis
 
         /// <summary>
         /// List the changes of a resource within the specified time range. Customer data will be masked if the user doesn&apos;t have access.
-        /// Request Path: /{resourceId}/providers/Microsoft.ChangeAnalysis/resourceChanges
-        /// Operation Id: ResourceChanges_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.ChangeAnalysis/resourceChanges</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceChanges_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceId"> The identifier of the resource. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
@@ -56,43 +63,23 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <returns> An async collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DetectedChangeData> GetResourceChangesAsync(string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DetectedChangeData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ResourceChangesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetResourceChanges");
-                scope.Start();
-                try
-                {
-                    var response = await ResourceChangesRestClient.ListAsync(resourceId, startTime, endTime, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DetectedChangeData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ResourceChangesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetResourceChanges");
-                scope.Start();
-                try
-                {
-                    var response = await ResourceChangesRestClient.ListNextPageAsync(nextLink, resourceId, startTime, endTime, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceChangesRestClient.CreateListRequest(resourceId, startTime, endTime, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceChangesRestClient.CreateListNextPageRequest(nextLink, resourceId, startTime, endTime, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ResourceChangesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetResourceChanges", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List the changes of a resource within the specified time range. Customer data will be masked if the user doesn&apos;t have access.
-        /// Request Path: /{resourceId}/providers/Microsoft.ChangeAnalysis/resourceChanges
-        /// Operation Id: ResourceChanges_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.ChangeAnalysis/resourceChanges</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceChanges_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceId"> The identifier of the resource. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
@@ -102,37 +89,9 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <returns> A collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DetectedChangeData> GetResourceChanges(string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<DetectedChangeData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ResourceChangesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetResourceChanges");
-                scope.Start();
-                try
-                {
-                    var response = ResourceChangesRestClient.List(resourceId, startTime, endTime, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DetectedChangeData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ResourceChangesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetResourceChanges");
-                scope.Start();
-                try
-                {
-                    var response = ResourceChangesRestClient.ListNextPage(nextLink, resourceId, startTime, endTime, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceChangesRestClient.CreateListRequest(resourceId, startTime, endTime, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceChangesRestClient.CreateListNextPageRequest(nextLink, resourceId, startTime, endTime, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ResourceChangesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetResourceChanges", "value", "nextLink", cancellationToken);
         }
     }
 }

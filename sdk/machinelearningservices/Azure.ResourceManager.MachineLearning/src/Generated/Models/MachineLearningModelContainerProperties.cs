@@ -9,10 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningModelContainerProperties.
-    /// Serialized Name: ModelContainer
-    /// </summary>
+    /// <summary> The MachineLearningModelContainerProperties. </summary>
     public partial class MachineLearningModelContainerProperties : MachineLearningAssetContainer
     {
         /// <summary> Initializes a new instance of MachineLearningModelContainerProperties. </summary>
@@ -21,30 +18,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningModelContainerProperties. </summary>
-        /// <param name="description">
-        /// The asset description text.
-        /// Serialized Name: ResourceBase.description
-        /// </param>
-        /// <param name="properties">
-        /// The asset property dictionary.
-        /// Serialized Name: ResourceBase.properties
-        /// </param>
-        /// <param name="tags">
-        /// Tag dictionary. Tags can be added, removed, and updated.
-        /// Serialized Name: ResourceBase.tags
-        /// </param>
-        /// <param name="isArchived">
-        /// Is the asset archived?
-        /// Serialized Name: AssetContainer.isArchived
-        /// </param>
-        /// <param name="latestVersion">
-        /// The latest version inside this container.
-        /// Serialized Name: AssetContainer.latestVersion
-        /// </param>
-        /// <param name="nextVersion">
-        /// The next auto incremental version
-        /// Serialized Name: AssetContainer.nextVersion
-        /// </param>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="latestVersion"> The latest version inside this container. </param>
+        /// <param name="nextVersion"> The next auto incremental version. </param>
         internal MachineLearningModelContainerProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isArchived, string latestVersion, string nextVersion) : base(description, properties, tags, isArchived, latestVersion, nextVersion)
         {
         }

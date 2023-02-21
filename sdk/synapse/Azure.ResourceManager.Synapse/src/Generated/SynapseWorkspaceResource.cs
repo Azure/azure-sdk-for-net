@@ -107,8 +107,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a Azure Active Directory only authentication property
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications/{azureADOnlyAuthenticationName}
-        /// Operation Id: AzureADOnlyAuthentications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications/{azureADOnlyAuthenticationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureADOnlyAuthentications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="azureADOnlyAuthenticationName"> name of the property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -120,8 +128,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a Azure Active Directory only authentication property
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications/{azureADOnlyAuthenticationName}
-        /// Operation Id: AzureADOnlyAuthentications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications/{azureADOnlyAuthenticationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureADOnlyAuthentications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="azureADOnlyAuthenticationName"> name of the property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -140,8 +156,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get a firewall rule
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/firewallRules/{ruleName}
-        /// Operation Id: IpFirewallRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/firewallRules/{ruleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpFirewallRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="ruleName"> The IP firewall rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -155,8 +179,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get a firewall rule
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/firewallRules/{ruleName}
-        /// Operation Id: IpFirewallRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/firewallRules/{ruleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpFirewallRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="ruleName"> The IP firewall rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -177,8 +209,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a workspace key
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/keys/{keyName}
-        /// Operation Id: Keys_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/keys/{keyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Keys_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="keyName"> The name of the workspace key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -192,8 +232,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a workspace key
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/keys/{keyName}
-        /// Operation Id: Keys_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/keys/{keyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Keys_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="keyName"> The name of the workspace key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -214,8 +262,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a private endpoint connection.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}
-        /// Operation Id: PrivateEndpointConnections_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -229,8 +285,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a private endpoint connection.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}
-        /// Operation Id: PrivateEndpointConnections_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -251,8 +315,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get private link resource in workspace
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/privateLinkResources/{privateLinkResourceName}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -266,8 +338,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get private link resource in workspace
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/privateLinkResources/{privateLinkResourceName}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -288,8 +368,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get SQL pool properties
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}
-        /// Operation Id: SqlPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sqlPoolName"> SQL pool name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -303,8 +391,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get SQL pool properties
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}
-        /// Operation Id: SqlPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sqlPoolName"> SQL pool name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -325,8 +421,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get a workspace managed sql server&apos;s blob auditing policy.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/auditingSettings/{blobAuditingPolicyName}
-        /// Operation Id: WorkspaceManagedSqlServerBlobAuditingPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/auditingSettings/{blobAuditingPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerBlobAuditingPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -338,8 +442,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get a workspace managed sql server&apos;s blob auditing policy.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/auditingSettings/{blobAuditingPolicyName}
-        /// Operation Id: WorkspaceManagedSqlServerBlobAuditingPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/auditingSettings/{blobAuditingPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerBlobAuditingPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -358,8 +470,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get a workspace SQL server&apos;s extended blob auditing policy.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/extendedAuditingSettings/{blobAuditingPolicyName}
-        /// Operation Id: WorkspaceManagedSqlServerExtendedBlobAuditingPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/extendedAuditingSettings/{blobAuditingPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerExtendedBlobAuditingPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -371,8 +491,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get a workspace SQL server&apos;s extended blob auditing policy.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/extendedAuditingSettings/{blobAuditingPolicyName}
-        /// Operation Id: WorkspaceManagedSqlServerExtendedBlobAuditingPolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/extendedAuditingSettings/{blobAuditingPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerExtendedBlobAuditingPolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -391,8 +519,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get a workspace managed sql server&apos;s security alert policy.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/securityAlertPolicies/{securityAlertPolicyName}
-        /// Operation Id: WorkspaceManagedSqlServerSecurityAlertPolicy_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/securityAlertPolicies/{securityAlertPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerSecurityAlertPolicy_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -404,8 +540,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get a workspace managed sql server&apos;s security alert policy.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/securityAlertPolicies/{securityAlertPolicyName}
-        /// Operation Id: WorkspaceManagedSqlServerSecurityAlertPolicy_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/securityAlertPolicies/{securityAlertPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerSecurityAlertPolicy_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -424,8 +568,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get workspace managed sql server&apos;s vulnerability assessment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}
-        /// Operation Id: WorkspaceManagedSqlServerVulnerabilityAssessments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerVulnerabilityAssessments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -437,8 +589,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get workspace managed sql server&apos;s vulnerability assessment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}
-        /// Operation Id: WorkspaceManagedSqlServerVulnerabilityAssessments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerVulnerabilityAssessments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -457,8 +617,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get workspace managed sql server&apos;s encryption protector.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/encryptionProtector/{encryptionProtectorName}
-        /// Operation Id: WorkspaceManagedSqlServerEncryptionProtector_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/encryptionProtector/{encryptionProtectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerEncryptionProtector_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="encryptionProtectorName"> The name of the encryption protector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -470,8 +638,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get workspace managed sql server&apos;s encryption protector.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/encryptionProtector/{encryptionProtectorName}
-        /// Operation Id: WorkspaceManagedSqlServerEncryptionProtector_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/encryptionProtector/{encryptionProtectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerEncryptionProtector_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="encryptionProtectorName"> The name of the encryption protector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -490,8 +666,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get recoverable sql pools for workspace managed sql server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/recoverableSqlPools/{sqlPoolName}
-        /// Operation Id: WorkspaceManagedSqlServerRecoverableSqlPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/recoverableSqlPools/{sqlPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerRecoverableSqlPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sqlPoolName"> The name of the sql pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -505,8 +689,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get recoverable sql pools for workspace managed sql server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/recoverableSqlPools/{sqlPoolName}
-        /// Operation Id: WorkspaceManagedSqlServerRecoverableSqlPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/recoverableSqlPools/{sqlPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerRecoverableSqlPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sqlPoolName"> The name of the sql pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -527,8 +719,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get workspace managed sql server&apos;s minimal tls settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/dedicatedSQLminimalTlsSettings/{dedicatedSQLminimalTlsSettingsName}
-        /// Operation Id: WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/dedicatedSQLminimalTlsSettings/{dedicatedSQLminimalTlsSettingsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dedicatedSQLminimalTlsSettingsName"> The name of the dedicated sql minimal tls settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -542,8 +742,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get workspace managed sql server&apos;s minimal tls settings.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/dedicatedSQLminimalTlsSettings/{dedicatedSQLminimalTlsSettingsName}
-        /// Operation Id: WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/dedicatedSQLminimalTlsSettings/{dedicatedSQLminimalTlsSettingsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dedicatedSQLminimalTlsSettingsName"> The name of the dedicated sql minimal tls settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -585,8 +793,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a deleted sql pool that can be restored
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/restorableDroppedSqlPools/{restorableDroppedSqlPoolId}
-        /// Operation Id: RestorableDroppedSqlPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/restorableDroppedSqlPools/{restorableDroppedSqlPoolId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDroppedSqlPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="restorableDroppedSqlPoolId"> The id of the deleted Sql Pool in the form of sqlPoolName,deletionTimeInFileTimeFormat. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -600,8 +816,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a deleted sql pool that can be restored
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/restorableDroppedSqlPools/{restorableDroppedSqlPoolId}
-        /// Operation Id: RestorableDroppedSqlPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/restorableDroppedSqlPools/{restorableDroppedSqlPoolId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDroppedSqlPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="restorableDroppedSqlPoolId"> The id of the deleted Sql Pool in the form of sqlPoolName,deletionTimeInFileTimeFormat. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -622,8 +846,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get a Big Data pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}
-        /// Operation Id: BigDataPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BigDataPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="bigDataPoolName"> Big Data pool name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -637,8 +869,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get a Big Data pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}
-        /// Operation Id: BigDataPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BigDataPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="bigDataPoolName"> Big Data pool name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -659,8 +899,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get library by name in a workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/libraries/{libraryName}
-        /// Operation Id: Library_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/libraries/{libraryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Library_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="libraryName"> Library name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -674,8 +922,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get library by name in a workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/libraries/{libraryName}
-        /// Operation Id: Library_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/libraries/{libraryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Library_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="libraryName"> Library name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -696,8 +952,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get an integration runtime
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/integrationRuntimes/{integrationRuntimeName}
-        /// Operation Id: IntegrationRuntimes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/integrationRuntimes/{integrationRuntimeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationRuntimes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="integrationRuntimeName"> Integration runtime name. </param>
         /// <param name="ifNoneMatch"> ETag of the integration runtime entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
@@ -712,8 +976,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get an integration runtime
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/integrationRuntimes/{integrationRuntimeName}
-        /// Operation Id: IntegrationRuntimes_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/integrationRuntimes/{integrationRuntimeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationRuntimes_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="integrationRuntimeName"> Integration runtime name. </param>
         /// <param name="ifNoneMatch"> ETag of the integration runtime entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
@@ -735,8 +1007,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get SparkConfiguration by name in a workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sparkconfigurations/{sparkConfigurationName}
-        /// Operation Id: SparkConfiguration_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sparkconfigurations/{sparkConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SparkConfiguration_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sparkConfigurationName"> SparkConfiguration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -750,8 +1030,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get SparkConfiguration by name in a workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sparkconfigurations/{sparkConfigurationName}
-        /// Operation Id: SparkConfiguration_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sparkconfigurations/{sparkConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SparkConfiguration_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="sparkConfigurationName"> SparkConfiguration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -772,8 +1060,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a Kusto pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}
-        /// Operation Id: KustoPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="kustoPoolName"> The name of the Kusto pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -787,8 +1083,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a Kusto pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}
-        /// Operation Id: KustoPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/kustoPools/{kustoPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KustoPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="kustoPoolName"> The name of the Kusto pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -802,8 +1106,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a workspace
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}
-        /// Operation Id: Workspaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SynapseWorkspaceResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -826,8 +1138,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Gets a workspace
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}
-        /// Operation Id: Workspaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SynapseWorkspaceResource> Get(CancellationToken cancellationToken = default)
@@ -850,8 +1170,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Deletes a workspace
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}
-        /// Operation Id: Workspaces_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -876,8 +1204,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Deletes a workspace
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}
-        /// Operation Id: Workspaces_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -902,8 +1238,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Updates a workspace
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}
-        /// Operation Id: Workspaces_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Workspace patch request properties. </param>
@@ -932,8 +1276,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Updates a workspace
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}
-        /// Operation Id: Workspaces_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Workspace patch request properties. </param>
@@ -962,8 +1314,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Replaces firewall rules
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/replaceAllIpFirewallRules
-        /// Operation Id: IpFirewallRules_ReplaceAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/replaceAllIpFirewallRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpFirewallRules_ReplaceAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Replace all IP firewall rules request. </param>
@@ -992,8 +1352,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Replaces firewall rules
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/replaceAllIpFirewallRules
-        /// Operation Id: IpFirewallRules_ReplaceAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/replaceAllIpFirewallRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpFirewallRules_ReplaceAll</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Replace all IP firewall rules request. </param>
@@ -1022,92 +1390,60 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get list of server usages metric for workspace managed sql server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlUsages
-        /// Operation Id: WorkspaceManagedSqlServerUsages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlUsages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerUsages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SynapseServerUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseServerUsage> GetWorkspaceManagedSqlServerUsagesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapseServerUsage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _workspaceManagedSqlServerUsagesClientDiagnostics.CreateScope("SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages");
-                scope.Start();
-                try
-                {
-                    var response = await _workspaceManagedSqlServerUsagesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SynapseServerUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _workspaceManagedSqlServerUsagesClientDiagnostics.CreateScope("SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages");
-                scope.Start();
-                try
-                {
-                    var response = await _workspaceManagedSqlServerUsagesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceManagedSqlServerUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workspaceManagedSqlServerUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SynapseServerUsage.DeserializeSynapseServerUsage, _workspaceManagedSqlServerUsagesClientDiagnostics, Pipeline, "SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get list of server usages metric for workspace managed sql server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlUsages
-        /// Operation Id: WorkspaceManagedSqlServerUsages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlUsages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerUsages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SynapseServerUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseServerUsage> GetWorkspaceManagedSqlServerUsages(CancellationToken cancellationToken = default)
         {
-            Page<SynapseServerUsage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _workspaceManagedSqlServerUsagesClientDiagnostics.CreateScope("SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages");
-                scope.Start();
-                try
-                {
-                    var response = _workspaceManagedSqlServerUsagesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SynapseServerUsage> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _workspaceManagedSqlServerUsagesClientDiagnostics.CreateScope("SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages");
-                scope.Start();
-                try
-                {
-                    var response = _workspaceManagedSqlServerUsagesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceManagedSqlServerUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workspaceManagedSqlServerUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SynapseServerUsage.DeserializeSynapseServerUsage, _workspaceManagedSqlServerUsagesClientDiagnostics, Pipeline, "SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}
-        /// Operation Id: Workspaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -1152,8 +1488,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}
-        /// Operation Id: Workspaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -1198,8 +1542,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}
-        /// Operation Id: Workspaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1239,8 +1591,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}
-        /// Operation Id: Workspaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1280,8 +1640,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}
-        /// Operation Id: Workspaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1324,8 +1692,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}
-        /// Operation Id: Workspaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

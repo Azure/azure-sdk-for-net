@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Level of workspace setup error
-    /// Serialized Name: DiagnoseResultLevel
-    /// </summary>
+    /// <summary> Level of workspace setup error. </summary>
     public readonly partial struct MachineLearningDiagnoseResultLevel : IEquatable<MachineLearningDiagnoseResultLevel>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string ErrorValue = "Error";
         private const string InformationValue = "Information";
 
-        /// <summary>
-        /// Warning
-        /// Serialized Name: DiagnoseResultLevel.Warning
-        /// </summary>
+        /// <summary> Warning. </summary>
         public static MachineLearningDiagnoseResultLevel Warning { get; } = new MachineLearningDiagnoseResultLevel(WarningValue);
-        /// <summary>
-        /// Error
-        /// Serialized Name: DiagnoseResultLevel.Error
-        /// </summary>
+        /// <summary> Error. </summary>
         public static MachineLearningDiagnoseResultLevel Error { get; } = new MachineLearningDiagnoseResultLevel(ErrorValue);
-        /// <summary>
-        /// Information
-        /// Serialized Name: DiagnoseResultLevel.Information
-        /// </summary>
+        /// <summary> Information. </summary>
         public static MachineLearningDiagnoseResultLevel Information { get; } = new MachineLearningDiagnoseResultLevel(InformationValue);
         /// <summary> Determines if two <see cref="MachineLearningDiagnoseResultLevel"/> values are the same. </summary>
         public static bool operator ==(MachineLearningDiagnoseResultLevel left, MachineLearningDiagnoseResultLevel right) => left.Equals(right);

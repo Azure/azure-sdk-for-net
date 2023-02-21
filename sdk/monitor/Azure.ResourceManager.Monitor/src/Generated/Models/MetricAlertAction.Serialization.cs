@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ActionGroupId))
             {
-                writer.WritePropertyName("actionGroupId");
+                writer.WritePropertyName("actionGroupId"u8);
                 writer.WriteStringValue(ActionGroupId);
             }
             if (Optional.IsCollectionDefined(WebHookProperties))
             {
-                writer.WritePropertyName("webHookProperties");
+                writer.WritePropertyName("webHookProperties"u8);
                 writer.WriteStartObject();
                 foreach (var item in WebHookProperties)
                 {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<IDictionary<string, string>> webHookProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("actionGroupId"))
+                if (property.NameEquals("actionGroupId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     actionGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("webHookProperties"))
+                if (property.NameEquals("webHookProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

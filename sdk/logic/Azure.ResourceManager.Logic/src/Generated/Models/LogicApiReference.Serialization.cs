@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName");
+                writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(IconUri))
             {
-                writer.WritePropertyName("iconUri");
+                writer.WritePropertyName("iconUri"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Swagger))
             {
-                writer.WritePropertyName("swagger");
+                writer.WritePropertyName("swagger"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Swagger);
 #else
@@ -42,22 +42,22 @@ namespace Azure.ResourceManager.Logic.Models
             }
             if (Optional.IsDefined(BrandColor))
             {
-                writer.WritePropertyName("brandColor");
+                writer.WritePropertyName("brandColor"u8);
                 writer.WriteStringValue(BrandColor);
             }
             if (Optional.IsDefined(Category))
             {
-                writer.WritePropertyName("category");
+                writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
             if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
-                writer.WritePropertyName("integrationServiceEnvironment");
+                writer.WritePropertyName("integrationServiceEnvironment"u8);
                 writer.WriteObjectValue(IntegrationServiceEnvironment);
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WriteEndObject();
@@ -77,17 +77,17 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<ResourceType> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("displayName"))
+                if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("iconUri"))
+                if (property.NameEquals("iconUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Logic.Models
                     iconUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("swagger"))
+                if (property.NameEquals("swagger"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.Logic.Models
                     swagger = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("brandColor"))
+                if (property.NameEquals("brandColor"u8))
                 {
                     brandColor = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("category"))
+                if (property.NameEquals("category"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Logic.Models
                     category = new LogicApiTier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("integrationServiceEnvironment"))
+                if (property.NameEquals("integrationServiceEnvironment"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Logic.Models
                     integrationServiceEnvironment = DeserializeLogicResourceReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -142,12 +142,12 @@ namespace Azure.ResourceManager.Logic.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

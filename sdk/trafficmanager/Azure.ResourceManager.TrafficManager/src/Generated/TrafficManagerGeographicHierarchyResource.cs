@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.TrafficManager
 
         /// <summary>
         /// Gets the default Geographic Hierarchy used by the Geographic traffic routing method.
-        /// Request Path: /providers/Microsoft.Network/trafficManagerGeographicHierarchies/default
-        /// Operation Id: GeographicHierarchies_GetDefault
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Network/trafficManagerGeographicHierarchies/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GeographicHierarchies_GetDefault</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TrafficManagerGeographicHierarchyResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -113,8 +121,16 @@ namespace Azure.ResourceManager.TrafficManager
 
         /// <summary>
         /// Gets the default Geographic Hierarchy used by the Geographic traffic routing method.
-        /// Request Path: /providers/Microsoft.Network/trafficManagerGeographicHierarchies/default
-        /// Operation Id: GeographicHierarchies_GetDefault
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Network/trafficManagerGeographicHierarchies/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GeographicHierarchies_GetDefault</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TrafficManagerGeographicHierarchyResource> Get(CancellationToken cancellationToken = default)

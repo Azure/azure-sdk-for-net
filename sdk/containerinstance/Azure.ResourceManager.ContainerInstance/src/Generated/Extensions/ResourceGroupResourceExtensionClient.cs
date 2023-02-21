@@ -5,7 +5,12 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerInstance
@@ -13,6 +18,9 @@ namespace Azure.ResourceManager.ContainerInstance
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     internal partial class ResourceGroupResourceExtensionClient : ArmResource
     {
+        private ClientDiagnostics _subnetServiceAssociationLinkClientDiagnostics;
+        private SubnetServiceAssociationLinkRestOperations _subnetServiceAssociationLinkRestClient;
+
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class for mocking. </summary>
         protected ResourceGroupResourceExtensionClient()
         {
@@ -25,6 +33,9 @@ namespace Azure.ResourceManager.ContainerInstance
         {
         }
 
+        private ClientDiagnostics SubnetServiceAssociationLinkClientDiagnostics => _subnetServiceAssociationLinkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private SubnetServiceAssociationLinkRestOperations SubnetServiceAssociationLinkRestClient => _subnetServiceAssociationLinkRestClient ??= new SubnetServiceAssociationLinkRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
@@ -36,6 +47,78 @@ namespace Azure.ResourceManager.ContainerInstance
         public virtual ContainerGroupCollection GetContainerGroups()
         {
             return GetCachedClient(Client => new ContainerGroupCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Delete container group virtual network association links. The operation does not delete other resources provided by the user.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/providers/Microsoft.ContainerInstance/serviceAssociationLinks/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubnetServiceAssociationLink_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="virtualNetworkName"> The name of the virtual network. </param>
+        /// <param name="subnetName"> The name of the subnet. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteSubnetServiceAssociationLinkAsync(WaitUntil waitUntil, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
+        {
+            using var scope = SubnetServiceAssociationLinkClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteSubnetServiceAssociationLink");
+            scope.Start();
+            try
+            {
+                var response = await SubnetServiceAssociationLinkRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, subnetName, cancellationToken).ConfigureAwait(false);
+                var operation = new ContainerInstanceArmOperation(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, SubnetServiceAssociationLinkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, subnetName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete container group virtual network association links. The operation does not delete other resources provided by the user.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/providers/Microsoft.ContainerInstance/serviceAssociationLinks/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubnetServiceAssociationLink_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="virtualNetworkName"> The name of the virtual network. </param>
+        /// <param name="subnetName"> The name of the subnet. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation DeleteSubnetServiceAssociationLink(WaitUntil waitUntil, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
+        {
+            using var scope = SubnetServiceAssociationLinkClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteSubnetServiceAssociationLink");
+            scope.Start();
+            try
+            {
+                var response = SubnetServiceAssociationLinkRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, subnetName, cancellationToken);
+                var operation = new ContainerInstanceArmOperation(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, SubnetServiceAssociationLinkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualNetworkName, subnetName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

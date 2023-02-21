@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<InputEndpoint>> inputEndpoints = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("inputEndpoints"))
+                if (property.NameEquals("inputEndpoints"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

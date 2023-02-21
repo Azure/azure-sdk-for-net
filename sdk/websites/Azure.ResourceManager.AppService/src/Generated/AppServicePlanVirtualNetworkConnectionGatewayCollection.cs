@@ -52,8 +52,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Update a Virtual Network gateway.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
-        /// Operation Id: AppServicePlans_UpdateVnetGateway
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_UpdateVnetGateway</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="gatewayName"> Name of the gateway. Only the &apos;primary&apos; gateway is supported. </param>
@@ -85,8 +93,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Update a Virtual Network gateway.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
-        /// Operation Id: AppServicePlans_UpdateVnetGateway
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_UpdateVnetGateway</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="gatewayName"> Name of the gateway. Only the &apos;primary&apos; gateway is supported. </param>
@@ -118,8 +134,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get a Virtual Network gateway.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
-        /// Operation Id: AppServicePlans_GetVnetGateway
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_GetVnetGateway</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="gatewayName"> Name of the gateway. Only the &apos;primary&apos; gateway is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -147,8 +171,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Get a Virtual Network gateway.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
-        /// Operation Id: AppServicePlans_GetVnetGateway
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_GetVnetGateway</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="gatewayName"> Name of the gateway. Only the &apos;primary&apos; gateway is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -176,8 +208,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
-        /// Operation Id: AppServicePlans_GetVnetGateway
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_GetVnetGateway</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="gatewayName"> Name of the gateway. Only the &apos;primary&apos; gateway is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -203,8 +243,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
-        /// Operation Id: AppServicePlans_GetVnetGateway
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_GetVnetGateway</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="gatewayName"> Name of the gateway. Only the &apos;primary&apos; gateway is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

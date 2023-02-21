@@ -27,18 +27,36 @@ namespace Azure.ResourceManager.Sql
     {
         /// <summary>
         /// Synchronizes the DNS server settings used by the managed instances inside the given virtual cluster.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/virtualClusters/{virtualClusterName}/updateManagedInstanceDnsServers
-        /// Operation Id: VirtualClusters_UpdateDnsServers
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/virtualClusters/{virtualClusterName}/updateManagedInstanceDnsServers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualClusters_UpdateDnsServers</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<ManagedInstanceUpdateDnsServersOperationData>> UpdateDnsServersAsync(CancellationToken cancellationToken = default) =>
             await (await UpdateDnsServersAsync(WaitUntil.Started, cancellationToken).ConfigureAwait(false)).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
         /// <summary>
         /// Synchronizes the DNS server settings used by the managed instances inside the given virtual cluster.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/virtualClusters/{virtualClusterName}/updateManagedInstanceDnsServers
-        /// Operation Id: VirtualClusters_UpdateDnsServers
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/virtualClusters/{virtualClusterName}/updateManagedInstanceDnsServers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualClusters_UpdateDnsServers</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<ManagedInstanceUpdateDnsServersOperationData> UpdateDnsServers(CancellationToken cancellationToken = default) =>
             UpdateDnsServers(WaitUntil.Started, cancellationToken).WaitForCompletion(cancellationToken);
     }

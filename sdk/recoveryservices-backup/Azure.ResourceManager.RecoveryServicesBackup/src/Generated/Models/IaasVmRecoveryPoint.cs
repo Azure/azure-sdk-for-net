@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> IaaS VM workload specific backup copy. </summary>
-    public partial class IaasVmRecoveryPoint : RecoveryPoint
+    public partial class IaasVmRecoveryPoint : BackupGenericRecoveryPoint
     {
         /// <summary> Initializes a new instance of IaasVmRecoveryPoint. </summary>
         public IaasVmRecoveryPoint()
@@ -40,7 +40,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="recoveryPointDiskConfiguration"> Disk configuration. </param>
         /// <param name="zones"> Identifies the zone of the VM at the time of backup. Applicable only for zone-pinned Vms. </param>
         /// <param name="recoveryPointMoveReadinessInfo"> Eligibility of RP to be moved to another tier. </param>
-        internal IaasVmRecoveryPoint(string objectType, string recoveryPointType, DateTimeOffset? recoveryPointOn, string recoveryPointAdditionalInfo, string sourceVmStorageType, bool? isSourceVmEncrypted, KeyAndSecretDetails keyAndSecret, bool? isInstantIlrSessionActive, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, bool? isManagedVirtualMachine, string virtualMachineSize, bool? originalStorageAccountOption, string osType, RecoveryPointDiskConfiguration recoveryPointDiskConfiguration, IList<string> zones, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo) : base(objectType)
+        /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
+        internal IaasVmRecoveryPoint(string objectType, string recoveryPointType, DateTimeOffset? recoveryPointOn, string recoveryPointAdditionalInfo, string sourceVmStorageType, bool? isSourceVmEncrypted, KeyAndSecretDetails keyAndSecret, bool? isInstantIlrSessionActive, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, bool? isManagedVirtualMachine, string virtualMachineSize, bool? originalStorageAccountOption, string osType, RecoveryPointDiskConfiguration recoveryPointDiskConfiguration, IList<string> zones, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, RecoveryPointProperties recoveryPointProperties) : base(objectType)
         {
             RecoveryPointType = recoveryPointType;
             RecoveryPointOn = recoveryPointOn;
@@ -57,6 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             RecoveryPointDiskConfiguration = recoveryPointDiskConfiguration;
             Zones = zones;
             RecoveryPointMoveReadinessInfo = recoveryPointMoveReadinessInfo;
+            RecoveryPointProperties = recoveryPointProperties;
             ObjectType = objectType ?? "IaasVMRecoveryPoint";
         }
 
@@ -90,5 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public IList<string> Zones { get; }
         /// <summary> Eligibility of RP to be moved to another tier. </summary>
         public IDictionary<string, RecoveryPointMoveReadinessInfo> RecoveryPointMoveReadinessInfo { get; }
+        /// <summary> Properties of Recovery Point. </summary>
+        public RecoveryPointProperties RecoveryPointProperties { get; set; }
     }
 }

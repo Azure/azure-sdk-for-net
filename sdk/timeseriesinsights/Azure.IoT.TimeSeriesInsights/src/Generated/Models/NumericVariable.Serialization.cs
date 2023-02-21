@@ -15,20 +15,20 @@ namespace Azure.IoT.TimeSeriesInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("value");
+            writer.WritePropertyName("value"u8);
             writer.WriteObjectValue(Value);
             if (Optional.IsDefined(Interpolation))
             {
-                writer.WritePropertyName("interpolation");
+                writer.WritePropertyName("interpolation"u8);
                 writer.WriteObjectValue(Interpolation);
             }
-            writer.WritePropertyName("aggregation");
+            writer.WritePropertyName("aggregation"u8);
             writer.WriteObjectValue(Aggregation);
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Filter))
             {
-                writer.WritePropertyName("filter");
+                writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
             }
             writer.WriteEndObject();
@@ -43,12 +43,12 @@ namespace Azure.IoT.TimeSeriesInsights
             Optional<TimeSeriesExpression> filter = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = TimeSeriesExpression.DeserializeTimeSeriesExpression(property.Value);
                     continue;
                 }
-                if (property.NameEquals("interpolation"))
+                if (property.NameEquals("interpolation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -58,17 +58,17 @@ namespace Azure.IoT.TimeSeriesInsights
                     interpolation = TimeSeriesInterpolation.DeserializeTimeSeriesInterpolation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("aggregation"))
+                if (property.NameEquals("aggregation"u8))
                 {
                     aggregation = TimeSeriesExpression.DeserializeTimeSeriesExpression(property.Value);
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filter"))
+                if (property.NameEquals("filter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

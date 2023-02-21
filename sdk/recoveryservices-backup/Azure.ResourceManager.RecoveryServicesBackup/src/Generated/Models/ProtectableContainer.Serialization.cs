@@ -17,24 +17,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(BackupManagementType))
             {
-                writer.WritePropertyName("backupManagementType");
+                writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            writer.WritePropertyName("protectableContainerType");
+            writer.WritePropertyName("protectableContainerType"u8);
             writer.WriteStringValue(ProtectableContainerType.ToSerialString());
             if (Optional.IsDefined(HealthStatus))
             {
-                writer.WritePropertyName("healthStatus");
+                writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
             if (Optional.IsDefined(ContainerId))
             {
-                writer.WritePropertyName("containerId");
+                writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
             }
             writer.WriteEndObject();
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "StorageContainer": return AzureStorageProtectableContainer.DeserializeAzureStorageProtectableContainer(element);
-                    case "VMAppContainer": return AzureVmAppContainerProtectableContainer.DeserializeAzureVmAppContainerProtectableContainer(element);
+                    case "StorageContainer": return StorageProtectableContainer.DeserializeStorageProtectableContainer(element);
+                    case "VMAppContainer": return VmAppContainerProtectableContainer.DeserializeVmAppContainerProtectableContainer(element);
                 }
             }
             return UnknownProtectableContainer.DeserializeUnknownProtectableContainer(element);

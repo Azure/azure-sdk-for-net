@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -56,8 +55,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Creates or updates a local network gateway in the specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways/{localNetworkGatewayName}
-        /// Operation Id: LocalNetworkGateways_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways/{localNetworkGatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocalNetworkGateways_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
@@ -89,8 +96,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Creates or updates a local network gateway in the specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways/{localNetworkGatewayName}
-        /// Operation Id: LocalNetworkGateways_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways/{localNetworkGatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocalNetworkGateways_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
@@ -122,8 +137,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets the specified local network gateway in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways/{localNetworkGatewayName}
-        /// Operation Id: LocalNetworkGateways_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways/{localNetworkGatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocalNetworkGateways_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,8 +174,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets the specified local network gateway in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways/{localNetworkGatewayName}
-        /// Operation Id: LocalNetworkGateways_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways/{localNetworkGatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocalNetworkGateways_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -180,92 +211,60 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets all the local network gateways in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways
-        /// Operation Id: LocalNetworkGateways_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocalNetworkGateways_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LocalNetworkGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LocalNetworkGatewayResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<LocalNetworkGatewayResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _localNetworkGatewayRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LocalNetworkGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<LocalNetworkGatewayResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _localNetworkGatewayRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LocalNetworkGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _localNetworkGatewayRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localNetworkGatewayRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LocalNetworkGatewayResource(Client, LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(e)), _localNetworkGatewayClientDiagnostics, Pipeline, "LocalNetworkGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the local network gateways in a resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways
-        /// Operation Id: LocalNetworkGateways_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocalNetworkGateways_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LocalNetworkGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LocalNetworkGatewayResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<LocalNetworkGatewayResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _localNetworkGatewayRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LocalNetworkGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<LocalNetworkGatewayResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _localNetworkGatewayClientDiagnostics.CreateScope("LocalNetworkGatewayCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _localNetworkGatewayRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LocalNetworkGatewayResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _localNetworkGatewayRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localNetworkGatewayRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LocalNetworkGatewayResource(Client, LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(e)), _localNetworkGatewayClientDiagnostics, Pipeline, "LocalNetworkGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways/{localNetworkGatewayName}
-        /// Operation Id: LocalNetworkGateways_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways/{localNetworkGatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocalNetworkGateways_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -291,8 +290,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways/{localNetworkGatewayName}
-        /// Operation Id: LocalNetworkGateways_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways/{localNetworkGatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocalNetworkGateways_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

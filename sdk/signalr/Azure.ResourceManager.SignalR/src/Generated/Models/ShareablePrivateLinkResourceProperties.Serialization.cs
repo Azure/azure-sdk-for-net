@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.SignalR.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(GroupId))
             {
-                writer.WritePropertyName("groupId");
+                writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
             if (Optional.IsDefined(ShareablePrivateLinkResourcePropertiesType))
             {
-                writer.WritePropertyName("type");
+                writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ShareablePrivateLinkResourcePropertiesType);
             }
             writer.WriteEndObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.SignalR.Models
             Optional<string> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("groupId"))
+                if (property.NameEquals("groupId"u8))
                 {
                     groupId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

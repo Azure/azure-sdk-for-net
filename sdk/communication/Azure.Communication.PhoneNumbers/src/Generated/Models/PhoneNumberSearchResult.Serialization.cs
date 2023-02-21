@@ -25,12 +25,12 @@ namespace Azure.Communication.PhoneNumbers
             DateTimeOffset searchExpiresBy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("searchId"))
+                if (property.NameEquals("searchId"u8))
                 {
                     searchId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("phoneNumbers"))
+                if (property.NameEquals("phoneNumbers"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -40,27 +40,27 @@ namespace Azure.Communication.PhoneNumbers
                     phoneNumbers = array;
                     continue;
                 }
-                if (property.NameEquals("phoneNumberType"))
+                if (property.NameEquals("phoneNumberType"u8))
                 {
                     phoneNumberType = new PhoneNumberType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("assignmentType"))
+                if (property.NameEquals("assignmentType"u8))
                 {
                     assignmentType = new PhoneNumberAssignmentType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("capabilities"u8))
                 {
                     capabilities = PhoneNumberCapabilities.DeserializePhoneNumberCapabilities(property.Value);
                     continue;
                 }
-                if (property.NameEquals("cost"))
+                if (property.NameEquals("cost"u8))
                 {
                     cost = PhoneNumberCost.DeserializePhoneNumberCost(property.Value);
                     continue;
                 }
-                if (property.NameEquals("searchExpiresBy"))
+                if (property.NameEquals("searchExpiresBy"u8))
                 {
                     searchExpiresBy = property.Value.GetDateTimeOffset("O");
                     continue;

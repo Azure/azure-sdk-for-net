@@ -3,9 +3,9 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <PackageId>Microsoft.Azure.WebJobs.Extensions.SignalRService</PackageId>
-    <Version>1.9.0</Version>
+    <Version>1.10.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.8.0</ApiCompatVersion>
+    <ApiCompatVersion>1.9.0</ApiCompatVersion>
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
     <NoWarn>$(NoWarn);CS1591;AZC0001;AZC0107;</NoWarn>

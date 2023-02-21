@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get all available workload profiles for a location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/availableManagedEnvironmentsWorkloadProfileTypes
-        /// Operation Id: AvailableWorkloadProfiles_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/availableManagedEnvironmentsWorkloadProfileTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableWorkloadProfiles_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -44,8 +52,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get all available workload profiles for a location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/availableManagedEnvironmentsWorkloadProfileTypes
-        /// Operation Id: AvailableWorkloadProfiles_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/availableManagedEnvironmentsWorkloadProfileTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailableWorkloadProfiles_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -58,8 +74,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get all billingMeters for a location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/billingMeters
-        /// Operation Id: BillingMeters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/billingMeters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingMeters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -72,8 +96,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get all billingMeters for a location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/billingMeters
-        /// Operation Id: BillingMeters_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/billingMeters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingMeters_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -86,8 +118,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get all connectedEnvironments for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/connectedEnvironments
-        /// Operation Id: ConnectedEnvironments_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/connectedEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -99,8 +139,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get all connectedEnvironments for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/connectedEnvironments
-        /// Operation Id: ConnectedEnvironments_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/connectedEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -112,8 +160,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get the Container Apps in a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/containerApps
-        /// Operation Id: ContainerApps_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/containerApps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -125,8 +181,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get the Container Apps in a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/containerApps
-        /// Operation Id: ContainerApps_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/containerApps</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -138,8 +202,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get all Managed Environments for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/managedEnvironments
-        /// Operation Id: ManagedEnvironments_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/managedEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,8 +223,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get all Managed Environments for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.App/managedEnvironments
-        /// Operation Id: ManagedEnvironments_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/managedEnvironments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -181,8 +261,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get the properties of an connectedEnvironment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}
-        /// Operation Id: ConnectedEnvironments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedEnvironments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="connectedEnvironmentName"> Name of the connectedEnvironment. </param>
@@ -197,8 +285,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get the properties of an connectedEnvironment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}
-        /// Operation Id: ConnectedEnvironments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedEnvironments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="connectedEnvironmentName"> Name of the connectedEnvironment. </param>
@@ -221,8 +317,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get the properties of a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
-        /// Operation Id: ContainerApps_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
@@ -237,8 +341,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get the properties of a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}
-        /// Operation Id: ContainerApps_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="containerAppName"> Name of the Container App. </param>
@@ -261,8 +373,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get the properties of a Managed Environment used to host container apps.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
-        /// Operation Id: ManagedEnvironments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="environmentName"> Name of the Environment. </param>
@@ -277,8 +397,16 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary>
         /// Get the properties of a Managed Environment used to host container apps.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
-        /// Operation Id: ManagedEnvironments_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironments_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="environmentName"> Name of the Environment. </param>

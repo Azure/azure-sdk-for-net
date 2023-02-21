@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// The MachineLearningJobLimits.
-    /// Serialized Name: JobLimits
     /// Please note <see cref="MachineLearningJobLimits"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MachineLearningSweepJobLimits"/> and <see cref="MachineLearningCommandJobLimits"/>.
     /// </summary>
@@ -23,29 +22,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningJobLimits. </summary>
-        /// <param name="jobLimitsType">
-        /// [Required] JobLimit type.
-        /// Serialized Name: JobLimits.jobLimitsType
-        /// </param>
-        /// <param name="timeout">
-        /// The max run duration in ISO 8601 format, after which the job will be cancelled. Only supports duration with precision as low as Seconds.
-        /// Serialized Name: JobLimits.timeout
-        /// </param>
+        /// <param name="jobLimitsType"> [Required] JobLimit type. </param>
+        /// <param name="timeout"> The max run duration in ISO 8601 format, after which the job will be cancelled. Only supports duration with precision as low as Seconds. </param>
         internal MachineLearningJobLimits(JobLimitsType jobLimitsType, TimeSpan? timeout)
         {
             JobLimitsType = jobLimitsType;
             Timeout = timeout;
         }
 
-        /// <summary>
-        /// [Required] JobLimit type.
-        /// Serialized Name: JobLimits.jobLimitsType
-        /// </summary>
+        /// <summary> [Required] JobLimit type. </summary>
         internal JobLimitsType JobLimitsType { get; set; }
-        /// <summary>
-        /// The max run duration in ISO 8601 format, after which the job will be cancelled. Only supports duration with precision as low as Seconds.
-        /// Serialized Name: JobLimits.timeout
-        /// </summary>
+        /// <summary> The max run duration in ISO 8601 format, after which the job will be cancelled. Only supports duration with precision as low as Seconds. </summary>
         public TimeSpan? Timeout { get; set; }
     }
 }

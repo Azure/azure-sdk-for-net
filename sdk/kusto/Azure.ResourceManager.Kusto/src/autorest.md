@@ -5,10 +5,11 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
+generate-model-factory: false
 csharp: true
 library-name: Kusto
 namespace: Azure.ResourceManager.Kusto
-require: https://github.com/Azure/azure-rest-api-specs/blob/2224eaaa3dcebd1220d36f193d4bc0bb8fcdcac6/specification/azure-kusto/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/78ec1b99699a4bf44869bd13f1b0ed7d92a99c27/specification/azure-kusto/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -133,8 +134,10 @@ rename-mapping:
   AzureSkuName.Standard_E16s_v5+4TB_PS: StandardE16sV54TBPS
   AzureSkuName.Standard_L8s_v3: StandardL8sV3
   AzureSkuName.Standard_L16s_v3: StandardL16sV3
+  AzureSkuName.Standard_L32s_v3: StandardL32sV3
   AzureSkuName.Standard_L8as_v3: StandardL8asV3
   AzureSkuName.Standard_L16as_v3: StandardL16asV3
+  AzureSkuName.Standard_L32as_v3: StandardL32asV3
   AzureSkuName.Standard_EC8as_v5+1TB_PS: StandardEC8asV51TBPS
   AzureSkuName.Standard_EC8as_v5+2TB_PS: StandardEC8asV52TBPS
   AzureSkuName.Standard_EC16as_v5+3TB_PS: StandardEC16asV53TBPS

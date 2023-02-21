@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<ReplicationEligibilityResultsErrorInfo>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientRequestId"))
+                if (property.NameEquals("clientRequestId"u8))
                 {
                     clientRequestId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

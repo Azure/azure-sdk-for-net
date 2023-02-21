@@ -21,22 +21,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<Uri> trackingUrl = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serialNumber"))
+                if (property.NameEquals("serialNumber"u8))
                 {
                     serialNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("carrierName"))
+                if (property.NameEquals("carrierName"u8))
                 {
                     carrierName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trackingId"))
+                if (property.NameEquals("trackingId"u8))
                 {
                     trackingId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trackingUrl"))
+                if (property.NameEquals("trackingUrl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

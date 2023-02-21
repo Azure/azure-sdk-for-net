@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<DateTimeOffset> backupFinishDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("databaseName"))
+                if (property.NameEquals("databaseName"u8))
                 {
                     databaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("backupType"))
+                if (property.NameEquals("backupType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     backupType = new BackupType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("backupFiles"))
+                if (property.NameEquals("backupFiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     backupFiles = array;
                     continue;
                 }
-                if (property.NameEquals("position"))
+                if (property.NameEquals("position"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     position = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("isDamaged"))
+                if (property.NameEquals("isDamaged"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     isDamaged = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("isCompressed"))
+                if (property.NameEquals("isCompressed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     isCompressed = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("familyCount"))
+                if (property.NameEquals("familyCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     familyCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("backupFinishDate"))
+                if (property.NameEquals("backupFinishDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

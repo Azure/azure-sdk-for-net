@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -52,86 +50,46 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// List the available security controls, their assessments, and the max score
-        /// Request Path: /providers/Microsoft.Security/secureScoreControlDefinitions
-        /// Operation Id: SecureScoreControlDefinitions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Security/secureScoreControlDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScoreControlDefinitions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SecureScoreControlDefinitionItem>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SecureScoreControlDefinitionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetSecureScoreControlDefinitions");
-                scope.Start();
-                try
-                {
-                    var response = await SecureScoreControlDefinitionsRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SecureScoreControlDefinitionItem>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SecureScoreControlDefinitionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetSecureScoreControlDefinitions");
-                scope.Start();
-                try
-                {
-                    var response = await SecureScoreControlDefinitionsRestClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SecureScoreControlDefinitionsRestClient.CreateListRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecureScoreControlDefinitionsRestClient.CreateListNextPageRequest(nextLink);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem, SecureScoreControlDefinitionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetSecureScoreControlDefinitions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List the available security controls, their assessments, and the max score
-        /// Request Path: /providers/Microsoft.Security/secureScoreControlDefinitions
-        /// Operation Id: SecureScoreControlDefinitions_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Security/secureScoreControlDefinitions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SecureScoreControlDefinitions_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecureScoreControlDefinitionItem" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitions(CancellationToken cancellationToken = default)
         {
-            Page<SecureScoreControlDefinitionItem> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SecureScoreControlDefinitionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetSecureScoreControlDefinitions");
-                scope.Start();
-                try
-                {
-                    var response = SecureScoreControlDefinitionsRestClient.List(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SecureScoreControlDefinitionItem> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SecureScoreControlDefinitionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetSecureScoreControlDefinitions");
-                scope.Start();
-                try
-                {
-                    var response = SecureScoreControlDefinitionsRestClient.ListNextPage(nextLink, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SecureScoreControlDefinitionsRestClient.CreateListRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecureScoreControlDefinitionsRestClient.CreateListNextPageRequest(nextLink);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem, SecureScoreControlDefinitionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetSecureScoreControlDefinitions", "value", "nextLink", cancellationToken);
         }
     }
 }

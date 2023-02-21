@@ -7,6 +7,8 @@ Project("{BA6279E1-15B0-4130-9D88-65305CB95784}") = "Azure.ResourceManager.ApiMa
 EndProject
 Project("{BA6279E1-15B0-4130-9D88-65305CB95784}") = "Azure.ResourceManager.ApiManagement.Tests", "tests\Azure.ResourceManager.ApiManagement.Tests.csproj", "{A5FFA29E-B174-4976-A2F5-A908647318E9}"
 EndProject
+Project("{BA6279E1-15B0-4130-9D88-65305CB95784}") = "Azure.ResourceManager.ApiManagement.Samples", "samples\Azure.ResourceManager.ApiManagement.Samples.csproj", "{B20CA0CA-F4A7-4B38-AF96-4C4F3D57D51E}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

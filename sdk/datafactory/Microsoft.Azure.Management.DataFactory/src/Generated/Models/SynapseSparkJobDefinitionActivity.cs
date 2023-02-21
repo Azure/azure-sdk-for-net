@@ -52,6 +52,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="file">The main file used for the job, which will
         /// override the 'file' of the spark job definition you provide. Type:
         /// string (or Expression with resultType string).</param>
+        /// <param name="scanFolder">Scanning subfolders from the root folder
+        /// of the main definition file, these files will be added as reference
+        /// files. The folders named 'jars', 'pyFiles', 'files' or 'archives'
+        /// will be scanned, and the folders name are case sensitive. Type:
+        /// boolean (or Expression with resultType boolean).</param>
         /// <param name="className">The fully-qualified identifier or the main
         /// class that is in the main definition file, which will override the
         /// 'className' of the spark job definition you provide. Type: string
@@ -85,13 +90,21 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// resultType string).</param>
         /// <param name="numExecutors">Number of executors to launch for this
         /// job, which will override the 'numExecutors' of the spark job
-        /// definition you provide.</param>
-        public SynapseSparkJobDefinitionActivity(string name, SynapseSparkJobReference sparkJob, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<object> arguments = default(IList<object>), object file = default(object), object className = default(object), IList<object> files = default(IList<object>), IList<object> pythonCodeReference = default(IList<object>), IList<object> filesV2 = default(IList<object>), BigDataPoolParametrizationReference targetBigDataPool = default(BigDataPoolParametrizationReference), object executorSize = default(object), object conf = default(object), object driverSize = default(object), int? numExecutors = default(int?))
+        /// definition you provide. Type: integer (or Expression with
+        /// resultType integer).</param>
+        /// <param name="configurationType">The type of the spark config.
+        /// Possible values include: 'Default', 'Customized',
+        /// 'Artifact'</param>
+        /// <param name="targetSparkConfiguration">The spark configuration of
+        /// the spark job.</param>
+        /// <param name="sparkConfig">Spark configuration property.</param>
+        public SynapseSparkJobDefinitionActivity(string name, SynapseSparkJobReference sparkJob, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<object> arguments = default(IList<object>), object file = default(object), object scanFolder = default(object), object className = default(object), IList<object> files = default(IList<object>), IList<object> pythonCodeReference = default(IList<object>), IList<object> filesV2 = default(IList<object>), BigDataPoolParametrizationReference targetBigDataPool = default(BigDataPoolParametrizationReference), object executorSize = default(object), object conf = default(object), object driverSize = default(object), object numExecutors = default(object), string configurationType = default(string), SparkConfigurationParametrizationReference targetSparkConfiguration = default(SparkConfigurationParametrizationReference), IDictionary<string, object> sparkConfig = default(IDictionary<string, object>))
             : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             SparkJob = sparkJob;
             Arguments = arguments;
             File = file;
+            ScanFolder = scanFolder;
             ClassName = className;
             Files = files;
             PythonCodeReference = pythonCodeReference;
@@ -101,6 +114,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             Conf = conf;
             DriverSize = driverSize;
             NumExecutors = numExecutors;
+            ConfigurationType = configurationType;
+            TargetSparkConfiguration = targetSparkConfiguration;
+            SparkConfig = sparkConfig;
             CustomInit();
         }
 
@@ -129,6 +145,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.file")]
         public object File { get; set; }
+
+        /// <summary>
+        /// Gets or sets scanning subfolders from the root folder of the main
+        /// definition file, these files will be added as reference files. The
+        /// folders named 'jars', 'pyFiles', 'files' or 'archives' will be
+        /// scanned, and the folders name are case sensitive. Type: boolean (or
+        /// Expression with resultType boolean).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.scanFolder")]
+        public object ScanFolder { get; set; }
 
         /// <summary>
         /// Gets or sets the fully-qualified identifier or the main class that
@@ -202,10 +228,29 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Gets or sets number of executors to launch for this job, which will
         /// override the 'numExecutors' of the spark job definition you
-        /// provide.
+        /// provide. Type: integer (or Expression with resultType integer).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.numExecutors")]
-        public int? NumExecutors { get; set; }
+        public object NumExecutors { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the spark config. Possible values include:
+        /// 'Default', 'Customized', 'Artifact'
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.configurationType")]
+        public string ConfigurationType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the spark configuration of the spark job.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.targetSparkConfiguration")]
+        public SparkConfigurationParametrizationReference TargetSparkConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets spark configuration property.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.sparkConfig")]
+        public IDictionary<string, object> SparkConfig { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -227,6 +272,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (TargetBigDataPool != null)
             {
                 TargetBigDataPool.Validate();
+            }
+            if (TargetSparkConfiguration != null)
+            {
+                TargetSparkConfiguration.Validate();
             }
         }
     }

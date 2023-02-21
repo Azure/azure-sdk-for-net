@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class CallAutomationModelFactory
     {
         /// <summary> Initializes a new instance of TransferCallToParticipantResult. </summary>
@@ -28,6 +28,22 @@ namespace Azure.Communication.CallAutomation
         public static RemoveParticipantsResult RemoveParticipantsResult(string operationContext = null)
         {
             return new RemoveParticipantsResult(operationContext);
+        }
+
+        /// <summary> Initializes a new instance of MuteParticipantsResponse. </summary>
+        /// <param name="operationContext"> The operation context provided by client. </param>
+        /// <returns> A new <see cref="CallAutomation.MuteParticipantsResponse"/> instance for mocking. </returns>
+        public static MuteParticipantsResponse MuteParticipantsResponse(string operationContext = null)
+        {
+            return new MuteParticipantsResponse(operationContext);
+        }
+
+        /// <summary> Initializes a new instance of UnmuteParticipantsResponse. </summary>
+        /// <param name="operationContext"> The operation context provided by client. </param>
+        /// <returns> A new <see cref="CallAutomation.UnmuteParticipantsResponse"/> instance for mocking. </returns>
+        public static UnmuteParticipantsResponse UnmuteParticipantsResponse(string operationContext = null)
+        {
+            return new UnmuteParticipantsResponse(operationContext);
         }
 
         /// <summary> Initializes a new instance of RecordingStateResult. </summary>
@@ -141,24 +157,6 @@ namespace Azure.Communication.CallAutomation
         public static PlayCanceled PlayCanceled(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
         {
             return new PlayCanceled(callConnectionId, serverCallId, correlationId, operationContext);
-        }
-
-        /// <summary> Initializes a new instance of RecognizeCompleted. </summary>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <param name="recognitionType">
-        /// Determines the sub-type of the recognize operation.
-        /// In case of cancel operation the this field is not set and is returned empty
-        /// </param>
-        /// <param name="collectTonesResult"> Defines the result for RecognitionType = Dtmf. </param>
-        /// <param name="choiceResult"> Defines the result for RecognitionType = Choices. </param>
-        /// <returns> A new <see cref="CallAutomation.RecognizeCompleted"/> instance for mocking. </returns>
-        public static RecognizeCompleted RecognizeCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, CollectTonesResult collectTonesResult = null, ChoiceResult choiceResult = null)
-        {
-            return new RecognizeCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, collectTonesResult, choiceResult);
         }
 
         /// <summary> Initializes a new instance of CollectTonesResult. </summary>

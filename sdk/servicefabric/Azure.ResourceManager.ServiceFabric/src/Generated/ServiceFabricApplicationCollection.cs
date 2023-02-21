@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary>
         /// Create or update a Service Fabric application resource with the specified name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applications/{applicationName}
-        /// Operation Id: Applications_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applications/{applicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Applications_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="applicationName"> The name of the application resource. </param>
@@ -88,8 +95,16 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary>
         /// Create or update a Service Fabric application resource with the specified name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applications/{applicationName}
-        /// Operation Id: Applications_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applications/{applicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Applications_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="applicationName"> The name of the application resource. </param>
@@ -121,8 +136,16 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary>
         /// Get a Service Fabric application resource created or in the process of being created in the Service Fabric cluster resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applications/{applicationName}
-        /// Operation Id: Applications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applications/{applicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Applications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="applicationName"> The name of the application resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +173,16 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary>
         /// Get a Service Fabric application resource created or in the process of being created in the Service Fabric cluster resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applications/{applicationName}
-        /// Operation Id: Applications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applications/{applicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Applications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="applicationName"> The name of the application resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,62 +210,58 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary>
         /// Gets all application resources created or in the process of being created in the Service Fabric cluster resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applications
-        /// Operation Id: Applications_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Applications_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServiceFabricApplicationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceFabricApplicationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServiceFabricApplicationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serviceFabricApplicationApplicationsClientDiagnostics.CreateScope("ServiceFabricApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serviceFabricApplicationApplicationsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceFabricApplicationResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricApplicationApplicationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceFabricApplicationResource(Client, ServiceFabricApplicationData.DeserializeServiceFabricApplicationData(e)), _serviceFabricApplicationApplicationsClientDiagnostics, Pipeline, "ServiceFabricApplicationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Gets all application resources created or in the process of being created in the Service Fabric cluster resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applications
-        /// Operation Id: Applications_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Applications_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServiceFabricApplicationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceFabricApplicationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ServiceFabricApplicationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serviceFabricApplicationApplicationsClientDiagnostics.CreateScope("ServiceFabricApplicationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serviceFabricApplicationApplicationsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceFabricApplicationResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricApplicationApplicationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceFabricApplicationResource(Client, ServiceFabricApplicationData.DeserializeServiceFabricApplicationData(e)), _serviceFabricApplicationApplicationsClientDiagnostics, Pipeline, "ServiceFabricApplicationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applications/{applicationName}
-        /// Operation Id: Applications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applications/{applicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Applications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="applicationName"> The name of the application resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -260,8 +287,16 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applications/{applicationName}
-        /// Operation Id: Applications_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}/applications/{applicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Applications_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="applicationName"> The name of the application resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TimerTriggerName))
             {
-                writer.WritePropertyName("timerTriggerName");
+                writer.WritePropertyName("timerTriggerName"u8);
                 writer.WriteStringValue(TimerTriggerName);
             }
             if (Optional.IsDefined(ScheduleOccurrence))
             {
-                writer.WritePropertyName("scheduleOccurrence");
+                writer.WritePropertyName("scheduleOccurrence"u8);
                 writer.WriteStringValue(ScheduleOccurrence);
             }
             writer.WriteEndObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<string> scheduleOccurrence = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timerTriggerName"))
+                if (property.NameEquals("timerTriggerName"u8))
                 {
                     timerTriggerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scheduleOccurrence"))
+                if (property.NameEquals("scheduleOccurrence"u8))
                 {
                     scheduleOccurrence = property.Value.GetString();
                     continue;

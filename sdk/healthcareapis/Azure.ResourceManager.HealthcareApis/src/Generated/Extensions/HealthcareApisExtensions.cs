@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary>
         /// Get all the service instances in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/services
-        /// Operation Id: Services_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/services</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -43,8 +51,16 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary>
         /// Get all the service instances in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/services
-        /// Operation Id: Services_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/services</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -56,8 +72,16 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary>
         /// Check if a service instance name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/checkNameAvailability
-        /// Operation Id: Services_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Set the name parameter in the CheckNameAvailabilityParameters structure to the name of the service instance to check. </param>
@@ -72,8 +96,16 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary>
         /// Check if a service instance name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/checkNameAvailability
-        /// Operation Id: Services_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Set the name parameter in the CheckNameAvailabilityParameters structure to the name of the service instance to check. </param>
@@ -88,8 +120,16 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary>
         /// Lists all the available workspaces under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/workspaces
-        /// Operation Id: Workspaces_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -101,8 +141,16 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary>
         /// Lists all the available workspaces under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/workspaces
-        /// Operation Id: Workspaces_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,8 +179,16 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary>
         /// Get the metadata of a service instance.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the service instance. </param>
@@ -147,8 +203,16 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary>
         /// Get the metadata of a service instance.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}
-        /// Operation Id: Services_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the service instance. </param>
@@ -171,8 +235,16 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary>
         /// Gets the properties of the specified workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}
-        /// Operation Id: Workspaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>
@@ -187,8 +259,16 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <summary>
         /// Gets the properties of the specified workspace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}
-        /// Operation Id: Workspaces_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of workspace resource. </param>

@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<IReadOnlyList<AcsRecordingChunkInfoProperties>> recordingChunks = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recordingChunks"))
+                if (property.NameEquals("recordingChunks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -18,29 +18,29 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(QueryStringCachingBehavior))
             {
-                writer.WritePropertyName("queryStringCachingBehavior");
+                writer.WritePropertyName("queryStringCachingBehavior"u8);
                 writer.WriteStringValue(QueryStringCachingBehavior.Value.ToString());
             }
             if (Optional.IsDefined(QueryParameters))
             {
-                writer.WritePropertyName("queryParameters");
+                writer.WritePropertyName("queryParameters"u8);
                 writer.WriteStringValue(QueryParameters);
             }
             if (Optional.IsDefined(IsCompressionEnabled))
             {
-                writer.WritePropertyName("isCompressionEnabled");
+                writer.WritePropertyName("isCompressionEnabled"u8);
                 writer.WriteStringValue(IsCompressionEnabled.Value.ToString());
             }
             if (Optional.IsDefined(CacheBehavior))
             {
-                writer.WritePropertyName("cacheBehavior");
+                writer.WritePropertyName("cacheBehavior"u8);
                 writer.WriteStringValue(CacheBehavior.Value.ToString());
             }
             if (Optional.IsDefined(CacheDuration))
             {
                 if (CacheDuration != null)
                 {
-                    writer.WritePropertyName("cacheDuration");
+                    writer.WritePropertyName("cacheDuration"u8);
                     writer.WriteStringValue(CacheDuration.Value, "c");
                 }
                 else
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<TimeSpan?> cacheDuration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("queryStringCachingBehavior"))
+                if (property.NameEquals("queryStringCachingBehavior"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Cdn.Models
                     queryStringCachingBehavior = new RuleQueryStringCachingBehavior(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("queryParameters"))
+                if (property.NameEquals("queryParameters"u8))
                 {
                     queryParameters = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isCompressionEnabled"))
+                if (property.NameEquals("isCompressionEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     isCompressionEnabled = new RuleIsCompressionEnabled(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cacheBehavior"))
+                if (property.NameEquals("cacheBehavior"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     cacheBehavior = new RuleCacheBehavior(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cacheDuration"))
+                if (property.NameEquals("cacheDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

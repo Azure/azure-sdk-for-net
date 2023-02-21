@@ -277,7 +277,7 @@ namespace Azure.Messaging.ServiceBus
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
         public void UpdateConcurrency(int maxConcurrentCalls) { }
-        public void UpdatePrefetch(int prefetchCount) { }
+        public void UpdatePrefetchCount(int prefetchCount) { }
     }
     public partial class ServiceBusProcessorOptions
     {
@@ -324,6 +324,7 @@ namespace Azure.Messaging.ServiceBus
         public System.TimeSpan TimeToLive { get { throw null; } }
         public string To { get { throw null; } }
         public string TransactionPartitionKey { get { throw null; } }
+        public static Azure.Messaging.ServiceBus.ServiceBusReceivedMessage FromAmqpMessage(Azure.Core.Amqp.AmqpAnnotatedMessage message, System.BinaryData lockTokenBytes) { throw null; }
         public Azure.Core.Amqp.AmqpAnnotatedMessage GetRawAmqpMessage() { throw null; }
         public override string ToString() { throw null; }
     }
@@ -501,7 +502,7 @@ namespace Azure.Messaging.ServiceBus
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
         public void UpdateConcurrency(int maxConcurrentSessions, int maxConcurrentCallsPerSession) { }
-        public void UpdatePrefetch(int prefetchCount) { }
+        public void UpdatePrefetchCount(int prefetchCount) { }
     }
     public partial class ServiceBusSessionProcessorOptions
     {

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Blueprint.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Error))
             {
-                writer.WritePropertyName("error");
+                writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
             if (Optional.IsCollectionDefined(Resources))
             {
-                writer.WritePropertyName("resources");
+                writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             Optional<IList<AssignmentJobCreatedResource>> resources = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     error = AzureResourceManagerError.DeserializeAzureResourceManagerError(property.Value);
                     continue;
                 }
-                if (property.NameEquals("resources"))
+                if (property.NameEquals("resources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

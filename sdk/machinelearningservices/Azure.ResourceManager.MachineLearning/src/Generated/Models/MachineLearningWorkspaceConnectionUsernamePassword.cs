@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// The MachineLearningWorkspaceConnectionUsernamePassword.
-    /// Serialized Name: WorkspaceConnectionUsernamePassword
-    /// </summary>
+    /// <summary> The MachineLearningWorkspaceConnectionUsernamePassword. </summary>
     public partial class MachineLearningWorkspaceConnectionUsernamePassword
     {
         /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionUsernamePassword. </summary>
@@ -19,17 +16,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionUsernamePassword. </summary>
-        /// <param name="username"> Serialized Name: WorkspaceConnectionUsernamePassword.username. </param>
-        /// <param name="password"> Serialized Name: WorkspaceConnectionUsernamePassword.password. </param>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
         internal MachineLearningWorkspaceConnectionUsernamePassword(string username, string password)
         {
             Username = username;
             Password = password;
         }
 
-        /// <summary> Serialized Name: WorkspaceConnectionUsernamePassword.username. </summary>
+        /// <summary> Gets or sets the username. </summary>
         public string Username { get; set; }
-        /// <summary> Serialized Name: WorkspaceConnectionUsernamePassword.password. </summary>
+        /// <summary> Gets or sets the password. </summary>
         public string Password { get; set; }
     }
 }

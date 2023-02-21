@@ -34,21 +34,27 @@ namespace Azure.Containers.ContainerRegistry.Tests
             return anonymousAccess ? CreateAnonymousClient() : CreateAuthenticatedClient();
         }
 
-        public ContainerRegistryBlobClient CreateBlobClient(string repository)
+        public ContainerRegistryBlobClient CreateBlobClient(string repository, int? chunkSize = default)
         {
             string endpoint = TestEnvironment.Endpoint;
             Uri authorityHost = GetAuthorityHost(endpoint);
             ContainerRegistryAudience audience = GetAudience(authorityHost);
 
+            ContainerRegistryClientOptions options = InstrumentClientOptions(new ContainerRegistryClientOptions()
+            {
+                Audience = audience
+            });
+
+            if (chunkSize.HasValue)
+            {
+                options.MaxChunkSize = chunkSize.Value;
+            }
+
             return InstrumentClient(new ContainerRegistryBlobClient(
                     new Uri(endpoint),
-                    TestEnvironment.Credential,
                     repository,
-                    InstrumentClientOptions(new ContainerRegistryClientOptions()
-                    {
-                        Audience = audience
-                    })
-                ));
+                    TestEnvironment.Credential,
+                    options));
         }
 
         public async Task CreateRepositoryAsync(string repository)
@@ -56,15 +62,15 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await CreateImageAsync(repository, null);
         }
 
-        public async Task CreateImageAsync(string repository, string tag)
+        public async Task<string> CreateImageAsync(string repository, string tag)
         {
-            await CreateImageAsync(new Uri(TestEnvironment.Endpoint), repository, tag);
+            return await CreateImageAsync(new Uri(TestEnvironment.Endpoint), repository, tag);
         }
 
-        public async Task CreateImageAsync(Uri endpoint, string repository, string tag)
+        public async Task<string> CreateImageAsync(Uri endpoint, string repository, string tag)
         {
             var client = GetUploadClient(endpoint, repository);
-            await client.UploadTestImageAsync(tag);
+            return await client.UploadTestImageAsync(tag);
         }
 
         public async Task AddTagAsync(Uri endpoint, string repository, string reference, string tag)
@@ -99,11 +105,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
             if (endpoint.Contains(".azurecr.us"))
             {
                 return AzureAuthorityHosts.AzureGovernment;
-            }
-
-            if (endpoint.Contains(".azurecr.de"))
-            {
-                return AzureAuthorityHosts.AzureGermany;
             }
 
             throw new NotSupportedException($"Cloud for endpoint {endpoint} is not supported.");
@@ -182,8 +183,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // We won't record the set-up calls, so don't instrument this client.
             return new ContainerRegistryBlobClient(endpoint,
-                TestEnvironment.Credential,
                 repository,
+                TestEnvironment.Credential,
                 new ContainerRegistryClientOptions()
                 {
                     Audience = GetAudience(authorityHost)
@@ -205,11 +206,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
             if (authorityHost == AzureAuthorityHosts.AzureGovernment)
             {
                 return ContainerRegistryAudience.AzureResourceManagerGovernment;
-            }
-
-            if (authorityHost == AzureAuthorityHosts.AzureGermany)
-            {
-                return ContainerRegistryAudience.AzureResourceManagerGermany;
             }
 
             throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");

@@ -16,18 +16,18 @@ namespace Azure.AI.TextAnalytics
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("timex");
+            writer.WritePropertyName("timex"u8);
             writer.WriteStringValue(Timex);
-            writer.WritePropertyName("dateTimeSubKind");
+            writer.WritePropertyName("dateTimeSubKind"u8);
             writer.WriteStringValue(DateTimeSubKind.ToString());
-            writer.WritePropertyName("value");
+            writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
             if (Optional.IsDefined(Modifier))
             {
-                writer.WritePropertyName("modifier");
+                writer.WritePropertyName("modifier"u8);
                 writer.WriteStringValue(Modifier.Value.ToString());
             }
-            writer.WritePropertyName("resolutionKind");
+            writer.WritePropertyName("resolutionKind"u8);
             writer.WriteStringValue(ResolutionKind.ToString());
             writer.WriteEndObject();
         }
@@ -41,22 +41,22 @@ namespace Azure.AI.TextAnalytics
             ResolutionKind resolutionKind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timex"))
+                if (property.NameEquals("timex"u8))
                 {
                     timex = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dateTimeSubKind"))
+                if (property.NameEquals("dateTimeSubKind"u8))
                 {
                     dateTimeSubKind = new DateTimeSubKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("modifier"))
+                if (property.NameEquals("modifier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -66,7 +66,7 @@ namespace Azure.AI.TextAnalytics
                     modifier = new TemporalModifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resolutionKind"))
+                if (property.NameEquals("resolutionKind"u8))
                 {
                     resolutionKind = new ResolutionKind(property.Value.GetString());
                     continue;

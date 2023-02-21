@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(IsAutomaticUpdateEnabled))
             {
-                writer.WritePropertyName("enableAutomaticUpdates");
+                writer.WritePropertyName("enableAutomaticUpdates"u8);
                 writer.WriteBooleanValue(IsAutomaticUpdateEnabled.Value);
             }
             writer.WriteEndObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<bool> enableAutomaticUpdates = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enableAutomaticUpdates"))
+                if (property.NameEquals("enableAutomaticUpdates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

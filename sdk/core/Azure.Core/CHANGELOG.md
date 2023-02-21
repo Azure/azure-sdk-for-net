@@ -1,6 +1,25 @@
 # Release History
 
-## 1.27.0-beta.1 (Unreleased)
+## 1.29.0-beta.1 (Unreleased)
+
+### Features Added
+
+- `ActivitySource` activities that are used when using the [experimental OpenTelemetry support](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/) will include the `az.schema_url` tag indicating the OpenTelemetry schema version. They will also include the attribute names specified [here](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.yml). 
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- `ActivitySource` activities will no longer be stamped with the `kind` attribute as this is redundant with the OpenTelemetry `SpanKind` attribute.
+
+### Other Changes
+
+## 1.28.0 (2023-02-06)
+
+### Bugs Fixed
+- Fixed an issue with `AzureSasCredential` which resulted in messages to fail authentication if the SAS signature was updated while a message was in a retry cycle.
+
+## 1.27.0 (2023-01-10)
 
 ### Features Added
 
@@ -8,12 +27,6 @@
 - Added `RetryPolicy` property to `ClientOptions` to allow library authors to set a custom retry policy.
 - Added `MessageProcessingContext` type and `ProcessingContext` property to `HttpMessage` which contains information about the message as it traverses through the pipeline.
 - Added `SetProperty` and `TryGetProperty` overloads to `HttpMessage` to allow setting property values using a `Type` as the key.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.26.0 (2022-11-08)
 

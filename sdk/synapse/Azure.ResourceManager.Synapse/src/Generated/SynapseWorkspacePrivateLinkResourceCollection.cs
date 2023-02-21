@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get private link resource in workspace
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/privateLinkResources/{privateLinkResourceName}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,8 +91,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get private link resource in workspace
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/privateLinkResources/{privateLinkResourceName}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -113,92 +128,60 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Get all private link resources for a workspaces
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/privateLinkResources
-        /// Operation Id: PrivateLinkResources_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SynapseWorkspacePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseWorkspacePrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapseWorkspacePrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseWorkspacePrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("SynapseWorkspacePrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseWorkspacePrivateLinkResourcePrivateLinkResourcesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseWorkspacePrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SynapseWorkspacePrivateLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseWorkspacePrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("SynapseWorkspacePrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseWorkspacePrivateLinkResourcePrivateLinkResourcesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseWorkspacePrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseWorkspacePrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseWorkspacePrivateLinkResourcePrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkspacePrivateLinkResource(Client, SynapsePrivateLinkResourceData.DeserializeSynapsePrivateLinkResourceData(e)), _synapseWorkspacePrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "SynapseWorkspacePrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get all private link resources for a workspaces
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/privateLinkResources
-        /// Operation Id: PrivateLinkResources_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SynapseWorkspacePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseWorkspacePrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SynapseWorkspacePrivateLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseWorkspacePrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("SynapseWorkspacePrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapseWorkspacePrivateLinkResourcePrivateLinkResourcesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseWorkspacePrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SynapseWorkspacePrivateLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseWorkspacePrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("SynapseWorkspacePrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _synapseWorkspacePrivateLinkResourcePrivateLinkResourcesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SynapseWorkspacePrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseWorkspacePrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseWorkspacePrivateLinkResourcePrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkspacePrivateLinkResource(Client, SynapsePrivateLinkResourceData.DeserializeSynapsePrivateLinkResourceData(e)), _synapseWorkspacePrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "SynapseWorkspacePrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/privateLinkResources/{privateLinkResourceName}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -224,8 +207,16 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/privateLinkResources/{privateLinkResourceName}
-        /// Operation Id: PrivateLinkResources_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

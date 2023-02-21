@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.StoragePool
 
         /// <summary>
         /// Gets a list of Disk Pools in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/diskPools
-        /// Operation Id: DiskPools_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/diskPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiskPools_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -43,8 +51,16 @@ namespace Azure.ResourceManager.StoragePool
 
         /// <summary>
         /// Gets a list of Disk Pools in a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/diskPools
-        /// Operation Id: DiskPools_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/diskPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiskPools_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -56,8 +72,16 @@ namespace Azure.ResourceManager.StoragePool
 
         /// <summary>
         /// Lists available Disk Pool Skus in an Azure location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/diskPoolZones
-        /// Operation Id: DiskPoolZones_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/diskPoolZones</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiskPoolZones_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
@@ -70,8 +94,16 @@ namespace Azure.ResourceManager.StoragePool
 
         /// <summary>
         /// Lists available Disk Pool Skus in an Azure location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/diskPoolZones
-        /// Operation Id: DiskPoolZones_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/diskPoolZones</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiskPoolZones_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
@@ -84,8 +116,16 @@ namespace Azure.ResourceManager.StoragePool
 
         /// <summary>
         /// Lists available StoragePool resources and skus in an Azure location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/skus
-        /// Operation Id: ResourceSkus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceSkus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
@@ -98,8 +138,16 @@ namespace Azure.ResourceManager.StoragePool
 
         /// <summary>
         /// Lists available StoragePool resources and skus in an Azure location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/skus
-        /// Operation Id: ResourceSkus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StoragePool/locations/{location}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceSkus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
@@ -129,8 +177,16 @@ namespace Azure.ResourceManager.StoragePool
 
         /// <summary>
         /// Get a Disk pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}
-        /// Operation Id: DiskPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiskPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
@@ -145,8 +201,16 @@ namespace Azure.ResourceManager.StoragePool
 
         /// <summary>
         /// Get a Disk pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}
-        /// Operation Id: DiskPools_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiskPools_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>

@@ -97,8 +97,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Get open request approval details
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}
-        /// Operation Id: PrivateStore_GetRequestApproval
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_GetRequestApproval</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -112,8 +120,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Get open request approval details
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}
-        /// Operation Id: PrivateStore_GetRequestApproval
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_GetRequestApproval</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,8 +150,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Get open approval requests
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals/{adminRequestApprovalId}
-        /// Operation Id: PrivateStore_GetAdminRequestApproval
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals/{adminRequestApprovalId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_GetAdminRequestApproval</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
         /// <param name="publisherId"> The publisher id of this offer. </param>
@@ -150,8 +174,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Get open approval requests
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals/{adminRequestApprovalId}
-        /// Operation Id: PrivateStore_GetAdminRequestApproval
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals/{adminRequestApprovalId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_GetAdminRequestApproval</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
         /// <param name="publisherId"> The publisher id of this offer. </param>
@@ -173,8 +205,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Gets private store collection
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}
-        /// Operation Id: PrivateStoreCollection_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStoreCollection_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -186,8 +226,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Gets private store collection
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}
-        /// Operation Id: PrivateStoreCollection_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStoreCollection_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -199,8 +247,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Get information about the private store
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}
-        /// Operation Id: PrivateStore_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PrivateStoreResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -223,8 +279,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Get information about the private store
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}
-        /// Operation Id: PrivateStore_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PrivateStoreResource> Get(CancellationToken cancellationToken = default)
@@ -247,8 +311,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Deletes the private store. All that is not saved will be lost.
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}
-        /// Operation Id: PrivateStore_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -273,8 +345,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Deletes the private store. All that is not saved will be lost.
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}
-        /// Operation Id: PrivateStore_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -299,8 +379,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Changes private store properties
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}
-        /// Operation Id: PrivateStore_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The PrivateStore to use. </param>
@@ -329,8 +417,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Changes private store properties
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}
-        /// Operation Id: PrivateStore_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The PrivateStore to use. </param>
@@ -359,8 +455,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Query whether exists any offer in the collections.
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/anyExistingOffersInTheCollections
-        /// Operation Id: PrivateStore_AnyExistingOffersInTheCollections
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/anyExistingOffersInTheCollections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_AnyExistingOffersInTheCollections</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AnyExistingOffersInTheCollectionsResult>> AnyExistingOffersInTheCollectionsAsync(CancellationToken cancellationToken = default)
@@ -381,8 +485,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Query whether exists any offer in the collections.
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/anyExistingOffersInTheCollections
-        /// Operation Id: PrivateStore_AnyExistingOffersInTheCollections
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/anyExistingOffersInTheCollections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_AnyExistingOffersInTheCollections</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AnyExistingOffersInTheCollectionsResult> AnyExistingOffersInTheCollections(CancellationToken cancellationToken = default)
@@ -403,118 +515,102 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// List of offers, regardless the collections
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryOffers
-        /// Operation Id: PrivateStore_QueryOffers
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryOffers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_QueryOffers</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PrivateStoreOfferResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateStoreOfferResult> QueryOffersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateStoreOfferResult>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.QueryOffers");
-                scope.Start();
-                try
-                {
-                    var response = await _privateStoreRestClient.QueryOffersAsync(Guid.Parse(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateQueryOffersRequest(Guid.Parse(Id.Name));
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PrivateStoreOfferResult.DeserializePrivateStoreOfferResult, _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.QueryOffers", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// List of offers, regardless the collections
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryOffers
-        /// Operation Id: PrivateStore_QueryOffers
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryOffers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_QueryOffers</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PrivateStoreOfferResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateStoreOfferResult> QueryOffers(CancellationToken cancellationToken = default)
         {
-            Page<PrivateStoreOfferResult> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.QueryOffers");
-                scope.Start();
-                try
-                {
-                    var response = _privateStoreRestClient.QueryOffers(Guid.Parse(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateQueryOffersRequest(Guid.Parse(Id.Name));
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, PrivateStoreOfferResult.DeserializePrivateStoreOfferResult, _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.QueryOffers", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// List of user&apos;s approved offers for the provided offers and subscriptions
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryUserOffers
-        /// Operation Id: PrivateStore_QueryUserOffers
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryUserOffers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_QueryUserOffers</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The QueryUserOffersContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PrivateStoreOfferResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateStoreOfferResult> QueryUserOffersAsync(QueryUserOffersContent content = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateStoreOfferResult>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.QueryUserOffers");
-                scope.Start();
-                try
-                {
-                    var response = await _privateStoreRestClient.QueryUserOffersAsync(Guid.Parse(Id.Name), content, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateQueryUserOffersRequest(Guid.Parse(Id.Name), content);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PrivateStoreOfferResult.DeserializePrivateStoreOfferResult, _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.QueryUserOffers", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// List of user&apos;s approved offers for the provided offers and subscriptions
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryUserOffers
-        /// Operation Id: PrivateStore_QueryUserOffers
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryUserOffers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_QueryUserOffers</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The QueryUserOffersContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PrivateStoreOfferResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateStoreOfferResult> QueryUserOffers(QueryUserOffersContent content = null, CancellationToken cancellationToken = default)
         {
-            Page<PrivateStoreOfferResult> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.QueryUserOffers");
-                scope.Start();
-                try
-                {
-                    var response = _privateStoreRestClient.QueryUserOffers(Guid.Parse(Id.Name), content, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateQueryUserOffersRequest(Guid.Parse(Id.Name), content);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, PrivateStoreOfferResult.DeserializePrivateStoreOfferResult, _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.QueryUserOffers", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Tenant billing accounts names
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/billingAccounts
-        /// Operation Id: PrivateStore_BillingAccounts
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/billingAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_BillingAccounts</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PrivateStoreBillingAccountsResult>> FetchBillingAccountsAsync(CancellationToken cancellationToken = default)
@@ -535,8 +631,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Tenant billing accounts names
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/billingAccounts
-        /// Operation Id: PrivateStore_BillingAccounts
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/billingAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_BillingAccounts</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PrivateStoreBillingAccountsResult> FetchBillingAccounts(CancellationToken cancellationToken = default)
@@ -557,8 +661,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// For a given subscriptions list, the API will return a map of collections and the related subscriptions from the supplied list.
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collectionsToSubscriptionsMapping
-        /// Operation Id: PrivateStore_CollectionsToSubscriptionsMapping
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collectionsToSubscriptionsMapping</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_CollectionsToSubscriptionsMapping</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The CollectionsToSubscriptionsMappingContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -580,8 +692,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// For a given subscriptions list, the API will return a map of collections and the related subscriptions from the supplied list.
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collectionsToSubscriptionsMapping
-        /// Operation Id: PrivateStore_CollectionsToSubscriptionsMapping
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collectionsToSubscriptionsMapping</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_CollectionsToSubscriptionsMapping</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The CollectionsToSubscriptionsMappingContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -603,8 +723,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Get map of plans and related approved subscriptions.
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryApprovedPlans
-        /// Operation Id: PrivateStore_QueryApprovedPlans
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryApprovedPlans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_QueryApprovedPlans</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The QueryApprovedPlansContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -626,8 +754,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Get map of plans and related approved subscriptions.
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryApprovedPlans
-        /// Operation Id: PrivateStore_QueryApprovedPlans
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryApprovedPlans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_QueryApprovedPlans</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The QueryApprovedPlansContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -649,8 +785,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Perform an action on bulk collections
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/bulkCollectionsAction
-        /// Operation Id: PrivateStore_BulkCollectionsAction
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/bulkCollectionsAction</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_BulkCollectionsAction</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The BulkCollectionsActionContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -672,8 +816,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Perform an action on bulk collections
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/bulkCollectionsAction
-        /// Operation Id: PrivateStore_BulkCollectionsAction
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/bulkCollectionsAction</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_BulkCollectionsAction</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="content"> The BulkCollectionsActionContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -695,8 +847,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Get private store notifications state
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryNotificationsState
-        /// Operation Id: PrivateStore_QueryNotificationsState
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryNotificationsState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_QueryNotificationsState</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PrivateStoreNotificationsState>> QueryNotificationsStateAsync(CancellationToken cancellationToken = default)
@@ -717,8 +877,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Get private store notifications state
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryNotificationsState
-        /// Operation Id: PrivateStore_QueryNotificationsState
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryNotificationsState</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_QueryNotificationsState</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PrivateStoreNotificationsState> QueryNotificationsState(CancellationToken cancellationToken = default)
@@ -739,8 +907,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Acknowledge notification for offer
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/offers/{offerId}/acknowledgeNotification
-        /// Operation Id: PrivateStore_AcknowledgeOfferNotification
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/offers/{offerId}/acknowledgeNotification</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_AcknowledgeOfferNotification</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="offerId"> The offer ID to update or delete. </param>
         /// <param name="content"> The AcknowledgeOfferNotificationContent to use. </param>
@@ -767,8 +943,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Acknowledge notification for offer
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/offers/{offerId}/acknowledgeNotification
-        /// Operation Id: PrivateStore_AcknowledgeOfferNotification
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/offers/{offerId}/acknowledgeNotification</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_AcknowledgeOfferNotification</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="offerId"> The offer ID to update or delete. </param>
         /// <param name="content"> The AcknowledgeOfferNotificationContent to use. </param>
@@ -795,64 +979,60 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// Fetch all subscriptions in tenant, only for marketplace admin
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/fetchAllSubscriptionsInTenant
-        /// Operation Id: PrivateStore_FetchAllSubscriptionsInTenant
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/fetchAllSubscriptionsInTenant</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_FetchAllSubscriptionsInTenant</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="nextPageToken"> The skip token to get the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MarketplaceSubscription" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MarketplaceSubscription> FetchAllMarketplaceSubscriptionsAsync(string nextPageToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MarketplaceSubscription>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchAllMarketplaceSubscriptions");
-                scope.Start();
-                try
-                {
-                    var response = await _privateStoreRestClient.FetchAllSubscriptionsInTenantAsync(Guid.Parse(Id.Name), nextPageToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateFetchAllSubscriptionsInTenantRequest(Guid.Parse(Id.Name), nextPageToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MarketplaceSubscription.DeserializeMarketplaceSubscription, _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.FetchAllMarketplaceSubscriptions", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Fetch all subscriptions in tenant, only for marketplace admin
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/fetchAllSubscriptionsInTenant
-        /// Operation Id: PrivateStore_FetchAllSubscriptionsInTenant
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/fetchAllSubscriptionsInTenant</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_FetchAllSubscriptionsInTenant</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="nextPageToken"> The skip token to get the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MarketplaceSubscription" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MarketplaceSubscription> FetchAllMarketplaceSubscriptions(string nextPageToken = null, CancellationToken cancellationToken = default)
         {
-            Page<MarketplaceSubscription> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchAllMarketplaceSubscriptions");
-                scope.Start();
-                try
-                {
-                    var response = _privateStoreRestClient.FetchAllSubscriptionsInTenant(Guid.Parse(Id.Name), nextPageToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreRestClient.CreateFetchAllSubscriptionsInTenantRequest(Guid.Parse(Id.Name), nextPageToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MarketplaceSubscription.DeserializeMarketplaceSubscription, _privateStoreClientDiagnostics, Pipeline, "PrivateStoreResource.FetchAllMarketplaceSubscriptions", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// List new plans notifications
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/listNewPlansNotifications
-        /// Operation Id: PrivateStore_ListNewPlansNotifications
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/listNewPlansNotifications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_ListNewPlansNotifications</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NewPlanNotificationListResult>> GetNewPlansNotificationsAsync(CancellationToken cancellationToken = default)
@@ -873,8 +1053,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// List new plans notifications
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/listNewPlansNotifications
-        /// Operation Id: PrivateStore_ListNewPlansNotifications
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/listNewPlansNotifications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_ListNewPlansNotifications</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NewPlanNotificationListResult> GetNewPlansNotifications(CancellationToken cancellationToken = default)
@@ -895,8 +1083,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// List stop sell notifications for both stop sell offers and stop sell plans
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/listStopSellOffersPlansNotifications
-        /// Operation Id: PrivateStore_ListStopSellOffersPlansNotifications
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/listStopSellOffersPlansNotifications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_ListStopSellOffersPlansNotifications</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="stopSellSubscriptions"> The StopSellSubscriptions to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -918,8 +1114,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// List stop sell notifications for both stop sell offers and stop sell plans
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/listStopSellOffersPlansNotifications
-        /// Operation Id: PrivateStore_ListStopSellOffersPlansNotifications
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/listStopSellOffersPlansNotifications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_ListStopSellOffersPlansNotifications</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="stopSellSubscriptions"> The StopSellSubscriptions to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -941,8 +1145,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// List all the subscriptions in the private store context
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/listSubscriptionsContext
-        /// Operation Id: PrivateStore_ListSubscriptionsContext
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/listSubscriptionsContext</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_ListSubscriptionsContext</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SubscriptionsContextList>> GetSubscriptionsContextAsync(CancellationToken cancellationToken = default)
@@ -963,8 +1175,16 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary>
         /// List all the subscriptions in the private store context
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/listSubscriptionsContext
-        /// Operation Id: PrivateStore_ListSubscriptionsContext
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/listSubscriptionsContext</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_ListSubscriptionsContext</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SubscriptionsContextList> GetSubscriptionsContext(CancellationToken cancellationToken = default)

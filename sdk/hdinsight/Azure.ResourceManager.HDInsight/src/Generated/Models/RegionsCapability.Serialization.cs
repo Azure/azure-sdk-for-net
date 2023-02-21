@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<IReadOnlyList<string>> available = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("available"))
+                if (property.NameEquals("available"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

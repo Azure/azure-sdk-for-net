@@ -97,8 +97,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary>
         /// Gets the specified Data Lake Store account details in the specified Data Lake Analytics account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/dataLakeStoreAccounts/{dataLakeStoreAccountName}
-        /// Operation Id: DataLakeStoreAccounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/dataLakeStoreAccounts/{dataLakeStoreAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataLakeStoreAccounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataLakeStoreAccountName"> The name of the Data Lake Store account to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -112,8 +120,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary>
         /// Gets the specified Data Lake Store account details in the specified Data Lake Analytics account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/dataLakeStoreAccounts/{dataLakeStoreAccountName}
-        /// Operation Id: DataLakeStoreAccounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/dataLakeStoreAccounts/{dataLakeStoreAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataLakeStoreAccounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="dataLakeStoreAccountName"> The name of the Data Lake Store account to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,8 +150,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary>
         /// Gets the specified Azure Storage account linked to the given Data Lake Analytics account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}
-        /// Operation Id: StorageAccounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="storageAccountName"> The name of the Azure Storage account for which to retrieve the details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -149,8 +173,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary>
         /// Gets the specified Azure Storage account linked to the given Data Lake Analytics account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}
-        /// Operation Id: StorageAccounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts/{storageAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="storageAccountName"> The name of the Azure Storage account for which to retrieve the details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -171,8 +203,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary>
         /// Gets the specified Data Lake Analytics compute policy.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/computePolicies/{computePolicyName}
-        /// Operation Id: ComputePolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/computePolicies/{computePolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComputePolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="computePolicyName"> The name of the compute policy to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -186,8 +226,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary>
         /// Gets the specified Data Lake Analytics compute policy.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/computePolicies/{computePolicyName}
-        /// Operation Id: ComputePolicies_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/computePolicies/{computePolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComputePolicies_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="computePolicyName"> The name of the compute policy to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -208,8 +256,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary>
         /// Gets the specified Data Lake Analytics firewall rule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/firewallRules/{firewallRuleName}
-        /// Operation Id: FirewallRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/firewallRules/{firewallRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FirewallRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the firewall rule to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -223,8 +279,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary>
         /// Gets the specified Data Lake Analytics firewall rule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/firewallRules/{firewallRuleName}
-        /// Operation Id: FirewallRules_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/firewallRules/{firewallRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FirewallRules_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the firewall rule to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -238,8 +302,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary>
         /// Gets details of the specified Data Lake Analytics account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}
-        /// Operation Id: Accounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DataLakeAnalyticsAccountResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -262,8 +334,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary>
         /// Gets details of the specified Data Lake Analytics account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}
-        /// Operation Id: Accounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataLakeAnalyticsAccountResource> Get(CancellationToken cancellationToken = default)
@@ -286,8 +366,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary>
         /// Begins the delete process for the Data Lake Analytics account object specified by the account name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}
-        /// Operation Id: Accounts_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -312,8 +400,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary>
         /// Begins the delete process for the Data Lake Analytics account object specified by the account name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}
-        /// Operation Id: Accounts_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -338,8 +434,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary>
         /// Updates the Data Lake Analytics account object specified by the accountName with the contents of the account object.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}
-        /// Operation Id: Accounts_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Parameters supplied to the update Data Lake Analytics account operation. </param>
@@ -368,8 +472,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         /// <summary>
         /// Updates the Data Lake Analytics account object specified by the accountName with the contents of the account object.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}
-        /// Operation Id: Accounts_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Parameters supplied to the update Data Lake Analytics account operation. </param>

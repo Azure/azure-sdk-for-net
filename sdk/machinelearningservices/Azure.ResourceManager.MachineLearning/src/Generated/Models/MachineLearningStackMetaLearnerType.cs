@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// The meta-learner is a model trained on the output of the individual heterogeneous models.
     /// Default meta-learners are LogisticRegression for classification tasks (or LogisticRegressionCV if cross-validation is enabled) and ElasticNet for regression/forecasting tasks (or ElasticNetCV if cross-validation is enabled).
     /// This parameter can be one of the following strings: LogisticRegression, LogisticRegressionCV, LightGBMClassifier, ElasticNet, ElasticNetCV, LightGBMRegressor, or LinearRegression
-    /// Serialized Name: StackMetaLearnerType
     /// </summary>
     public readonly partial struct MachineLearningStackMetaLearnerType : IEquatable<MachineLearningStackMetaLearnerType>
     {
@@ -36,45 +35,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string LightGBMRegressorValue = "LightGBMRegressor";
         private const string LinearRegressionValue = "LinearRegression";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: StackMetaLearnerType.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static MachineLearningStackMetaLearnerType None { get; } = new MachineLearningStackMetaLearnerType(NoneValue);
-        /// <summary>
-        /// Default meta-learners are LogisticRegression for classification tasks.
-        /// Serialized Name: StackMetaLearnerType.LogisticRegression
-        /// </summary>
+        /// <summary> Default meta-learners are LogisticRegression for classification tasks. </summary>
         public static MachineLearningStackMetaLearnerType LogisticRegression { get; } = new MachineLearningStackMetaLearnerType(LogisticRegressionValue);
-        /// <summary>
-        /// Default meta-learners are LogisticRegression for classification task when CV is on.
-        /// Serialized Name: StackMetaLearnerType.LogisticRegressionCV
-        /// </summary>
+        /// <summary> Default meta-learners are LogisticRegression for classification task when CV is on. </summary>
         public static MachineLearningStackMetaLearnerType LogisticRegressionCV { get; } = new MachineLearningStackMetaLearnerType(LogisticRegressionCVValue);
-        /// <summary>
-        /// LightGBMClassifier
-        /// Serialized Name: StackMetaLearnerType.LightGBMClassifier
-        /// </summary>
+        /// <summary> LightGBMClassifier. </summary>
         public static MachineLearningStackMetaLearnerType LightGBMClassifier { get; } = new MachineLearningStackMetaLearnerType(LightGBMClassifierValue);
-        /// <summary>
-        /// Default meta-learners are LogisticRegression for regression task.
-        /// Serialized Name: StackMetaLearnerType.ElasticNet
-        /// </summary>
+        /// <summary> Default meta-learners are LogisticRegression for regression task. </summary>
         public static MachineLearningStackMetaLearnerType ElasticNet { get; } = new MachineLearningStackMetaLearnerType(ElasticNetValue);
-        /// <summary>
-        /// Default meta-learners are LogisticRegression for regression task when CV is on.
-        /// Serialized Name: StackMetaLearnerType.ElasticNetCV
-        /// </summary>
+        /// <summary> Default meta-learners are LogisticRegression for regression task when CV is on. </summary>
         public static MachineLearningStackMetaLearnerType ElasticNetCV { get; } = new MachineLearningStackMetaLearnerType(ElasticNetCVValue);
-        /// <summary>
-        /// LightGBMRegressor
-        /// Serialized Name: StackMetaLearnerType.LightGBMRegressor
-        /// </summary>
+        /// <summary> LightGBMRegressor. </summary>
         public static MachineLearningStackMetaLearnerType LightGBMRegressor { get; } = new MachineLearningStackMetaLearnerType(LightGBMRegressorValue);
-        /// <summary>
-        /// LinearRegression
-        /// Serialized Name: StackMetaLearnerType.LinearRegression
-        /// </summary>
+        /// <summary> LinearRegression. </summary>
         public static MachineLearningStackMetaLearnerType LinearRegression { get; } = new MachineLearningStackMetaLearnerType(LinearRegressionValue);
         /// <summary> Determines if two <see cref="MachineLearningStackMetaLearnerType"/> values are the same. </summary>
         public static bool operator ==(MachineLearningStackMetaLearnerType left, MachineLearningStackMetaLearnerType right) => left.Equals(right);

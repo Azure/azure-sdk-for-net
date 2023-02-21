@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -57,8 +56,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Creates or updates a custom assessment automation for the provided subscription. Please note that providing an existing custom assessment automation will replace the existing record.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customAssessmentAutomations/{customAssessmentAutomationName}
-        /// Operation Id: CustomAssessmentAutomations_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customAssessmentAutomations/{customAssessmentAutomationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomAssessmentAutomations_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="customAssessmentAutomationName"> Name of the Custom Assessment Automation. </param>
@@ -90,8 +97,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Creates or updates a custom assessment automation for the provided subscription. Please note that providing an existing custom assessment automation will replace the existing record.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customAssessmentAutomations/{customAssessmentAutomationName}
-        /// Operation Id: CustomAssessmentAutomations_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customAssessmentAutomations/{customAssessmentAutomationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomAssessmentAutomations_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="customAssessmentAutomationName"> Name of the Custom Assessment Automation. </param>
@@ -123,8 +138,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets a single custom assessment automation by name for the provided subscription and resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customAssessmentAutomations/{customAssessmentAutomationName}
-        /// Operation Id: CustomAssessmentAutomations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customAssessmentAutomations/{customAssessmentAutomationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomAssessmentAutomations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="customAssessmentAutomationName"> Name of the Custom Assessment Automation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -152,8 +175,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Gets a single custom assessment automation by name for the provided subscription and resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customAssessmentAutomations/{customAssessmentAutomationName}
-        /// Operation Id: CustomAssessmentAutomations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customAssessmentAutomations/{customAssessmentAutomationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomAssessmentAutomations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="customAssessmentAutomationName"> Name of the Custom Assessment Automation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -181,92 +212,60 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// List custom assessment automations by provided subscription and resource group
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customAssessmentAutomations
-        /// Operation Id: CustomAssessmentAutomations_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customAssessmentAutomations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomAssessmentAutomations_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CustomAssessmentAutomationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CustomAssessmentAutomationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CustomAssessmentAutomationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _customAssessmentAutomationClientDiagnostics.CreateScope("CustomAssessmentAutomationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _customAssessmentAutomationRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomAssessmentAutomationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<CustomAssessmentAutomationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _customAssessmentAutomationClientDiagnostics.CreateScope("CustomAssessmentAutomationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _customAssessmentAutomationRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomAssessmentAutomationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _customAssessmentAutomationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customAssessmentAutomationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomAssessmentAutomationResource(Client, CustomAssessmentAutomationData.DeserializeCustomAssessmentAutomationData(e)), _customAssessmentAutomationClientDiagnostics, Pipeline, "CustomAssessmentAutomationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List custom assessment automations by provided subscription and resource group
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customAssessmentAutomations
-        /// Operation Id: CustomAssessmentAutomations_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customAssessmentAutomations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomAssessmentAutomations_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CustomAssessmentAutomationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CustomAssessmentAutomationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<CustomAssessmentAutomationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _customAssessmentAutomationClientDiagnostics.CreateScope("CustomAssessmentAutomationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _customAssessmentAutomationRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomAssessmentAutomationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<CustomAssessmentAutomationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _customAssessmentAutomationClientDiagnostics.CreateScope("CustomAssessmentAutomationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _customAssessmentAutomationRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomAssessmentAutomationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _customAssessmentAutomationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customAssessmentAutomationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomAssessmentAutomationResource(Client, CustomAssessmentAutomationData.DeserializeCustomAssessmentAutomationData(e)), _customAssessmentAutomationClientDiagnostics, Pipeline, "CustomAssessmentAutomationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customAssessmentAutomations/{customAssessmentAutomationName}
-        /// Operation Id: CustomAssessmentAutomations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customAssessmentAutomations/{customAssessmentAutomationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomAssessmentAutomations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="customAssessmentAutomationName"> Name of the Custom Assessment Automation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -292,8 +291,16 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customAssessmentAutomations/{customAssessmentAutomationName}
-        /// Operation Id: CustomAssessmentAutomations_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customAssessmentAutomations/{customAssessmentAutomationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomAssessmentAutomations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="customAssessmentAutomationName"> Name of the Custom Assessment Automation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

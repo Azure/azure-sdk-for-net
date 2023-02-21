@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<IReadOnlyList<NewPlanNotification>> newPlansNotifications = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("newPlansNotifications"))
+                if (property.NameEquals("newPlansNotifications"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

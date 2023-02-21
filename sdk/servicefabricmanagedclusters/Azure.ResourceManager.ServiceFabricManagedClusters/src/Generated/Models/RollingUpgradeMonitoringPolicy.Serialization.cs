@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("failureAction");
+            writer.WritePropertyName("failureAction"u8);
             writer.WriteStringValue(FailureAction.ToString());
-            writer.WritePropertyName("healthCheckWaitDuration");
+            writer.WritePropertyName("healthCheckWaitDuration"u8);
             writer.WriteStringValue(HealthCheckWaitDuration, "c");
-            writer.WritePropertyName("healthCheckStableDuration");
+            writer.WritePropertyName("healthCheckStableDuration"u8);
             writer.WriteStringValue(HealthCheckStableDuration, "c");
-            writer.WritePropertyName("healthCheckRetryTimeout");
+            writer.WritePropertyName("healthCheckRetryTimeout"u8);
             writer.WriteStringValue(HealthCheckRetryTimeout, "c");
-            writer.WritePropertyName("upgradeTimeout");
+            writer.WritePropertyName("upgradeTimeout"u8);
             writer.WriteStringValue(UpgradeTimeout, "c");
-            writer.WritePropertyName("upgradeDomainTimeout");
+            writer.WritePropertyName("upgradeDomainTimeout"u8);
             writer.WriteStringValue(UpgradeDomainTimeout, "c");
             writer.WriteEndObject();
         }
@@ -41,32 +41,32 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             TimeSpan upgradeDomainTimeout = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("failureAction"))
+                if (property.NameEquals("failureAction"u8))
                 {
                     failureAction = new PolicyViolationCompensationAction(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("healthCheckWaitDuration"))
+                if (property.NameEquals("healthCheckWaitDuration"u8))
                 {
                     healthCheckWaitDuration = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("healthCheckStableDuration"))
+                if (property.NameEquals("healthCheckStableDuration"u8))
                 {
                     healthCheckStableDuration = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("healthCheckRetryTimeout"))
+                if (property.NameEquals("healthCheckRetryTimeout"u8))
                 {
                     healthCheckRetryTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("upgradeTimeout"))
+                if (property.NameEquals("upgradeTimeout"u8))
                 {
                     upgradeTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("upgradeDomainTimeout"))
+                if (property.NameEquals("upgradeDomainTimeout"u8))
                 {
                     upgradeDomainTimeout = property.Value.GetTimeSpan("c");
                     continue;

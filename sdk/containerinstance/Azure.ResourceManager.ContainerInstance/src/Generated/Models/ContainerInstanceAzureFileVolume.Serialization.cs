@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("shareName");
+            writer.WritePropertyName("shareName"u8);
             writer.WriteStringValue(ShareName);
             if (Optional.IsDefined(IsReadOnly))
             {
-                writer.WritePropertyName("readOnly");
+                writer.WritePropertyName("readOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
             }
-            writer.WritePropertyName("storageAccountName");
+            writer.WritePropertyName("storageAccountName"u8);
             writer.WriteStringValue(StorageAccountName);
             if (Optional.IsDefined(StorageAccountKey))
             {
-                writer.WritePropertyName("storageAccountKey");
+                writer.WritePropertyName("storageAccountKey"u8);
                 writer.WriteStringValue(StorageAccountKey);
             }
             writer.WriteEndObject();
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<string> storageAccountKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("shareName"))
+                if (property.NameEquals("shareName"u8))
                 {
                     shareName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("readOnly"))
+                if (property.NameEquals("readOnly"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     readOnly = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("storageAccountName"))
+                if (property.NameEquals("storageAccountName"u8))
                 {
                     storageAccountName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageAccountKey"))
+                if (property.NameEquals("storageAccountKey"u8))
                 {
                     storageAccountKey = property.Value.GetString();
                     continue;

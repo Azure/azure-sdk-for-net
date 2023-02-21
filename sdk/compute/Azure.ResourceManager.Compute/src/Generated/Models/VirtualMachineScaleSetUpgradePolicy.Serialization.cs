@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("mode");
+                writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToSerialString());
             }
             if (Optional.IsDefined(RollingUpgradePolicy))
             {
-                writer.WritePropertyName("rollingUpgradePolicy");
+                writer.WritePropertyName("rollingUpgradePolicy"u8);
                 writer.WriteObjectValue(RollingUpgradePolicy);
             }
             if (Optional.IsDefined(AutomaticOSUpgradePolicy))
             {
-                writer.WritePropertyName("automaticOSUpgradePolicy");
+                writer.WritePropertyName("automaticOSUpgradePolicy"u8);
                 writer.WriteObjectValue(AutomaticOSUpgradePolicy);
             }
             writer.WriteEndObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<AutomaticOSUpgradePolicy> automaticOSUpgradePolicy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mode"))
+                if (property.NameEquals("mode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                     mode = property.Value.GetString().ToVirtualMachineScaleSetUpgradeMode();
                     continue;
                 }
-                if (property.NameEquals("rollingUpgradePolicy"))
+                if (property.NameEquals("rollingUpgradePolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
                     rollingUpgradePolicy = RollingUpgradePolicy.DeserializeRollingUpgradePolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("automaticOSUpgradePolicy"))
+                if (property.NameEquals("automaticOSUpgradePolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

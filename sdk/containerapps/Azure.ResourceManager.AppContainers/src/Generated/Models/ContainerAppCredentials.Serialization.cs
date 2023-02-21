@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("clientId");
+                writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
             if (Optional.IsDefined(ClientSecret))
             {
-                writer.WritePropertyName("clientSecret");
+                writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(SubscriptionId))
             {
-                writer.WritePropertyName("subscriptionId");
+                writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
             writer.WriteEndObject();
@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> subscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientId"))
+                if (property.NameEquals("clientId"u8))
                 {
                     clientId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientSecret"))
+                if (property.NameEquals("clientSecret"u8))
                 {
                     clientSecret = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"))
+                if (property.NameEquals("subscriptionId"u8))
                 {
                     subscriptionId = property.Value.GetString();
                     continue;

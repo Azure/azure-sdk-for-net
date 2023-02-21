@@ -261,9 +261,9 @@ var data = new {
     kind = "AdlsGen2Account",
 };
 
-var operation = await client.CreateAsync(WaitUntil.Started, "<sentShareName>", "<assetName>", RequestContent.Create(data));
+var operation = await client.CreateAsync(WaitUntil.Completed, "<sentShareName>", "<assetName>", RequestContent.Create(data));
 
-BinaryData data = await operation.WaitForCompletionAsync();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -398,9 +398,9 @@ var data = new {
     kind = "AdlsGen2Account",
 };
 
-var operation = client.Create(WaitUntil.Started, "<sentShareName>", "<assetName>", RequestContent.Create(data));
+var operation = client.Create(WaitUntil.Completed, "<sentShareName>", "<assetName>", RequestContent.Create(data));
 
-BinaryData data = operation.WaitForCompletion();
+BinaryData data = operation.Value;
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -520,10 +520,9 @@ This sample shows how to call DeleteAsync with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new AssetsClient("<https://my-service.azure.com>", credential);
 
-var operation = await client.DeleteAsync(WaitUntil.Started, "<sentShareName>", "<assetName>");
+var operation = await client.DeleteAsync(WaitUntil.Completed, "<sentShareName>", "<assetName>");
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>
@@ -537,10 +536,9 @@ This sample shows how to call Delete with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new AssetsClient("<https://my-service.azure.com>", credential);
 
-var operation = client.Delete(WaitUntil.Started, "<sentShareName>", "<assetName>");
+var operation = client.Delete(WaitUntil.Completed, "<sentShareName>", "<assetName>");
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>

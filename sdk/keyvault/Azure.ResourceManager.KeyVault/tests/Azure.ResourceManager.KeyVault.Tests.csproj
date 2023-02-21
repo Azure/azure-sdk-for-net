@@ -5,6 +5,5 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
-    <PackageReference Include="Microsoft.Graph"  VersionOverride="4.28.0"/>
   </ItemGroup>
 </Project>

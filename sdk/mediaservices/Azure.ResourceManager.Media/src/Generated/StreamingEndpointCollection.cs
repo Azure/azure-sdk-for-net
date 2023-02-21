@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -55,8 +54,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Creates a streaming endpoint.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
-        /// Operation Id: StreamingEndpoints_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingEndpoints_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="streamingEndpointName"> The name of the streaming endpoint, maximum length is 24. </param>
@@ -89,8 +96,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Creates a streaming endpoint.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
-        /// Operation Id: StreamingEndpoints_Create
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingEndpoints_Create</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="streamingEndpointName"> The name of the streaming endpoint, maximum length is 24. </param>
@@ -123,8 +138,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Gets a streaming endpoint.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
-        /// Operation Id: StreamingEndpoints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingEndpoints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="streamingEndpointName"> The name of the streaming endpoint, maximum length is 24. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -152,8 +175,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Gets a streaming endpoint.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
-        /// Operation Id: StreamingEndpoints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingEndpoints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="streamingEndpointName"> The name of the streaming endpoint, maximum length is 24. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -181,92 +212,60 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Lists the streaming endpoints in the account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints
-        /// Operation Id: StreamingEndpoints_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingEndpoints_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StreamingEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamingEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StreamingEndpointResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _streamingEndpointRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingEndpointResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StreamingEndpointResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _streamingEndpointRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingEndpointResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingEndpointRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingEndpointRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingEndpointResource(Client, StreamingEndpointData.DeserializeStreamingEndpointData(e)), _streamingEndpointClientDiagnostics, Pipeline, "StreamingEndpointCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists the streaming endpoints in the account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints
-        /// Operation Id: StreamingEndpoints_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingEndpoints_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StreamingEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamingEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<StreamingEndpointResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _streamingEndpointRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingEndpointResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StreamingEndpointResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _streamingEndpointRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingEndpointResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingEndpointRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingEndpointRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingEndpointResource(Client, StreamingEndpointData.DeserializeStreamingEndpointData(e)), _streamingEndpointClientDiagnostics, Pipeline, "StreamingEndpointCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
-        /// Operation Id: StreamingEndpoints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingEndpoints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="streamingEndpointName"> The name of the streaming endpoint, maximum length is 24. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -292,8 +291,16 @@ namespace Azure.ResourceManager.Media
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}
-        /// Operation Id: StreamingEndpoints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/streamingEndpoints/{streamingEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingEndpoints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="streamingEndpointName"> The name of the streaming endpoint, maximum length is 24. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

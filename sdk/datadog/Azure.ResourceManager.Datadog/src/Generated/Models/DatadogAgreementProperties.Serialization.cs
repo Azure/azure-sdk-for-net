@@ -18,42 +18,42 @@ namespace Azure.ResourceManager.Datadog.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Publisher))
             {
-                writer.WritePropertyName("publisher");
+                writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
             if (Optional.IsDefined(Product))
             {
-                writer.WritePropertyName("product");
+                writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
             if (Optional.IsDefined(Plan))
             {
-                writer.WritePropertyName("plan");
+                writer.WritePropertyName("plan"u8);
                 writer.WriteStringValue(Plan);
             }
             if (Optional.IsDefined(LicenseTextLink))
             {
-                writer.WritePropertyName("licenseTextLink");
+                writer.WritePropertyName("licenseTextLink"u8);
                 writer.WriteStringValue(LicenseTextLink);
             }
             if (Optional.IsDefined(PrivacyPolicyLink))
             {
-                writer.WritePropertyName("privacyPolicyLink");
+                writer.WritePropertyName("privacyPolicyLink"u8);
                 writer.WriteStringValue(PrivacyPolicyLink);
             }
             if (Optional.IsDefined(RetrieveDatetime))
             {
-                writer.WritePropertyName("retrieveDatetime");
+                writer.WritePropertyName("retrieveDatetime"u8);
                 writer.WriteStringValue(RetrieveDatetime.Value, "O");
             }
             if (Optional.IsDefined(Signature))
             {
-                writer.WritePropertyName("signature");
+                writer.WritePropertyName("signature"u8);
                 writer.WriteStringValue(Signature);
             }
             if (Optional.IsDefined(Accepted))
             {
-                writer.WritePropertyName("accepted");
+                writer.WritePropertyName("accepted"u8);
                 writer.WriteBooleanValue(Accepted.Value);
             }
             writer.WriteEndObject();
@@ -71,32 +71,32 @@ namespace Azure.ResourceManager.Datadog.Models
             Optional<bool> accepted = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publisher"))
+                if (property.NameEquals("publisher"u8))
                 {
                     publisher = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("product"))
+                if (property.NameEquals("product"u8))
                 {
                     product = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("plan"))
+                if (property.NameEquals("plan"u8))
                 {
                     plan = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("licenseTextLink"))
+                if (property.NameEquals("licenseTextLink"u8))
                 {
                     licenseTextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privacyPolicyLink"))
+                if (property.NameEquals("privacyPolicyLink"u8))
                 {
                     privacyPolicyLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("retrieveDatetime"))
+                if (property.NameEquals("retrieveDatetime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.Datadog.Models
                     retrieveDatetime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("signature"))
+                if (property.NameEquals("signature"u8))
                 {
                     signature = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accepted"))
+                if (property.NameEquals("accepted"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

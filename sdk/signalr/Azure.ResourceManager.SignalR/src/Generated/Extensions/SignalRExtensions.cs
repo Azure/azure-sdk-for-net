@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.SignalR
 
         /// <summary>
         /// Checks that the resource name is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability
-        /// Operation Id: SignalR_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SignalR_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> the region. </param>
@@ -47,8 +55,16 @@ namespace Azure.ResourceManager.SignalR
 
         /// <summary>
         /// Checks that the resource name is valid and is not already in use.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability
-        /// Operation Id: SignalR_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SignalR_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> the region. </param>
@@ -64,8 +80,16 @@ namespace Azure.ResourceManager.SignalR
 
         /// <summary>
         /// Handles requests to list all resources in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/signalR
-        /// Operation Id: SignalR_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/signalR</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SignalR_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -77,8 +101,16 @@ namespace Azure.ResourceManager.SignalR
 
         /// <summary>
         /// Handles requests to list all resources in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/signalR
-        /// Operation Id: SignalR_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/signalR</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SignalR_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -90,8 +122,16 @@ namespace Azure.ResourceManager.SignalR
 
         /// <summary>
         /// List resource usage quotas by location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages
-        /// Operation Id: Usages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> the location like &quot;eastus&quot;. </param>
@@ -104,8 +144,16 @@ namespace Azure.ResourceManager.SignalR
 
         /// <summary>
         /// List resource usage quotas by location.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages
-        /// Operation Id: Usages_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> the location like &quot;eastus&quot;. </param>
@@ -135,8 +183,16 @@ namespace Azure.ResourceManager.SignalR
 
         /// <summary>
         /// Get the resource and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}
-        /// Operation Id: SignalR_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SignalR_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the resource. </param>
@@ -151,8 +207,16 @@ namespace Azure.ResourceManager.SignalR
 
         /// <summary>
         /// Get the resource and its properties.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}
-        /// Operation Id: SignalR_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SignalR_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the resource. </param>

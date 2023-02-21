@@ -5,10 +5,7 @@
 
 #nullable disable
 
-using System;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -65,310 +62,178 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets all the applications within a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Solutions/applications
-        /// Operation Id: Applications_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Solutions/applications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Applications_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ArmApplicationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ArmApplicationResource> GetArmApplicationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ArmApplicationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ArmApplicationApplicationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetArmApplications");
-                scope.Start();
-                try
-                {
-                    var response = await ArmApplicationApplicationsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArmApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ArmApplicationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ArmApplicationApplicationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetArmApplications");
-                scope.Start();
-                try
-                {
-                    var response = await ArmApplicationApplicationsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArmApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => ArmApplicationApplicationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ArmApplicationApplicationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArmApplicationResource(Client, ArmApplicationData.DeserializeArmApplicationData(e)), ArmApplicationApplicationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetArmApplications", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the applications within a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Solutions/applications
-        /// Operation Id: Applications_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Solutions/applications</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Applications_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ArmApplicationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ArmApplicationResource> GetArmApplications(CancellationToken cancellationToken = default)
         {
-            Page<ArmApplicationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ArmApplicationApplicationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetArmApplications");
-                scope.Start();
-                try
-                {
-                    var response = ArmApplicationApplicationsRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArmApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ArmApplicationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ArmApplicationApplicationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetArmApplications");
-                scope.Start();
-                try
-                {
-                    var response = ArmApplicationApplicationsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArmApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => ArmApplicationApplicationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ArmApplicationApplicationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArmApplicationResource(Client, ArmApplicationData.DeserializeArmApplicationData(e)), ArmApplicationApplicationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetArmApplications", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Retrieves all JIT requests within the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Solutions/jitRequests
-        /// Operation Id: jitRequests_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Solutions/jitRequests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>jitRequests_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="JitRequestResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<JitRequestResource> GetJitRequestDefinitionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<JitRequestResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = JitRequestClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetJitRequestDefinitions");
-                scope.Start();
-                try
-                {
-                    var response = await JitRequestRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JitRequestResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => JitRequestRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new JitRequestResource(Client, JitRequestData.DeserializeJitRequestData(e)), JitRequestClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetJitRequestDefinitions", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Retrieves all JIT requests within the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Solutions/jitRequests
-        /// Operation Id: jitRequests_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Solutions/jitRequests</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>jitRequests_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="JitRequestResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<JitRequestResource> GetJitRequestDefinitions(CancellationToken cancellationToken = default)
         {
-            Page<JitRequestResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = JitRequestClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetJitRequestDefinitions");
-                scope.Start();
-                try
-                {
-                    var response = JitRequestRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JitRequestResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => JitRequestRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new JitRequestResource(Client, JitRequestData.DeserializeJitRequestData(e)), JitRequestClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetJitRequestDefinitions", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Lists all deployment scripts for a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentScripts
-        /// Operation Id: DeploymentScripts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentScripts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentScripts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ArmDeploymentScriptResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ArmDeploymentScriptResource> GetArmDeploymentScriptsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ArmDeploymentScriptResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ArmDeploymentScriptDeploymentScriptsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetArmDeploymentScripts");
-                scope.Start();
-                try
-                {
-                    var response = await ArmDeploymentScriptDeploymentScriptsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArmDeploymentScriptResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ArmDeploymentScriptResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ArmDeploymentScriptDeploymentScriptsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetArmDeploymentScripts");
-                scope.Start();
-                try
-                {
-                    var response = await ArmDeploymentScriptDeploymentScriptsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArmDeploymentScriptResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => ArmDeploymentScriptDeploymentScriptsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ArmDeploymentScriptDeploymentScriptsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentScriptResource(Client, ArmDeploymentScriptData.DeserializeArmDeploymentScriptData(e)), ArmDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetArmDeploymentScripts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all deployment scripts for a given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentScripts
-        /// Operation Id: DeploymentScripts_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Resources/deploymentScripts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentScripts_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ArmDeploymentScriptResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ArmDeploymentScriptResource> GetArmDeploymentScripts(CancellationToken cancellationToken = default)
         {
-            Page<ArmDeploymentScriptResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ArmDeploymentScriptDeploymentScriptsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetArmDeploymentScripts");
-                scope.Start();
-                try
-                {
-                    var response = ArmDeploymentScriptDeploymentScriptsRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArmDeploymentScriptResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ArmDeploymentScriptResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ArmDeploymentScriptDeploymentScriptsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetArmDeploymentScripts");
-                scope.Start();
-                try
-                {
-                    var response = ArmDeploymentScriptDeploymentScriptsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArmDeploymentScriptResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => ArmDeploymentScriptDeploymentScriptsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ArmDeploymentScriptDeploymentScriptsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentScriptResource(Client, ArmDeploymentScriptData.DeserializeArmDeploymentScriptData(e)), ArmDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetArmDeploymentScripts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the Template Specs within the specified subscriptions.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/templateSpecs
-        /// Operation Id: TemplateSpecs_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Resources/templateSpecs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TemplateSpecs_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TemplateSpecResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TemplateSpecResource> GetTemplateSpecsAsync(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TemplateSpecResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = TemplateSpecClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplateSpecs");
-                scope.Start();
-                try
-                {
-                    var response = await TemplateSpecRestClient.ListBySubscriptionAsync(Id.SubscriptionId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpecResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<TemplateSpecResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = TemplateSpecClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplateSpecs");
-                scope.Start();
-                try
-                {
-                    var response = await TemplateSpecRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpecResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => TemplateSpecRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
+            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TemplateSpecRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TemplateSpecResource(Client, TemplateSpecData.DeserializeTemplateSpecData(e)), TemplateSpecClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetTemplateSpecs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the Template Specs within the specified subscriptions.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Resources/templateSpecs
-        /// Operation Id: TemplateSpecs_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Resources/templateSpecs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TemplateSpecs_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TemplateSpecResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TemplateSpecResource> GetTemplateSpecs(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            Page<TemplateSpecResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = TemplateSpecClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplateSpecs");
-                scope.Start();
-                try
-                {
-                    var response = TemplateSpecRestClient.ListBySubscription(Id.SubscriptionId, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpecResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<TemplateSpecResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = TemplateSpecClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetTemplateSpecs");
-                scope.Start();
-                try
-                {
-                    var response = TemplateSpecRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpecResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => TemplateSpecRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
+            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TemplateSpecRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TemplateSpecResource(Client, TemplateSpecData.DeserializeTemplateSpecData(e)), TemplateSpecClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetTemplateSpecs", "value", "nextLink", cancellationToken);
         }
     }
 }

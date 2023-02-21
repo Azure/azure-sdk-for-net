@@ -11,10 +11,7 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// A paginated list of ComponentContainer entities.
-    /// Serialized Name: ComponentContainerResourceArmPaginatedResult
-    /// </summary>
+    /// <summary> A paginated list of ComponentContainer entities. </summary>
     internal partial class ComponentContainerResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of ComponentContainerResourceArmPaginatedResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ComponentContainerResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink">
-        /// The link to the next page of ComponentContainer objects. If null, there are no additional pages.
-        /// Serialized Name: ComponentContainerResourceArmPaginatedResult.nextLink
-        /// </param>
-        /// <param name="value">
-        /// An array of objects of type ComponentContainer.
-        /// Serialized Name: ComponentContainerResourceArmPaginatedResult.value
-        /// </param>
+        /// <param name="nextLink"> The link to the next page of ComponentContainer objects. If null, there are no additional pages. </param>
+        /// <param name="value"> An array of objects of type ComponentContainer. </param>
         internal ComponentContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningComponentContainerData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary>
-        /// The link to the next page of ComponentContainer objects. If null, there are no additional pages.
-        /// Serialized Name: ComponentContainerResourceArmPaginatedResult.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of ComponentContainer objects. If null, there are no additional pages. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// An array of objects of type ComponentContainer.
-        /// Serialized Name: ComponentContainerResourceArmPaginatedResult.value
-        /// </summary>
+        /// <summary> An array of objects of type ComponentContainer. </summary>
         public IReadOnlyList<MachineLearningComponentContainerData> Value { get; }
     }
 }

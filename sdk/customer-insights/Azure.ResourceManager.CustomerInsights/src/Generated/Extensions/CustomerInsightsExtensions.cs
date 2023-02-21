@@ -29,8 +29,16 @@ namespace Azure.ResourceManager.CustomerInsights
 
         /// <summary>
         /// Gets all hubs in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CustomerInsights/hubs
-        /// Operation Id: Hubs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CustomerInsights/hubs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Hubs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -42,8 +50,16 @@ namespace Azure.ResourceManager.CustomerInsights
 
         /// <summary>
         /// Gets all hubs in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CustomerInsights/hubs
-        /// Operation Id: Hubs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CustomerInsights/hubs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Hubs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -72,8 +88,16 @@ namespace Azure.ResourceManager.CustomerInsights
 
         /// <summary>
         /// Gets information about the specified hub.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}
-        /// Operation Id: Hubs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Hubs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="hubName"> The name of the hub. </param>
@@ -88,8 +112,16 @@ namespace Azure.ResourceManager.CustomerInsights
 
         /// <summary>
         /// Gets information about the specified hub.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}
-        /// Operation Id: Hubs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Hubs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="hubName"> The name of the hub. </param>

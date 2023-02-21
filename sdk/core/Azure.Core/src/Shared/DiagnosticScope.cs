@@ -18,6 +18,8 @@ namespace Azure.Core.Pipeline
     internal readonly struct DiagnosticScope : IDisposable
     {
         private const string AzureSdkScopeLabel = "az.sdk.scope";
+        internal const string OpenTelemetrySchemaAttribute = "az.schema_url";
+        internal const string OpenTelemetrySchemaVersion = "https://opentelemetry.io/schemas/1.17.0";
         private static readonly object AzureSdkScopeValue = bool.TrueString;
         private static readonly ConcurrentDictionary<string, object?> ActivitySources = new();
 
@@ -72,6 +74,11 @@ namespace Azure.Core.Pipeline
         }
 
         public void AddAttribute(string name, string value)
+        {
+            _activityAdapter?.AddTag(name, value);
+        }
+
+        public void AddIntegerAttribute(string name, int value)
         {
             _activityAdapter?.AddTag(name, value);
         }
@@ -200,28 +207,9 @@ namespace Azure.Core.Pipeline
                 _activityName = activityName;
                 _kind = kind;
                 _diagnosticSourceArgs = diagnosticSourceArgs;
-
-                switch (_kind)
-                {
-                    case ActivityKind.Internal:
-                        AddTag("kind", "internal");
-                        break;
-                    case ActivityKind.Server:
-                        AddTag("kind", "server");
-                        break;
-                    case ActivityKind.Client:
-                        AddTag("kind", "client");
-                        break;
-                    case ActivityKind.Producer:
-                        AddTag("kind", "producer");
-                        break;
-                    case ActivityKind.Consumer:
-                        AddTag("kind", "consumer");
-                        break;
-                }
             }
 
-            public void AddTag(string name, string value)
+            public void AddTag(string name, object value)
             {
                 if (_currentActivity == null)
                 {
@@ -232,7 +220,7 @@ namespace Azure.Core.Pipeline
                 }
                 else
                 {
-                    _currentActivity?.AddTag(name, value!);
+                    _currentActivity?.AddObjectTag(name, value);
                 }
             }
 
@@ -292,12 +280,34 @@ namespace Azure.Core.Pipeline
             public Activity? Start()
             {
                 _currentActivity = StartActivitySourceActivity();
-
-                if (_currentActivity == null)
+                if (_currentActivity != null)
+                {
+                    _currentActivity.AddTag(OpenTelemetrySchemaAttribute, OpenTelemetrySchemaVersion);
+                }
+                else
                 {
                     if (!_diagnosticSource.IsEnabled(_activityName, _diagnosticSourceArgs))
                     {
                         return null;
+                    }
+
+                    switch (_kind)
+                    {
+                        case ActivityKind.Internal:
+                            AddTag("kind", "internal");
+                            break;
+                        case ActivityKind.Server:
+                            AddTag("kind", "server");
+                            break;
+                        case ActivityKind.Client:
+                            AddTag("kind", "client");
+                            break;
+                        case ActivityKind.Producer:
+                            AddTag("kind", "producer");
+                            break;
+                        case ActivityKind.Consumer:
+                            AddTag("kind", "consumer");
+                            break;
                     }
 
                     _currentActivity = new DiagnosticActivity(_activityName)
@@ -315,7 +325,7 @@ namespace Azure.Core.Pipeline
                     {
                         foreach (var tag in _tagCollection)
                         {
-                            _currentActivity.AddTag(tag.Key, (string)tag.Value);
+                            _currentActivity.AddObjectTag(tag.Key, tag.Value);
                         }
                     }
 
@@ -340,7 +350,8 @@ namespace Azure.Core.Pipeline
                     (int)_kind,
                     startTime: _startTime,
                     tags: _tagCollection,
-                    links: GetActivitySourceLinkCollection());
+                    links: GetActivitySourceLinkCollection(),
+                    parentId: _traceparent);
             }
 
             public void SetStartTime(DateTime startTime)
@@ -356,8 +367,11 @@ namespace Azure.Core.Pipeline
 
             public void SetTraceparent(string traceparent)
             {
+                if (_currentActivity != null)
+                {
+                    throw new InvalidOperationException("Traceparent can not be set after the activity is started.");
+                }
                 _traceparent = traceparent;
-                _currentActivity?.SetParentId(traceparent);
             }
 
             public void Dispose()
@@ -404,7 +418,7 @@ namespace Azure.Core.Pipeline
         private static Action<Activity, string?>? SetTraceStateStringMethod;
         private static Func<Activity, int>? GetIdFormatMethod;
         private static Action<Activity, string, object?>? ActivityAddTagMethod;
-        private static Func<object, string, int, ICollection<KeyValuePair<string, object>>?, IList?, DateTimeOffset, Activity?>? ActivitySourceStartActivityMethod;
+        private static Func<object, string, int, string?, ICollection<KeyValuePair<string, object>>?, IList?, DateTimeOffset, Activity?>? ActivitySourceStartActivityMethod;
         private static Func<object, bool>? ActivitySourceHasListenersMethod;
         private static Func<string, string?, ICollection<KeyValuePair<string, object>>?, object?>? CreateActivityLinkMethod;
         private static Func<ICollection<KeyValuePair<string,object>>?>? CreateTagsCollectionMethod;
@@ -557,7 +571,13 @@ namespace Azure.Core.Pipeline
 
                 if (method == null)
                 {
-                    ActivityAddTagMethod = (_, _, _) => { };
+                    // If the object overload is not available, fall back to the string overload. The assumption is that the object overload
+                    // not being available means that we cannot be using activity source, so the string cast should never fail because we will always
+                    // be passing a string value.
+                    ActivityAddTagMethod = (activityParameter, nameParameter, valueParameter) => activityParameter.AddTag(
+                        nameParameter,
+                        // null check is required to keep nullable reference compilation happy
+                        valueParameter == null ? null : (string)valueParameter);
                 }
                 else
                 {
@@ -667,7 +687,7 @@ namespace Azure.Core.Pipeline
             return ActivitySourceHasListenersMethod.Invoke(activitySource);
         }
 
-        public static Activity? ActivitySourceStartActivity(object? activitySource, string activityName, int kind, DateTimeOffset startTime, ICollection<KeyValuePair<string, object>>? tags, IList? links)
+        public static Activity? ActivitySourceStartActivity(object? activitySource, string activityName, int kind, DateTimeOffset startTime, ICollection<KeyValuePair<string, object>>? tags, IList? links, string? parentId)
         {
             if (activitySource == null)
             {
@@ -681,7 +701,7 @@ namespace Azure.Core.Pipeline
                     ActivityContextType == null ||
                     ActivityKindType == null)
                 {
-                    ActivitySourceStartActivityMethod = (_, _, _, _, _, _) => null;
+                    ActivitySourceStartActivityMethod = (_, _, _, _, _, _, _) => null;
                 }
                 else
                 {
@@ -689,7 +709,7 @@ namespace Azure.Core.Pipeline
                     {
                         typeof(string),
                         ActivityKindType,
-                        ActivityContextType,
+                        typeof(string),
                         typeof(IEnumerable<KeyValuePair<string, object>>),
                         typeof(IEnumerable<>).MakeGenericType(ActivityLinkType),
                         typeof(DateTimeOffset)
@@ -697,33 +717,34 @@ namespace Azure.Core.Pipeline
 
                     if (method == null)
                     {
-                        ActivitySourceStartActivityMethod = (_, _, _, _, _, _) => null;
+                        ActivitySourceStartActivityMethod = (_, _, _, _, _, _, _) => null;
                     }
                     else
                     {
                         var sourceParameter = Expression.Parameter(typeof(object));
                         var nameParameter = Expression.Parameter(typeof(string));
                         var kindParameter = Expression.Parameter(typeof(int));
+                        var parentIdParameter = Expression.Parameter(typeof(string));
                         var startTimeParameter = Expression.Parameter(typeof(DateTimeOffset));
                         var tagsParameter = Expression.Parameter(typeof(ICollection<KeyValuePair<string, object>>));
                         var linksParameter = Expression.Parameter(typeof(IList));
                         var methodParameter = method.GetParameters();
-                        ActivitySourceStartActivityMethod = Expression.Lambda<Func<object, string, int, ICollection<KeyValuePair<string, object>>?, IList?, DateTimeOffset, Activity?>>(
+                        ActivitySourceStartActivityMethod = Expression.Lambda<Func<object, string, int, string?, ICollection<KeyValuePair<string, object>>?, IList?, DateTimeOffset, Activity?>>(
                             Expression.Call(
                                 Expression.Convert(sourceParameter, method.DeclaringType!),
                                 method,
                                 nameParameter,
                                 Expression.Convert(kindParameter,  methodParameter[1].ParameterType),
-                                Expression.Default(ActivityContextType),
+                                Expression.Convert(parentIdParameter, methodParameter[2].ParameterType),
                                 Expression.Convert(tagsParameter,  methodParameter[3].ParameterType),
                                 Expression.Convert(linksParameter,  methodParameter[4].ParameterType),
                                 Expression.Convert(startTimeParameter,  methodParameter[5].ParameterType)),
-                            sourceParameter, nameParameter, kindParameter, tagsParameter, linksParameter,  startTimeParameter).Compile();
+                            sourceParameter, nameParameter, kindParameter, parentIdParameter, tagsParameter, linksParameter, startTimeParameter).Compile();
                     }
                 }
             }
 
-            return ActivitySourceStartActivityMethod.Invoke(activitySource, activityName, kind, tags, links, startTime);
+            return ActivitySourceStartActivityMethod.Invoke(activitySource, activityName, kind, parentId, tags, links, startTime);
         }
 
         public static object? CreateActivitySource(string name)

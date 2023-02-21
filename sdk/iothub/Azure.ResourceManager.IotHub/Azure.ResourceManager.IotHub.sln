@@ -7,6 +7,8 @@ Project("{62045487-58D4-44A2-8408-71E57ACB9D77}") = "Azure.ResourceManager.IotHu
 EndProject
 Project("{62045487-58D4-44A2-8408-71E57ACB9D77}") = "Azure.ResourceManager.IotHub.Tests", "tests\Azure.ResourceManager.IotHub.Tests.csproj", "{AA5EEF86-1C29-426F-BC98-43205BE56C9B}"
 EndProject
+Project("{62045487-58D4-44A2-8408-71E57ACB9D77}") = "Azure.ResourceManager.IotHub.Samples", "samples\Azure.ResourceManager.IotHub.Samples.csproj", "{12640742-9301-4642-B998-86C3EC567FE1}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

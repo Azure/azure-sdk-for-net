@@ -95,8 +95,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets an app&apos;s Virtual Network gateway.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
-        /// Operation Id: WebApps_GetVnetConnectionGateway
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetVnetConnectionGateway</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -110,8 +118,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets an app&apos;s Virtual Network gateway.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
-        /// Operation Id: WebApps_GetVnetConnectionGateway
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetVnetConnectionGateway</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -125,8 +141,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets a virtual network the app (or deployment slot) is connected to by name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
-        /// Operation Id: WebApps_GetVnetConnection
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetVnetConnection</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SiteVirtualNetworkConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -149,8 +173,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Gets a virtual network the app (or deployment slot) is connected to by name.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
-        /// Operation Id: WebApps_GetVnetConnection
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetVnetConnection</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteVirtualNetworkConnectionResource> Get(CancellationToken cancellationToken = default)
@@ -173,8 +205,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Deletes a connection from an app (or deployment slot to a named virtual network.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
-        /// Operation Id: WebApps_DeleteVnetConnection
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_DeleteVnetConnection</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -199,8 +239,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Deletes a connection from an app (or deployment slot to a named virtual network.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
-        /// Operation Id: WebApps_DeleteVnetConnection
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_DeleteVnetConnection</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -225,8 +273,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
-        /// Operation Id: WebApps_UpdateVnetConnection
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_UpdateVnetConnection</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -251,8 +307,16 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary>
         /// Description for Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH).
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
-        /// Operation Id: WebApps_UpdateVnetConnection
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_UpdateVnetConnection</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

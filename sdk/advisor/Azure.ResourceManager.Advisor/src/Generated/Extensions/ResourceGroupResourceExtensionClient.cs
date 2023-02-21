@@ -45,62 +45,58 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Retrieve Azure Advisor configurations.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations
-        /// Operation Id: Configurations_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConfigData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConfigData> GetConfigurationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ConfigData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConfigurationsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = await ConfigurationsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ConfigData.DeserializeConfigData, ConfigurationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Retrieve Azure Advisor configurations.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations
-        /// Operation Id: Configurations_ListByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_ListByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConfigData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConfigData> GetConfigurations(CancellationToken cancellationToken = default)
         {
-            Page<ConfigData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ConfigurationsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetConfigurations");
-                scope.Start();
-                try
-                {
-                    var response = ConfigurationsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ConfigData.DeserializeConfigData, ConfigurationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Create/Overwrite Azure Advisor configuration.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations/{configurationName}
-        /// Operation Id: Configurations_CreateInResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_CreateInResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
@@ -123,8 +119,16 @@ namespace Azure.ResourceManager.Advisor
 
         /// <summary>
         /// Create/Overwrite Azure Advisor configuration.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations/{configurationName}
-        /// Operation Id: Configurations_CreateInResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Configurations_CreateInResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>

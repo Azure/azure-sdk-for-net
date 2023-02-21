@@ -11,10 +11,7 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Paginated list of Machine Learning compute objects wrapped in ARM resource envelope.
-    /// Serialized Name: PaginatedComputeResourcesList
-    /// </summary>
+    /// <summary> Paginated list of Machine Learning compute objects wrapped in ARM resource envelope. </summary>
     internal partial class PaginatedComputeResourcesList
     {
         /// <summary> Initializes a new instance of PaginatedComputeResourcesList. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of PaginatedComputeResourcesList. </summary>
-        /// <param name="value">
-        /// An array of Machine Learning compute objects wrapped in ARM resource envelope.
-        /// Serialized Name: PaginatedComputeResourcesList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// A continuation link (absolute URI) to the next page of results in the list.
-        /// Serialized Name: PaginatedComputeResourcesList.nextLink
-        /// </param>
+        /// <param name="value"> An array of Machine Learning compute objects wrapped in ARM resource envelope. </param>
+        /// <param name="nextLink"> A continuation link (absolute URI) to the next page of results in the list. </param>
         internal PaginatedComputeResourcesList(IReadOnlyList<MachineLearningComputeData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// An array of Machine Learning compute objects wrapped in ARM resource envelope.
-        /// Serialized Name: PaginatedComputeResourcesList.value
-        /// </summary>
+        /// <summary> An array of Machine Learning compute objects wrapped in ARM resource envelope. </summary>
         public IReadOnlyList<MachineLearningComputeData> Value { get; }
-        /// <summary>
-        /// A continuation link (absolute URI) to the next page of results in the list.
-        /// Serialized Name: PaginatedComputeResourcesList.nextLink
-        /// </summary>
+        /// <summary> A continuation link (absolute URI) to the next page of results in the list. </summary>
         public string NextLink { get; }
     }
 }

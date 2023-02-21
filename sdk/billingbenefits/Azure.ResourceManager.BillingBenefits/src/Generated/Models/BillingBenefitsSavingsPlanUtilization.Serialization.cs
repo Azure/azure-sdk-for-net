@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             Optional<IReadOnlyList<BillingBenefitsSavingsPlanUtilizationAggregate>> aggregates = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("trend"))
+                if (property.NameEquals("trend"u8))
                 {
                     trend = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("aggregates"))
+                if (property.NameEquals("aggregates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

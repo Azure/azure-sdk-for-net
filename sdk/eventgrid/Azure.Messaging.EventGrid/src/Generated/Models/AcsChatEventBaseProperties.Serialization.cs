@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recipientCommunicationIdentifier"))
+                if (property.NameEquals("recipientCommunicationIdentifier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -29,12 +29,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     recipientCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("transactionId"))
+                if (property.NameEquals("transactionId"u8))
                 {
                     transactionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("threadId"))
+                if (property.NameEquals("threadId"u8))
                 {
                     threadId = property.Value.GetString();
                     continue;

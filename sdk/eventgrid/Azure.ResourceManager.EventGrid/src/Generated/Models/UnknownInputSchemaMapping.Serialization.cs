@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("inputSchemaMappingType");
+            writer.WritePropertyName("inputSchemaMappingType"u8);
             writer.WriteStringValue(InputSchemaMappingType.ToString());
             writer.WriteEndObject();
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             InputSchemaMappingType inputSchemaMappingType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("inputSchemaMappingType"))
+                if (property.NameEquals("inputSchemaMappingType"u8))
                 {
                     inputSchemaMappingType = new InputSchemaMappingType(property.Value.GetString());
                     continue;

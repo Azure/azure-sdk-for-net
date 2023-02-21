@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IReadOnlyList<string>> vpnServerConfigurationResourceIds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vpnServerConfigurationResourceIds"))
+                if (property.NameEquals("vpnServerConfigurationResourceIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

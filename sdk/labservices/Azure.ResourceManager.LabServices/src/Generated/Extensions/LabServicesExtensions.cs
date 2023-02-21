@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Returns a list of all lab plans within a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LabServices/labPlans
-        /// Operation Id: LabPlans_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LabServices/labPlans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LabPlans_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The filter to apply to the operation. </param>
@@ -44,8 +52,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Returns a list of all lab plans within a subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LabServices/labPlans
-        /// Operation Id: LabPlans_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LabServices/labPlans</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LabPlans_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The filter to apply to the operation. </param>
@@ -58,8 +74,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Returns a list of all labs for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LabServices/labs
-        /// Operation Id: Labs_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LabServices/labs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The filter to apply to the operation. </param>
@@ -72,8 +96,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Returns a list of all labs for a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LabServices/labs
-        /// Operation Id: Labs_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LabServices/labs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The filter to apply to the operation. </param>
@@ -86,8 +118,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Returns a list of Azure Lab Services resource SKUs.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LabServices/skus
-        /// Operation Id: Skus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LabServices/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The filter to apply to the operation. </param>
@@ -100,8 +140,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Returns a list of Azure Lab Services resource SKUs.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LabServices/skus
-        /// Operation Id: Skus_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LabServices/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> The filter to apply to the operation. </param>
@@ -114,8 +162,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Returns list of usage per SKU family for the specified subscription in the specified region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LabServices/locations/{location}/usages
-        /// Operation Id: Usages_ListByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LabServices/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_ListByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location name. </param>
@@ -129,8 +185,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Returns list of usage per SKU family for the specified subscription in the specified region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.LabServices/locations/{location}/usages
-        /// Operation Id: Usages_ListByLocation
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LabServices/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_ListByLocation</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location name. </param>
@@ -161,8 +225,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Retrieves the properties of a Lab Plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labPlans/{labPlanName}
-        /// Operation Id: LabPlans_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labPlans/{labPlanName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LabPlans_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="labPlanName"> The name of the lab plan that uniquely identifies it within containing resource group. Used in resource URIs and in UI. </param>
@@ -177,8 +249,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Retrieves the properties of a Lab Plan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labPlans/{labPlanName}
-        /// Operation Id: LabPlans_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labPlans/{labPlanName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LabPlans_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="labPlanName"> The name of the lab plan that uniquely identifies it within containing resource group. Used in resource URIs and in UI. </param>
@@ -201,8 +281,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Returns the properties of a lab resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}
-        /// Operation Id: Labs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="labName"> The name of the lab that uniquely identifies it within containing lab plan. Used in resource URIs. </param>
@@ -217,8 +305,16 @@ namespace Azure.ResourceManager.LabServices
 
         /// <summary>
         /// Returns the properties of a lab resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}
-        /// Operation Id: Labs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Labs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="labName"> The name of the lab that uniquely identifies it within containing lab plan. Used in resource URIs. </param>

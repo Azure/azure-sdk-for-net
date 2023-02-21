@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             PrivateEndpointConnections = new ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData>();
             AllowedFqdnList = new ChangeTrackingList<string>();
             Endpoints = new ChangeTrackingDictionary<string, string>();
+            CommitmentPlanAssociations = new ChangeTrackingList<CommitmentPlanAssociation>();
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesAccountProperties. </summary>
@@ -50,7 +51,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="restore"></param>
         /// <param name="deletedOn"> The deletion date, only available for deleted account. </param>
         /// <param name="scheduledPurgeDate"> The scheduled purge date, only available for deleted account. </param>
-        internal CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IReadOnlyList<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IList<ServiceAccountUserOwnedStorage> userOwnedStorage, IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate)
+        /// <param name="locations"> The multiregion settings of Cognitive Services account. </param>
+        /// <param name="commitmentPlanAssociations"> The commitment plan associations of Cognitive Services account. </param>
+        internal CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IReadOnlyList<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IList<ServiceAccountUserOwnedStorage> userOwnedStorage, IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate, CognitiveServicesMultiRegionSettings locations, IReadOnlyList<CommitmentPlanAssociation> commitmentPlanAssociations)
         {
             ProvisioningState = provisioningState;
             Endpoint = endpoint;
@@ -76,6 +79,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Restore = restore;
             DeletedOn = deletedOn;
             ScheduledPurgeDate = scheduledPurgeDate;
+            Locations = locations;
+            CommitmentPlanAssociations = commitmentPlanAssociations;
         }
 
         /// <summary> Gets the status of the cognitive services account at the time the operation was called. </summary>
@@ -126,5 +131,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public DateTimeOffset? DeletedOn { get; }
         /// <summary> The scheduled purge date, only available for deleted account. </summary>
         public string ScheduledPurgeDate { get; }
+        /// <summary> The multiregion settings of Cognitive Services account. </summary>
+        public CognitiveServicesMultiRegionSettings Locations { get; set; }
+        /// <summary> The commitment plan associations of Cognitive Services account. </summary>
+        public IReadOnlyList<CommitmentPlanAssociation> CommitmentPlanAssociations { get; }
     }
 }

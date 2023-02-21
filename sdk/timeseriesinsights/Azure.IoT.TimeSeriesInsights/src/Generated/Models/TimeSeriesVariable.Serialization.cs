@@ -15,11 +15,11 @@ namespace Azure.IoT.TimeSeriesInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("kind");
+            writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Filter))
             {
-                writer.WritePropertyName("filter");
+                writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
             }
             writer.WriteEndObject();

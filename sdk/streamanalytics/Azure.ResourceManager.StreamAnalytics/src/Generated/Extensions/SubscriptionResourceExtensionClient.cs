@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -54,150 +53,106 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         /// <summary>
         /// Lists all of the streaming jobs in the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/streamingjobs
-        /// Operation Id: StreamingJobs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/streamingjobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingJobs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than &apos;inputs&apos;, &apos;transformation&apos;, &apos;outputs&apos;, and &apos;functions&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StreamingJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamingJobResource> GetStreamingJobsAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<StreamingJobResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = StreamingJobClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStreamingJobs");
-                scope.Start();
-                try
-                {
-                    var response = await StreamingJobRestClient.ListAsync(Id.SubscriptionId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StreamingJobResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = StreamingJobClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStreamingJobs");
-                scope.Start();
-                try
-                {
-                    var response = await StreamingJobRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StreamingJobRestClient.CreateListRequest(Id.SubscriptionId, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StreamingJobRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingJobResource(Client, StreamingJobData.DeserializeStreamingJobData(e)), StreamingJobClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStreamingJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all of the streaming jobs in the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/streamingjobs
-        /// Operation Id: StreamingJobs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/streamingjobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingJobs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than &apos;inputs&apos;, &apos;transformation&apos;, &apos;outputs&apos;, and &apos;functions&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StreamingJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamingJobResource> GetStreamingJobs(string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<StreamingJobResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = StreamingJobClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStreamingJobs");
-                scope.Start();
-                try
-                {
-                    var response = StreamingJobRestClient.List(Id.SubscriptionId, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StreamingJobResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = StreamingJobClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStreamingJobs");
-                scope.Start();
-                try
-                {
-                    var response = StreamingJobRestClient.ListNextPage(nextLink, Id.SubscriptionId, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StreamingJobRestClient.CreateListRequest(Id.SubscriptionId, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StreamingJobRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingJobResource(Client, StreamingJobData.DeserializeStreamingJobData(e)), StreamingJobClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStreamingJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Retrieves the subscription&apos;s current quota information in a particular region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/quotas
-        /// Operation Id: Subscriptions_ListQuotas
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/quotas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscriptions_ListQuotas</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StreamAnalyticsSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamAnalyticsSubscriptionQuota> GetQuotasSubscriptionsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<StreamAnalyticsSubscriptionQuota>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQuotasSubscriptions");
-                scope.Start();
-                try
-                {
-                    var response = await SubscriptionsRestClient.ListQuotasAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SubscriptionsRestClient.CreateListQuotasRequest(Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, StreamAnalyticsSubscriptionQuota.DeserializeStreamAnalyticsSubscriptionQuota, SubscriptionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetQuotasSubscriptions", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Retrieves the subscription&apos;s current quota information in a particular region.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/quotas
-        /// Operation Id: Subscriptions_ListQuotas
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/quotas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscriptions_ListQuotas</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StreamAnalyticsSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamAnalyticsSubscriptionQuota> GetQuotasSubscriptions(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<StreamAnalyticsSubscriptionQuota> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetQuotasSubscriptions");
-                scope.Start();
-                try
-                {
-                    var response = SubscriptionsRestClient.ListQuotas(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SubscriptionsRestClient.CreateListQuotasRequest(Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, StreamAnalyticsSubscriptionQuota.DeserializeStreamAnalyticsSubscriptionQuota, SubscriptionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetQuotasSubscriptions", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Test the Stream Analytics query on a sample input.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/testQuery
-        /// Operation Id: Subscriptions_TestQuery
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/testQuery</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscriptions_TestQuery</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
@@ -224,8 +179,16 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         /// <summary>
         /// Test the Stream Analytics query on a sample input.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/testQuery
-        /// Operation Id: Subscriptions_TestQuery
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/testQuery</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscriptions_TestQuery</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
@@ -252,8 +215,16 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         /// <summary>
         /// Compile the Stream Analytics query.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/compileQuery
-        /// Operation Id: Subscriptions_CompileQuery
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/compileQuery</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscriptions_CompileQuery</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="compileQuery"> The query compilation object which defines the input, output, and transformation for the query compilation. </param>
@@ -276,8 +247,16 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         /// <summary>
         /// Compile the Stream Analytics query.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/compileQuery
-        /// Operation Id: Subscriptions_CompileQuery
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/compileQuery</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscriptions_CompileQuery</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="compileQuery"> The query compilation object which defines the input, output, and transformation for the query compilation. </param>
@@ -300,8 +279,16 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         /// <summary>
         /// Sample the Stream Analytics input data.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/sampleInput
-        /// Operation Id: Subscriptions_SampleInput
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/sampleInput</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscriptions_SampleInput</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
@@ -328,8 +315,16 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         /// <summary>
         /// Sample the Stream Analytics input data.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/sampleInput
-        /// Operation Id: Subscriptions_SampleInput
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/sampleInput</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscriptions_SampleInput</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
@@ -356,8 +351,16 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         /// <summary>
         /// Test the Stream Analytics input.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/testInput
-        /// Operation Id: Subscriptions_TestInput
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/testInput</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscriptions_TestInput</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
@@ -384,8 +387,16 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         /// <summary>
         /// Test the Stream Analytics input.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/testInput
-        /// Operation Id: Subscriptions_TestInput
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/testInput</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscriptions_TestInput</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
@@ -412,8 +423,16 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         /// <summary>
         /// Test the Stream Analytics output.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/testOutput
-        /// Operation Id: Subscriptions_TestOutput
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/testOutput</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscriptions_TestOutput</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
@@ -440,8 +459,16 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         /// <summary>
         /// Test the Stream Analytics output.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/testOutput
-        /// Operation Id: Subscriptions_TestOutput
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/locations/{location}/testOutput</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscriptions_TestOutput</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
@@ -468,86 +495,46 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         /// <summary>
         /// Lists all of the clusters in the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/clusters
-        /// Operation Id: Clusters_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/clusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StreamAnalyticsClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamAnalyticsClusterResource> GetStreamAnalyticsClustersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StreamAnalyticsClusterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = StreamAnalyticsClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStreamAnalyticsClusters");
-                scope.Start();
-                try
-                {
-                    var response = await StreamAnalyticsClusterClustersRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamAnalyticsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StreamAnalyticsClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = StreamAnalyticsClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStreamAnalyticsClusters");
-                scope.Start();
-                try
-                {
-                    var response = await StreamAnalyticsClusterClustersRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamAnalyticsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StreamAnalyticsClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StreamAnalyticsClusterClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsClusterResource(Client, StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(e)), StreamAnalyticsClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStreamAnalyticsClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all of the clusters in the given subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/clusters
-        /// Operation Id: Clusters_ListBySubscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StreamAnalytics/clusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_ListBySubscription</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StreamAnalyticsClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamAnalyticsClusterResource> GetStreamAnalyticsClusters(CancellationToken cancellationToken = default)
         {
-            Page<StreamAnalyticsClusterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = StreamAnalyticsClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStreamAnalyticsClusters");
-                scope.Start();
-                try
-                {
-                    var response = StreamAnalyticsClusterClustersRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamAnalyticsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StreamAnalyticsClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = StreamAnalyticsClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStreamAnalyticsClusters");
-                scope.Start();
-                try
-                {
-                    var response = StreamAnalyticsClusterClustersRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamAnalyticsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StreamAnalyticsClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StreamAnalyticsClusterClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsClusterResource(Client, StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(e)), StreamAnalyticsClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStreamAnalyticsClusters", "value", "nextLink", cancellationToken);
         }
     }
 }

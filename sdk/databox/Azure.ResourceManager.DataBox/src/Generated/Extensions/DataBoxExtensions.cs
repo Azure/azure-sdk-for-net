@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// Lists all the jobs available under the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/jobs
-        /// Operation Id: Jobs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/jobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of jobs, which provides the next page in the list of jobs. </param>
@@ -44,8 +52,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// Lists all the jobs available under the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/jobs
-        /// Operation Id: Jobs_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/jobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of jobs, which provides the next page in the list of jobs. </param>
@@ -58,8 +74,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// [DEPRECATED NOTICE: This operation will soon be removed]. This method validates the customer shipping address and provide alternate addresses if any.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateAddress
-        /// Operation Id: Service_ValidateAddress
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateAddress</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ValidateAddress</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
@@ -75,8 +99,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// [DEPRECATED NOTICE: This operation will soon be removed]. This method validates the customer shipping address and provide alternate addresses if any.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateAddress
-        /// Operation Id: Service_ValidateAddress
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateAddress</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ValidateAddress</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
@@ -92,8 +124,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This method does all necessary pre-job creation validation under subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateInputs
-        /// Operation Id: Service_ValidateInputs
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ValidateInputs</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
@@ -109,8 +149,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This method does all necessary pre-job creation validation under subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateInputs
-        /// Operation Id: Service_ValidateInputs
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ValidateInputs</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
@@ -126,8 +174,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This API provides configuration details specific to given region/location at Subscription level.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration
-        /// Operation Id: Service_RegionConfiguration
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_RegionConfiguration</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
@@ -143,8 +199,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This API provides configuration details specific to given region/location at Subscription level.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration
-        /// Operation Id: Service_RegionConfiguration
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_RegionConfiguration</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
@@ -177,8 +241,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// Gets information about the specified job.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}
-        /// Operation Id: Jobs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
@@ -194,8 +266,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// Gets information about the specified job.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}
-        /// Operation Id: Jobs_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
@@ -211,8 +291,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This method provides the list of available skus for the given subscription, resource group and location.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/availableSkus
-        /// Operation Id: Service_ListAvailableSkusByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/availableSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ListAvailableSkusByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
@@ -229,8 +317,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This method provides the list of available skus for the given subscription, resource group and location.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/availableSkus
-        /// Operation Id: Service_ListAvailableSkusByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/availableSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ListAvailableSkusByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
@@ -247,8 +343,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This method does all necessary pre-job creation validation under resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/validateInputs
-        /// Operation Id: Service_ValidateInputsByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ValidateInputsByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
@@ -264,8 +368,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This method does all necessary pre-job creation validation under resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/validateInputs
-        /// Operation Id: Service_ValidateInputsByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/validateInputs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_ValidateInputsByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
@@ -281,8 +393,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This API provides configuration details specific to given region/location at Resource group level.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration
-        /// Operation Id: Service_RegionConfigurationByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_RegionConfigurationByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>
@@ -298,8 +418,16 @@ namespace Azure.ResourceManager.DataBox
 
         /// <summary>
         /// This API provides configuration details specific to given region/location at Resource group level.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration
-        /// Operation Id: Service_RegionConfigurationByResourceGroup
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/locations/{location}/regionConfiguration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Service_RegionConfigurationByResourceGroup</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the resource. </param>

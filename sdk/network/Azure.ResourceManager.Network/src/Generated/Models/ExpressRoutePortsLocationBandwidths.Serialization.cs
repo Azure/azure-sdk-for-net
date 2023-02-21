@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Network.Models
             Optional<int> valueInGbps = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("offerName"))
+                if (property.NameEquals("offerName"u8))
                 {
                     offerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("valueInGbps"))
+                if (property.NameEquals("valueInGbps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateEndpointConnectionName))
             {
-                writer.WritePropertyName("privateEndpointConnectionName");
+                writer.WritePropertyName("privateEndpointConnectionName"u8);
                 writer.WriteStringValue(PrivateEndpointConnectionName);
             }
             if (Optional.IsDefined(QueryAccessMode))
             {
-                writer.WritePropertyName("queryAccessMode");
+                writer.WritePropertyName("queryAccessMode"u8);
                 writer.WriteStringValue(QueryAccessMode.Value.ToString());
             }
             if (Optional.IsDefined(IngestionAccessMode))
             {
-                writer.WritePropertyName("ingestionAccessMode");
+                writer.WritePropertyName("ingestionAccessMode"u8);
                 writer.WriteStringValue(IngestionAccessMode.Value.ToString());
             }
             writer.WriteEndObject();
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<MonitorPrivateLinkAccessMode> ingestionAccessMode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("privateEndpointConnectionName"))
+                if (property.NameEquals("privateEndpointConnectionName"u8))
                 {
                     privateEndpointConnectionName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("queryAccessMode"))
+                if (property.NameEquals("queryAccessMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     queryAccessMode = new MonitorPrivateLinkAccessMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ingestionAccessMode"))
+                if (property.NameEquals("ingestionAccessMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

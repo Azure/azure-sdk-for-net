@@ -17,47 +17,47 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualNetworkId))
             {
-                writer.WritePropertyName("virtualNetworkId");
+                writer.WritePropertyName("virtualNetworkId"u8);
                 writer.WriteStringValue(VirtualNetworkId);
             }
             if (Optional.IsDefined(SubnetId))
             {
-                writer.WritePropertyName("subnetId");
+                writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
             if (Optional.IsDefined(PublicIPAddressId))
             {
-                writer.WritePropertyName("publicIpAddressId");
+                writer.WritePropertyName("publicIpAddressId"u8);
                 writer.WriteStringValue(PublicIPAddressId);
             }
             if (Optional.IsDefined(PublicIPAddress))
             {
-                writer.WritePropertyName("publicIpAddress");
+                writer.WritePropertyName("publicIpAddress"u8);
                 writer.WriteStringValue(PublicIPAddress);
             }
             if (Optional.IsDefined(PrivateIPAddress))
             {
-                writer.WritePropertyName("privateIpAddress");
+                writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
             if (Optional.IsDefined(DnsName))
             {
-                writer.WritePropertyName("dnsName");
+                writer.WritePropertyName("dnsName"u8);
                 writer.WriteStringValue(DnsName);
             }
             if (Optional.IsDefined(RdpAuthority))
             {
-                writer.WritePropertyName("rdpAuthority");
+                writer.WritePropertyName("rdpAuthority"u8);
                 writer.WriteStringValue(RdpAuthority);
             }
             if (Optional.IsDefined(SshAuthority))
             {
-                writer.WritePropertyName("sshAuthority");
+                writer.WritePropertyName("sshAuthority"u8);
                 writer.WriteStringValue(SshAuthority);
             }
             if (Optional.IsDefined(SharedPublicIPAddressConfiguration))
             {
-                writer.WritePropertyName("sharedPublicIpAddressConfiguration");
+                writer.WritePropertyName("sharedPublicIpAddressConfiguration"u8);
                 writer.WriteObjectValue(SharedPublicIPAddressConfiguration);
             }
             writer.WriteEndObject();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<SharedPublicIPAddressConfiguration> sharedPublicIPAddressConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("virtualNetworkId"))
+                if (property.NameEquals("virtualNetworkId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     virtualNetworkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("subnetId"))
+                if (property.NameEquals("subnetId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("publicIpAddressId"))
+                if (property.NameEquals("publicIpAddressId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -106,32 +106,32 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     publicIPAddressId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("publicIpAddress"))
+                if (property.NameEquals("publicIpAddress"u8))
                 {
                     publicIPAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateIpAddress"))
+                if (property.NameEquals("privateIpAddress"u8))
                 {
                     privateIPAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dnsName"))
+                if (property.NameEquals("dnsName"u8))
                 {
                     dnsName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rdpAuthority"))
+                if (property.NameEquals("rdpAuthority"u8))
                 {
                     rdpAuthority = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sshAuthority"))
+                if (property.NameEquals("sshAuthority"u8))
                 {
                     sshAuthority = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sharedPublicIpAddressConfiguration"))
+                if (property.NameEquals("sharedPublicIpAddressConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -30,8 +30,16 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary>
         /// Checks whether the container registry name is available for use. The name must contain only alphanumeric characters, be globally unique, and between 5 and 50 characters in length.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerRegistry/checkNameAvailability
-        /// Operation Id: Registries_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerRegistry/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The object containing information for the availability request. </param>
@@ -46,8 +54,16 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary>
         /// Checks whether the container registry name is available for use. The name must contain only alphanumeric characters, be globally unique, and between 5 and 50 characters in length.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerRegistry/checkNameAvailability
-        /// Operation Id: Registries_CheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerRegistry/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The object containing information for the availability request. </param>
@@ -62,8 +78,16 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary>
         /// Lists all the container registries under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerRegistry/registries
-        /// Operation Id: Registries_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerRegistry/registries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -75,8 +99,16 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary>
         /// Lists all the container registries under the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerRegistry/registries
-        /// Operation Id: Registries_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerRegistry/registries</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -105,8 +137,16 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary>
         /// Gets the properties of the specified container registry.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}
-        /// Operation Id: Registries_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="registryName"> The name of the container registry. </param>
@@ -121,8 +161,16 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary>
         /// Gets the properties of the specified container registry.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}
-        /// Operation Id: Registries_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Registries_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="registryName"> The name of the container registry. </param>
@@ -134,44 +182,6 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             return resourceGroupResource.GetContainerRegistries().Get(registryName, cancellationToken);
         }
-
-        #region ConnectedRegistryResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ConnectedRegistryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConnectedRegistryResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedRegistryResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConnectedRegistryResource" /> object. </returns>
-        public static ConnectedRegistryResource GetConnectedRegistryResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ConnectedRegistryResource.ValidateResourceId(id);
-                return new ConnectedRegistryResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ExportPipelineResource
-        /// <summary>
-        /// Gets an object representing an <see cref="ExportPipelineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExportPipelineResource.CreateResourceIdentifier" /> to create an <see cref="ExportPipelineResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExportPipelineResource" /> object. </returns>
-        public static ExportPipelineResource GetExportPipelineResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ExportPipelineResource.ValidateResourceId(id);
-                return new ExportPipelineResource(client, id);
-            }
-            );
-        }
-        #endregion
 
         #region ContainerRegistryResource
         /// <summary>
@@ -206,44 +216,6 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 ContainerRegistryPrivateLinkResource.ValidateResourceId(id);
                 return new ContainerRegistryPrivateLinkResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ImportPipelineResource
-        /// <summary>
-        /// Gets an object representing an <see cref="ImportPipelineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ImportPipelineResource.CreateResourceIdentifier" /> to create an <see cref="ImportPipelineResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ImportPipelineResource" /> object. </returns>
-        public static ImportPipelineResource GetImportPipelineResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ImportPipelineResource.ValidateResourceId(id);
-                return new ImportPipelineResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ContainerRegistryPipelineRunResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryPipelineRunResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerRegistryPipelineRunResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryPipelineRunResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryPipelineRunResource" /> object. </returns>
-        public static ContainerRegistryPipelineRunResource GetContainerRegistryPipelineRunResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ContainerRegistryPipelineRunResource.ValidateResourceId(id);
-                return new ContainerRegistryPipelineRunResource(client, id);
             }
             );
         }

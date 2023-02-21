@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyDictionary<string, int>> categorizedResourceCounts = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceCount"))
+                if (property.NameEquals("resourceCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     resourceCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("issues"))
+                if (property.NameEquals("issues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     issues = array;
                     continue;
                 }
-                if (property.NameEquals("categorizedResourceCounts"))
+                if (property.NameEquals("categorizedResourceCounts"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

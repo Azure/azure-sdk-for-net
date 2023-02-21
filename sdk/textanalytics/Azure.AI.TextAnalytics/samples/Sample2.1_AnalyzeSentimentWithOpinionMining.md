@@ -7,55 +7,56 @@ For example, if a customer leaves feedback about a hotel such as "The room was g
 For the purpose of the sample, we will be the administrator of a hotel and we've set a system to look at the online reviews customers are posting to identify the major complaints about our hotel.
 In order to do so, we will use the Sentiment Analysis feature of the Text Analytics client library.
 
-## Creating a `TextAnalyticsClient`
+## Create a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient`, you need a Cognitive Services or Language service endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Language service API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client. See [README][README] for links and instructions.
-
-You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
+To create a new `TextAnalyticsClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create simply with an API key.
 
 ```C# Snippet:CreateTextAnalyticsClient
-string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey));
+Uri endpoint = new("<endpoint>");
+AzureKeyCredential credential = new("<apiKey>");
+TextAnalyticsClient client = new(endpoint, credential);
 ```
+
+The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
 ## Identify complaints
 
 To get a deeper analysis into which are the targets that people considered good or bad, we will need to set the `IncludeOpinionMining` type into the `AnalyzeSentimentOptions`.
 
-```C# Snippet:TAAnalyzeSentimentWithOpinionMining
-string reviewA = @"The food and service were unacceptable, but the concierge were nice.
-                 After talking to them about the quality of the food and the process
-                 to get room service they refunded the money we spent at the restaurant
-                 and gave us a voucher for nearby restaurants.";
+```C# Snippet:Sample2_AnalyzeSentimentWithOpinionMining
+string reviewA =
+    "The food and service were unacceptable, but the concierge were nice. After talking to them about the"
+    + " quality of the food and the process to get room service they refunded the money we spent at the"
+    + " restaurant and gave us a voucher for nearby restaurants.";
 
-string reviewB = @"The rooms were beautiful. The AC was good and quiet, which was key for
-                us as outside it was 100F and our baby was getting uncomfortable because of the heat.
-                The breakfast was good too with good options and good servicing times.
-                The thing we didn't like was that the toilet in our bathroom was smelly.
-                It could have been that the toilet was not cleaned before we arrived.
-                Either way it was very uncomfortable.
-                Once we notified the staff, they came and cleaned it and left candles.";
+string reviewB =
+    "The rooms were beautiful. The AC was good and quiet, which was key for us as outside it was 100F and"
+    + "our baby was getting uncomfortable because of the heat. The breakfast was good too with good"
+    + " options and good servicing times. The thing we didn't like was that the toilet in our bathroom was"
+    + "smelly. It could have been that the toilet was not cleaned before we arrived. Either way it was"
+    + "very uncomfortable. Once we notified the staff, they came and cleaned it and left candles.";
 
-string reviewC = @"Nice rooms! I had a great unobstructed view of the Microsoft campus
-                but bathrooms were old and the toilet was dirty when we arrived. 
-                It was close to bus stops and groceries stores. If you want to be close to
-                campus I will recommend it, otherwise, might be better to stay in a cleaner one.";
+string reviewC =
+    "Nice rooms! I had a great unobstructed view of the Microsoft campus but bathrooms were old and the"
+    + "toilet was dirty when we arrived. It was close to bus stops and groceries stores. If you want to"
+    + "be close to campus I will recommend it, otherwise, might be better to stay in a cleaner one.";
 
-var documents = new List<string>
+// Prepare the input of the text analysis operation. You can add multiple documents to this list and
+// perform the same operation on all of them simultaneously.
+List<string> batchedDocuments = new()
 {
     reviewA,
     reviewB,
     reviewC
 };
 
-var options = new AnalyzeSentimentOptions() { IncludeOpinionMining = true };
-Response<AnalyzeSentimentResultCollection> response = client.AnalyzeSentimentBatch(documents, options: options);
+AnalyzeSentimentOptions options = new() { IncludeOpinionMining = true };
+Response<AnalyzeSentimentResultCollection> response = client.AnalyzeSentimentBatch(batchedDocuments, options: options);
 AnalyzeSentimentResultCollection reviews = response.Value;
 
 Dictionary<string, int> complaints = GetComplaints(reviews);
 
-var negativeAspect = complaints.Aggregate((l, r) => l.Value > r.Value ? l : r).Key;
+string negativeAspect = complaints.Aggregate((l, r) => l.Value > r.Value ? l : r).Key;
 Console.WriteLine($"Alert! major complaint is *{negativeAspect}*");
 Console.WriteLine();
 Console.WriteLine("---All complaints:");
@@ -66,7 +67,8 @@ foreach (KeyValuePair<string, int> complaint in complaints)
 ```
 
 Output:
-```
+
+```text
 Alert! major complaint is *toilet*
 
 ---All complaints:
@@ -76,12 +78,13 @@ Alert! major complaint is *toilet*
 ```
 
 ## Define method `GetComplaints`
+
 Implementation for calculating complaints:
 
-```C# Snippet:TAGetComplaints
+```C# Snippet:Sample2_AnalyzeSentimentWithOpinionMining_GetComplaints
 private Dictionary<string, int> GetComplaints(AnalyzeSentimentResultCollection reviews)
 {
-    var complaints = new Dictionary<string, int>();
+    Dictionary<string, int> complaints = new();
     foreach (AnalyzeSentimentResult review in reviews)
     {
         foreach (SentenceSentiment sentence in review.DocumentSentiment.Sentences)
@@ -90,7 +93,7 @@ private Dictionary<string, int> GetComplaints(AnalyzeSentimentResultCollection r
             {
                 if (opinion.Target.Sentiment == TextSentiment.Negative)
                 {
-                    complaints.TryGetValue(opinion.Target.Text, out var value);
+                    complaints.TryGetValue(opinion.Target.Text, out int value);
                     complaints[opinion.Target.Text] = value + 1;
                 }
             }

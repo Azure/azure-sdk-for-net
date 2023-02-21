@@ -45,8 +45,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Check whether a bot name is available.
-        /// Request Path: /providers/Microsoft.BotService/checkNameAvailability
-        /// Operation Id: Bots_GetCheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BotService/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_GetCheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="checkNameAvailabilityRequestBody"> The request body parameters to provide for the check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -68,8 +76,16 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Check whether a bot name is available.
-        /// Request Path: /providers/Microsoft.BotService/checkNameAvailability
-        /// Operation Id: Bots_GetCheckNameAvailability
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BotService/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_GetCheckNameAvailability</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="checkNameAvailabilityRequestBody"> The request body parameters to provide for the check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

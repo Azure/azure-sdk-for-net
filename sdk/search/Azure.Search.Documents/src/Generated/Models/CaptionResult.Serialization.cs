@@ -21,12 +21,12 @@ namespace Azure.Search.Documents.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("text"))
+                if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("highlights"))
+                if (property.NameEquals("highlights"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

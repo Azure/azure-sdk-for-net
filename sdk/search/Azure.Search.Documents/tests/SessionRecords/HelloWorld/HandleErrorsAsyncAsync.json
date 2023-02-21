@@ -6,27 +6,27 @@
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-c140ad14e274d6a45d41adc08cf7e152-ed1cd762e3edd9b3-00",
-        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "22254b229b9fdd40bed38648cf603c8a",
+        "traceparent": "00-a31cf205eced004fabab3008cd661a77-4e89725132380143-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230107.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "201403a5e36fcb50b578f82ec7f761f8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "22254b22-9b9f-dd40-bed3-8648cf603c8a",
+        "client-request-id": "201403a5-e36f-cb50-b578-f82ec7f761f8",
         "Content-Language": "en",
         "Content-Length": "110",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 06 Jan 2023 20:48:31 GMT",
-        "elapsed-time": "8",
+        "Date": "Mon, 09 Jan 2023 18:03:48 GMT",
+        "elapsed-time": "7",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "22254b22-9b9f-dd40-bed3-8648cf603c8a",
+        "request-id": "201403a5-e36f-cb50-b578-f82ec7f761f8",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "22254b22-9b9f-dd40-bed3-8648cf603c8a"
+        "x-ms-client-request-id": "201403a5-e36f-cb50-b578-f82ec7f761f8"
       },
       "ResponseBody": {
         "error": {
@@ -37,8 +37,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "386709467",
-    "SearchIndexName": "urwsditp",
+    "RandomSeed": "50600248",
+    "SearchIndexName": "dlnpqugf",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
     "SEARCH_ENDPOINT_SUFFIX": "search.windows.net",
     "SEARCH_SERVICE_NAME": "azs-net-shrejaazsearch"

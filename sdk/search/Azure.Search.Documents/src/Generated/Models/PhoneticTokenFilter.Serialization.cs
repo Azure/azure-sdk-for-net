@@ -17,17 +17,17 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Encoder))
             {
-                writer.WritePropertyName("encoder");
+                writer.WritePropertyName("encoder"u8);
                 writer.WriteStringValue(Encoder.Value.ToSerialString());
             }
             if (Optional.IsDefined(ReplaceOriginalTokens))
             {
-                writer.WritePropertyName("replace");
+                writer.WritePropertyName("replace"u8);
                 writer.WriteBooleanValue(ReplaceOriginalTokens.Value);
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WriteEndObject();
         }
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("encoder"))
+                if (property.NameEquals("encoder"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -50,7 +50,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     encoder = property.Value.GetString().ToPhoneticEncoder();
                     continue;
                 }
-                if (property.NameEquals("replace"))
+                if (property.NameEquals("replace"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -60,12 +60,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     replace = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
