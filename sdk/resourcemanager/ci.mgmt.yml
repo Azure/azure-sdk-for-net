@@ -159,6 +159,7 @@ trigger:
     - sdk/support/Azure.ResourceManager.Support
     - sdk/synapse/Azure.ResourceManager.Synapse
     - sdk/trafficmanager/Azure.ResourceManager.TrafficManager
+    - sdk/voiceservices/Azure.ResourceManager.VoiceServices
     - sdk/webpubsub/Azure.ResourceManager.WebPubSub
     - sdk/websites/Azure.ResourceManager.AppService
     - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
@@ -324,6 +325,7 @@ pr:
     - sdk/support/Azure.ResourceManager.Support
     - sdk/synapse/Azure.ResourceManager.Synapse
     - sdk/trafficmanager/Azure.ResourceManager.TrafficManager
+    - sdk/voiceservices/Azure.ResourceManager.VoiceServices
     - sdk/webpubsub/Azure.ResourceManager.WebPubSub
     - sdk/websites/Azure.ResourceManager.AppService
     - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
