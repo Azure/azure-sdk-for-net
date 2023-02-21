@@ -45,7 +45,7 @@ EmailClient client = new EmailClient(new Uri(endpoint), tokenCredential);
 ## Examples
 ### Send a simple email message with automatic polling for status
 To send an email message, call the simple overload of `Send` or `SendAsync` function from the `EmailClient`.
-```C# Snippet:Azure_Communication_Email_Send_Simple
+```C# Snippet:Azure_Communication_Email_Send_Simple_AutoPolling
 try
 {
     /// Send the email message
@@ -75,7 +75,7 @@ catch (ArgumentException ex)
 
 ### Send a simple email message with manual polling for status
 To send an email message, call the simple overload of `Send` or `SendAsync` function from the `EmailClient`.
-```C# Snippet:Azure_Communication_Email_Send_Simple
+```C# Snippet:Azure_Communication_Email_Send_Simple_ManualPolling
 try
 {
     /// Send the email message with WaitUntil.Started
@@ -130,8 +130,8 @@ var emailContent = new EmailContent("This is the subject")
     }
     
 var emailMessage = new EmailMessage(
-    from: "sender@contoso.com",
-    to: "cusomter@domain.com",
+    fromAddress: "sender@contoso.com",
+    toAddress: "cusomter@domain.com",
     content: emailContent);
 
 try
@@ -238,8 +238,8 @@ var emailContent = new EmailContent("This is the subject")
     
 /// Create an email message quickly using a single to recipient.
 var emailMessage = new EmailMessage(
-    from: "sender@contoso.com",
-    to: "customer@domain.com",
+    fromAddress: "sender@contoso.com",
+    toAddress: "customer@domain.com",
     emailContent);
 
 /// Create Email attachments
