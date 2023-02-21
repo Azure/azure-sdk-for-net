@@ -34,7 +34,7 @@ namespace Azure.Identity.Tests
                 Transport = config.Transport,
                 DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false,
                 TokenCachePersistenceOptions = tokenCacheOptions,
-                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants,
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 AuthenticationRecord = new AuthenticationRecord(ExpectedUsername, "login.windows.net", $"{ObjectId}.{resolvedTenantId}", resolvedTenantId, ClientId),
             };
             var pipeline = CredentialPipeline.GetInstance(options);

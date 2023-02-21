@@ -48,6 +48,7 @@
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\*.cs" LinkBase="Shared\ClientsideEncryption" />
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\Models\*.cs" LinkBase="Shared\ClientsideEncryption\Models" />
     <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)CompatSwitches.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Errors.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Errors.Clients.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)GeoRedundantReadPolicy.cs" LinkBase="Shared" />

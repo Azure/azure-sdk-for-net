@@ -207,25 +207,6 @@ namespace Azure.Core.Pipeline
                 _activityName = activityName;
                 _kind = kind;
                 _diagnosticSourceArgs = diagnosticSourceArgs;
-
-                switch (_kind)
-                {
-                    case ActivityKind.Internal:
-                        AddTag("kind", "internal");
-                        break;
-                    case ActivityKind.Server:
-                        AddTag("kind", "server");
-                        break;
-                    case ActivityKind.Client:
-                        AddTag("kind", "client");
-                        break;
-                    case ActivityKind.Producer:
-                        AddTag("kind", "producer");
-                        break;
-                    case ActivityKind.Consumer:
-                        AddTag("kind", "consumer");
-                        break;
-                }
             }
 
             public void AddTag(string name, object value)
@@ -308,6 +289,25 @@ namespace Azure.Core.Pipeline
                     if (!_diagnosticSource.IsEnabled(_activityName, _diagnosticSourceArgs))
                     {
                         return null;
+                    }
+
+                    switch (_kind)
+                    {
+                        case ActivityKind.Internal:
+                            AddTag("kind", "internal");
+                            break;
+                        case ActivityKind.Server:
+                            AddTag("kind", "server");
+                            break;
+                        case ActivityKind.Client:
+                            AddTag("kind", "client");
+                            break;
+                        case ActivityKind.Producer:
+                            AddTag("kind", "producer");
+                            break;
+                        case ActivityKind.Consumer:
+                            AddTag("kind", "consumer");
+                            break;
                     }
 
                     _currentActivity = new DiagnosticActivity(_activityName)

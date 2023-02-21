@@ -63,7 +63,7 @@ namespace Azure.Identity.Tests
             var options = new DeviceCodeCredentialOptions
             {
                 Transport = config.Transport,
-                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants,
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false
             };
             var pipeline = CredentialPipeline.GetInstance(options);
