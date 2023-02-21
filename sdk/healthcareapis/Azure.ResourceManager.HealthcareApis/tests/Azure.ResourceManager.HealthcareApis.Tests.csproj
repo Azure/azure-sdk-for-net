@@ -1,5 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.EventHubs" VersionOverride ="1.0.0"/>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.HealthcareApis.csproj" />
   </ItemGroup>
 </Project>

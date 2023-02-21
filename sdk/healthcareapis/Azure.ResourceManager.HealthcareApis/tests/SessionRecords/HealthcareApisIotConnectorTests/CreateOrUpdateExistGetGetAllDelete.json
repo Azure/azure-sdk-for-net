@@ -1,0 +1,2126 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-515585fa1858764d9e6c31f435f1f340-51b4f4f8e89a2924-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "454ece28673420be7361be7717dd9a5b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "748",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:23:11 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b0ba32e5-53d8-4bfe-a37a-1318ea143a07",
+        "x-ms-ratelimit-remaining-subscription-reads": "11965",
+        "x-ms-request-id": "b0ba32e5-53d8-4bfe-a37a-1318ea143a07",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062312Z:b0ba32e5-53d8-4bfe-a37a-1318ea143a07"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "TagKey-9823": "TagValue-1254",
+          "TagKey-3481": "TagValue-320",
+          "TagKey-4926": "TagValue-1187",
+          "TagKey-751": "TagValue-3921",
+          "TagKey-1866": "TagValue-8559",
+          "TagKey-3094": "TagValue-9190",
+          "TagKey-2449": "TagValue-9",
+          "TagKey-8379": "TagValue-164",
+          "TagKey-7470": "TagValue-2205",
+          "TagKey-4236": "TagValue-3698",
+          "TagKey-5316": "TagValue-2725"
+        },
+        "subscriptionId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": ".NET Mgmt SDK Test with TTL = 1 Day",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/HealthCareApisRG3016?api-version=**",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "21",
+        "Content-Type": "application/json",
+        "traceparent": "00-a1ce20c15495347d91f323d7883e6090-e6d8de94b315cd61-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4a8e11f347feaf685e3ecab3b79a49c5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "237",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:23:14 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9f599867-8f90-4a1a-b99b-df763e118694",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "9f599867-8f90-4a1a-b99b-df763e118694",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062315Z:9f599867-8f90-4a1a-b99b-df763e118694"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016",
+        "name": "HealthCareApisRG3016",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.HealthcareApis/workspaces/workspace8520?api-version=2022-06-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "31",
+        "Content-Type": "application/json",
+        "traceparent": "00-dd6e26e6d85bb2303f027a3c2258d4d7-ce8800442465c70d-00",
+        "User-Agent": "azsdk-net-ResourceManager.HealthcareApis/1.1.0-alpha.20230221.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "88ba073340d914e78e3a03f94c7f1b06",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "eastus"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "415",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:23:20 GMT",
+        "ETag": "\u0022ca07be52-0000-0400-0000-63f463570000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4fed97d5-6293-4b7b-9f08-621e68357e38",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "1011dbb5-2cc7-427b-a23f-5bb2517e9999",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062320Z:4fed97d5-6293-4b7b-9f08-621e68357e38",
+        "X-Request-ID": "dd6e26e6d85bb2303f027a3c2258d4d7"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.HealthcareApis/workspaces/workspace8520",
+        "name": "workspace8520",
+        "type": "Microsoft.HealthcareApis/workspaces",
+        "etag": "\u0022ca07be52-0000-0400-0000-63f463570000\u0022",
+        "location": "eastus",
+        "tags": {},
+        "properties": {
+          "privateEndpointConnections": [],
+          "publicNetworkAccess": "Enabled",
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.EventHub/namespaces/azmedtechspaces6778?api-version=2021-11-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "47",
+        "Content-Type": "application/json",
+        "traceparent": "00-5752a8d708895e5d33f51df7f45a3502-2279ce2ca3415b5a-00",
+        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.0.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "33a192a9d11935a6700d65b612bfafac",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "eastus",
+        "properties": {}
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "729",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:23:26 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "33a192a9d11935a6700d65b612bfafac",
+        "x-ms-correlation-request-id": "8b21bf4d-4af8-4e72-80a2-9c2ef1468017",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "49",
+        "x-ms-request-id": "5cb0179f-937c-4c0e-ae24-4ccd06973249_M4CH3_M4CH3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062326Z:8b21bf4d-4af8-4e72-80a2-9c2ef1468017"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.EventHub/namespaces/azmedtechspaces6778",
+        "name": "azmedtechspaces6778",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c:azmedtechspaces6778",
+          "createdAt": "2023-02-21T06:23:24.873Z",
+          "updatedAt": "2023-02-21T06:23:24.873Z",
+          "serviceBusEndpoint": "https://azmedtechspaces6778.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.EventHub/namespaces/azmedtechspaces6778?api-version=2021-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5752a8d708895e5d33f51df7f45a3502-c5bdf4cdf94d98ba-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "88d56f478a65fef398fbb97980dfc268",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "729",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:23:26 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "88d56f478a65fef398fbb97980dfc268",
+        "x-ms-correlation-request-id": "c2bb9002-6c6f-4ada-9ead-92e900708657",
+        "x-ms-ratelimit-remaining-subscription-reads": "11964",
+        "x-ms-request-id": "c137f38e-197c-4901-b7c7-77fa8537bedf_M4CH3_M4CH3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062326Z:c2bb9002-6c6f-4ada-9ead-92e900708657"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.EventHub/namespaces/azmedtechspaces6778",
+        "name": "azmedtechspaces6778",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c:azmedtechspaces6778",
+          "createdAt": "2023-02-21T06:23:24.873Z",
+          "updatedAt": "2023-02-21T06:23:24.873Z",
+          "serviceBusEndpoint": "https://azmedtechspaces6778.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.EventHub/namespaces/azmedtechspaces6778?api-version=2021-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5752a8d708895e5d33f51df7f45a3502-23c14daad9a145ee-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3ac3c0442cfca0d312cd4015b9b38e9e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "729",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:23:28 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3ac3c0442cfca0d312cd4015b9b38e9e",
+        "x-ms-correlation-request-id": "b5987ce6-4374-4301-8b3c-b250b6572ba0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11963",
+        "x-ms-request-id": "80748b9a-436b-4072-81ef-19d3cef57455_M4CH3_M4CH3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062328Z:b5987ce6-4374-4301-8b3c-b250b6572ba0"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.EventHub/namespaces/azmedtechspaces6778",
+        "name": "azmedtechspaces6778",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c:azmedtechspaces6778",
+          "createdAt": "2023-02-21T06:23:24.873Z",
+          "updatedAt": "2023-02-21T06:23:24.873Z",
+          "serviceBusEndpoint": "https://azmedtechspaces6778.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.EventHub/namespaces/azmedtechspaces6778?api-version=2021-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5752a8d708895e5d33f51df7f45a3502-e6ebbc047e399cc9-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a36ed79a27ea6d47997bed0d4f065412",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "729",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:23:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a36ed79a27ea6d47997bed0d4f065412",
+        "x-ms-correlation-request-id": "bbc77680-cce2-45f5-baba-53b00410dc81",
+        "x-ms-ratelimit-remaining-subscription-reads": "11962",
+        "x-ms-request-id": "347df75b-3e60-4ec4-9eb9-1eefac8add4e_M4CH3_M4CH3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062330Z:bbc77680-cce2-45f5-baba-53b00410dc81"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.EventHub/namespaces/azmedtechspaces6778",
+        "name": "azmedtechspaces6778",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c:azmedtechspaces6778",
+          "createdAt": "2023-02-21T06:23:24.873Z",
+          "updatedAt": "2023-02-21T06:23:24.873Z",
+          "serviceBusEndpoint": "https://azmedtechspaces6778.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.EventHub/namespaces/azmedtechspaces6778?api-version=2021-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5752a8d708895e5d33f51df7f45a3502-3b6580112eb3bfa3-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e6afae42380e1a919b3475984add44e5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "729",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:23:31 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e6afae42380e1a919b3475984add44e5",
+        "x-ms-correlation-request-id": "359c93ed-a1ad-43db-973b-12d415e987d4",
+        "x-ms-ratelimit-remaining-subscription-reads": "11961",
+        "x-ms-request-id": "fcd974ad-c77a-4d3e-a930-762fc2ec51e2_M4CH3_M4CH3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062331Z:359c93ed-a1ad-43db-973b-12d415e987d4"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.EventHub/namespaces/azmedtechspaces6778",
+        "name": "azmedtechspaces6778",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c:azmedtechspaces6778",
+          "createdAt": "2023-02-21T06:23:24.873Z",
+          "updatedAt": "2023-02-21T06:23:24.873Z",
+          "serviceBusEndpoint": "https://azmedtechspaces6778.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.EventHub/namespaces/azmedtechspaces6778?api-version=2021-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5752a8d708895e5d33f51df7f45a3502-f4b71f4bb8922ceb-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a8df1b6d1f711d7e7856a0813ec5510b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "729",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:23:33 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a8df1b6d1f711d7e7856a0813ec5510b",
+        "x-ms-correlation-request-id": "fae4ecd1-928e-4d80-a790-da3a388a5502",
+        "x-ms-ratelimit-remaining-subscription-reads": "11960",
+        "x-ms-request-id": "c573caec-605c-4cba-af1d-1471a1205a6e_M4CH3_M4CH3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062334Z:fae4ecd1-928e-4d80-a790-da3a388a5502"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.EventHub/namespaces/azmedtechspaces6778",
+        "name": "azmedtechspaces6778",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c:azmedtechspaces6778",
+          "createdAt": "2023-02-21T06:23:24.873Z",
+          "updatedAt": "2023-02-21T06:23:24.873Z",
+          "serviceBusEndpoint": "https://azmedtechspaces6778.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.EventHub/namespaces/azmedtechspaces6778?api-version=2021-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5752a8d708895e5d33f51df7f45a3502-e776336d7574c2d1-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0bd32e78a703618f465307b5b1af23bb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "729",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:23:38 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0bd32e78a703618f465307b5b1af23bb",
+        "x-ms-correlation-request-id": "852703ab-69d5-44fd-9f09-304bc3a70ec7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11959",
+        "x-ms-request-id": "de08e200-b748-4004-9cae-5edeeaeed23b_M4CH3_M4CH3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062338Z:852703ab-69d5-44fd-9f09-304bc3a70ec7"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.EventHub/namespaces/azmedtechspaces6778",
+        "name": "azmedtechspaces6778",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c:azmedtechspaces6778",
+          "createdAt": "2023-02-21T06:23:24.873Z",
+          "updatedAt": "2023-02-21T06:23:24.873Z",
+          "serviceBusEndpoint": "https://azmedtechspaces6778.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.EventHub/namespaces/azmedtechspaces6778?api-version=2021-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5752a8d708895e5d33f51df7f45a3502-c90bfe7e4b0233f5-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "33a00836ab2722a130916db8980fdcd6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "729",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:23:46 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "33a00836ab2722a130916db8980fdcd6",
+        "x-ms-correlation-request-id": "7a411da0-f705-4113-bcc3-4bdaf67644e8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11958",
+        "x-ms-request-id": "013c3bd7-937b-4772-b357-9ac325ce77ce_M4CH3_M4CH3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062347Z:7a411da0-f705-4113-bcc3-4bdaf67644e8"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.EventHub/namespaces/azmedtechspaces6778",
+        "name": "azmedtechspaces6778",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c:azmedtechspaces6778",
+          "createdAt": "2023-02-21T06:23:24.873Z",
+          "updatedAt": "2023-02-21T06:23:24.873Z",
+          "serviceBusEndpoint": "https://azmedtechspaces6778.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.EventHub/namespaces/azmedtechspaces6778?api-version=2021-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5752a8d708895e5d33f51df7f45a3502-9e151508d9596b7f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1b1f69e2390ac5e18b7d611d17c86bc9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "729",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:24:03 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1b1f69e2390ac5e18b7d611d17c86bc9",
+        "x-ms-correlation-request-id": "d610a582-de1c-4a12-8886-b25b08a3759b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11957",
+        "x-ms-request-id": "b5e9eaca-99f1-4fe3-81dd-ac7e1e310b4e_M4CH3_M4CH3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062404Z:d610a582-de1c-4a12-8886-b25b08a3759b"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.EventHub/namespaces/azmedtechspaces6778",
+        "name": "azmedtechspaces6778",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Created",
+          "metricId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c:azmedtechspaces6778",
+          "createdAt": "2023-02-21T06:23:24.873Z",
+          "updatedAt": "2023-02-21T06:23:24.873Z",
+          "serviceBusEndpoint": "https://azmedtechspaces6778.servicebus.windows.net:443/",
+          "status": "Activating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.EventHub/namespaces/azmedtechspaces6778?api-version=2021-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5752a8d708895e5d33f51df7f45a3502-8e6b0daa9bc7ff21-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "354ae5321d24cde38cb0db7139d7c937",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "727",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:24:37 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Server-SB": "Service-Bus-Resource-Provider/CH3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "354ae5321d24cde38cb0db7139d7c937",
+        "x-ms-correlation-request-id": "926ecb93-6368-4f53-83fc-0b19176ec8b3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11956",
+        "x-ms-request-id": "28afb3f6-72e0-41b5-9fde-3643728e58be_M4CH3_M4CH3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062437Z:926ecb93-6368-4f53-83fc-0b19176ec8b3"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 1
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.EventHub/namespaces/azmedtechspaces6778",
+        "name": "azmedtechspaces6778",
+        "type": "Microsoft.EventHub/Namespaces",
+        "location": "East US",
+        "tags": {},
+        "properties": {
+          "disableLocalAuth": false,
+          "zoneRedundant": false,
+          "isAutoInflateEnabled": false,
+          "maximumThroughputUnits": 0,
+          "kafkaEnabled": true,
+          "provisioningState": "Succeeded",
+          "metricId": "db1ab6f0-4769-4b27-930e-01e2ef9c123c:azmedtechspaces6778",
+          "createdAt": "2023-02-21T06:23:24.873Z",
+          "updatedAt": "2023-02-21T06:24:16.267Z",
+          "serviceBusEndpoint": "https://azmedtechspaces6778.servicebus.windows.net:443/",
+          "status": "Active"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.EventHub/namespaces/azmedtechspaces6778/eventhubs/eventhub3172?api-version=2021-11-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "17",
+        "Content-Type": "application/json",
+        "traceparent": "00-56fb6e22e9d362dfe9f8e4fe8c096ace-33ae6f07793d32e3-00",
+        "User-Agent": "azsdk-net-ResourceManager.EventHubs/1.0.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9047d331b10727fddba8aa4a840b6726",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {}
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "459",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:24:39 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f0dfe76c-3001-4282-9d35-4db228ee4521",
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "f0dfe76c-3001-4282-9d35-4db228ee4521",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062440Z:f0dfe76c-3001-4282-9d35-4db228ee4521"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.EventHub/namespaces/azmedtechspaces6778/eventhubs/eventhub3172",
+        "name": "eventhub3172",
+        "type": "Microsoft.EventHub/namespaces/eventhubs",
+        "location": "eastus",
+        "properties": {
+          "messageRetentionInDays": 7,
+          "partitionCount": 4,
+          "status": "Active",
+          "createdAt": "2023-02-21T06:24:39.767Z",
+          "updatedAt": "2023-02-21T06:24:39.94Z",
+          "partitionIds": [
+            "0",
+            "1",
+            "2",
+            "3"
+          ]
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.HealthcareApis/workspaces/workspace8520/iotconnectors/medtech5330?api-version=2022-06-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "290",
+        "Content-Type": "application/json",
+        "traceparent": "00-749c076385a065640566d6d9c3cc25d6-b726c58c58700659-00",
+        "User-Agent": "azsdk-net-ResourceManager.HealthcareApis/1.1.0-alpha.20230221.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c4b385a4b1a786c5518f5a5d6f8bb3b4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "eastus",
+        "properties": {
+          "ingestionEndpointConfiguration": {
+            "eventHubName": "eventhub3172",
+            "consumerGroup": "$Default",
+            "fullyQualifiedEventHubNamespace": "eventhub3172.servicesbus.windows.net"
+          },
+          "deviceMapping": {
+            "content": {
+              "templateType": "CollectionContent",
+              "template": []
+            }
+          }
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o?api-version=2022-06-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "646",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:24:45 GMT",
+        "ETag": "\u0022ca075c5e-0000-0400-0000-63f463ac0000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f76ac76a-44d1-41e3-bf4c-86cbb64f9100",
+        "x-ms-ratelimit-remaining-subscription-writes": "1193",
+        "x-ms-request-id": "cf871b97-bf3c-48e1-a1b6-94e386fe6dd5",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062445Z:f76ac76a-44d1-41e3-bf4c-86cbb64f9100",
+        "X-Request-ID": "749c076385a065640566d6d9c3cc25d6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.HealthcareApis/workspaces/workspace8520/iotconnectors/medtech5330",
+        "name": "workspace8520/medtech5330",
+        "type": "Microsoft.HealthcareApis/workspaces/iotconnectors",
+        "etag": "\u0022ca075c5e-0000-0400-0000-63f463ac0000\u0022",
+        "location": "eastus",
+        "tags": {},
+        "properties": {
+          "ingestionEndpointConfiguration": {
+            "eventHubName": "eventhub3172",
+            "consumerGroup": "$Default",
+            "fullyQualifiedEventHubNamespace": "eventhub3172.servicesbus.windows.net"
+          },
+          "deviceMapping": {
+            "content": {
+              "templateType": "CollectionContent",
+              "template": []
+            }
+          },
+          "provisioningState": "Creating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-749c076385a065640566d6d9c3cc25d6-9303401662f4c9e2-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "52954b7372167fd00dc13e78569fb74f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:24:45 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "8c8dad38-20a0-4b99-a496-2aaadce28b23",
+        "x-ms-ratelimit-remaining-subscription-reads": "11955",
+        "x-ms-request-id": "68785f06-d30e-4575-a7f8-844d497317b0",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062446Z:8c8dad38-20a0-4b99-a496-2aaadce28b23",
+        "X-Request-ID": "749c076385a065640566d6d9c3cc25d6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o",
+        "name": "l0kud5h1g73149gsfarnpnh2o",
+        "status": "Running",
+        "startTime": "2023-02-21T06:24:44.4767166Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-749c076385a065640566d6d9c3cc25d6-da7aa95c59a9fd0f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "de20f6f471256b02597f7798674f4ccf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:24:46 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c54e69bd-82d3-409e-b3e1-aed46caf46f6",
+        "x-ms-ratelimit-remaining-subscription-reads": "11954",
+        "x-ms-request-id": "c9830cdd-bcb8-49ff-83de-091b20f0e68f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062447Z:c54e69bd-82d3-409e-b3e1-aed46caf46f6",
+        "X-Request-ID": "749c076385a065640566d6d9c3cc25d6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o",
+        "name": "l0kud5h1g73149gsfarnpnh2o",
+        "status": "Running",
+        "startTime": "2023-02-21T06:24:44.4767166Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-749c076385a065640566d6d9c3cc25d6-e1a6a0bfd242d34f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "24e9b58761f6b79dd566e762fab3ddad",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:24:48 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6229fe62-9ce6-4dd1-8059-8dd79f317363",
+        "x-ms-ratelimit-remaining-subscription-reads": "11953",
+        "x-ms-request-id": "aa21c863-dbd9-4c51-ac6e-e08805f4867b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062449Z:6229fe62-9ce6-4dd1-8059-8dd79f317363",
+        "X-Request-ID": "749c076385a065640566d6d9c3cc25d6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o",
+        "name": "l0kud5h1g73149gsfarnpnh2o",
+        "status": "Running",
+        "startTime": "2023-02-21T06:24:44.4767166Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-749c076385a065640566d6d9c3cc25d6-8e249cb9f09ff0f0-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4280fa562862027f4929f897fa3717bd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:24:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "1c595e8e-44dc-43be-99cd-3aedad53c133",
+        "x-ms-ratelimit-remaining-subscription-reads": "11952",
+        "x-ms-request-id": "b81ce83d-517f-4e6b-9cca-7e8a3a2dd57a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062450Z:1c595e8e-44dc-43be-99cd-3aedad53c133",
+        "X-Request-ID": "749c076385a065640566d6d9c3cc25d6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o",
+        "name": "l0kud5h1g73149gsfarnpnh2o",
+        "status": "Running",
+        "startTime": "2023-02-21T06:24:44.4767166Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-749c076385a065640566d6d9c3cc25d6-1e4d6fa075d1e451-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a1f06f7493b59358586809be89a070a6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:24:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "367b65ba-1ac7-4128-ae34-e0f563232c0b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11951",
+        "x-ms-request-id": "82c7ce4b-94e7-41f0-8643-88f6acec1ac7",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062452Z:367b65ba-1ac7-4128-ae34-e0f563232c0b",
+        "X-Request-ID": "749c076385a065640566d6d9c3cc25d6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o",
+        "name": "l0kud5h1g73149gsfarnpnh2o",
+        "status": "Running",
+        "startTime": "2023-02-21T06:24:44.4767166Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-749c076385a065640566d6d9c3cc25d6-4253a44dece07ba2-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6d41caa10ace5f6c35e7dbcd6806bc9d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:24:56 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ca04aec3-1da6-4ff2-b8c4-531aa5371bad",
+        "x-ms-ratelimit-remaining-subscription-reads": "11950",
+        "x-ms-request-id": "8cc1261a-5d76-46f6-ac08-3d08f1a90783",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062456Z:ca04aec3-1da6-4ff2-b8c4-531aa5371bad",
+        "X-Request-ID": "749c076385a065640566d6d9c3cc25d6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o",
+        "name": "l0kud5h1g73149gsfarnpnh2o",
+        "status": "Running",
+        "startTime": "2023-02-21T06:24:44.4767166Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-749c076385a065640566d6d9c3cc25d6-96aea0dfc6bce6e6-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8bed294f3bc3c3f7a2edeafa1fc178a8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:25:04 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "34ce4299-ac6a-40e6-9433-b0a11f60c985",
+        "x-ms-ratelimit-remaining-subscription-reads": "11949",
+        "x-ms-request-id": "92ba7db3-d6f8-4418-b2a1-746824ac3919",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062505Z:34ce4299-ac6a-40e6-9433-b0a11f60c985",
+        "X-Request-ID": "749c076385a065640566d6d9c3cc25d6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o",
+        "name": "l0kud5h1g73149gsfarnpnh2o",
+        "status": "Running",
+        "startTime": "2023-02-21T06:24:44.4767166Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-749c076385a065640566d6d9c3cc25d6-6ce462933041baab-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2ff552b9aaf56aef03916cceb88b2a52",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:25:20 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "128606fa-aa58-41bb-b9eb-93d3ce5bdb0a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11948",
+        "x-ms-request-id": "e8032e76-023a-4379-b338-f06387ab4d3b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062521Z:128606fa-aa58-41bb-b9eb-93d3ce5bdb0a",
+        "X-Request-ID": "749c076385a065640566d6d9c3cc25d6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o",
+        "name": "l0kud5h1g73149gsfarnpnh2o",
+        "status": "Running",
+        "startTime": "2023-02-21T06:24:44.4767166Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-749c076385a065640566d6d9c3cc25d6-e0d9ec78e615b8b2-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5f6e6babe4b266e3d37ecbe11f723f73",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:25:53 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6fc95d8c-1530-4b43-b1af-a94afe4dd941",
+        "x-ms-ratelimit-remaining-subscription-reads": "11947",
+        "x-ms-request-id": "678d6edd-e1c6-4c82-9bfa-6642f0d9995a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062553Z:6fc95d8c-1530-4b43-b1af-a94afe4dd941",
+        "X-Request-ID": "749c076385a065640566d6d9c3cc25d6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o",
+        "name": "l0kud5h1g73149gsfarnpnh2o",
+        "status": "Running",
+        "startTime": "2023-02-21T06:24:44.4767166Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-749c076385a065640566d6d9c3cc25d6-52544adfa8e7b893-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1613326e8d11a4a83a828832cf280a17",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:26:26 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0473a367-67f4-4ed3-b2a0-c5d93c3291a7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11946",
+        "x-ms-request-id": "0481be19-1cd5-42f2-b03f-b5908689a514",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062626Z:0473a367-67f4-4ed3-b2a0-c5d93c3291a7",
+        "X-Request-ID": "749c076385a065640566d6d9c3cc25d6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o",
+        "name": "l0kud5h1g73149gsfarnpnh2o",
+        "status": "Running",
+        "startTime": "2023-02-21T06:24:44.4767166Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-749c076385a065640566d6d9c3cc25d6-e61dc5536797668e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b34e97c21952d4f66e8e5c77df0d4a90",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:26:57 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e103927a-b576-4b13-a206-8a7514de3e59",
+        "x-ms-ratelimit-remaining-subscription-reads": "11945",
+        "x-ms-request-id": "42c03abb-48d6-4a7e-89a1-9908c1d0d1b3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062658Z:e103927a-b576-4b13-a206-8a7514de3e59",
+        "X-Request-ID": "749c076385a065640566d6d9c3cc25d6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o",
+        "name": "l0kud5h1g73149gsfarnpnh2o",
+        "status": "Running",
+        "startTime": "2023-02-21T06:24:44.4767166Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-749c076385a065640566d6d9c3cc25d6-f35b55a26214124a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "865ff85114771e41c3ca242f5cb197aa",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:27:30 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "23bd6f53-bb86-443b-9bc8-8724268e5e70",
+        "x-ms-ratelimit-remaining-subscription-reads": "11944",
+        "x-ms-request-id": "be491a1f-d371-41d0-b8ca-ca812747f586",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062730Z:23bd6f53-bb86-443b-9bc8-8724268e5e70",
+        "X-Request-ID": "749c076385a065640566d6d9c3cc25d6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o",
+        "name": "l0kud5h1g73149gsfarnpnh2o",
+        "status": "Running",
+        "startTime": "2023-02-21T06:24:44.4767166Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-749c076385a065640566d6d9c3cc25d6-465b17c78fae7b22-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "881eb4738c2355203b3fa7823031c52d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:28:07 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "21022b8f-7453-4015-86b8-bf94a791336f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11943",
+        "x-ms-request-id": "2a04213b-ef81-48f9-9bb5-cd4c38df2598",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062807Z:21022b8f-7453-4015-86b8-bf94a791336f",
+        "X-Request-ID": "749c076385a065640566d6d9c3cc25d6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o",
+        "name": "l0kud5h1g73149gsfarnpnh2o",
+        "status": "Running",
+        "startTime": "2023-02-21T06:24:44.4767166Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-749c076385a065640566d6d9c3cc25d6-9a48c95adac5a1fe-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d6e1f73884c8ae9f562ff088f4c678bd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:28:39 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e143aa8a-208e-4ea1-b55b-dcf2241b69a7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11942",
+        "x-ms-request-id": "05835de6-8cc9-45f4-9235-121220abea3f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062840Z:e143aa8a-208e-4ea1-b55b-dcf2241b69a7",
+        "X-Request-ID": "749c076385a065640566d6d9c3cc25d6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o",
+        "name": "l0kud5h1g73149gsfarnpnh2o",
+        "status": "Running",
+        "startTime": "2023-02-21T06:24:44.4767166Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-749c076385a065640566d6d9c3cc25d6-03d12080546fb188-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2b03b1f7c2efc46dd80a4a386dbeee92",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:29:11 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "66c0efa5-7dbd-46ed-a88d-d21420ce6cbb",
+        "x-ms-ratelimit-remaining-subscription-reads": "11941",
+        "x-ms-request-id": "0a9d2196-5f6c-4083-a871-6d097ce8fa1c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062912Z:66c0efa5-7dbd-46ed-a88d-d21420ce6cbb",
+        "X-Request-ID": "749c076385a065640566d6d9c3cc25d6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o",
+        "name": "l0kud5h1g73149gsfarnpnh2o",
+        "status": "Running",
+        "startTime": "2023-02-21T06:24:44.4767166Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-749c076385a065640566d6d9c3cc25d6-5317107c381dd23f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "64f7f704c0d0eee1147031f39c976074",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "254",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:29:44 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "bd896dbd-479a-4b7c-8f23-26c7349adbe7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11940",
+        "x-ms-request-id": "3d560b54-652a-4561-857b-e2d3607dcc33",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062944Z:bd896dbd-479a-4b7c-8f23-26c7349adbe7",
+        "X-Request-ID": "749c076385a065640566d6d9c3cc25d6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/l0kud5h1g73149gsfarnpnh2o",
+        "name": "l0kud5h1g73149gsfarnpnh2o",
+        "status": "Succeeded",
+        "startTime": "2023-02-21T06:24:44.4767166Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.HealthcareApis/workspaces/workspace8520/iotconnectors/medtech5330?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-749c076385a065640566d6d9c3cc25d6-e75a447362f9f461-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7f8ae9c69a2d753d8a1cfebe3a674097",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "647",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:29:44 GMT",
+        "ETag": "\u0022ca079c7d-0000-0400-0000-63f464b90000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "7f069346-4756-49ac-9de2-2c29ed685cf5",
+        "x-ms-ratelimit-remaining-subscription-reads": "11939",
+        "x-ms-request-id": "d9e37157-fc45-441f-9572-5fbd37de56cc",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062945Z:7f069346-4756-49ac-9de2-2c29ed685cf5",
+        "X-Request-ID": "749c076385a065640566d6d9c3cc25d6"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.HealthcareApis/workspaces/workspace8520/iotconnectors/medtech5330",
+        "name": "workspace8520/medtech5330",
+        "type": "Microsoft.HealthcareApis/workspaces/iotconnectors",
+        "etag": "\u0022ca079c7d-0000-0400-0000-63f464b90000\u0022",
+        "location": "eastus",
+        "tags": {},
+        "properties": {
+          "ingestionEndpointConfiguration": {
+            "eventHubName": "eventhub3172",
+            "consumerGroup": "$Default",
+            "fullyQualifiedEventHubNamespace": "eventhub3172.servicesbus.windows.net"
+          },
+          "deviceMapping": {
+            "content": {
+              "templateType": "CollectionContent",
+              "template": []
+            }
+          },
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.HealthcareApis/workspaces/workspace8520/iotconnectors/medtech5330?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-216e30198c0dad8d58a441d86463017e-e61d3ec41877b8d9-00",
+        "User-Agent": "azsdk-net-ResourceManager.HealthcareApis/1.1.0-alpha.20230221.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fd845e4113cf37edcf14167f91792840",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "647",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:29:45 GMT",
+        "ETag": "\u0022ca079c7d-0000-0400-0000-63f464b90000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d33b3eef-27d3-4899-9922-06dfdcfd3325",
+        "x-ms-ratelimit-remaining-subscription-reads": "11938",
+        "x-ms-request-id": "bb2a3798-6d43-41d1-a316-d96a51a60634",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062945Z:d33b3eef-27d3-4899-9922-06dfdcfd3325",
+        "X-Request-ID": "216e30198c0dad8d58a441d86463017e"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.HealthcareApis/workspaces/workspace8520/iotconnectors/medtech5330",
+        "name": "workspace8520/medtech5330",
+        "type": "Microsoft.HealthcareApis/workspaces/iotconnectors",
+        "etag": "\u0022ca079c7d-0000-0400-0000-63f464b90000\u0022",
+        "location": "eastus",
+        "tags": {},
+        "properties": {
+          "ingestionEndpointConfiguration": {
+            "eventHubName": "eventhub3172",
+            "consumerGroup": "$Default",
+            "fullyQualifiedEventHubNamespace": "eventhub3172.servicesbus.windows.net"
+          },
+          "deviceMapping": {
+            "content": {
+              "templateType": "CollectionContent",
+              "template": []
+            }
+          },
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.HealthcareApis/workspaces/workspace8520/iotconnectors/medtech5330?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ed1819b657e340c892aaf3a7f4a20b1b-928984ee6bcdd275-00",
+        "User-Agent": "azsdk-net-ResourceManager.HealthcareApis/1.1.0-alpha.20230221.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8371d5aa6e346964b981dab3c223b4ad",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "647",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:29:45 GMT",
+        "ETag": "\u0022ca079c7d-0000-0400-0000-63f464b90000\u0022",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4f81d7e2-078f-485c-95c7-096dba27538f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11937",
+        "x-ms-request-id": "122754ef-e8da-4604-9691-dbcd4f0cb93a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062946Z:4f81d7e2-078f-485c-95c7-096dba27538f",
+        "X-Request-ID": "ed1819b657e340c892aaf3a7f4a20b1b"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.HealthcareApis/workspaces/workspace8520/iotconnectors/medtech5330",
+        "name": "workspace8520/medtech5330",
+        "type": "Microsoft.HealthcareApis/workspaces/iotconnectors",
+        "etag": "\u0022ca079c7d-0000-0400-0000-63f464b90000\u0022",
+        "location": "eastus",
+        "tags": {},
+        "properties": {
+          "ingestionEndpointConfiguration": {
+            "eventHubName": "eventhub3172",
+            "consumerGroup": "$Default",
+            "fullyQualifiedEventHubNamespace": "eventhub3172.servicesbus.windows.net"
+          },
+          "deviceMapping": {
+            "content": {
+              "templateType": "CollectionContent",
+              "template": []
+            }
+          },
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.HealthcareApis/workspaces/workspace8520/iotconnectors?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2d555dfdd61c9e4862ec9d5f51497506-9dfed5f78ae96467-00",
+        "User-Agent": "azsdk-net-ResourceManager.HealthcareApis/1.1.0-alpha.20230221.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3db2992f6313b3a5fc53af1983bee410",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "659",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:29:46 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "45d033b6-ea75-4a09-bfa3-d32274799497",
+        "x-ms-ratelimit-remaining-subscription-reads": "11936",
+        "x-ms-request-id": "08f6a598-3728-4e76-b262-ef8f68807040",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062946Z:45d033b6-ea75-4a09-bfa3-d32274799497",
+        "X-Request-ID": "2d555dfdd61c9e4862ec9d5f51497506"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.HealthcareApis/workspaces/workspace8520/iotconnectors/medtech5330",
+            "name": "workspace8520/medtech5330",
+            "type": "Microsoft.HealthcareApis/workspaces/iotconnectors",
+            "etag": "\u0022ca079c7d-0000-0400-0000-63f464b90000\u0022",
+            "location": "eastus",
+            "tags": {},
+            "properties": {
+              "ingestionEndpointConfiguration": {
+                "eventHubName": "eventhub3172",
+                "consumerGroup": "$Default",
+                "fullyQualifiedEventHubNamespace": "eventhub3172.servicesbus.windows.net"
+              },
+              "deviceMapping": {
+                "content": {
+                  "templateType": "CollectionContent",
+                  "template": []
+                }
+              },
+              "provisioningState": "Succeeded"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.HealthcareApis/workspaces/workspace8520/iotconnectors/medtech5330?api-version=2022-06-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-0d9fdda6931ae54fab15f3f853072768-7e441ed9bb5876ec-00",
+        "User-Agent": "azsdk-net-ResourceManager.HealthcareApis/1.1.0-alpha.20230221.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6414bdf3bdf5d263f91a434d383974ab",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11?api-version=2022-06-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Tue, 21 Feb 2023 06:29:47 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11?api-version=2022-06-01\u0026operationResultResponseType=Location",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0dface42-6070-49e7-ae77-4f3171edd137",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14998",
+        "x-ms-request-id": "0dface42-6070-49e7-ae77-4f3171edd137",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062948Z:0dface42-6070-49e7-ae77-4f3171edd137",
+        "X-Request-ID": "0d9fdda6931ae54fab15f3f853072768"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0d9fdda6931ae54fab15f3f853072768-1fa4e42434ee5696-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "04c0c99d4f0f71b736df43f820577ac2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:29:48 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "44e54594-4995-439b-9008-291ee0f22438",
+        "x-ms-ratelimit-remaining-subscription-reads": "11935",
+        "x-ms-request-id": "4558eaea-b5fa-4e16-83b2-c42af9c71829",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062948Z:44e54594-4995-439b-9008-291ee0f22438",
+        "X-Request-ID": "0d9fdda6931ae54fab15f3f853072768"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11",
+        "name": "31nkwu32esdki7crhvoi20k11",
+        "status": "Running",
+        "startTime": "2023-02-21T06:29:47.8190991Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0d9fdda6931ae54fab15f3f853072768-8e9378662545f47f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1ab903deec6e084990cd3438358213af",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:29:49 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "63c8812f-3b67-424d-be39-e6dce364b894",
+        "x-ms-ratelimit-remaining-subscription-reads": "11934",
+        "x-ms-request-id": "67b6c99b-1c7b-4589-bc22-98473ae15e99",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062949Z:63c8812f-3b67-424d-be39-e6dce364b894",
+        "X-Request-ID": "0d9fdda6931ae54fab15f3f853072768"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11",
+        "name": "31nkwu32esdki7crhvoi20k11",
+        "status": "Running",
+        "startTime": "2023-02-21T06:29:47.8190991Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0d9fdda6931ae54fab15f3f853072768-356a1cac157feb39-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6eb047346f790f9cb1dec1e8a63426d8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:29:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "dc70b8d9-d441-425d-9a6c-21e3b3e9e4a8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11933",
+        "x-ms-request-id": "184c7a56-0b02-4731-a576-f7f72f27be01",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062951Z:dc70b8d9-d441-425d-9a6c-21e3b3e9e4a8",
+        "X-Request-ID": "0d9fdda6931ae54fab15f3f853072768"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11",
+        "name": "31nkwu32esdki7crhvoi20k11",
+        "status": "Running",
+        "startTime": "2023-02-21T06:29:47.8190991Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0d9fdda6931ae54fab15f3f853072768-79e397e125bb3700-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "bb02c542cb90b18d80b774411b7f3cb3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:29:51 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "70fa2061-0092-4a0b-a976-ab3e61146c1f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11932",
+        "x-ms-request-id": "562b57ee-254a-4626-bc67-e0dca05f2799",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062952Z:70fa2061-0092-4a0b-a976-ab3e61146c1f",
+        "X-Request-ID": "0d9fdda6931ae54fab15f3f853072768"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11",
+        "name": "31nkwu32esdki7crhvoi20k11",
+        "status": "Running",
+        "startTime": "2023-02-21T06:29:47.8190991Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0d9fdda6931ae54fab15f3f853072768-3c138d9e06af6208-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d8c394cb0ca76e4967a968902a61615b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:29:54 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "26327945-5e57-4485-8ee7-22be760e320b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11931",
+        "x-ms-request-id": "ebcaa791-d157-4a4c-8e73-18b44932e0c2",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062954Z:26327945-5e57-4485-8ee7-22be760e320b",
+        "X-Request-ID": "0d9fdda6931ae54fab15f3f853072768"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11",
+        "name": "31nkwu32esdki7crhvoi20k11",
+        "status": "Running",
+        "startTime": "2023-02-21T06:29:47.8190991Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0d9fdda6931ae54fab15f3f853072768-0f3c4b9e7d7925d5-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "70f55ba7587f691ebaffeec1fb5af432",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:29:58 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e97df5bc-ae2d-4b33-9ac0-81c7ab9d95d1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11930",
+        "x-ms-request-id": "f86840da-763e-413b-9607-eb6d27e778e8",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T062959Z:e97df5bc-ae2d-4b33-9ac0-81c7ab9d95d1",
+        "X-Request-ID": "0d9fdda6931ae54fab15f3f853072768"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11",
+        "name": "31nkwu32esdki7crhvoi20k11",
+        "status": "Running",
+        "startTime": "2023-02-21T06:29:47.8190991Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0d9fdda6931ae54fab15f3f853072768-845f00d764cd5f9b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "121c0da14d7036317c9354e762fc861f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:30:06 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5604447b-6500-405f-8aba-44e44241d841",
+        "x-ms-ratelimit-remaining-subscription-reads": "11929",
+        "x-ms-request-id": "8e212ab9-edd0-4c85-a55c-f1855c82cffd",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T063007Z:5604447b-6500-405f-8aba-44e44241d841",
+        "X-Request-ID": "0d9fdda6931ae54fab15f3f853072768"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11",
+        "name": "31nkwu32esdki7crhvoi20k11",
+        "status": "Running",
+        "startTime": "2023-02-21T06:29:47.8190991Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0d9fdda6931ae54fab15f3f853072768-9be41f411286eb8a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "bf9a1956cc8a7234765a1ea81d88730c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:30:23 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c87cbad4-bc39-4623-8437-a3c0ce86c0a2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11928",
+        "x-ms-request-id": "32cab51d-36fd-4c17-b7a7-1df549a66933",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T063023Z:c87cbad4-bc39-4623-8437-a3c0ce86c0a2",
+        "X-Request-ID": "0d9fdda6931ae54fab15f3f853072768"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11",
+        "name": "31nkwu32esdki7crhvoi20k11",
+        "status": "Running",
+        "startTime": "2023-02-21T06:29:47.8190991Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0d9fdda6931ae54fab15f3f853072768-4dfd5efba4d2d4ec-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1cee35b54f4459ea2abef4eb043706bd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:30:55 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ae4ece79-dff2-4f9e-8ed0-43d34ee3e987",
+        "x-ms-ratelimit-remaining-subscription-reads": "11927",
+        "x-ms-request-id": "98dc4b19-b78d-4be6-bd96-49082c722075",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T063056Z:ae4ece79-dff2-4f9e-8ed0-43d34ee3e987",
+        "X-Request-ID": "0d9fdda6931ae54fab15f3f853072768"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11",
+        "name": "31nkwu32esdki7crhvoi20k11",
+        "status": "Running",
+        "startTime": "2023-02-21T06:29:47.8190991Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0d9fdda6931ae54fab15f3f853072768-ba51d2f1c67b2c91-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e16bce7835c0d5a8d9aa9c162f8819f3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:31:27 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0242d1d2-2b4f-415c-9b35-795ea4a27e6c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11926",
+        "x-ms-request-id": "2070ec73-363c-47be-ad86-70bdca44444b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T063128Z:0242d1d2-2b4f-415c-9b35-795ea4a27e6c",
+        "X-Request-ID": "0d9fdda6931ae54fab15f3f853072768"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11",
+        "name": "31nkwu32esdki7crhvoi20k11",
+        "status": "Running",
+        "startTime": "2023-02-21T06:29:47.8190991Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0d9fdda6931ae54fab15f3f853072768-9008f1d69d446fdf-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2c314720690d06db2e4094ccd7486e3e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "252",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:32:00 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d72aa165-7a47-40ed-9841-9aeb740ecd1a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11925",
+        "x-ms-request-id": "7ab752f6-7b08-49e9-9376-a09524e8a629",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T063200Z:d72aa165-7a47-40ed-9841-9aeb740ecd1a",
+        "X-Request-ID": "0d9fdda6931ae54fab15f3f853072768"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11",
+        "name": "31nkwu32esdki7crhvoi20k11",
+        "status": "Running",
+        "startTime": "2023-02-21T06:29:47.8190991Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-0d9fdda6931ae54fab15f3f853072768-d896ec88ee806170-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4e2f6054911c804c8d19439ab3d42aa2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "254",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:32:32 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "830e3c69-70a8-42d5-84a4-0ff5cf6e1079",
+        "x-ms-ratelimit-remaining-subscription-reads": "11924",
+        "x-ms-request-id": "fcddb7f8-10f1-4834-809c-d233471bc1ca",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T063233Z:830e3c69-70a8-42d5-84a4-0ff5cf6e1079",
+        "X-Request-ID": "0d9fdda6931ae54fab15f3f853072768"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.HealthcareApis/locations/eastus/operationresults/31nkwu32esdki7crhvoi20k11",
+        "name": "31nkwu32esdki7crhvoi20k11",
+        "status": "Succeeded",
+        "startTime": "2023-02-21T06:29:47.8190991Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/HealthCareApisRG3016/providers/Microsoft.HealthcareApis/workspaces/workspace8520/iotconnectors/medtech5330?api-version=2022-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7807ac99b96626d64cb8fd1dc43d1758-050d411d633659c7-00",
+        "User-Agent": "azsdk-net-ResourceManager.HealthcareApis/1.1.0-alpha.20230221.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "bccb00a5d9050eb0f364b37fa0dcfd90",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "267",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 21 Feb 2023 06:32:32 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d2e9839c-25a1-4d77-bb26-123c9c0586c4",
+        "x-ms-failure-cause": "gateway",
+        "x-ms-request-id": "d2e9839c-25a1-4d77-bb26-123c9c0586c4",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20230221T063233Z:d2e9839c-25a1-4d77-bb26-123c9c0586c4"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ResourceNotFound",
+          "message": "The Resource \u0027Microsoft.HealthcareApis/workspaces/workspace8520/iotconnectors/medtech5330\u0027 under resource group \u0027HealthCareApisRG3016\u0027 was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "353652627",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

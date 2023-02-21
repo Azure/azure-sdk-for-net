@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
     internal class DicomServiceTests : HealthcareApisManagementTestBase
     {
         private DicomServiceCollection _dicomServiceCollection;
+        private const string _dicomServiceNamePrefix = "dicom";
 
         public DicomServiceTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -31,10 +32,10 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         }
 
         [RecordedTest]
-        public async Task CreateUpdateExistGetDelete()
+        public async Task CreateOrUpdateExistGetGetAllDelete()
         {
             // CreateOrUpdate
-            string dicomServiceName = Recording.GenerateAssetName("dicom");
+            string dicomServiceName = Recording.GenerateAssetName(_dicomServiceNamePrefix);
             var dicomService = await CreateDicomService(dicomServiceName);
             ValidateDicomService(dicomService.Data, dicomServiceName);
 
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         public async Task AddRemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
-            string dicomServiceName = Recording.GenerateAssetName("dicom");
+            string dicomServiceName = Recording.GenerateAssetName(_dicomServiceNamePrefix);
             var dicomService = await CreateDicomService(dicomServiceName);
 
             // AddTag

@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
     {
         private ResourceGroupResource _resourceGroup;
         private HealthcareApisWorkspaceCollection _workspaceCollection;
+        private const string _workspaceNamePrefix = "workspace";
 
         public WorkspaceTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            string workspaceName = Recording.GenerateAssetName("workspace");
+            string workspaceName = Recording.GenerateAssetName(_workspaceNamePrefix);
             var workspace = await CreateHealthcareApisWorkspace(_resourceGroup,workspaceName);
             ValidateHealthcareApisWorkspace(workspace.Data, workspaceName);
         }
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         [RecordedTest]
         public async Task Exist()
         {
-            string workspaceName = Recording.GenerateAssetName("workspace");
+            string workspaceName = Recording.GenerateAssetName(_workspaceNamePrefix);
             await CreateHealthcareApisWorkspace(_resourceGroup, workspaceName);
             var flag = await _workspaceCollection.ExistsAsync(workspaceName);
             Assert.IsTrue(flag);
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         [RecordedTest]
         public async Task Get()
         {
-            string workspaceName = Recording.GenerateAssetName("workspace");
+            string workspaceName = Recording.GenerateAssetName(_workspaceNamePrefix);
             await CreateHealthcareApisWorkspace(_resourceGroup, workspaceName);
             var workspace = await _workspaceCollection.GetAsync(workspaceName);
             ValidateHealthcareApisWorkspace(workspace.Value.Data, workspaceName);
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         [RecordedTest]
         public async Task GetAll()
         {
-            string workspaceName = Recording.GenerateAssetName("workspace");
+            string workspaceName = Recording.GenerateAssetName(_workspaceNamePrefix);
             await CreateHealthcareApisWorkspace(_resourceGroup, workspaceName);
             var list = await _workspaceCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            string workspaceName = Recording.GenerateAssetName("workspace");
+            string workspaceName = Recording.GenerateAssetName(_workspaceNamePrefix);
             var workspace = await CreateHealthcareApisWorkspace(_resourceGroup, workspaceName);
             var flag = await _workspaceCollection.ExistsAsync(workspaceName);
             Assert.IsTrue(flag);
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         public async Task AddRemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
-            string workspaceName = Recording.GenerateAssetName("workspace");
+            string workspaceName = Recording.GenerateAssetName(_workspaceNamePrefix);
             var workspace = await CreateHealthcareApisWorkspace(_resourceGroup, workspaceName);
 
             // AddTag

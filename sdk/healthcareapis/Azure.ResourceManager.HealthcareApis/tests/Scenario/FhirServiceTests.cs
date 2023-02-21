@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
 {
     internal class FhirServiceTests : HealthcareApisManagementTestBase
     {
-        private string _workspaceName;
         private const string fhirServicePrefixName = "fhir";
+        private HealthcareApisWorkspaceResource _workspace;
         private FhirServiceCollection _fhirServiceCollection;
 
-        public FhirServiceTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public FhirServiceTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -27,17 +27,16 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         public async Task SetUp()
         {
             var resourceGroup = await CreateResourceGroup();
-            _workspaceName = Recording.GenerateAssetName("workspace");
-            var workspace = await CreateHealthcareApisWorkspace(resourceGroup, _workspaceName);
-            _fhirServiceCollection = workspace.GetFhirServices();
+            _workspace = await CreateHealthcareApisWorkspace(resourceGroup, Recording.GenerateAssetName("workspace"));
+            _fhirServiceCollection = _workspace.GetFhirServices();
         }
 
         [RecordedTest]
-        public async Task CreateUpdateExistGetDelete()
+        public async Task CreateOrUpdateExistGetGetAllDelete()
         {
-            // Create
+            // CreateOrUpdate
             string fhirServiceName = Recording.GenerateAssetName(fhirServicePrefixName);
-            var fhirService = await CreateFhirService(fhirServiceName);
+            var fhirService = await CreateFhirService(_workspace, fhirServiceName);
             ValidateFhirService(fhirService.Data, fhirServiceName);
 
             // Exist
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         {
             SetTagResourceUsage(Client, useTagResource);
             string fhirServiceName = Recording.GenerateAssetName(fhirServicePrefixName);
-            var fhirService = await CreateFhirService(fhirServiceName);
+            var fhirService = await CreateFhirService(_workspace, fhirServiceName);
 
             // AddTag
             await fhirService.AddTagAsync("addtagkey", "addtagvalue");
@@ -82,33 +81,17 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
             Assert.AreEqual(0, fhirService.Data.Tags.Count);
         }
 
-        private async Task<FhirServiceResource> CreateFhirService(string fhirServiceName)
-        {
-            FhirServiceData data = new FhirServiceData(DefaultLocation)
-            {
-                Kind = "fhir-R4",
-                AuthenticationConfiguration = new FhirServiceAuthenticationConfiguration()
-                {
-                    Authority = $"https://login.microsoftonline.com/{Environment.GetEnvironmentVariable("TENANT_ID")}",
-                    Audience = $"https://{_workspaceName}-{fhirServiceName}.fhir.azurehealthcareapis.com"
-                },
-                ImportConfiguration = new FhirServiceImportConfiguration()
-                {
-                    IsEnabled = false,
-                    IsInitialImportMode = false,
-                },
-                ResourceVersionPolicyConfiguration = new FhirServiceResourceVersionPolicyConfiguration()
-                {
-                    Default = "no-version",
-                }
-            };
-            var lro = await _fhirServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, fhirServiceName, data);
-            return lro.Value;
-        }
-
         private void ValidateFhirService(FhirServiceData fhirService, string fhirServiceName)
         {
             Assert.IsNotNull(fhirService);
+            Assert.IsNotNull(fhirService.ETag);
+            Assert.AreEqual(fhirServiceName, fhirService.Id.Name);
+            Assert.AreEqual("fhir-R4", fhirService.Kind.ToString());
+            Assert.AreEqual(DefaultLocation, fhirService.Location);
+            Assert.AreEqual("Succeeded", fhirService.ProvisioningState.ToString());
+            Assert.AreEqual("Enabled", fhirService.PublicNetworkAccess.ToString());
+            Assert.AreEqual("Microsoft.HealthcareApis/workspaces/fhirservices", fhirService.ResourceType.ToString());
+            Assert.AreEqual("no-version", fhirService.ResourceVersionPolicyConfiguration.Default.ToString());
         }
     }
 }
