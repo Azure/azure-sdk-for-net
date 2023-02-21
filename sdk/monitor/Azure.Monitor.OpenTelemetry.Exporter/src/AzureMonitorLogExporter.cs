@@ -55,8 +55,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
 
                 _persistentStorage?.StopExporterTimerAndTransmitFromStorage();
-
-                return exportResult;
             }
             catch (Exception ex)
             {
