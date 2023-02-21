@@ -1,10 +1,11 @@
-﻿# Azure Share Client Samples - Create Received Share
+# Azure Share Client Samples - Create Received Share
 
 ## Import the namespaces
 
 ```C# Snippet:ReceivedSharesClientSample_ImportNamespaces
+using System;
+using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Identity;
 ```
 
 ## Create Received Share
@@ -12,25 +13,32 @@ using Azure.Identity;
 ```C# Snippet:ReceivedSharesClientSample_CreateReceivedShare
 var credential = new DefaultAzureCredential();
 var endPoint = "https://<my-account-name>.purview.azure.com/share";
-var sentShareClient = new SentSharesClient(endPoint, credential);
+var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 
-// Create sent share
-var sentShareName = "sample-Share";
-
-var inPlaceSentShareDto = new
+var data = new
 {
     shareKind = "InPlace",
     properties = new
     {
-        description = "demo share",
-        collection = new
+        sink = new
         {
-            // for root collection else name of any accessible child collection in the Purview account.
-            referenceName = "<purivewAccountName>",
-            type = "CollectionReference"
-        }
+            storeKind = "AdlsGen2Account",
+            storeReference = new
+            {
+                referenceName = "/subscriptions/<suscriptionId>/resourceGroups/<resourceGroup>/providers/Microsoft.Storage/storageAccounts/<storageAccount>",
+
+                type = "ArmResourceReference"
+            },
+            properties = new
+            {
+                containerName = <>,
+                folder = <>,
+                mountPath = <>,
+            }
+        },
+        displayName = <displayName>,
     }
 };
 
-var sentShare = await sentShareClient.CreateOrUpdateAsync(sentShareName, RequestContent.Create(inPlaceSentShareDto));
+Operation<BinaryData> createResponse = await receivedSharesClient.CreateOrReplaceReceivedShareAsync(WaitUntil.Completed, <receivedShareId>, RequestContent.Create(data));
 ```

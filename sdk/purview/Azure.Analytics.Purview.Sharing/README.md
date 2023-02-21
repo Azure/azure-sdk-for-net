@@ -104,7 +104,7 @@ var data = new
     }
 };
 
-Operation<BinaryData> createResponse = await sentShareClient.CreateSentShareAsync(WaitUntil.Completed, <sentShareId>, RequestContent.Create(data));
+Operation<BinaryData> createResponse = await sentShareClient.CreateOrReplaceSentShareAsync(WaitUntil.Completed, <sentShareId>, RequestContent.Create(data));
 ```
 
 ### Get sent share
@@ -209,7 +209,7 @@ var data = new
     }
 };
 
-Operation<BinaryData> createResponse = await receivedSharesClient.CreateOrUpdateReceivedShareAsync(WaitUntil.Completed, <receivedShareId>, RequestContent.Create(data));
+Operation<BinaryData> createResponse = await receivedSharesClient.CreateOrReplaceReceivedShareAsync(WaitUntil.Completed, <receivedShareId>, RequestContent.Create(data));
 ```
 
 ### Get received share
