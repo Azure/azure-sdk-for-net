@@ -8,6 +8,10 @@ namespace Microsoft.Azure.WebJobs
         public string Connection { get { throw null; } set { } }
         public string EventHubName { get { throw null; } }
     }
+    public static partial class EventHubsWebJobsExtensions
+    {
+        public static System.Threading.Tasks.Task AddAsync(this Microsoft.Azure.WebJobs.IAsyncCollector<Azure.Messaging.EventHubs.EventData> instance, Azure.Messaging.EventHubs.EventData eventData, string partitionKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     [Microsoft.Azure.WebJobs.Description.BindingAttribute]
     [System.AttributeUsageAttribute(System.AttributeTargets.Parameter)]
     public sealed partial class EventHubTriggerAttribute : System.Attribute
@@ -16,10 +20,6 @@ namespace Microsoft.Azure.WebJobs
         public string Connection { get { throw null; } set { } }
         public string ConsumerGroup { get { throw null; } set { } }
         public string EventHubName { get { throw null; } }
-    }
-    public static partial class IAsyncCollectorExtensions
-    {
-        public static System.Threading.Tasks.Task AddAsync(this Microsoft.Azure.WebJobs.IAsyncCollector<Azure.Messaging.EventHubs.EventData> instance, Azure.Messaging.EventHubs.EventData eventData, string partitionKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Microsoft.Azure.WebJobs.EventHubs
