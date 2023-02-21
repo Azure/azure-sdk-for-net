@@ -332,8 +332,10 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation SouthCentralUS { get { throw null; } }
         public static Azure.Core.AzureLocation SoutheastAsia { get { throw null; } }
         public static Azure.Core.AzureLocation SouthIndia { get { throw null; } }
+        public static Azure.Core.AzureLocation SwedenCentral { get { throw null; } }
         public static Azure.Core.AzureLocation SwitzerlandNorth { get { throw null; } }
         public static Azure.Core.AzureLocation SwitzerlandWest { get { throw null; } }
+        public static Azure.Core.AzureLocation QatarCentral { get { throw null; } }
         public static Azure.Core.AzureLocation UAECentral { get { throw null; } }
         public static Azure.Core.AzureLocation UAENorth { get { throw null; } }
         public static Azure.Core.AzureLocation UKSouth { get { throw null; } }
@@ -349,6 +351,7 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation WestIndia { get { throw null; } }
         public static Azure.Core.AzureLocation WestUS { get { throw null; } }
         public static Azure.Core.AzureLocation WestUS2 { get { throw null; } }
+        public static Azure.Core.AzureLocation WestUS3 { get { throw null; } }
         public bool Equals(Azure.Core.AzureLocation other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
