@@ -1,10 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
-  </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.ResourceManager.VoiceServices.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\" />
   </ItemGroup>
 </Project>
