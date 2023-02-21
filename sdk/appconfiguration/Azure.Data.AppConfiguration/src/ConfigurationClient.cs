@@ -24,6 +24,36 @@ namespace Azure.Data.AppConfiguration
     [CodeGenSuppress("CheckSnapshots", typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("CheckSnapshotAsync", typeof(string), typeof(MatchConditions), typeof(RequestContext))]
     [CodeGenSuppress("CheckSnapshot", typeof(string), typeof(MatchConditions), typeof(RequestContext))]
+    [CodeGenSuppress("CheckKeyValues", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<string>), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("CheckKeyValuesAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<string>), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("CheckKeys", typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("CheckKeysAsync", typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("CheckKeyValue", typeof(string), typeof(string), typeof(string), typeof(IEnumerable<string>), typeof(MatchConditions), typeof(RequestContext))]
+    [CodeGenSuppress("CheckKeyValueAsync", typeof(string), typeof(string), typeof(string), typeof(IEnumerable<string>), typeof(MatchConditions), typeof(RequestContext))]
+    [CodeGenSuppress("CheckLabels", typeof(string), typeof(string), typeof(string), typeof(IEnumerable<string>), typeof(RequestContext))]
+    [CodeGenSuppress("CheckLabelsAsync", typeof(string), typeof(string), typeof(string), typeof(IEnumerable<string>), typeof(RequestContext))]
+    [CodeGenSuppress("CheckRevisions", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<string>), typeof(RequestContext))]
+    [CodeGenSuppress("CheckRevisionsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<string>), typeof(RequestContext))]
+    [CodeGenSuppress("CreateReadOnlyLock", typeof(string), typeof(string), typeof(MatchConditions), typeof(RequestContext))]
+    [CodeGenSuppress("CreateReadOnlyLockAsync", typeof(string), typeof(string), typeof(MatchConditions), typeof(RequestContext))]
+    [CodeGenSuppress("DeleteReadOnlyLock", typeof(string), typeof(string), typeof(MatchConditions), typeof(RequestContext))]
+    [CodeGenSuppress("DeleteReadOnlyLockAsync", typeof(string), typeof(string), typeof(MatchConditions), typeof(RequestContext))]
+    [CodeGenSuppress("GetConfigurationSetting", typeof(string), typeof(string), typeof(string), typeof(IEnumerable<string>), typeof(MatchConditions), typeof(RequestContext))]
+    [CodeGenSuppress("GetConfigurationSettingAsync", typeof(string), typeof(string), typeof(string), typeof(IEnumerable<string>), typeof(MatchConditions), typeof(RequestContext))]
+    [CodeGenSuppress("GetConfigurationSettings", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<string>), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetConfigurationSettingsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<string>), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetKeys", typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetKeysAsync", typeof(string), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetLabels", typeof(string), typeof(string), typeof(string), typeof(IEnumerable<string>), typeof(RequestContext))]
+    [CodeGenSuppress("GetLabelsAsync", typeof(string), typeof(string), typeof(string), typeof(IEnumerable<string>), typeof(RequestContext))]
+    [CodeGenSuppress("GetRevisions", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<string>), typeof(RequestContext))]
+    [CodeGenSuppress("GetRevisionsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<string>), typeof(RequestContext))]
+    [CodeGenSuppress("SetConfigurationSetting", typeof(string), typeof(RequestContent), typeof(ContentType), typeof(string), typeof(MatchConditions), typeof(RequestContext))]
+    [CodeGenSuppress("SetConfigurationSettingAsync", typeof(string), typeof(RequestContent), typeof(ContentType), typeof(string), typeof(MatchConditions), typeof(RequestContext))]
+    [CodeGenSuppress("DeleteConfigurationSetting", typeof(string), typeof(string), typeof(ETag), typeof(RequestContext))]
+    [CodeGenSuppress("DeleteConfigurationSettingAsync", typeof(string), typeof(string), typeof(ETag), typeof(RequestContext))]
+    [CodeGenSuppress("GetConfigurationSetting", typeof(string), typeof(string), typeof(string), typeof(IEnumerable<string>), typeof(MatchConditions), typeof(RequestContext))]
+    [CodeGenSuppress("GetConfigurationSettingAsync", typeof(string), typeof(string), typeof(string), typeof(IEnumerable<string>), typeof(MatchConditions), typeof(RequestContext))]
     public partial class ConfigurationClient
     {
         private readonly SyncTokenPolicy _syncTokenPolicy;
@@ -475,9 +505,8 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Generated/Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteConfigurationSettingAsync(String,String,ETag,RequestContext)']/*" />
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual async Task<Response> DeleteConfigurationSettingAsync(string key, string label, ETag? ifMatch, RequestContext context)
+        internal virtual async Task<Response> DeleteConfigurationSettingAsync(string key, string label, ETag? ifMatch, RequestContext context)
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -505,8 +534,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Generated/Docs/ConfigurationClient.xml" path="doc/members/member[@name='DeleteConfigurationSetting(String,String,ETag,RequestContext)']/*" />
-        public virtual Response DeleteConfigurationSetting(string key, string label, ETag? ifMatch, RequestContext context)
+        internal virtual Response DeleteConfigurationSetting(string key, string label, ETag? ifMatch, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
@@ -695,7 +723,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="Generated/Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetConfigurationSettingAsync(String,String,String,IEnumerable,MatchConditions,RequestContext)']/*" />
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual async Task<Response> GetConfigurationSettingAsync(string key, string label, string acceptDatetime, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
+        internal virtual async Task<Response> GetConfigurationSettingAsync(string key, string label, string acceptDatetime, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
@@ -726,7 +754,7 @@ namespace Azure.Data.AppConfiguration
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <include file="Generated/Docs/ConfigurationClient.xml" path="doc/members/member[@name='GetConfigurationSetting(String,String,String,IEnumerable,MatchConditions,RequestContext)']/*" />
-        public virtual Response GetConfigurationSetting(string key, string label, string acceptDatetime, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
+        internal virtual Response GetConfigurationSetting(string key, string label, string acceptDatetime, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
@@ -1389,6 +1417,172 @@ namespace Azure.Data.AppConfiguration
             Argument.AssertNotNull(setting, nameof(setting));
             MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
             return SetReadOnlyAsync(setting.Key, setting.Label, requestOptions, isReadOnly, false, cancellationToken).EnsureCompleted();
+        }
+
+        /// <summary> Creates a key-value. </summary>
+        /// <param name="key"> The key of the key-value to create. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/*+json&quot; | &quot;application/json&quot; | &quot;application/json-patch+json&quot; | &quot;application/vnd.microsoft.appconfig.kv+json&quot; | &quot;application/vnd.microsoft.appconfig.kvset+json&quot; | &quot;text/json&quot;. </param>
+        /// <param name="label"> The label of the key-value to create. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        internal virtual async Task<Response> SetConfigurationSettingAsync(string key, RequestContent content, ContentType contentType, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.SetConfigurationSetting");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSetConfigurationSettingRequest(key, content, contentType, label, matchConditions, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates a key-value. </summary>
+        /// <param name="key"> The key of the key-value to create. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/*+json&quot; | &quot;application/json&quot; | &quot;application/json-patch+json&quot; | &quot;application/vnd.microsoft.appconfig.kv+json&quot; | &quot;application/vnd.microsoft.appconfig.kvset+json&quot; | &quot;text/json&quot;. </param>
+        /// <param name="label"> The label of the key-value to create. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        internal virtual Response SetConfigurationSetting(string key, RequestContent content, ContentType contentType, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.SetConfigurationSetting");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSetConfigurationSettingRequest(key, content, contentType, label, matchConditions, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Locks a key-value. </summary>
+        /// <param name="key"> The key of the key-value to lock. </param>
+        /// <param name="label"> The label, if any, of the key-value to lock. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        internal virtual async Task<Response> CreateReadOnlyLockAsync(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateReadOnlyLock");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateReadOnlyLockRequest(key, label, matchConditions, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Locks a key-value. </summary>
+        /// <param name="key"> The key of the key-value to lock. </param>
+        /// <param name="label"> The label, if any, of the key-value to lock. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        internal virtual Response CreateReadOnlyLock(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateReadOnlyLock");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateReadOnlyLockRequest(key, label, matchConditions, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Unlocks a key-value. </summary>
+        /// <param name="key"> The key of the key-value to unlock. </param>
+        /// <param name="label"> The label, if any, of the key-value to unlock. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        internal virtual async Task<Response> DeleteReadOnlyLockAsync(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteReadOnlyLock");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteReadOnlyLockRequest(key, label, matchConditions, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Unlocks a key-value. </summary>
+        /// <param name="key"> The key of the key-value to unlock. </param>
+        /// <param name="label"> The label, if any, of the key-value to unlock. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        internal virtual Response DeleteReadOnlyLock(string key, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteReadOnlyLock");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteReadOnlyLockRequest(key, label, matchConditions, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         private async ValueTask<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, string label, MatchConditions requestOptions, bool isReadOnly, bool async, CancellationToken cancellationToken)
