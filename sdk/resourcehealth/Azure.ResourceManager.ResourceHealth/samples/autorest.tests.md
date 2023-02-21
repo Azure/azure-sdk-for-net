@@ -2,7 +2,7 @@
 
 Run `dotnet build /t:GenerateTests` to generate code.
 
-# Azure.ResourceManager.VoiceServices.Tests
+# Azure.ResourceManager.ResourceHealth.Tests
 
 > see https://aka.ms/autorest
 ``` yaml
