@@ -19,6 +19,6 @@ namespace Azure.Communication.Email
         /// <summary> MIME type of the content being attached. </summary>
         public string ContentType { get; }
         /// <summary> Base64 encoded contents of the attachment. </summary>
-        public string ContentBytesBase64 { get; }
+        public string ContentInBase64 { get; }
     }
 }

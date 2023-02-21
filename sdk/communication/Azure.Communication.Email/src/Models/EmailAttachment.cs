@@ -28,7 +28,7 @@ namespace Azure.Communication.Email
 
             try
             {
-                ContentBytesBase64 = Convert.ToBase64String(content.ToArray());
+                ContentInBase64 = Convert.ToBase64String(content.ToArray());
             }
             catch (Exception)
             {
@@ -38,7 +38,7 @@ namespace Azure.Communication.Email
 
         internal void ValidateAttachmentContent()
         {
-            if (string.IsNullOrWhiteSpace(ContentBytesBase64))
+            if (string.IsNullOrWhiteSpace(ContentInBase64))
             {
                 throw new ArgumentException(ErrorMessages.InvalidAttachmentContent);
             }
