@@ -37,8 +37,8 @@ namespace Azure.Analytics.Purview.Share.Tests
                         },
                         properties = new
                         {
-                            containerName = "container213509",
-                            folder = "folder213509",
+                            containerName = "container221952",
+                            folder = "folder221952",
                             mountPath = "",
                         }
                     },
@@ -48,14 +48,14 @@ namespace Azure.Analytics.Purview.Share.Tests
 
             ReceivedSharesClient client = GetReceivedSharesClient();
 
-            Operation<BinaryData> createResponse = await client.CreateOrReplaceReceivedShareAsync(WaitUntil.Completed, "fd19de76-ced3-4199-99cc-001ad46fa5c5", RequestContent.Create(data));
+            Operation<BinaryData> createResponse = await client.CreateOrReplaceReceivedShareAsync(WaitUntil.Completed, "6b47a0d9-6fc1-4e48-b7cd-978c7082a177", RequestContent.Create(data));
 
             Assert.IsTrue(createResponse.HasCompleted);
 
             var jsonDocument = JsonDocument.Parse(createResponse.Value);
             var actualId = jsonDocument.RootElement.GetProperty("id").ToString();
 
-            Assert.AreEqual("fd19de76-ced3-4199-99cc-001ad46fa5c5", actualId);
+            Assert.AreEqual("6b47a0d9-6fc1-4e48-b7cd-978c7082a177", actualId);
 
             JsonElement properties = jsonDocument.RootElement.GetProperty("properties");
 
@@ -69,12 +69,12 @@ namespace Azure.Analytics.Purview.Share.Tests
         {
             ReceivedSharesClient client = GetReceivedSharesClient();
 
-            Response response = await client.GetReceivedShareAsync("fd19de76-ced3-4199-99cc-001ad46fa5c5");
+            Response response = await client.GetReceivedShareAsync("6b47a0d9-6fc1-4e48-b7cd-978c7082a177");
 
             var jsonDocument = JsonDocument.Parse(GetContentFromResponse(response));
             JsonElement getBodyJson = jsonDocument.RootElement;
 
-            Assert.AreEqual("fd19de76-ced3-4199-99cc-001ad46fa5c5", getBodyJson.GetProperty("id").GetString());
+            Assert.AreEqual("6b47a0d9-6fc1-4e48-b7cd-978c7082a177", getBodyJson.GetProperty("id").GetString());
         }
 
         [RecordedTest]
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Purview.Share.Tests
         {
             ReceivedSharesClient client = GetReceivedSharesClient();
 
-            Operation response = await client.DeleteReceivedShareAsync(WaitUntil.Completed, "fd19de76-ced3-4199-99cc-001ad46fa5c5");
+            Operation response = await client.DeleteReceivedShareAsync(WaitUntil.Completed, "6b47a0d9-6fc1-4e48-b7cd-978c7082a177");
 
             Assert.IsTrue(response.HasCompleted);
         }
@@ -94,7 +94,7 @@ namespace Azure.Analytics.Purview.Share.Tests
 
             List<BinaryData> detachedReceivedShares = await client.GetAllDetachedReceivedSharesAsync().ToEnumerableAsync();
 
-            Assert.AreEqual(1, detachedReceivedShares.Count);
+            Assert.AreEqual(2, detachedReceivedShares.Count);
 
             var detachedReceivedShare = detachedReceivedShares[0];
 
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.Share.Tests
 
             List<BinaryData> attachedReceivedShares = await client.GetAllAttachedReceivedSharesAsync("/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/faisalaltell/providers/Microsoft.Storage/storageAccounts/ftreceiversan").ToEnumerableAsync();
 
-            Assert.AreEqual(1, attachedReceivedShares.Count);
+            Assert.AreEqual(2, attachedReceivedShares.Count);
 
             var attachedReceivedShare = attachedReceivedShares[0];
 

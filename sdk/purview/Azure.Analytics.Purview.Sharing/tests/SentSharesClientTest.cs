@@ -50,14 +50,14 @@ namespace Azure.Analytics.Purview.Share.Tests
 
             SentSharesClient client = GetSentSharesClient();
 
-            Operation<BinaryData> createResponse = await client.CreateOrReplaceSentShareAsync(WaitUntil.Completed, "e802f487-92bf-4dc3-bf1d-86afe0d757a3", RequestContent.Create(data));
+            Operation<BinaryData> createResponse = await client.CreateOrReplaceSentShareAsync(WaitUntil.Completed, "5f789532-a7b5-4194-a9a8-81f1bbd27562", RequestContent.Create(data));
 
             Assert.IsTrue(createResponse.HasCompleted);
 
             var jsonDocument = JsonDocument.Parse(createResponse.Value);
 
             var actualId = jsonDocument.RootElement.GetProperty("id").ToString();
-            var expectedId = "e802f487-92bf-4dc3-bf1d-86afe0d757a3";
+            var expectedId = "5f789532-a7b5-4194-a9a8-81f1bbd27562";
             Assert.AreEqual(expectedId, actualId);
 
             JsonElement properties = jsonDocument.RootElement.GetProperty("properties");
@@ -76,12 +76,12 @@ namespace Azure.Analytics.Purview.Share.Tests
         {
             SentSharesClient client = GetSentSharesClient();
 
-            Response response = await client.GetSentShareAsync("e802f487-92bf-4dc3-bf1d-86afe0d757a3");
+            Response response = await client.GetSentShareAsync("5f789532-a7b5-4194-a9a8-81f1bbd27562");
 
             using var jsonDocumentGet = JsonDocument.Parse(GetContentFromResponse(response));
             JsonElement getBodyJson = jsonDocumentGet.RootElement;
 
-            Assert.AreEqual("e802f487-92bf-4dc3-bf1d-86afe0d757a3", getBodyJson.GetProperty("id").GetString());
+            Assert.AreEqual("5f789532-a7b5-4194-a9a8-81f1bbd27562", getBodyJson.GetProperty("id").GetString());
 
             JsonElement properties = getBodyJson.GetProperty("properties");
 
@@ -103,7 +103,7 @@ namespace Azure.Analytics.Purview.Share.Tests
         {
             SentSharesClient client = GetSentSharesClient();
 
-            Operation response = await client.DeleteSentShareAsync(WaitUntil.Completed, "e802f487-92bf-4dc3-bf1d-86afe0d757a3");
+            Operation response = await client.DeleteSentShareAsync(WaitUntil.Completed, "5f789532-a7b5-4194-a9a8-81f1bbd27562");
 
             Assert.IsTrue(response.HasCompleted);
         }
@@ -123,7 +123,7 @@ namespace Azure.Analytics.Purview.Share.Tests
 
             SentSharesClient client = GetSentSharesClient();
 
-            Response response = await client.CreateSentShareInvitationAsync("e802f487-92bf-4dc3-bf1d-86afe0d757a3", "e322785e-8fb0-4d7b-b7b3-521e0d602fae", RequestContent.Create(data));
+            Response response = await client.CreateSentShareInvitationAsync("5f789532-a7b5-4194-a9a8-81f1bbd27562", "be5ea079-c652-4328-91b1-76f15f9e6cf2", RequestContent.Create(data));
 
             Assert.AreEqual(201, response.Status);
 
@@ -140,7 +140,7 @@ namespace Azure.Analytics.Purview.Share.Tests
         {
             SentSharesClient client = GetSentSharesClient();
 
-            Response testing = await client.GetSentShareInvitationAsync("e802f487-92bf-4dc3-bf1d-86afe0d757a3", "e322785e-8fb0-4d7b-b7b3-521e0d602fae");
+            Response testing = await client.GetSentShareInvitationAsync("5f789532-a7b5-4194-a9a8-81f1bbd27562", "be5ea079-c652-4328-91b1-76f15f9e6cf2");
 
             var jsonDocumentGet = JsonDocument.Parse(GetContentFromResponse(testing));
             string actualTargetActiveDirectoryId = jsonDocumentGet.RootElement.GetProperty("properties").GetProperty("targetActiveDirectoryId").ToString();
@@ -149,7 +149,7 @@ namespace Azure.Analytics.Purview.Share.Tests
             Assert.AreEqual("fc010728-94f6-4e9c-be3c-c08687414bd4", actualTargetObjectId);
             Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", actualTargetActiveDirectoryId);
 
-            List<BinaryData> invitations = await client.GetAllSentShareInvitationsAsync("e802f487-92bf-4dc3-bf1d-86afe0d757a3").ToEnumerableAsync();
+            List<BinaryData> invitations = await client.GetAllSentShareInvitationsAsync("5f789532-a7b5-4194-a9a8-81f1bbd27562").ToEnumerableAsync();
 
             Assert.GreaterOrEqual(invitations.Count, 0);
         }
@@ -159,7 +159,7 @@ namespace Azure.Analytics.Purview.Share.Tests
         {
             SentSharesClient client = GetSentSharesClient();
 
-            Operation response = await client.DeleteSentShareInvitationAsync(WaitUntil.Completed, "e802f487-92bf-4dc3-bf1d-86afe0d757a3", "e322785e-8fb0-4d7b-b7b3-521e0d602fae");
+            Operation response = await client.DeleteSentShareInvitationAsync(WaitUntil.Completed, "5f789532-a7b5-4194-a9a8-81f1bbd27562", "be5ea079-c652-4328-91b1-76f15f9e6cf2");
 
             Assert.IsTrue(response.HasCompleted);
         }

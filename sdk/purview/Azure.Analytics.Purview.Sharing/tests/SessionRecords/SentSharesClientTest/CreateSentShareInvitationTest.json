@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ads-perf-westeurope-pv.purview.azure.com/share/sentShares/e802f487-92bf-4dc3-bf1d-86afe0d757a3/sentShareInvitations/e322785e-8fb0-4d7b-b7b3-521e0d602fae?api-version=2023-02-15-preview",
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/sentShares/5f789532-a7b5-4194-a9a8-81f1bbd27562/sentShareInvitations/be5ea079-c652-4328-91b1-76f15f9e6cf2?api-version=2023-02-15-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "164",
         "Content-Type": "application/json",
-        "traceparent": "00-2d5124279d1faceae1bfe3308a1d8f85-b871a78321d174b7-00",
-        "User-Agent": "azsdk-net-Analytics.Purview.Share/1.0.3-alpha.20230213.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "64e66c74a02405b4d18b06b32d16972b",
+        "traceparent": "00-fdbbd36c828c12cddef01cc38a4223d4-06f1661498f28a30-00",
+        "User-Agent": "azsdk-net-Analytics.Purview/1.0.3-alpha.20230221.1 (.NET 6.0.14; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7a899eef922864133c5f3a7cde229ecd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -22,33 +22,33 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Content-Length": "397",
+        "Content-Length": "385",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 14 Feb 2023 01:00:48 GMT",
-        "Location": "/sentShares/e802f487-92bf-4dc3-bf1d-86afe0d757a3/sentShareInvitations/e322785e-8fb0-4d7b-b7b3-521e0d602fae/e322785e-8fb0-4d7b-b7b3-521e0d602fae",
+        "Date": "Tue, 21 Feb 2023 18:03:42 GMT",
+        "Location": "/sentShares/5f789532-a7b5-4194-a9a8-81f1bbd27562/sentShareInvitations/be5ea079-c652-4328-91b1-76f15f9e6cf2/be5ea079-c652-4328-91b1-76f15f9e6cf2",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "x-ms-correlation-request-id": "4e5921ef-5fdb-4a7e-a2fd-3ef00cb14d57"
+        "x-ms-correlation-request-id": "9d1b84e1-7cc4-4ef8-a8a3-f1227bf3d147"
       },
       "ResponseBody": {
         "properties": {
           "targetActiveDirectoryId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
           "targetObjectId": "fc010728-94f6-4e9c-be3c-c08687414bd4",
           "shareStatus": "Detached",
-          "sentAt": "2023-02-14T01:00:48.4051838Z",
+          "sentAt": "2023-02-21T18:03:42.7890528Z",
           "senderName": "SyMS",
           "senderTenantName": "Microsoft",
-          "provisioningState": "Succeeded"
+          "state": "Succeeded"
         },
         "invitationKind": "Service",
-        "id": "e322785e-8fb0-4d7b-b7b3-521e0d602fae",
+        "id": "be5ea079-c652-4328-91b1-76f15f9e6cf2",
         "type": "sentShares/sentShareInvitations"
       }
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": null,
-    "PURVIEW_SHARE_URL": "https://ads-perf-westeurope-pv.purview.azure.com/share",
-    "RandomSeed": "1348497552"
+    "PURVIEW_SHARE_URL": "https://ads-dev-eastus-pv.purview.azure.com/share",
+    "RandomSeed": "120316041"
   }
 }
