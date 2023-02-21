@@ -9,8 +9,8 @@ using Microsoft.Azure.WebJobs.EventHubs;
 
 namespace Microsoft.Azure.WebJobs
 {
-    public static class IAsyncCollectorExtensions
-	{
+    public static class EventHubsWebJobsExtensions
+    {
         /// <summary>
         /// Add an event to be published using the provided <paramref name="partitionKey"/> for partition assignment.
         /// </summary>
