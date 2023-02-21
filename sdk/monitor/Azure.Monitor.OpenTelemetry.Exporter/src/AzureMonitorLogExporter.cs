@@ -44,10 +44,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             // Prevent Azure Monitor's HTTP operations from being instrumented.
             using var scope = SuppressInstrumentationScope.Begin();
 
+            ExportResult exportResult = ExportResult.Failure;
+
             try
             {
                 var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey);
-                var exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
+                if (telemetryItems.Count > 0)
+                {
+                    exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
+                }
+
                 _persistentStorage?.StopExporterTimerAndTransmitFromStorage();
 
                 return exportResult;
@@ -55,8 +61,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             catch (Exception ex)
             {
                 AzureMonitorExporterEventSource.Log.WriteError("FailedToExport", ex);
-                return ExportResult.Failure;
             }
+
+            return exportResult;
         }
     }
 }
