@@ -91,6 +91,59 @@ namespace Azure.ResourceManager.ResourceHealth
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of TenantResourceHealthEventImpactedResources in the TenantEvent. </summary>
+        /// <returns> An object representing collection of TenantResourceHealthEventImpactedResources and their operations over a TenantResourceHealthEventImpactedResource. </returns>
+        public virtual TenantResourceHealthEventImpactedResourceCollection GetTenantResourceHealthEventImpactedResources()
+        {
+            return GetCachedClient(Client => new TenantResourceHealthEventImpactedResourceCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specific impacted resource in the tenant by an event.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ImpactedResources_GetByTenantId</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="impactedResourceName"> Name of the Impacted Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="impactedResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<TenantResourceHealthEventImpactedResource>> GetTenantResourceHealthEventImpactedResourceAsync(string impactedResourceName, CancellationToken cancellationToken = default)
+        {
+            return await GetTenantResourceHealthEventImpactedResources().GetAsync(impactedResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specific impacted resource in the tenant by an event.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ImpactedResources_GetByTenantId</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="impactedResourceName"> Name of the Impacted Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="impactedResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<TenantResourceHealthEventImpactedResource> GetTenantResourceHealthEventImpactedResource(string impactedResourceName, CancellationToken cancellationToken = default)
+        {
+            return GetTenantResourceHealthEventImpactedResources().Get(impactedResourceName, cancellationToken);
+        }
+
         /// <summary>
         /// Service health event in the tenant by event tracking id
         /// <list type="bullet">
@@ -174,12 +227,12 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventImpactedResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventImpactedResource> GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventIdAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EventImpactedResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventImpactedResourceData> GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventIdAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAdvisoryImpactedResourcesRestClient.CreateListByTenantIdAndEventIdRequest(Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAdvisoryImpactedResourcesRestClient.CreateListByTenantIdAndEventIdNextPageRequest(nextLink, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventImpactedResource(Client, EventImpactedResourceData.DeserializeEventImpactedResourceData(e)), _securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, "TenantEventResource.GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventId", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EventImpactedResourceData.DeserializeEventImpactedResourceData, _securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, "TenantEventResource.GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -197,12 +250,12 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventImpactedResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventImpactedResource> GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventId(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventImpactedResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventImpactedResourceData> GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventId(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAdvisoryImpactedResourcesRestClient.CreateListByTenantIdAndEventIdRequest(Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAdvisoryImpactedResourcesRestClient.CreateListByTenantIdAndEventIdNextPageRequest(nextLink, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventImpactedResource(Client, EventImpactedResourceData.DeserializeEventImpactedResourceData(e)), _securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, "TenantEventResource.GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventId", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EventImpactedResourceData.DeserializeEventImpactedResourceData, _securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, "TenantEventResource.GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

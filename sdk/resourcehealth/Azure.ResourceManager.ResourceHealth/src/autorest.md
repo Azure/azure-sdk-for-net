@@ -15,7 +15,8 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+rename-mapping:
+  Link.type: LinkType
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -48,13 +49,7 @@ rename-rules:
   Etag: ETag|etag
 
 request-path-to-resource-name:
-  /subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}: EventImpactedResource
-  /providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}: EventImpactedResource
+  /subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}: SubscriptionResourceHealthEventImpactedResource
+  /providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}: TenantResourceHealthEventImpactedResource
 
-directive:
-  - from: ResourceHealth.json
-    where: $.definitions
-    transform: >
-      $.availabilityStatus.properties.type['x-ms-client-name'] = 'ResourceType';
-      $.link.properties.type['x-ms-client-name'] = 'LinkType';
 ```

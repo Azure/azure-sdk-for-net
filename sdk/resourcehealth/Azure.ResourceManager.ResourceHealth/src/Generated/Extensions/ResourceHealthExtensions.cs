@@ -330,20 +330,39 @@ namespace Azure.ResourceManager.ResourceHealth
         }
         #endregion
 
-        #region EventImpactedResource
+        #region SubscriptionResourceHealthEventImpactedResource
         /// <summary>
-        /// Gets an object representing an <see cref="EventImpactedResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventImpactedResource.CreateResourceIdentifier" /> to create an <see cref="EventImpactedResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SubscriptionResourceHealthEventImpactedResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionResourceHealthEventImpactedResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionResourceHealthEventImpactedResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventImpactedResource" /> object. </returns>
-        public static EventImpactedResource GetEventImpactedResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SubscriptionResourceHealthEventImpactedResource" /> object. </returns>
+        public static SubscriptionResourceHealthEventImpactedResource GetSubscriptionResourceHealthEventImpactedResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                EventImpactedResource.ValidateResourceId(id);
-                return new EventImpactedResource(client, id);
+                SubscriptionResourceHealthEventImpactedResource.ValidateResourceId(id);
+                return new SubscriptionResourceHealthEventImpactedResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region TenantResourceHealthEventImpactedResource
+        /// <summary>
+        /// Gets an object representing a <see cref="TenantResourceHealthEventImpactedResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantResourceHealthEventImpactedResource.CreateResourceIdentifier" /> to create a <see cref="TenantResourceHealthEventImpactedResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TenantResourceHealthEventImpactedResource" /> object. </returns>
+        public static TenantResourceHealthEventImpactedResource GetTenantResourceHealthEventImpactedResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                TenantResourceHealthEventImpactedResource.ValidateResourceId(id);
+                return new TenantResourceHealthEventImpactedResource(client, id);
             }
             );
         }

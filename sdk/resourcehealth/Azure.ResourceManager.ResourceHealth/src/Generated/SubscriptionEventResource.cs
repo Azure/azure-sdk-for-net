@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.ResourceHealth
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of EventImpactedResources in the SubscriptionEvent. </summary>
-        /// <returns> An object representing collection of EventImpactedResources and their operations over a EventImpactedResource. </returns>
-        public virtual EventImpactedResourceCollection GetEventImpactedResources()
+        /// <summary> Gets a collection of SubscriptionResourceHealthEventImpactedResources in the SubscriptionEvent. </summary>
+        /// <returns> An object representing collection of SubscriptionResourceHealthEventImpactedResources and their operations over a SubscriptionResourceHealthEventImpactedResource. </returns>
+        public virtual SubscriptionResourceHealthEventImpactedResourceCollection GetSubscriptionResourceHealthEventImpactedResources()
         {
-            return GetCachedClient(Client => new EventImpactedResourceCollection(Client, Id));
+            return GetCachedClient(Client => new SubscriptionResourceHealthEventImpactedResourceCollection(Client, Id));
         }
 
         /// <summary>
@@ -116,9 +116,9 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentException"> <paramref name="impactedResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EventImpactedResource>> GetEventImpactedResourceAsync(string impactedResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionResourceHealthEventImpactedResource>> GetSubscriptionResourceHealthEventImpactedResourceAsync(string impactedResourceName, CancellationToken cancellationToken = default)
         {
-            return await GetEventImpactedResources().GetAsync(impactedResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionResourceHealthEventImpactedResources().GetAsync(impactedResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -139,9 +139,9 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentException"> <paramref name="impactedResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EventImpactedResource> GetEventImpactedResource(string impactedResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionResourceHealthEventImpactedResource> GetSubscriptionResourceHealthEventImpactedResource(string impactedResourceName, CancellationToken cancellationToken = default)
         {
-            return GetEventImpactedResources().Get(impactedResourceName, cancellationToken);
+            return GetSubscriptionResourceHealthEventImpactedResources().Get(impactedResourceName, cancellationToken);
         }
 
         /// <summary>
@@ -227,12 +227,12 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventImpactedResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventImpactedResource> GetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EventImpactedResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventImpactedResourceData> GetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAdvisoryImpactedResourcesRestClient.CreateListBySubscriptionIdAndEventIdRequest(Id.SubscriptionId, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAdvisoryImpactedResourcesRestClient.CreateListBySubscriptionIdAndEventIdNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventImpactedResource(Client, EventImpactedResourceData.DeserializeEventImpactedResourceData(e)), _securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, "SubscriptionEventResource.GetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventId", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EventImpactedResourceData.DeserializeEventImpactedResourceData, _securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, "SubscriptionEventResource.GetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,12 +250,12 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventImpactedResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventImpactedResource> GetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventId(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventImpactedResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventImpactedResourceData> GetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventId(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityAdvisoryImpactedResourcesRestClient.CreateListBySubscriptionIdAndEventIdRequest(Id.SubscriptionId, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityAdvisoryImpactedResourcesRestClient.CreateListBySubscriptionIdAndEventIdNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventImpactedResource(Client, EventImpactedResourceData.DeserializeEventImpactedResourceData(e)), _securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, "SubscriptionEventResource.GetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventId", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EventImpactedResourceData.DeserializeEventImpactedResourceData, _securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, "SubscriptionEventResource.GetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
